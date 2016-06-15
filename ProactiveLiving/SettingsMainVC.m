@@ -1,0 +1,171 @@
+//
+//  SettingsMainVC.m
+//  ProactiveLiving
+//
+//  Created by Mohd Asim on 31/05/16.
+//  Copyright © 2016 appstudioz. All rights reserved.
+//
+
+#import "SettingsMainVC.h"
+#import "SettingsContactsVC.h"
+#import "SettingsOrganizationsVC.h"
+#import "AppDelegate.h"
+#import "AppHelper.h"
+#import "Defines.h"
+
+@interface SettingsMainVC ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@end
+
+@implementation SettingsMainVC
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+}
+
+
+#pragma mark - uitableview
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //number of rows in tableview
+    return 2;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *cellIdentifier = @"SettingsMainCell";
+    UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UILabel *headerLabel=(UILabel *)[cell.contentView viewWithTag:111];
+    
+    switch (indexPath.row) {
+        case 0:
+            headerLabel.text=@"Organizations linked";
+            break;
+        case 1:
+            headerLabel.text=@"Contacts";
+            break;
+        default:
+            break;
+    }
+    
+    
+    return cell;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    switch (indexPath.row) {
+        case 0:
+            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+                
+                if ([AppDelegate checkInternetConnection]) {
+                    
+                    //show indicator on screen
+                    [AppDelegate showProgressHUDWithStatus:@"Please wait.."];
+                    
+                    NSMutableDictionary *parameters=[[NSMutableDictionary alloc]init];
+                    [parameters setValue:AppKey forKey:@"AppKey"];
+                    [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
+                    
+                    //call global web service class
+                    [Services serviceCallWithPath:ServiceUserOrganizationSettings withParam:parameters success:^(NSDictionary *responseDict)
+                     {
+                         [AppDelegate dismissProgressHUD];//dissmiss indicator
+                         
+                         if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
+                         {
+                             if ([[responseDict objectForKey:@"error"] intValue] == 0) {
+                                 SettingsOrganizationsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsOrganizationsVC"];
+                                 vc.dataDict=[responseDict objectForKey:@"result"];
+                                 [self.navigationController pushViewController:vc animated:YES];
+                             }
+                             else
+                             {
+                                 [AppHelper showAlertWithTitle:[responseDict objectForKey:@"errorMsg"] message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                             }
+                             
+                         }
+                         else
+                             [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                         
+                     } failure:^(NSError *error)
+                     {
+                         [AppDelegate dismissProgressHUD];//dissmiss indicator
+                         [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                     }];
+                    
+                }
+                else
+                    //show internet not available
+                    [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                
+            }
+            break;
+        case 1:
+            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+                
+                if ([AppDelegate checkInternetConnection]) {
+                    
+                    //show indicator on screen
+                    [AppDelegate showProgressHUDWithStatus:@"Please wait.."];
+                    
+                    NSMutableDictionary *parameters=[[NSMutableDictionary alloc]init];
+                    [parameters setValue:AppKey forKey:@"AppKey"];
+                    [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
+                    
+                    //call global web service class
+                    [Services serviceCallWithPath:ServiceUserContactSettings withParam:parameters success:^(NSDictionary *responseDict)
+                     {
+                         [AppDelegate dismissProgressHUD];//dissmiss indicator
+                         
+                         if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
+                         {
+                             if ([[responseDict objectForKey:@"error"] intValue] == 0) {
+                                 SettingsContactsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsContactsVC"];
+                                 vc.dataArray=[responseDict objectForKey:@"result"];
+                                 [self.navigationController pushViewController:vc animated:YES];
+                             }
+                             else
+                             {
+                                 [AppHelper showAlertWithTitle:[responseDict objectForKey:@"errorMsg"] message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                             }
+                             
+                         }
+                         else
+                             [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                         
+                     } failure:^(NSError *error)
+                     {
+                         [AppDelegate dismissProgressHUD];//dissmiss indicator
+                         [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                     }];
+                    
+                }
+                else
+                    //show internet not available
+                    [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                
+            }
+            break;
+        default:
+            break;
+    }
+    
+}
+
+- (IBAction)btnBackClick:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

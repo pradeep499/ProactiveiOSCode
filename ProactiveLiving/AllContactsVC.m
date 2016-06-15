@@ -1,0 +1,125 @@
+//
+//  AllContactsVC.m
+//  ProactiveLiving
+//
+//  Created by Mohd Asim on 17/05/16.
+//  Copyright © 2016 appstudioz. All rights reserved.
+//
+
+#import "AllContactsVC.h"
+#import "YSLContainerViewController.h"
+#import "ContactsVC.h"
+#import "ContactFriendsVC.h"
+
+@interface AllContactsVC ()<YSLContainerViewControllerDelegate>
+{
+    NSMutableArray *arrServices;
+    NSMutableArray *arrTypes;
+    ContactsVC *contactVC1;
+    ContactFriendsVC *contactVC2;
+    ContactsVC *contactVC3;
+    ContactsVC *contactVC4;
+    ContactsVC *contactVC5;
+}
+
+
+@end
+
+@implementation AllContactsVC
+@synthesize contactSelectBlock;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [self setUpViewControllers];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+#pragma mark - preferredStatusBarStyle
+-(UIStatusBarStyle)preferredStatusBarStyle {
+    // to set the light color of status bar
+    return UIStatusBarStyleLightContent;
+}
+-(void)setPhontactBlock:(ContactSelectBlock)block
+{
+    self.contactSelectBlock = block;
+}
+
+-(void)setUpViewControllers
+{
+    // SetUp ViewControllers
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    
+    contactVC1 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
+    contactVC1.delegate = self;
+    contactVC1.title = @"ALL";
+    contactVC1.contactType=@"all";
+    
+    contactVC2 = [storyboard instantiateViewControllerWithIdentifier:@"ContactFriendsVC"];
+    contactVC2.delegate = self;
+    contactVC2.title = @"FRIENDS";
+
+    contactVC3 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
+    contactVC3.delegate = self;
+    contactVC3.title = @"COLLEAGUES";
+    contactVC3.contactType=@"colleagues";
+
+    contactVC4 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
+    contactVC4.delegate = self;
+    contactVC4.title = @"HEALTH CLUBS";
+    contactVC4.contactType=@"healthclub";
+
+    contactVC5 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
+    contactVC5.delegate = self;
+    contactVC5.title = @"OTHERS";
+    contactVC5.contactType=@"";
+
+    // ContainerView
+    //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    //float navigationHeight = self.navigationController.navigationBar.frame.size.height;
+    
+    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]
+                                               initWithControllers:@[contactVC1,contactVC2,contactVC3,contactVC4]
+                                               topBarHeight:0
+                                               parentViewController:self];
+    
+    containerVC.delegate = self;
+    containerVC.menuItemFont = [UIFont fontWithName:@"Roboto-Regular" size:11];
+    containerVC.menuItemSelectedFont = [UIFont fontWithName:@"Roboto-Bold" size:11.5];
+    containerVC.menuBackGroudColor=[UIColor colorWithRed:1.0/255 green:174.0/255 blue:240.0/255 alpha:1.0];
+    containerVC.menuItemTitleColor=[UIColor whiteColor];
+    containerVC.menuItemSelectedTitleColor=[UIColor whiteColor];
+    containerVC.view.frame=CGRectMake(0, 64, containerVC.view.frame.size.width, containerVC.view.frame.size.height-64);
+    
+    [self.view addSubview:containerVC.view];
+}
+-(void)getSelectedPhone:(NSString*)phoneNumber
+{
+    self.contactSelectBlock(phoneNumber);
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark -- YSLContainerViewControllerDelegate
+- (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
+{
+    [self.view endEditing:YES];
+    NSLog(@"current Index : %ld",(long)index);
+    NSLog(@"current controller : %@",controller);
+    [controller viewWillAppear:YES];
+}
+
+- (IBAction)btnBackClick:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end
