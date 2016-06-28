@@ -62,9 +62,7 @@
 //    self.data[date2] = @[mockingJay, integrationEvent,anotherEvent];
 //    self.data[date2] = @[mockingJay, integrationEvent];
 //    self.data[date3] = @[fixBug];
-    
-    [[AppDelegate getAppDelegate] getStaticData];
-    
+        
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(btnListAllClick) name:@"PUSH_ALL_LIST_VC" object:nil];
 
     

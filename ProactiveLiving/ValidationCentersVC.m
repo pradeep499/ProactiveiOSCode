@@ -74,10 +74,11 @@
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(filterDataWithInfo:) name:NOTIFICATION_VALIDATION_CENTER_FLTER object:nil];
     
-    //setup Map for annotations
-    [self mapSetup];
-    
+    //initiate Location and draw Map with API consumed data
+    [self locationManagerSetup];
     [self prepareDataForValidationCenters:nil];
+    [self mapSetup];
+
 
 }
 
@@ -146,28 +147,38 @@
     }
 }
 
--(void)mapSetup
+
+-(void)locationManagerSetup
 {
-    self.mapView.delegate = self;
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    
-    if([CLLocationManager locationServicesEnabled]){
-        
-        NSLog(@"Location Services Enabled");
-        
-        if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
-            
-        }
-    }
+    self.locationManagerSingleton = [LocationManagerSingleton sharedSingleton];
     
 #ifdef __IPHONE_8_0
     if(IS_OS_8_OR_LATER) {
         // Use one from below, not both. Depending on requirement and what you put in info.plist
-        [self.locationManager requestWhenInUseAuthorization];// NSLocationWhenInUseUsageDescription key add in info.plist
+        [self.locationManagerSingleton.locationManager requestWhenInUseAuthorization];// NSLocationWhenInUseUsageDescription key add in info.plist
         //[self.locationManager requestAlwaysAuthorization]; // NSLocationAlwaysUsageDescription key add in info.plist
     }
 #endif
+    
+    [self.locationManagerSingleton.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [self.locationManagerSingleton.locationManager setDistanceFilter:kCLDistanceFilterNone];
+    [self.locationManagerSingleton.locationManager setHeadingFilter:kCLHeadingFilterNone];
+
+    [self.locationManagerSingleton.locationManager startUpdatingLocation];
+
+}
+
+-(void)mapSetup
+{
+    self.mapView.delegate = self;
+    
+    if([CLLocationManager locationServicesEnabled]){
+        
+        if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
+            NSLog(@"Location Services Enabled but Denied");
+        }
+    }
+    
     
     [self.mapView setMapType:MKMapTypeStandard];
     [self.mapView setZoomEnabled:YES];
@@ -185,39 +196,36 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    
     [super viewDidAppear:YES];
     
-    if([CLLocationManager locationServicesEnabled]){
-        
-        NSLog(@"Location Services Enabled");
-        
+    if([CLLocationManager locationServicesEnabled] && [[AppHelper userDefaultsForKey:GPSStatus] boolValue]){
+                
         if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Permission Denied"
-                                                            message:@"To re-enable, please go to Settings and turn on Location Service for this app."
+            
+            [AppHelper saveToUserDefaults:@"0" withKey:GPSStatus];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Access Denied"
+                                                            message:@"Please go to Settings and allow location access for this app."
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
-            //[alert show];
+            [alert show];
         }
-        else
-        {
-            [self.locationManager setDelegate:self];
-            self.locationManager.distanceFilter = kCLDistanceFilterNone;
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-            [self.locationManager startUpdatingLocation];
-            [self.tableView reloadData];
-
-            NSLog(@"%@", [self deviceLocation]);
-
-        }
+       
+        NSLog(@"%@", [self deviceLocation]);
     }
-    else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Permission Denied"
-                                                        message:@"To re-enable, please go to Settings and turn on Location Service."
+    else if([[AppHelper userDefaultsForKey:GPSStatus] boolValue])
+    {
+        [AppHelper saveToUserDefaults:@"0" withKey:GPSStatus];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
+                                                        message:@"To re-enable, please go to Settings and turn on location service."
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
+
     }
 
     
@@ -269,13 +277,17 @@
     [self.mapView setVisibleMapRect:zoomRect edgePadding:UIEdgeInsetsMake(40.0f, 40.0f, 40.0f, 40.0f) animated:YES];
     
     //Bottom annotation view
-    self.tagView.canSeletedTags = YES;
+    self.tagView.canSeletedTags = NO;
     self.tagView.tagColor = [UIColor darkGrayColor];
     self.tagView.tagCornerRadius = 0.0f;
     [self.tagView.tags removeAllObjects];
     [self.tagView.tagColors removeAllObjects];
-    [self.tagView.tags addObjectsFromArray:[[self.dataArray valueForKey:@"color"] valueForKey:@"name"]];
-    [self.tagView.tagColors addObjectsFromArray:[[self.dataArray valueForKey:@"color"] valueForKey:@"color"]];
+    
+    NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:[self.dataArray valueForKey:@"color"]];
+    NSArray *arrayWithNoDuplicates = [orderedSet array];
+    
+    [self.tagView.tags addObjectsFromArray:[arrayWithNoDuplicates valueForKey:@"name"]];
+    [self.tagView.tagColors addObjectsFromArray:[arrayWithNoDuplicates valueForKey:@"color"]];
     [self.tagView.collectionView reloadData];
     
     [self.tagView setCompletionBlockWithSeleted:^(NSInteger index) {
@@ -300,12 +312,12 @@
         [parameters setValue:AppKey forKey:@"AppKey"];
         [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
         
-        if([[AppDelegate getAppDelegate].isGPSOn intValue]==1)
+        if([[AppHelper userDefaultsForKey:GPSStatus] boolValue] && [CLLocationManager authorizationStatus]!=kCLAuthorizationStatusDenied)
         {
             NSString *latitude=[NSString stringWithFormat:@"%f",[LocationManagerSingleton sharedSingleton].locationManager.location.coordinate.latitude];
             NSString *longitude=[NSString stringWithFormat:@"%f",[LocationManagerSingleton sharedSingleton].locationManager.location.coordinate.longitude];
 
-            [parameters setObject:[AppDelegate getAppDelegate].isGPSOn forKey:@"isGpsOn"];
+            [parameters setObject:[AppHelper userDefaultsForKey:GPSStatus] forKey:@"isGpsOn"];
             [parameters setObject:latitude forKey:@"latitude"];
             [parameters setObject:longitude forKey:@"longitude"];
         }
@@ -447,7 +459,6 @@
 
     cell.lblDistance.text=[NSString stringWithFormat:@"%.02f miles",(([[[self.dataArray objectAtIndex:indexPath.row]valueForKey:@"dist"] floatValue])/1609.344)];
     
-    
     NSURL *url = [NSURL URLWithString:[self.dataArray objectAtIndex:indexPath.row][@"image"]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     UIImage *placeholderImage = [UIImage imageNamed:@"your_placeholder"];
@@ -482,10 +493,10 @@
 {
     
     CLLocationDistance distance;
-    if([[AppDelegate getAppDelegate].isGPSOn intValue]==0 && [self.arrLatLong count]==2)
+    if(![[AppHelper userDefaultsForKey:GPSStatus] boolValue] && [self.arrLatLong count]==2)
         distance= [location distanceFromLocation:[[CLLocation alloc]initWithLatitude:[[self.arrLatLong objectAtIndex:1]floatValue] longitude:[[self.arrLatLong objectAtIndex:0]floatValue]]];
     else
-        distance=[location distanceFromLocation:self.locationManager.location];
+        distance=[location distanceFromLocation:self.locationManagerSingleton.locationManager.location];
     
     return distance/1609.344; //meter to mile
 }
@@ -588,7 +599,7 @@
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         [self performSegueWithIdentifier:@"ValidationFiltersVC" sender:sender];
-        [AppDelegate getAppDelegate].currentLocation=self.locationManager.location;
+        [AppDelegate getAppDelegate].currentLocation=self.locationManagerSingleton.locationManager.location;
     }
 
 }
@@ -672,40 +683,13 @@
     NSLog(@"CurrentLocation: %f: %f",region.center.latitude,region.center.longitude);
 }
 
-- (void)locationManager:(CLLocationManager*)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    switch (status) {
-        case kCLAuthorizationStatusNotDetermined: {
-            NSLog(@"User still thinking granting location access!");
-            [self.locationManager startUpdatingLocation]; // this will access location automatically if user granted access manually. and will not show apple's request alert twice. (Tested)
-            [self.tableView reloadData];
-
-        } break;
-        case kCLAuthorizationStatusDenied: {
-            NSLog(@"User denied location access request!!");
-            // show text on label
-             NSLog(@"To re-enable, please go to Settings and turn on Location Service for this app.");
-            [self.locationManager stopUpdatingLocation];
-        } break;
-        case kCLAuthorizationStatusAuthorizedWhenInUse: {
-            [self.locationManager startUpdatingLocation]; //Will update location immediately
-            [self.tableView reloadData];
-        } break;
-        case kCLAuthorizationStatusAuthorizedAlways: {
-            [self.locationManager startUpdatingLocation]; //Will update location immediately
-            [self.tableView reloadData];
-        } break;
-        default:
-            break;
-    }
-}
-
 - (void) updateLocation:(NSNotification *) info {
-    [self.locationManager startUpdatingLocation]; //Will update location immediately
+    [self.locationManagerSingleton.locationManager startUpdatingLocation]; //Will update location immediately
     [self.tableView reloadData];
 }
 
 - (NSString *)deviceLocation {
-    return [NSString stringWithFormat:@"latitude: %f longitude: %f", self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
+    return [NSString stringWithFormat:@"latitude: %f longitude: %f", self.locationManagerSingleton.locationManager.location.coordinate.latitude, self.locationManagerSingleton.locationManager.location.coordinate.longitude];
 }
 
 -(MKAnnotationView *)mapView:(MKMapView *)mV viewForAnnotation:(id <MKAnnotation>)annotation

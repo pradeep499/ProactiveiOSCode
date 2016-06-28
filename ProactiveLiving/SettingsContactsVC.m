@@ -35,7 +35,7 @@
                                                         
                                                           @"Everyone":@0,
                                                           @"Friends":@0,
-                                                          @"Collegues":@0,
+                                                          @"Colleagues":@0,
                                                           @"Health Club Members":@0,
                                                           @"Males":@1,
                                                           @"Females":@1,
@@ -45,7 +45,7 @@
                                                         
                                                           @"Everyone":@0,
                                                           @"Friends":@0,
-                                                          @"Collegues":@0,
+                                                          @"Colleagues":@0,
                                                           @"Health Club Members":@0,
                                                           @"Males":@0,
                                                           @"Females":@0,

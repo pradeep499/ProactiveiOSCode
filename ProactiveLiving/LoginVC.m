@@ -15,7 +15,7 @@
 #import "CoreDataFunction.h"
 #import "GetPasVC.h"
 #import "HomeVC.h"
-#import "PASToDoVC.h"
+#import "MyPAStodoVC.h"
 #import "CalendarVC.h"
 #import "InboxVC.h"
 #import "CustonTabBarController.h"
@@ -43,22 +43,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // fetch and store static data
-    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
-        NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
-    }];
-
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         
         //[self performSegueWithIdentifier:@"GetPasVC" sender:nil];
-        [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
-            [self setupTabBarController];
-        }];
-
+        [self setupTabBarController];        
     }
     else
-    [self setUpInitialView];
+        [self setUpInitialView];
     
+   
+
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 
     
@@ -85,9 +79,9 @@
     UIViewController *thirdNavigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:thirdViewController];
     
-    PASToDoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PASToDoVC"];
-    fourthViewController.title=@"My PAS To Do";
-    fourthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_pas"];
+    MyPAStodoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPAStodoVC"];
+    fourthViewController.title=@"Activate";
+    fourthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_tabbar_activate"];
     UIViewController *fourthNavigationController = [[UINavigationController alloc]
                                                    initWithRootViewController:fourthViewController];
     
@@ -368,6 +362,7 @@
     }
     return YES;
 }
+
 #pragma mark - preferredStatusBarStyle
 -(UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleDefault;

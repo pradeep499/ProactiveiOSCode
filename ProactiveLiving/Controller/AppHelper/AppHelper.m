@@ -206,3 +206,36 @@
 }
 
 @end
+
+#pragma mark- NSObject Category
+
+@interface NSObject (NullCheck)
+
+- (BOOL)isNull;
+- (BOOL)isNotNull;
+
+@end
+
+@implementation NSObject (NullCheck)
+
+- (BOOL)isNull
+{
+    if (!self) return YES;
+    else if (self == [NSNull null]) return YES;
+    else if ([self isKindOfClass:[NSString class]])
+    {
+        return ([((NSString *)self)isEqualToString : @""]
+                || [((NSString *)self)isEqualToString : @"null"]
+                || [((NSString *)self)isEqualToString : @"<null>"]
+                || [((NSString *)self)isEqualToString : @"(null)"]
+                );
+    }
+    return NO;
+}
+
+- (BOOL)isNotNull
+{
+    return ![self isNull];
+}
+
+@end

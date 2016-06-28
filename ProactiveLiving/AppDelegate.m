@@ -11,6 +11,7 @@
 #import "Defines.h"
 #import "LocationManagerSingleton.h"
 #import <AFNetworking/AFNetworking.h>
+#import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface AppDelegate ()
@@ -29,12 +30,17 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+     // fetch and store static data
+    [AppDelegate connectedCompletionBlock:^(BOOL connected) {
+        if (connected)
+            [self getStaticData];
+        else
+            NSLog(@"NOT REACHABLE");
+    }];
 
     //Put location using ZipCode by default
-    self.isGPSOn=@"0";
     NSLog(@"location::::::> %@",[LocationManagerSingleton sharedSingleton].locationManager.location);
-
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];//to check network connection in the app
     
     //UISearchBar Global look n feel alteration
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:
@@ -245,6 +251,28 @@
 #pragma mark - getAppdelegate
 + (AppDelegate*)getAppDelegate {
     return (AppDelegate*)[UIApplication sharedApplication].delegate;
+}
+
++(void)connectedCompletionBlock:(void(^)(BOOL connected))block {
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        BOOL con = NO;
+        NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
+        
+        if (status == AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi) {
+            
+            con = YES;
+        }
+        
+        if (block) {
+            [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+            block(con);
+        }
+        
+    }];
 }
 
 

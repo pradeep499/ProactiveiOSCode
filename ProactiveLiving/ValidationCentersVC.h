@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "LocationManagerSingleton.h"
 
 
 @interface ValidationCentersVC : UIViewController<MKMapViewDelegate,CLLocationManagerDelegate>
-@property(nonatomic, retain) CLLocationManager *locationManager;
+@property(nonatomic, retain) LocationManagerSingleton *locationManagerSingleton;
 @property (weak, nonatomic) IBOutlet UIView *mapContainerView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *imgArrow;

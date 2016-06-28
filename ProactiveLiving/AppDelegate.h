@@ -24,13 +24,13 @@
 +(BOOL)checkInternetConnection;//global method to check internet connectivity throughout app
 + (void)showProgressHUDWithStatus:(NSString *)status;
 + (void)dismissProgressHUD;
++(void)connectedCompletionBlock:(void(^)(BOOL connected))block;
 
 -(void)getStaticData;
 @property(nonatomic,strong) CLLocation *currentLocation;
 @property (nonatomic, copy) NSString *PASInst;
 @property (nonatomic, copy) NSString *PASInstVideo;
 @property (nonatomic, copy) NSString *aboutPAS;
-@property (nonatomic, copy) NSString *isGPSOn;
 
 
 @end

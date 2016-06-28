@@ -39,10 +39,10 @@
     [self.searchBar setReturnKeyType:UIReturnKeyDone];
     self.searchBar.delegate=self;
     self.searchBar.placeholder = @"Zip Code";
-    [self.switch1 setOn:![[AppDelegate getAppDelegate].isGPSOn boolValue]];
+    [self.switch1 setOn:![[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
     [self.switch2 setOn:NO];
     [self.searchBar setUserInteractionEnabled:NO];
-    [self.switch3 setOn:[[AppDelegate getAppDelegate].isGPSOn boolValue]];
+    [self.switch3 setOn:[[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
     
     [AppHelper setBorderOnView:self.tableView];
 }
@@ -205,9 +205,9 @@
     
     [self.searchBar setUserInteractionEnabled:self.switch2.isOn];
     //Capture state of main GPS related switch
-    [AppDelegate getAppDelegate].isGPSOn =[NSString stringWithFormat:@"%i",!self.switch1.isOn];
+    [AppHelper saveToUserDefaults:[NSString stringWithFormat:@"%i",!self.switch1.isOn] withKey:GPSStatus];
 
-    NSLog(@"GPS-%@",[AppDelegate getAppDelegate].isGPSOn);
+    NSLog(@"GPS-%@",[AppHelper userDefaultsForKey:GPSStatus]);
 
 }
 @end

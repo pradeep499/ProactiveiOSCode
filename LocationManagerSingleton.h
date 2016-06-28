@@ -12,6 +12,7 @@
 
 //custom delegate
 @protocol LocationUpdateProtocol <NSObject>
+
 @required
 //required methods
 @optional
@@ -19,6 +20,7 @@
 -(void)locationDidUpdateToLocation:(CLLocation *)location;
 
 @end
+//----
 
 @interface LocationManagerSingleton : NSObject <CLLocationManagerDelegate>
 {

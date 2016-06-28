@@ -17,9 +17,6 @@
     if(self) {
         self.locationManager = [CLLocationManager new];
         [self.locationManager setDelegate:self];
-        [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
-        [self.locationManager setHeadingFilter:kCLHeadingFilterNone];
-        [self.locationManager startUpdatingLocation];
         //do any more customization to your location manager
     }
     
@@ -46,6 +43,33 @@
                            [self.delegate locationDidUpdateToLocation:newLocation];
                     });
     
+}
+
+- (void)locationManager:(CLLocationManager*)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined: {
+            NSLog(@"User still thinking granting location access!");
+            [self.locationManager startUpdatingLocation]; // this will access location automatically if user granted access manually. and will not show apple's request alert twice. (Tested)
+            //[self.tableView reloadData];
+            
+        } break;
+        case kCLAuthorizationStatusDenied: {
+            NSLog(@"User denied location access request!!");
+            // show text on label
+            NSLog(@"To re-enable, please go to Settings and turn on Location Service for this app.");
+            [self.locationManager stopUpdatingLocation];
+        } break;
+        case kCLAuthorizationStatusAuthorizedWhenInUse: {
+            [self.locationManager startUpdatingLocation]; //Will update location immediately
+            //[self.tableView reloadData];
+        } break;
+        case kCLAuthorizationStatusAuthorizedAlways: {
+            [self.locationManager startUpdatingLocation]; //Will update location immediately
+            //[self.tableView reloadData];
+        } break;
+        default:
+            break;
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {

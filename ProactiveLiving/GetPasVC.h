@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TabBarView.h"
 
 @interface GetPasVC : UIViewController
-
-@property (weak, nonatomic) IBOutlet TabBarView *tabBar;
 
 @end

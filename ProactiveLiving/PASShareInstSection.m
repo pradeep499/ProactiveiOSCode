@@ -14,7 +14,7 @@
     [super awakeFromNib];
     // Initialization code
     UIView *ViewInst = (UIView *)[self viewWithTag:999];
-    ViewInst.layer.borderWidth=3.0f;
+    ViewInst.layer.borderWidth=2.0f;
     ViewInst.layer.borderColor=[UIColor colorWithRed:1.0/255.0f green:174.0/255.0f blue:240.0/255.0f alpha:1.0].CGColor;
 
 }

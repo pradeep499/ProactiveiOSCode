@@ -56,26 +56,69 @@
     // SetUp ViewControllers
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    filterVC1 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC1"];
-    filterVC1.title = @"SERVICES";
-    filterVC1.dataArray=arrServices;
     
-    
-    filterVC2 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC2"];
-    filterVC2.title = @"AVAILABILITY";
-    
-    filterVC3 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC3"];
-    filterVC3.title = @"LOCATION";
-    
-    filterVC4 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC4"];
-    filterVC4.title = @"TYPES";
-    filterVC4.dataArray=arrTypes;
     
     // ContainerView
     //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     //float navigationHeight = self.navigationController.navigationBar.frame.size.height;
     
-    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:@[filterVC4,filterVC1,filterVC2,filterVC3]
+    NSArray *arrFilterVCs;
+    
+    if([self.screenTitle isEqualToString:@"Validation Centers"])
+    {
+        filterVC1 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC1"];
+        filterVC1.title = @"SERVICES";
+        filterVC1.dataArray=arrServices;
+        
+        filterVC2 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC2"];
+        filterVC2.title = @"AVAILABILITY";
+        
+        filterVC3 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC3"];
+        filterVC3.title = @"LOCATION";
+        
+        filterVC4 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC4"];
+        filterVC4.title = @"TYPES";
+        filterVC4.dataArray=arrTypes;
+        
+        arrFilterVCs=@[filterVC4,filterVC1,filterVC2,filterVC3];
+    }
+    else if([self.screenTitle isEqualToString:@"Physicians"])
+    {
+        
+        filterVC2 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC2"];
+        filterVC2.title = @"AVAILABILITY";
+        
+        filterVC3 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC3"];
+        filterVC3.title = @"LOCATION";
+        
+        filterVC4 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC4"];
+        filterVC4.title = @"TYPES";
+        NSMutableDictionary *dicEditedTypes= [[NSMutableDictionary alloc]init];
+        [dicEditedTypes setObject:[[arrTypes objectAtIndex:1] objectForKey:@"_id"] forKey:@"_id"];
+        [dicEditedTypes setObject:[[arrTypes objectAtIndex:1] objectForKey:@"key"] forKey:@"key"];
+        [dicEditedTypes setObject:[[arrTypes objectAtIndex:1] objectForKey:@"name"] forKey:@"name"];
+        
+        NSMutableArray *arrfiltered=[[[arrTypes objectAtIndex:1] objectForKey:@"Types"] mutableCopy];
+        [arrfiltered removeObjectAtIndex:2];
+        [dicEditedTypes setObject:arrfiltered forKey:@"Types"];
+
+                                         //[[[arrTypes objectAtIndex:1] objectForKey:@"Types"] removeObjectAtIndex:2];
+        filterVC4.dataArray=[[NSArray alloc]initWithObjects:dicEditedTypes, nil];
+        
+        arrFilterVCs=@[filterVC4,filterVC2,filterVC3];
+    }
+    else
+    {
+        filterVC2 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC2"];
+        filterVC2.title = @"AVAILABILITY";
+        
+        filterVC3 = [storyboard instantiateViewControllerWithIdentifier:@"FilterVC3"];
+        filterVC3.title = @"LOCATION";
+        
+        arrFilterVCs=@[filterVC2,filterVC3];
+    }
+
+    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:arrFilterVCs
                                                                                         topBarHeight:0
                                                                                 parentViewController:self];
     containerVC.delegate = self;
@@ -113,7 +156,7 @@
                      // services
                      arrServices = [responseDict valueForKey:@"services"];//set dictionary
                      //types
-                     arrTypes = [responseDict valueForKey:@"types"];//set dictionary
+                     arrTypes = [[responseDict valueForKey:@"types"]mutableCopy];//set dictionary
                      
                      // SetUp ViewControllers
                      [self setUpViewControllers];
@@ -170,17 +213,24 @@
     //[AppHelper saveToUserDefaults:filterVC3.selectedRowsArray withKey:@"arrLocations"];
     //[AppHelper saveToUserDefaults:filterVC4.selectedRowsArray withKey:@"arrTypes"];
 
-    NSMutableDictionary *aDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                 filterVC1.selectedRowsArray, @"arrServices",
-                                 filterVC3.selectedRowsArray, @"arrLocations",
-                                 filterVC4.selectedRowsArray, @"arrTypes",
-                                 nil];
+    NSMutableDictionary *aDictionary = [NSMutableDictionary new];
     
+    if(filterVC1.selectedRowsArray!=nil)
+    [aDictionary setObject:filterVC1.selectedRowsArray forKey:@"arrServices"];
+    if(filterVC3.selectedRowsArray!=nil)
+    [aDictionary setObject:filterVC3.selectedRowsArray forKey:@"arrLocations"];
+    if(filterVC4.selectedRowsArray!=nil)
+    [aDictionary setObject:filterVC4.selectedRowsArray forKey:@"arrTypes"];
     
     //If availability selecetd
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dateComponents = [calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:filterVC2.selectedDate];
-    NSDateComponents *timeComponents = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:filterVC2.selectedTime];
+    NSDateComponents *dateComponents;
+    NSDateComponents *timeComponents;
+    
+     if(filterVC2.selectedDate!=nil)
+         dateComponents = [calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:filterVC2.selectedDate];
+     if(filterVC2.selectedTime!=nil)
+         timeComponents = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:filterVC2.selectedTime];
     
     if(dateComponents || timeComponents)
     {

@@ -109,7 +109,21 @@
             UILabel *labelInst = (UILabel *)[headerInstruction viewWithTag:111];
             UIButton *btnClose = (UIButton *)[headerInstruction viewWithTag:222];
             [btnClose addTarget:self action:@selector(closeInstructionSection) forControlEvents:UIControlEventTouchUpInside];
-            labelInst.text=@"You have created a link with the following organizations in Settings. Below you can select what information (PAS/ PAS Level/ PAS Rating) you want to send the organization(s) linked. \n Please note, the latest PAS informtion will be sent with today's date and time. Once sent this can not be undone.";
+            
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+            paragraphStyle.alignment = NSTextAlignmentJustified;
+            
+            NSString *strInst=@"You have created a link with the following entities in Settings. Below you can select what information (PAS/ PAS Level/ PAS Rating) you want to send the entities linked.\n\nPlease note, the latest PAS informtion will be sent with today's date and time. Once sent this can not be undone.";
+            
+            NSAttributedString *attString = [[NSAttributedString alloc] initWithString:strInst
+                                                                            attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                        paragraphStyle, NSParagraphStyleAttributeName ,
+                                                                                        [NSNumber numberWithFloat:0],NSBaselineOffsetAttributeName,
+                                                                                        nil]];
+            
+            labelInst.attributedText = attString;
+
             return headerInstruction;
             break;
         }
@@ -124,8 +138,8 @@
             [dateFormatter setDateFormat:@"MMM dd, yyyy"];
             NSString *outputDate=[dateFormatter stringFromDate:inputDate];
             
-            headerScore.lblPASValidationDate.text=(outputDate)?[NSString stringWithFormat:@"Latest PAS Validation Date:%@",outputDate]:@"";
-            headerScore.lblCurrentDate.text=[NSString stringWithFormat:@"Today's Date:%@",[dateFormatter stringFromDate:[NSDate date]]];
+            headerScore.lblPASValidationDate.text=(outputDate)?[NSString stringWithFormat:@"Most Recent PAS Validation Date: %@",outputDate]:@"";
+            headerScore.lblCurrentDate.text=[NSString stringWithFormat:@"Today's Date: %@",[dateFormatter stringFromDate:[NSDate date]]];
             
             headerScore.lblPAScore.text=[[self.pasDataArray objectAtIndex:0] valueForKey:@"pasScore"];
             headerScore.lblPALevel.text=[[[self.pasDataArray objectAtIndex:0] objectForKey:@"pasId"] valueForKey:@"level"];
@@ -147,7 +161,7 @@
             if(shouldHide)
                 return 0;
             else
-                return 200.0;
+                return 170.0;
             break;
         case 1:
             return 130.0;
@@ -176,6 +190,11 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 140;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"PASShareCell";
@@ -190,7 +209,7 @@
             PASShareCell *cell =[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.sideColorView.backgroundColor=[UIColor blueColor];
-            cell.lblTitle.font=[UIFont fontWithName:FONT_REGULAR size:14];
+            cell.lblTitle.font=[UIFont fontWithName:FONT_BOLD size:16];
             
             NSString * orgName=[NSString stringWithFormat:@"%@ (%@)",[[self.orgDataArray objectAtIndex:indexPath.row] objectForKey:@"organizationId"][@"name"],[[self.orgDataArray objectAtIndex:indexPath.row] objectForKey:@"organizationName"]];
             
@@ -198,7 +217,7 @@
                                                initWithString:orgName];
             
             [text addAttribute:NSFontAttributeName
-                         value:[UIFont fontWithName:FONT_THIN size:14]
+                         value:[UIFont fontWithName:FONT_THIN size:13]
                          range:[orgName rangeOfString:[NSString stringWithFormat:@"(%@)",[[self.orgDataArray objectAtIndex:indexPath.row] objectForKey:@"organizationName"]]]];
             
             if (![text isKindOfClass:[NSNull class]] && text && text != NULL)
@@ -251,48 +270,61 @@
 }
 
 
-- (IBAction)btnSendClick:(id)sender {
+- (IBAction)btnSendClick:(UIButton *)sender {
     
-    if(/* DISABLES CODE */ (YES))
-    {
-        if([[AppDelegate getAppDelegate].window.subviews containsObject:self.modal.view]){
-            [UIView animateWithDuration:0.3 animations:^{
-                self.modal.view.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
-            } completion:^(BOOL finished) {
-                [self.modal.view removeFromSuperview];
-                [self addNewPopup];
-            
-            }];
-        }
-        else
-        {
-            [self addNewPopup];
-        }
+    sender.enabled=NO;
+    [self performSelector:@selector(delayEnable:) withObject:sender afterDelay:0.5];
+
+    NSMutableArray *dataArray=[NSMutableArray array];
+    for (int count=0; count<self.orgDataArray.count; count++) {
+        NSMutableDictionary *dataDict=[NSMutableDictionary dictionary];
         
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:count inSection:1];
+        PASShareCell *cell =[self.tableView cellForRowAtIndexPath:indexPath];
+        BOOL pas= cell.checkBoxScore.checked;
+        BOOL level= cell.checkBoxLevel.checked;
+        BOOL rating= cell.checkBoxRating.checked;
+        
+        [dataDict setObject:[[self.orgDataArray objectAtIndex:count] objectForKey:@"organizationId"][@"_id"] forKey:@"orgId"];
+        
+        [dataDict setObject:[NSNumber numberWithBool:pas] forKey:@"pas"];
+        [dataDict setObject:[NSNumber numberWithBool:level] forKey:@"level"];
+        [dataDict setObject:[NSNumber numberWithBool:rating] forKey:@"rating"];
+        
+        [dataArray addObject:dataDict];
     }
-    else
-        [AppHelper showAlertWithTitle:@"No Time selected!" message:@"Please choose a Time from list" tag:0 delegate:nil cancelButton:@"Ok" otherButton:nil];
-}
-
--(void)addNewPopup
-{
-    // SetUp Popup view
-    self.modal = (PASSharePopUp*)[self.storyboard instantiateViewControllerWithIdentifier:@"PASSharePopUp"];
-    self.modal.view.userInteractionEnabled = TRUE;
-    [self.modal.btnShare addTarget:self action:@selector(btnShareClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.modal.dimView setAlpha:0.0f];
-    self.modal.view.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
-    [[AppDelegate getAppDelegate].window addSubview:self.modal.view];
     
-    [UIView animateWithDuration:0.3 animations:^{
-        self.modal.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);;
-    } completion:^(BOOL finished) {
-    [self.modal.dimView setAlpha:0.2f];
-    }];
-
+    NSArray* notAllZeros = [dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%@ IN self.@allValues",[NSNumber numberWithBool:YES] ]];
+    
+    
+    if([notAllZeros count]==0 )
+    {
+        [AppHelper showAlertWithTitle:@"PAS information not selected!" message:@"Please select PAS information you want to share with an Entity." tag:0 delegate:nil cancelButton:@"Ok" otherButton:nil];
+        return;
+    }
+    
+    self.modal = (PASSharePopUp*)[self.storyboard instantiateViewControllerWithIdentifier:@"PASSharePopUp"];
+    
+    self.modal.pas=[NSString stringWithFormat:@"PAS %@",[[self.pasDataArray objectAtIndex:0] valueForKey:@"pasScore"]];
+    self.modal.level=[NSString stringWithFormat:@"Level %@",[[[self.pasDataArray objectAtIndex:0] objectForKey:@"pasId"] valueForKey:@"level"]];
+    self.modal.rating=[[[self.pasDataArray objectAtIndex:0] objectForKey:@"pasId"]valueForKey:@"rating"];
+    self.modal.employers=[[self.orgDataArray valueForKey:@"organizationId"] valueForKey:@"name"];
+    
+    if([[AppDelegate getAppDelegate].window.subviews containsObject:self.modal.view])
+        [self.modal hidePopUp];
+    else
+        [self.modal showPopUp];
+    
+    [self.modal.btnShare addTarget:self action:@selector(btnShareClick) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
--(void)btnShareClick:(id)sender
+- (void)delayEnable:(UIButton *)sender
+{
+    sender.enabled = YES;
+}
+
+-(void)btnShareClick
 {
 
     NSMutableArray *dataArray=[NSMutableArray array];
@@ -335,6 +367,7 @@
                 if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
                 {
                     //if ([[responseDict objectForKey:@"error"] intValue] == 0)
+                    [self.modal hidePopUp];
                     [AppHelper showAlertWithTitle:[responseDict objectForKey:@"errorMsg"] message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
                 }
                 else

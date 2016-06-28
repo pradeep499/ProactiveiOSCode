@@ -166,6 +166,9 @@
         [AppHelper showAlertWithTitle:@"Input atleast one phone number!" message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self.view endEditing:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

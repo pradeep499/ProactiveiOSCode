@@ -83,7 +83,6 @@
 		BA7BBE5B1C7357AB00EBC5BF /* ValidationCProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7BBE5A1C7357AB00EBC5BF /* ValidationCProfileVC.m */; };
 		BA7BBE5E1C735F7700EBC5BF /* MoreVCTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7BBE5D1C735F7700EBC5BF /* MoreVCTableCell.m */; };
 		BA7BBE611C735F8A00EBC5BF /* ProfileVCTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7BBE601C735F8A00EBC5BF /* ProfileVCTableCell.m */; };
-		BA7D52B81C7F26FD0033AFEE /* TabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7D52B71C7F26FD0033AFEE /* TabBarView.m */; };
 		BA7D52BC1C7F374B0033AFEE /* GetPasVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7D52BB1C7F374B0033AFEE /* GetPasVC.m */; };
 		BA8888291C64939B0083C857 /* FilterOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8888281C64939B0083C857 /* FilterOneCell.m */; };
 		BA88882C1C6493BA0083C857 /* FilterFourCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA88882B1C6493BA0083C857 /* FilterFourCell.m */; };
@@ -98,6 +97,29 @@
 		BAA471B41CCFA4FC00CF90D7 /* ExpertsDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA471B31CCFA4FC00CF90D7 /* ExpertsDetailVC.m */; };
 		BAA4E83A1CD0FAC800A198E7 /* AllAppointmentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA4E8391CD0FAC800A198E7 /* AllAppointmentsVC.m */; };
 		BAA4E8461CD0FB8500A198E7 /* ActivitiesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA4E8451CD0FB8500A198E7 /* ActivitiesVC.m */; };
+		BAA993A41D2137FA00D0CAA1 /* SocketAckEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA9938E1D2137FA00D0CAA1 /* SocketAckEmitter.swift */; };
+		BAA993A51D2137FA00D0CAA1 /* SocketAckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA9938F1D2137FA00D0CAA1 /* SocketAckManager.swift */; };
+		BAA993A61D2137FA00D0CAA1 /* SocketAnyEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993901D2137FA00D0CAA1 /* SocketAnyEvent.swift */; };
+		BAA993A71D2137FA00D0CAA1 /* SocketClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993911D2137FA00D0CAA1 /* SocketClientSpec.swift */; };
+		BAA993A81D2137FA00D0CAA1 /* SocketEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993921D2137FA00D0CAA1 /* SocketEngine.swift */; };
+		BAA993A91D2137FA00D0CAA1 /* SocketEngineClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993931D2137FA00D0CAA1 /* SocketEngineClient.swift */; };
+		BAA993AA1D2137FA00D0CAA1 /* SocketEnginePacketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993941D2137FA00D0CAA1 /* SocketEnginePacketType.swift */; };
+		BAA993AB1D2137FA00D0CAA1 /* SocketEnginePollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993951D2137FA00D0CAA1 /* SocketEnginePollable.swift */; };
+		BAA993AC1D2137FA00D0CAA1 /* SocketEngineSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993961D2137FA00D0CAA1 /* SocketEngineSpec.swift */; };
+		BAA993AD1D2137FA00D0CAA1 /* SocketEngineWebsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993971D2137FA00D0CAA1 /* SocketEngineWebsocket.swift */; };
+		BAA993AE1D2137FA00D0CAA1 /* SocketEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993981D2137FA00D0CAA1 /* SocketEventHandler.swift */; };
+		BAA993AF1D2137FA00D0CAA1 /* SocketFixUTF8.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993991D2137FA00D0CAA1 /* SocketFixUTF8.swift */; };
+		BAA993B01D2137FA00D0CAA1 /* SocketIOClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA9939A1D2137FA00D0CAA1 /* SocketIOClient.swift */; };
+		BAA993B11D2137FA00D0CAA1 /* SocketIOClientOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA9939B1D2137FA00D0CAA1 /* SocketIOClientOption.swift */; };
+		BAA993B21D2137FA00D0CAA1 /* SocketIOClientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA9939C1D2137FA00D0CAA1 /* SocketIOClientStatus.swift */; };
+		BAA993B31D2137FA00D0CAA1 /* SocketLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA9939D1D2137FA00D0CAA1 /* SocketLogger.swift */; };
+		BAA993B41D2137FA00D0CAA1 /* SocketPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA9939E1D2137FA00D0CAA1 /* SocketPacket.swift */; };
+		BAA993B51D2137FA00D0CAA1 /* SocketParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA9939F1D2137FA00D0CAA1 /* SocketParsable.swift */; };
+		BAA993B61D2137FA00D0CAA1 /* SocketStringReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993A01D2137FA00D0CAA1 /* SocketStringReader.swift */; };
+		BAA993B71D2137FA00D0CAA1 /* SocketTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993A11D2137FA00D0CAA1 /* SocketTypes.swift */; };
+		BAA993B81D2137FA00D0CAA1 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993A21D2137FA00D0CAA1 /* SwiftRegex.swift */; };
+		BAA993B91D2137FA00D0CAA1 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993A31D2137FA00D0CAA1 /* WebSocket.swift */; };
+		BAA993BB1D2281AE00D0CAA1 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA993BA1D2281AE00D0CAA1 /* SocketIOManager.swift */; };
 		BAAF57021C92D6E5000D54F6 /* JCCollectionViewTagFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAF56FD1C92D6E5000D54F6 /* JCCollectionViewTagFlowLayout.m */; };
 		BAAF57031C92D6E5000D54F6 /* JCTagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAF56FF1C92D6E5000D54F6 /* JCTagCell.m */; };
 		BAAF57041C92D6E5000D54F6 /* JCTagListView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAF57011C92D6E5000D54F6 /* JCTagListView.m */; };
@@ -107,7 +129,6 @@
 		BAB985521D0AC9CA00F7DA80 /* PASShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB985511D0AC9CA00F7DA80 /* PASShareCell.m */; };
 		BABB57DC1CEF105100F7C879 /* MessagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BABB57DB1CEF105100F7C879 /* MessagesVC.m */; };
 		BABB57DF1CEF161200F7C879 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BABB57DE1CEF161200F7C879 /* MessageCell.m */; };
-		BABEFAB21D1029AF0053A8A2 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABEFAB11D1029AF0053A8A2 /* Menu.swift */; };
 		BABEFAB51D113F550053A8A2 /* PASSharePopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = BABEFAB41D113F550053A8A2 /* PASSharePopUp.m */; };
 		BAC09B681D095EA100AA2C56 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC09B671D095EA100AA2C56 /* UIPlaceHolderTextView.m */; };
 		BAC8D2991C588F0B0084AA47 /* ValidationCentersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC8D2981C588F0B0084AA47 /* ValidationCentersVC.m */; };
@@ -159,6 +180,7 @@
 		BAD909A01CFD7A3800E12422 /* SettingsConCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD9099F1CFD7A3800E12422 /* SettingsConCell.m */; };
 		BAD98DC31CAA75C900EF2723 /* AppointmentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD98DC21CAA75C900EF2723 /* AppointmentVC.m */; };
 		BADE153B1CBE7F2200E59661 /* CustomUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = BADE153A1CBE7F2200E59661 /* CustomUISwitch.m */; };
+		BADFD6F41D1D31C7008B1FA9 /* MyPAStodoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BADFD6F31D1D31C7008B1FA9 /* MyPAStodoVC.m */; };
 		BAE565CF1CE4B1BE007D6959 /* AllPACirclesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE565CE1CE4B1BE007D6959 /* AllPACirclesVC.m */; };
 		BAE64FC41D0E9AEE0058F3BD /* PASShareInstSection.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE64FC31D0E9AEE0058F3BD /* PASShareInstSection.m */; };
 		BAE64FC71D0E9B0A0058F3BD /* PASShareScoreSection.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE64FC61D0E9B0A0058F3BD /* PASShareScoreSection.m */; };
@@ -316,8 +338,6 @@
 		BA7BBE5D1C735F7700EBC5BF /* MoreVCTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreVCTableCell.m; sourceTree = "<group>"; };
 		BA7BBE5F1C735F8A00EBC5BF /* ProfileVCTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileVCTableCell.h; sourceTree = "<group>"; };
 		BA7BBE601C735F8A00EBC5BF /* ProfileVCTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileVCTableCell.m; sourceTree = "<group>"; };
-		BA7D52B61C7F26FD0033AFEE /* TabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarView.h; sourceTree = "<group>"; };
-		BA7D52B71C7F26FD0033AFEE /* TabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarView.m; sourceTree = "<group>"; };
 		BA7D52BA1C7F374B0033AFEE /* GetPasVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPasVC.h; sourceTree = "<group>"; };
 		BA7D52BB1C7F374B0033AFEE /* GetPasVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetPasVC.m; sourceTree = "<group>"; };
 		BA8888271C64939B0083C857 /* FilterOneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterOneCell.h; sourceTree = "<group>"; };
@@ -346,6 +366,29 @@
 		BAA4E8391CD0FAC800A198E7 /* AllAppointmentsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllAppointmentsVC.m; sourceTree = "<group>"; };
 		BAA4E8441CD0FB8500A198E7 /* ActivitiesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitiesVC.h; sourceTree = "<group>"; };
 		BAA4E8451CD0FB8500A198E7 /* ActivitiesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitiesVC.m; sourceTree = "<group>"; };
+		BAA9938E1D2137FA00D0CAA1 /* SocketAckEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckEmitter.swift; sourceTree = "<group>"; };
+		BAA9938F1D2137FA00D0CAA1 /* SocketAckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckManager.swift; sourceTree = "<group>"; };
+		BAA993901D2137FA00D0CAA1 /* SocketAnyEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAnyEvent.swift; sourceTree = "<group>"; };
+		BAA993911D2137FA00D0CAA1 /* SocketClientSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketClientSpec.swift; sourceTree = "<group>"; };
+		BAA993921D2137FA00D0CAA1 /* SocketEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEngine.swift; sourceTree = "<group>"; };
+		BAA993931D2137FA00D0CAA1 /* SocketEngineClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEngineClient.swift; sourceTree = "<group>"; };
+		BAA993941D2137FA00D0CAA1 /* SocketEnginePacketType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEnginePacketType.swift; sourceTree = "<group>"; };
+		BAA993951D2137FA00D0CAA1 /* SocketEnginePollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEnginePollable.swift; sourceTree = "<group>"; };
+		BAA993961D2137FA00D0CAA1 /* SocketEngineSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEngineSpec.swift; sourceTree = "<group>"; };
+		BAA993971D2137FA00D0CAA1 /* SocketEngineWebsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEngineWebsocket.swift; sourceTree = "<group>"; };
+		BAA993981D2137FA00D0CAA1 /* SocketEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEventHandler.swift; sourceTree = "<group>"; };
+		BAA993991D2137FA00D0CAA1 /* SocketFixUTF8.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketFixUTF8.swift; sourceTree = "<group>"; };
+		BAA9939A1D2137FA00D0CAA1 /* SocketIOClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOClient.swift; sourceTree = "<group>"; };
+		BAA9939B1D2137FA00D0CAA1 /* SocketIOClientOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOClientOption.swift; sourceTree = "<group>"; };
+		BAA9939C1D2137FA00D0CAA1 /* SocketIOClientStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOClientStatus.swift; sourceTree = "<group>"; };
+		BAA9939D1D2137FA00D0CAA1 /* SocketLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketLogger.swift; sourceTree = "<group>"; };
+		BAA9939E1D2137FA00D0CAA1 /* SocketPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketPacket.swift; sourceTree = "<group>"; };
+		BAA9939F1D2137FA00D0CAA1 /* SocketParsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketParsable.swift; sourceTree = "<group>"; };
+		BAA993A01D2137FA00D0CAA1 /* SocketStringReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketStringReader.swift; sourceTree = "<group>"; };
+		BAA993A11D2137FA00D0CAA1 /* SocketTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketTypes.swift; sourceTree = "<group>"; };
+		BAA993A21D2137FA00D0CAA1 /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
+		BAA993A31D2137FA00D0CAA1 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		BAA993BA1D2281AE00D0CAA1 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		BAAF56FC1C92D6E5000D54F6 /* JCCollectionViewTagFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCollectionViewTagFlowLayout.h; sourceTree = "<group>"; };
 		BAAF56FD1C92D6E5000D54F6 /* JCCollectionViewTagFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCollectionViewTagFlowLayout.m; sourceTree = "<group>"; };
 		BAAF56FE1C92D6E5000D54F6 /* JCTagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTagCell.h; sourceTree = "<group>"; };
@@ -365,7 +408,6 @@
 		BABB57DD1CEF161200F7C879 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
 		BABB57DE1CEF161200F7C879 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		BABEFAB01D1029AF0053A8A2 /* ProactiveLiving-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProactiveLiving-Bridging-Header.h"; sourceTree = "<group>"; };
-		BABEFAB11D1029AF0053A8A2 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Menu.swift; path = ../Menu.swift; sourceTree = "<group>"; };
 		BABEFAB31D113F550053A8A2 /* PASSharePopUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASSharePopUp.h; sourceTree = "<group>"; };
 		BABEFAB41D113F550053A8A2 /* PASSharePopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASSharePopUp.m; sourceTree = "<group>"; };
 		BAC09B661D095EA100AA2C56 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
@@ -476,6 +518,8 @@
 		BAD98DC21CAA75C900EF2723 /* AppointmentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppointmentVC.m; path = ../AppointmentVC.m; sourceTree = "<group>"; };
 		BADE15391CBE7F2200E59661 /* CustomUISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUISwitch.h; sourceTree = "<group>"; };
 		BADE153A1CBE7F2200E59661 /* CustomUISwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUISwitch.m; sourceTree = "<group>"; };
+		BADFD6F21D1D31C7008B1FA9 /* MyPAStodoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPAStodoVC.h; sourceTree = "<group>"; };
+		BADFD6F31D1D31C7008B1FA9 /* MyPAStodoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPAStodoVC.m; sourceTree = "<group>"; };
 		BAE565CD1CE4B1BE007D6959 /* AllPACirclesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllPACirclesVC.h; sourceTree = "<group>"; };
 		BAE565CE1CE4B1BE007D6959 /* AllPACirclesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllPACirclesVC.m; sourceTree = "<group>"; };
 		BAE64FC21D0E9AEE0058F3BD /* PASShareInstSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASShareInstSection.h; sourceTree = "<group>"; };
@@ -545,6 +589,7 @@
 		671C3D531C44FB71006A5423 = {
 			isa = PBXGroup;
 			children = (
+				BAA9935E1D21370A00D0CAA1 /* SocketChat */,
 				671C3D6E1C44FB72006A5423 /* Assets.xcassets */,
 				671C3D681C44FB72006A5423 /* Main.storyboard */,
 				671C3D951C44FE7A006A5423 /* AppDelegate */,
@@ -621,7 +666,6 @@
 		671C3D961C44FEE6006A5423 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BABEFAB11D1029AF0053A8A2 /* Menu.swift */,
 				BA02E2BB1D05BFCB00FC5489 /* PAS-Share */,
 				BAD909911CFD78D500E12422 /* Settings */,
 				BA18B0421CF5EB2D00C1086A /* Chat */,
@@ -639,7 +683,6 @@
 				BAD5F10C1CB5210300C8F206 /* Appointments */,
 				BAFC7C741CB38FFB00761462 /* PAS-To-Do */,
 				BAD98DC01CAA759700EF2723 /* Instructional Views */,
-				BA7D52B51C7F26D20033AFEE /* Tab Bar */,
 				BA7D52B91C7F36F80033AFEE /* Get PAS */,
 				67A026B41C50AB70002E31DA /* HomeVC */,
 				BAC8D2931C588EA90084AA47 /* Validation Centers */,
@@ -993,15 +1036,6 @@
 			name = ValidationFiltersVC;
 			sourceTree = "<group>";
 		};
-		BA7D52B51C7F26D20033AFEE /* Tab Bar */ = {
-			isa = PBXGroup;
-			children = (
-				BA7D52B61C7F26FD0033AFEE /* TabBarView.h */,
-				BA7D52B71C7F26FD0033AFEE /* TabBarView.m */,
-			);
-			name = "Tab Bar";
-			sourceTree = "<group>";
-		};
 		BA7D52B91C7F36F80033AFEE /* Get PAS */ = {
 			isa = PBXGroup;
 			children = (
@@ -1056,6 +1090,52 @@
 				BAB3C9F81CEDC29200B83A68 /* ContactFriendsVC.m */,
 			);
 			name = Contacts;
+			sourceTree = "<group>";
+		};
+		BAA9935E1D21370A00D0CAA1 /* SocketChat */ = {
+			isa = PBXGroup;
+			children = (
+				BAA9938D1D2137FA00D0CAA1 /* Source */,
+				BAA9935F1D21379C00D0CAA1 /* SocketIO */,
+			);
+			name = SocketChat;
+			sourceTree = "<group>";
+		};
+		BAA9935F1D21379C00D0CAA1 /* SocketIO */ = {
+			isa = PBXGroup;
+			children = (
+				BAA993BA1D2281AE00D0CAA1 /* SocketIOManager.swift */,
+			);
+			name = SocketIO;
+			sourceTree = "<group>";
+		};
+		BAA9938D1D2137FA00D0CAA1 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				BAA9938E1D2137FA00D0CAA1 /* SocketAckEmitter.swift */,
+				BAA9938F1D2137FA00D0CAA1 /* SocketAckManager.swift */,
+				BAA993901D2137FA00D0CAA1 /* SocketAnyEvent.swift */,
+				BAA993911D2137FA00D0CAA1 /* SocketClientSpec.swift */,
+				BAA993921D2137FA00D0CAA1 /* SocketEngine.swift */,
+				BAA993931D2137FA00D0CAA1 /* SocketEngineClient.swift */,
+				BAA993941D2137FA00D0CAA1 /* SocketEnginePacketType.swift */,
+				BAA993951D2137FA00D0CAA1 /* SocketEnginePollable.swift */,
+				BAA993961D2137FA00D0CAA1 /* SocketEngineSpec.swift */,
+				BAA993971D2137FA00D0CAA1 /* SocketEngineWebsocket.swift */,
+				BAA993981D2137FA00D0CAA1 /* SocketEventHandler.swift */,
+				BAA993991D2137FA00D0CAA1 /* SocketFixUTF8.swift */,
+				BAA9939A1D2137FA00D0CAA1 /* SocketIOClient.swift */,
+				BAA9939B1D2137FA00D0CAA1 /* SocketIOClientOption.swift */,
+				BAA9939C1D2137FA00D0CAA1 /* SocketIOClientStatus.swift */,
+				BAA9939D1D2137FA00D0CAA1 /* SocketLogger.swift */,
+				BAA9939E1D2137FA00D0CAA1 /* SocketPacket.swift */,
+				BAA9939F1D2137FA00D0CAA1 /* SocketParsable.swift */,
+				BAA993A01D2137FA00D0CAA1 /* SocketStringReader.swift */,
+				BAA993A11D2137FA00D0CAA1 /* SocketTypes.swift */,
+				BAA993A21D2137FA00D0CAA1 /* SwiftRegex.swift */,
+				BAA993A31D2137FA00D0CAA1 /* WebSocket.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 		BAAF57051C92D6E9000D54F6 /* JCTagList */ = {
@@ -1384,6 +1464,8 @@
 			children = (
 				BAFC7C781CB3903C00761462 /* PASToDoVC.h */,
 				BAFC7C791CB3903C00761462 /* PASToDoVC.m */,
+				BADFD6F21D1D31C7008B1FA9 /* MyPAStodoVC.h */,
+				BADFD6F31D1D31C7008B1FA9 /* MyPAStodoVC.m */,
 			);
 			name = "PAS-To-Do";
 			sourceTree = "<group>";
@@ -1601,14 +1683,20 @@
 			files = (
 				BAD195EC1C635B1C0085DD9B /* FilterVC3.m in Sources */,
 				BAD8D6391CBCCDCB0037ED23 /* NSCalendar+Juncture.m in Sources */,
+				BAA993A61D2137FA00D0CAA1 /* SocketAnyEvent.swift in Sources */,
 				BA7BBE611C735F8A00EBC5BF /* ProfileVCTableCell.m in Sources */,
+				BAA993BB1D2281AE00D0CAA1 /* SocketIOManager.swift in Sources */,
 				BA1D70851CD8B29B00978F2F /* ActivityDetailVC.m in Sources */,
 				BA7D52BC1C7F374B0033AFEE /* GetPasVC.m in Sources */,
+				BAA993B61D2137FA00D0CAA1 /* SocketStringReader.swift in Sources */,
 				67C4179A1C4E69A6006B76DE /* ForgotPassword2VC.m in Sources */,
 				BAD909941CFD791B00E12422 /* SettingsMainVC.m in Sources */,
 				BA88882C1C6493BA0083C857 /* FilterFourCell.m in Sources */,
+				BAA993B01D2137FA00D0CAA1 /* SocketIOClient.swift in Sources */,
 				BAD5F0AB1D068D26002186B4 /* NSDate+Utils.m in Sources */,
 				BAD195E91C635B0A0085DD9B /* FilterVC2.m in Sources */,
+				BAA993AB1D2137FA00D0CAA1 /* SocketEnginePollable.swift in Sources */,
+				BAA993AE1D2137FA00D0CAA1 /* SocketEventHandler.swift in Sources */,
 				BAD8D6491CBCCDCB0037ED23 /* CKCalendarViewControllerInternal.m in Sources */,
 				BA18B04D1CF5EBE600C1086A /* Message.m in Sources */,
 				BAAF57021C92D6E5000D54F6 /* JCCollectionViewTagFlowLayout.m in Sources */,
@@ -1616,6 +1704,7 @@
 				BAD909A01CFD7A3800E12422 /* SettingsConCell.m in Sources */,
 				BA18B03C1CF5EAC300C1086A /* SOImageBrowserView.m in Sources */,
 				BAA471AD1CCF7ED600CF90D7 /* CollectionHeaderView.m in Sources */,
+				BAA993B71D2137FA00D0CAA1 /* SocketTypes.swift in Sources */,
 				BAD8D6431CBCCDCB0037ED23 /* CKCalendarEvent.m in Sources */,
 				BABB57DC1CEF105100F7C879 /* MessagesVC.m in Sources */,
 				BAC9B4B01CBF7A8600373F73 /* ExpertsVC.m in Sources */,
@@ -1623,12 +1712,12 @@
 				BABEFAB51D113F550053A8A2 /* PASSharePopUp.m in Sources */,
 				BAB9854F1D0AC97300F7DA80 /* PASShareVC.m in Sources */,
 				673D9A4E1C5111E9009DD48A /* PushSegue.m in Sources */,
+				BAA993B41D2137FA00D0CAA1 /* SocketPacket.swift in Sources */,
 				671C3D671C44FB72006A5423 /* LoginVC.m in Sources */,
 				BAA471B01CCF9D1100CF90D7 /* CertDetailsVC.m in Sources */,
 				671C3D641C44FB72006A5423 /* AppDelegate.m in Sources */,
 				BA04854D1CABFC4500196747 /* AboutPASInstVC.m in Sources */,
 				BA6F33601C7C9674008288F2 /* TreeNode.m in Sources */,
-				BA7D52B81C7F26FD0033AFEE /* TabBarView.m in Sources */,
 				BAD03B441CE3474B00CDEEA6 /* EducationVC.m in Sources */,
 				BAD5F0B41D06ADA9002186B4 /* PASInviteMainVC.m in Sources */,
 				BAB985521D0AC9CA00F7DA80 /* PASShareCell.m in Sources */,
@@ -1639,6 +1728,8 @@
 				BAD9099D1CFD7A2100E12422 /* SettingsOrgCell.m in Sources */,
 				679AA7201C461F85002D96AE /* ForgotPasswordVC.m in Sources */,
 				BAD8D6421CBCCDCB0037ED23 /* CKCalendarCell.m in Sources */,
+				BAA993A41D2137FA00D0CAA1 /* SocketAckEmitter.swift in Sources */,
+				BAA993B31D2137FA00D0CAA1 /* SocketLogger.swift in Sources */,
 				671C3DA21C45017C006A5423 /* CoreDataFunction.m in Sources */,
 				BAC9B4AC1CBF7A6100373F73 /* ImproveVC.m in Sources */,
 				BAFC7C7A1CB3903C00761462 /* PASToDoVC.m in Sources */,
@@ -1650,9 +1741,12 @@
 				671C3DA81C4504DB006A5423 /* AppHelper.m in Sources */,
 				BA53301D1CC6096100887DBF /* PASLevelVC.m in Sources */,
 				BAD5F0AE1D069A8E002186B4 /* PASInviteOrGiftVC.m in Sources */,
+				BAA993B81D2137FA00D0CAA1 /* SwiftRegex.swift in Sources */,
+				BAA993A51D2137FA00D0CAA1 /* SocketAckManager.swift in Sources */,
 				BAA471B41CCFA4FC00CF90D7 /* ExpertsDetailVC.m in Sources */,
 				671C3D6D1C44FB72006A5423 /* ProactiveLiving.xcdatamodeld in Sources */,
 				BA8888291C64939B0083C857 /* FilterOneCell.m in Sources */,
+				BADFD6F41D1D31C7008B1FA9 /* MyPAStodoVC.m in Sources */,
 				BAE565CF1CE4B1BE007D6959 /* AllPACirclesVC.m in Sources */,
 				BA7414131C75A4900041B8D4 /* ProfileVCTableCell2.m in Sources */,
 				BAD909971CFD795500E12422 /* SettingsOrganizationsVC.m in Sources */,
@@ -1664,6 +1758,8 @@
 				BAD8D63C1CBCCDCB0037ED23 /* NSDate+Description.m in Sources */,
 				BAD8D63D1CBCCDCB0037ED23 /* NSDateComponents+AllComponents.m in Sources */,
 				BAF2D9991CA2B0D5000FBD1F /* BookingPopUp.m in Sources */,
+				BAA993AD1D2137FA00D0CAA1 /* SocketEngineWebsocket.swift in Sources */,
+				BAA993B51D2137FA00D0CAA1 /* SocketParsable.swift in Sources */,
 				BA18B03E1CF5EAC300C1086A /* SOMessageInputView.m in Sources */,
 				BAC8D2991C588F0B0084AA47 /* ValidationCentersVC.m in Sources */,
 				679AA7231C461F9C002D96AE /* SignUpVC.m in Sources */,
@@ -1671,6 +1767,7 @@
 				BADE153B1CBE7F2200E59661 /* CustomUISwitch.m in Sources */,
 				BAD8D64F1CBD12EB0037ED23 /* CalendarCellDot.m in Sources */,
 				BA7BBE581C73578900EBC5BF /* ValidationCMoreVC.m in Sources */,
+				BAA993AF1D2137FA00D0CAA1 /* SocketFixUTF8.swift in Sources */,
 				BA18B0451CF5EB5D00C1086A /* ChatVC.m in Sources */,
 				BA7A4B191C61F481005CA80C /* ValidationFiltersVC.m in Sources */,
 				BAF1E5571CABAB2300FA5CC5 /* PASInstVideoVC.m in Sources */,
@@ -1684,7 +1781,9 @@
 				BAD8D6471CBCCDCB0037ED23 /* MBPolygonView.m in Sources */,
 				BA8FC7A71C5F814C00BCA20E /* ZSAnnotation.m in Sources */,
 				BA02E2C41D05C06000FC5489 /* AllPasVC.m in Sources */,
+				BAA993AA1D2137FA00D0CAA1 /* SocketEnginePacketType.swift in Sources */,
 				BA18B0401CF5EAC300C1086A /* SOPlaceholderedTextView.m in Sources */,
+				BAA993A91D2137FA00D0CAA1 /* SocketEngineClient.swift in Sources */,
 				BA18B0491CF5EBCA00C1086A /* ContentManager.m in Sources */,
 				BAB985431D0ABCD700F7DA80 /* UICustomCheckBox.m in Sources */,
 				BAD195E61C63589E0085DD9B /* FilterVC1.m in Sources */,
@@ -1695,26 +1794,31 @@
 				BAD8D6441CBCCDCB0037ED23 /* CKCalendarHeaderView.m in Sources */,
 				BAD5F1121CB5214B00C8F206 /* AppointmentDetailsVC.m in Sources */,
 				BA18B0311CF5EAC300C1086A /* NSString+Calculation.m in Sources */,
+				BAA993B11D2137FA00D0CAA1 /* SocketIOClientOption.swift in Sources */,
 				BAD5F10F1CB5213300C8F206 /* AppointmentListingVC.m in Sources */,
 				BAD8D6461CBCCDCB0037ED23 /* CKTableViewCell.m in Sources */,
 				BAD8D6401CBCCDCB0037ED23 /* UIView+AnimatedFrame.m in Sources */,
 				BAD9099A1CFD797C00E12422 /* SettingsContactsVC.m in Sources */,
 				BAD8D6371CBCCDCB0037ED23 /* NSCalendar+DateComparison.m in Sources */,
+				BAA993B91D2137FA00D0CAA1 /* WebSocket.swift in Sources */,
 				BAD98DC31CAA75C900EF2723 /* AppointmentVC.m in Sources */,
+				BAA993A71D2137FA00D0CAA1 /* SocketClientSpec.swift in Sources */,
 				BAE64FC71D0E9B0A0058F3BD /* PASShareScoreSection.m in Sources */,
 				671C3D611C44FB72006A5423 /* main.m in Sources */,
 				BA1BF0DF1CEB4B2D000CC4EA /* InboxVC.m in Sources */,
 				BA18B0411CF5EAC300C1086A /* UINavigationController+Rotation.m in Sources */,
+				BAA993AC1D2137FA00D0CAA1 /* SocketEngineSpec.swift in Sources */,
 				BAD8D63A1CBCCDCB0037ED23 /* NSCalendar+Ranges.m in Sources */,
 				BA388C331C60DF6F00DF0574 /* ASStarRatingView.m in Sources */,
+				BAA993B21D2137FA00D0CAA1 /* SocketIOClientStatus.swift in Sources */,
 				BAA411F81CE9B77500CDE467 /* ContactsVC.m in Sources */,
 				BA7BBE5B1C7357AB00EBC5BF /* ValidationCProfileVC.m in Sources */,
 				BAD8D5F91CBCCCD60037ED23 /* CalendarVC.m in Sources */,
 				67A026B71C50AB98002E31DA /* HomeVC.m in Sources */,
+				BAA993A81D2137FA00D0CAA1 /* SocketEngine.swift in Sources */,
 				BA5330231CC6099D00887DBF /* CurrentPASVC.m in Sources */,
 				BA5330201CC6097800887DBF /* PASRatingVC.m in Sources */,
 				BAF1E55A1CABAB3E00FA5CC5 /* PASInstTextVC.m in Sources */,
-				BABEFAB21D1029AF0053A8A2 /* Menu.swift in Sources */,
 				BAD5F10B1CB512D700C8F206 /* CustonTabBarController.m in Sources */,
 				BA8FC7A61C5F814C00BCA20E /* ZSPinAnnotation.m in Sources */,
 				671C3DA51C4504C2006A5423 /* Services.m in Sources */,
@@ -1879,9 +1983,9 @@
 				INFOPLIST_FILE = ProactiveLiving/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.proactivelive;
+				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4926cd4-df89-4a12-ba05-9fee6ba41ec1";
 				SWIFT_OBJC_BRIDGING_HEADER = "ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1899,9 +2003,9 @@
 				INFOPLIST_FILE = ProactiveLiving/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.proactivelive;
+				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4926cd4-df89-4a12-ba05-9fee6ba41ec1";
 				SWIFT_OBJC_BRIDGING_HEADER = "ProactiveLiving-Bridging-Header.h";
 			};
 			name = Release;
@@ -1916,7 +2020,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4926cd4-df89-4a12-ba05-9fee6ba41ec1";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProactiveLiving.app/ProactiveLiving";
 			};
 			name = Debug;
@@ -1931,7 +2035,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4926cd4-df89-4a12-ba05-9fee6ba41ec1";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProactiveLiving.app/ProactiveLiving";
 			};
 			name = Release;
@@ -1945,7 +2049,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4926cd4-df89-4a12-ba05-9fee6ba41ec1";
 				TEST_TARGET_NAME = ProactiveLiving;
 				USES_XCTRUNNER = YES;
 			};
@@ -1960,7 +2064,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f4926cd4-df89-4a12-ba05-9fee6ba41ec1";
 				TEST_TARGET_NAME = ProactiveLiving;
 				USES_XCTRUNNER = YES;
 			};

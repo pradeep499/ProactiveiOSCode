@@ -124,8 +124,10 @@
 #define BOOK_POPUP_HEIGHT 392
 
 //UserDefaults
-#define BookinTime                    @"BookinTime"
-#define SyncStatus                    @"SyncStatus"
+#define BookinTime                      @"BookinTime"
+#define SyncStatus                      @"SyncStatus"
+#define GPSStatus                       @"GPSStatus"
+
 
 
 

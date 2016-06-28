@@ -12,7 +12,6 @@
 #import "PASToDoVC.h"
 #import "AboutPASInstVC.h"
 #import "AppDelegate.h"
-#import "TabBarView.h"
 #import "ValidationCentersVC.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "SettingsMainVC.h"
@@ -70,11 +69,6 @@
         PASToDoVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PASToDoVC"];
         [self presentViewController:vc animated:NO completion:nil];
     }
-}
-
--(void)tabView:(TabBarView *)tabView didSelectTabAtIndex:(NSUInteger)itemIndex;
-{
-    NSLog(@"Selected Tab Index: %lu", (unsigned long)itemIndex);
 }
 
 
