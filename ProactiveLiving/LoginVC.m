@@ -20,6 +20,8 @@
 #import "InboxVC.h"
 #import "CustonTabBarController.h"
 #import <AFNetworking/AFNetworking.h>
+#import "ProactiveLiving-Swift.h"
+
 
 @interface LoginVC ()<UITextFieldDelegate, UIAlertViewDelegate> {
     BOOL isRememberMe;
@@ -44,7 +46,6 @@
     [super viewDidLoad];
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-        
         //[self performSegueWithIdentifier:@"GetPasVC" sender:nil];
         [self setupTabBarController];        
     }
@@ -66,6 +67,7 @@
     UIViewController *firstNavigationController = [[UINavigationController alloc]
                                                    initWithRootViewController:firstViewController];
     
+
     InboxVC *secondViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"InboxVC"];
     secondViewController.title=@"Inbox";
     secondViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_inbox"];
@@ -228,12 +230,31 @@
     else {
         if ([AppDelegate checkInternetConnection]) {
             [SVProgressHUD showWithStatus:@"Signing In" maskType:SVProgressHUDMaskTypeBlack];
-            NSDictionary *parameters;
+            NSMutableDictionary *parameters=[NSMutableDictionary dictionary];;
             
-            parameters = @{@"AppKey" : AppKey,
-                           @"emailOrPhone" : [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],
-                           @"password" : [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-                           };
+            [parameters setObject:AppKey forKey:@"AppKey"];
+            [parameters setObject:[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] forKey:@"emailOrPhone"];
+            [parameters setObject:[self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] forKey:@"password"];
+            
+            
+            #if TARGET_IPHONE_SIMULATOR
+            [parameters setObject:@"iPhone" forKey:@"deviceType"];
+            #else
+            if([AppHelper userDefaultsForKey:DEVICE_TYPE])
+                [parameters setObject:[AppHelper userDefaultsForKey:DEVICE_TYPE] forKey:@"deviceType"];
+            else
+                [parameters setObject:@"NA" forKey:@"deviceType"];
+            #endif
+
+            #if TARGET_IPHONE_SIMULATOR
+            [parameters setObject:@"DUMMY_TOKEN" forKey:@"deviceToken"];
+            #else
+            if([AppHelper userDefaultsForKey:DEVICE_TOKEN])
+                [parameters setObject:[AppHelper userDefaultsForKey:DEVICE_TOKEN] forKey:@"deviceToken"];
+            else
+                [parameters setObject:@"NA" forKey:@"deviceToken"];
+            #endif
+            
             
             [Services serviceCallWithPath:ServiceLogin withParam:parameters success:^(NSDictionary *responseDict) {
                 [SVProgressHUD dismiss];
@@ -248,9 +269,27 @@
                         // success login
                         
                         if (![[self.detailDictionary objectForKey:@"result"] isKindOfClass:[NSNull class]] && [self.detailDictionary objectForKey:@"result"]) {
-                            [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] objectForKey:@"UserID"] withKey:uId];
+                            [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"UserID"] withKey:uId];
+                            
+                            //CHAT RELATED
+                            [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"_id"] key:_ID];
+                            [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"mobilePhone"] key:cellNum];
+                            [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"firstName"] key:userFirstName];
+                            
+
+                            if ([[self.detailDictionary objectForKey:@"result"] valueForKey:@"imgUrl"]) {
+                                [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"imgUrl"] withKey:@"user_imageUrl"];
+                            }
+                            
+                            
+                            
+                            [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"firstName"] withKey:@"user_firstName"];
+                            
                             [AppHelper saveToUserDefaults:[self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] withKey:pwd];
                             [AppHelper saveToUserDefaults:[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] withKey:cellNum];
+                            
+                            //Create connection
+                            [[ChatListner getChatListnerObj] createConnection];
                             
                         }
                         NSLog(@"%@",[AppHelper userDefaultsForKey:uId]);//print uid

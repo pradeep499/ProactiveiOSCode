@@ -102,7 +102,7 @@
 {
     CGPoint distance = [sender translationInView:self.topView]; // get distance of pan/swipe in the view in which the gesture recognizer was added
     CGPoint velocity = [sender velocityInView:self.topView]; // get velocity of pan/swipe in the view in which the gesture recognizer was added
-    float usersSwipeSpeed = fabs(velocity.x); // use this if you need to move an object at a speed that matches the users swipe speed
+    //float usersSwipeSpeed = fabs(velocity.x); // use this if you need to move an object at a speed that matches the users swipe speed
     //NSLog(@"swipe speed:%f", usersSwipeSpeed);
     
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -153,7 +153,7 @@
     self.locationManagerSingleton = [LocationManagerSingleton sharedSingleton];
     
 #ifdef __IPHONE_8_0
-    if(IS_OS_8_OR_LATER) {
+    if(IS_IOS8_OR_LATER) {
         // Use one from below, not both. Depending on requirement and what you put in info.plist
         [self.locationManagerSingleton.locationManager requestWhenInUseAuthorization];// NSLocationWhenInUseUsageDescription key add in info.plist
         //[self.locationManager requestAlwaysAuthorization]; // NSLocationAlwaysUsageDescription key add in info.plist

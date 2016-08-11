@@ -13,6 +13,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "ProactiveLiving-Swift.h"
 
 @interface AppDelegate ()
 {
@@ -30,6 +31,21 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // Reset badge count
+    [UIApplication sharedApplication].applicationIconBadgeNumber =0;
+    //Register for Push Notification
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeNewsstandContentAvailability| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+
     
      // fetch and store static data
     [AppDelegate connectedCompletionBlock:^(BOOL connected) {
@@ -87,7 +103,133 @@
     [splashView removeFromSuperview];
      */
     
+    //Create connection
+    [[ChatListner getChatListnerObj] createConnection];
+    
     return YES;
+}
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString * token = [NSString stringWithFormat:@"%@", deviceToken];
+    //Format token as you need:
+    NSString *tokenString = [NSString stringWithFormat:@"%@",token];
+    tokenString = [tokenString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    tokenString = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"Device Token:%@",tokenString);
+    [AppHelper saveToUserDefaults:tokenString withKey:DEVICE_TOKEN];
+    [AppHelper saveToUserDefaults:CURRENT_DEVICE withKey:DEVICE_TYPE];
+
+}
+
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:   (UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+{
+    // NSLog(@"identifier ====%@ , userInfo===%@",userInfo,identifier);
+    
+    //   [AppHelper showAlertViewWithTag:0 title:APP_NAME message:@"push notification" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok"];
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber =0;
+    
+    //handle the actions
+    if ([identifier isEqualToString:@"declineAction"]){
+        
+    }
+    else if ([identifier isEqualToString:@"answerAction"]){
+        
+    }
+}
+#endif
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber =0;
+    NSLog(@"[userInfo didReceiveRemoteNotification == %@",[userInfo valueForKey:@"aps"]);
+    
+    if ([AppHelper userDefaultsForKey:@"userId"]) {
+        
+        //NSString*strMsg= [[userInfo valueForKey:@"aps"] objectForKey:@"alert"];
+        NSDictionary *info_dic = [userInfo valueForKey:@"aps"];
+        self.notyDic=[NSMutableDictionary dictionaryWithDictionary:info_dic];
+        int pushType = [[info_dic objectForKey:@"push_type"] intValue]; // 20->one to one & 21->group chat
+        
+        if (pushType == 20 || pushType==21) {
+            
+            // Pk 30 Oct 2015
+            
+            if ([[AppHelper userDefaultsForKey:@"APP_STATUS"]isEqualToString:@"didBecomeInActive"])
+            {
+                NSLog(@"abc");
+                
+                //NSString *senderid  = info_dic[@"senderid"];
+                
+                UINavigationController *nav=(UINavigationController *)[AppDelegate getAppDelegate].self.window.rootViewController;
+                NSArray*vcArray=[nav viewControllers];
+                UITabBarController *tabBarController=nil;
+                BOOL isTab=NO;
+                NSInteger tabBarValue=0;
+                for (int i = 0; i<vcArray.count; i++)
+                {
+                    UIViewController* controller = [vcArray objectAtIndex:i];
+                    //  NSLog(@"$UIViewController===1%@",controller);
+                    if([controller isKindOfClass:NSClassFromString(@"TabBarViewController")])
+                    {
+                        isTab=YES;
+                        tabBarValue = i;
+                        tabBarController=(UITabBarController*)controller;
+                        break;
+                    }
+                }
+                if (isTab) {
+                    tabBarController.selectedIndex=3;
+                    
+                    
+                }
+                
+                
+            }
+            else{
+                
+                UINavigationController *nav=(UINavigationController *)[AppDelegate getAppDelegate].self.window.rootViewController;
+                NSArray*vcArray=[nav viewControllers];
+                UITabBarController *tabBarController=nil;
+                BOOL isTab=NO;
+                NSInteger tabBarValue= 0;
+                for (int i = 0; i<vcArray.count; i++)
+                {
+                    UIViewController* controller = [vcArray objectAtIndex:i];
+                    //  NSLog(@"$UIViewController===1%@",controller);
+                    if([controller isKindOfClass:NSClassFromString(@"TabBarViewController")])
+                    {
+                        isTab=YES;
+                        tabBarValue = i;
+                        tabBarController=(UITabBarController*)controller;
+                        break;
+                    }
+                }
+                
+                NSInteger aChatPushCount = [[DataBaseController sharedInstance] fetchUnreadCount];
+                if ([AppDelegate getAppDelegate].barItemForChat) {
+                    if (aChatPushCount>0) {
+                        
+                        [AppDelegate getAppDelegate].barItemForChat.badgeValue=[NSString stringWithFormat:@"%ld",(long)[[DataBaseController sharedInstance] fetchUnreadCount]];
+                    }
+                    else
+                    {
+                        [AppDelegate getAppDelegate].barItemForChat.badgeValue=nil;
+                    }
+                    
+                }
+                
+            }
+        }
+    }
 }
 
 + (void)showProgressHUDWithStatus:(NSString *)status {
@@ -148,25 +290,35 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    [AppHelper saveToUserDefaults:@"didBecomeInActive" withKey:@"APP_STATUS"];
+
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"POP_TO_CHAT_MAIN_SCREEN" object:nil];
+    [[ChatListner getChatListnerObj]closeConnection];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    //Create connection
+    [[ChatListner getChatListnerObj] createConnection];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [AppHelper saveToUserDefaults:@"didBecomeActive" withKey:@"APP_STATUS"];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+     [[ChatListner getChatListnerObj]closeConnection];
 }
 
 #pragma mark - Core Data stack
@@ -177,6 +329,9 @@
 
 - (NSURL *)applicationDocumentsDirectory {
     // The directory the application uses to store the Core Data store file. This code uses a directory named "MaverickHitesh.ProactiveLiving" in the application's documents directory.
+    
+    NSLog(@"sqlite %@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory  inDomains:NSUserDomainMask] lastObject]);
+
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 

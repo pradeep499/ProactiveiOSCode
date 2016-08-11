@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imgPerson;
 @property (weak, nonatomic) IBOutlet UILabel *lblName;
 @property (weak, nonatomic) IBOutlet UILabel *lblDesc;
+@property (weak, nonatomic) IBOutlet UIImageView *imgCellSelection;
 
 @end

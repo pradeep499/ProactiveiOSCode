@@ -188,7 +188,7 @@
 #pragma mark - dontPhonePad
 -(void)donePhonePad {
     //done editing
-    NSIndexPath *indexPath = [[NSIndexPath alloc]init];
+    NSIndexPath *indexPath;
     
     indexPath = [NSIndexPath indexPathForRow:4 inSection:0];
     SignUpCell *cell = (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -233,7 +233,7 @@
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     
-    NSIndexPath *indexPath = [[NSIndexPath alloc]init];
+    NSIndexPath *indexPath;
     
     long rowNo = [self getCurrentRow:textField];
     NSLog(@"Row number %ld",rowNo);
@@ -331,7 +331,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 100) {
         if (buttonIndex == 0) {
-            NSIndexPath *indexPath = [[NSIndexPath alloc]init];
+            NSIndexPath *indexPath;
             SignUpCell *cell;
             if ([[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
                 indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -375,7 +375,7 @@
         confirmPassword = @"";
         [self.tableView reloadData];
         
-        NSIndexPath *indexPath = [[NSIndexPath alloc]init];
+        NSIndexPath *indexPath;
         SignUpCell *cell;
         indexPath = [NSIndexPath indexPathForRow:5 inSection:0];
         cell = (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -385,7 +385,7 @@
         emailId = @"";
         [self.tableView reloadData];
         
-        NSIndexPath *indexPath = [[NSIndexPath alloc]init];
+        NSIndexPath *indexPath;
         SignUpCell *cell;
         indexPath = [NSIndexPath indexPathForRow:4 inSection:0];
         cell = (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -398,7 +398,7 @@
         cellNumber = @"";
         [self.tableView reloadData];
         
-        NSIndexPath *indexPath = [[NSIndexPath alloc]init];
+        NSIndexPath *indexPath;
         SignUpCell *cell;
         indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
         cell = (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];

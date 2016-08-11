@@ -90,6 +90,8 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     self.strBookingDate=[_dateFormatter stringFromDate:[datePicker date]];
     /*CALayer *sublayer = [CALayer layer];
      sublayer.backgroundColor = [UIColor lightGrayColor].CGColor;

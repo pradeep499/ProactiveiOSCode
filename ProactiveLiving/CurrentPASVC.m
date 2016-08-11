@@ -9,7 +9,6 @@
 #import "CurrentPASVC.h"
 #import "PASLevelVC.h"
 #import "PASRatingVC.h"
-#import "PASToDoVC.h"
 #import "AppHelper.h"
 #import "Defines.h"
 
@@ -249,11 +248,6 @@
 
 - (IBAction)btnPASToDoClick:(id)sender {
     
-//    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId])
-//    {
-//        PASToDoVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PASToDoVC"];
-//        [self.navigationController pushViewController:vc animated:YES];
-//    }
     [self.navigationController popViewControllerAnimated:YES];
 
 }

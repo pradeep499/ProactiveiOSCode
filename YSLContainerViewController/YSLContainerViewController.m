@@ -128,7 +128,8 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     
     [self setChildViewControllerWithCurrentIndex:index];
     
-    if (index == self.currentIndex) { return; }
+    //By Mohammad Asim
+    //if (index == self.currentIndex) { return; }
     self.currentIndex = index;
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(containerViewItemIndex:currentController:)]) {

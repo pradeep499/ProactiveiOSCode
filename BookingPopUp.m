@@ -33,6 +33,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setDateFormat:@"MMM"];
@@ -79,7 +81,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    UIImageView *imgCellSelection = (UIImageView *)[cell viewWithTag:123123];
+    //UIImageView *imgCellSelection = (UIImageView *)[cell viewWithTag:123123];
     
     if (indexPath != nil)
     {

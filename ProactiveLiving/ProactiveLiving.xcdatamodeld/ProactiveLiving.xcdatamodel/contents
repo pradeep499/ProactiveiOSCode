@@ -1,4 +1,197 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F27" minimumToolsVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15C50" minimumToolsVersion="Automatic">
+    <entity name="AppContactList" representedClassName="AppContactList" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isBlock" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="isFav" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFriend" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFromCont" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFromFB" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isReport" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="loginUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updateDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userImgString" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Chat" representedClassName="Chat" syncable="YES">
+        <attribute name="localFileUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localThumbUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginUserid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="msgTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiverId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serverFileUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serverThumbUrl" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ContactList" representedClassName="ContactList" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isDelete" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isRegistered" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isUpdatedData" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updateDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="userImgString" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="GroupChat" representedClassName="GroupChat" syncable="YES">
+        <attribute name="chatDirection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localSortID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="locMessageId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiverId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sessionId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="groupChatFile" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="GroupChatFile" syncable="YES"/>
+    </entity>
+    <entity name="GroupChatFile" representedClassName="GroupChatFile" syncable="YES">
+        <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaLocalPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaLocalThumbPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaSize" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaThumbUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaTypes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="groupChat" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="GroupChat" syncable="YES"/>
+    </entity>
+    <entity name="GroupList" representedClassName="GroupList" syncable="YES">
+        <attribute name="adminUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groupImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groupName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userCount" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="GroupUserList" representedClassName="GroupUserList" syncable="YES">
+        <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isAdmin" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="isDeletedGroup" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="isNameAvail" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="loginUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="LoginDetails" representedClassName="LoginDetails" syncable="YES">
+        <attribute name="user_cellNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_connection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_createdOn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_dob" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_gpsOn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_latitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_longitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_middleName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_rememberMe" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_updatedOn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_zipCode" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RecentChat" representedClassName="RecentChat" syncable="YES">
+        <attribute name="friendId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="friendImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="friendName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="frndBlock" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="frndShow" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lastmessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastMessageTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notificationCount" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="RecentChatList" representedClassName="RecentChatList" syncable="YES">
+        <attribute name="friendId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="friendImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="friendName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groupId" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="isBlock" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="isNameAvail" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="isReport" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="isTyping" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastMessageTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="meldDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="meldServerTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notificationCount" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <relationship name="userChat" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="UserChat" syncable="YES"/>
+    </entity>
+    <entity name="Test" representedClassName="Test" syncable="YES">
+        <attribute name="msgId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="UserChat" representedClassName="UserChat" syncable="YES">
+        <attribute name="chatDirection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localSortID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="locMessageId" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="loginUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="receiverId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sessionId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="chatFile" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="UserChatFile" syncable="YES"/>
+        <relationship name="recentChatList" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="RecentChatList" syncable="YES"/>
+    </entity>
+    <entity name="UserChatFile" representedClassName="UserChatFile" syncable="YES">
+        <attribute name="mediaLocalPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaLocalThumbPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaSize" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaThumbUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaTypes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="userChat" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="UserChat" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AppContactList" positionX="-54" positionY="-9" width="128" height="270"/>
+        <element name="Chat" positionX="-36" positionY="126" width="128" height="225"/>
+        <element name="ContactList" positionX="-18" positionY="171" width="128" height="270"/>
+        <element name="Test" positionX="0" positionY="180" width="128" height="60"/>
+        <element name="LoginDetails" positionX="207" positionY="167" width="128" height="328"/>
+        <element name="RecentChat" positionX="36" positionY="198" width="128" height="180"/>
+        <element name="UserChatFile" positionX="0" positionY="153" width="128" height="165"/>
+        <element name="RecentChatList" positionX="9" positionY="162" width="128" height="270"/>
+        <element name="GroupUserList" positionX="18" positionY="171" width="128" height="165"/>
+        <element name="UserChat" positionX="27" positionY="180" width="128" height="300"/>
+        <element name="GroupChat" positionX="9" positionY="153" width="128" height="315"/>
+        <element name="GroupChatFile" positionX="18" positionY="162" width="128" height="180"/>
+        <element name="GroupList" positionX="27" positionY="171" width="128" height="150"/>
+    </elements>
 </model>

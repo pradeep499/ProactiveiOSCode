@@ -12,20 +12,22 @@
 #import "AllContactsVC.h"
 #import "YSLContainerViewController.h"
 #import "MessagesVC.h"
+#import "ProactiveLiving-Swift.h"
 
 @interface InboxVC () <YSLContainerViewControllerDelegate>
 {
     NSMutableArray *arrServices;
     NSMutableArray *arrTypes;
-    MessagesVC *mesagesVC1;
+    ChatHomeVC *mesagesVC1;
     MessagesVC *mesagesVC2;
     MessagesVC *mesagesVC3;
     MessagesVC *mesagesVC4;
-
 }
+@property (weak, nonatomic) IBOutlet UIButton *btnEdit;
+@property (weak, nonatomic) IBOutlet UIButton *btnDeleteAll;
+@property (weak, nonatomic) IBOutlet UIButton *btnCreateNew;
+@property (weak, nonatomic) IBOutlet UIButton *btnContacts;
 
-- (IBAction)btnContactsClick:(id)sender;
-- (IBAction)btnCreateNewClick:(id)sender;
 
 @end
 
@@ -34,10 +36,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpViewControllers];
+    
+    [self.btnEdit setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
+    //[self.btnEdit setTitle:@"Edit" forState:UIControlStateNormal];
+    [self.btnEdit setImage:[UIImage imageNamed:@"done"] forState:UIControlStateSelected];
+    //[self.btnEdit setTitle:@"Edit" forState:UIControlStateSelected];
+    [self.btnDeleteAll setHidden:YES];
+
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
 }
 
 #pragma mark - preferredStatusBarStyle
@@ -51,8 +64,9 @@
     // SetUp ViewControllers
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    //UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     
-    mesagesVC1 = [storyboard instantiateViewControllerWithIdentifier:@"MessagesVC"];
+    mesagesVC1 = [storyboard instantiateViewControllerWithIdentifier:@"ChatHomeVC"];
     mesagesVC1.title = @"MESSAGES";
     
     mesagesVC2 = [storyboard instantiateViewControllerWithIdentifier:@"MessagesVC"];
@@ -99,8 +113,34 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)btnCancelClick:(UIButton*)sender {
+    
+    sender.selected=!sender.selected;
+    BOOL status= (sender.selected)? YES : NO;
+    if(status)
+    {
+        [self.btnDeleteAll setHidden:NO];
+        [self.btnContacts setHidden:YES];
+        [self.btnCreateNew setHidden:YES];
+    }
+    else
+    {
+        [self.btnDeleteAll setHidden:YES];
+        [self.btnContacts setHidden:NO];
+        [self.btnCreateNew setHidden:NO];
+    }
+    [mesagesVC1 toggleDeleteChats:status];
+}
 
 - (IBAction)btnContactsClick:(id)sender {
+
+    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+        AllContactsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllContactsVC"];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+
+}
+- (IBAction)deleteAllClick:(id)sender {
     
     
 }
@@ -108,9 +148,10 @@
 - (IBAction)btnCreateNewClick:(id)sender {
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-        AllContactsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllContactsVC"];
-        //vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        //UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        //GroupHomeVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"GroupHomeVC"];
+        //[self.navigationController pushViewController:vc animated:YES];
     }
+    
 }
 @end

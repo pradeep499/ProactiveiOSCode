@@ -11,7 +11,7 @@
 #import "AppHelper.h"
 #import "AppDelegate.h"
 #import "Defines.h"
-#import "ChatVC.h"
+#import "ChatVC_Old.h"
 #import <UIImageView+AFNetworking.h>
 
 @interface MessagesVC ()
@@ -149,6 +149,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //number of rows in tableview
     return [self.dataArray count];
+    //return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -188,8 +189,8 @@
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId])
     {
         [self updateReadStatusForMessage:[[self.dataArray objectAtIndex:indexPath.row]valueForKey:@"_id"]];
-        ChatVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatVC"];
-        vc.partnerDict=[self.dataArray objectAtIndex:indexPath.row];
+        ChatVC_Old *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatVC_Old"];
+        vc.partnerDict=[[self.dataArray objectAtIndex:indexPath.row] copy];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

@@ -27,11 +27,12 @@
 +(void)connectedCompletionBlock:(void(^)(BOOL connected))block;
 
 -(void)getStaticData;
-@property(nonatomic,strong) CLLocation *currentLocation;
+@property (nonatomic,strong) CLLocation *currentLocation;
 @property (nonatomic, copy) NSString *PASInst;
 @property (nonatomic, copy) NSString *PASInstVideo;
 @property (nonatomic, copy) NSString *aboutPAS;
-
+@property (strong,nonatomic) NSMutableDictionary *notyDic;
+@property(strong,nonatomic) UITabBarItem *barItemForChat;
 
 @end
 

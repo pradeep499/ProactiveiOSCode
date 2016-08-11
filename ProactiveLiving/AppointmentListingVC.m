@@ -167,7 +167,7 @@
     [dayFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     NSDate *myDate=[dayFormatter dateFromString:date];
     [dayFormatter setDateFormat:@"yyyy MMM EEEE"];
-    NSString*strDate1=[dayFormatter stringFromDate:myDate];
+    //NSString*strDate1=[dayFormatter stringFromDate:myDate];
     [dayFormatter setDateFormat:@"EE d LLLL yyyy"];
     NSString *strDate2=[dayFormatter stringFromDate:myDate];
 

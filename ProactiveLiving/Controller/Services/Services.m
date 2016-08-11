@@ -28,7 +28,7 @@
     
     //manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
-    [manager POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:[BASE_URL stringByAppendingString:path] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         for(NSString *aKey in [params allKeys]){
             NSLog(@"Key: %@ - Value: %@",aKey, [params objectForKey:aKey]);
             [formData appendPartWithFormData:[[params objectForKey:aKey] dataUsingEncoding:NSUTF8StringEncoding] name:aKey];
@@ -123,7 +123,7 @@
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:[BASE_URL stringByAppendingString:path] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         for(NSString *aKey in [params allKeys]){
             NSLog(@"Key: %@ - Value: %@",aKey, [params objectForKey:aKey]);
             [formData appendPartWithFormData:[[params objectForKey:aKey] dataUsingEncoding:NSUTF8StringEncoding] name:aKey];
@@ -191,7 +191,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     
-    [manager POST:strURL parameters:dictParams success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:[BASE_URL stringByAppendingString:strURL] parameters:dictParams success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]) {
             if(success) {
                 success(responseObject);

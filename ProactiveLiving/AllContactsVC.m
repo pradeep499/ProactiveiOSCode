@@ -10,6 +10,8 @@
 #import "YSLContainerViewController.h"
 #import "ContactsVC.h"
 #import "ContactFriendsVC.h"
+#import "Defines.h"
+#import "ProactiveLiving-Swift.h"
 
 @interface AllContactsVC ()<YSLContainerViewControllerDelegate>
 {
@@ -20,6 +22,9 @@
     ContactsVC *contactVC3;
     ContactsVC *contactVC4;
     ContactsVC *contactVC5;
+    
+    UIViewController *currentController;
+    
 }
 
 
@@ -31,6 +36,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpViewControllers];
+    [self.btnDone setHidden:YES];
+    [self.btnCreateNewGroup setHidden:NO];
+}
+-(void)someAction
+{
+    //do something
+    NSLog(@"...Done...");
+    [self.btnCreateNewGroup setHidden:YES];
+    [self.btnDone setHidden:NO];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -55,25 +69,31 @@
     
     contactVC1 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC1.delegate = self;
+    contactVC1.delegate1 = self;
+    contactVC1.delegate2=self;
     contactVC1.title = @"ALL";
     contactVC1.contactType=@"all";
     
     contactVC2 = [storyboard instantiateViewControllerWithIdentifier:@"ContactFriendsVC"];
     contactVC2.delegate = self;
+
     contactVC2.title = @"FRIENDS";
 
     contactVC3 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC3.delegate = self;
+    contactVC3.delegate1 = self;
     contactVC3.title = @"COLLEAGUES";
     contactVC3.contactType=@"colleagues";
 
     contactVC4 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC4.delegate = self;
+    contactVC4.delegate1 = self;
     contactVC4.title = @"HEALTH CLUBS";
     contactVC4.contactType=@"healthclub";
 
     contactVC5 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC5.delegate = self;
+    contactVC5.delegate1 = self;
     contactVC5.title = @"OTHERS";
     contactVC5.contactType=@"";
 
@@ -102,18 +122,51 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)addMemberInGroup:(GroupDetailVC*)groupObj withInfo:(ChatContactModelClass *)frndObj
+{
+    //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    //GroupDetailVC *groupObj = [storyboard instantiateViewControllerWithIdentifier:@"GroupDetailVC"];
+    //groupObj.isDeletedGroup=@"false";
+    [groupObj addNewFrndIngrp:frndObj];
+    [self.navigationController popViewControllerAnimated:YES];
+   
+}
+
 #pragma mark -- YSLContainerViewControllerDelegate
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
     [self.view endEditing:YES];
     NSLog(@"current Index : %ld",(long)index);
     NSLog(@"current controller : %@",controller);
-    [controller viewWillAppear:YES];
+    currentController=controller;
+    [currentController viewWillAppear:YES];
 }
 
 - (IBAction)btnBackClick:(id)sender {
     
     [self.navigationController popViewControllerAnimated:YES];
+    
+}
+- (IBAction)btnCreateGroupClick:(id)sender {
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SHOW_GROUP_VIEW_CLICKED object:self];
+
+}
+- (IBAction)btnDoneClick:(id)sender {
+    
+    //[self.btnDone setHidden:YES];
+    
+    if([currentController isKindOfClass:[ContactsVC class]])
+    {
+        ContactsVC *currentVC=(ContactsVC*) currentController;
+        [currentVC createGroupWithContacts];
+    }
+    else if([currentController isKindOfClass:[ContactFriendsVC class]])
+    {
+        ContactFriendsVC *currentVC=(ContactFriendsVC*) currentController;
+        //[currentVC createGroupWithContacts];
+    }
     
 }
 

@@ -9,7 +9,6 @@
 #import "GetPasVC.h"
 #import "AppHelper.h"
 #import "Defines.h"
-#import "PASToDoVC.h"
 #import "AboutPASInstVC.h"
 #import "AppDelegate.h"
 #import "ValidationCentersVC.h"
@@ -53,24 +52,6 @@
     // to set the light color of status bar
     return UIStatusBarStyleLightContent;
 }
-
-#pragma -mark Tab Bar items click methods
-- (void)btnHomeClick {
-        
-    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-            [self performSegueWithIdentifier:@"HomeVCScreen" sender:nil];
-    }
-        
-}
-
-- (void)btnMyPASClick {
-    
-    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-        PASToDoVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PASToDoVC"];
-        [self presentViewController:vc animated:NO completion:nil];
-    }
-}
-
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

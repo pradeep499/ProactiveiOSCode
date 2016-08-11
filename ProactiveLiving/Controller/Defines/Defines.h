@@ -13,10 +13,14 @@
 #define FONT_LIGHT @"Roboto-Light"
 #define FONT_THIN @"Roboto-Thin"
 
+//Device info
+#define DEVICE_TOKEN @"PushToken"
+#define DEVICE_TYPE @"DeviceType"
+#define CURRENT_DEVICE (IS_IPAD ? @"iPad" : @"iPhone")
 
 
 //iOS Version check
-#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+#define IS_IOS8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 //Devices and Screens
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -33,40 +37,44 @@
 #define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 
+#define BASE_URL @"http://52.23.211.77:3000/api/v1/"
+
+//#define BASE_URL @"http://192.168.2.119:90/api/v1/"
+
 #define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 
 //RGB anf HEX Colors
 #define UIColorFromHEX(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define UIColorFromRGB(r,g,b) [UIColor colorWithRed:((float)r)/255.0 green:((float)g)/255.0 blue:((float)b)/255.0 alpha:1.0]
 
-#define ServiceRegister                 @"http://52.23.211.77:3000/api/v1/users/SignUp"
-#define SERVICE                         @"http://52.23.211.77:3000/api/v1/users/SignUpUp"
-#define ServiceLogin                    @"http://52.23.211.77:3000/api/v1/users/Login"
-#define ServiceForgotPassword           @"http://52.23.211.77:3000/api/v1/users/ForgotPassword"
-#define ServiceValidationCenters        @"http://52.23.211.77:3000/api/v1/organization/getOrganizationList"
-#define ServicePersonalTrainers         @"http://52.23.211.77:3000/api/v1/organization/getPersonalTrainers"
-#define ServiceValidationCenterTypes    @"http://52.23.211.77:3000/api/v1/organization/getOrganizationTypeList"
-#define ServiceGetCodelist              @"http://52.23.211.77:3000/api/v1/organization/getCategoryList"
-#define ServiceLocationFilter           @"http://52.23.211.77:3000/api/v1/organization/locationFilter"
-#define ServiceBookOrganization         @"http://52.23.211.77:3000/api/v1/organization/bookOrganizationByUser"
-#define QRImageBaseUrl                  @"http://52.23.211.77:3000/api/v1/qrImg/"
-#define ServiceGetPASInst               @"http://52.23.211.77:3000/api/v1/users/getPasInstruction"
-#define ServiceGetAppointmentList       @"http://52.23.211.77:3000/api/v1/organization/userBookingList"
-#define ServiceGetAppointment           @"http://52.23.211.77:3000/api/v1/organization/userBookingDetail"
-#define ServiceGetCertifications        @"http://52.23.211.77:3000/api/v1/organization/getCertifications"
-#define ServiceGetContacts              @"http://52.23.211.77:3000/api/v1/users/getContactList"
-#define ServiceGetMessages              @"http://52.23.211.77:3000/api/v1/users/getMessages"
-#define ServiceSendMessage              @"http://52.23.211.77:3000/api/v1/users/sendMessage"
-#define ServiceGetMessageListing        @"http://52.23.211.77:3000/api/v1/users/getMessageListing"
-#define ServiceRefreshMessages          @"http://52.23.211.77:3000/api/v1/users/refreshMessages"
-#define ServiceUserContactSettings      @"http://52.23.211.77:3000/api/v1/users/getUserContactSettings"
-#define ServiceUserOrganizationSettings @"http://52.23.211.77:3000/api/v1/users/getUserOrganizationSettings"
-#define ServiceApplyOrgID               @"http://52.23.211.77:3000/api/v1/users/applyId"
-#define ServiceUpdateOrgSettings        @"http://52.23.211.77:3000/api/v1/users/updateUserOrgSetting"
-#define ServiceUpdateReadUnread         @"http://52.23.211.77:3000/api/v1/users/readLastMessage"
-#define ServiceInviteOrGiftPAS          @"http://52.23.211.77:3000/api/v1/users/sendPasInvite"
-#define ServiceSharePAS                 @"http://52.23.211.77:3000/api/v1/users/getPasShareOptions"
-#define ServiceSendPAS                  @"http://52.23.211.77:3000/api/v1/users/sendPasShare"
+//
+#define ServiceRegister                 @"users/SignUp"
+#define ServiceLogin                    @"users/Login"
+#define ServiceForgotPassword           @"users/ForgotPassword"
+#define ServiceValidationCenters        @"organization/getOrganizationList"
+#define ServicePersonalTrainers         @"organization/getPersonalTrainers"
+#define ServiceValidationCenterTypes    @"organization/getOrganizationTypeList"
+#define ServiceGetCodelist              @"organization/getCategoryList"
+#define ServiceLocationFilter           @"organization/locationFilter"
+#define ServiceBookOrganization         @"organization/bookOrganizationByUser"
+#define QRImageBaseUrl                  @"qrImg/"
+#define ServiceGetPASInst               @"users/getPasInstruction"
+#define ServiceGetAppointmentList       @"organization/userBookingList"
+#define ServiceGetAppointment           @"organization/userBookingDetail"
+#define ServiceGetCertifications        @"organization/getCertifications"
+#define ServiceGetContacts              @"users/getContactList"
+#define ServiceGetMessages              @"users/getMessages"
+#define ServiceSendMessage              @"users/sendMessage"
+#define ServiceGetMessageListing        @"users/getMessageListing"
+#define ServiceRefreshMessages          @"users/refreshMessages"
+#define ServiceUserContactSettings      @"users/getUserContactSettings"
+#define ServiceUserOrganizationSettings @"users/getUserOrganizationSettings"
+#define ServiceApplyOrgID               @"users/applyId"
+#define ServiceUpdateOrgSettings        @"users/updateUserOrgSetting"
+#define ServiceUpdateReadUnread         @"users/readLastMessage"
+#define ServiceInviteOrGiftPAS          @"users/sendPasInvite"
+#define ServiceSharePAS                 @"users/getPasShareOptions"
+#define ServiceSendPAS                  @"users/sendPasShare"
 
 #define maxLength                       25
 #define maxPhoneLength                  15
@@ -88,7 +96,10 @@
 #define isRememberUser                  @"isRemember"// to check, need to remember credentials
 #define pwd                             @"pwd"// remember password
 #define cellNum                         @"cellNum"
+#define userFirstName                   @"firstName"
 #define uImage                          @"uImage"
+#define _ID                             @"userId"
+
 
 #define ACCEPTABLE_CHARACTERS           @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 #define ACCEPTABLE_MOBILE               @"+*#0123456789"
@@ -120,6 +131,8 @@
 #define NOTIFICATION_VALIDATION_CENTER_FLTER @"VALIDATION_CENTER_FLTER_NOTIFICATION"
 #define NOTIFICATION_ANNOTATION_CLICKED @"NOTIFICATION_ANNOTATION_CLICKED"
 #define NOTIFICATION_SYNCCONTACT_CLICKED @"NOTIFICATION_SYNCCONTACT_CLICKED"
+#define NOTIFICATION_SHOW_GROUP_VIEW_CLICKED @"NOTIFICATION_SHOW_GROUP_VIEW_CLICKED"
+
 
 #define BOOK_POPUP_HEIGHT 392
 

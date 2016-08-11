@@ -10,8 +10,10 @@
 #import "ContactsVC.h"
 #import "ContactFriendsVC.h"
 typedef void (^ContactSelectBlock)(NSString*);
-@interface AllContactsVC : UIViewController <phoneSelectForInvite,phoneSelectForInviteFriends>
+@interface AllContactsVC : UIViewController <phoneSelectForInvite,phoneSelectForInviteFriends,GroupChatProtocol,SomeProtocol>
 @property (strong, nonatomic) ContactSelectBlock contactSelectBlock;
 -(void)setPhontactBlock:(ContactSelectBlock)block;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnDone;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCreateNewGroup;
 
 @end
