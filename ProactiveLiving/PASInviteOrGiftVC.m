@@ -81,7 +81,7 @@
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         __block NSInteger selectedIndex = sender.tag;
         AllContactsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllContactsVC"];
-        
+        vc.fromVC=@"InviteOrGift";
         [vc setPhontactBlock:^(NSString *phone) {
             [phoneArray replaceObjectAtIndex:selectedIndex withObject:phone];
             [self.tableView reloadData];

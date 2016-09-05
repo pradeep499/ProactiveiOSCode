@@ -95,26 +95,24 @@ let totalCholosterolEmpty = "Please enter your total cholosterol"
 let hdlCholosterolEmpty = "Please enter your HDL cholosterol"
 let sbpEmpty = "Please enter your Systolic Blood Pressure"
 
-let showAgeAlertForHRS = "Heart risk score works only for age between 30 to 80 Year."
-
-//Connect device
-let noDeviceMsg = "There is no device for this type"
-
-
-//MARK: - Home screen Alerts
-let noMoreResultsMsg = "There is no more cards."
 
 let Base_imgurl = ""//"http://whatsumm.w3studioz.com/uploads/users/"
-let Base_spouseImgUrl = "http://whatsumm.w3studioz.com/uploads/spouse/"
-let Base_childImgUrl = "http://whatsumm.w3studioz.com/uploads/child/"
 
 // for attachments
-//let chatCDNbaseUrl = "http://192.168.2.119:3000/api/v1/sendMedia"
-let chatCDNbaseUrl="http://cdn.mymeldr.com/meldermedia"
+let chatCDNbaseUrl = "http://52.89.149.60:3000/proactiveliving"
+//let chatCDNbaseUrl="http://cdn.mymeldr.com/meldermedia"
+
 
 //for chat profile images
-//let ChatBaseMediaUrl = "http://192.168.2.119:90/"
-let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
+
+//let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
+
+//ClientNewURL
+//let ChatBaseMediaUrl = "http://52.89.149.60:3000/"
+
+//Testing URL
+let ChatBaseMediaUrl = "http://192.168.3.178:90/"
+
 let ChatMediaPath = "api/v1/sendMedia"
 
 

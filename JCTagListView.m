@@ -56,9 +56,6 @@ static NSString * const reuseIdentifier = @"tagListViewItemId";
     //[self.tags addObjectsFromArray:[[self.dataArray valueForKey:@"color"] valueForKey:@"name"]];
     //[self.tagColors addObjectsFromArray:[[self.dataArray valueForKey:@"color"] valueForKey:@"color"]];
     
-    self.tagColor = [UIColor darkGrayColor];
-    self.tagCornerRadius = 0.0f;
-    
     JCCollectionViewTagFlowLayout *layout = [[JCCollectionViewTagFlowLayout alloc] init];
     
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
@@ -97,12 +94,15 @@ static NSString * const reuseIdentifier = @"tagListViewItemId";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JCTagCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
+    cell.backgroundColor = self.tagColor;
     cell.layer.borderColor = [UIColor clearColor].CGColor;
     cell.layer.cornerRadius = self.tagCornerRadius;
+    
+    if([self.tagColors count]>indexPath.row)
     cell.annotImage.backgroundColor=[AppHelper colorFromHexString:self.tagColors[indexPath.item] alpha:1];
+    
     cell.titleLabel.text = self.tags[indexPath.item];
-    cell.titleLabel.textColor = self.tagColor;
+    cell.titleLabel.textColor = [UIColor darkGrayColor];
     
     return cell;
 }

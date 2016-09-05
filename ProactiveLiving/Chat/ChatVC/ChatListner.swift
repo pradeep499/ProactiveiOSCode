@@ -22,12 +22,14 @@ import UIKit
     
     
     let homeCoreData = AppDelegate.getAppDelegate()
-    var  socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!, options: [.Log(true), .ForcePolling(true)])
-    //Test Server
-    //var  socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.2.119:90")!, options: [.Log(true), .ForcePolling(true)])
     
-    //var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://52.1.48.207:8089")!)
-    //var socket: SocketIOClient = SocketIOClient(socketURL: NSURL(string: "http://52.76.112.16:8089")!)
+    //var  socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
+    
+    //ClientNewURL
+    //var  socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
+
+    //Test Server
+    var  socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
     
     var pushDict : Dictionary<NSObject,AnyObject>!
     var socketIdStr : String!
@@ -63,6 +65,9 @@ func connectToSocket() -> Void{
     weakself.socket.off("isUserTyping")
     weakself.socket.off("getGroupInfo")
     weakself.socket.off("delUserInGroup")
+    
+    weakself.socket.off("getMeetup_Invite_listing")
+
 
     socket.on("connect") { data, ack in
         
@@ -96,8 +101,26 @@ func connectToSocket() -> Void{
     weakself.isTypingStopListner("")
     weakself.getGroupInfoListner()
     weakself.deleteUserFromGroupListner()
+    //weakself.doNotSleepListener()
     
     }
+    
+    /*
+    func doNotSleep() {
+        unowned let weakself = self
+        var dataDic = Dictionary<String,String>()
+        dataDic["beat"]="1"
+        weakself.socket.emit("pong",dataDic)
+        print("pong")
+    }
+    
+    func doNotSleepListener() {
+        unowned let weakself = self
+        weakself.socket.on("ping") {data, ack in
+        print("ping")
+        weakself.doNotSleep()
+        }
+    }*/
     
     /*!
     return sigelton object of class
@@ -258,7 +281,6 @@ func connectToSocket() -> Void{
                 let status = receiveMsgDic["status"] as! Int
                 dict["status"] = "\(status)"
                 dict["phoneNumber"] = receiveMsgDic["phoneNumber"] as! String
-                dict["user_firstName"] = receiveMsgDic["user_firstName"] as! String
                 dict["profile_image"] = receiveMsgDic["profile_image"] as! String
                 
                 if (receiveMsgDic["user_firstName"] as? String) != nil {
@@ -1583,6 +1605,8 @@ func connectToSocket() -> Void{
             ChatListner.getChatListnerObj().isConnectionStable = false
             ChatHelper.saveToUserDefault(AppHelper.userDefaultsForKey("userId"), key: "userId")
             ChatListner.getChatListnerObj().socket.disconnect()
+           
+            //ChatListner.getChatListnerObj().socket.removeAllHandlers()
 
 //            if socket.status == .Connected {
 //                ChatListner.getChatListnerObj().isConnectionStable = false

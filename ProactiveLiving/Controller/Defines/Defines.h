@@ -37,9 +37,14 @@
 #define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 
-#define BASE_URL @"http://52.23.211.77:3000/api/v1/"
+//#define BASE_URL @"http://52.23.211.77:3000/api/v1/"
 
-//#define BASE_URL @"http://192.168.2.119:90/api/v1/"
+
+//ClientNewURL
+//#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
+
+//Testing ULR
+#define BASE_URL @"http://192.168.3.178:90/api/v1/"
 
 #define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 
@@ -47,7 +52,6 @@
 #define UIColorFromHEX(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define UIColorFromRGB(r,g,b) [UIColor colorWithRed:((float)r)/255.0 green:((float)g)/255.0 blue:((float)b)/255.0 alpha:1.0]
 
-//
 #define ServiceRegister                 @"users/SignUp"
 #define ServiceLogin                    @"users/Login"
 #define ServiceForgotPassword           @"users/ForgotPassword"

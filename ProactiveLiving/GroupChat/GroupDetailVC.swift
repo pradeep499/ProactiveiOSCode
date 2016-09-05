@@ -11,13 +11,13 @@ import MobileCoreServices
 
 class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate {
 
-     var groupObj : GroupList!
-     var groupUserList : NSMutableArray!
+    var groupObj : GroupList!
+    var groupUserList : NSMutableArray!
     var groupUserPassArr : NSMutableArray!
     var groupMediaArr : NSMutableArray!
     var meRemoved : String!
     var imageChanged : Bool!
-    var isDeletedGroup : Bool!
+    var deletedGroup : Bool  = false
     
     @IBOutlet weak var editBtnOutlet: UIButton!
     @IBOutlet weak var exitBtnHeightConst: NSLayoutConstraint!
@@ -55,13 +55,16 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         dict["phoneNumber"]=frndObj.phoneNumber
         //println(dict)
         ChatListner .getChatListnerObj().socket.emit("addInGroup", dict)
+        dispatch_after(5, dispatch_get_main_queue(), {
+            stopActivityIndicator(self.view)
+        })
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        if isDeletedGroup==true
+        if deletedGroup==true
         {
             exitBtnOutlet.enabled=false
             addBtnOutlet.enabled=false
@@ -93,12 +96,22 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         grpImgV.userInteractionEnabled = true
         grpImgV.layer.cornerRadius = grpImgV.frame.height/2
         grpImgV.clipsToBounds = true
+        self.imgGroup.contentMode = .ScaleAspectFill
         grpImgV.setImageWithURL(NSURL(string:groupObj.groupImage!), placeholderImage: UIImage(named:"profile.png"))
         self.imgGroup.setImageWithURL(NSURL(string:groupObj.groupImage!), placeholderImage: UIImage(named:"group_img"))
 
         grpNameTxtF.text=groupObj.groupName
         txtGroupName.text=groupObj.groupName
-        createdDate.text = groupObj.createdDate
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
+        let date = dateFormatter.dateFromString(groupObj.createdDate!)
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let dateStr = dateFormatter.stringFromDate(date!)
+        createdDate.text = "Created by XYZ, "+dateStr
+        
         groupUserList = NSMutableArray()
         groupUserPassArr = NSMutableArray()
         groupMediaArr = NSMutableArray()
@@ -308,8 +321,8 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         let userImage = cell.contentView.viewWithTag(1) as! UIImageView
         let userName = cell.contentView.viewWithTag(2) as! UILabel
         let adminLabel = cell.contentView.viewWithTag(4) as! UILabel
-        var anObject :  GroupUserList!
-        anObject = groupUserList[indexPath.row] as! GroupUserList
+        
+        let anObject = groupUserList[indexPath.row] as! GroupUserList
         userImage.setImageWithURL(NSURL(string:anObject.userImage!), placeholderImage: UIImage(named:"profile.png"))
         let nameStr = anObject.userName! as String
         let nameStr1 = ChatHelper.userDefaultForKey("PhoneNumber") as String
@@ -392,7 +405,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
     
     func buttonDeleteClicked(index: NSIndexPath)
     {
-        if isDeletedGroup == true
+        if deletedGroup == true
         {
             return
         }
@@ -459,7 +472,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
 
     func updateGroupDetails() {
         
-        if isDeletedGroup==true
+        if deletedGroup==true
         {
             [self.navigationController?.popViewControllerAnimated(true)]
         }
@@ -619,7 +632,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
     
     func clickUserImage(recognizer:UITapGestureRecognizer)
     {
-        if isDeletedGroup == true
+        if deletedGroup == true
         {
             return;
         }

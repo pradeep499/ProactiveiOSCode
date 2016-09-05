@@ -77,12 +77,13 @@
 {
     view.layer.borderWidth=1.0f;
     view.layer.borderColor=[UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:235.0/255.0f alpha:1.0].CGColor;
+
 }
 
 // Assumes input like "#00FF00" (#RRGGBB).
 + (UIColor *)colorFromHexString:(NSString *)hexString alpha:(CGFloat)alpha {
     
-    if(![hexString isEqual:[NSNull null]]&&![hexString isEqualToString:@""]&&![hexString length]<=0 )
+    if(![hexString isEqual:[NSNull null]]&&![hexString isEqualToString:@""]&&!([hexString length]<=0) )
     {
     unsigned rgbValue = 0;
     NSScanner *scanner = [NSScanner scannerWithString:hexString];

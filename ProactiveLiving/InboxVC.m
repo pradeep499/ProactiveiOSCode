@@ -11,17 +11,16 @@
 #import "Defines.h"
 #import "AllContactsVC.h"
 #import "YSLContainerViewController.h"
-#import "MessagesVC.h"
 #import "ProactiveLiving-Swift.h"
 
 @interface InboxVC () <YSLContainerViewControllerDelegate>
 {
     NSMutableArray *arrServices;
     NSMutableArray *arrTypes;
-    ChatHomeVC *mesagesVC1;
-    MessagesVC *mesagesVC2;
-    MessagesVC *mesagesVC3;
-    MessagesVC *mesagesVC4;
+    ChatHomeVC *mesagesVC;
+    MeetUpsListingVC *meetUpVC;
+    MeetUpsListingVC *webInviteVC;
+    NSInteger currentIndex;
 }
 @property (weak, nonatomic) IBOutlet UIButton *btnEdit;
 @property (weak, nonatomic) IBOutlet UIButton *btnDeleteAll;
@@ -66,25 +65,21 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     //UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     
-    mesagesVC1 = [storyboard instantiateViewControllerWithIdentifier:@"ChatHomeVC"];
-    mesagesVC1.title = @"MESSAGES";
+    mesagesVC = [storyboard instantiateViewControllerWithIdentifier:@"ChatHomeVC"];
+    mesagesVC.title = @"MESSAGES";
     
-    mesagesVC2 = [storyboard instantiateViewControllerWithIdentifier:@"MessagesVC"];
-    mesagesVC2.title = @"MEETUPS";
+    meetUpVC = [storyboard instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
+    meetUpVC.title = @"MEET UPS";
     
-    mesagesVC3 = [storyboard instantiateViewControllerWithIdentifier:@"MessagesVC"];
-    mesagesVC3.title = @"INVITATION";
-    
-    mesagesVC4 = [storyboard instantiateViewControllerWithIdentifier:@"MessagesVC"];
-    mesagesVC4.title = @"REQUESTS";
-    
-    
+    webInviteVC = [storyboard instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
+    webInviteVC.title = @"WEB INVITES";
+
     // ContainerView
     //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     //float navigationHeight = self.navigationController.navigationBar.frame.size.height;
     
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]
-                                               initWithControllers:@[mesagesVC1]
+                                               initWithControllers:@[mesagesVC,meetUpVC,webInviteVC]
                                                topBarHeight:0
                                                parentViewController:self];
     
@@ -105,6 +100,8 @@
     [self.view endEditing:YES];
     NSLog(@"current Index : %ld",(long)index);
     NSLog(@"current controller : %@",controller);
+    currentIndex=index;
+    
     [controller viewWillAppear:YES];
 }
 
@@ -129,13 +126,14 @@
         [self.btnContacts setHidden:NO];
         [self.btnCreateNew setHidden:NO];
     }
-    [mesagesVC1 toggleDeleteChats:status];
+    [mesagesVC toggleDeleteChats:status];
 }
 
 - (IBAction)btnContactsClick:(id)sender {
-
+    
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         AllContactsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllContactsVC"];
+        vc.fromVC=@"Inbox";
         [self.navigationController pushViewController:vc animated:YES];
     }
 
@@ -147,11 +145,41 @@
 
 - (IBAction)btnCreateNewClick:(id)sender {
     
-    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-        //UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        //GroupHomeVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"GroupHomeVC"];
-        //[self.navigationController pushViewController:vc animated:YES];
+    if(currentIndex==0)
+    {
+//        if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+//            UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+//            CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }
     }
+    else if (currentIndex==1)
+    {
+        if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+            UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+            CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
+            vc.pushedFrom=@"MEETUPS";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    else if (currentIndex==2)
+    {
+        if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+            UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+            CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
+            vc.pushedFrom=@"WEBINVITES";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    else if (currentIndex==3)
+    {
+//        if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+//            UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+//            CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }
+    }
+    
     
 }
 @end

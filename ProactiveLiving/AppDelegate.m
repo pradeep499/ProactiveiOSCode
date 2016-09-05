@@ -14,7 +14,6 @@
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "ProactiveLiving-Swift.h"
-
 @interface AppDelegate ()
 {
     UIImageView *splashView;
@@ -34,6 +33,7 @@
     
     // Reset badge count
     [UIApplication sharedApplication].applicationIconBadgeNumber =0;
+    
     //Register for Push Notification
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
@@ -298,8 +298,10 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+   
     [[NSNotificationCenter defaultCenter] postNotificationName:@"POP_TO_CHAT_MAIN_SCREEN" object:nil];
     [[ChatListner getChatListnerObj]closeConnection];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -318,7 +320,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
-     [[ChatListner getChatListnerObj]closeConnection];
+    [[ChatListner getChatListnerObj]closeConnection];
 }
 
 #pragma mark - Core Data stack

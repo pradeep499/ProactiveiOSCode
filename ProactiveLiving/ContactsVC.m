@@ -311,26 +311,35 @@
         //if let classObject = NSClassFromString("YOURAPPNAME.MyClass") as? MyClass.Type {
             //let object = classObject.init()
         //}
-        GroupDetailVC *previousViewController;
         if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[GroupDetailVC class]])
         {
-            previousViewController = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
+            GroupDetailVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
+            ChatContactModelClass *anobject = [[ChatContactModelClass alloc] init];
+            anobject.userId =[frndDict  valueForKey:@"_id"];
+            anobject.loginUserId =[AppHelper userDefaultsForKey:_ID];
+            anobject.name =  [frndDict valueForKey:@"firstName"];
+            anobject.email = @"etrfgg";
+            anobject.isBlock = @"0";
+            anobject.isReport = @"0";
+            anobject.isFav = @"no";
+            anobject.isFriend = @"yes";
+            anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
+            anobject.isFromCont = @"yes";
+            anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
+            [previousVC addNewFrndIngrp:anobject];
+
+            [self.delegate1 addMemberInGroup:previousVC withInfo:(ChatContactModelClass *)anobject];
+        }
+        else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[CreateMeetUpVC class]])
+        {
+         
+            CreateMeetUpVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
+            [previousVC addCotact:frndDict];
+            [self.navigationController popViewControllerAnimated:YES];
+
         }
         
-        ChatContactModelClass *anobject = [[ChatContactModelClass alloc] init];
-        anobject.userId =[frndDict  valueForKey:@"_id"];
-        anobject.loginUserId =[AppHelper userDefaultsForKey:_ID];
-        anobject.name =  [frndDict valueForKey:@"firstName"];
-        anobject.email = @"etrfgg";
-        anobject.isBlock = @"0";
-        anobject.isReport = @"0";
-        anobject.isFav = @"no";
-        anobject.isFriend = @"yes";
-        anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
-        anobject.isFromCont = @"yes";
-        anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
-    
-        [self.delegate1 addMemberInGroup:previousViewController withInfo:(ChatContactModelClass *)anobject];
+       
         
     }
     }

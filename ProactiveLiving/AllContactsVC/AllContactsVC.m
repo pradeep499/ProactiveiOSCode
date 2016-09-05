@@ -37,7 +37,12 @@
     // Do any additional setup after loading the view.
     [self setUpViewControllers];
     [self.btnDone setHidden:YES];
-    [self.btnCreateNewGroup setHidden:NO];
+    
+    if([self.fromVC isEqualToString:@"Inbox"])
+        [self.btnCreateNewGroup setHidden:NO];
+    else
+        [self.btnCreateNewGroup setHidden:YES];
+
 }
 -(void)someAction
 {
@@ -126,7 +131,7 @@
 {
     //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     //GroupDetailVC *groupObj = [storyboard instantiateViewControllerWithIdentifier:@"GroupDetailVC"];
-    //groupObj.isDeletedGroup=@"false";
+    groupObj.deletedGroup = YES;
     [groupObj addNewFrndIngrp:frndObj];
     [self.navigationController popViewControllerAnimated:YES];
    

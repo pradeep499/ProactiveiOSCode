@@ -35,10 +35,6 @@ class ServiceClass: NSObject {
     }
     
     
-    
-    
-    
-    
     // AnyObject
     
     class func checkNetworkReachabilityWithoutAlert() ->Bool {

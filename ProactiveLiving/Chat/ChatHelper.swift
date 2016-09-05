@@ -107,6 +107,13 @@ class ChatHelper: NSObject {
         
     }
     
+    class func showAlertController(fromController viewController:UIViewController, title:String, message:String?, cancelButtonTitle:String?, otherButtonTitle:String?)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        viewController.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     //MARK:-  Convert Int value to String
     class func convertIntToString(intValue:Int)->String
     {

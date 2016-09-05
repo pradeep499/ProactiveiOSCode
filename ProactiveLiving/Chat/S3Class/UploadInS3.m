@@ -10,10 +10,10 @@
 #import "ProactiveLiving-Swift.h"
 
 
-#define AWS_ACCESS_KEY_ID                                       @"AKIAJ47XZOVZVDUDNIGA"
-#define AWS_SECRET_KEY                                          @"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"
-#define AWS_MEDIA_BUCKET                                        @"melder"
-#define AWS_Image_Folder_Name                                   @"meldermedia"
+#define AWS_ACCESS_KEY_ID                                       @"AKIAJMFUUZHGQYPKJPWQ"
+#define AWS_SECRET_KEY                                          @"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"
+#define AWS_MEDIA_BUCKET                                        @"proactiveliving"
+#define AWS_Image_Folder_Name                                   @"attachments"
 
 @interface UploadInS3()<AmazonServiceRequestDelegate>
 

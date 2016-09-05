@@ -44,6 +44,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     var deleteIndexP : NSIndexPath!
     
     var dictData = Dictionary<String, AnyObject>()
+    var colorDict = Dictionary<String, AnyObject>()
 
     
     @IBOutlet weak var bottomPlusConstraint: NSLayoutConstraint!
@@ -539,7 +540,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         if (defaults.stringForKey("fontName") != nil) {
 
         } else {
-            ChatHelper .saveToUserDefault("HelveticaNeue", key: "fontName")
+            ChatHelper .saveToUserDefault("Roboto-Regular", key: "fontName")
             ChatHelper .saveToUserDefault(14.0, key: "fontSize")
         }
         
@@ -1128,12 +1129,12 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         }
         
         earlierView.backgroundColor=UIColor.lightGrayColor()
-        earlierView.alpha=1;
+        earlierView.alpha=0.6;
        
         loadMoreBtn.addTarget(self, action: #selector(ChattingMainVC.viewEarlierMessageClick(_:)), forControlEvents:
             UIControlEvents.TouchUpInside)
         loadMoreBtn.setTitle("Load More", forState: UIControlState.Normal)
-        loadMoreBtn.titleLabel!.font =  UIFont(name: "Helvetica-Medium", size: 20)
+        loadMoreBtn.titleLabel!.font =  UIFont(name: FONT_REGULAR, size: 16)
         earlierView.addSubview(loadMoreBtn)
         chatTableView.tableHeaderView=earlierView;
     }
@@ -1159,7 +1160,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         addContactBtn.addTarget(self, action: #selector(ChattingMainVC.addContactClick(_:)), forControlEvents:
             UIControlEvents.TouchUpInside)
         addContactBtn.setTitle("Add to contact", forState: UIControlState.Normal)
-        addContactBtn.titleLabel!.font =  UIFont(name: "Helvetica-Medium", size: 20)
+        addContactBtn.titleLabel!.font =  UIFont(name: "Roboto-Medium", size: 20)
         
         headerContactView.addSubview(addContactBtn)
         chatTableView.tableHeaderView=headerContactView;
@@ -1180,7 +1181,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
 //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
 //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
                     
-                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 14 , width: 221.0, fontName: "HelveticaNeue")
+                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 14 , width: 221.0, fontName: "Roboto-Regular")
                     
                     let height = size.height
                     let width = size.width
@@ -1226,7 +1227,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                  //   let fontName = AppHelper .userDefaultForAny("fontName") as String
                  //   let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
                     
-                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 14 , width: 221.0, fontName: "HelveticaNeue")
+                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 14 , width: 221.0, fontName: "Roboto-Regular")
                     
                     let height = size.height
                     let width = size.width
@@ -1427,7 +1428,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let fontSize = ChatHelper .userDefaultForAny("fontSize") as! CGFloat
                     let bgImageView = cell.contentView.viewWithTag(9) as! UIImageView
                     let myImage = UIImage(named: "recevier_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    //bgImageView.image = myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
+                    
                     textMessage.font=UIFont(name: fontName, size: fontSize)
                     textMessage.text = chatObj.message!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).stringByReplacingEmojiCheatCodesWithUnicode()
                     textMessage.scrollEnabled = false
@@ -1508,7 +1512,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     downloadBtn.hidden = true
                     playBtn.hidden = true
                     let myImage = UIImage(named: "recevier_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     
                     downloadBtn.addTarget(self, action: #selector(ChattingMainVC.tapOnDownloadBtn(_:)), forControlEvents:
                         UIControlEvents.TouchUpInside)
@@ -1593,7 +1597,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     downloadBtn.hidden = true
                     playBtn.hidden = true
                     let myImage = UIImage(named: "recevier_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     
                     downloadBtn.addTarget(self, action: #selector(ChattingMainVC.tapOnDownloadBtn(_:)), forControlEvents:
                         UIControlEvents.TouchUpInside)
@@ -1719,7 +1723,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     timeLabel.text = dateStr
                     
                     let myImage = UIImage(named: "sender_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     return cell
                 } else if(chatObj.messageType == "notification") {
                     let cell: ChatNotificationCell = tableView.dequeueReusableCellWithIdentifier("NotificationCell", forIndexPath: indexPath) as! ChatNotificationCell
@@ -1775,7 +1779,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         UIControlEvents.TouchUpInside)
                     
                     let myImage = UIImage(named: "sender_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     
                     let tempStr = chatObj.chatFile!.mediaLocalPath! as String
                     
@@ -1873,7 +1877,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         UIControlEvents.TouchUpInside)
                     
                     let myImage = UIImage(named: "sender_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     
                     let tempStr = chatObj.chatFile!.mediaLocalThumbPath! as String
                     let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -1988,15 +1992,19 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let fontSize = ChatHelper .userDefaultForAny("fontSize") as! CGFloat
                     let bgImageView = cell.contentView.viewWithTag(9) as! UIImageView
                     let myImage = UIImage(named: "recevier_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
-                    textMessage.font=UIFont(name: fontName, size: fontSize)
                     
+                    bgImageView.image = myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
+                    let tintedImage = myImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    bgImageView.image = tintedImage
+                    bgImageView.tintColor = getRandomColor(chatObj.senderId!)
+                    
+                    textMessage.font=UIFont(name: fontName, size: fontSize)
                     textMessage.text = chatObj.message!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).stringByReplacingEmojiCheatCodesWithUnicode()
                     nameLabel.text = chatObj.senderName
                     textMessage.scrollEnabled = false
                     var size : CGSize!
                     size = self.sizeForTextView(textMessage.text, font: textMessage.font!)
-                    let widthName =  CommonMethodFunctions.widthOfText(chatObj.senderName, fontSize: 12, height: 21.0, fontName: "HelveticaNeue")
+                    let widthName =  CommonMethodFunctions.widthOfText(chatObj.senderName, fontSize: 12, height: 21.0, fontName: "Roboto-Regular")
                     if size.width < widthName
                     {
                         cell.textViewWidthConst.constant = widthName
@@ -2094,7 +2102,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     nameLabel.hidden = false
                     nameLabel.text = chatObj.senderName
                     let myImage = UIImage(named: "recevier_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     
                     downloadBtn.addTarget(self, action: #selector(ChattingMainVC.tapOnDownloadBtn(_:)), forControlEvents:
                         UIControlEvents.TouchUpInside)
@@ -2207,7 +2215,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         UIControlEvents.TouchUpInside)
                     
                     let myImage = UIImage(named: "recevier_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     
                     
                     let tempStr = chatObj.groupChatFile!.mediaLocalThumbPath! as String
@@ -2342,7 +2350,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     timeLabel.text = dateStr
                     
                     let myImage = UIImage(named: "sender_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     return cell
                 }else if(chatObj.messageType == "notification")
                 {
@@ -2406,8 +2414,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     
                     
                     let myImage = UIImage(named: "sender_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
-                    
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     let tempStr = chatObj.groupChatFile!.mediaLocalPath! as String
                     if tempStr.characters.count > 0
                     {
@@ -2517,7 +2524,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     downloadBtn.hidden = true
                     progressV.hidden = true
                     let myImage = UIImage(named: "sender_bg.png")!
-                    bgImageView.image=myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
+                    bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     let tempStr = chatObj.groupChatFile!.mediaLocalThumbPath! as String
                     let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
                     let documentsDirectory = paths.stringByAppendingPathComponent("/ChatFile")
@@ -2605,6 +2612,22 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 
             }
         }
+        
+    }
+    
+    func getRandomColor(userID:String) -> UIColor{
+        
+        let randomRed:CGFloat = CGFloat(drand48())
+        
+        let randomGreen:CGFloat = CGFloat(drand48())
+        
+        let randomBlue:CGFloat = CGFloat(drand48())
+        
+        if(colorDict[userID]==nil)
+        {
+            colorDict[userID]=UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 0.3)
+        }
+        return colorDict[userID] as! UIColor
         
     }
     
@@ -3104,12 +3127,12 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         growingTextView.minNumberOfLines = 1;
         growingTextView.maxNumberOfLines = 6;
         growingTextView.returnKeyType = .Default; //just as an example
-        growingTextView.font = UIFont(name: "Roboto-Regular", size: 15);
+        growingTextView.font = UIFont(name: "Roboto-Regular", size: 14);
         growingTextView.delegate = self;
         growingTextView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(2, 0, 2, 0);
         growingTextView.clipsToBounds = true;
         growingTextView.layer.cornerRadius = 10.0;
-        growingTextView.placeholder="Type Your Message";
+        growingTextView.placeholder="Your message";
         growingTextView.placeholderColor = UIColor.lightGrayColor();
         growingTextView.backgroundColor = UIColor.whiteColor();
         growingTextView.keyboardType = .Default
@@ -6107,10 +6130,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             
             if self.exitedView.hidden == false
             {
-                chatMainObj.isDeletedGroup=true
+                chatMainObj.deletedGroup=true
             }else
             {
-                chatMainObj.isDeletedGroup=false
+                chatMainObj.deletedGroup=false
             }
             
             
