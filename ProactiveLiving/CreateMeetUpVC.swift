@@ -41,6 +41,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var arrAttachments = [String]()
     var gpaViewController : GooglePlacesAutocomplete!
     var pushedFrom : String!
+    var isForwardAllowed : Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,8 +54,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         if(pushedFrom=="MEETUPS")
         {
-            self.titleBar.text = "Create Meet Up"
-            self.arrTypes = ["We", "Heart", "Potluck"]
+            self.titleBar.text = "New Meet Up"
+            //self.arrTypes = ["We", "Heart", "Potluck"]
             self.txtFieldWhereSecond.hidden=false
             self.txtPin.hidden=true
             self.txtDialInNum.hidden=true
@@ -64,8 +65,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         else if(pushedFrom=="WEBINVITES")
         {
-            self.titleBar.text = "Create Web Invite"
-            self.arrTypes = ["Conference Call", "Podcast", "Videocast", "Webinar", "Webcast"]
+            self.titleBar.text = "New Web Invite"
+            self.txtFieldWhereFirst.placeholder="Web Invite Link"
+            //self.arrTypes = ["Conference Call", "Podcast", "Videocast", "Webinar", "Webcast"]
             self.txtFieldWhereSecond.hidden=true
             self.txtPin.hidden=false
             self.txtDialInNum.hidden=false
@@ -186,6 +188,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         IQKeyboardManager.sharedManager().enable=true
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
 
+        self.getStaticDataFromServer()
     }
     
     func addCotact(contact : [String : AnyObject] ) -> Void {
@@ -224,9 +227,13 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func doneTypesPicker() {
+        
+        if(arrTypes.count>0)
+        {
         self.txtFieldFor.text = self.arrTypes[pickerView.selectedRowInComponent(0)]
         self.txtFieldFor.resignFirstResponder()
         print("done!")
+        }
     }
     
     func doneDatePicker() {
@@ -323,29 +330,42 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             else
             {
+                
+                var linksArray : NSMutableArray!
+                linksArray = NSMutableArray()
+                
                 button.userInteractionEnabled=false
                 showActivityIndicator(self.view)
                 var dict = Dictionary<String,AnyObject>()
-                dict["venue"]=self.txtFieldWhereFirst.text
-                dict["address"]=self.txtFieldWhereFirst.text
                 dict["title"]=self.txtFieldTitle.text! as String
                 dict["desc"]=txtViewDesc.text
                 
                 if(pushedFrom=="MEETUPS") {
                     dict["type"]="meetup"
+                    dict["venue"]=self.txtFieldWhereFirst.text
+                    dict["address"]=self.txtFieldWhereSecond.text
                 }
                 else {
                     dict["type"]="webinvite"
                     dict["dialInNumber"] = txtDialInNum.text ?? ""
                     dict["pin"] = txtPin.text ?? ""
+                    dict["webLink"]=self.txtFieldWhereFirst.text
+
                 }
                 dict["for"]=txtFieldFor.text
-                dict["links"]="www.google.com"
+                
+                var dicLinks = Dictionary<String,AnyObject>()
+                dicLinks["title"] = "Google"
+                dicLinks["url"] = "www.google.com"
+                linksArray.addObject(dicLinks)
+                
+                dict["links"]=linksArray
+                
                 dict["attachments"]="abc.png"
                 dict["createdBy"]=ChatHelper.userDefaultForKey("userId") as String
-                dict["createdDate"]=txtFieldOn.text
-                dict["createdTime"]=txtFiledAt.text
-
+                dict["eventDate"]=txtFieldOn.text
+                dict["eventTime"]=txtFiledAt.text
+                dict["isAllow"]=isForwardAllowed
 
                 var userIdArray : NSMutableArray!
                 userIdArray = NSMutableArray()
@@ -366,6 +386,26 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
                 userIdArray.addObject(tempDict)
                 dict["members"] = userIdArray
+                
+                //group create data
+                var groupDict = [String: AnyObject]()
+                groupDict["userid"] = AppHelper.userDefaultsForKey(_ID)
+                groupDict["groupname"] = self.txtFieldTitle.text! as String
+                var userArray = [AnyObject]()
+                for myobject: AnyObject in self.tokens {
+                    var dataDict = [String: AnyObject]()
+                    dataDict["userid"] = myobject["_id"] as! String
+                    dataDict["phoneNumber"] = (myobject["mobilePhone"] as! String)
+                    dataDict["user_firstName"] = (myobject["firstName"] as! String)
+                    userArray.append(dataDict)
+                }
+                var userDict = [String: AnyObject]()
+                userDict["userid"] = ChatHelper.userDefaultForKey(_ID)
+                userDict["phoneNumber"] = AppHelper.userDefaultsForKey(cellNum)
+                userDict["user_firstName"] = AppHelper.userDefaultsForKey(userFirstName)
+                userArray.append(userDict)
+                groupDict["users"] = userArray
+                dict["groupDetail"] = groupDict
                 
                 if self.imgCoverPic.image != nil
                 {
@@ -397,8 +437,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                             button.userInteractionEnabled=true
                             
                             ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                            dispatch_after(5, dispatch_get_main_queue(), {
+                            dispatch_after(1, dispatch_get_main_queue(), {
                                 stopActivityIndicator(self.view)
+                                //self.createMeetUpWithGroupChat()
+
                                 self.navigationController?.popToRootViewControllerAnimated(true)
                             })
                             
@@ -415,8 +457,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 {
                     dict["imgUrl"] = ""
                     ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                    dispatch_after(5, dispatch_get_main_queue(), {
+                    dispatch_after(0, dispatch_get_main_queue(), {
                         stopActivityIndicator(self.view)
+                        //self.createMeetUpWithGroupChat()
                         self.navigationController?.popToRootViewControllerAnimated(true)
                     })
                 }
@@ -430,12 +473,104 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    func createMeetUpWithGroupChat() {
+        //check internet before hitting web service
+        if AppDelegate.checkInternetConnection() {
+            
+            var dict = [String: AnyObject]()
+            dict["userid"] = AppHelper.userDefaultsForKey(_ID)
+            dict["groupname"] = "MyMeetUp"
+            var userIdArray = [AnyObject]()
+            for myobject: AnyObject in self.tokens {
+                
+                var tempDict = [String: AnyObject]()
+                tempDict["userid"] = myobject["_id"] as! String
+                tempDict["phoneNumber"] = (myobject["mobilePhone"] as! String)
+                tempDict["user_firstName"] = (myobject["firstName"] as! String)
+                userIdArray.append(tempDict)
+            }
+            var tempDict = [String: AnyObject]()
+            tempDict["userid"] = ChatHelper.userDefaultForKey(_ID)
+            tempDict["phoneNumber"] = AppHelper.userDefaultsForKey(cellNum)
+            tempDict["user_firstName"] = AppHelper.userDefaultsForKey(userFirstName)
+            userIdArray.append(tempDict)
+            dict["users"] = userIdArray
+            let groupImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 120, height: 120))
+            groupImage.image = self.imgCoverPic.image!
+            dict["imgUrl"] = ""
+            ChatListner.getChatListnerObj().socket.emit("createGroup", withItems: [dict])
+           
+            dispatch_after(5, dispatch_get_main_queue(), {
+                stopActivityIndicator(self.view)
+                
+                /*
+                 
+                 let str:String = ChatHelper.userDefaultForKey("userId") as String!
+                 let str1:String = recentChatObj.groupId as String!
+                 let strPred:String = "loginUserId contains[cd] \"\(str)\" AND groupId LIKE \"\(str1)\""
+                 let instance = DataBaseController.sharedInstance
+                 let fetchResult=instance.fetchData("GroupList", predicate: strPred, sort: ("groupId",false))! as NSArray
+                 var groupObj : GroupList!
+                 for myobject : AnyObject in fetchResult
+                 {
+                 groupObj = myobject as! GroupList
+                 
+                 }
+                 */
+                self.navigationController?.popToRootViewControllerAnimated(true)
+            })
+            
+        }
+        else {
+            AppHelper.showAlertWithTitle( "", message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+    }
+    
     @IBAction func btnAddContactClick(sender: AnyObject) {
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let friendListObj: AllContactsVC = storyBoard.instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
         friendListObj.fromVC="MeetUp"
         self.navigationController?.pushViewController(friendListObj, animated: true)
+        
+    }
+    
+    func getStaticDataFromServer(){
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["UserID"] = AppHelper.userDefaultsForKey(uId)
+            
+            //call global web service class
+            Services.serviceCallWithPath(ServiceMeetUpInviteStaticData, withParam: parameters, success: { (responseDict) in
+                
+                print(responseDict)
+                
+                AppDelegate.dismissProgressHUD()
+                //dissmiss indicator
+                if ((responseDict["error"] as! Int) == 0) {
+                    let items = responseDict["result"] as! [AnyObject]
+                    self.arrTypes = items.map({$0["type"]! as! String}) as [String]
+                    self.pickerView.reloadAllComponents()
+                }
+                else {
+                    AppHelper.showAlertWithTitle(responseDict["errorMsg"] as! String, message: "", tag: 0, delegate: nil, cancelButton: "Ok", otherButton: nil)
+                }
+                
+                }, failure: { (error) in
+                    
+                    AppDelegate.dismissProgressHUD()
+                    //dissmiss indicator
+                    AppHelper.showAlertWithTitle("", message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+            })
+        }
+        else {
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
         
     }
     
@@ -609,7 +744,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         print(#function)
     }
     
-    @IBAction func switchAllowInviteClick(sender: AnyObject) {
+    @IBAction func switchAllowInviteClick(mySwitch: UISwitch) {
+        
+        isForwardAllowed=mySwitch.on
+
     }
     
     @IBAction func btnBackClick(sender: AnyObject) {

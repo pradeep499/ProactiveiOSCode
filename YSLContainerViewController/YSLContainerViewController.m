@@ -115,6 +115,7 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
         }
     }
 }
+
 #pragma mark -- YSLScrollMenuView Delegate
 
 - (void)scrollMenuViewSelectedIndex:(NSInteger)index
@@ -187,11 +188,11 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     [_menuView setItemTextColor:self.menuItemTitleColor
            seletedItemTextColor:self.menuItemSelectedTitleColor
                    currentIndex:currentIndex];
-    
+    [self setChildViewControllerWithCurrentIndex:self.currentIndex];
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(containerViewItemIndex:currentController:)]) {
         [self.delegate containerViewItemIndex:self.currentIndex currentController:_childControllers[self.currentIndex]];
     }
-    [self setChildViewControllerWithCurrentIndex:self.currentIndex];
 }
 
 @end

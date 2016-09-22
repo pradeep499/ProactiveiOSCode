@@ -23,9 +23,10 @@ import UIKit
     
     let homeCoreData = AppDelegate.getAppDelegate()
     
+    //Server URL
     //var  socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
     
-    //ClientNewURL
+    //Production URL
     //var  socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
 
     //Test Server
@@ -67,7 +68,7 @@ func connectToSocket() -> Void{
     weakself.socket.off("delUserInGroup")
     
     weakself.socket.off("getMeetup_Invite_listing")
-
+    weakself.socket.off("getForward_Meetup_Invite")
 
     socket.on("connect") { data, ack in
         

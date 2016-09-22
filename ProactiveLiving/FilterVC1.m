@@ -85,7 +85,7 @@
             break;
     }
    
-    //Section 1 always remain not-collepsable (BMI Only, BMI & BFP)
+    //Section 0 always remain not-collepsable (BMI Only, BMI & BFP)
     if(section==1)
     {
         UITapGestureRecognizer  *headerTapped   = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];

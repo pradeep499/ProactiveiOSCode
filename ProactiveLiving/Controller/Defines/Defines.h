@@ -8,10 +8,10 @@
 
 
 //Custom Fonts
-#define FONT_BOLD @"Roboto-Bold"
-#define FONT_REGULAR @"Roboto-Regular"
-#define FONT_LIGHT @"Roboto-Light"
-#define FONT_THIN @"Roboto-Thin"
+#define FONT_BOLD @"Roboto-Bold" //15pix
+#define FONT_REGULAR @"Roboto-Regular" //14pix
+#define FONT_LIGHT @"Roboto-Light" //13pix
+#define FONT_THIN @"Roboto-Thin" //12pix
 
 //Device info
 #define DEVICE_TOKEN @"PushToken"
@@ -37,10 +37,10 @@
 #define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 
+//Server URL
 //#define BASE_URL @"http://52.23.211.77:3000/api/v1/"
 
-
-//ClientNewURL
+//Production URL
 //#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
 
 //Testing ULR
@@ -79,6 +79,8 @@
 #define ServiceInviteOrGiftPAS          @"users/sendPasInvite"
 #define ServiceSharePAS                 @"users/getPasShareOptions"
 #define ServiceSendPAS                  @"users/sendPasShare"
+#define ServiceMeetUpInviteStaticData   @"getMeetupInviteFor"
+
 
 #define maxLength                       25
 #define maxPhoneLength                  15
@@ -136,6 +138,7 @@
 #define NOTIFICATION_ANNOTATION_CLICKED @"NOTIFICATION_ANNOTATION_CLICKED"
 #define NOTIFICATION_SYNCCONTACT_CLICKED @"NOTIFICATION_SYNCCONTACT_CLICKED"
 #define NOTIFICATION_SHOW_GROUP_VIEW_CLICKED @"NOTIFICATION_SHOW_GROUP_VIEW_CLICKED"
+#define NOTIFICATION_GET_CONTACT_CLICKED @"NOTIFICATION_GET_CONTACT_CLICKED"
 
 
 #define BOOK_POPUP_HEIGHT 392

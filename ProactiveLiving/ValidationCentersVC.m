@@ -21,7 +21,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "LocationManagerSingleton.h"
 
-@interface ValidationCentersVC () <UISearchBarDelegate,UIGestureRecognizerDelegate>
+@interface ValidationCentersVC () <UISearchBarDelegate,UIGestureRecognizerDelegate,MKMapViewDelegate>
 {
     BOOL flag;
 }

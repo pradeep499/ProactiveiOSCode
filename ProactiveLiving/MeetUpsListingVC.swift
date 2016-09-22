@@ -19,13 +19,12 @@ class MeetUpsListingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.arrData = Array()
-        
+
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.fetchMeetUpOrWebInviteData()
-
     }
     //mark- Fetch Meetups/Invites listing data
     func fetchMeetUpOrWebInviteData() {
@@ -90,72 +89,213 @@ class MeetUpsListingVC: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("CellMeetUps", forIndexPath: indexPath) as UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("CellMeetUps", forIndexPath: indexPath) as! MeetUpListingCell
         cell.selectionStyle = .None
-        
         let eventImage = cell.contentView.viewWithTag(11) as! UIImageView
+        eventImage.layer.cornerRadius = eventImage.frame.height/2
+        eventImage.clipsToBounds = true
         let eventName = cell.contentView.viewWithTag(12) as! UILabel
         let statusBG = cell.contentView.viewWithTag(13) as! UIImageView
         let eventStatus = cell.contentView.viewWithTag(14) as! UILabel
         let eventTypeBy = cell.contentView.viewWithTag(15) as! UILabel
         let eventDesc = cell.contentView.viewWithTag(16) as! UILabel
-        let imgDate = cell.contentView.viewWithTag(17) as! UIImageView
         let lblDate = cell.contentView.viewWithTag(18) as! UILabel
         let imglink = cell.contentView.viewWithTag(19) as! UIImageView
-        let lblLink = cell.contentView.viewWithTag(20) as! UILabel
-        let imgAddress = cell.contentView.viewWithTag(21) as! UIImageView
-        let lblAddress = cell.contentView.viewWithTag(22) as! UILabel
-        let imgPhone = cell.contentView.viewWithTag(23) as! UIImageView
-        let lblPhone = cell.contentView.viewWithTag(24) as! UILabel
-
+        let txtLink = cell.contentView.viewWithTag(20) as! UILabel
+        let txtPIN = cell.contentView.viewWithTag(21) as! UILabel
+        let imgCall = cell.contentView.viewWithTag(23) as! UIImageView
+        let lblCall = cell.contentView.viewWithTag(24) as! UILabel
+        let lblMembers = cell.contentView.viewWithTag(27) as! UILabel
+        let lblAddress = cell.contentView.viewWithTag(28) as! UITextView
+        lblAddress.textContainer.lineFragmentPadding = 0;
+        lblAddress.textContainerInset = UIEdgeInsetsZero;
+        
         eventName.text = self.arrData[indexPath.row]["title"] as? String
         statusBG.image = UIImage(named:"")
-        eventStatus.text = self.arrData[indexPath.row]["isEdited"] as? String
+        eventStatus.text = ""
+        
         eventTypeBy.text = self.arrData[indexPath.row]["for"] as? String
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
         lblDate.text = self.arrData[indexPath.row]["createdDate"] as? String
         
-        lblLink.text = (self.arrData[indexPath.row]["links"] as! Array).joinWithSeparator(",")
-        lblAddress.text = self.arrData[indexPath.row]["address"] as? String
-        lblPhone.text = self.arrData[indexPath.row]["dialInNumber"] as? String
+        //lblLink.text = (self.arrData[indexPath.row]["links"] as! Array).joinWithSeparator(",")
+        //lblPhone.text = self.arrData[indexPath.row]["dialInNumber"] as? String
 
         if let imageUrlStr = self.arrData[indexPath.row]["imgUrl"] as? String {
             
             let image_url = NSURL(string: imageUrlStr)
             if (image_url != nil) {
-                let url_request = NSURLRequest(URL: image_url!)
-                let placeholder = UIImage(named: "no_photo")
-                eventImage.setImageWithURLRequest(url_request, placeholderImage: placeholder, success: { [weak cell] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
-                    print(cell)
-                    }, failure: { [weak cell]
-                        (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
-                        print(cell)
-                    })
+                let placeholder = UIImage(named: "ic_booking_profilepic")
+                eventImage.setImageWithURL(image_url, placeholderImage: placeholder)
             }
         }
         
         let acceptButton = cell.contentView.viewWithTag(25) as! UIButton
         let declineButton = cell.contentView.viewWithTag(26) as! UIButton
+        AppHelper.setBorderOnView(acceptButton)
+        AppHelper.setBorderOnView(declineButton)
+        
+        var dataDict = self.arrData[indexPath.row] as! [String : AnyObject]
+        let arrMembers = dataDict["members"] as! [AnyObject]
+
+        //Check status if member accepted or rejacted--
+        for item in arrMembers {
+            
+            var membDict = item as! [String : AnyObject]
+            let status = membDict["status"] as! String
+            
+            
+            if(membDict["memberId"] as! String == ChatHelper.userDefaultForKey("userId"))
+            {
+              
+                if(status == "1")
+                {
+                    cell.btnAccept.selected=true
+                    cell.imgAccept.hidden=false
+                    cell.btnAccept.layer.borderColor=UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+                    
+                    cell.btnDecline.selected=false
+                    cell.imgDecline.hidden=true
+                    cell.btnDecline.layer.borderColor=UIColor.clearColor().CGColor
+                }
+                else if(status == "2")
+                {
+                    cell.btnDecline.selected=true
+                    cell.imgDecline.hidden=false
+                    cell.btnDecline.layer.borderColor=UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+                    
+                    cell.btnAccept.selected=false
+                    cell.imgAccept.hidden=true
+                    cell.btnAccept.layer.borderColor=UIColor.clearColor().CGColor                }
+                
+            }
+            
+        }
+        
+        if((dataDict["createdBy"] as! String) == ChatHelper.userDefaultForKey("userId"))
+        {
+            cell.btnAccept.enabled=false
+            cell.btnDecline.enabled=false
+        }
+        
+        
+        if(self.title == "MEET UPS") {
+            
+            acceptButton.setTitle("Sure!", forState: UIControlState.Normal)
+            declineButton.setTitle("Sorry!", forState: UIControlState.Normal)
+            
+            acceptButton.titleLabel?.text="Sure!"
+            declineButton.titleLabel?.text="Sorry!"
+            lblAddress.hidden=false
+            txtLink.hidden=true
+            txtPIN.hidden=true
+            lblAddress.text = self.arrData[indexPath.row]["address"] as? String
+            imglink.image=UIImage(named:"address")
+            imgCall.hidden=true
+            lblCall.hidden=true
+
+            var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
+            let memberArr = someDict["members"] as! [AnyObject]
+            lblMembers.text = "\(memberArr.count) Going"
+        }
+        else {
+            
+            acceptButton.setTitle("Accept", forState: UIControlState.Normal)
+            declineButton.setTitle("Decline", forState: UIControlState.Normal)
+
+            acceptButton.titleLabel?.text="Accept"
+            declineButton.titleLabel?.text="Decline"
+            lblAddress.hidden=true
+            txtLink.hidden=false
+            txtPIN.hidden=false
+            txtLink.text = self.arrData[indexPath.row]["webLink"] as? String
+            txtPIN.text = "(PIN: \(self.arrData[indexPath.row]["pin"] as! String))"
+            imglink.image=UIImage(named:"web_invite_link")
+            imgCall.hidden=false
+            lblCall.hidden=false
+            
+            var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
+            let memberArr = someDict["members"] as! [AnyObject]
+            lblMembers.text = "\(memberArr.count) Attending"        }
         
         acceptButton.addTarget(self, action: #selector(btnAcceptClick(_:)), forControlEvents: .TouchUpInside)
         declineButton.addTarget(self, action: #selector(btnDeclineClick(_:)), forControlEvents: .TouchUpInside)
-        AppHelper.setBorderOnView(acceptButton)
-        AppHelper.setBorderOnView(declineButton)
-
         
         return cell;
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let meetUpContainerVC: MeetUpContainerVC = storyBoard.instantiateViewControllerWithIdentifier("MeetUpContainerVC") as! MeetUpContainerVC
+        //meetUpContainerVC.dataDict=self.arrData[indexPath.row] as! [String : AnyObject]
+        meetUpContainerVC.meetUpID=self.arrData[indexPath.row]["_id"] as! String
+        if(self.title == "MEET UPS")
+        {
+            meetUpContainerVC.title = "MEET UPS"
+        }
+        else
+        {
+            meetUpContainerVC.title = "WEB INVITES"
+        }
+        self.navigationController?.pushViewController(meetUpContainerVC, animated: true)
+        
     }
     
-    func btnAcceptClick(sender: AnyObject)  {
+    
+    func btnAcceptClick(sender: UIButton)  {
         print(sender)
+        //sender.selected = !sender.selected
+        let point = self.tableView.convertPoint(CGPoint.zero, fromView: sender)
+        
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(point) else {
+            fatalError("can't find point in tableView")
+        }
+        
+        var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
+        
+        var dict = Dictionary<String,AnyObject>()
+        
+        if(self.title == "MEET UPS") {
+            dict["type"]="meetup"
+        }
+        else {
+            dict["type"]="webinvite"
+        }
+        dict["typeId"] = someDict["_id"] as! String
+        dict["status"] = "1"
+        dict["userId"] = ChatHelper.userDefaultForKey("userId")
+        ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
+
+        self.fetchMeetUpOrWebInviteData()
     }
     
-    func btnDeclineClick(sender: AnyObject)  {
+    func btnDeclineClick(sender: UIButton)  {
         print(sender)
+        //sender.selected = !sender.selected
+        
+        let point = self.tableView.convertPoint(CGPoint.zero, fromView: sender)
+        
+        guard let indexPath = self.tableView.indexPathForRowAtPoint(point) else {
+            fatalError("can't find point in tableView")
+        }
+        
+        var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
+        
+        var dict = Dictionary<String,AnyObject>()
+        if(self.title == "MEET UPS") {
+            dict["type"]="meetup"
+        }
+        else {
+            dict["type"]="webinvite"
+        }
+        dict["typeId"] = someDict["_id"] as! String
+        dict["status"] = "2"
+        dict["userId"] = ChatHelper.userDefaultForKey("userId")
+        ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
+
+        self.fetchMeetUpOrWebInviteData()
+
     }
 
     

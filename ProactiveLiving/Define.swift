@@ -105,9 +105,10 @@ let chatCDNbaseUrl = "http://52.89.149.60:3000/proactiveliving"
 
 //for chat profile images
 
+// Server URL
 //let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
 
-//ClientNewURL
+//Production URL
 //let ChatBaseMediaUrl = "http://52.89.149.60:3000/"
 
 //Testing URL
@@ -455,6 +456,7 @@ func UIColorFromRGB(rgbValue: UInt) -> UIColor
     )
 }
 
+
 //MARK:- Validation Extension -
 
 extension String {
@@ -531,6 +533,68 @@ extension String {
         
         return nsSt.stringByAppendingPathComponent(path)
     }
+    
+    //To convert string to Bool
+    func toBool() -> Bool? {
+        switch self {
+        case "True", "true", "yes", "1":
+            return true
+        case "False", "false", "no", "0":
+            return false
+        default:
+            return nil
+        }
+    }
+//    func sizeWithFont(font: UIFont, constrainedToWidth width: Float, lineBreakMode: NSLineBreakMode) -> CGSize {
+//        var paragraphStyle = NSMutableParagraphStyle.defaultParagraphStyle()
+//        paragraphStyle.lineBreakMode = NSLineBreakMode.ByWordWrapping
+//        var textRect = self.boundingRectWithSize(CGSizeMake(300.0,CGFloat.max), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle], context: nil)
+//        return CGSizeMake(ceilf(textRect.size.width), ceilf(textRect.size.height))
+//    }
+//    
+//    func calculateHeightForText(inText:String, width:Float, font:UIFont ) -> CGFloat
+//    {
+//        var messageString = inText
+//        var attributes = [UIFont(): UIFont.systemFontOfSize(15.0)]
+//        var attrString:NSAttributedString? = NSAttributedString(string: messageString, attributes: attributes)
+//        var rect:CGRect = attrString!.boundingRectWithSize(CGSizeMake(300.0,CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context:nil )//hear u will get nearer height not the exact value
+//        var requredSize:CGRect = rect
+//        return requredSize.height  //to include button's in your tableview
+//        
+//    }
+    
+//    func heightForView(text:String, #font:UIFont, #width:CGFloat) -> CGFloat{
+//        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+//        label.numberOfLines = 0
+//        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+//        label.font = font
+//        label.text = text
+//        
+//        label.sizeToFit()
+//        return label.frame.height
+//    }
+
+    
+    func sizeWithFontt(font: UIFont) -> CGSize {
+        let size = self.sizeWithAttributes([NSFontAttributeName: font])
+        return CGSizeMake(CGFloat(size.width), CGFloat(size.height))
+    }
+    
+    func sizeWithFontt(font: UIFont, constrainedToSize size: CGSize, lineBreakMode: NSLineBreakMode) -> CGSize {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = lineBreakMode
+        let textRect = self.boundingRectWithSize(size, options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle], context: nil)
+        return CGSizeMake(CGFloat(textRect.size.width), CGFloat(textRect.size.height))
+    }
+    
+    func sizeWithFont(font: UIFont, constrainedToWidth width: CGFloat, lineBreakMode: NSLineBreakMode) -> CGSize {
+        let size = CGSizeMake(width, CGFloat.max)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = lineBreakMode
+        let textRect = self.boundingRectWithSize(size, options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle], context: nil)
+        return CGSizeMake(CGFloat(textRect.size.width), CGFloat(textRect.size.height))
+    }
+
 }
 
 extension UIImage {

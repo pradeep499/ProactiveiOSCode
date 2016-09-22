@@ -68,6 +68,11 @@
     
     //Statusbar appearance
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    //Navigationbar appearence
+    [[UINavigationBar appearance] setBarTintColor: [UIColor colorWithRed:1.0/255 green:174.0/255 blue:240.0/255 alpha:1.0]];
+    [[UINavigationBar appearance] setTintColor: [UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, [UIFont fontWithName:FONT_REGULAR size:16], NSFontAttributeName,nil]];
 
     /*
     BOOL isLoggedIn;

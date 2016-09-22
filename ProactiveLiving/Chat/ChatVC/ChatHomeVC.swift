@@ -398,21 +398,6 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
             anObject = fetchedResultsController.objectAtIndexPath(indexPath) as! RecentChatList
         }
         
-//        let storyBoard : UIStoryboard = UIStoryboard(name: "ChatStoryboard", bundle:nil)
-//        let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as ChattingMainVC
-//        chatMainObj.isFromClass="Recent"
-//        chatMainObj.isFromDeatilScreen = "0"
-//        chatMainObj.recentChatObj=anObject
-//        
-//        if anObject.groupId == "0"
-//        {
-//            chatMainObj.isGroup="0"
-//        }else
-//        {
-//            chatMainObj.isGroup="1"
-//        }
-//        self.navigationController?.pushViewController(chatMainObj, animated: true)
-        
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
         
@@ -426,7 +411,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
 
         } else {
             locIndexPath=indexPath;
-            hitServiceForMeldDetails(anObject.groupId! as String)
+            //hitServiceForMeldDetails(anObject.groupId! as String)
 
             let strPred:String = "groupId contains[cd] \"\(anObject.groupId!)\""
 
@@ -452,7 +437,11 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
         }
     }
 
-
+    //Below delegate prevent swipe to delete
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        if self.recent_chatTable.editing {return .Delete}
+        return .None
+    }
 
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         

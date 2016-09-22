@@ -580,9 +580,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         super.viewWillAppear(true)
     
-        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
-            print(finish)
-        }
+        //bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
+           // print(finish)
+        //}
         
         self.navigationController?.navigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
@@ -714,9 +714,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            print(finish)
-        }
+        //bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+            //print(finish)
+        //}
         
         self.navigationController?.navigationBarHidden = false
         IQKeyboardManager.sharedManager().enable = true

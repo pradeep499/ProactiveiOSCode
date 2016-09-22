@@ -102,6 +102,11 @@
     NSLog(@"current controller : %@",controller);
     currentIndex=index;
     
+    if(currentIndex==0)
+        self.btnEdit.hidden=NO;
+    else
+        self.btnEdit.hidden=YES;
+    
     [controller viewWillAppear:YES];
 }
 

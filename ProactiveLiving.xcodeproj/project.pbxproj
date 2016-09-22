@@ -68,6 +68,8 @@
 		BA02E0DC1CE9D4B3006DF10E /* ContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA02E0DB1CE9D4B3006DF10E /* ContactsCell.m */; };
 		BA02E2C41D05C06000FC5489 /* AllPasVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA02E2C31D05C06000FC5489 /* AllPasVC.m */; };
 		BA04854D1CABFC4500196747 /* AboutPASInstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04854C1CABFC4500196747 /* AboutPASInstVC.m */; };
+		BA0B653C1D93B48000CB6BB8 /* NewsFeedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0B653B1D93B48000CB6BB8 /* NewsFeedContainer.swift */; };
+		BA0B653E1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0B653D1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift */; };
 		BA18B0451CF5EB5D00C1086A /* ChatVC_Old.m in Sources */ = {isa = PBXBuildFile; fileRef = BA18B0441CF5EB5D00C1086A /* ChatVC_Old.m */; };
 		BA1BF0DF1CEB4B2D000CC4EA /* InboxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF0DE1CEB4B2D000CC4EA /* InboxVC.m */; };
 		BA1D70851CD8B29B00978F2F /* ActivityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1D70841CD8B29B00978F2F /* ActivityDetailVC.m */; };
@@ -220,6 +222,8 @@
 		BA5901B11D365E99006142AC /* HelpingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5901B01D365E99006142AC /* HelpingClass.swift */; };
 		BA5901B31D365F57006142AC /* ServiceClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5901B21D365F57006142AC /* ServiceClass.swift */; };
 		BA5901B51D365FCD006142AC /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5901B41D365FCD006142AC /* Reachability.swift */; };
+		BA642DC41D8040C30079422F /* MeetUpListingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA642DC31D8040C30079422F /* MeetUpListingCell.swift */; };
+		BA6E72651D7DAD95008081FC /* MeetUpDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6E72641D7DAD95008081FC /* MeetUpDetailsVC.swift */; };
 		BA6F33601C7C9674008288F2 /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6F335F1C7C9674008288F2 /* TreeNode.m */; };
 		BA7414131C75A4900041B8D4 /* ProfileVCTableCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7414121C75A4900041B8D4 /* ProfileVCTableCell2.m */; };
 		BA7A4B191C61F481005CA80C /* ValidationFiltersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7A4B181C61F481005CA80C /* ValidationFiltersVC.m */; };
@@ -346,11 +350,14 @@
 		BAF1E55A1CABAB3E00FA5CC5 /* PASInstTextVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF1E5591CABAB3E00FA5CC5 /* PASInstTextVC.m */; };
 		BAF2D9991CA2B0D5000FBD1F /* BookingPopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2D9981CA2B0D5000FBD1F /* BookingPopUp.m */; };
 		BAF4AE741CCA3BD800C76F99 /* CertificationsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF4AE731CCA3BD800C76F99 /* CertificationsVC.m */; };
+		BAFA9DC71D81742F005D0609 /* MeetUpContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA9DC61D81742E005D0609 /* MeetUpContainerVC.swift */; };
 		BAFC7C7A1CB3903C00761462 /* PASToDoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAFC7C791CB3903C00761462 /* PASToDoVC.m */; };
 		BAFDA8FB1D40DFC500301C01 /* CreateChatGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFDA8F71D40DFC500301C01 /* CreateChatGroupVC.swift */; };
 		BAFDA8FC1D40DFC500301C01 /* GroupDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFDA8F81D40DFC500301C01 /* GroupDetailVC.swift */; };
 		BAFDA8FD1D40DFC500301C01 /* GroupHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFDA8F91D40DFC500301C01 /* GroupHomeCell.swift */; };
 		BAFDA8FE1D40DFC500301C01 /* GroupHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFDA8FA1D40DFC500301C01 /* GroupHomeVC.swift */; };
+		BAFFA5BC1D8AB8A300969211 /* MeetUpProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFFA5BB1D8AB8A200969211 /* MeetUpProfileCell.swift */; };
+		BAFFA5BE1D8BF2CD00969211 /* MembersCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFFA5BD1D8BF2CD00969211 /* MembersCollectionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -465,6 +472,8 @@
 		BA02E2C31D05C06000FC5489 /* AllPasVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllPasVC.m; sourceTree = "<group>"; };
 		BA04854B1CABFC4500196747 /* AboutPASInstVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPASInstVC.h; sourceTree = "<group>"; };
 		BA04854C1CABFC4500196747 /* AboutPASInstVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPASInstVC.m; sourceTree = "<group>"; };
+		BA0B653B1D93B48000CB6BB8 /* NewsFeedContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedContainer.swift; sourceTree = "<group>"; };
+		BA0B653D1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedsAllVC.swift; sourceTree = "<group>"; };
 		BA18B0431CF5EB5D00C1086A /* ChatVC_Old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatVC_Old.h; sourceTree = "<group>"; };
 		BA18B0441CF5EB5D00C1086A /* ChatVC_Old.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatVC_Old.m; sourceTree = "<group>"; };
 		BA1BF0DD1CEB4B2D000CC4EA /* InboxVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxVC.h; sourceTree = "<group>"; };
@@ -640,6 +649,8 @@
 		BA59FFFD1D364EFD006142AC /* ic_blue_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_blue_arrow@2x.png"; sourceTree = "<group>"; };
 		BA59FFFE1D364EFD006142AC /* ic_chat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_chat_add@2x.png"; sourceTree = "<group>"; };
 		BA59FFFF1D364EFD006142AC /* ic_chat_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_chat_camera@2x.png"; sourceTree = "<group>"; };
+		BA642DC31D8040C30079422F /* MeetUpListingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetUpListingCell.swift; sourceTree = "<group>"; };
+		BA6E72641D7DAD95008081FC /* MeetUpDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetUpDetailsVC.swift; sourceTree = "<group>"; };
 		BA6F335E1C7C9674008288F2 /* TreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
 		BA6F335F1C7C9674008288F2 /* TreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
 		BA7414111C75A4900041B8D4 /* ProfileVCTableCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileVCTableCell2.h; sourceTree = "<group>"; };
@@ -870,12 +881,15 @@
 		BAF2D9981CA2B0D5000FBD1F /* BookingPopUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookingPopUp.m; path = ../BookingPopUp.m; sourceTree = "<group>"; };
 		BAF4AE721CCA3BD800C76F99 /* CertificationsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificationsVC.h; sourceTree = "<group>"; };
 		BAF4AE731CCA3BD800C76F99 /* CertificationsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificationsVC.m; sourceTree = "<group>"; };
+		BAFA9DC61D81742E005D0609 /* MeetUpContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetUpContainerVC.swift; sourceTree = "<group>"; };
 		BAFC7C781CB3903C00761462 /* PASToDoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASToDoVC.h; sourceTree = "<group>"; };
 		BAFC7C791CB3903C00761462 /* PASToDoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASToDoVC.m; sourceTree = "<group>"; };
 		BAFDA8F71D40DFC500301C01 /* CreateChatGroupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateChatGroupVC.swift; path = GroupChat/CreateChatGroupVC.swift; sourceTree = "<group>"; };
 		BAFDA8F81D40DFC500301C01 /* GroupDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailVC.swift; path = GroupChat/GroupDetailVC.swift; sourceTree = "<group>"; };
 		BAFDA8F91D40DFC500301C01 /* GroupHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupHomeCell.swift; path = GroupChat/GroupHomeCell.swift; sourceTree = "<group>"; };
 		BAFDA8FA1D40DFC500301C01 /* GroupHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupHomeVC.swift; path = GroupChat/GroupHomeVC.swift; sourceTree = "<group>"; };
+		BAFFA5BB1D8AB8A200969211 /* MeetUpProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetUpProfileCell.swift; sourceTree = "<group>"; };
+		BAFFA5BD1D8BF2CD00969211 /* MembersCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersCollectionCell.swift; sourceTree = "<group>"; };
 		C32D6441F9590B14B646033B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1005,7 +1019,8 @@
 		671C3D961C44FEE6006A5423 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BAE59C861D799AC3007654BA /* MeetUpInviteListing */,
+				BA0B653A1D93B42C00CB6BB8 /* NewsFeeds */,
+				BAE59C861D799AC3007654BA /* MeetUps */,
 				BAAF5F191D63382100BAF0E8 /* CreateMeetUps */,
 				BAFDA8E61D40AAFB00301C01 /* GroupChat */,
 				BA59FFF41D364EFD006142AC /* Chat */,
@@ -1250,6 +1265,15 @@
 				BABEFAB41D113F550053A8A2 /* PASSharePopUp.m */,
 			);
 			name = "PAS-Share";
+			sourceTree = "<group>";
+		};
+		BA0B653A1D93B42C00CB6BB8 /* NewsFeeds */ = {
+			isa = PBXGroup;
+			children = (
+				BA0B653B1D93B48000CB6BB8 /* NewsFeedContainer.swift */,
+				BA0B653D1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift */,
+			);
+			name = NewsFeeds;
 			sourceTree = "<group>";
 		};
 		BA18B0421CF5EB2D00C1086A /* Chat Old */ = {
@@ -2166,12 +2190,17 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		BAE59C861D799AC3007654BA /* MeetUpInviteListing */ = {
+		BAE59C861D799AC3007654BA /* MeetUps */ = {
 			isa = PBXGroup;
 			children = (
 				BA01EEDE1D7D7C92009548D6 /* MeetUpsListingVC.swift */,
+				BA6E72641D7DAD95008081FC /* MeetUpDetailsVC.swift */,
+				BA642DC31D8040C30079422F /* MeetUpListingCell.swift */,
+				BAFA9DC61D81742E005D0609 /* MeetUpContainerVC.swift */,
+				BAFFA5BB1D8AB8A200969211 /* MeetUpProfileCell.swift */,
+				BAFFA5BD1D8BF2CD00969211 /* MembersCollectionCell.swift */,
 			);
-			name = MeetUpInviteListing;
+			name = MeetUps;
 			sourceTree = "<group>";
 		};
 		BAF4AE711CCA3BAA00C76F99 /* Certifications */ = {
@@ -2498,6 +2527,7 @@
 				BAD8D6391CBCCDCB0037ED23 /* NSCalendar+Juncture.m in Sources */,
 				BA7BBE611C735F8A00EBC5BF /* ProfileVCTableCell.m in Sources */,
 				BA5901141D364EFD006142AC /* FullScreenImageVC.swift in Sources */,
+				BA6E72651D7DAD95008081FC /* MeetUpDetailsVC.swift in Sources */,
 				BAB0E4F61D5DE59B00906C10 /* SocketEngineWebsocket.swift in Sources */,
 				BA59019C1D36579D006142AC /* IQNSArray+Sort.swift in Sources */,
 				BAB0E4ED1D5DE59B00906C10 /* SocketAckManager.swift in Sources */,
@@ -2510,6 +2540,7 @@
 				BA5900E11D364EFD006142AC /* GroupList+CoreDataProperties.swift in Sources */,
 				BAB0E5001D5DE59B00906C10 /* SocketParsable.swift in Sources */,
 				BA01EEDF1D7D7C92009548D6 /* CreateMeetUpVC.swift in Sources */,
+				BAFFA5BC1D8AB8A300969211 /* MeetUpProfileCell.swift in Sources */,
 				BAD909941CFD791B00E12422 /* SettingsMainVC.m in Sources */,
 				BA88882C1C6493BA0083C857 /* FilterFourCell.m in Sources */,
 				BA5901131D364EFD006142AC /* ChatVC.swift in Sources */,
@@ -2527,6 +2558,7 @@
 				BA5901201D364EFD006142AC /* StrorePhoneContact.m in Sources */,
 				BABB57DC1CEF105100F7C879 /* MessagesVC.m in Sources */,
 				BAC9B4B01CBF7A8600373F73 /* ExpertsVC.m in Sources */,
+				BAFFA5BE1D8BF2CD00969211 /* MembersCollectionCell.swift in Sources */,
 				BA5900E61D364EFD006142AC /* RecentChat.swift in Sources */,
 				92E092021D37767A00BEC575 /* SOPlaceholderedTextView.m in Sources */,
 				BA5901121D364EFD006142AC /* ChattingMainVC.swift in Sources */,
@@ -2574,6 +2606,7 @@
 				BA5900D81D364EFD006142AC /* AppContactList.swift in Sources */,
 				BA02E0DC1CE9D4B3006DF10E /* ContactsCell.m in Sources */,
 				BAD8D6451CBCCDCB0037ED23 /* CKCalendarView.m in Sources */,
+				BAFA9DC71D81742F005D0609 /* MeetUpContainerVC.swift in Sources */,
 				BAA4E8461CD0FB8500A198E7 /* ActivitiesVC.m in Sources */,
 				BAB0E4F91D5DE59B00906C10 /* SocketFixUTF8.swift in Sources */,
 				BA893DEA1C6322AE00E94DBE /* YSLScrollMenuView.m in Sources */,
@@ -2615,6 +2648,7 @@
 				BAB0E4FE1D5DE59B00906C10 /* SocketLogger.swift in Sources */,
 				BAF2D9991CA2B0D5000FBD1F /* BookingPopUp.m in Sources */,
 				BA5900EC1D364EFD006142AC /* Test.swift in Sources */,
+				BA0B653E1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift in Sources */,
 				BAC8D2991C588F0B0084AA47 /* ValidationCentersVC.m in Sources */,
 				BA5900EF1D364EFD006142AC /* UserChatFile+CoreDataProperties.swift in Sources */,
 				BA5901471D364F86006142AC /* NSData+Base64.m in Sources */,
@@ -2657,6 +2691,7 @@
 				BAB985431D0ABCD700F7DA80 /* UICustomCheckBox.m in Sources */,
 				BAD195E61C63589E0085DD9B /* FilterVC1.m in Sources */,
 				BAD8D63B1CBCCDCB0037ED23 /* NSDate+Components.m in Sources */,
+				BA642DC41D8040C30079422F /* MeetUpListingCell.swift in Sources */,
 				BAD5F0B11D069AE7002186B4 /* PASInviteInstrVC.m in Sources */,
 				BAC9B4B31CBF8CA600373F73 /* LocationManagerSingleton.m in Sources */,
 				BA7BBE5E1C735F7700EBC5BF /* MoreVCTableCell.m in Sources */,
@@ -2671,6 +2706,7 @@
 				BA59011A1D364EFD006142AC /* DKImagePickerController.swift in Sources */,
 				BAD5F10F1CB5213300C8F206 /* AppointmentListingVC.m in Sources */,
 				BAD8D6461CBCCDCB0037ED23 /* CKTableViewCell.m in Sources */,
+				BA0B653C1D93B48000CB6BB8 /* NewsFeedContainer.swift in Sources */,
 				BAD8D6401CBCCDCB0037ED23 /* UIView+AnimatedFrame.m in Sources */,
 				BAD9099A1CFD797C00E12422 /* SettingsContactsVC.m in Sources */,
 				BA5900D71D364EFD006142AC /* AppContactList+CoreDataProperties.swift in Sources */,
@@ -2805,8 +2841,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
@@ -2830,7 +2866,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE = "153c7b60-bd16-4bcb-9fdd-5c9a966cb0b9";
+				PROVISIONING_PROFILE = "60c4ce17-adb9-4900-a9ad-b59d6e2e6048";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2854,8 +2890,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -2872,7 +2908,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE = "153c7b60-bd16-4bcb-9fdd-5c9a966cb0b9";
+				PROVISIONING_PROFILE = "60c4ce17-adb9-4900-a9ad-b59d6e2e6048";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2888,8 +2924,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -2905,7 +2941,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "60c4ce17-adb9-4900-a9ad-b59d6e2e6048";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/sahil/Documents/proactively-ios/ProactiveLiving/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2919,8 +2955,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -2936,7 +2972,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "60c4ce17-adb9-4900-a9ad-b59d6e2e6048";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/sahil/Documents/proactively-ios/ProactiveLiving/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -2952,7 +2988,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "163639fe-31ca-45d9-951e-c3157e1df7ad";
+				PROVISIONING_PROFILE = "60c4ce17-adb9-4900-a9ad-b59d6e2e6048";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProactiveLiving.app/ProactiveLiving";
 			};
 			name = Debug;
@@ -2967,7 +3003,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "163639fe-31ca-45d9-951e-c3157e1df7ad";
+				PROVISIONING_PROFILE = "60c4ce17-adb9-4900-a9ad-b59d6e2e6048";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProactiveLiving.app/ProactiveLiving";
 			};
 			name = Release;
@@ -2981,7 +3017,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "163639fe-31ca-45d9-951e-c3157e1df7ad";
+				PROVISIONING_PROFILE = "60c4ce17-adb9-4900-a9ad-b59d6e2e6048";
 				TEST_TARGET_NAME = ProactiveLiving;
 				USES_XCTRUNNER = YES;
 			};
@@ -2996,7 +3032,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "163639fe-31ca-45d9-951e-c3157e1df7ad";
+				PROVISIONING_PROFILE = "60c4ce17-adb9-4900-a9ad-b59d6e2e6048";
 				TEST_TARGET_NAME = ProactiveLiving;
 				USES_XCTRUNNER = YES;
 			};
