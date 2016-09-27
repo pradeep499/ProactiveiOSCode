@@ -80,7 +80,7 @@
 #define ServiceSharePAS                 @"users/getPasShareOptions"
 #define ServiceSendPAS                  @"users/sendPasShare"
 #define ServiceMeetUpInviteStaticData   @"getMeetupInviteFor"
-
+#define ServiceGetAllStories            @"getStories"
 
 #define maxLength                       25
 #define maxPhoneLength                  15

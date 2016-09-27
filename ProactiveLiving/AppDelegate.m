@@ -107,11 +107,26 @@
     
     [splashView removeFromSuperview];
      */
-    
     //Create connection
     [[ChatListner getChatListnerObj] createConnection];
     
+    
+    // Delay execution in each 15 seconds.
+    [NSTimer scheduledTimerWithTimeInterval: 15.0 target: self
+                                                    selector: @selector(timerFired:) userInfo: nil repeats: YES];
+    
     return YES;
+}
+
+- (void)timerFired:(NSTimer*)theTimer{
+    if(/* DISABLES CODE */ (YES)){
+        [theTimer isValid]; //recall the NSTimer
+        //implement your methods
+        [[ChatListner getChatListnerObj] doNotSleep];
+        NSLog(@"fired...");
+    }else{
+        [theTimer invalidate]; //stop the NSTimer
+    }
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -312,13 +327,15 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    //Create connection
-    [[ChatListner getChatListnerObj] createConnection];
+       NSLog(@"applicationWillEnterForeground>>>>>>>>>>>>>>>>>>>>");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [AppHelper saveToUserDefaults:@"didBecomeActive" withKey:@"APP_STATUS"];
+    //Create connection
+    [[ChatListner getChatListnerObj] createConnection];
+    NSLog(@"applicationDidBecomeActive>>>>>>>>>>>>>>>>>>>>");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

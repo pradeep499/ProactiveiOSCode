@@ -580,9 +580,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         super.viewWillAppear(true)
     
-        //bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
+        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
            // print(finish)
-        //}
+        }
         
         self.navigationController?.navigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
@@ -714,9 +714,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        //bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
             //print(finish)
-        //}
+        }
         
         self.navigationController?.navigationBarHidden = false
         IQKeyboardManager.sharedManager().enable = true
@@ -3625,7 +3625,6 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             }
             if(IS_IOS_7)
             {
-                //                let actionSheet = UIActionSheet(title: friendName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Email Conversation",blockStr,reportStr,"Delete Conversation","Cancel")
                 
                 let actionSheet = UIActionSheet(title: friendName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Email Conversation","Delete Conversation","Cancel")
                 
@@ -3640,21 +3639,6 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         self.emailAlertMethod()
                 }))
                 
-                //                actionSheet.addAction(UIAlertAction(title: blockStr, style: UIAlertActionStyle.Default, handler:
-                //                    { (ACTION :UIAlertAction!)in
-                //
-                //                        self.blockAlertMethod()
-                //
-                //                }))
-                
-                //                actionSheet.addAction(UIAlertAction(title: reportStr, style: UIAlertActionStyle.Default, handler:
-                //                    { (ACTION :UIAlertAction!)in
-                //                        if  reportStr == "Report user"
-                //                        {
-                //                            self.reportAlertMethod()
-                //                        }
-                //
-                //                }))
                 actionSheet.addAction(UIAlertAction(title: "Delete Conversation", style: UIAlertActionStyle.Default, handler:
                     { (ACTION :UIAlertAction!)in
                         

@@ -338,7 +338,7 @@
             [self.navigationController popViewControllerAnimated:YES];
 
         }
-         else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[MeetUpContainerVC class]])
+         else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[MeetUpDetailsVC class]])
          {
              [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GET_CONTACT_CLICKED object:self userInfo:frndDict];
              

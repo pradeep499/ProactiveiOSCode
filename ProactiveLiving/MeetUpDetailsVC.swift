@@ -8,25 +8,28 @@
 
 import UIKit
 
-class MeetUpDetailsVC: UIViewController {
+class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     var arrayForBool = [Int]()
     lazy var dataDict = [String : AnyObject]()
     var selectedRowsArray=[String]()
     var screenName: String!
     var meetUpID: String!
-
+    var fwBy: String!
+    var meetUpGroupID: String!
     
     @IBOutlet weak var imgMeetUp: UIImageView!
     @IBOutlet weak var imgLike: UIImageView!
     @IBOutlet weak var lblLike: UILabel!
     @IBOutlet weak var btnForward: UIButton!
+    @IBOutlet weak var screenTitle: UILabel!
     
     @IBOutlet weak var tableMeetUpDetails: UITableView!
     @IBOutlet weak var btnLink: UIButton!
     @IBOutlet weak var btnDialUp: UIButton!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var dialUpView: UIView!
+    @IBOutlet weak var HConstDialUpView: NSLayoutConstraint!
 
     
     @IBOutlet weak var btnSure: UIButton!
@@ -81,8 +84,10 @@ class MeetUpDetailsVC: UIViewController {
 
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBarHidden = true
     }
    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -179,9 +184,9 @@ class MeetUpDetailsVC: UIViewController {
             case 1:
                 return ((self.dataDict["desc"] as! String?)?.sizeWithFont(UIFont(name: FONT_LIGHT, size: 13.0)!, constrainedToWidth: screenWidth-16, lineBreakMode: .ByWordWrapping).height)!+10
             case 2:
-                return 50
+                return 30
             case 3:
-                return 60
+                return 116
             default:
                 break
             }
@@ -229,21 +234,35 @@ class MeetUpDetailsVC: UIViewController {
         switch (indexPath.section) {
         case (0):
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID0, forIndexPath: indexPath) as! MeetUpProfileCell
+            cell.selectionStyle = .None
             cell.lblName.text=self.dataDict["for"] as? String
             cell.lblCreatedBy.text="by \(self.dataDict["createdBy"] as! String)"
-            cell.lblForwardBy.text="FW: by \(self.dataDict["forwardedBy"] as? String)"
+            
+            if(!(self.fwBy == ""))
+            {
+                cell.lblForwardBy.hidden=false
+                cell.lblForwardBy.text="FW: by \(self.fwBy)"
+            }
+            else
+            {
+                cell.lblForwardBy.hidden=true
+            }
             cell.lblDate.text=self.dataDict["createdDate"] as? String
             cell.lblTime.text=self.dataDict["createdTime"] as? String
             /* ... */
             return cell
         case (1):
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID1, forIndexPath: indexPath) as UITableViewCell
+            cell.selectionStyle = .None
+
             let lblDesc = cell.contentView.viewWithTag(111) as! UILabel
             lblDesc.text = self.dataDict["desc"] as? String
             /* ... */
             return cell
         case (2):
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID2, forIndexPath: indexPath) as UITableViewCell
+            cell.selectionStyle = .None
+
             let btnAttachment = cell.contentView.viewWithTag(111) as! UIButton
             AppHelper.setBorderOnView(btnAttachment)
             btnAttachment.addTarget(self, action: #selector(btnAttachmentClick(_:)), forControlEvents: .TouchUpInside)
@@ -254,6 +273,8 @@ class MeetUpDetailsVC: UIViewController {
             return cell
         default: //case (2)
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID3, forIndexPath: indexPath) as! MembersCollectionCell
+            cell.selectionStyle = .None
+
             cell.backgroundColor = UIColor.clearColor()
             cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
             /* ... */
@@ -270,8 +291,19 @@ class MeetUpDetailsVC: UIViewController {
         }
         
         let dataArr = self.dataDict["links"] as! [AnyObject]
-        let link: String = dataArr[indexPath.row]["url"] as! String
-        UIApplication.sharedApplication().openURL(NSURL(string: link)!)
+        
+        var url : String!
+        
+        if((dataArr[indexPath.row]["url"] as! String).hasPrefix("http://") || (dataArr[indexPath.row]["url"] as! String).hasPrefix("https://")){
+            
+            url = dataArr[indexPath.row]["url"] as! String
+        }
+        else
+        {
+            url = "http://" + (dataArr[indexPath.row]["url"] as! String)
+        }
+        
+        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
 
     }
     
@@ -297,7 +329,7 @@ class MeetUpDetailsVC: UIViewController {
     func btnForwardClick(sender: UIButton)  {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name:NOTIFICATION_GET_CONTACT_CLICKED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MeetUpDetailsVC.forwardMeetUpOrInvite(_:)), name:NOTIFICATION_GET_CONTACT_CLICKED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(forwardMeetUpOrInvite(_:)), name:NOTIFICATION_GET_CONTACT_CLICKED, object: nil)
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let friendListObj: AllContactsVC = storyBoard.instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
@@ -328,14 +360,18 @@ class MeetUpDetailsVC: UIViewController {
     func btnLinkClick(sender: UIButton)  {
         print(sender)
         
-        let point = self.tableMeetUpDetails.convertPoint(CGPoint.zero, fromView: sender)
-        guard let indexPath = self.tableMeetUpDetails.indexPathForRowAtPoint(point) else {
-            fatalError("can't find point in tableView")
+        var url : String!
+        
+        if((self.dataDict["webLink"] as! String).hasPrefix("http://") || (self.dataDict["webLink"] as! String).hasPrefix("https://")){
+            
+            url = self.dataDict["webLink"] as! String
+        }
+        else
+        {
+            url = "http://" + (self.dataDict["webLink"] as! String)
         }
         
-        let dataArr = self.dataDict["webLink"] as! [AnyObject]
-        let link: String = dataArr[indexPath.row]["url"] as! String
-        UIApplication.sharedApplication().openURL(NSURL(string: link)!)
+        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
         
     }
     
@@ -383,14 +419,23 @@ class MeetUpDetailsVC: UIViewController {
                     self.dataDict=dictData["result"] as! Dictionary<String, AnyObject>
                     print("arrayList \(self.dataDict)")
                     
-                    let controller = (self.parentViewController as! YSLContainerViewController).parentViewController as! MeetUpContainerVC
-                    controller.screenTitle.text = self.dataDict["title"] as? String
+                    //let controller = (self.parentViewController as! YSLContainerViewController).parentViewController as! MeetUpContainerVC
+                    //controller.screenTitle.text = self.dataDict["title"] as? String
+                    self.screenTitle.text = self.dataDict["title"] as? String
+                    self.btnLink.setTitle((self.dataDict["webLink"] as! String), forState: .Normal)
+                    self.btnDialUp.setTitle((self.dataDict["dialInNumber"] as! String), forState: .Normal)
 
                     if let imageUrlStr = self.dataDict["imgUrl"] as? String {
                         let image_url = NSURL(string: imageUrlStr)
                         if (image_url != nil) {
                             let placeholder = UIImage(named: "no_photo")
                             self.imgMeetUp.setImageWithURL(image_url, placeholderImage: placeholder)
+                        }
+                    }
+                    
+                    if let groupIdStr = self.dataDict["groupId"] as? String {
+                        if (!(groupIdStr == "")) {
+                            self.meetUpGroupID = groupIdStr
                         }
                     }
                     
@@ -401,6 +446,7 @@ class MeetUpDetailsVC: UIViewController {
                         self.btnForward.setTitle("Forward Meet Up", forState: .Normal)
                         self.headerView.frame.size.height = self.headerView.frame.size.height-40
                         self.dialUpView.hidden = true
+                        //self.HConstDialUpView.constant=0;
                         
                         self.btnSure.setTitle("Sure!", forState: UIControlState.Normal)
                         self.btnSorry.setTitle("Sorry!", forState: UIControlState.Normal)
@@ -413,7 +459,7 @@ class MeetUpDetailsVC: UIViewController {
                         self.lblLike.text="\((self.dataDict["likes"] as! [AnyObject]).count) Likes"
                         self.imgLike.image = UIImage(named: "like")
                         self.btnForward.setTitle("Forward Web Invite", forState: .Normal)
-                        
+                       
                         self.btnSure.setTitle("Accept", forState: UIControlState.Normal)
                         self.btnSorry.setTitle("Decline", forState: UIControlState.Normal)
                         self.btnLike.hidden=false
@@ -449,16 +495,26 @@ class MeetUpDetailsVC: UIViewController {
                                 //cell.btnAccept.hidden=true
                             }
                             
+                            if(!(membDict["forwardedBy"] as! String == ""))
+                            {
+                                self.fwBy = membDict["forwardedBy"] as! String
+                            }
+                            else
+                            {
+                                self.fwBy=""
+                            }
+                            
+                            
                         }
                         
                     }
                     
                     if((self.dataDict["createdBy"] as! String) == ChatHelper.userDefaultForKey("userId"))
                     {
-                        self.btnSure.hidden=true
-                        self.imgSure.hidden=true
-                        self.btnSorry.hidden=true
-                        self.imgSorry.hidden=true
+                        self.btnSure.enabled=false
+                        //self.imgSure.hidden=true
+                        self.btnSorry.enabled=false
+                        //self.imgSorry.hidden=true
                         
                         self.btnForward.hidden=true
                     }
@@ -561,8 +617,247 @@ class MeetUpDetailsVC: UIViewController {
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
         
     }
-
     
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int)
+    {
+        if actionSheet.tag==200
+        {
+            switch buttonIndex{
+            case 0:
+                self.goToLinkOrDirectionClick()
+                break;
+            case 1:
+                self.editMeetUpOrInviteClick()
+                break;
+            case 2:
+                self.deleteMeetUpOrInvite()
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    
+    @IBAction func handleDrag( sender: UIButton, for event: UIEvent) {
+
+        var point = event.allTouches()!.first!.locationInView(self.view)
+        if point.y >= 84 && point.y <= (screenHeight - 68) {
+            point.x = sender.center.x
+            //Always stick to the same x value
+            sender.center = point
+        }
+    }
+
+    @IBAction func btnChatClick(sender: UIButton) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let mesagesVC = storyboard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
+        
+        let strPred:String = "groupId contains[cd] \"\(self.meetUpGroupID)\""
+        let instance = DataBaseController.sharedInstance
+        let recentObj=instance.fetchDataRecentChatObject("RecentChatList", predicate: strPred) as RecentChatList?
+        
+        if (recentObj != nil) {
+            mesagesVC.isFromClass="df"
+            mesagesVC.isFromDeatilScreen = "0"
+            mesagesVC.recentChatObj=recentObj
+            mesagesVC.isGroup="0"
+            mesagesVC.manageChatTableH="0"
+            mesagesVC.isGroup = "1"
+        }
+        
+        self.navigationController?.pushViewController(mesagesVC, animated: true)
+
+    }
+    
+    func editMeetUpOrInviteClick()
+    {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let createMeetUpVC: CreateMeetUpVC = storyBoard.instantiateViewControllerWithIdentifier("CreateMeetUpVC") as! CreateMeetUpVC
+        createMeetUpVC.dataDict = self.dataDict
+        
+        if(self.screenName == "MEET UPS")
+        {
+            createMeetUpVC.pushedFrom = "EDITMEETUPS"
+        }
+        else
+        {
+            createMeetUpVC.pushedFrom = "EDITWEBINVITES"
+        }
+        self.navigationController?.pushViewController(createMeetUpVC, animated: true)
+        
+    }
+    
+    func editMeetUpOrInvite(notification: NSNotification) {
+        
+        if let memberID = notification.userInfo?["_id"] as? String {
+            
+            var dict = Dictionary<String,AnyObject>()
+            if(self.screenName == "MEET UPS") {
+                dict["type"]="meetup"
+            }
+            else {
+                dict["type"]="webinvite"
+            }
+            dict["typeId"] = self.dataDict["_id"] as! String
+            dict["forwadedBy"] = ChatHelper.userDefaultForKey("userId")
+            dict["userId"] = memberID
+            ChatListner .getChatListnerObj().socket.emit("forwardMeetup_Invite", dict)
+            
+            self.fetchDataForMeetUpOrWebInvite()
+        }
+    }
+    
+    func deleteMeetUpOrInvite() {
+      
+        let msgTitle: String!
+        
+        if(self.screenName == "MEET UPS") {
+            msgTitle = "You are about to delete the Meet Up you created."
+        }
+        else {
+            msgTitle = "You are about to delete the Web Invite you created."
+        }
+        
+        let alertController = UIAlertController(title: msgTitle, message: "Are you sure you want to go ahead with this action? This cannot be undone. All members will be notified.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let saveAction = UIAlertAction(title: "Yes, Confirm", style: UIAlertActionStyle.Default, handler: {
+            alert -> Void in
+            
+            var dict = Dictionary<String,AnyObject>()
+            if(self.screenName == "MEET UPS") {
+                dict["type"]="meetup"
+            }
+            else {
+                dict["type"]="webinvite"
+            }
+            dict["typeId"] = self.dataDict["_id"] as! String
+            dict["userId"] = ChatHelper.userDefaultForKey("userId")
+            ChatListner .getChatListnerObj().socket.emit("deleteMeetup_Invite", dict)
+            
+            self.navigationController?.popViewControllerAnimated(true)
+
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {
+            (action : UIAlertAction!) -> Void in
+            
+        })
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+    }
+    
+    func goToLinkOrDirectionClick() {
+        
+        if(self.screenName == "MEET UPS") {
+            //http://www.google.com/maps/place/49.46800006494457,17.11514008755796/@49.46800006494457,17.11514008755796,17z
+            
+            //https://www.google.com/maps/preview/@<latitude>,<longitude>,<zoom level>z
+            //https://www.google.com/maps/preview/@-15.623037,18.388672,8z
+            
+            
+            let latlong = self.dataDict["latlong"] as! String
+            
+            let arrLatLong = latlong.componentsSeparatedByString(",") 
+            let start = CLLocationCoordinate2D(latitude: 34.621654, longitude: -118.41397)
+            let end = CLLocationCoordinate2D(latitude: Double(arrLatLong[0])!, longitude: Double(arrLatLong[1])!)
+            
+            let googleMapsURLString = "http://maps.google.com/?saddr=\(start.latitude),\(start.longitude)&daddr=\(end.latitude),\(end.longitude)"
+            UIApplication.sharedApplication().openURL(NSURL(string: googleMapsURLString)!)
+            
+        }
+        else {
+            
+            var url : String!
+            
+            if((self.dataDict["webLink"] as! String).hasPrefix("http://") || (self.dataDict["webLink"] as! String).hasPrefix("https://")){
+                
+                url = self.dataDict["webLink"] as! String
+            }
+            else
+            {
+                url = "http://" + (self.dataDict["webLink"] as! String)
+            }
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+
+        }
+        
+    }
+    
+    @IBAction func btnBackClick(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func btnMoreClick(sender: AnyObject) {
+        
+        let buttonOneTitle : String!
+        let buttonTwoTitle : String!
+        let buttonThreeTitle : String!
+        
+        
+        if(self.screenName == "MEET UPS") {
+            buttonOneTitle = "Get Directions"
+            buttonTwoTitle = "Edit Meet Up"
+            buttonThreeTitle = "Cancel Meet Up"
+        }
+        else {
+            buttonOneTitle = "Go To Link"
+            buttonTwoTitle = "Edit Web Invite"
+            buttonThreeTitle = "Cancel Web Invite"
+        }
+        
+        if(IS_IOS_7)
+        {
+            
+            let actionSheet : UIActionSheet!
+            
+            if((self.dataDict["createdBy"] as! String) == ChatHelper.userDefaultForKey("userId"))
+            {
+                actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle,buttonTwoTitle,buttonThreeTitle)
+            }
+            else
+            {
+                actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle)
+            }
+            
+            actionSheet.tag=300
+            actionSheet.showFromTabBar((self.navigationController?.tabBarController?.tabBar)!)
+        }
+        else
+        {
+            let actionSheet =  UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            actionSheet.addAction(UIAlertAction(title: buttonOneTitle, style: UIAlertActionStyle.Default, handler:
+                {(ACTION :UIAlertAction!)in
+                    self.goToLinkOrDirectionClick()
+            }))
+            
+            
+            if((self.dataDict["createdBy"] as! String) == ChatHelper.userDefaultForKey("userId"))
+            {
+                actionSheet.addAction(UIAlertAction(title: buttonTwoTitle, style: UIAlertActionStyle.Default, handler:
+                    { (ACTION :UIAlertAction!)in
+                        
+                        self.editMeetUpOrInviteClick()
+                }))
+                
+                actionSheet.addAction(UIAlertAction(title: buttonThreeTitle, style: UIAlertActionStyle.Default, handler:
+                    { (ACTION :UIAlertAction!)in
+                        
+                        self.deleteMeetUpOrInvite()
+                }))
+                
+            }
+            
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(actionSheet, animated: true, completion: nil)
+        }
+    }
+
+
 }
 
 extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource {

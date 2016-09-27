@@ -106,19 +106,20 @@ func connectToSocket() -> Void{
     
     }
     
-    /*
+    
     func doNotSleep() {
         unowned let weakself = self
         var dataDic = Dictionary<String,String>()
         dataDic["beat"]="1"
-        weakself.socket.emit("pong",dataDic)
-        print("pong")
+        weakself.socket.emit("ping",dataDic)
+        print("ping")
     }
     
+    /*
     func doNotSleepListener() {
         unowned let weakself = self
-        weakself.socket.on("ping") {data, ack in
-        print("ping")
+        weakself.socket.on("pong") {data, ack in
+        print("pong")
         weakself.doNotSleep()
         }
     }*/

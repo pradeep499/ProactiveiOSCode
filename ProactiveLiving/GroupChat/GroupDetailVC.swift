@@ -154,8 +154,15 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         lblParticipants.text = String(format:"Participants %d",self.groupUserList.count)
          grpNameTxtF.addTarget(self, action: #selector(GroupDetailVC.textFieldDidChange), forControlEvents: UIControlEvents.EditingChanged)
         
-       //
         // Do any additional setup after loading the view.
+        if (self.navigationController!.viewControllers[(self.navigationController!.viewControllers.count - 3)] is MeetUpDetailsVC) {
+            
+            exitBtnOutlet.hidden=true
+            addBtnOutlet.hidden=true
+            editBtnOutlet.hidden=true
+            grpImgV.removeGestureRecognizer(recognizer)
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool)
@@ -368,6 +375,12 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        // by Mohammad Asim
+        if (self.navigationController!.viewControllers[(self.navigationController!.viewControllers.count - 3)] is MeetUpDetailsVC)
+        {
+            return false
+        }
         
        // by Mohammad Asim
        if groupObj.adminUserId != ChatHelper.userDefaultForKey("userId") as String || (groupUserList[indexPath.row] as! GroupUserList).userId == groupObj.adminUserId || meRemoved == "1"

@@ -22,10 +22,13 @@ class MeetUpsListingVC: UIViewController {
 
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBarHidden = true
         self.fetchMeetUpOrWebInviteData()
     }
+    
     //mark- Fetch Meetups/Invites listing data
     func fetchMeetUpOrWebInviteData() {
         
@@ -96,7 +99,6 @@ class MeetUpsListingVC: UIViewController {
         eventImage.clipsToBounds = true
         let eventName = cell.contentView.viewWithTag(12) as! UILabel
         let statusBG = cell.contentView.viewWithTag(13) as! UIImageView
-        let eventStatus = cell.contentView.viewWithTag(14) as! UILabel
         let eventTypeBy = cell.contentView.viewWithTag(15) as! UILabel
         let eventDesc = cell.contentView.viewWithTag(16) as! UILabel
         let lblDate = cell.contentView.viewWithTag(18) as! UILabel
@@ -111,10 +113,28 @@ class MeetUpsListingVC: UIViewController {
         lblAddress.textContainerInset = UIEdgeInsetsZero;
         
         eventName.text = self.arrData[indexPath.row]["title"] as? String
-        statusBG.image = UIImage(named:"")
-        eventStatus.text = ""
         
-        eventTypeBy.text = self.arrData[indexPath.row]["for"] as? String
+        let isUpdated = self.arrData[indexPath.row]["isEdited"] as! Bool
+        if (isUpdated) {
+            statusBG.hidden = false
+            statusBG.image = UIImage(named:"updated_ribbon")
+        }
+        else
+        {
+            statusBG.hidden = true
+        }
+        
+        let isDeleted = self.arrData[indexPath.row]["isDeleted"] as! Bool
+        if (isDeleted) {
+            statusBG.hidden = false
+            statusBG.image = UIImage(named:"cancelled_ribbon")
+        }
+        else
+        {
+            statusBG.hidden = true
+        }
+        
+        eventTypeBy.text = "\(self.arrData[indexPath.row]["for"] as! String), by \(self.arrData[indexPath.row]["createdBy"] as! String)"
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
         lblDate.text = self.arrData[indexPath.row]["createdDate"] as? String
         
@@ -166,7 +186,8 @@ class MeetUpsListingVC: UIViewController {
                     
                     cell.btnAccept.selected=false
                     cell.imgAccept.hidden=true
-                    cell.btnAccept.layer.borderColor=UIColor.clearColor().CGColor                }
+                    cell.btnAccept.layer.borderColor=UIColor.clearColor().CGColor
+                }
                 
             }
             
@@ -208,11 +229,14 @@ class MeetUpsListingVC: UIViewController {
             lblAddress.hidden=true
             txtLink.hidden=false
             txtPIN.hidden=false
-            txtLink.text = self.arrData[indexPath.row]["webLink"] as? String
-            txtPIN.text = "(PIN: \(self.arrData[indexPath.row]["pin"] as! String))"
-            imglink.image=UIImage(named:"web_invite_link")
             imgCall.hidden=false
             lblCall.hidden=false
+            
+            txtLink.text = self.arrData[indexPath.row]["webLink"] as? String
+            lblCall.text = self.arrData[indexPath.row]["dialInNumber"] as? String
+            txtPIN.text = "(PIN: \(self.arrData[indexPath.row]["pin"] as! String))"
+            imglink.image=UIImage(named:"web_invite_link")
+           
             
             var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
             let memberArr = someDict["members"] as! [AnyObject]
@@ -227,18 +251,17 @@ class MeetUpsListingVC: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let meetUpContainerVC: MeetUpContainerVC = storyBoard.instantiateViewControllerWithIdentifier("MeetUpContainerVC") as! MeetUpContainerVC
-        //meetUpContainerVC.dataDict=self.arrData[indexPath.row] as! [String : AnyObject]
-        meetUpContainerVC.meetUpID=self.arrData[indexPath.row]["_id"] as! String
+        let meetUpDetailVC: MeetUpDetailsVC = storyBoard.instantiateViewControllerWithIdentifier("MeetUpDetailsVC") as! MeetUpDetailsVC
+        meetUpDetailVC.meetUpID=self.arrData[indexPath.row]["_id"] as! String
         if(self.title == "MEET UPS")
         {
-            meetUpContainerVC.title = "MEET UPS"
+            meetUpDetailVC.screenName = "MEET UPS"
         }
         else
         {
-            meetUpContainerVC.title = "WEB INVITES"
+            meetUpDetailVC.screenName = "WEB INVITES"
         }
-        self.navigationController?.pushViewController(meetUpContainerVC, animated: true)
+        self.navigationController?.pushViewController(meetUpDetailVC, animated: true)
         
     }
     

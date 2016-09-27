@@ -75,7 +75,7 @@
                                                    initWithRootViewController:secondViewController];
 
     
-    HomeVC *thirdViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeVC"];
+    NewsFeedContainer *thirdViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewsFeedContainer"];
     thirdViewController.title=@"Home";
     thirdViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_home"];
     UIViewController *thirdNavigationController = [[UINavigationController alloc]

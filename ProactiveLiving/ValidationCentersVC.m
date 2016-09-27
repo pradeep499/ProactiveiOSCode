@@ -278,7 +278,7 @@
     
     //Bottom annotation view
     self.tagView.canSeletedTags = NO;
-    self.tagView.tagColor = [UIColor darkGrayColor];
+    self.tagView.tagColor = [UIColor clearColor];
     self.tagView.tagCornerRadius = 0.0f;
     [self.tagView.tags removeAllObjects];
     [self.tagView.tagColors removeAllObjects];

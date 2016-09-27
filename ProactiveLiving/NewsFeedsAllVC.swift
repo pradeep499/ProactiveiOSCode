@@ -10,10 +10,25 @@ import UIKit
 
 class NewsFeedsAllVC: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    //mark- UITableview Delegates
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("CellNewsFeedAll", forIndexPath: indexPath) as! UITableViewCell
+        cell.selectionStyle = .None
+        
+        return cell
     }
 
     override func didReceiveMemoryWarning() {

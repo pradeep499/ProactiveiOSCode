@@ -27,8 +27,8 @@ class MeetUpContainerVC: UIViewController, YSLContainerViewControllerDelegate {
         // Do any additional setup after loading the view.
         self.setUpViewControllers()
         self.btnEdit.setImage(UIImage(named: "edit")!, forState: .Normal)
-        //[self.btnEdit setTitle:@"Edit" forState:UIControlStateNormal];
         self.btnEdit.setImage(UIImage(named: "done")!, forState: .Selected)
+        self.btnEdit.addTarget(self, action: #selector(btnMoreClick(_:)), forControlEvents: .TouchUpInside)
         //[self.btnEdit setTitle:@"Edit" forState:UIControlStateSelected];
     }
     
@@ -133,34 +133,17 @@ class MeetUpContainerVC: UIViewController, YSLContainerViewControllerDelegate {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func btnContactsClick(sender: AnyObject) {
-        if !(AppHelper.userDefaultsForKey(uId) is NSNull) {
-            let vc = self.storyboard!.instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
-            vc.fromVC = "Inbox"
-            self.navigationController!.pushViewController(vc, animated: true)
-        }
+    func btnMoreClick(sender: AnyObject) {
     }
     
-    @IBAction func deleteAllClick(sender: AnyObject) {
-    }
     
     @IBAction func btnCreateNewClick(sender: AnyObject) {
         
         if currentIndex == 0 {
-            if !(AppHelper.userDefaultsForKey(uId) is NSNull) {
-                let chatStoryBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let vc = chatStoryBoard.instantiateViewControllerWithIdentifier("CreateMeetUpVC") as! CreateMeetUpVC
-                vc.pushedFrom = "MEETUPS"
-                self.navigationController!.pushViewController(vc, animated: true)
-            }
+            
         }
         else if currentIndex == 1 {
-            if !(AppHelper.userDefaultsForKey(uId) is NSNull) {
-                let chatStoryBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let vc = chatStoryBoard.instantiateViewControllerWithIdentifier("CreateMeetUpVC") as! CreateMeetUpVC
-                vc.pushedFrom = "WEBINVITES"
-                self.navigationController!.pushViewController(vc, animated: true)
-            }
+            
         }
         else  {
             

@@ -11,11 +11,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBOutlet weak var txtFieldFor: CustomTextField!
     @IBOutlet weak var txtFieldOn: CustomTextField!
-    @IBOutlet weak var txtFiledAt: CustomTextField!
+    @IBOutlet weak var txtFieldAt: CustomTextField!
     @IBOutlet weak var txtFieldWhereFirst: CustomTextField!
     @IBOutlet weak var txtFieldWhereSecond: CustomTextField!
     @IBOutlet weak var txtFieldTitle: CustomTextField!
-    @IBOutlet weak var contactsView: JCTagListView!
     @IBOutlet weak var imgCoverPic: UIImageView!
     @IBOutlet weak var txtViewDesc: UIPlaceHolderTextView!
     @IBOutlet weak var switchAllowInvite: UISwitch!
@@ -38,11 +37,13 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var pickerView:UIPickerView!
     var datePicker : UIDatePicker!
     var timePicker : UIDatePicker!
-    var arrAttachments = [String]()
+    var arrAttachments = [AnyObject]()
     var gpaViewController : GooglePlacesAutocomplete!
     var pushedFrom : String!
     var isForwardAllowed : Bool!
-    
+    var dataDict = [String : AnyObject]()
+    var strLatLong : String!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     //"AIzaSyCwX2QTq72LeMHwJ8ymH6TGGJP8iqMoFLU"
@@ -74,6 +75,51 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.lblWithWho.text="Who"
             self.lblForTo.text="To"
             self.lblTitle.text="Web Invite Title"
+        }
+        else if(pushedFrom=="EDITMEETUPS")
+        {
+            self.titleBar.text = "Edit Meet Up"
+            //self.arrTypes = ["We", "Heart", "Potluck"]
+            self.txtFieldWhereSecond.hidden=false
+            self.txtPin.hidden=true
+            self.txtDialInNum.hidden=true
+            self.lblWithWho.text="With"
+            self.lblForTo.text="For"
+            self.lblTitle.text="Meet Up Title"
+            
+            self.tokens = self.dataDict["members"] as! Array
+            for contact in self.tokens {
+                 self.tokenField.tags.addObject(contact["name"]!!)
+            }
+            self.tokenField.reloadTagSubviews()
+
+            txtFieldFor.text = self.dataDict["for"] as? String
+            txtFieldOn.text = self.dataDict["eventDate"] as? String
+            txtFieldAt.text = self.dataDict["eventTime"] as? String
+            txtFieldWhereSecond.text = self.dataDict["address"] as? String
+            txtFieldTitle.text = self.dataDict["title"] as? String
+            txtViewDesc.text = self.dataDict["desc"] as? String
+            switchAllowInvite.on = self.dataDict["isAllow"] as! Bool
+            let imgUrl = self.dataDict["imgUrl"] as? String
+            if !(imgUrl == "") {
+                imgCoverPic.setImageWithURL(NSURL(string: imgUrl!))
+            }
+            
+        }
+        else if(pushedFrom=="EDITWEBINVITES")
+        {
+            self.titleBar.text = "Edit Web Invite"
+            self.txtFieldWhereFirst.placeholder="Web Invite Link"
+            //self.arrTypes = ["Conference Call", "Podcast", "Videocast", "Webinar", "Webcast"]
+            self.txtFieldWhereSecond.hidden=true
+            self.txtPin.hidden=false
+            self.txtDialInNum.hidden=false
+            self.lblWithWho.text="Who"
+            self.lblForTo.text="To"
+            self.lblTitle.text="Web Invite Title"
+            
+            txtFieldTitle.text = self.dataDict["title"] as? String
+
         }
 
         txtFieldTitle.delegate=self
@@ -141,8 +187,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         toolBar2.setItems([spaceButton, doneButton2], animated: false)
         toolBar2.userInteractionEnabled = true
         
-        txtFiledAt.inputView=timePicker
-        txtFiledAt.inputAccessoryView = toolBar2
+        txtFieldAt.inputView=timePicker
+        txtFieldAt.inputAccessoryView = toolBar2
         
 
         self.txtFieldFor.rightViewMode = UITextFieldViewMode.Always
@@ -156,10 +202,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.txtFieldOn.rightView = imageView2
         
         
-        self.txtFiledAt.rightViewMode = UITextFieldViewMode.Always
+        txtFieldAt.rightViewMode = UITextFieldViewMode.Always
         let imageView3 = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
         imageView3.image = UIImage(named: "create_meetup_select_time")
-        self.txtFiledAt.rightView = imageView3
+        txtFieldAt.rightView = imageView3
         
         self.txtFieldWhereSecond.rightViewMode = UITextFieldViewMode.Always
         let imageView4 = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
@@ -189,6 +235,12 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
 
         self.getStaticDataFromServer()
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBarHidden = true
     }
     
     func addCotact(contact : [String : AnyObject] ) -> Void {
@@ -227,13 +279,51 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func doneTypesPicker() {
-        
-        if(arrTypes.count>0)
-        {
-        self.txtFieldFor.text = self.arrTypes[pickerView.selectedRowInComponent(0)]
+       
         self.txtFieldFor.resignFirstResponder()
-        print("done!")
+
+        if(self.arrTypes.count>0)
+        {
+            let type = self.arrTypes[pickerView.selectedRowInComponent(0)]
+            
+            if(!(type == "Other"))
+            {
+                self.txtFieldFor.text = self.arrTypes[pickerView.selectedRowInComponent(0)]
+            }
+            else
+            {
+                self.showAlertForOtherType()
+            }
+            print("done!")
         }
+    }
+    
+    func showAlertForOtherType() {
+        
+        let alertController = UIAlertController(title: "Other", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in
+            textField.placeholder = "Add your choice"
+        }
+        
+        let doneAction = UIAlertAction(title: "Done", style: UIAlertActionStyle.Default, handler: {
+            alert -> Void in
+            
+            let titleTextField = alertController.textFields![0] as UITextField
+            
+            if (titleTextField.text?.characters.count > 0)
+            {
+               self.txtFieldFor.text = titleTextField.text! as String
+                
+            }
+            self.txtFieldFor.resignFirstResponder()
+            
+        })
+        
+        
+        alertController.addAction(doneAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func doneDatePicker() {
@@ -254,8 +344,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         dateFormatter1.dateFormat = "hh:mm a"
         let selectedDate = dateFormatter1.stringFromDate(timePicker.date)
         
-        self.txtFiledAt.text = selectedDate
-        self.txtFiledAt.resignFirstResponder()
+        self.txtFieldAt.text = selectedDate
+        self.txtFieldAt.resignFirstResponder()
         print("done!")
     }
     
@@ -266,7 +356,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //mark- UITableview Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrAttachments.count
+        return self.arrAttachments.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -278,7 +368,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         closeButton.addTarget(self, action: #selector(btnDeleteClick(_:)), forControlEvents: .TouchUpInside)
         let backView = cell.contentView.viewWithTag(333)! as UIView
         AppHelper.setBorderOnView(backView)
-        attachmentName.text=arrAttachments[indexPath.row]
+        attachmentName.text = self.arrAttachments[indexPath.row]["title"] as! String
         return cell;
     }
     
@@ -286,8 +376,15 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
     }
     
-    func btnDeleteClick(sender: AnyObject)  {
+    func btnDeleteClick(sender: UIButton)  {
         print(sender)
+        
+        let point = self.tableAttachments.convertPoint(CGPoint.zero, fromView: sender)
+        guard let indexPath = self.tableAttachments.indexPathForRowAtPoint(point) else {
+            fatalError("can't find point in tableView")
+        }
+        self.arrAttachments.removeAtIndex(indexPath.row)
+        self.tableAttachments.reloadData()
     }
     
     @IBAction func btnDoneClick(sender: AnyObject) {
@@ -309,7 +406,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select date.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
                 
             }
-            else if (self.txtFiledAt.text!.characters.count == 0)
+            else if (self.txtFieldAt.text!.characters.count == 0)
             {
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select time.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
                 
@@ -354,17 +451,18 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
                 dict["for"]=txtFieldFor.text
                 
-                var dicLinks = Dictionary<String,AnyObject>()
-                dicLinks["title"] = "Google"
-                dicLinks["url"] = "www.google.com"
-                linksArray.addObject(dicLinks)
+                for link in self.arrAttachments {
+                    var dicLinks = Dictionary<String,AnyObject>()
+                    dicLinks["title"] = link ["title"]
+                    dicLinks["url"] = link ["url"]
+                    linksArray.addObject(dicLinks)
+                }
                 
-                dict["links"]=linksArray
-                
+                dict["links"]=linksArray as [AnyObject]
                 dict["attachments"]="abc.png"
                 dict["createdBy"]=ChatHelper.userDefaultForKey("userId") as String
                 dict["eventDate"]=txtFieldOn.text
-                dict["eventTime"]=txtFiledAt.text
+                dict["eventTime"]=txtFieldAt.text
                 dict["isAllow"]=isForwardAllowed
 
                 var userIdArray : NSMutableArray!
@@ -386,7 +484,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
                 userIdArray.addObject(tempDict)
                 dict["members"] = userIdArray
-                
+                dict["latlong"] = self.strLatLong
+
                 //group create data
                 var groupDict = [String: AnyObject]()
                 groupDict["userid"] = AppHelper.userDefaultsForKey(_ID)
@@ -437,9 +536,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                             button.userInteractionEnabled=true
                             
                             ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                            dispatch_after(1, dispatch_get_main_queue(), {
+                            dispatch_after(4, dispatch_get_main_queue(), {
                                 stopActivityIndicator(self.view)
-                                //self.createMeetUpWithGroupChat()
 
                                 self.navigationController?.popToRootViewControllerAnimated(true)
                             })
@@ -457,9 +555,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 {
                     dict["imgUrl"] = ""
                     ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                    dispatch_after(0, dispatch_get_main_queue(), {
+                    dispatch_after(4, dispatch_get_main_queue(), {
                         stopActivityIndicator(self.view)
-                        //self.createMeetUpWithGroupChat()
                         self.navigationController?.popToRootViewControllerAnimated(true)
                     })
                 }
@@ -470,59 +567,6 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }else
         {
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-        }
-    }
-    
-    func createMeetUpWithGroupChat() {
-        //check internet before hitting web service
-        if AppDelegate.checkInternetConnection() {
-            
-            var dict = [String: AnyObject]()
-            dict["userid"] = AppHelper.userDefaultsForKey(_ID)
-            dict["groupname"] = "MyMeetUp"
-            var userIdArray = [AnyObject]()
-            for myobject: AnyObject in self.tokens {
-                
-                var tempDict = [String: AnyObject]()
-                tempDict["userid"] = myobject["_id"] as! String
-                tempDict["phoneNumber"] = (myobject["mobilePhone"] as! String)
-                tempDict["user_firstName"] = (myobject["firstName"] as! String)
-                userIdArray.append(tempDict)
-            }
-            var tempDict = [String: AnyObject]()
-            tempDict["userid"] = ChatHelper.userDefaultForKey(_ID)
-            tempDict["phoneNumber"] = AppHelper.userDefaultsForKey(cellNum)
-            tempDict["user_firstName"] = AppHelper.userDefaultsForKey(userFirstName)
-            userIdArray.append(tempDict)
-            dict["users"] = userIdArray
-            let groupImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 120, height: 120))
-            groupImage.image = self.imgCoverPic.image!
-            dict["imgUrl"] = ""
-            ChatListner.getChatListnerObj().socket.emit("createGroup", withItems: [dict])
-           
-            dispatch_after(5, dispatch_get_main_queue(), {
-                stopActivityIndicator(self.view)
-                
-                /*
-                 
-                 let str:String = ChatHelper.userDefaultForKey("userId") as String!
-                 let str1:String = recentChatObj.groupId as String!
-                 let strPred:String = "loginUserId contains[cd] \"\(str)\" AND groupId LIKE \"\(str1)\""
-                 let instance = DataBaseController.sharedInstance
-                 let fetchResult=instance.fetchData("GroupList", predicate: strPred, sort: ("groupId",false))! as NSArray
-                 var groupObj : GroupList!
-                 for myobject : AnyObject in fetchResult
-                 {
-                 groupObj = myobject as! GroupList
-                 
-                 }
-                 */
-                self.navigationController?.popToRootViewControllerAnimated(true)
-            })
-            
-        }
-        else {
-            AppHelper.showAlertWithTitle( "", message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
         }
     }
     
@@ -671,28 +715,42 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     @IBAction func btnAddLinkClick(sender: AnyObject) {
         
-        let alertController = UIAlertController(title: "Add Attachment", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Add Link", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in
+            textField.placeholder = "Add title here"
+        }
         
         alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in
             textField.placeholder = "Add link here"
         }
         
-        
         let saveAction = UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: {
             alert -> Void in
             
-            let linkTextField = alertController.textFields![0] as UITextField
+            let titleTextField = alertController.textFields![0] as UITextField
+
+            let linkTextField = alertController.textFields![1] as UITextField
             
-            if (linkTextField.text?.characters.count > 0)
+            var dict = Dictionary<String,AnyObject>()
+
+            if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
             {
-            self.arrAttachments.append(linkTextField.text!)
-            self.tableAttachments.reloadData()
+                dict["title"]=titleTextField.text! as String
+                dict["url"]=linkTextField.text
+                
+                self.arrAttachments.append(dict)
+                self.tableAttachments.reloadData()
             }
-            print(linkTextField.text)
+            else
+            {
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input both title and url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+         
             
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {
             (action : UIAlertAction!) -> Void in
             
         })
@@ -764,6 +822,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.txtFieldWhereSecond.text=place.description
         dismissViewControllerAnimated(true, completion: nil)
         place.getDetails { details in
+            self.strLatLong = "\(details.latitude),\(details.longitude)"
             print(details.description)
         }
     }
