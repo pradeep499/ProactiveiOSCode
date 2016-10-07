@@ -50,7 +50,7 @@
     
     self.moviePlayer = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:[AppDelegate getAppDelegate].PASInstVideo]];
     
-    self.moviePlayer.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
+    self.moviePlayer.moviePlayer.movieSourceType = MPMovieSourceTypeUnknown;
     [[self.moviePlayer moviePlayer] prepareToPlay];
     [[self.moviePlayer moviePlayer] setShouldAutoplay:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self

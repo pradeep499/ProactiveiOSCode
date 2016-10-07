@@ -7,8 +7,10 @@
 //
 
 import UIKit
-@objc class ChatListner: NSObject {
+class ChatListner: NSObject {
     
+    var  socket : SocketIOClient!
+
     class var sharedInstance: ChatListner {
         struct Static {
             static var onceToken: dispatch_once_t = 0
@@ -24,13 +26,13 @@ import UIKit
     let homeCoreData = AppDelegate.getAppDelegate()
     
     //Server URL
-    //var  socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
+    //socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
     
     //Production URL
-    //var  socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
+    //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
 
     //Test Server
-    var  socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
+    //socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
     
     var pushDict : Dictionary<NSObject,AnyObject>!
     var socketIdStr : String!
@@ -40,6 +42,15 @@ import UIKit
     var isConnectionStable = false
     var currentOperationDict : NSMutableDictionary!
 
+    override init(){
+        socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
+    }
+
+    deinit{
+        self.closeConnection()
+        socket = nil
+    }
+    
     /*!
     Make a connection to socket
     */
@@ -56,54 +67,53 @@ import UIKit
   
     // status
 func connectToSocket() -> Void{
-      chatProgressV = NSMutableDictionary()
-    currentOperationDict = NSMutableDictionary()
-    self.socket.connect()
-    unowned let weakself = self
-    weakself.socket.off("recieveMessage")
-    weakself.socket.off("recieveMessageAll")
-    weakself.socket.off("messageStatus")
-    weakself.socket.off("isUserTyping")
-    weakself.socket.off("getGroupInfo")
-    weakself.socket.off("delUserInGroup")
     
-    weakself.socket.off("getMeetup_Invite_listing")
-    weakself.socket.off("getForward_Meetup_Invite")
-
-    socket.on("connect") { data, ack in
+    if let value:String = ChatHelper.userDefaultForKey(_ID)  {
+        //Registered user
         
-        print(weakself.isConnectionStable)
+        print_debug("hiiiii")
         
-        if weakself.isConnectionStable == false {
+        if isConnectionStable == false{
             
-            /*var loginDic = Dictionary<String,String>()
-            loginDic["userid"]=ChatHelper.userDefaultForKey("userId")
-            loginDic["lastHitDate"]=ChatHelper.userDefaultForKey("lastHitDate")
-            //loginDic["lastHitDate"]="2016-07-27 13:00:02"
-            loginDic["deviceType"]="iphone"
-           // print("login dictionary value\(loginDic)")
-            weakself.socket.emit("createOnline", loginDic)
-            NSNotificationCenter.defaultCenter().postNotificationName("ConnectingNotificationForChat", object: nil, userInfo: nil)
-            */
-            //let triggerTime = (Int64(NSEC_PER_SEC) * 1)
-            //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(), { () -> Void in
-                weakself.createOnline()
-                weakself.sendOffLineMessage()
-            //})
-           
-            weakself.isConnectionStable = true
+            self.isConnectionStable = true
+            
+            chatProgressV = NSMutableDictionary()
+            currentOperationDict = NSMutableDictionary()
+            
+            if ChatListner.getChatListnerObj().socket.status != .Connected {
+                
+                self.socket.connect()
+                unowned let weakself = self
+                weakself.socket.off("recieveMessage")
+                weakself.socket.off("recieveMessageAll")
+                weakself.socket.off("messageStatus")
+                weakself.socket.off("isUserTyping")
+                weakself.socket.off("getGroupInfo")
+                weakself.socket.off("delUserInGroup")
+                
+                weakself.socket.off("getMeetup_Invite_listing")
+                weakself.socket.off("getForward_Meetup_Invite")
+                
+                socket.on("connect") { data, ack in
+                    print(weakself.isConnectionStable)
+                    weakself.createOnline()
+                    weakself.sendOffLineMessage()
+                }
+                weakself.isTypingChatListener()
+                weakself.addReceiveMsgHandlers()
+                weakself.addOffLineReceiveMsgHandlers();
+                weakself.msgStatusListener()
+                weakself.isTypingStopListner("")
+                weakself.getGroupInfoListner()
+                weakself.deleteUserFromGroupListner()
+                //weakself.doNotSleepListener()
+                
+            }
+            
         }
         
     }
-    weakself.isTypingChatListener()
-    weakself.addReceiveMsgHandlers()
-    weakself.addOffLineReceiveMsgHandlers();
-    weakself.msgStatusListener()
-    weakself.isTypingStopListner("")
-    weakself.getGroupInfoListner()
-    weakself.deleteUserFromGroupListner()
-    //weakself.doNotSleepListener()
-    
+
     }
     
     
@@ -1181,7 +1191,7 @@ func connectToSocket() -> Void{
                 self.pushNotificationView.frame=CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
         })
         
-        _ = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector:  #selector(ChatListner.hideAlert), userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector:  #selector(ChatListner.hideAlert), userInfo: nil, repeats: false)
         
      
         let instance = DataBaseController.sharedInstance
@@ -1577,20 +1587,19 @@ func connectToSocket() -> Void{
         }
     }
     
-    
+    //Call to make Socket connection
     func createConnection() {
-        //AppHelper.saveToUserDefaults("574848ff92c4c1a60836eebf", withKey: "userId")
-        //print(AppHelper.userDefaultsForKey("userId"))
         
         if (AppHelper.userDefaultsForKey("userId")) != nil {
             
-            if socket.status != .Connected {
+            if socket == nil {
+                socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
                 
-                HelpingClass.delay(0.1, closure: {
-                    ChatHelper.saveToUserDefault(AppHelper.userDefaultsForKey("userId"), key: "userId")
-                    ChatListner.getChatListnerObj().connectToSocket()
-                    
-                })
+            }
+            //self.closeConnection();
+            if socket.status != .Connected {
+                ChatHelper.saveToUserDefault(AppHelper.userDefaultsForKey("userId"), key: "userId")
+                ChatListner.getChatListnerObj().connectToSocket()
             }
         }
         else {
@@ -1606,11 +1615,18 @@ func connectToSocket() -> Void{
             
             ChatListner.getChatListnerObj().isConnectionStable = false
             ChatHelper.saveToUserDefault(AppHelper.userDefaultsForKey("userId"), key: "userId")
+            if socket != nil{
+             if socket.status == .Connected  {
             ChatListner.getChatListnerObj().socket.disconnect()
+            }
+            }
+            
+            socket = nil
+            isConnectionStable = false
            
             //ChatListner.getChatListnerObj().socket.removeAllHandlers()
 
-//            if socket.status == .Connected {
+//
 //                ChatListner.getChatListnerObj().isConnectionStable = false
 //                ChatHelper.saveToUserDefault(AppHelper.userDefaultsForKey("userId"), key: "userId")
 //                ChatListner.getChatListnerObj().socket.disconnect()

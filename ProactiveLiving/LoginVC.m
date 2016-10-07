@@ -75,8 +75,26 @@
                                                    initWithRootViewController:secondViewController];
 
     
+    NewsFeedsAllVC *firstVC = [self.storyboard instantiateViewControllerWithIdentifier:@"NewsFeedsAllVC"];
+    firstVC.title = @"ALL";
+
+    ExploreVC *secondVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ExploreVC"];
+    secondVC.title = @"EXPLORE";
+
+    NewsFeedsAllVC *thirdVC = [self.storyboard instantiateViewControllerWithIdentifier:@"NewsFeedsAllVC"];
+    thirdVC.title = @"FRIENDS";
+    
+    NewsFeedsAllVC *fourthVC = [self.storyboard instantiateViewControllerWithIdentifier:@"NewsFeedsAllVC"];
+    fourthVC.title = @"COLLEAGUES";
+    
+    NewsFeedsAllVC *fifthVC = [self.storyboard instantiateViewControllerWithIdentifier:@"NewsFeedsAllVC"];
+    fifthVC.title = @"HEALTH CLUBS";
+    
+    NSArray *arrVCs=[NSArray arrayWithObjects:firstVC,secondVC,thirdVC,fourthVC,fifthVC, nil];
+    
     NewsFeedContainer *thirdViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NewsFeedContainer"];
     thirdViewController.title=@"Home";
+    thirdViewController.arrViewControllers=arrVCs;
     thirdViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_home"];
     UIViewController *thirdNavigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:thirdViewController];

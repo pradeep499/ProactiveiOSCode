@@ -25,7 +25,7 @@ class NewsFeedsAllVC: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("CellNewsFeedAll", forIndexPath: indexPath) as! UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("CellNewsFeedAll", forIndexPath: indexPath) 
         cell.selectionStyle = .None
         
         return cell

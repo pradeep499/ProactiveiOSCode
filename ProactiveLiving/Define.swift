@@ -133,7 +133,16 @@ enum CustomFonts: String
     case museosans500 = "museosans-500"
 }
 
-
+enum cardSizes :String{
+    
+    case S1 = "100,200"
+    case S2 = "200,100"
+    case S3 = "300,200"
+    case S4 = "200,200"
+    case S5 = "100,300"
+    case S6 = "100,400"
+    case Unknown = "100,100"
+}
 
 enum ServiceUrls : String
 {

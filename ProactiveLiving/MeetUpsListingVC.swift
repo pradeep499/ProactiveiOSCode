@@ -81,6 +81,7 @@ class MeetUpsListingVC: UIViewController {
             
         }else
         {
+            AppDelegate.dismissProgressHUD()
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
         }
     }
@@ -265,7 +266,7 @@ class MeetUpsListingVC: UIViewController {
         
     }
     
-    
+    //Accept button tapped
     func btnAcceptClick(sender: UIButton)  {
         print(sender)
         //sender.selected = !sender.selected
@@ -287,12 +288,25 @@ class MeetUpsListingVC: UIViewController {
         }
         dict["typeId"] = someDict["_id"] as! String
         dict["status"] = "1"
-        dict["userId"] = ChatHelper.userDefaultForKey("userId")
+        dict["userId"] = ChatHelper.userDefaultForKey(_ID)
+        
+        
+        //group info
+        var groupDict = Dictionary<String,AnyObject>()
+        groupDict["userid"] = someDict["createdBy"] as! String
+        groupDict["groupid"] = someDict["groupId"] as! String
+        groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
+        groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
+        
+        dict["groupInfo"] = groupDict
+
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
 
         self.fetchMeetUpOrWebInviteData()
     }
     
+    
+    // Decline button tapped
     func btnDeclineClick(sender: UIButton)  {
         print(sender)
         //sender.selected = !sender.selected
@@ -315,6 +329,16 @@ class MeetUpsListingVC: UIViewController {
         dict["typeId"] = someDict["_id"] as! String
         dict["status"] = "2"
         dict["userId"] = ChatHelper.userDefaultForKey("userId")
+        
+        //group info
+        var groupDict = Dictionary<String,AnyObject>()
+        groupDict["userid"] = someDict["createdBy"] as! String
+        groupDict["groupid"] = someDict["groupId"] as! String
+        groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
+        groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
+        
+        dict["groupInfo"] = groupDict
+        
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
 
         self.fetchMeetUpOrWebInviteData()

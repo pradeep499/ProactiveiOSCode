@@ -73,7 +73,7 @@ class ExploreDynamicVC: UIViewController {
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
-            parameters["UserID"] = AppHelper.userDefaultsForKey(uId)
+            parameters["UserID"] = AppHelper.userDefaultsForKey(_ID)
             
             //call global web service class
             Services.serviceCallWithPath(ServiceGetAllStories, withParam: parameters, success: { (responseDict) in

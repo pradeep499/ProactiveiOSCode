@@ -93,7 +93,7 @@ class ChatListVC: SOMessagingViewController {
             
             var param : Dictionary<String,AnyObject> = Dictionary<String,AnyObject>()
             param["AppKey"] = AppKey
-            param["UserID"] = AppHelper.userDefaultsForKey(uId)
+            param["UserID"] = AppHelper.userDefaultsForKey(_ID)
             param["senderPhone"] = AppHelper.userDefaultsForKey(cellNum)
             param["recieverPhone"] = "9645454545"
             

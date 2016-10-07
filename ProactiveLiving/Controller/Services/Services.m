@@ -162,7 +162,7 @@
 +(void)postRequest:(NSString *)urlStr parameters:(NSDictionary *)parametersDictionary completionHandler:(void (^)(NSString*, NSDictionary*))completionBlock{
     
 
-    NSURL *URL = [NSURL URLWithString:urlStr];
+    NSURL *URL = [NSURL URLWithString:[BASE_URL stringByAppendingString:urlStr]];
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     

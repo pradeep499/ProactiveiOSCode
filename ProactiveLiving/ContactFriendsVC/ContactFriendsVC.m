@@ -212,10 +212,13 @@
         }
         CFRelease(phoneNumbers);
         
+        if([numbers count]== 0) { [numbers addObject:@"No Number"]; }
+        if([fullName  isEqual: @""]) { fullName = @"Unknown"; }
+        
         NSMutableDictionary *contact = [NSMutableDictionary dictionary];
-        [contact setObject:(firstName)? fullName : @"Unknown" forKey:@"name"];
-        [contact setObject:numbers forKey:@"numbers"];
-        [contact setObject:profileImage forKey:@"image"];
+        [contact setObject: fullName forKey:@"name"];
+        [contact setObject: numbers forKey:@"numbers"];
+        [contact setObject: profileImage forKey:@"image"];
         
         [self.arrContacts addObject:contact];
         

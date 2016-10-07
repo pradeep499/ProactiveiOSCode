@@ -144,13 +144,11 @@ class JMCFlexibleCollectionViewDataSource: NSObject, UICollectionViewDataSource,
         return 1
     }
     
-    
     //MARK: Delegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         delegate?.cellDidSelected(indexPath, item: dataItems[indexPath.row])
     }
         
-    
     /**This method generates a dynamic grid based on the image sizes*/
     func collectionView(collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -175,6 +173,7 @@ class JMCFlexibleCollectionViewDataSource: NSObject, UICollectionViewDataSource,
     
     /**Calculates size of */
     private func prepareSizes(){
+        
         let sizes = dataItems.map({return $0.getSize()})
         let width = CGRectGetWidth(self.collectionView!.frame) - 2 * margin
         //Maximum height of the row

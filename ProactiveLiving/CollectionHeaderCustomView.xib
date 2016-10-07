@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="fFZ-TR-iSd" customClass="CollectionHeaderCustomView" customModule="ProactiveLiving" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="373" height="370"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="CA7-QD-xWC">
+                    <rect key="frame" x="0.0" y="52" width="373" height="265"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wkC-Yn-ILH">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="fFZ-TR-iSd" id="0HQ-0w-PaR"/>
+                        <outlet property="delegate" destination="fFZ-TR-iSd" id="BEm-jW-7x8"/>
+                    </connections>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOLLOWING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXj-Qb-yBs">
+                    <rect key="frame" x="0.0" y="15" width="373" height="25"/>
+                    <color key="backgroundColor" red="0.84511217949999995" green="0.84511217949999995" blue="0.84511217949999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="VVv-Hx-yDI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOLLOW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtq-zV-hvc">
+                    <rect key="frame" x="0.0" y="334" width="373" height="25"/>
+                    <color key="backgroundColor" red="0.84511217949999995" green="0.84511217949999995" blue="0.84511217949999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="4j0-3D-L0E"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Rtq-zV-hvc" secondAttribute="bottom" constant="11" id="1cR-q0-MQg"/>
+                <constraint firstAttribute="trailing" secondItem="Rtq-zV-hvc" secondAttribute="trailing" id="3OB-kg-RlI"/>
+                <constraint firstItem="CA7-QD-xWC" firstAttribute="leading" secondItem="fFZ-TR-iSd" secondAttribute="leading" id="QGN-lq-Aua"/>
+                <constraint firstItem="WXj-Qb-yBs" firstAttribute="leading" secondItem="fFZ-TR-iSd" secondAttribute="leading" id="VoU-cP-KMj"/>
+                <constraint firstItem="WXj-Qb-yBs" firstAttribute="top" secondItem="fFZ-TR-iSd" secondAttribute="top" constant="15" id="eK7-Ek-1Gb"/>
+                <constraint firstItem="Rtq-zV-hvc" firstAttribute="top" secondItem="CA7-QD-xWC" secondAttribute="bottom" constant="17" id="gTW-nB-hFv"/>
+                <constraint firstItem="CA7-QD-xWC" firstAttribute="top" secondItem="WXj-Qb-yBs" secondAttribute="bottom" constant="12" id="njb-O6-Wlq"/>
+                <constraint firstAttribute="trailing" secondItem="CA7-QD-xWC" secondAttribute="trailing" id="pQl-4s-wid"/>
+                <constraint firstItem="Rtq-zV-hvc" firstAttribute="leading" secondItem="fFZ-TR-iSd" secondAttribute="leading" id="pZk-z9-xsa"/>
+                <constraint firstAttribute="trailing" secondItem="WXj-Qb-yBs" secondAttribute="trailing" id="wS2-D9-umy"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="collectionView" destination="CA7-QD-xWC" id="zg9-94-f2E"/>
+            </connections>
+            <point key="canvasLocation" x="276.5" y="17"/>
+        </view>
+    </objects>
+</document>

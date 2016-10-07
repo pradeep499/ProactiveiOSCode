@@ -9,7 +9,6 @@
 #import "UploadInS3.h"
 #import "ProactiveLiving-Swift.h"
 
-
 #define AWS_ACCESS_KEY_ID                                       @"AKIAJMFUUZHGQYPKJPWQ"
 #define AWS_SECRET_KEY                                          @"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"
 #define AWS_MEDIA_BUCKET                                        @"proactiveliving"

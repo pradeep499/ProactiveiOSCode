@@ -87,15 +87,37 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.lblForTo.text="For"
             self.lblTitle.text="Meet Up Title"
             
-            self.tokens = self.dataDict["members"] as! Array
-            for contact in self.tokens {
-                 self.tokenField.tags.addObject(contact["name"]!!)
+            //self.tokens = self.dataDict["members"] as! Array
+            
+            for item in (self.dataDict["members"] as! NSArray) {
+                var tempData = item as! [String:AnyObject]
+                if ((tempData["memberId"] as! String) != ChatHelper.userDefaultForKey(_ID)){
+                    var tempDict = Dictionary <String,String>()
+                    tempDict["firstName"] = tempData["name"] as? String
+                    tempDict["_id"] = tempData["memberId"] as? String
+                    tempDict["mobilePhone"] = tempData["mobilePhone"] as? String
+                    tempDict["imgUrl"] = tempData["imgUrl"] as? String
+                    tempDict["forwardedBy"] = tempData["forwardedBy"] as? String
+                    tempDict["status"] = tempData["status"] as? String
+                    
+                    self.tokens.append(tempDict)
+                }
+                
             }
+            
+            for contact in self.tokens {
+                 self.tokenField.tags.addObject(contact["firstName"]!!)
+            }
+            
+            self.arrAttachments = self.dataDict["links"] as! Array
+            
+            self.tableAttachments.reloadData()
             self.tokenField.reloadTagSubviews()
 
             txtFieldFor.text = self.dataDict["for"] as? String
             txtFieldOn.text = self.dataDict["eventDate"] as? String
             txtFieldAt.text = self.dataDict["eventTime"] as? String
+            txtFieldWhereFirst.text = self.dataDict["locationName"] as? String
             txtFieldWhereSecond.text = self.dataDict["address"] as? String
             txtFieldTitle.text = self.dataDict["title"] as? String
             txtViewDesc.text = self.dataDict["desc"] as? String
@@ -124,6 +146,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         txtFieldTitle.delegate=self
         self.tokenField.tagPlaceholder = "Add here";
+        isForwardAllowed = switchAllowInvite.on
         //self.tokenField.mode = TLTagsControlMode.Edit ;
         self.tokenField.tagsDeleteButtonColor = UIColor.lightGrayColor()
         self.tokenField.tapDelegate=self
@@ -404,12 +427,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             else if (self.txtFieldOn.text!.characters.count == 0)
             {
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select date.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                
             }
             else if (self.txtFieldAt.text!.characters.count == 0)
             {
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select time.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                
             }
             else if (self.txtFieldWhereFirst.text!.characters.count == 0)
             {
@@ -418,16 +439,13 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             else if (self.txtFieldTitle.text!.characters.count == 0)
             {
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter title.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                
             }
             else if (self.txtViewDesc.text!.characters.count == 0)
             {
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter description.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                
             }
             else
             {
-                
                 var linksArray : NSMutableArray!
                 linksArray = NSMutableArray()
                 
@@ -437,7 +455,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 dict["title"]=self.txtFieldTitle.text! as String
                 dict["desc"]=txtViewDesc.text
                 
-                if(pushedFrom=="MEETUPS") {
+                if(pushedFrom=="MEETUPS" || self.pushedFrom == "EDITMEETUPS") {
                     dict["type"]="meetup"
                     dict["venue"]=self.txtFieldWhereFirst.text
                     dict["address"]=self.txtFieldWhereSecond.text
@@ -447,8 +465,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     dict["dialInNumber"] = txtDialInNum.text ?? ""
                     dict["pin"] = txtPin.text ?? ""
                     dict["webLink"]=self.txtFieldWhereFirst.text
-
                 }
+                
                 dict["for"]=txtFieldFor.text
                 
                 for link in self.arrAttachments {
@@ -468,44 +486,68 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 var userIdArray : NSMutableArray!
                 userIdArray = NSMutableArray()
                 
-                var tempDict = Dictionary<String,AnyObject>()
                 
                 for myobject : AnyObject in self.tokens
                 {
-                    let anObject = myobject["_id"] as! String
-                    tempDict["userId"]=anObject
-                    //tempDict["phoneNumber"]=anObject.phoneNumber! as String
+                    var tempDict = Dictionary<String,AnyObject>()
+                    tempDict["userId"]=myobject["_id"] as! String
+                    tempDict["mobilePhone"]=myobject["mobilePhone"] as! String
+                    
+                    if let firstName = myobject["firstName"] as? String {
+                        tempDict["firstName"] = firstName
+                    }
+                    if let mobilePhone = myobject["mobilePhone"] as? String {
+                        tempDict["mobilePhone"] = mobilePhone
+                    }
+                    if let imgUrl = myobject["imgUrl"] as? String {
+                        tempDict["imgUrl"] = imgUrl
+                    }
+                    if let forwardedBy = myobject["forwardedBy"] as? String {
+                        tempDict["forwardedBy"] = forwardedBy
+                    }
+                    if let status = myobject["status"] as? String {
+                        tempDict["status"] = status
+                    }
                     
                     userIdArray.addObject(tempDict);
                 }
                 
+                var tempDict = Dictionary<String,AnyObject>()
                 tempDict["userId"]=ChatHelper.userDefaultForKey("userId") as String
-                //tempDict["phoneNumber"]=ChatHelper.userDefaultForKey("PhoneNumber") as String
+                tempDict["mobilePhone"] = AppHelper.userDefaultsForKey(cellNum)
+                userIdArray.addObject(tempDict);
                 
-                userIdArray.addObject(tempDict)
+              
+                if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
+                {
+                    dict["groupId"] = self.dataDict["groupId"] as! String
+                    dict["typeId"] = self.dataDict["_id"] as! String
+                    dict["createdDate"] = self.dataDict["createdDate"] as! String
+                    
+                }
+                else
+                {
+                    //group create data
+                    var groupDict = [String: AnyObject]()
+                    groupDict["userid"] = AppHelper.userDefaultsForKey(_ID)
+                    groupDict["groupname"] = self.txtFieldTitle.text! as String
+                    
+                    var groupMembers = [AnyObject]()
+                    var userDict = [String: AnyObject]()
+                    userDict["userid"] = ChatHelper.userDefaultForKey(_ID)
+                    userDict["phoneNumber"] = AppHelper.userDefaultsForKey(cellNum)
+                    userDict["user_firstName"] = AppHelper.userDefaultsForKey(userFirstName)
+                    groupMembers.append(userDict)
+                    groupDict["users"] = groupMembers
+                    dict["groupDetail"] = groupDict
+
+                }
+                
                 dict["members"] = userIdArray
                 dict["latlong"] = self.strLatLong
 
-                //group create data
-                var groupDict = [String: AnyObject]()
-                groupDict["userid"] = AppHelper.userDefaultsForKey(_ID)
-                groupDict["groupname"] = self.txtFieldTitle.text! as String
-                var userArray = [AnyObject]()
-                for myobject: AnyObject in self.tokens {
-                    var dataDict = [String: AnyObject]()
-                    dataDict["userid"] = myobject["_id"] as! String
-                    dataDict["phoneNumber"] = (myobject["mobilePhone"] as! String)
-                    dataDict["user_firstName"] = (myobject["firstName"] as! String)
-                    userArray.append(dataDict)
-                }
-                var userDict = [String: AnyObject]()
-                userDict["userid"] = ChatHelper.userDefaultForKey(_ID)
-                userDict["phoneNumber"] = AppHelper.userDefaultsForKey(cellNum)
-                userDict["user_firstName"] = AppHelper.userDefaultsForKey(userFirstName)
-                userArray.append(userDict)
-                groupDict["users"] = userArray
-                dict["groupDetail"] = groupDict
-                
+                print(dict)
+
                 if self.imgCoverPic.image != nil
                 {
                     let imageData = UIImageJPEGRepresentation(self.imgCoverPic.image!, 1.0)
@@ -523,8 +565,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         }
                         
                         
-                        },
-                                 success:
+                        }, success:
                         {
                             operation, response -> Void in
                             
@@ -535,12 +576,25 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                             
                             button.userInteractionEnabled=true
                             
-                            ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                            dispatch_after(4, dispatch_get_main_queue(), {
-                                stopActivityIndicator(self.view)
-
-                                self.navigationController?.popToRootViewControllerAnimated(true)
-                            })
+                            if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
+                            {
+                                ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
+                                dispatch_after(3, dispatch_get_main_queue(), {
+                                    stopActivityIndicator(self.view)
+                                    
+                                    self.navigationController?.popToRootViewControllerAnimated(true)
+                                })
+                            }
+                            else
+                            {
+                                ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
+                                dispatch_after(3, dispatch_get_main_queue(), {
+                                    stopActivityIndicator(self.view)
+                                    
+                                    self.navigationController?.popToRootViewControllerAnimated(true)
+                                })
+                            }
+                            
                             
                         }, failure:
                         {
@@ -554,11 +608,24 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }else
                 {
                     dict["imgUrl"] = ""
-                    ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                    dispatch_after(4, dispatch_get_main_queue(), {
-                        stopActivityIndicator(self.view)
-                        self.navigationController?.popToRootViewControllerAnimated(true)
-                    })
+                    if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
+                    {
+                        ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
+                        dispatch_after(3, dispatch_get_main_queue(), {
+                            stopActivityIndicator(self.view)
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        })
+                    }
+                    else
+                    {
+                        ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
+                        dispatch_after(3, dispatch_get_main_queue(), {
+                            stopActivityIndicator(self.view)
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        })
+                    }
+                    
+                    
                 }
                 
                 
@@ -586,7 +653,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
-            parameters["UserID"] = AppHelper.userDefaultsForKey(uId)
+            parameters["UserID"] = AppHelper.userDefaultsForKey(_ID)
             
             //call global web service class
             Services.serviceCallWithPath(ServiceMeetUpInviteStaticData, withParam: parameters, success: { (responseDict) in

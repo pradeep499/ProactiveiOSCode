@@ -81,6 +81,7 @@
 #define ServiceSendPAS                  @"users/sendPasShare"
 #define ServiceMeetUpInviteStaticData   @"getMeetupInviteFor"
 #define ServiceGetAllStories            @"getStories"
+#define ServiceGetSubscribedStories     @"getSubscribeStories"
 
 #define maxLength                       25
 #define maxPhoneLength                  15

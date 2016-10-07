@@ -598,6 +598,17 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         dict["typeId"] = self.dataDict["_id"] as! String
         dict["status"] = "1"
         dict["userId"] = ChatHelper.userDefaultForKey("userId")
+        
+        //group info
+        var groupDict = Dictionary<String,AnyObject>()
+        groupDict["userid"] = self.dataDict["createdBy"] as! String
+        groupDict["groupid"] = self.dataDict["groupId"] as! String
+        groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
+        groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
+        
+        dict["groupInfo"] = groupDict
+
+        
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
         
     }
@@ -614,6 +625,16 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         dict["typeId"] = self.dataDict["_id"] as! String
         dict["status"] = "2"
         dict["userId"] = ChatHelper.userDefaultForKey("userId")
+        
+        //group info
+        var groupDict = Dictionary<String,AnyObject>()
+        groupDict["userid"] = self.dataDict["createdBy"] as! String
+        groupDict["groupid"] = self.dataDict["groupId"] as! String
+        groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
+        groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
+        
+        dict["groupInfo"] = groupDict
+        
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
         
     }

@@ -7052,7 +7052,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                         let strFileName : String = fileName["chatImagesName"] as! String
                                         let nsDict = fileName["chatImgDicInfo"] as! NSDictionary
                                         
-                                        self.sendImageFilePathToChatServer(nsDict, filePath: strFileName, index:-1)
+                                        self.sendImageFilePathToChatServer(nsDict, filePath: pathUrl, index:-1)
                                     }
                                     else
                                     {
