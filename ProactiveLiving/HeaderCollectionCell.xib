@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -20,24 +20,36 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" tag="111" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pdw-Tm-6si">
-                        <rect key="frame" x="0.0" y="0.0" width="140" height="170"/>
+                        <rect key="frame" x="0.0" y="0.0" width="140" height="245"/>
                         <color key="backgroundColor" red="0.60272435899999999" green="0.60272435899999999" blue="0.60272435899999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="170" id="34B-rp-n5Z"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="34B-rp-n5Z"/>
+                            </mask>
+                        </variation>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_blured_heigh" translatesAutoresizingMaskIntoConstraints="NO" id="Kdi-yj-rsX" userLabel="blured">
+                        <rect key="frame" x="0.0" y="0.0" width="140" height="245"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" tag="222" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hbj-W1-hhx">
-                        <rect key="frame" x="35" y="133" width="70" height="70"/>
+                        <rect key="frame" x="65" y="5" width="70" height="70"/>
                         <color key="backgroundColor" red="0.60272435899999999" green="0.60272435899999999" blue="0.60272435899999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="70" id="EDm-f8-aj8"/>
                             <constraint firstAttribute="width" constant="70" id="kRL-Lz-296"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="333" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hnn-jQ-sEQ">
-                        <rect key="frame" x="0.0" y="203" width="140" height="42"/>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="333" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label  " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hnn-jQ-sEQ">
+                        <rect key="frame" x="0.0" y="185" width="140" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="8eq-sl-h3K"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="13"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -47,14 +59,32 @@
                 <constraint firstAttribute="bottom" secondItem="Hnn-jQ-sEQ" secondAttribute="bottom" id="2QZ-Ex-Ikg"/>
                 <constraint firstAttribute="trailing" secondItem="Hnn-jQ-sEQ" secondAttribute="trailing" id="61o-IA-mI9"/>
                 <constraint firstItem="pdw-Tm-6si" firstAttribute="leading" secondItem="qQo-l5-pK7" secondAttribute="leading" id="9pG-Lp-FLt"/>
+                <constraint firstAttribute="bottom" secondItem="Hnn-jQ-sEQ" secondAttribute="bottom" id="DNW-hF-TY1"/>
                 <constraint firstItem="Hnn-jQ-sEQ" firstAttribute="top" secondItem="pdw-Tm-6si" secondAttribute="bottom" constant="33" id="E9c-mO-CY4"/>
-                <constraint firstItem="Hbj-W1-hhx" firstAttribute="top" secondItem="qQo-l5-pK7" secondAttribute="top" constant="133" id="EBx-ya-9zr"/>
+                <constraint firstItem="Hbj-W1-hhx" firstAttribute="top" secondItem="qQo-l5-pK7" secondAttribute="top" constant="5" id="EBx-ya-9zr"/>
+                <constraint firstAttribute="trailing" secondItem="Hnn-jQ-sEQ" secondAttribute="trailing" id="F9Q-dR-FWc"/>
+                <constraint firstAttribute="trailing" secondItem="Hbj-W1-hhx" secondAttribute="trailing" constant="5" id="GaW-kN-E9r"/>
                 <constraint firstAttribute="trailing" secondItem="pdw-Tm-6si" secondAttribute="trailing" id="LXf-7v-UXF"/>
+                <constraint firstAttribute="bottom" secondItem="pdw-Tm-6si" secondAttribute="bottom" id="T7e-u2-q96"/>
+                <constraint firstAttribute="bottom" secondItem="Kdi-yj-rsX" secondAttribute="bottom" id="WUy-vR-m05"/>
                 <constraint firstItem="Hbj-W1-hhx" firstAttribute="centerX" secondItem="qQo-l5-pK7" secondAttribute="centerX" id="aIf-av-E2z"/>
+                <constraint firstItem="Kdi-yj-rsX" firstAttribute="leading" secondItem="qQo-l5-pK7" secondAttribute="leading" id="cK6-yC-9k0"/>
+                <constraint firstItem="Hnn-jQ-sEQ" firstAttribute="leading" secondItem="qQo-l5-pK7" secondAttribute="leading" id="cT9-Vm-Syd"/>
+                <constraint firstItem="Kdi-yj-rsX" firstAttribute="top" secondItem="qQo-l5-pK7" secondAttribute="top" id="nsI-Vw-sfC"/>
+                <constraint firstAttribute="trailing" secondItem="Kdi-yj-rsX" secondAttribute="trailing" id="oAy-aB-XXh"/>
                 <constraint firstItem="Hnn-jQ-sEQ" firstAttribute="leading" secondItem="qQo-l5-pK7" secondAttribute="leading" id="sMF-JY-jRM"/>
                 <constraint firstItem="pdw-Tm-6si" firstAttribute="top" secondItem="qQo-l5-pK7" secondAttribute="top" id="vdf-PD-3mD"/>
             </constraints>
             <size key="customSize" width="140" height="244"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="aIf-av-E2z"/>
+                    <exclude reference="2QZ-Ex-Ikg"/>
+                    <exclude reference="61o-IA-mI9"/>
+                    <exclude reference="E9c-mO-CY4"/>
+                    <exclude reference="sMF-JY-jRM"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="imgBack" destination="pdw-Tm-6si" id="pFP-5m-FPx"/>
                 <outlet property="imgLogo" destination="Hbj-W1-hhx" id="YSc-dL-jkh"/>
@@ -63,4 +93,7 @@
             <point key="canvasLocation" x="206" y="11.5"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="cell_blured_heigh" width="150" height="200"/>
+    </resources>
 </document>

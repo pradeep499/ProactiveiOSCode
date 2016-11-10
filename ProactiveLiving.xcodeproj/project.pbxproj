@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		600DA7AB1DD3331300A95595 /* RecurrenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600DA7AA1DD3331300A95595 /* RecurrenceVC.swift */; };
+		600F1CD71DBA293B00BCBC12 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CB71DBA293B00BCBC12 /* MKAnnotationView+WebCache.m */; };
+		600F1CD81DBA293B00BCBC12 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CB91DBA293B00BCBC12 /* NSData+ImageContentType.m */; };
+		600F1CD91DBA293B00BCBC12 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CBB1DBA293B00BCBC12 /* SDImageCache.m */; };
+		600F1CDA1DBA293B00BCBC12 /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CBD1DBA293B00BCBC12 /* SDWebImageCompat.m */; };
+		600F1CDB1DBA293B00BCBC12 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CBF1DBA293B00BCBC12 /* SDWebImageDecoder.m */; };
+		600F1CDC1DBA293B00BCBC12 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CC11DBA293B00BCBC12 /* SDWebImageDownloader.m */; };
+		600F1CDD1DBA293B00BCBC12 /* SDWebImageDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CC31DBA293B00BCBC12 /* SDWebImageDownloaderOperation.m */; };
+		600F1CDE1DBA293B00BCBC12 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CC51DBA293B00BCBC12 /* SDWebImageManager.m */; };
+		600F1CDF1DBA293B00BCBC12 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CC81DBA293B00BCBC12 /* SDWebImagePrefetcher.m */; };
+		600F1CE01DBA293B00BCBC12 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CCA1DBA293B00BCBC12 /* UIButton+WebCache.m */; };
+		600F1CE11DBA293B00BCBC12 /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CCC1DBA293B00BCBC12 /* UIImage+GIF.m */; };
+		600F1CE21DBA293B00BCBC12 /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CCE1DBA293B00BCBC12 /* UIImage+MultiFormat.m */; };
+		600F1CE31DBA293B00BCBC12 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CD01DBA293B00BCBC12 /* UIImage+WebP.m */; };
+		600F1CE41DBA293B00BCBC12 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CD21DBA293B00BCBC12 /* UIImageView+HighlightedWebCache.m */; };
+		600F1CE51DBA293B00BCBC12 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CD41DBA293B00BCBC12 /* UIImageView+WebCache.m */; };
+		600F1CE61DBA293B00BCBC12 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CD61DBA293B00BCBC12 /* UIView+WebCacheOperation.m */; };
+		600F1CEB1DBA436000BCBC12 /* BroadcastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */; };
+		60D471C71DC07D9900EAD7D9 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D471C61DC07D9900EAD7D9 /* MenuVC.swift */; };
 		671C3D611C44FB72006A5423 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D601C44FB72006A5423 /* main.m */; };
 		671C3D671C44FB72006A5423 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D661C44FB72006A5423 /* LoginVC.m */; };
 		671C3D6A1C44FB72006A5423 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 671C3D681C44FB72006A5423 /* Main.storyboard */; };
@@ -78,6 +97,20 @@
 		BA288ADC1DA4F58D00B7D88A /* VideosContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA288ADB1DA4F58D00B7D88A /* VideosContainer.swift */; };
 		BA288ADE1DA4F5A500B7D88A /* VideosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA288ADD1DA4F5A500B7D88A /* VideosVC.swift */; };
 		BA388C331C60DF6F00DF0574 /* ASStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA388C321C60DF6F00DF0574 /* ASStarRatingView.m */; };
+		BA4859001DC9DDDE00DED552 /* NSCalendar+RSDFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4858F01DC9DDDE00DED552 /* NSCalendar+RSDFAdditions.m */; };
+		BA4859011DC9DDDE00DED552 /* RSDFDatePickerCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4858F31DC9DDDE00DED552 /* RSDFDatePickerCollectionView.m */; };
+		BA4859021DC9DDDE00DED552 /* RSDFDatePickerCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4858F51DC9DDDE00DED552 /* RSDFDatePickerCollectionViewLayout.m */; };
+		BA4859031DC9DDDE00DED552 /* RSDFDatePickerDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4858F81DC9DDDE00DED552 /* RSDFDatePickerDayCell.m */; };
+		BA4859041DC9DDDE00DED552 /* RSDFDatePickerDaysOfWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4858FA1DC9DDDE00DED552 /* RSDFDatePickerDaysOfWeekView.m */; };
+		BA4859051DC9DDDE00DED552 /* RSDFDatePickerMonthHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4858FC1DC9DDDE00DED552 /* RSDFDatePickerMonthHeader.m */; };
+		BA4859061DC9DDDE00DED552 /* RSDFDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4858FF1DC9DDDE00DED552 /* RSDFDatePickerView.m */; };
+		BA48590A1DC9DE4700DED552 /* RSDFDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4859091DC9DE4700DED552 /* RSDFDatePickerViewController.m */; };
+		BA4859181DC9DEF800DED552 /* RSDFCustomDatePickerCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA48590D1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionView.m */; };
+		BA4859191DC9DEF800DED552 /* RSDFCustomDatePickerCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BA48590F1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionViewLayout.m */; };
+		BA48591A1DC9DEF800DED552 /* RSDFCustomDatePickerDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4859111DC9DEF800DED552 /* RSDFCustomDatePickerDayCell.m */; };
+		BA48591B1DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4859131DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.m */; };
+		BA48591C1DC9DEF800DED552 /* RSDFCustomDatePickerMonthHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4859151DC9DEF800DED552 /* RSDFCustomDatePickerMonthHeader.m */; };
+		BA48591D1DC9DEF800DED552 /* RSDFCustomDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4859171DC9DEF800DED552 /* RSDFCustomDatePickerView.m */; };
 		BA53301D1CC6096100887DBF /* PASLevelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53301C1CC6096100887DBF /* PASLevelVC.m */; };
 		BA5330201CC6097800887DBF /* PASRatingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53301F1CC6097800887DBF /* PASRatingVC.m */; };
 		BA5330231CC6099D00887DBF /* CurrentPASVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA5330221CC6099D00887DBF /* CurrentPASVC.m */; };
@@ -398,6 +431,42 @@
 
 /* Begin PBXFileReference section */
 		226D6395651946217E4B7158 /* Pods-ProactiveLiving.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProactiveLiving.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving.release.xcconfig"; sourceTree = "<group>"; };
+		600DA7AA1DD3331300A95595 /* RecurrenceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecurrenceVC.swift; path = Recurrence/RecurrenceVC.swift; sourceTree = "<group>"; };
+		600F1CB61DBA293B00BCBC12 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
+		600F1CB71DBA293B00BCBC12 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
+		600F1CB81DBA293B00BCBC12 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
+		600F1CB91DBA293B00BCBC12 /* NSData+ImageContentType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ImageContentType.m"; sourceTree = "<group>"; };
+		600F1CBA1DBA293B00BCBC12 /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
+		600F1CBB1DBA293B00BCBC12 /* SDImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageCache.m; sourceTree = "<group>"; };
+		600F1CBC1DBA293B00BCBC12 /* SDWebImageCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompat.h; sourceTree = "<group>"; };
+		600F1CBD1DBA293B00BCBC12 /* SDWebImageCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageCompat.m; sourceTree = "<group>"; };
+		600F1CBE1DBA293B00BCBC12 /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
+		600F1CBF1DBA293B00BCBC12 /* SDWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDecoder.m; sourceTree = "<group>"; };
+		600F1CC01DBA293B00BCBC12 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloader.h; sourceTree = "<group>"; };
+		600F1CC11DBA293B00BCBC12 /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
+		600F1CC21DBA293B00BCBC12 /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
+		600F1CC31DBA293B00BCBC12 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
+		600F1CC41DBA293B00BCBC12 /* SDWebImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManager.h; sourceTree = "<group>"; };
+		600F1CC51DBA293B00BCBC12 /* SDWebImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageManager.m; sourceTree = "<group>"; };
+		600F1CC61DBA293B00BCBC12 /* SDWebImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageOperation.h; sourceTree = "<group>"; };
+		600F1CC71DBA293B00BCBC12 /* SDWebImagePrefetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImagePrefetcher.h; sourceTree = "<group>"; };
+		600F1CC81DBA293B00BCBC12 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePrefetcher.m; sourceTree = "<group>"; };
+		600F1CC91DBA293B00BCBC12 /* UIButton+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+WebCache.h"; sourceTree = "<group>"; };
+		600F1CCA1DBA293B00BCBC12 /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
+		600F1CCB1DBA293B00BCBC12 /* UIImage+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GIF.h"; sourceTree = "<group>"; };
+		600F1CCC1DBA293B00BCBC12 /* UIImage+GIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GIF.m"; sourceTree = "<group>"; };
+		600F1CCD1DBA293B00BCBC12 /* UIImage+MultiFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MultiFormat.h"; sourceTree = "<group>"; };
+		600F1CCE1DBA293B00BCBC12 /* UIImage+MultiFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MultiFormat.m"; sourceTree = "<group>"; };
+		600F1CCF1DBA293B00BCBC12 /* UIImage+WebP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WebP.h"; sourceTree = "<group>"; };
+		600F1CD01DBA293B00BCBC12 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
+		600F1CD11DBA293B00BCBC12 /* UIImageView+HighlightedWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+HighlightedWebCache.h"; sourceTree = "<group>"; };
+		600F1CD21DBA293B00BCBC12 /* UIImageView+HighlightedWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+HighlightedWebCache.m"; sourceTree = "<group>"; };
+		600F1CD31DBA293B00BCBC12 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
+		600F1CD41DBA293B00BCBC12 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		600F1CD51DBA293B00BCBC12 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
+		600F1CD61DBA293B00BCBC12 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastVC.swift; sourceTree = "<group>"; };
+		60D471C61DC07D9900EAD7D9 /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		671C3D5C1C44FB72006A5423 /* ProactiveLiving.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProactiveLiving.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		671C3D601C44FB72006A5423 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		671C3D651C44FB72006A5423 /* LoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
@@ -505,6 +574,37 @@
 		BA288ADD1DA4F5A500B7D88A /* VideosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosVC.swift; sourceTree = "<group>"; };
 		BA388C311C60DF6F00DF0574 /* ASStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASStarRatingView.h; sourceTree = "<group>"; };
 		BA388C321C60DF6F00DF0574 /* ASStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASStarRatingView.m; sourceTree = "<group>"; };
+		BA4858EF1DC9DDDE00DED552 /* NSCalendar+RSDFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+RSDFAdditions.h"; sourceTree = "<group>"; };
+		BA4858F01DC9DDDE00DED552 /* NSCalendar+RSDFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+RSDFAdditions.m"; sourceTree = "<group>"; };
+		BA4858F11DC9DDDE00DED552 /* RSDayFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDayFlow.h; sourceTree = "<group>"; };
+		BA4858F21DC9DDDE00DED552 /* RSDFDatePickerCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFDatePickerCollectionView.h; sourceTree = "<group>"; };
+		BA4858F31DC9DDDE00DED552 /* RSDFDatePickerCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFDatePickerCollectionView.m; sourceTree = "<group>"; };
+		BA4858F41DC9DDDE00DED552 /* RSDFDatePickerCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFDatePickerCollectionViewLayout.h; sourceTree = "<group>"; };
+		BA4858F51DC9DDDE00DED552 /* RSDFDatePickerCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFDatePickerCollectionViewLayout.m; sourceTree = "<group>"; };
+		BA4858F61DC9DDDE00DED552 /* RSDFDatePickerDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFDatePickerDate.h; sourceTree = "<group>"; };
+		BA4858F71DC9DDDE00DED552 /* RSDFDatePickerDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFDatePickerDayCell.h; sourceTree = "<group>"; };
+		BA4858F81DC9DDDE00DED552 /* RSDFDatePickerDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFDatePickerDayCell.m; sourceTree = "<group>"; };
+		BA4858F91DC9DDDE00DED552 /* RSDFDatePickerDaysOfWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFDatePickerDaysOfWeekView.h; sourceTree = "<group>"; };
+		BA4858FA1DC9DDDE00DED552 /* RSDFDatePickerDaysOfWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFDatePickerDaysOfWeekView.m; sourceTree = "<group>"; };
+		BA4858FB1DC9DDDE00DED552 /* RSDFDatePickerMonthHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFDatePickerMonthHeader.h; sourceTree = "<group>"; };
+		BA4858FC1DC9DDDE00DED552 /* RSDFDatePickerMonthHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFDatePickerMonthHeader.m; sourceTree = "<group>"; };
+		BA4858FD1DC9DDDE00DED552 /* RSDFDatePickerView+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSDFDatePickerView+Protected.h"; sourceTree = "<group>"; };
+		BA4858FE1DC9DDDE00DED552 /* RSDFDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFDatePickerView.h; sourceTree = "<group>"; };
+		BA4858FF1DC9DDDE00DED552 /* RSDFDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFDatePickerView.m; sourceTree = "<group>"; };
+		BA4859081DC9DE4700DED552 /* RSDFDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFDatePickerViewController.h; sourceTree = "<group>"; };
+		BA4859091DC9DE4700DED552 /* RSDFDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFDatePickerViewController.m; sourceTree = "<group>"; };
+		BA48590C1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFCustomDatePickerCollectionView.h; sourceTree = "<group>"; };
+		BA48590D1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFCustomDatePickerCollectionView.m; sourceTree = "<group>"; };
+		BA48590E1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFCustomDatePickerCollectionViewLayout.h; sourceTree = "<group>"; };
+		BA48590F1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFCustomDatePickerCollectionViewLayout.m; sourceTree = "<group>"; };
+		BA4859101DC9DEF800DED552 /* RSDFCustomDatePickerDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFCustomDatePickerDayCell.h; sourceTree = "<group>"; };
+		BA4859111DC9DEF800DED552 /* RSDFCustomDatePickerDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFCustomDatePickerDayCell.m; sourceTree = "<group>"; };
+		BA4859121DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFCustomDatePickerDaysOfWeekView.h; sourceTree = "<group>"; };
+		BA4859131DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFCustomDatePickerDaysOfWeekView.m; sourceTree = "<group>"; };
+		BA4859141DC9DEF800DED552 /* RSDFCustomDatePickerMonthHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFCustomDatePickerMonthHeader.h; sourceTree = "<group>"; };
+		BA4859151DC9DEF800DED552 /* RSDFCustomDatePickerMonthHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFCustomDatePickerMonthHeader.m; sourceTree = "<group>"; };
+		BA4859161DC9DEF800DED552 /* RSDFCustomDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDFCustomDatePickerView.h; sourceTree = "<group>"; };
+		BA4859171DC9DEF800DED552 /* RSDFCustomDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDFCustomDatePickerView.m; sourceTree = "<group>"; };
 		BA53301B1CC6096100887DBF /* PASLevelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASLevelVC.h; sourceTree = "<group>"; };
 		BA53301C1CC6096100887DBF /* PASLevelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASLevelVC.m; sourceTree = "<group>"; };
 		BA53301E1CC6097800887DBF /* PASRatingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASRatingVC.h; sourceTree = "<group>"; };
@@ -977,6 +1077,70 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		600DA7A91DD332CE00A95595 /* Recurrence */ = {
+			isa = PBXGroup;
+			children = (
+				600DA7AA1DD3331300A95595 /* RecurrenceVC.swift */,
+			);
+			name = Recurrence;
+			sourceTree = "<group>";
+		};
+		600F1CB51DBA293B00BCBC12 /* SDWebImages */ = {
+			isa = PBXGroup;
+			children = (
+				600F1CB61DBA293B00BCBC12 /* MKAnnotationView+WebCache.h */,
+				600F1CB71DBA293B00BCBC12 /* MKAnnotationView+WebCache.m */,
+				600F1CB81DBA293B00BCBC12 /* NSData+ImageContentType.h */,
+				600F1CB91DBA293B00BCBC12 /* NSData+ImageContentType.m */,
+				600F1CBA1DBA293B00BCBC12 /* SDImageCache.h */,
+				600F1CBB1DBA293B00BCBC12 /* SDImageCache.m */,
+				600F1CBC1DBA293B00BCBC12 /* SDWebImageCompat.h */,
+				600F1CBD1DBA293B00BCBC12 /* SDWebImageCompat.m */,
+				600F1CBE1DBA293B00BCBC12 /* SDWebImageDecoder.h */,
+				600F1CBF1DBA293B00BCBC12 /* SDWebImageDecoder.m */,
+				600F1CC01DBA293B00BCBC12 /* SDWebImageDownloader.h */,
+				600F1CC11DBA293B00BCBC12 /* SDWebImageDownloader.m */,
+				600F1CC21DBA293B00BCBC12 /* SDWebImageDownloaderOperation.h */,
+				600F1CC31DBA293B00BCBC12 /* SDWebImageDownloaderOperation.m */,
+				600F1CC41DBA293B00BCBC12 /* SDWebImageManager.h */,
+				600F1CC51DBA293B00BCBC12 /* SDWebImageManager.m */,
+				600F1CC61DBA293B00BCBC12 /* SDWebImageOperation.h */,
+				600F1CC71DBA293B00BCBC12 /* SDWebImagePrefetcher.h */,
+				600F1CC81DBA293B00BCBC12 /* SDWebImagePrefetcher.m */,
+				600F1CC91DBA293B00BCBC12 /* UIButton+WebCache.h */,
+				600F1CCA1DBA293B00BCBC12 /* UIButton+WebCache.m */,
+				600F1CCB1DBA293B00BCBC12 /* UIImage+GIF.h */,
+				600F1CCC1DBA293B00BCBC12 /* UIImage+GIF.m */,
+				600F1CCD1DBA293B00BCBC12 /* UIImage+MultiFormat.h */,
+				600F1CCE1DBA293B00BCBC12 /* UIImage+MultiFormat.m */,
+				600F1CCF1DBA293B00BCBC12 /* UIImage+WebP.h */,
+				600F1CD01DBA293B00BCBC12 /* UIImage+WebP.m */,
+				600F1CD11DBA293B00BCBC12 /* UIImageView+HighlightedWebCache.h */,
+				600F1CD21DBA293B00BCBC12 /* UIImageView+HighlightedWebCache.m */,
+				600F1CD31DBA293B00BCBC12 /* UIImageView+WebCache.h */,
+				600F1CD41DBA293B00BCBC12 /* UIImageView+WebCache.m */,
+				600F1CD51DBA293B00BCBC12 /* UIView+WebCacheOperation.h */,
+				600F1CD61DBA293B00BCBC12 /* UIView+WebCacheOperation.m */,
+			);
+			path = SDWebImages;
+			sourceTree = "<group>";
+		};
+		600F1CE71DBA42CE00BCBC12 /* BroadCast */ = {
+			isa = PBXGroup;
+			children = (
+				600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */,
+			);
+			name = BroadCast;
+			sourceTree = "<group>";
+		};
+		60D471C51DC07D7000EAD7D9 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				60D471C61DC07D9900EAD7D9 /* MenuVC.swift */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
 		671C3D531C44FB71006A5423 = {
 			isa = PBXGroup;
 			children = (
@@ -984,10 +1148,9 @@
 				671C3D6E1C44FB72006A5423 /* Assets.xcassets */,
 				671C3D681C44FB72006A5423 /* Main.storyboard */,
 				671C3D951C44FE7A006A5423 /* AppDelegate */,
-				671C3D9B1C4500BD006A5423 /* AppHelper */,
-				671C3D9E1C45011C006A5423 /* Defines */,
-				BA8FC7A11C5F812B00BCA20E /* CustomClasses */,
 				671C3D5E1C44FB72006A5423 /* ProactiveLiving */,
+				671C3D9E1C45011C006A5423 /* HelperClasses */,
+				BA8FC7A11C5F812B00BCA20E /* CustomClasses */,
 				671C3D7B1C44FB72006A5423 /* ProactiveLivingTests */,
 				671C3D861C44FB72006A5423 /* ProactiveLivingUITests */,
 				671C3D5D1C44FB72006A5423 /* Products */,
@@ -1009,7 +1172,6 @@
 		671C3D5E1C44FB72006A5423 /* ProactiveLiving */ = {
 			isa = PBXGroup;
 			children = (
-				BA9F179E1D78544700381EFF /* ProactiveLiving.entitlements */,
 				671C3D961C44FEE6006A5423 /* Views */,
 				671C3D981C44FEF6006A5423 /* ControllerClasses */,
 				671C3D9A1C44FF26006A5423 /* Resources */,
@@ -1057,6 +1219,9 @@
 		671C3D961C44FEE6006A5423 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				600DA7A91DD332CE00A95595 /* Recurrence */,
+				BA4859071DC9DE3300DED552 /* Calender */,
+				60D471C51DC07D7000EAD7D9 /* Menu */,
 				BA0B653A1D93B42C00CB6BB8 /* NewsFeeds */,
 				BAE59C861D799AC3007654BA /* MeetUps */,
 				BAAF5F191D63382100BAF0E8 /* CreateMeetUps */,
@@ -1096,6 +1261,7 @@
 		671C3D981C44FEF6006A5423 /* ControllerClasses */ = {
 			isa = PBXGroup;
 			children = (
+				BA48591F1DCCBE2D00DED552 /* LocationManager */,
 				673D9A4B1C5111D8009DD48A /* PushSegue */,
 				671C3D9D1C4500DA006A5423 /* CoreDataFunction */,
 				671C3D9C1C4500CC006A5423 /* Services */,
@@ -1115,22 +1281,13 @@
 		671C3D9A1C44FF26006A5423 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				67BD405D1C47AABC0084EFD4 /* Roboto */,
+				67BD405D1C47AABC0084EFD4 /* Font Roboto */,
+				BA9F179E1D78544700381EFF /* ProactiveLiving.entitlements */,
 				671C3D701C44FB72006A5423 /* LaunchScreen.storyboard */,
 				671C3D731C44FB72006A5423 /* Info.plist */,
 				671C3D6B1C44FB72006A5423 /* ProactiveLiving.xcdatamodeld */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		671C3D9B1C4500BD006A5423 /* AppHelper */ = {
-			isa = PBXGroup;
-			children = (
-				671C3DA61C4504DB006A5423 /* AppHelper.h */,
-				671C3DA71C4504DB006A5423 /* AppHelper.m */,
-			);
-			name = AppHelper;
-			path = ProactiveLiving;
 			sourceTree = "<group>";
 		};
 		671C3D9C1C4500CC006A5423 /* Services */ = {
@@ -1151,15 +1308,17 @@
 			name = CoreDataFunction;
 			sourceTree = "<group>";
 		};
-		671C3D9E1C45011C006A5423 /* Defines */ = {
+		671C3D9E1C45011C006A5423 /* HelperClasses */ = {
 			isa = PBXGroup;
 			children = (
+				671C3DA61C4504DB006A5423 /* AppHelper.h */,
+				671C3DA71C4504DB006A5423 /* AppHelper.m */,
 				671C3D9F1C450152006A5423 /* Defines.h */,
 				BA5901AD1D365DBC006142AC /* Define.swift */,
 				BA5901B01D365E99006142AC /* HelpingClass.swift */,
 				BA5901531D365571006142AC /* ProactiveLiving-Bridging-Header.h */,
 			);
-			name = Defines;
+			name = HelperClasses;
 			path = ProactiveLiving;
 			sourceTree = "<group>";
 		};
@@ -1201,7 +1360,7 @@
 			name = HomeVC;
 			sourceTree = "<group>";
 		};
-		67BD405D1C47AABC0084EFD4 /* Roboto */ = {
+		67BD405D1C47AABC0084EFD4 /* Font Roboto */ = {
 			isa = PBXGroup;
 			children = (
 				67BD405E1C47AAC90084EFD4 /* Roboto-Black.ttf */,
@@ -1223,7 +1382,7 @@
 				67BD406E1C47AAC90084EFD4 /* RobotoCondensed-LightItalic.ttf */,
 				67BD406F1C47AAC90084EFD4 /* RobotoCondensed-Regular.ttf */,
 			);
-			name = Roboto;
+			name = "Font Roboto";
 			sourceTree = "<group>";
 		};
 		67C417971C4E6952006B76DE /* ForgotPassword2VC */ = {
@@ -1308,6 +1467,7 @@
 		BA0B653A1D93B42C00CB6BB8 /* NewsFeeds */ = {
 			isa = PBXGroup;
 			children = (
+				600F1CE71DBA42CE00BCBC12 /* BroadCast */,
 				BA288ADA1DA4F56900B7D88A /* Videos */,
 				BA0B653B1D93B48000CB6BB8 /* NewsFeedContainer.swift */,
 				BA0B653D1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift */,
@@ -1383,6 +1543,78 @@
 				BA388C321C60DF6F00DF0574 /* ASStarRatingView.m */,
 			);
 			name = ASStarRatingView;
+			sourceTree = "<group>";
+		};
+		BA4858EE1DC9DDDE00DED552 /* RSDayFlow */ = {
+			isa = PBXGroup;
+			children = (
+				BA4858EF1DC9DDDE00DED552 /* NSCalendar+RSDFAdditions.h */,
+				BA4858F01DC9DDDE00DED552 /* NSCalendar+RSDFAdditions.m */,
+				BA4858F11DC9DDDE00DED552 /* RSDayFlow.h */,
+				BA4858F21DC9DDDE00DED552 /* RSDFDatePickerCollectionView.h */,
+				BA4858F31DC9DDDE00DED552 /* RSDFDatePickerCollectionView.m */,
+				BA4858F41DC9DDDE00DED552 /* RSDFDatePickerCollectionViewLayout.h */,
+				BA4858F51DC9DDDE00DED552 /* RSDFDatePickerCollectionViewLayout.m */,
+				BA4858F61DC9DDDE00DED552 /* RSDFDatePickerDate.h */,
+				BA4858F71DC9DDDE00DED552 /* RSDFDatePickerDayCell.h */,
+				BA4858F81DC9DDDE00DED552 /* RSDFDatePickerDayCell.m */,
+				BA4858F91DC9DDDE00DED552 /* RSDFDatePickerDaysOfWeekView.h */,
+				BA4858FA1DC9DDDE00DED552 /* RSDFDatePickerDaysOfWeekView.m */,
+				BA4858FB1DC9DDDE00DED552 /* RSDFDatePickerMonthHeader.h */,
+				BA4858FC1DC9DDDE00DED552 /* RSDFDatePickerMonthHeader.m */,
+				BA4858FD1DC9DDDE00DED552 /* RSDFDatePickerView+Protected.h */,
+				BA4858FE1DC9DDDE00DED552 /* RSDFDatePickerView.h */,
+				BA4858FF1DC9DDDE00DED552 /* RSDFDatePickerView.m */,
+			);
+			path = RSDayFlow;
+			sourceTree = "<group>";
+		};
+		BA4859071DC9DE3300DED552 /* Calender */ = {
+			isa = PBXGroup;
+			children = (
+				BA48590B1DC9DEF800DED552 /* CalenderViews */,
+				BA4859081DC9DE4700DED552 /* RSDFDatePickerViewController.h */,
+				BA4859091DC9DE4700DED552 /* RSDFDatePickerViewController.m */,
+			);
+			name = Calender;
+			sourceTree = "<group>";
+		};
+		BA48590B1DC9DEF800DED552 /* CalenderViews */ = {
+			isa = PBXGroup;
+			children = (
+				BA48590C1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionView.h */,
+				BA48590D1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionView.m */,
+				BA48590E1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionViewLayout.h */,
+				BA48590F1DC9DEF800DED552 /* RSDFCustomDatePickerCollectionViewLayout.m */,
+				BA4859101DC9DEF800DED552 /* RSDFCustomDatePickerDayCell.h */,
+				BA4859111DC9DEF800DED552 /* RSDFCustomDatePickerDayCell.m */,
+				BA4859121DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.h */,
+				BA4859131DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.m */,
+				BA4859141DC9DEF800DED552 /* RSDFCustomDatePickerMonthHeader.h */,
+				BA4859151DC9DEF800DED552 /* RSDFCustomDatePickerMonthHeader.m */,
+				BA4859161DC9DEF800DED552 /* RSDFCustomDatePickerView.h */,
+				BA4859171DC9DEF800DED552 /* RSDFCustomDatePickerView.m */,
+			);
+			path = CalenderViews;
+			sourceTree = "<group>";
+		};
+		BA48591E1DCCBE0C00DED552 /* CustomSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				BADE15391CBE7F2200E59661 /* CustomUISwitch.h */,
+				BADE153A1CBE7F2200E59661 /* CustomUISwitch.m */,
+			);
+			name = CustomSwitch;
+			sourceTree = "<group>";
+		};
+		BA48591F1DCCBE2D00DED552 /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				BAC9B4B11CBF8CA600373F73 /* LocationManagerSingleton.h */,
+				BAC9B4B21CBF8CA600373F73 /* LocationManagerSingleton.m */,
+			);
+			name = LocationManager;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		BA5330181CC6090C00887DBF /* CurrentPAS */ = {
@@ -1840,6 +2072,9 @@
 		BA8FC7A11C5F812B00BCA20E /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
+				BA48591E1DCCBE0C00DED552 /* CustomSwitch */,
+				BA4858EE1DC9DDDE00DED552 /* RSDayFlow */,
+				600F1CB51DBA293B00BCBC12 /* SDWebImages */,
 				BAD63F0B1D9A9011002BDF0A /* JMCCollectionViewLayout */,
 				BAA8A1021D7051CD002C5C47 /* GooglePlacesAutocomplete */,
 				BAA01E1B1D6AE34100E1B80D /* TLTagsControl */,
@@ -1852,10 +2087,6 @@
 				BAAF57051C92D6E9000D54F6 /* JCTagList */,
 				BA893DE41C6322AD00E94DBE /* YSLContainerVC */,
 				BA388C341C60DF7A00DF0574 /* ASStarRatingView */,
-				BADE15391CBE7F2200E59661 /* CustomUISwitch.h */,
-				BADE153A1CBE7F2200E59661 /* CustomUISwitch.m */,
-				BAC9B4B11CBF8CA600373F73 /* LocationManagerSingleton.h */,
-				BAC9B4B21CBF8CA600373F73 /* LocationManagerSingleton.m */,
 				BAB985441D0ABCED00F7DA80 /* CheckBox */,
 			);
 			name = CustomClasses;
@@ -2322,6 +2553,7 @@
 				671C3D5A1C44FB72006A5423 /* Resources */,
 				BD4A774529B99B96C0C31640 /* 📦 Embed Pods Frameworks */,
 				2B5B63BF3A930F4D1D136FA6 /* 📦 Copy Pods Resources */,
+				C81A74D8EA2981FDAADF49AB /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2596,6 +2828,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C81A74D8EA2981FDAADF49AB /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2623,12 +2870,15 @@
 				BAB0E5001D5DE59B00906C10 /* SocketParsable.swift in Sources */,
 				BA01EEDF1D7D7C92009548D6 /* CreateMeetUpVC.swift in Sources */,
 				BAFFA5BC1D8AB8A300969211 /* MeetUpProfileCell.swift in Sources */,
+				BA48590A1DC9DE4700DED552 /* RSDFDatePickerViewController.m in Sources */,
+				BA48591C1DC9DEF800DED552 /* RSDFCustomDatePickerMonthHeader.m in Sources */,
 				BAD909941CFD791B00E12422 /* SettingsMainVC.m in Sources */,
 				BA88882C1C6493BA0083C857 /* FilterFourCell.m in Sources */,
 				BA5901131D364EFD006142AC /* ChatVC.swift in Sources */,
 				BAD5F0AB1D068D26002186B4 /* NSDate+Utils.m in Sources */,
 				BAD195E91C635B0A0085DD9B /* FilterVC2.m in Sources */,
 				BA5900DC1D364EFD006142AC /* ContactList.swift in Sources */,
+				600F1CDA1DBA293B00BCBC12 /* SDWebImageCompat.m in Sources */,
 				BA59012F1D364F55006142AC /* HSDatePickerViewController.m in Sources */,
 				BAD8D6491CBCCDCB0037ED23 /* CKCalendarViewControllerInternal.m in Sources */,
 				BAAF57021C92D6E5000D54F6 /* JCCollectionViewTagFlowLayout.m in Sources */,
@@ -2636,6 +2886,7 @@
 				BA893DE91C6322AE00E94DBE /* YSLContainerViewController.m in Sources */,
 				BAD909A01CFD7A3800E12422 /* SettingsConCell.m in Sources */,
 				BAA471AD1CCF7ED600CF90D7 /* CollectionHeaderView.m in Sources */,
+				600F1CD71DBA293B00BCBC12 /* MKAnnotationView+WebCache.m in Sources */,
 				BAD8D6431CBCCDCB0037ED23 /* CKCalendarEvent.m in Sources */,
 				BA5901201D364EFD006142AC /* StrorePhoneContact.m in Sources */,
 				BABB57DC1CEF105100F7C879 /* MessagesVC.m in Sources */,
@@ -2644,6 +2895,7 @@
 				BA5900E61D364EFD006142AC /* RecentChat.swift in Sources */,
 				92E092021D37767A00BEC575 /* SOPlaceholderedTextView.m in Sources */,
 				BA5901121D364EFD006142AC /* ChattingMainVC.swift in Sources */,
+				BA48591A1DC9DEF800DED552 /* RSDFCustomDatePickerDayCell.m in Sources */,
 				BA5901101D364EFD006142AC /* ChatTextCell.swift in Sources */,
 				BABEFAB51D113F550053A8A2 /* PASSharePopUp.m in Sources */,
 				BA5901A61D36579D006142AC /* IQTextView.swift in Sources */,
@@ -2653,7 +2905,11 @@
 				671C3D671C44FB72006A5423 /* LoginVC.m in Sources */,
 				BA5901151D364EFD006142AC /* mediaCell.swift in Sources */,
 				BAA471B01CCF9D1100CF90D7 /* CertDetailsVC.m in Sources */,
+				600F1CDB1DBA293B00BCBC12 /* SDWebImageDecoder.m in Sources */,
 				BAB0E5021D5DE59B00906C10 /* SocketTypes.swift in Sources */,
+				BA4859011DC9DDDE00DED552 /* RSDFDatePickerCollectionView.m in Sources */,
+				600F1CE11DBA293B00BCBC12 /* UIImage+GIF.m in Sources */,
+				600F1CE21DBA293B00BCBC12 /* UIImage+MultiFormat.m in Sources */,
 				BAD63EF61D9960EB002BDF0A /* ExploreVC.swift in Sources */,
 				BA5901171D364EFD006142AC /* CustomViewController.m in Sources */,
 				BA5901B31D365F57006142AC /* ServiceClass.swift in Sources */,
@@ -2662,6 +2918,7 @@
 				BAD03B441CE3474B00CDEEA6 /* EducationVC.m in Sources */,
 				BAD5F0B41D06ADA9002186B4 /* PASInviteMainVC.m in Sources */,
 				BAB985521D0AC9CA00F7DA80 /* PASShareCell.m in Sources */,
+				600F1CDE1DBA293B00BCBC12 /* SDWebImageManager.m in Sources */,
 				BAD8D6361CBCCDCB0037ED23 /* NSCalendar+Components.m in Sources */,
 				BA59011C1D364EFD006142AC /* HPGrowingTextView.m in Sources */,
 				BA5901AE1D365DBC006142AC /* Define.swift in Sources */,
@@ -2672,13 +2929,17 @@
 				BAB0E5051D5DE59B00906C10 /* WebSocket.swift in Sources */,
 				BAD9099D1CFD7A2100E12422 /* SettingsOrgCell.m in Sources */,
 				679AA7201C461F85002D96AE /* ForgotPasswordVC.m in Sources */,
+				BA48591D1DC9DEF800DED552 /* RSDFCustomDatePickerView.m in Sources */,
 				BAB0E4F01D5DE59B00906C10 /* SocketClientSpec.swift in Sources */,
 				BAD63F061D9A8EEA002BDF0A /* ExploreDynamicVC.swift in Sources */,
 				BA59010E1D364EFD006142AC /* ChatListner.swift in Sources */,
+				BA4859041DC9DDDE00DED552 /* RSDFDatePickerDaysOfWeekView.m in Sources */,
 				BAD63F0A1D9A9007002BDF0A /* JMCFlexibleDatasource.swift in Sources */,
+				600F1CE01DBA293B00BCBC12 /* UIButton+WebCache.m in Sources */,
 				BAD8D6421CBCCDCB0037ED23 /* CKCalendarCell.m in Sources */,
 				671C3DA21C45017C006A5423 /* CoreDataFunction.m in Sources */,
 				BAB0E4CE1D5DE39900906C10 /* ContactFriendsVC.m in Sources */,
+				BA4859061DC9DDDE00DED552 /* RSDFDatePickerView.m in Sources */,
 				BA5900DE1D364EFD006142AC /* GroupChat.swift in Sources */,
 				BAB0E4F51D5DE59B00906C10 /* SocketEngineSpec.swift in Sources */,
 				BAC9B4AC1CBF7A6100373F73 /* ImproveVC.m in Sources */,
@@ -2686,6 +2947,7 @@
 				BAB0E4FA1D5DE59B00906C10 /* SocketIOClient.swift in Sources */,
 				BAA01E1E1D6AE35700E1B80D /* TLTagsControl.m in Sources */,
 				BAFC7C7A1CB3903C00761462 /* PASToDoVC.m in Sources */,
+				600F1CDD1DBA293B00BCBC12 /* SDWebImageDownloaderOperation.m in Sources */,
 				BA5901491D364F86006142AC /* OAuthCore.m in Sources */,
 				BAB0E4CA1D5DE33300906C10 /* AllContactsVC.m in Sources */,
 				BA5900D81D364EFD006142AC /* AppContactList.swift in Sources */,
@@ -2696,6 +2958,7 @@
 				BAB0E4F91D5DE59B00906C10 /* SocketFixUTF8.swift in Sources */,
 				BA893DEA1C6322AE00E94DBE /* YSLScrollMenuView.m in Sources */,
 				BAA4E83A1CD0FAC800A198E7 /* AllAppointmentsVC.m in Sources */,
+				BA4859051DC9DDDE00DED552 /* RSDFDatePickerMonthHeader.m in Sources */,
 				BA5901081D364EFD006142AC /* AllChatFriendCell.swift in Sources */,
 				671C3DA81C4504DB006A5423 /* AppHelper.m in Sources */,
 				BAB0E4F81D5DE59B00906C10 /* SocketExtensions.swift in Sources */,
@@ -2706,7 +2969,9 @@
 				BAA471B41CCFA4FC00CF90D7 /* ExpertsDetailVC.m in Sources */,
 				BA5901A91D36579D006142AC /* IQToolbar.swift in Sources */,
 				671C3D6D1C44FB72006A5423 /* ProactiveLiving.xcdatamodeld in Sources */,
+				600F1CE31DBA293B00BCBC12 /* UIImage+WebP.m in Sources */,
 				BA59010D1D364EFD006142AC /* ChatImageCell.swift in Sources */,
+				BA4859001DC9DDDE00DED552 /* NSCalendar+RSDFAdditions.m in Sources */,
 				BA8888291C64939B0083C857 /* FilterOneCell.m in Sources */,
 				BA5900E91D364EFD006142AC /* Reminder+CoreDataProperties.swift in Sources */,
 				BA5900E21D364EFD006142AC /* GroupList.swift in Sources */,
@@ -2714,6 +2979,7 @@
 				BAB0E4EE1D5DE59B00906C10 /* SocketAnyEvent.swift in Sources */,
 				BADFD6F41D1D31C7008B1FA9 /* MyPAStodoVC.m in Sources */,
 				BA5901A41D36579D006142AC /* IQKeyboardManager.swift in Sources */,
+				BA4859181DC9DEF800DED552 /* RSDFCustomDatePickerCollectionView.m in Sources */,
 				BA288ADC1DA4F58D00B7D88A /* VideosContainer.swift in Sources */,
 				92E091FE1D37767A00BEC575 /* SOImageBrowserView.m in Sources */,
 				BA9AE8771D9CEF0A00830B40 /* HeaderScrollerView.swift in Sources */,
@@ -2727,11 +2993,13 @@
 				BA5900E01D364EFD006142AC /* GroupChatFile.swift in Sources */,
 				BABB57DF1CEF161200F7C879 /* MessageCell.m in Sources */,
 				BAC8D29C1C58ABA70084AA47 /* ValidationCenterCell.m in Sources */,
+				600F1CDF1DBA293B00BCBC12 /* SDWebImagePrefetcher.m in Sources */,
 				BA5900DF1D364EFD006142AC /* GroupChatFile+CoreDataProperties.swift in Sources */,
 				BAD8D6381CBCCDCB0037ED23 /* NSCalendar+DateManipulation.m in Sources */,
 				BAD03B401CE312BD00CDEEA6 /* PACircleVC.m in Sources */,
 				BAD8D63C1CBCCDCB0037ED23 /* NSDate+Description.m in Sources */,
 				BAD8D63D1CBCCDCB0037ED23 /* NSDateComponents+AllComponents.m in Sources */,
+				600F1CEB1DBA436000BCBC12 /* BroadcastVC.swift in Sources */,
 				BAB0E4FE1D5DE59B00906C10 /* SocketLogger.swift in Sources */,
 				BAF2D9991CA2B0D5000FBD1F /* BookingPopUp.m in Sources */,
 				BA5900EC1D364EFD006142AC /* Test.swift in Sources */,
@@ -2753,6 +3021,8 @@
 				BAFDA8FC1D40DFC500301C01 /* GroupDetailVC.swift in Sources */,
 				BA5901091D364EFD006142AC /* AllChatFriendsVC.swift in Sources */,
 				BA5901211D364EFD006142AC /* TableViewCell_Extension.swift in Sources */,
+				BA48591B1DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.m in Sources */,
+				600F1CE61DBA293B00BCBC12 /* UIView+WebCacheOperation.m in Sources */,
 				BA7A4B191C61F481005CA80C /* ValidationFiltersVC.m in Sources */,
 				BAF1E5571CABAB2300FA5CC5 /* PASInstVideoVC.m in Sources */,
 				BAA01E201D6B140E00E1B80D /* ChatContactModelClass.swift in Sources */,
@@ -2771,14 +3041,18 @@
 				BAAF57031C92D6E5000D54F6 /* JCTagCell.m in Sources */,
 				BAD5F1181CB5380A00C8F206 /* AppointmentListTableCell.m in Sources */,
 				BAD8D6471CBCCDCB0037ED23 /* MBPolygonView.m in Sources */,
+				600F1CD91DBA293B00BCBC12 /* SDImageCache.m in Sources */,
 				BA8FC7A71C5F814C00BCA20E /* ZSAnnotation.m in Sources */,
 				BA02E2C41D05C06000FC5489 /* AllPasVC.m in Sources */,
 				BA5900EA1D364EFD006142AC /* Reminder.swift in Sources */,
 				BA5901A81D36579D006142AC /* IQTitleBarButtonItem.swift in Sources */,
 				BA8083251D26503200AEB5E7 /* ChatListVC.swift in Sources */,
 				BAB985431D0ABCD700F7DA80 /* UICustomCheckBox.m in Sources */,
+				BA4859191DC9DEF800DED552 /* RSDFCustomDatePickerCollectionViewLayout.m in Sources */,
+				BA4859031DC9DDDE00DED552 /* RSDFDatePickerDayCell.m in Sources */,
 				BAD195E61C63589E0085DD9B /* FilterVC1.m in Sources */,
 				BAD8D63B1CBCCDCB0037ED23 /* NSDate+Components.m in Sources */,
+				BA4859021DC9DDDE00DED552 /* RSDFDatePickerCollectionViewLayout.m in Sources */,
 				BA288ADE1DA4F5A500B7D88A /* VideosVC.swift in Sources */,
 				BA642DC41D8040C30079422F /* MeetUpListingCell.swift in Sources */,
 				BAD5F0B11D069AE7002186B4 /* PASInviteInstrVC.m in Sources */,
@@ -2804,6 +3078,7 @@
 				BA59010C1D364EFD006142AC /* ChatHomeVC.swift in Sources */,
 				BAD8D6371CBCCDCB0037ED23 /* NSCalendar+DateComparison.m in Sources */,
 				BAB0E4FF1D5DE59B00906C10 /* SocketPacket.swift in Sources */,
+				600F1CE51DBA293B00BCBC12 /* UIImageView+WebCache.m in Sources */,
 				BAD98DC31CAA75C900EF2723 /* AppointmentVC.m in Sources */,
 				BA5901191D364EFD006142AC /* NSString+Emoji.m in Sources */,
 				BAA997C31D472640006AD64D /* AppDelegate.m in Sources */,
@@ -2816,6 +3091,7 @@
 				BA5900F01D364EFD006142AC /* UserChatFile.swift in Sources */,
 				BA5901A01D36579D006142AC /* IQUIViewController+Additions.swift in Sources */,
 				BA5900E31D364EFD006142AC /* GroupUserList+CoreDataProperties.swift in Sources */,
+				60D471C71DC07D9900EAD7D9 /* MenuVC.swift in Sources */,
 				92E092011D37767A00BEC575 /* SOMessagingViewController.m in Sources */,
 				BA9AE8811D9E6B0900830B40 /* OrgProfileVC.swift in Sources */,
 				BAD8D63A1CBCCDCB0037ED23 /* NSCalendar+Ranges.m in Sources */,
@@ -2834,6 +3110,7 @@
 				BAD8D5F91CBCCCD60037ED23 /* CalendarVC.m in Sources */,
 				BAFDA8FE1D40DFC500301C01 /* GroupHomeVC.swift in Sources */,
 				67A026B71C50AB98002E31DA /* HomeVC.m in Sources */,
+				600F1CD81DBA293B00BCBC12 /* NSData+ImageContentType.m in Sources */,
 				BA5330231CC6099D00887DBF /* CurrentPASVC.m in Sources */,
 				BA5901181D364EFD006142AC /* DataBaseController.swift in Sources */,
 				BA5330201CC6097800887DBF /* PASRatingVC.m in Sources */,
@@ -2848,9 +3125,12 @@
 				671C3DA51C4504C2006A5423 /* Services.m in Sources */,
 				679AA7261C4626A9002D96AE /* SignUpCell.m in Sources */,
 				BAA8A1001D70519F002C5C47 /* GooglePlacesAutocomplete.swift in Sources */,
+				600F1CE41DBA293B00BCBC12 /* UIImageView+HighlightedWebCache.m in Sources */,
+				600DA7AB1DD3331300A95595 /* RecurrenceVC.swift in Sources */,
 				BAAF57041C92D6E5000D54F6 /* JCTagListView.m in Sources */,
 				BA5900E81D364EFD006142AC /* RecentChatList.swift in Sources */,
 				BAD8D6411CBCCDCB0037ED23 /* UIView+Border.m in Sources */,
+				600F1CDC1DBA293B00BCBC12 /* SDWebImageDownloader.m in Sources */,
 				BAC09B681D095EA100AA2C56 /* UIPlaceHolderTextView.m in Sources */,
 				BAD8D63F1CBCCDCB0037ED23 /* UIColor+HexString.m in Sources */,
 				BA27071F1CA96F4600C1E242 /* BookTableCell.m in Sources */,
@@ -2956,7 +3236,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE = "187241ed-7f3e-438f-a52e-3bdee7925196";
+				PROVISIONING_PROFILE = "9e17de41-48d8-4f13-ad99-221a649e3090";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2998,7 +3278,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE = "187241ed-7f3e-438f-a52e-3bdee7925196";
+				PROVISIONING_PROFILE = "9e17de41-48d8-4f13-ad99-221a649e3090";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3014,7 +3294,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -3031,8 +3311,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "187241ed-7f3e-438f-a52e-3bdee7925196";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/sahil/Documents/proactively-ios/ProactiveLiving/ProactiveLiving-Bridging-Header.h";
+				PROVISIONING_PROFILE = "9e17de41-48d8-4f13-ad99-221a649e3090";
+				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -3045,7 +3325,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -3062,8 +3342,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "187241ed-7f3e-438f-a52e-3bdee7925196";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/sahil/Documents/proactively-ios/ProactiveLiving/ProactiveLiving-Bridging-Header.h";
+				PROVISIONING_PROFILE = "9e17de41-48d8-4f13-ad99-221a649e3090";
+				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;

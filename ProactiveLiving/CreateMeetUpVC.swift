@@ -12,6 +12,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var txtFieldFor: CustomTextField!
     @IBOutlet weak var txtFieldOn: CustomTextField!
     @IBOutlet weak var txtFieldAt: CustomTextField!
+    @IBOutlet weak var txtField_eventEndTime: CustomTextField!
     @IBOutlet weak var txtFieldWhereFirst: CustomTextField!
     @IBOutlet weak var txtFieldWhereSecond: CustomTextField!
     @IBOutlet weak var txtFieldTitle: CustomTextField!
@@ -24,6 +25,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var txtDialInNum: CustomTextField!
     @IBOutlet weak var txtPin: CustomTextField!
     @IBOutlet weak var titleBar: UILabel!
+    
+    @IBOutlet weak var txtFieldFakeRecurrence: CustomTextField!
 
     @IBOutlet weak var m_footerView: UIView!
     @IBOutlet weak var lblWithWho: UILabel!
@@ -43,6 +46,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var isForwardAllowed : Bool!
     var dataDict = [String : AnyObject]()
     var strLatLong : String!
+    
+    var recurrenceDict:[String:String]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +121,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
             txtFieldFor.text = self.dataDict["for"] as? String
             txtFieldOn.text = self.dataDict["eventDate"] as? String
-            txtFieldAt.text = self.dataDict["eventTime"] as? String
+            txtFieldAt.text = self.dataDict["eventStartTime"] as? String
+            txtField_eventEndTime.text = self.dataDict["eventEndTime"] as? String
             txtFieldWhereFirst.text = self.dataDict["locationName"] as? String
             txtFieldWhereSecond.text = self.dataDict["address"] as? String
             txtFieldTitle.text = self.dataDict["title"] as? String
@@ -139,9 +145,47 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.lblWithWho.text="Who"
             self.lblForTo.text="To"
             self.lblTitle.text="Web Invite Title"
-            
-            txtFieldTitle.text = self.dataDict["title"] as? String
 
+            
+            for item in (self.dataDict["members"] as! NSArray) {
+                var tempData = item as! [String:AnyObject]
+                if ((tempData["memberId"] as! String) != ChatHelper.userDefaultForKey(_ID)){
+                    var tempDict = Dictionary <String,String>()
+                    tempDict["firstName"] = tempData["name"] as? String
+                    tempDict["_id"] = tempData["memberId"] as? String
+                    tempDict["mobilePhone"] = tempData["mobilePhone"] as? String
+                    tempDict["imgUrl"] = tempData["imgUrl"] as? String
+                    tempDict["forwardedBy"] = tempData["forwardedBy"] as? String
+                    tempDict["status"] = tempData["status"] as? String
+                    
+                    self.tokens.append(tempDict)
+                }
+                
+            }
+            
+            for contact in self.tokens {
+                self.tokenField.tags.addObject(contact["firstName"]!!)
+            }
+            self.arrAttachments = self.dataDict["links"] as! Array
+            
+            self.tableAttachments.reloadData()
+            self.tokenField.reloadTagSubviews()
+            
+            txtFieldFor.text = self.dataDict["for"] as? String
+            txtFieldOn.text = self.dataDict["eventDate"] as? String
+            txtFieldAt.text = self.dataDict["eventStartTime"] as? String
+            txtField_eventEndTime.text = self.dataDict["eventEndTime"] as? String
+            txtFieldWhereFirst.text = self.dataDict["webLink"] as? String
+            txtDialInNum.text = self.dataDict["dialInNumber"] as? String
+            txtPin.text = self.dataDict["pin"] as? String
+            txtFieldTitle.text = self.dataDict["title"] as? String
+            txtViewDesc.text = self.dataDict["desc"] as? String
+            switchAllowInvite.on = self.dataDict["isAllow"] as! Bool
+            let imgUrl = self.dataDict["imgUrl"] as? String
+            if !(imgUrl == "") {
+                imgCoverPic.setImageWithURL(NSURL(string: imgUrl!))
+            }
+            
         }
 
         txtFieldTitle.delegate=self
@@ -276,6 +320,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.tokenField.tags.addObject(contact["firstName"]!)
         self.tokenField.reloadTagSubviews()
     }
+    
+    //MARK:- Btn Action
+    
+    
     
     //MARK:- TLTagsControlDelegate
     func tagsControl(tagsControl: TLTagsControl!, tappedAtIndex index: Int) {
@@ -480,7 +528,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 dict["attachments"]="abc.png"
                 dict["createdBy"]=ChatHelper.userDefaultForKey("userId") as String
                 dict["eventDate"]=txtFieldOn.text
-                dict["eventTime"]=txtFieldAt.text
+                dict["eventStartTime"]=txtFieldAt.text
+                dict["eventEndTime"]=txtField_eventEndTime.text
                 dict["isAllow"]=isForwardAllowed
 
                 var userIdArray : NSMutableArray!
@@ -545,6 +594,17 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
                 dict["members"] = userIdArray
                 dict["latlong"] = self.strLatLong
+                
+                
+                if (recurrenceDict != nil) {
+                    dict["isrecur"] = String(true)
+                    dict["recurrence"] = recurrenceDict
+                }else{
+                    dict["isrecur"] = String(false)
+                }
+                
+                
+                
 
                 print(dict)
 
@@ -878,6 +938,24 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func btnBackClick(sender: AnyObject) {
         self.navigationController!.popViewControllerAnimated(true)
     }
+    
+    @IBAction func onClickRecurrenceBtn(sender: AnyObject) {
+        if  self.txtFieldOn.text?.characters.count < 1 {
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence start date cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return
+        }
+        if  self.txtFieldAt.text?.characters.count < 1 {
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence start time cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return
+        }
+        
+        let VC:RecurrenceVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("RecurrenceVC") as! RecurrenceVC
+        VC.startDateOfRecurrenceStr = self.txtFieldOn.text!
+        VC.startDateAtOfRecurrenceStr = self.txtFieldAt.text!
+        self.navigationController?.pushViewController(VC, animated: true);
+    }
+    
+    
     
     func addressTextFieldDidChange(textField: UITextField) {
         gpaViewController.placeDelegate = self

@@ -342,7 +342,8 @@
     [parameters setObject:AppKey forKey:@"AppKey"];
     [parameters setObject:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
     [parameters setObject:[self.dataDict valueForKey:@"_id"] forKey:@"organizationId"];
-    
+    [parameters setObject:@"appointment" forKey:@"type"];
+
     if(self.strBookingDate && ![self.strBookingDate isEqualToString:@""])
     {
         [parameters setObject:self.strBookingDate forKey:@"bookingAt"];
@@ -477,7 +478,9 @@
     [parameters setObject:AppKey forKey:@"AppKey"];
     [parameters setObject:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
     [parameters setObject:[self.dataDict valueForKey:@"_id"] forKey:@"organizationId"];
-    
+    [parameters setObject:@"appointment" forKey:@"type"];
+    [parameters setObject:[self.dataDict valueForKey:@"name"] forKey:@"name"];
+
     if([self.modal.selectedRowsArray count]>0)
     {
         if(self.modal){

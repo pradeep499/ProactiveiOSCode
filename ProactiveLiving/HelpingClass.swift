@@ -13,7 +13,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
     var loadingView: UIView!
     var activityIndicator:UIActivityIndicatorView?
 
-    
+    //MARK: User Defaults
     // save to user default
     class func saveToUserDefault (value: AnyObject? , key: String!) {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -232,11 +232,6 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
     
     
     
-    
-    
-    
-    
-
     func hideGloabalLoader()
     {
         if(self.loadingView != nil)
@@ -257,7 +252,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
 
     //set Tabbar Controller as a Root
     
-    //MARK:- Validation
+    //MARK:- Validations
     
     //   class func isValidEmail(testStr:String) -> Bool {
     //
@@ -340,7 +335,6 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         
     }
     
-    
    class func isValidEmail(testStr:String) -> Bool {
         
         print("validate emilId: \(testStr)")
@@ -355,7 +349,6 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
        
     }
     
-    
    class func validatePhone(value: String) -> Bool {
         let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
         
@@ -366,9 +359,6 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         return phoneResult
         
     }
-    
-    
-    
     
     
 }

@@ -34,6 +34,14 @@
 #import "NSData+Base64.h"
 #import "OAuth+Additions.h"
 #import "OAuthCore.h"
-#import "UIImageView+AFNetworking.h"
+
+#import "SettingsMainVC.h"
+#import "AboutPASInstVC.h"
+#import "LoginVC.h"
+
+#import "UIImageView+WebCache.h"
+//#import "UIImageView+AFNetworking.h"
+
+
 
 #endif /* ProactiveLiving_Bridging_Header_h */

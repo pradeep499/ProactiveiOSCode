@@ -288,6 +288,7 @@
         anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
         anobject.isFromCont = @"yes";
         anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
+        anobject.firstName = [frndDict valueForKey:@"firstName"];
         
         chatMainVC.contObj=anobject;
         chatMainVC.isFromClass = @"chatd";
@@ -326,6 +327,8 @@
             anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
             anobject.isFromCont = @"yes";
             anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
+             anobject.firstName = [frndDict valueForKey:@"firstName"];
+            
             [previousVC addNewFrndIngrp:anobject];
 
             [self.delegate1 addMemberInGroup:previousVC withInfo:(ChatContactModelClass *)anobject];

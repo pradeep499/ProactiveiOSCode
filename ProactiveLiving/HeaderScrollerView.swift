@@ -7,12 +7,17 @@
 //
 
 import UIKit
+
 class CollectionHeaderCustomView: UIView ,UICollectionViewDelegate,UICollectionViewDataSource, UIGestureRecognizerDelegate  {
     var dataSource : [AnyObject] = [AnyObject]()
     
     @IBOutlet weak var collectionView: UICollectionView!
     var w : CGFloat = 0.0
     var scrollTimer = NSTimer()
+    
+    @IBOutlet weak var lbl_top: UILabel!
+    
+    @IBOutlet weak var lbl_bottom: UILabel!
     
     override func awakeFromNib()
     {
@@ -113,7 +118,7 @@ class CollectionHeaderCustomView: UIView ,UICollectionViewDelegate,UICollectionV
         cell.imgBack.clipsToBounds = true
         
         cell.imgLogo.layer.borderWidth = 1.0
-        cell.imgLogo.contentMode = .ScaleAspectFill
+        cell.imgLogo.contentMode = .ScaleAspectFit
         cell.imgLogo.backgroundColor = UIColor.whiteColor()
         cell.imgLogo.layer.masksToBounds = false
         cell.imgLogo.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -121,13 +126,25 @@ class CollectionHeaderCustomView: UIView ,UICollectionViewDelegate,UICollectionV
         cell.imgLogo.clipsToBounds = true
         
         let dataDict = self.dataSource[indexPath.row] as! [String : AnyObject]
-        cell.title.text = dataDict["name"] as? String
+  //     cell.title.text = dataDict["name"] as? String
+        cell.title.text = dataDict["latestArticleTitle"] as? String
         
         if let imageUrlStr = dataDict["latestArticleLogoUrl"] as? String {
             let image_url = NSURL(string: imageUrlStr )
             if (image_url != nil) {
                 let placeholder = UIImage(named: "no_photo")
-                cell.imgBack.setImageWithURL(image_url, placeholderImage: placeholder)
+            //    cell.imgBack.setImageWithURL(image_url, placeholderImage: placeholder)
+           /*     cell.imgBack.setImageWithURLRequest(NSURLRequest(URL: image_url!), placeholderImage: placeholder, success: { (request:NSURLRequest!, response:NSHTTPURLResponse?, image:UIImage?)in
+                    cell.imgBack.image = image
+                    
+                    }, failure: { (request:NSURLRequest!, response:NSHTTPURLResponse!, err:NSError!) in
+                        
+                })*/
+                
+                cell.imgBack.sd_setImageWithURL((URL: image_url!), placeholderImage: placeholder)
+                
+                
+                
             }
         }
         
@@ -135,7 +152,16 @@ class CollectionHeaderCustomView: UIView ,UICollectionViewDelegate,UICollectionV
             let image_url = NSURL(string: logoUrlStr )
             if (image_url != nil) {
                 let placeholder = UIImage(named: "no_photo")
-                cell.imgLogo.setImageWithURL(image_url, placeholderImage: placeholder)
+             //   cell.imgLogo.setImageWithURL(image_url, placeholderImage: placeholder)
+                
+          /*      cell.imgLogo.setImageWithURLRequest(NSURLRequest(URL: image_url!), placeholderImage: placeholder, success: { (request:NSURLRequest!, response:NSHTTPURLResponse?, image:UIImage?)in
+                    cell.imgLogo.image = image
+                    
+                    }, failure: { (request:NSURLRequest!, response:NSHTTPURLResponse!, err:NSError!) in
+                        
+                })*/
+                
+                 cell.imgLogo.sd_setImageWithURL((URL: image_url!), placeholderImage: placeholder)
             }
         }
         
@@ -227,6 +253,14 @@ class HeaderScrollerView: UICollectionReusableView{
         customView?.dataSource = dataSoure
         customView?.collectionView.reloadData()
     }
+    
+    func setViewTitle(top topTitle:String, bottomTitle:String) -> Void {
+        
+        customView?.lbl_top.text = topTitle
+        customView?.lbl_bottom.text = bottomTitle
+        
+    }
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         self.myCustomInit()

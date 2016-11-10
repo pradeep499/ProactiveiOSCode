@@ -12,7 +12,7 @@ import MediaPlayer
 
 class VideosVC: UIViewController {
 
-    var arrUrls = [AnyObject]()
+    var dataArra = [AnyObject]?()
     var yourArray = [String]()
     var moviePlayer = MPMoviePlayerViewController()
     
@@ -26,7 +26,7 @@ class VideosVC: UIViewController {
     
     //mark- UITableview Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrUrls.count
+        return dataArra!.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -34,11 +34,33 @@ class VideosVC: UIViewController {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("CellVideos", forIndexPath: indexPath)
         cell.selectionStyle = .None
         
-        let thumbVideo = cell.contentView.viewWithTag(111) as! UIImageView
+        let thumbVideo = cell.contentView.viewWithTag(1) as! UIImageView
+        
+        let lbl_duration = cell.contentView.viewWithTag(2) as! UILabel
+        let lbl_title = cell.contentView.viewWithTag(3) as! UILabel
+        let lbl_author = cell.contentView.viewWithTag(4) as! UILabel
+        
+        let btn_views = cell.contentView.viewWithTag(5) as! UIButton
+        let btn_comments = cell.contentView.viewWithTag(6) as! UIButton
+        let btn_like = cell.contentView.viewWithTag(7) as! UIButton
+        let btn_share = cell.contentView.viewWithTag(8) as! UIButton
+        
+        self.btnImgInsect(btn_comments)
+        self.btnImgInsect(btn_like)
+        
         //thumbVideo.addTarget(self, action: #selector(self.btnPlayVideoClick(_:)), forControlEvents: .TouchUpInside)
-     //   var escapedString = self.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
+        //var escapedString = self.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
+        
+        let datDict = self.dataArra![indexPath.row] as? [String:String]
+        
+        if let val = datDict!["title"] {
+            lbl_title.text = val
+        }
+        if let val = datDict!["author"] {
+            lbl_author.text = "By: " + val
+        }
 
-        if let imageUrlStr = arrUrls[indexPath.row] as? String {
+        if let imageUrlStr = datDict!["link"]  {
             let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
             let image_url = NSURL(string: (imageUrlStr.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet))! )
             if (image_url != nil) {
@@ -72,7 +94,21 @@ class VideosVC: UIViewController {
         self.playVideoOnCellTap(indexPath)
 
     }
+    //MARK: - btnImgInsect with btnTitle
+    func btnImgInsect(btn:UIButton) -> Void {
+        
+        let spacing: CGFloat = 8.0
+        let labelString = NSString(string: btn.titleLabel!.text!)
+         
+        btn.titleEdgeInsets = UIEdgeInsetsMake(0.0, -btn.frame.size.width + 15, 0.0, 0.0)
+        
+        
+        let titleSize = labelString.sizeWithAttributes([NSFontAttributeName: btn.titleLabel!.font])
+        btn.imageEdgeInsets = UIEdgeInsetsMake( 0.0, (titleSize.width + spacing), 0.0, 0.0)
+        
+    }
     
+    //MARK: - addGradientOnImage
     func addGradientOnImage(image: UIImage) -> UIImage
     {
 //        let size = CGSize(width:image.size.width, height:image.size.height)
@@ -107,21 +143,22 @@ class VideosVC: UIViewController {
         
     }
     
-    func getPreviewImageForVideoAtURL(videoURL: NSURL, atInterval: Int) -> UIImage? {
-        print("Taking pic at \(atInterval) second")
-        let asset = AVAsset(URL: videoURL)
-        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        let time = CMTimeMakeWithSeconds(Float64(atInterval), 100)
-        do {
-            let img = try assetImgGenerate.copyCGImageAtTime(time, actualTime: nil)
-            let frameImg = UIImage(CGImage: img)
-            return frameImg
-        } catch {
-            /* error handling here */
-        }
-        return nil
-    }
+    //MARK: - Get thumbnail from video url
+//    func getPreviewImageForVideoAtURL(videoURL: NSURL, atInterval: Int) -> UIImage? {
+//        print("Taking pic at \(atInterval) second")
+//        let asset = AVAsset(URL: videoURL)
+//        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+//        assetImgGenerate.appliesPreferredTrackTransform = true
+//        let time = CMTimeMakeWithSeconds(Float64(atInterval), 100)
+//        do {
+//            let img = try assetImgGenerate.copyCGImageAtTime(time, actualTime: nil)
+//            let frameImg = UIImage(CGImage: img)
+//            return frameImg
+//        } catch {
+//            /* error handling here */
+//        }
+//        return nil
+//    }
     
     func generateThumnail(url : NSURL, fromTime:Float64) -> UIImage? {
        
@@ -144,44 +181,30 @@ class VideosVC: UIViewController {
         
     }
 
-    
-    func thumbnailImageForVideo(url:NSURL) -> UIImage?
-    {
-        let asset = AVAsset(URL: url)
-        let imageGenerator = AVAssetImageGenerator(asset: asset)
-        imageGenerator.appliesPreferredTrackTransform = true
-        
-        var time = asset.duration
-        //If possible - take not the first frame (it could be completely black or white on camara's videos)
-        time.value = min(time.value, 4)
-        
-        do {
-            let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
-            return UIImage(CGImage: imageRef)
-        }
-        catch let error as NSError
-        {
-            print("Image generation failed with error \(error)")
-            return UIImage(named: "bubble")!
-        }
-    }
-    
+    //MARK: - play Video On Cell Tap
     func playVideoOnCellTap(indexPath: NSIndexPath ) -> Void {
         
-        let urlString = self.arrUrls[indexPath.row] as! String
-        self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlString)!)
-        self.moviePlayer.moviePlayer.movieSourceType = .Unknown
-        self.moviePlayer.moviePlayer.prepareToPlay()
-        self.moviePlayer.moviePlayer.shouldAutoplay = true
-        //[[self.moviePlayer moviePlayer] setControlStyle:MPMovieControlStyleNone];
-        //[[self.moviePlayer moviePlayer] setFullscreen:YES animated:YES];
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.mpMoviePlayerLoadStateDidChange(_:)), name: MPMoviePlayerLoadStateDidChangeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.moviePlaybackDidFinish), name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
-        self.presentMoviePlayerViewControllerAnimated(self.moviePlayer)
-        self.moviePlayer.moviePlayer.play()
+        let dataDict = self.dataArra![indexPath.row] as? [String:String]
+        
+        if let urlString = dataDict!["link"]{
+            
+            self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlString)!)
+            self.moviePlayer.moviePlayer.movieSourceType = .Unknown
+            self.moviePlayer.moviePlayer.prepareToPlay()
+            self.moviePlayer.moviePlayer.shouldAutoplay = true
+            //[[self.moviePlayer moviePlayer] setControlStyle:MPMovieControlStyleNone];
+            //[[self.moviePlayer moviePlayer] setFullscreen:YES animated:YES];
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.mpMoviePlayerLoadStateDidChange(_:)), name: MPMoviePlayerLoadStateDidChangeNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.moviePlaybackDidFinish), name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
+            self.presentMoviePlayerViewControllerAnimated(self.moviePlayer)
+            self.moviePlayer.moviePlayer.play()
+        
+        
+        }
         
     }
     
+    //MARK: - play Video On thumbnail Tap
     func btnPlayVideoClick(sender: UIButton) -> Void {
         
         let point = self.tableView.convertPoint(CGPoint.zero, fromView: sender)
@@ -190,7 +213,7 @@ class VideosVC: UIViewController {
             fatalError("can't find point in tableView")
         }
         
-        let urlString = self.arrUrls[indexPath.row] as! String
+        let urlString = self.dataArra![indexPath.row] as! String
         self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlString)!)
         self.moviePlayer.moviePlayer.movieSourceType = .Unknown
         self.moviePlayer.moviePlayer.prepareToPlay()
@@ -204,6 +227,7 @@ class VideosVC: UIViewController {
         
     }
     
+    //MARK: - Player event notifications
     func mpMoviePlayerLoadStateDidChange(notification: NSNotification) {
         //    NSLog(@"loadstate change: %lu", (unsigned long)[self.moviePlayer moviePlayer].loadState);
         //

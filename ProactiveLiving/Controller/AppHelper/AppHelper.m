@@ -12,6 +12,10 @@
 
 @implementation AppHelper
 
++(UIStoryboard*)getStoryBoard{
+    return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+}
+
 #pragma mark - saveToUserDefaults
 +(void)saveToUserDefaults:(id)value withKey:(NSString*)key {
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
@@ -39,6 +43,7 @@
     [standardUserDefaults synchronize];
 }
 
+#pragma mark - showAlertWithTitle
 +(void)showAlertWithTitle:(NSString*)title message:(NSString*)message tag:(NSInteger)tag delegate:(id)delegate
             cancelButton:(NSString*)cancelButton otherButton:(NSString*)otherButton{
     
@@ -51,6 +56,7 @@
     
 }
 
+#pragma mark - addShadowOnView
 +(void)addShadowOnView:(UIView *)view
 {
     [view.layer setMasksToBounds:NO];
@@ -62,6 +68,7 @@
 
 }
 
+#pragma mark - addShadowOnView with Offset
 +(void)addShadowOnView:(UIView *)view withOffset:(CGSize)shadowOffset withColor:(UIColor *)color
 {
     [view.layer setMasksToBounds:NO];
@@ -73,12 +80,15 @@
     
 }
 
+#pragma mark - setBorderOnView
 +(void)setBorderOnView:(UIView *)view
 {
     view.layer.borderWidth=1.0f;
     view.layer.borderColor=[UIColor colorWithRed:235.0/255.0f green:235.0/255.0f blue:235.0/255.0f alpha:1.0].CGColor;
 
 }
+
+#pragma mark - colorFromHexString
 
 // Assumes input like "#00FF00" (#RRGGBB).
 + (UIColor *)colorFromHexString:(NSString *)hexString alpha:(CGFloat)alpha {
@@ -95,6 +105,7 @@
     return [UIColor lightGrayColor];
 }
 
+#pragma mark - imageFromColor
 + (UIImage *)imageFromColor:(UIColor *)color {
     CGRect rect = CGRectMake(0, 0, 10, 10);
     UIGraphicsBeginImageContext(rect.size);
@@ -106,6 +117,7 @@
     return image;
 }
 
+#pragma mark - convertUTCFormattedDate
 + (NSString *)convertUTCFormattedDate:(NSString *)strDate
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -122,6 +134,7 @@
     return dateString;
 }
 
+#pragma mark - convertUTCToLocal
 + (NSString *)convertUTCToLocal:(NSString *)strDate//@"2015-04-01T11:42:00"
 {
     // create dateFormatter with UTC time format
@@ -137,7 +150,7 @@
     return timestamp;
 }
 
-
+#pragma mark - timeFormattedFromSeconds
 + (NSString *)timeFormattedFromSeconds:(int)totalSeconds
 {
     
@@ -156,6 +169,8 @@
     
 }
 
+#pragma mark - dayFromDateString
+
 // Convert the Date string to Day
 +(NSString *)dayFromDateString:(NSString *)dateString
 {
@@ -168,30 +183,7 @@
     return dayName;
 }
 
-
-/*
- MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:url]];
- player.view.frame = CGRectMake(184, 200, 400, 300);
- [self.view addSubview:player.view];
- [player play];
- ---OR---
- #import <QuartzCore/QuartzCore.h>
- #import "AVFoundation/AVFoundation.h"
- 
- AVPlayer *player = [AVPlayer playerWithURL:[NSURL url...]]; //
- 
- AVPlayerLayer *layer = [AVPlayerLayer layer];
- 
- [layer setPlayer:player];
- [layer setFrame:CGRectMake(10, 10, 300, 200)];
- [layer setBackgroundColor:[UIColor redColor].CGColor];
- [layer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
- 
- [self.view.layer addSublayer:layer];
- 
- [player play];
- */
-
+#pragma mark - thumbnail generator from Url
 - (UIImage *)thumbnailImageFromURL:(NSURL *)videoURL {
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL: videoURL options:nil];
     AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
@@ -209,7 +201,6 @@
 @end
 
 #pragma mark- NSObject Category
-
 @interface NSObject (NullCheck)
 
 - (BOOL)isNull;

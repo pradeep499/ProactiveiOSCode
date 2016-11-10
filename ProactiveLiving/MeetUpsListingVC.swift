@@ -91,6 +91,11 @@ class MeetUpsListingVC: UIViewController {
         return self.arrData.count
     }
     
+     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    
+        return 200
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = self.tableView.dequeueReusableCellWithIdentifier("CellMeetUps", forIndexPath: indexPath) as! MeetUpListingCell
@@ -137,7 +142,7 @@ class MeetUpsListingVC: UIViewController {
         
         eventTypeBy.text = "\(self.arrData[indexPath.row]["for"] as! String), by \(self.arrData[indexPath.row]["createdBy"] as! String)"
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
-        lblDate.text = self.arrData[indexPath.row]["createdDate"] as? String
+        lblDate.text = self.arrData[indexPath.row]["eventDate"] as? String
         
         //lblLink.text = (self.arrData[indexPath.row]["links"] as! Array).joinWithSeparator(",")
         //lblPhone.text = self.arrData[indexPath.row]["dialInNumber"] as? String

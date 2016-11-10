@@ -14,7 +14,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "Services.h"
 #import "AppointmentListingVC.h"
-
+#import "ProactiveLiving-Swift.h"
 @interface AllAppointmentsVC ()<YSLContainerViewControllerDelegate>
 {
     NSMutableArray *arrServices;
@@ -23,9 +23,6 @@
     AppointmentListingVC *appointVC2;
     AppointmentListingVC *appointVC3;
     AppointmentListingVC *appointVC4;
-    AppointmentListingVC *appointVC5;
-    AppointmentListingVC *appointVC6;
-    AppointmentListingVC *appointVC7;
     AppointmentListingVC *appointVC8;
 
 
@@ -57,24 +54,12 @@
     appointVC2.appointmnetType=@"appointment";
     
     appointVC3 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
-    appointVC3.title = @"WEBINARS";
-    appointVC3.appointmnetType=@"webinar";
+    appointVC3.title = @"MEET UPS";
+    appointVC3.appointmnetType=@"meetup";
     
     appointVC4 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
-    appointVC4.title = @"CONFERENCES";
-    appointVC4.appointmnetType=@"conference";
-    
-    appointVC5 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
-    appointVC5.title = @"ACTIVITIES";
-    appointVC5.appointmnetType=@"activity";
-    
-    appointVC6 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
-    appointVC6.title = @"PAC MEETINGS";
-    appointVC6.appointmnetType=@"pac";
-    
-    appointVC7 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
-    appointVC7.title = @"EVENTS";
-    appointVC7.appointmnetType=@"event";
+    appointVC4.title = @"WEB INVITES";
+    appointVC4.appointmnetType=@"webinvite";
     
     appointVC8 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC8.title = @"OTHERS";
@@ -85,7 +70,7 @@
     //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     //float navigationHeight = self.navigationController.navigationBar.frame.size.height;
     
-    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:@[appointVC1,appointVC2,appointVC3,appointVC4,appointVC5,appointVC6,appointVC7,appointVC8]
+    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:@[appointVC1,appointVC2,appointVC3,appointVC4,appointVC8]
                                                                                         topBarHeight:0
                                                                                 parentViewController:self];
     containerVC.delegate = self;
@@ -111,6 +96,82 @@
 - (IBAction)btnBackClick:(id)sender {
     
     [self.navigationController popViewControllerAnimated:YES];
+    
+}
+- (IBAction)btnCreateEventClick:(id)sender {
+    
+    UIAlertController * alertActionSheet=   [UIAlertController
+                                 alertControllerWithTitle:nil
+                                 message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction * appointment = [UIAlertAction
+                         actionWithTitle:@"Appointment"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             //Do some thing here
+                             [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    UIAlertAction * meetup = [UIAlertAction
+                                   actionWithTitle:@"Meet Up"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Do some thing here
+                                       if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+                                           UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+                                           CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
+                                           vc.pushedFrom=@"MEETUPS";
+                                           [self.navigationController pushViewController:vc animated:YES];
+                                       }
+                                       [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                       
+                                   }];
+    UIAlertAction * webinvite = [UIAlertAction
+                                   actionWithTitle:@"Web Invite"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Do some thing here
+                                       if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+                                           UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+                                           CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
+                                           vc.pushedFrom=@"WEBINVITES";
+                                           [self.navigationController pushViewController:vc animated:YES];
+                                       }
+
+                                       [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                       
+                                   }];
+    UIAlertAction * other = [UIAlertAction
+                                   actionWithTitle:@"Other"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Do some thing here
+                                       
+                                       [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                       
+                                   }];
+    UIAlertAction * cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+    
+    [alertActionSheet addAction:appointment];
+    [alertActionSheet addAction:meetup];
+    [alertActionSheet addAction:webinvite];
+    [alertActionSheet addAction:other];
+
+    [alertActionSheet addAction:cancel];
+    [self presentViewController:alertActionSheet animated:YES completion:nil];
     
 }
 

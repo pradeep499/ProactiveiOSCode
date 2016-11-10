@@ -25,6 +25,9 @@ class OrgProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        imgBack.contentMode = .ScaleAspectFill
+        imgBack.clipsToBounds = true
+
         imgProfile.layer.borderWidth = 1.0
         imgProfile.contentMode = .ScaleAspectFill
         imgProfile.backgroundColor = UIColor.whiteColor()
@@ -50,7 +53,7 @@ class OrgProfileVC: UIViewController {
         lblAboutOrg.text = dataDict["desc"] as? String
         lblTitle.text = dataDict["name"] as? String
         
-        btnEmail.addTarget(self, action: #selector(btnLinkClick(_:)), forControlEvents: .TouchUpInside)
+        btnEmail.addTarget(self, action: #selector(btnEmailClick(_:)), forControlEvents: .TouchUpInside)
         btnPhone.addTarget(self, action: #selector(btnDialUpClick(_:)), forControlEvents: .TouchUpInside)
 
         
@@ -62,13 +65,13 @@ class OrgProfileVC: UIViewController {
         "videos",
         "promotions",
         "announcements",
-
+        "broadcasts",
         "add_favorite",
         "follow",
-        "message",
         "share",
         "social",
-        "website"]
+        "website",
+        "message"]
         
     }
     
@@ -90,15 +93,33 @@ class OrgProfileVC: UIViewController {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
         
-        if(indexPath.row==10)
+        if (indexPath.row==0) {
+            
+            if let aboutUrl = self.dataDict["aboutUs"] {
+                 UIApplication.sharedApplication().openURL(NSURL(string: aboutUrl as! String)!)
+            }
+            
+           
+        }
+        if(indexPath.row==2) {
+            let videosContainer: VideosContainer = self.storyboard!.instantiateViewControllerWithIdentifier("VideosContainer") as! VideosContainer
+            videosContainer.dataDict=dataDict["videos"] as! [String:AnyObject]
+            self.navigationController?.pushViewController(videosContainer, animated: true)
+            
+        }
+        else if(indexPath.row==5) {
+            let broadCast: BroadcastVC = self.storyboard!.instantiateViewControllerWithIdentifier("BroadcastVC") as! BroadcastVC
+            broadCast.dataDictArr = dataDict["articles"] as? [AnyObject]
+            broadCast.subTitle = dataDict["name"] as? String
+
+            self.navigationController?.pushViewController(broadCast, animated: true)
+            
+        }else if(indexPath.row==10)
         {
             let webUrl = self.dataDict["latestArticleLink"] as! String
             self.btnWebLinkClick(webUrl)
             
-        } else if(indexPath.row==2) {
-            let videosContainer: VideosContainer = self.storyboard!.instantiateViewControllerWithIdentifier("VideosContainer") as! VideosContainer
-            videosContainer.dataDict=dataDict["videos"] as! [String:AnyObject]
-            self.navigationController?.pushViewController(videosContainer, animated: true)
+        } else {
 
         }
         
@@ -139,28 +160,15 @@ class OrgProfileVC: UIViewController {
         
     }
     
-    func btnLinkClick(sender: UIButton)  {
-        print(sender)
-        
-        var url : String!
-        
-        if((self.dataDict["webLink"] as! String).hasPrefix("http://") || (self.dataDict["webLink"] as! String).hasPrefix("https://")){
-            
-            url = self.dataDict["webLink"] as! String
-        }
-        else
-        {
-            url = "http://" + (self.dataDict["webLink"] as! String)
-        }
-        
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
-        
+    func btnEmailClick(sender: UIButton)  {
+        let email = self.dataDict["email"] as! String
+        UIApplication.sharedApplication().openURL(NSURL(string: "mailto:\(email)")!)
     }
     
     func btnDialUpClick(sender: UIButton)  {
         print(sender)
         
-        let phoneNumber: String = self.dataDict["dialInNumber"] as! String
+        let phoneNumber: String = self.dataDict["mobile"] as! String
         if let url = NSURL(string: "tel://\(phoneNumber)") {
             UIApplication.sharedApplication().openURL(url)
         }

@@ -24,17 +24,14 @@
 @implementation AppDelegate
 
 
-+(BOOL)checkInternetConnection {
-    //global method to check internet connectivity throughout app
-    return [AFNetworkReachabilityManager sharedManager].reachable;
-}
+#pragma mark - App delegate methods
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Reset badge count
     [UIApplication sharedApplication].applicationIconBadgeNumber =0;
     
-    //Register for Push Notification
+    // Register for Push Notification
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
@@ -47,7 +44,7 @@
     }
 
     
-     // fetch and store static data
+     // fetch and hold static data
     [AppDelegate connectedCompletionBlock:^(BOOL connected) {
         if (connected)
             [self getStaticData];
@@ -55,13 +52,14 @@
             NSLog(@"NOT REACHABLE");
     }];
 
-    //Put location using ZipCode by default
-    NSLog(@"location::::::> %@",[LocationManagerSingleton sharedSingleton].locationManager.location);
+    // Check current location (Use ZipCode by default)
+    CLLocation *location= [LocationManagerSingleton sharedSingleton].locationManager.location;
+    NSLog(@"location-> %@",location);
     
     //UISearchBar Global look n feel alteration
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:
                                                 [NSDictionary dictionaryWithObjectsAndKeys:                                                                                                  [UIColor whiteColor],                                                                                                  NSForegroundColorAttributeName,                                                                                                 [UIColor whiteColor],                                                                                              NSForegroundColorAttributeName,                                                                                                  [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],                                                                                                  NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
-    //UITabBar Global look n feel alteration
+    //UITabBar appearance
     //[[UITabBar appearance] setTintColor:[UIColor blueColor]];
     [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
     
@@ -107,25 +105,14 @@
     
     [splashView removeFromSuperview];
      */
-    //Create connection
+    
+    //Create socket connection
     [[ChatListner getChatListnerObj] createConnection];
     
-    
-    // Delay execution in each 15 seconds.
+    // Method execution in each 15 seconds.
     //[NSTimer scheduledTimerWithTimeInterval: 15.0 target:self selector: @selector(timerFired:) userInfo: nil repeats: YES];
     
     return YES;
-}
-
-- (void)timerFired:(NSTimer*)theTimer{
-    if(/* DISABLES CODE */ (YES)){
-        [theTimer isValid]; //recall the NSTimer
-        //implement your methods
-        [[ChatListner getChatListnerObj] doNotSleep];
-        NSLog(@"fired...");
-    }else{
-        [theTimer invalidate]; //stop the NSTimer
-    }
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -251,6 +238,16 @@
     }
 }
 
+#pragma mark - Utility methods
+
++ (AppDelegate*)getAppDelegate {
+    return (AppDelegate*)[UIApplication sharedApplication].delegate;
+}
+
++(BOOL)checkInternetConnection {
+    return [AFNetworkReachabilityManager sharedManager].reachable;
+}
+
 + (void)showProgressHUDWithStatus:(NSString *)status {
     
     if(status && [status length]>0)
@@ -265,13 +262,33 @@
     [SVProgressHUD dismiss];
 }
 
++(void)connectedCompletionBlock:(void(^)(BOOL connected))block {
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        BOOL con = NO;
+        NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
+        
+        if (status == AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi) {
+            
+            con = YES;
+        }
+        
+        if (block) {
+            [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+            block(con);
+        }
+        
+    }];
+}
+
 -(void)getStaticData
 {
     //check internet before hitting web service
     if ([AppDelegate checkInternetConnection]) {
         
-        //show indicator on screen
-        //[SVProgressHUD showWithStatus:@"Please wait" maskType:SVProgressHUDMaskTypeBlack];
         NSMutableDictionary *parameters=[NSMutableDictionary new];
         //call global web service class
         [Services serviceCallWithPath:ServiceGetPASInst withParam:parameters success:^(NSDictionary *responseDict)
@@ -305,6 +322,19 @@
         //show internet not available
         [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
 }
+
+- (void)timerFired:(NSTimer*)theTimer{
+    if(/* DISABLES CODE */ (YES)){
+        [theTimer isValid]; //recall the NSTimer
+        //implement your methods
+        [[ChatListner getChatListnerObj] doNotSleep];
+        NSLog(@"fired...");
+    }else{
+        [theTimer invalidate]; //stop the NSTimer
+    }
+}
+
+#pragma mark - App life-cycle methods
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -420,32 +450,5 @@
         }
     }
 }
-#pragma mark - getAppdelegate
-+ (AppDelegate*)getAppDelegate {
-    return (AppDelegate*)[UIApplication sharedApplication].delegate;
-}
-
-+(void)connectedCompletionBlock:(void(^)(BOOL connected))block {
-    
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    
-    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        
-        BOOL con = NO;
-        NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
-        
-        if (status == AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi) {
-            
-            con = YES;
-        }
-        
-        if (block) {
-            [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
-            block(con);
-        }
-        
-    }];
-}
-
 
 @end

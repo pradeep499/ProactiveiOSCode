@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.imgQRCode setImageWithURL:[NSURL URLWithString:[QRImageBaseUrl stringByAppendingString:[NSString stringWithFormat:@"%@",[self.dictBookingDetails valueForKey:@"_id"]]]] placeholderImage:nil];
+    [self.imgQRCode setImageWithURL:[NSURL URLWithString:[BASE_URL stringByAppendingString:[QRImageBaseUrl stringByAppendingString:[NSString stringWithFormat:@"%@",[self.dictBookingDetails valueForKey:@"_id"]]]]] placeholderImage:nil];
     
     self.lblName.text=[self.dictUserDetails valueForKey:@"firstName"];
     self.lblIdentity.text=[self.dictUserDetails valueForKey:@"identity"];

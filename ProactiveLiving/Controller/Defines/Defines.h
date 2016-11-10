@@ -44,7 +44,7 @@
 //#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
 
 //Testing ULR
-#define BASE_URL @"http://192.168.3.178:90/api/v1/"
+#define BASE_URL @"http://192.168.3.106:90/api/v1/"
 
 #define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 
@@ -52,6 +52,8 @@
 #define UIColorFromHEX(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define UIColorFromRGB(r,g,b) [UIColor colorWithRed:((float)r)/255.0 green:((float)g)/255.0 blue:((float)b)/255.0 alpha:1.0]
 
+
+// Web Services
 #define ServiceRegister                 @"users/SignUp"
 #define ServiceLogin                    @"users/Login"
 #define ServiceForgotPassword           @"users/ForgotPassword"
@@ -98,7 +100,7 @@
 #define AppKey                          @"DFd$$@@#454gHGer$#"
 #define HeaderKey                       @"$%#^%%7hg54634243k5lu79626%$#$%@$#hg$%#$#hggf"
 
-
+//UserDefaults
 #define uId                             @"uId" // userid of logged in user
 #define isRememberUser                  @"isRemember"// to check, need to remember credentials
 #define pwd                             @"pwd"// remember password
@@ -107,6 +109,9 @@
 #define uImage                          @"uImage"
 #define _ID                             @"userId"
 
+#define BookinTime                      @"BookinTime"
+#define SyncStatus                      @"SyncStatus"
+#define GPSStatus                       @"GPSStatus"
 
 #define ACCEPTABLE_CHARACTERS           @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 #define ACCEPTABLE_MOBILE               @"+*#0123456789"
@@ -117,7 +122,7 @@
 #define signUpSuccess                   @"Sign up successfull, please login with your credentials"
 #define userExist                       @"User already exist"
 #define ok                              @"OK"
-#define cancel                          @"Cancel"
+#define Cancel                          @"Cancel"
 #define yes                             @"Yes"
 #define no                              @"No"
 #define allMandatory                    @"Please enter mandatory fields"
@@ -144,10 +149,7 @@
 
 #define BOOK_POPUP_HEIGHT 392
 
-//UserDefaults
-#define BookinTime                      @"BookinTime"
-#define SyncStatus                      @"SyncStatus"
-#define GPSStatus                       @"GPSStatus"
+
 
 
 

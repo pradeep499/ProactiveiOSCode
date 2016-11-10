@@ -489,6 +489,38 @@ class DataBaseController : NSObject
     }
     
     // MARK:- Delete
+    
+    
+    func deleteEverything() {
+        
+        let mainContext = appDelegate.managedObjectContext
+        let workerContext = NSManagedObjectContext(parentContext: mainContext, concurrencyType: .PrivateQueueConcurrencyType)
+        
+        workerContext.performBlock {
+            var error: NSError?
+            workerContext.deleteAllObjects(&error)
+            
+            if error == nil {
+                mainContext.performBlockAndWait {
+                    
+                    do {
+                        
+                        try mainContext.save()
+                        // success ...
+                    } catch let error as NSError {
+                        // failure
+                        print("Fetch failed: \(error.localizedDescription)")
+                    }
+           //
+                }
+            }
+            
+            if let error = error {
+                print("Error deleting all objects: \(error)")
+            }
+        }
+    }
+    
     func deleteAllData(modelName:String) -> Bool
     {
         let cdhObj = appDelegate.managedObjectContext
@@ -1976,5 +2008,33 @@ class DataBaseController : NSObject
     }
 
 
+}
+
+extension NSManagedObjectContext {
+    
+    convenience init(parentContext parent: NSManagedObjectContext, concurrencyType: NSManagedObjectContextConcurrencyType) {
+        self.init(concurrencyType: concurrencyType)
+        parentContext = parent
+    }
+    
+    func deleteAllObjects(error: NSErrorPointer) {
+        
+        if let entitesByName = persistentStoreCoordinator?.managedObjectModel.entitiesByName   {
+            
+            for (name, entityDescription) in entitesByName {
+             //   deleteAllObjectsForEntity(entityDescription, error: error)
+                DataBaseController.sharedInstance.deleteAllData(name)
+                
+                print("Entity Name = ", name)
+                
+                // If there's a problem, bail on the whole operation.
+                if error.memory != nil {
+                    return
+                }
+            }
+        }
+}
+    
+    
 }
 

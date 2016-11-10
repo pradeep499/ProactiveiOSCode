@@ -112,7 +112,7 @@ let chatCDNbaseUrl = "http://52.89.149.60:3000/proactiveliving"
 //let ChatBaseMediaUrl = "http://52.89.149.60:3000/"
 
 //Testing URL
-let ChatBaseMediaUrl = "http://192.168.3.178:90/"
+let ChatBaseMediaUrl = "http://192.168.3.106:90/"
 
 let ChatMediaPath = "api/v1/sendMedia"
 
@@ -151,10 +151,6 @@ enum ServiceUrls : String
     
     //current live url
     case BaseUrl        = "http://5dotstest.w3studioz.com/user.json"
-    
-    //case BaseUrl        = "http://fivedots.w3studioz.com/user.json"
-    //case BaseUrl        = "http://staging.5dlife.in/user.json"
-    //case BaseUrl        = "http://dev.5dlife.in/user.json"
     case imageBaseUrl   = "http://ols.w3studioz.com"
     case watchUrl  = "http://ols.w3studioz.com/Video.json"
     case commentUrl = "http://ols.w3studioz.com/Comment.json"

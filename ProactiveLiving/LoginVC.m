@@ -16,7 +16,8 @@
 #import "GetPasVC.h"
 #import "HomeVC.h"
 #import "MyPAStodoVC.h"
-#import "CalendarVC.h"
+//#import "CalendarVC.h"
+#import "RSDFDatePickerViewController.h"
 #import "InboxVC.h"
 #import "CustonTabBarController.h"
 #import <AFNetworking/AFNetworking.h>
@@ -61,11 +62,18 @@
 
 -(void)setupTabBarController
 {
-    CalendarVC *firstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarVC"];
+    //CalendarVC *firstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarVC"];
+    //firstViewController.title=@"Calendar";
+    //firstViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_calendar"];
+    //UIViewController *firstNavigationController = [[UINavigationController alloc]
+                                                   //initWithRootViewController:firstViewController];
+    
+    RSDFDatePickerViewController *firstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarVC"];
     firstViewController.title=@"Calendar";
     firstViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_calendar"];
-    UIViewController *firstNavigationController = [[UINavigationController alloc]
-                                                   initWithRootViewController:firstViewController];
+    firstViewController.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    firstViewController.calendar.locale = [NSLocale currentLocale];
+    UIViewController *firstNavigationController = [[UINavigationController alloc] initWithRootViewController:firstViewController];
     
 
     InboxVC *secondViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"InboxVC"];
@@ -105,11 +113,20 @@
     UIViewController *fourthNavigationController = [[UINavigationController alloc]
                                                    initWithRootViewController:fourthViewController];
     
-    GetPasVC *fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GetPasVC"];
+  /*  GetPasVC *fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GetPasVC"];
     fifthViewController.title=@" Menu";
     fifthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_menu"];
     UIViewController *fifthNavigationController = [[UINavigationController alloc]
                                                    initWithRootViewController:fifthViewController];
+    */
+    
+    
+    MenuVC *fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MenuVC"];
+    fifthViewController.title=@" Menu";
+    fifthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_menu"];
+    UIViewController *fifthNavigationController = [[UINavigationController alloc]
+                                                   initWithRootViewController:fifthViewController];
+    
 
     
     self.tabBarController = [[CustonTabBarController alloc] init];
@@ -128,6 +145,9 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    
+    [self.navigationController setNavigationBarHidden:true animated:yes];
+    
     NSLog(@"%@",[AppHelper userDefaultsForKey:isRememberUser]);
     if (![[AppHelper userDefaultsForKey:isRememberUser] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:isRememberUser]) {
         if (![[AppHelper userDefaultsForKey:cellNum] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:cellNum]) {

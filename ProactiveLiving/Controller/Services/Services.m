@@ -12,6 +12,11 @@
 
 @implementation Services
 + (void)serviceCallWithPath:(NSString *)path withParam:(NSDictionary *)params success:(void (^)(NSDictionary *))success failure:(void (^)(NSError *))failure {
+    
+    
+    // replce UserID with _ID
+    params = [self replaceUserIDWith_ID:params];
+    
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:HeaderKey forHTTPHeaderField:@"custom_user_header_key"];
@@ -121,6 +126,9 @@
     
     //------Migration to AFNetworking 3.0
     
+    // replce UserID with _ID
+    params = [self replaceUserIDWith_ID:params];
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:[BASE_URL stringByAppendingString:path] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -159,7 +167,10 @@
     
 }
 
-+(void)postRequest:(NSString *)urlStr parameters:(NSDictionary *)parametersDictionary completionHandler:(void (^)(NSString*, NSDictionary*))completionBlock{
++(void)postRequest:(NSString *)urlStr parameters:(NSDictionary *)params completionHandler:(void (^)(NSString*, NSDictionary*))completionBlock{
+    
+     // replce UserID with _ID
+    params = [self replaceUserIDWith_ID:params];
     
 
     NSURL *URL = [NSURL URLWithString:[BASE_URL stringByAppendingString:urlStr]];
@@ -172,7 +183,7 @@
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
-     [manager POST:URL.absoluteString parameters:parametersDictionary success:^(NSURLSessionDataTask *task, id responseObject) {
+     [manager POST:URL.absoluteString parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
         NSError* error;
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseObject
                                                              options:kNilOptions
@@ -186,12 +197,15 @@
     }];
 }
 
-+(void)requestPostUrl:(NSString *)strURL parameters:(NSDictionary *)dictParams success:(void (^)(NSDictionary *responce))success failure:(void (^)(NSError *error))failure {
++(void)requestPostUrl:(NSString *)strURL parameters:(NSDictionary *)params success:(void (^)(NSDictionary *responce))success failure:(void (^)(NSError *error))failure {
+    
+     // replce UserID with _ID
+    params = [self replaceUserIDWith_ID:params];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     
-    [manager POST:[BASE_URL stringByAppendingString:strURL] parameters:dictParams success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:[BASE_URL stringByAppendingString:strURL] parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if([responseObject isKindOfClass:[NSDictionary class]]) {
             if(success) {
                 success(responseObject);
@@ -225,5 +239,24 @@
  
  }
  */
+
+
+//Replce UserID with _ID for backened Dublication
++(NSDictionary *)replaceUserIDWith_ID:(NSDictionary *)paramsDict{
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]initWithDictionary:paramsDict];
+    NSString *key = @"UserID";
+    
+    NSArray * keys = [paramsDict allKeys];
+    
+    if ([keys containsObject:key]) {
+        
+        NSString *userId =  [[NSUserDefaults standardUserDefaults]valueForKey:_ID];
+        [dict setValue:userId forKey:key];
+        
+    }
+    
+    return dict;
+}
 
 @end

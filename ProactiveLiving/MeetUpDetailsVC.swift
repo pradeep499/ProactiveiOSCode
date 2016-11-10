@@ -52,6 +52,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         arrayForBool[2] = Int(true)
         arrayForBool[3] = Int(true)
 
+        imgMeetUp.contentMode = .ScaleAspectFill
+        imgMeetUp.clipsToBounds = true
         
         btnForward.layer.borderWidth = 2.0;
         btnForward.layer.cornerRadius = 3.0
@@ -76,7 +78,10 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
 
         btnSure.addTarget(self, action: #selector(btnAcceptClick(_:)), forControlEvents: .TouchUpInside)
         btnSorry.addTarget(self, action: #selector(btnDeclineClick(_:)), forControlEvents: .TouchUpInside)
+        
         btnLike.addTarget(self, action: #selector(btnLikeClick(_:)), forControlEvents: .TouchUpInside)
+        btnLike.setImage(UIImage(named: "like_empty"), forState: .Normal)
+        btnLike.setImage(UIImage(named: "like_filled"), forState: .Selected)
 
         btnLink.addTarget(self, action: #selector(btnLinkClick(_:)), forControlEvents: .TouchUpInside)
         btnDialUp.addTarget(self, action: #selector(btnDialUpClick(_:)), forControlEvents: .TouchUpInside)
@@ -247,8 +252,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             {
                 cell.lblForwardBy.hidden=true
             }
-            cell.lblDate.text=self.dataDict["createdDate"] as? String
-            cell.lblTime.text=self.dataDict["createdTime"] as? String
+            cell.lblDate.text=self.dataDict["eventDate"] as? String
+            cell.lblTime.text=self.dataDict["eventTime"] as? String
             /* ... */
             return cell
         case (1):
@@ -305,6 +310,17 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
         UIApplication.sharedApplication().openURL(NSURL(string: url)!)
 
+    }
+    
+    func canOpenURL(string: String?) -> Bool {
+        guard let urlString = string else {return false}
+        guard let url = NSURL(string: urlString) else {return false}
+        if !UIApplication.sharedApplication().canOpenURL(url) {return false}
+        
+        //otherwise regex will validate
+        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
+        return predicate.evaluateWithObject(string)
     }
     
     func btnLikeClick(sender: UIButton)  {
@@ -824,8 +840,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             buttonOneTitle = "Get Directions"
             buttonTwoTitle = "Edit Meet Up"
             buttonThreeTitle = "Cancel Meet Up"
-        }
-        else {
+        } else {
             buttonOneTitle = "Go To Link"
             buttonTwoTitle = "Edit Web Invite"
             buttonThreeTitle = "Cancel Web Invite"
@@ -895,16 +910,20 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
         
         let imgProfile = cell.contentView.viewWithTag(111) as! UIImageView
         let imgStatus = cell.contentView.viewWithTag(222) as! UIImageView
+        let lblName = cell.contentView.viewWithTag(333) as! UILabel
 
         
         let dataArr = self.dataDict["members"] as! [AnyObject]
         let dataDict = dataArr[indexPath.row] as! [String : AnyObject]
+
 
         if let imageUrlStr = dataDict["imgUrl"] as? String {
             let image_url = NSURL(string: imageUrlStr )
             if (image_url != nil) {
                 let placeholder = UIImage(named: "no_photo")
                 imgProfile.setImageWithURL(image_url, placeholderImage: placeholder)
+                lblName.text = dataDict["name"] as? String
+
             }
         }
         

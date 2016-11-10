@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "Defines.h"
 #import "CKCalendarEvent.h"
-
+#import "ProactiveLiving-Swift.h"
 @interface AppointmentListingVC ()
 
 @property (strong, nonatomic) NSMutableArray *dataArray;
@@ -100,11 +100,17 @@
     cell.lblTitle.text=[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
     cell.lblDD.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:1];
     cell.lblEEE.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:0];
-    cell.sideBarView.backgroundColor=[UIColor redColor];//use clear 
     cell.sideBarView.backgroundColor=[AppHelper colorFromHexString:[[self.dataArray objectAtIndex:indexPath.row] valueForKey:@"bookingColor"] alpha:1.0];
     cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
-    cell.lblName.text=[[self.dataArray objectAtIndex:indexPath.row][@"organizationId"]valueForKey:@"name"];
-    cell.lblDesc.text=[[self.dataArray objectAtIndex:indexPath.row]valueForKey:@"desc"];
+    //cell.lblName.text=[NSString stringWithFormat:@"Event Type: %@",[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"type"]];
+    if ([[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"type"] isEqualToString:@"appointment"]) {
+        cell.lblDesc.text=[[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"organizationId"] valueForKey:@"address1"];
+    }
+    else
+    {
+        cell.lblDesc.text=@"";
+    }
+    
     [AppHelper setBorderOnView:cell.imgCellBG];
     
     cell.btnEdit.tag=indexPath.row;
@@ -177,9 +183,27 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-        AppointmentDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsVC"];
-        vc.dataDict=[self.dataArray objectAtIndex:indexPath.row];
-        [self.navigationController pushViewController:vc animated:YES];
+        if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"meetup"])
+        {
+            MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
+            vc.screenName = @"MEET UPS";
+            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"webinvite"])
+        {
+            
+            MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
+            vc.screenName = @"WEB INVITES";
+            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else
+        {
+            AppointmentDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsVC"];
+            vc.dataDict=[self.dataArray objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 

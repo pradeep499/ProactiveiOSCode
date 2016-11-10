@@ -53,6 +53,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         dict["groupid"]=groupObj.groupId
         dict["groupuserid"]=frndObj.userId
         dict["phoneNumber"]=frndObj.phoneNumber
+        dict["user_firstName"]=frndObj.firstName
         //println(dict)
         ChatListner .getChatListnerObj().socket.emit("addInGroup", dict)
         dispatch_after(5, dispatch_get_main_queue(), {
@@ -331,15 +332,23 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         
         let anObject = groupUserList[indexPath.row] as! GroupUserList
         userImage.setImageWithURL(NSURL(string:anObject.userImage!), placeholderImage: UIImage(named:"profile.png"))
+        
         let nameStr = anObject.userName! as String
-        let nameStr1 = ChatHelper.userDefaultForKey("PhoneNumber") as String
+        let mb = ChatHelper.userDefaultForKey(cellNum) as String
+        
         let trimmedString = nameStr.stringByReplacingOccurrencesOfString("+91", withString: "")
-        let trimmedString1 = nameStr1.stringByReplacingOccurrencesOfString("+91", withString: "")
-        if trimmedString == trimmedString1
+        let trimmedString1 = mb.stringByReplacingOccurrencesOfString("+91", withString: "")
+       
+//        if nameStr != ChatHelper.userDefaultForAny(userFirstName) as! String
+//        {
+//            userName.text = anObject.userName
+//        }
+        
+        if anObject.userId! == ChatHelper.userDefaultForAny(_ID) as! String
         {
             userName.text = "You"
-        }else
-        {
+            
+        }else{
             userName.text = anObject.userName
         }
         

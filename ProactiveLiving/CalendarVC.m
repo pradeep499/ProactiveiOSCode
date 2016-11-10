@@ -7,6 +7,7 @@
 //
 
 #import "CalendarVC.h"
+#import <EventKit/EventKit.h>
 
 #import "NSCalendarCategories.h"
 #import "NSDate+Components.h"
@@ -41,6 +42,8 @@
     
     [self setDataSource:self];
     [self setDelegate:self];
+    
+    
     
     /**
      *  Create some events.
@@ -90,6 +93,8 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self getAppointmentListingData];
+    
+  
 
 }
 
@@ -246,5 +251,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 @end

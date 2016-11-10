@@ -21,7 +21,7 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 + (AppDelegate*)getAppDelegate;
-+(BOOL)checkInternetConnection;//global method to check internet connectivity throughout app
++(BOOL)checkInternetConnection;
 + (void)showProgressHUDWithStatus:(NSString *)status;
 + (void)dismissProgressHUD;
 +(void)connectedCompletionBlock:(void(^)(BOOL connected))block;

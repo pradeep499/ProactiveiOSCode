@@ -344,9 +344,6 @@
  self.shareModel.myLocationArray = [[NSMutableArray alloc]init];
  }
  
- 
- 
- 
  @end
  */
 

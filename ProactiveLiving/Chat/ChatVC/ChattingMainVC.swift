@@ -466,11 +466,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
            // print(groupObj.userName)
            // print(self.groupUserDic[groupObj.userId])
             let nameStr = groupObj.userName! as String
-            let nameStr1 = ChatHelper.userDefaultForKey("PhoneNumber") as String
-            let trimmedString = nameStr.stringByReplacingOccurrencesOfString("+91", withString: "")
-            let trimmedString1 = nameStr1.stringByReplacingOccurrencesOfString("+91", withString: "")
+            let mb = ChatHelper.userDefaultForKey("PhoneNumber") as String
             
-            if trimmedString == trimmedString1 {
+     //       let trimmedString = nameStr.stringByReplacingOccurrencesOfString("+91", withString: "")
+     //       let trimmedString1 = mb.stringByReplacingOccurrencesOfString("+91", withString: "")
+            
+            
+            if groupObj.userId == ChatHelper.userDefaultForAny(_ID) as! String {
                 groupUserName = groupUserName + "You" + ", "
             } else {
                 groupUserName = groupUserName + groupObj.userName! + ", "
