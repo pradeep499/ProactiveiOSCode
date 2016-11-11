@@ -66,7 +66,7 @@ type = 2 for month basis
 type = 3 for yeary basis
 */
 
--(void)setupRecurringEventFromStartingDate:(NSDate*)sDate toEndDate:(NSDate*)eDate withType:(NSInteger)type {
+-(NSMutableArray *)setupRecurringEventFromStartingDate:(NSDate*)sDate toEndDate:(NSDate*)eDate withType:(NSInteger)type interval:(NSInteger)interval{
     
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
     [df setDateFormat:@"dd-mm-yyyy"];
@@ -74,8 +74,8 @@ type = 3 for yeary basis
     
     //NSString *endDate = [dateFormate stringFromDate: eDate];
     
-    
-    NSMutableDictionary *recurringDict = [NSMutableDictionary dictionary];
+    NSMutableArray *recuringArr = [[NSMutableArray alloc]init];
+//    NSMutableDictionary *recurringDict = [NSMutableDictionary dictionary];
     NSDate *nextRecurringDate = sDate;
     NSCalendar *cal = [NSCalendar currentCalendar];
     
@@ -84,19 +84,20 @@ type = 3 for yeary basis
         
         
         NSDateComponents *dateComponent = [[NSDateComponents alloc] init];
+       // dateComponent.
         
         switch (type) {
             case 0:
-                dateComponent.day = 1;
+                dateComponent.day = interval;
                 break;
             case 1:
-                dateComponent.weekOfMonth = 1;
+                dateComponent.weekOfMonth = interval;
                 break;
             case 2:
-                dateComponent.month = 1;
+                dateComponent.month = interval;
                 break;
             case 3:
-                dateComponent.year = 1;
+                dateComponent.year = interval;
                 break;
                 
                 
@@ -120,18 +121,21 @@ type = 3 for yeary basis
         
         if ([nextRecurringDate compare:eDate] == NSOrderedDescending) {
             NSLog(@"nextRecurringDate is later than eDate");
-            return;
-        } else if ([nextRecurringDate compare:eDate] == NSOrderedAscending) {
+            return recuringArr;
+        }
+        /*else if ([nextRecurringDate compare:eDate] == NSOrderedAscending) {
             NSLog(@"nextRecurringDate is earlier than eDate");
         } else {
             NSLog(@"dates are the same");
-        }
+        }*/
         
         
         [recuringArr addObject: nextRecurringDate];
         
         
     }while (1);
+    
+    return recuringArr;
     
 }
 
@@ -495,16 +499,71 @@ type = 3 for yeary basis
                          NSDate *date;
                          for (int i=0; i<[[groups objectForKey:key] count]; i++) {
                              
-                             
+                             //Title not nil means Appontment else Meet up may have recurrence
                              NSString *title = [[[[groups objectForKey:key] objectAtIndex:i] objectForKey:@"organizationId"] valueForKey:@"name"];
+                             
+                             
+                             
                              date = [NSDate
                                      dateWithDay:[[[[[[groups objectForKey:key] objectAtIndex:i] valueForKey:@"bookingDate"] componentsSeparatedByString:@"/"]objectAtIndex:2] intValue]
                                      month:[[[[[[groups objectForKey:key] objectAtIndex:i] valueForKey:@"bookingDate"] componentsSeparatedByString:@"/"]objectAtIndex:1] intValue]
                                      year:[[[[[[groups objectForKey:key] objectAtIndex:i] valueForKey:@"bookingDate"] componentsSeparatedByString:@"/"]objectAtIndex:0] intValue]];
                              [datesToMark addObject:date];
                              
-                             CKCalendarEvent *event = [CKCalendarEvent eventWithTitle:title andDate:date andInfo:[[groups objectForKey:key] objectAtIndex:i] andColor:[AppHelper colorFromHexString:[[[[groups objectForKey:key] objectAtIndex:i] objectForKey:@"color"] valueForKey:@"color"] alpha:1.0]];
+                             NSDictionary *infoDict = [[groups objectForKey:key] objectAtIndex:i];
+                             UIColor *color = [AppHelper colorFromHexString:[[[groups objectForKey:key] objectAtIndex:i] valueForKey:@"bookingColor"] alpha:1.0];
+                             
+                             CKCalendarEvent *event = [CKCalendarEvent eventWithTitle:title andDate:date andInfo:infoDict andColor:color];
+                             
                              [eventsArray addObject:event];
+                             
+                             if (title == nil || [title isEqualToString:@"<nil>"] || title.length == 0) {
+                                 printf("Nil checking");
+                                 
+                             }
+                             
+                             // create recurrence of meet up if have. 1 = have, 0 = not have
+                             if ((title == nil || [title isEqualToString:@"<nil>"] || title.length == 0) && [[[[groups objectForKey:key] objectAtIndex:i] valueForKeyPath:@"meetupInviteId.isrecur"] integerValue] == 1) {
+                                 
+                                 NSDictionary *recurrenceDict = [[[groups objectForKey:key] objectAtIndex:i] valueForKeyPath:@"meetupInviteId.recurrence"];
+                               //  NSString *startDate = [recurrenceDict valueForKey:@""];
+                                 NSString *endDate = [recurrenceDict valueForKey:@"endDate"];
+                                 NSString *recurrenceType = [recurrenceDict valueForKey:@"pattern"];
+                                 int interval = [[recurrenceDict valueForKey:@"recurevery"]intValue];
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 //get the recurrence date n append array
+                                 NSDateFormatter *df = [[NSDateFormatter alloc]init];
+                                 [df setDateFormat:@"yyyy/MM/dd"];
+                                 
+                                 int rType = 0;
+                                 if([recurrenceType isEqualToString:@"Weekly"])
+                                     rType = 1;
+                                 else if([recurrenceType isEqualToString:@"Monthly"])
+                                     rType = 2;
+                                 else if([recurrenceType isEqualToString:@"Yearly"])
+                                     rType = 3;
+                                 
+                                 
+                                 NSArray *recurrenceArr = [self setupRecurringEventFromStartingDate:[df dateFromString:key ] toEndDate:[df dateFromString:endDate] withType:rType interval:interval];
+                                 
+                                 [datesToMark addObjectsFromArray:recurrenceArr];
+                                 
+                                 // add event to dict
+                                 for (int i = 0; i < recurrenceArr.count; i++) {
+                                     
+                                     event = [CKCalendarEvent eventWithTitle:title andDate: [recurrenceArr objectAtIndex:i]  andInfo:infoDict andColor:color];
+                                     
+                                     self.eventData[[recurrenceArr objectAtIndex:i]]= [NSArray arrayWithObject:event];
+                                 }
+                                 
+                             }
+                             
+                             
+                             
                          }
                          self.eventData[date]=eventsArray;
                      }
@@ -515,12 +574,12 @@ type = 3 for yeary basis
                    //  for (int i = 0; i< 3; i++) {
                    //      [self setupRecurringEventFromStartingDate:[df dateFromString:@"08-11-2016"] toEndDate:[df dateFromString:@"08-11-2020"] withType:0];
                   //   }
-                     [self setupRecurringEventFromStartingDate:[df dateFromString:@"08-11-2016"] toEndDate:[df dateFromString:@"08-11-2020"] withType:1];
+                  /*   [self setupRecurringEventFromStartingDate:[df dateFromString:@"07-11-2016"] toEndDate:[df dateFromString:@"07-11-2020"] withType:1];
                      [self setupRecurringEventFromStartingDate:[df dateFromString:@"08-11-2016"] toEndDate:[df dateFromString:@"08-11-2020"] withType:2];
-                     [self setupRecurringEventFromStartingDate:[df dateFromString:@"08-11-2016"] toEndDate:[df dateFromString:@"08-11-2020"] withType:3];
+                     [self setupRecurringEventFromStartingDate:[df dateFromString:@"09-11-2016"] toEndDate:[df dateFromString:@"09-11-2020"] withType:3];
                      
                      // add recurring date in arry to display on calendar
-                     [datesToMark addObjectsFromArray:recuringArr];
+                     [datesToMark addObjectsFromArray:recuringArr]; */
                      
                      _datesToMark = [datesToMark copy];
                      _datePickerView.eventData = self.eventData;
@@ -621,11 +680,18 @@ type = 3 for yeary basis
 
 - (UIColor *)datePickerView:(RSDFDatePickerView *)view markImageColorForDate:(NSDate *)date
 {
-    if (![self.statesOfTasks[date] boolValue]) {
+   /* if (![self.statesOfTasks[date] boolValue]) {
         return self.uncompletedTasksColor;
     } else {
         return self.completedTasksColor;
+    }*/
+    if ([self.datesToMark containsObject:date]) {
+        
+        //get color form event
+        CKCalendarEvent *event = [self.eventData[date] firstObject];
+        return   event.color ;
     }
+    return nil;
 }
 
 @end

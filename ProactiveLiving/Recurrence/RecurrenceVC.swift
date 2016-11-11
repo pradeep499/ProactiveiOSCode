@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegate,UITextFieldDelegate {
+class RecurrenceVC: UIViewController,UITextFieldDelegate {
     
 //    @IBOutlet weak var tf_start_appointment: CustomTextField!
 //    @IBOutlet weak var txt_end_appointment: CustomTextField!
@@ -39,7 +39,7 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
     
     
     
-    var datePicker : UIDatePicker!
+    var datePicker:UIDatePicker = UIDatePicker()
     var recurrencePatternStr:String = "Weekly"
     var startDateOfRecurrenceStr:String = ""
     var startDateAtOfRecurrenceStr:String = ""
@@ -57,11 +57,10 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
         //Recurrence Btn
     //    self.setUpRecurrenceBtnBorder(self.btn_Mon)
         
-        self.setUpEndRecurrenceBtnImg(self.btn_endBy)
+        self.setUp()
         endDateOfRecurrenceStr = "End After";
         
-        self.tf_startDate_rangeOfRecurrence.text = startDateOfRecurrenceStr
-        self.tf_startDate_at_rangeOfRecurrence.text = startDateAtOfRecurrenceStr
+      
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,6 +71,24 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
     //MARKS:-
     
     func setUp() -> Void {
+        
+        //start date
+        self.tf_startDate_rangeOfRecurrence.rightViewMode = UITextFieldViewMode.Always
+        let imageView2 = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        imageView2.image = UIImage(named: "create_meetup_select_date")
+        self.tf_startDate_rangeOfRecurrence.rightView = imageView2
+        
+        //strt date at
+        self.tf_startDate_at_rangeOfRecurrence.rightViewMode = UITextFieldViewMode.Always
+        let imageView3 = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        imageView3.image = UIImage(named: "create_meetup_select_time")
+        self.tf_startDate_at_rangeOfRecurrence.rightView = imageView3
+        
+        //end date
+        self.tf_startDate_rangeOfRecurrence.rightViewMode = UITextFieldViewMode.Always
+        self.tf_startDate_rangeOfRecurrence.rightView = imageView2
+        
+        
         
         //for start text field
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
@@ -92,6 +109,12 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
         
         self.tf_endDateRangeofRecurrence.inputView=datePicker
         self.tf_endDateRangeofRecurrence.inputAccessoryView = toolBar1
+        
+        
+        
+        self.setUpEndRecurrenceBtnImg(self.btn_endAfter)
+        self.tf_startDate_rangeOfRecurrence.text = startDateOfRecurrenceStr
+        self.tf_startDate_at_rangeOfRecurrence.text = startDateAtOfRecurrenceStr
         
         
     }
@@ -191,17 +214,25 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
         var dict = [String:String]()
         dict["pattern"] = recurrencePatternStr
         dict["recurevery"] = String(self.tf_recureEvery.text!)
+    
+        let df = NSDateFormatter.init()
+        df .dateFormat = "dd/MM/yyyy"
+        var endDate = df.dateFromString(self.tf_endDateRangeofRecurrence.text!)
+        
+        df .dateFormat = "yyyy/MM/dd"
         
         if endDateOfRecurrenceStr == "No End Date" {
-            dict["isNoEndDate"] = String(true)
+            dict["endDate"] = "2030/12/31"
         }
-        else if endDateOfRecurrenceStr == "No End Date" {
-            dict["occurance"] = self.tf_occurrence.text
+        else if endDateOfRecurrenceStr == "End After" {
+            dict["endDate"] = df.stringFromDate(endDate!)
         }
         else{
-            dict["endBy"] = self.tf_endDateRangeofRecurrence.text
+            dict["endDate"] = df.stringFromDate(endDate!)
         }
-        
+        //if end date forever make the limitation of upto 2030 for inifinte loop
+        //static
+      //  dict["endDate"] = "2030/12/31"
         
         
         if parentVC != nil {
@@ -216,20 +247,24 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
     @IBAction func onClickDailyBtn(sender: AnyObject) {
         self.setRecurrencePaternBtnImg(self.btn_daily_recrrence)
         self.lbl_selectedRecurrenceType.text = "Daily(s) on"
+        recurrencePatternStr = "Daily"
     }
     @IBAction func onClickWeeklyBtn(sender: AnyObject) {
         self.setRecurrencePaternBtnImg(self.btn_weekly_recrrence)
-        self.lbl_selectedRecurrenceType.text = "Weekly(s) on"
+        self.lbl_selectedRecurrenceType.text = "Week(s) on"
+        recurrencePatternStr = "Weekly"
     }
     
     @IBAction func onClickMonthlyBtn(sender: AnyObject) {
         self.setRecurrencePaternBtnImg(self.btn_monthly_recrrence)
-        self.lbl_selectedRecurrenceType.text = "Monthly(s) on"
+        self.lbl_selectedRecurrenceType.text = "Month(s) on"
+        recurrencePatternStr = "Monthly"
     }
     
     @IBAction func onClickYearlyBtn(sender: AnyObject) {
         self.setRecurrencePaternBtnImg(self.btn_yearly_recrrence)
-        self.lbl_selectedRecurrenceType.text = "Yearly(s) on"
+        self.lbl_selectedRecurrenceType.text = "Year(s) on"
+        recurrencePatternStr = "Yearly"
     }
     
     
@@ -264,15 +299,15 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
         self.setUpEndRecurrenceBtnImg(self.btn_noEndDate)
         
         self.tf_occurrence.text = "";
-        self.tf_endDateRangeofRecurrence.text = ""
-        self.tf_endDateRangeofRecurrence.text = "No End Date";
+        self.tf_endDateRangeofRecurrence.text = "31/12/2030"
+        endDateOfRecurrenceStr = "No End Date";
     }
     
     @IBAction func onClickEndAfterBtn(sender: AnyObject) {
         self.setUpEndRecurrenceBtnImg(self.btn_endAfter)
         
         self.tf_occurrence.text = "5";
-        self.tf_endDateRangeofRecurrence.text = "End After";
+        endDateOfRecurrenceStr = "End After";
         
         //calculate End Recurrance Date
         self.calculateEndDateOfRecurrence()
@@ -283,7 +318,8 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
         
         self.tf_occurrence.text = "";
         self.tf_endDateRangeofRecurrence.text = ""
-        self.tf_endDateRangeofRecurrence.text = "End By";
+        self.tf_endDateRangeofRecurrence.becomeFirstResponder()
+        endDateOfRecurrenceStr = "End By";
     }
     
     //MARK:
@@ -292,13 +328,33 @@ class RecurrenceVC: UIViewController,UIPickerViewDataSource, UIPickerViewDelegat
         let df = NSDateFormatter()
         df.dateFormat = "dd/MM/yyyy"
         
-        let startDate:NSDate = df.dateFromString(self.startDateOfRecurrenceStr)!
-        let daysToAdd =  Double(self.tf_occurrence.text!)
-        let endDate:NSDate = startDate.dateByAddingTimeInterval(60*60*24*daysToAdd!)
         
-        self.tf_endDateRangeofRecurrence.text = df.stringFromDate(endDate)
-        
-    }
+        //check pattern
+        if endDateOfRecurrenceStr == "End After" {
+            
+            let cal = NSCalendar.currentCalendar()
+            let dateComponent = NSDateComponents.init()
+            
+            if(recurrencePatternStr == "Daily"){
+                dateComponent.day = Int(self.tf_recureEvery.text!)!
+            }
+            else if(recurrencePatternStr == "Weekly"){
+                dateComponent.weekOfMonth = Int(self.tf_recureEvery.text!)!
+            }
+            else if(recurrencePatternStr == "Monthly"){
+                dateComponent.month = Int(self.tf_recureEvery.text!)!
+            }
+            else{
+                dateComponent.year = Int(self.tf_recureEvery.text!)!
+            }
+            
+            // add for loop to get end date
+            let endDate:NSDate = cal.dateByAddingComponents(dateComponent, toDate: df.dateFromString(startDateOfRecurrenceStr)!, options:NSCalendarOptions(rawValue: 0) )!
+            self.tf_endDateRangeofRecurrence.text = df.stringFromDate(endDate)
+        }
+        }
+    
+    
     //MARK: TextField Delegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

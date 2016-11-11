@@ -257,6 +257,20 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         txtFieldAt.inputView=timePicker
         txtFieldAt.inputAccessoryView = toolBar2
         
+        let toolBarEndTime = UIToolbar()
+        toolBarEndTime.barStyle = UIBarStyle.Default
+        toolBarEndTime.translucent = true
+        //toolBar2.tintColor = UIColor(red: 76/255, green: 17/255, blue: 100/255, alpha: 1)
+        toolBarEndTime.sizeToFit()
+        
+        let doneButtonEndTime = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateMeetUpVC.doneTimePickerEndTime))
+        toolBarEndTime.setItems([spaceButton, doneButtonEndTime], animated: false)
+        toolBarEndTime.userInteractionEnabled = true
+        
+        
+        txtField_eventEndTime.inputView=timePicker
+        txtField_eventEndTime.inputAccessoryView = toolBarEndTime
+        
 
         self.txtFieldFor.rightViewMode = UITextFieldViewMode.Always
         let imageView1 = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
@@ -273,6 +287,12 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let imageView3 = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
         imageView3.image = UIImage(named: "create_meetup_select_time")
         txtFieldAt.rightView = imageView3
+        
+        
+        self.txtField_eventEndTime.rightViewMode = UITextFieldViewMode.Always
+        let ivTime = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        ivTime.image = UIImage(named: "create_meetup_select_time")
+        self.txtField_eventEndTime.rightView = ivTime
         
         self.txtFieldWhereSecond.rightViewMode = UITextFieldViewMode.Always
         let imageView4 = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
@@ -419,6 +439,19 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.txtFieldAt.resignFirstResponder()
         print("done!")
     }
+    
+    func doneTimePickerEndTime() {
+        
+        let dateFormatter1 = NSDateFormatter()
+        dateFormatter1.dateFormat = "hh:mm a"
+        let selectedDate = dateFormatter1.stringFromDate(timePicker.date)
+        
+        self.txtField_eventEndTime.text = selectedDate
+        self.txtField_eventEndTime.resignFirstResponder()
+        print("done!")
+    }
+    
+    
     
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
@@ -952,6 +985,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let VC:RecurrenceVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("RecurrenceVC") as! RecurrenceVC
         VC.startDateOfRecurrenceStr = self.txtFieldOn.text!
         VC.startDateAtOfRecurrenceStr = self.txtFieldAt.text!
+        VC.parentVC = self
         self.navigationController?.pushViewController(VC, animated: true);
     }
     
