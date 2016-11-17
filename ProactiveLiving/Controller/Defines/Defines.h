@@ -84,6 +84,7 @@
 #define ServiceMeetUpInviteStaticData   @"getMeetupInviteFor"
 #define ServiceGetAllStories            @"getStories"
 #define ServiceGetSubscribedStories     @"getSubscribeStories"
+#define ServiceGetNewsFeed              @"getNewsFeed"
 
 #define maxLength                       25
 #define maxPhoneLength                  15

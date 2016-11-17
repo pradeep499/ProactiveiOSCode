@@ -47,6 +47,7 @@
     appointVC1.title = @"ALL";
     appointVC1.appointmnetType=@"";
     appointVC1.arrEvents=self.arrEvents;
+    appointVC1.selectedRecurrenceDate = self.selectedRecurrenceDate;
     
     
     appointVC2 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];

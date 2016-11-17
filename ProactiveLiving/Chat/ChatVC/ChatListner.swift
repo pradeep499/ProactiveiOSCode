@@ -38,13 +38,13 @@ class ChatListner: NSObject {
     override init(){
         //socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
         //Server URL
-        //socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
+         socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
         
         //Production URL
         //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
         
         //Test Server
-        socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
+         socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
     }
 
     deinit{

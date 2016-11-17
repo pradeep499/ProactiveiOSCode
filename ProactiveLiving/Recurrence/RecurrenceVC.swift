@@ -51,6 +51,8 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tf_occurrence.delegate = self
+        self.tf_recureEvery.delegate = self
         
         self.setRecurrencePaternBtnImg(self.btn_weekly_recrrence)
         
@@ -117,6 +119,11 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
         self.tf_startDate_at_rangeOfRecurrence.text = startDateAtOfRecurrenceStr
         
         
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.tf_occurrence.resignFirstResponder()
+        self.tf_recureEvery.resignFirstResponder()
     }
     
     //MARK: Btn
@@ -207,8 +214,14 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func btnDoneClick(sender: AnyObject) {
+        self.calculateEndDateOfRecurrence()
+       
         if  self.tf_recureEvery.text?.characters.count < 1 {
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence every cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return
+        }
+        if  self.tf_endDateRangeofRecurrence.text?.characters.count < 1 {
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence end date cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         var dict = [String:String]()
@@ -217,7 +230,7 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
     
         let df = NSDateFormatter.init()
         df .dateFormat = "dd/MM/yyyy"
-        var endDate = df.dateFromString(self.tf_endDateRangeofRecurrence.text!)
+        let endDate = df.dateFromString(self.tf_endDateRangeofRecurrence.text!)
         
         df .dateFormat = "yyyy/MM/dd"
         
@@ -301,6 +314,7 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
         self.tf_occurrence.text = "";
         self.tf_endDateRangeofRecurrence.text = "31/12/2030"
         endDateOfRecurrenceStr = "No End Date";
+        self.tf_endDateRangeofRecurrence.resignFirstResponder()
     }
     
     @IBAction func onClickEndAfterBtn(sender: AnyObject) {
@@ -311,6 +325,7 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
         
         //calculate End Recurrance Date
         self.calculateEndDateOfRecurrence()
+        self.tf_endDateRangeofRecurrence.resignFirstResponder()
         
     }
     @IBAction func onClickEndByBtn(sender: AnyObject) {
@@ -348,8 +363,16 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
                 dateComponent.year = Int(self.tf_recureEvery.text!)!
             }
             
+            var endDate:NSDate  = df.dateFromString(startDateOfRecurrenceStr)!
+            
             // add for loop to get end date
-            let endDate:NSDate = cal.dateByAddingComponents(dateComponent, toDate: df.dateFromString(startDateOfRecurrenceStr)!, options:NSCalendarOptions(rawValue: 0) )!
+            for _ in 0..<Int(self.tf_occurrence.text!)! {
+                
+                 endDate = cal.dateByAddingComponents(dateComponent, toDate: endDate, options:NSCalendarOptions(rawValue: 0) )!
+                
+            }
+             
+            
             self.tf_endDateRangeofRecurrence.text = df.stringFromDate(endDate)
         }
         }

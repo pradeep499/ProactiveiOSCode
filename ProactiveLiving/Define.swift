@@ -106,7 +106,7 @@ let chatCDNbaseUrl = "http://52.89.149.60:3000/proactiveliving"
 //for chat profile images
 
 // Server URL
-//let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
+// let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
 
 //Production URL
 //let ChatBaseMediaUrl = "http://52.89.149.60:3000/"

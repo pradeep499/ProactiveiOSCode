@@ -98,17 +98,41 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.lblTitle.text=[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
-    cell.lblDD.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:1];
-    cell.lblEEE.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:0];
+    
+    //showing selected date
+    if (indexPath.row == 0 && [self.title isEqualToString:@"ALL"]) {
+        cell.lblDD.text= [[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:1];
+        cell.lblEEE.text=[[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:0];
+        
+        NSDateFormatter *df = [[NSDateFormatter alloc]init];
+        [df setDateFormat:@"yyyy/MM/dd"];
+        
+        cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[df stringFromDate:_selectedRecurrenceDate],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
+        
+    }else{
+        cell.lblDD.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:1];
+        cell.lblEEE.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:0];
+    
+        cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
+    
+    }
+    
     cell.sideBarView.backgroundColor=[AppHelper colorFromHexString:[[self.dataArray objectAtIndex:indexPath.row] valueForKey:@"bookingColor"] alpha:1.0];
-    cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
+    
+    
     //cell.lblName.text=[NSString stringWithFormat:@"Event Type: %@",[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"type"]];
+    
     if ([[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"type"] isEqualToString:@"appointment"]) {
+        
+        cell.lblFor.text = @"";
+        cell.lblBy.text = @"";
         cell.lblDesc.text=[[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"organizationId"] valueForKey:@"address1"];
     }
     else
     {
-        cell.lblDesc.text=@"";
+        cell.lblFor.text = [[self.dataArray objectAtIndex:indexPath.row] valueForKeyPath:@"meetupInviteId.for"];
+        cell.lblBy.text = [NSString stringWithFormat:@"by %@",[[self.dataArray objectAtIndex:indexPath.row] valueForKeyPath:@"meetupInviteId.admin"]];
+        cell.lblDesc.text= [[self.dataArray objectAtIndex:indexPath.row] valueForKeyPath:@"meetupInviteId.address" ];
     }
     
     [AppHelper setBorderOnView:cell.imgCellBG];
@@ -168,10 +192,11 @@
 }
 
 -(NSString *)componentsFromDate:(NSString *)date{
-    NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
+     NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
     [dayFormatter setDateFormat:@"yyyy-MM-dd"];//@"EE, d LLLL yyyy HH:mm:ss Z"
     [dayFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
-    NSDate *myDate=[dayFormatter dateFromString:date];
+     NSDate *myDate=[dayFormatter dateFromString:date];
+   
     [dayFormatter setDateFormat:@"yyyy MMM EEEE"];
     //NSString*strDate1=[dayFormatter stringFromDate:myDate];
     [dayFormatter setDateFormat:@"EE d LLLL yyyy"];
@@ -180,14 +205,27 @@
     return strDate2;
 }
 
+-(NSString *)getDateStringFromDate:(NSDate *)date{
+    
+    NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
+    [dayFormatter setDateFormat:@"yyyy MMM EEEE"];
+    //NSString*strDate1=[dayFormatter stringFromDate:myDate];
+    [dayFormatter setDateFormat:@"EE d LLLL yyyy"];
+    NSString *strDate2=[dayFormatter stringFromDate:date];
+    
+    return strDate2;
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+        
         if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"meetup"])
         {
             MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
             vc.screenName = @"MEET UPS";
-            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"];
+            
+            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"webinvite"])
@@ -195,7 +233,7 @@
             
             MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
             vc.screenName = @"WEB INVITES";
-            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"];
+            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else

@@ -11,5 +11,6 @@
 @interface AppointmentListingVC : UIViewController
 @property (copy, nonatomic)  NSString *appointmnetType;
 @property (nonatomic,copy)NSArray *arrEvents;
+@property (nonatomic,copy)NSDate *selectedRecurrenceDate;
 
 @end

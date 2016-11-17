@@ -119,27 +119,30 @@ extension MenuVC:UITableViewDelegate{
             
             self.navigationController?.pushViewController(settingVC, animated: true)
             break
+        case 7:
+            let WebVC:WebViewVC = self.storyboard!.instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.pageName = "TERMSNPOLICIES"
+            self.navigationController?.pushViewController(WebVC, animated: true)
+            break
         case 8:
-            
             let aboutVC: AboutPASInstVC = self.storyboard!.instantiateViewControllerWithIdentifier("AboutPASInstVC") as! AboutPASInstVC
             
             self.navigationController?.pushViewController(aboutVC, animated: true)
-            
             break
         case 9:
             
-            let alertController = UIAlertController(title:APP_NAME, message: "Are you sure! You want to logout?" , preferredStyle: UIAlertControllerStyle.Alert)
+            let alertController = UIAlertController(title:APP_NAME, message: "Do you want to logout ?" , preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
             }))
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
                 
                 do{
-                     //Disconect Chat
+                    //Disconect Chat
                     let x = try? ChatListner.getChatListnerObj().closeConnection()
                     print("",x)
                 }catch {
                     
-                    }
+                }
                 
                 
                 do{
@@ -155,7 +158,13 @@ extension MenuVC:UITableViewDelegate{
                 }
                 
                 
+                
+                
+                
+                
+                
                 self.navigationController?.navigationBarHidden = true
+                //
                 
                 let loginVC:LoginVC = self.storyboard!.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
                 let nav = UINavigationController.init(rootViewController: loginVC)

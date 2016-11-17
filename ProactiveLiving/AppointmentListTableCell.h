@@ -10,7 +10,8 @@
 
 @interface AppointmentListTableCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
-@property (weak, nonatomic) IBOutlet UILabel *lblName;
+@property (weak, nonatomic) IBOutlet UILabel *lblFor;
+@property (weak, nonatomic) IBOutlet UILabel *lblBy;
 @property (weak, nonatomic) IBOutlet UILabel *lblDateTime;
 @property (weak, nonatomic) IBOutlet UILabel *lblDesc;
 @property (weak, nonatomic) IBOutlet UILabel *lblDD;

@@ -630,9 +630,19 @@ type = 3 for yeary basis
 {
     NSArray * eventArray=[view.eventData objectForKey:date];
     if ([eventArray count]>0) {
+      /*
+        //add recurrence selected date to event
+        CKCalendarEvent *event  = [eventArray firstObject];
+        NSMutableDictionary *dict= [event.info mutableCopy] ;
+        [dict setValue:date forKey:@"recurrenceDate"];
+        
+        NSArray *arr = [NSArray arrayWithObject:dict];
+        */
+            
         if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
             AllAppointmentsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllAppointmentsVC"];
-            vc.arrEvents=eventArray;
+             vc.arrEvents=eventArray;
+             vc.selectedRecurrenceDate = date;
             [self.navigationController pushViewController:vc animated:YES];
         }
         NSLog(@"%lu",(unsigned long)eventArray.count);

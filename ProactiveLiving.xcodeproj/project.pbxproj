@@ -25,6 +25,8 @@
 		600F1CE51DBA293B00BCBC12 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CD41DBA293B00BCBC12 /* UIImageView+WebCache.m */; };
 		600F1CE61DBA293B00BCBC12 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CD61DBA293B00BCBC12 /* UIView+WebCacheOperation.m */; };
 		600F1CEB1DBA436000BCBC12 /* BroadcastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */; };
+		601AF81D1DDAE6B3006ABB5F /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */; };
+		60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A7CADE1DDD6BB10033BA1E /* Social.framework */; };
 		60D471C71DC07D9900EAD7D9 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D471C61DC07D9900EAD7D9 /* MenuVC.swift */; };
 		671C3D611C44FB72006A5423 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D601C44FB72006A5423 /* main.m */; };
 		671C3D671C44FB72006A5423 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D661C44FB72006A5423 /* LoginVC.m */; };
@@ -466,6 +468,8 @@
 		600F1CD51DBA293B00BCBC12 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		600F1CD61DBA293B00BCBC12 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastVC.swift; sourceTree = "<group>"; };
+		601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
+		60A7CADE1DDD6BB10033BA1E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		60D471C61DC07D9900EAD7D9 /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		671C3D5C1C44FB72006A5423 /* ProactiveLiving.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProactiveLiving.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		671C3D601C44FB72006A5423 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1035,6 +1039,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */,
 				92E091D41D3775AF00BEC575 /* AWSS3.framework in Frameworks */,
 				92E091D31D3775AF00BEC575 /* AWSRuntime.framework in Frameworks */,
 				BAC8D2A21C58D50E0084AA47 /* MapKit.framework in Frameworks */,
@@ -1071,6 +1076,7 @@
 		3BD02C3FB4517E2652864AFB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				60A7CADE1DDD6BB10033BA1E /* Social.framework */,
 				BAC8D2A11C58D50E0084AA47 /* MapKit.framework */,
 				D0E80E747E9528DEF38B7FFF /* libPods-ProactiveLiving.a */,
 			);
@@ -1131,6 +1137,15 @@
 				600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */,
 			);
 			name = BroadCast;
+			sourceTree = "<group>";
+		};
+		601AF81B1DDAE6B3006ABB5F /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */,
+			);
+			name = WebView;
+			path = View/WebView;
 			sourceTree = "<group>";
 		};
 		60D471C51DC07D7000EAD7D9 /* Menu */ = {
@@ -1219,6 +1234,7 @@
 		671C3D961C44FEE6006A5423 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				601AF81B1DDAE6B3006ABB5F /* WebView */,
 				600DA7A91DD332CE00A95595 /* Recurrence */,
 				BA4859071DC9DE3300DED552 /* Calender */,
 				60D471C51DC07D7000EAD7D9 /* Menu */,
@@ -2926,6 +2942,7 @@
 				BAD195EF1C635B2C0085DD9B /* FilterVC4.m in Sources */,
 				BAD8D63E1CBCCDCB0037ED23 /* NSString+Color.m in Sources */,
 				BA5900EE1D364EFD006142AC /* UserChat.swift in Sources */,
+				601AF81D1DDAE6B3006ABB5F /* WebViewVC.swift in Sources */,
 				BAB0E5051D5DE59B00906C10 /* WebSocket.swift in Sources */,
 				BAD9099D1CFD7A2100E12422 /* SettingsOrgCell.m in Sources */,
 				679AA7201C461F85002D96AE /* ForgotPasswordVC.m in Sources */,
@@ -3236,7 +3253,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE = "9e17de41-48d8-4f13-ad99-221a649e3090";
+				PROVISIONING_PROFILE = "203ed9cd-fd9d-436e-87dd-d1d8fb5b3398";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3278,7 +3295,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE = "9e17de41-48d8-4f13-ad99-221a649e3090";
+				PROVISIONING_PROFILE = "203ed9cd-fd9d-436e-87dd-d1d8fb5b3398";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3294,7 +3311,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -3311,7 +3328,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e17de41-48d8-4f13-ad99-221a649e3090";
+				PROVISIONING_PROFILE = "203ed9cd-fd9d-436e-87dd-d1d8fb5b3398";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -3325,7 +3342,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -3342,7 +3359,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e17de41-48d8-4f13-ad99-221a649e3090";
+				PROVISIONING_PROFILE = "203ed9cd-fd9d-436e-87dd-d1d8fb5b3398";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -3358,7 +3375,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "187241ed-7f3e-438f-a52e-3bdee7925196";
+				PROVISIONING_PROFILE = "203ed9cd-fd9d-436e-87dd-d1d8fb5b3398";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProactiveLiving.app/ProactiveLiving";
 			};
 			name = Debug;
@@ -3373,7 +3390,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "187241ed-7f3e-438f-a52e-3bdee7925196";
+				PROVISIONING_PROFILE = "203ed9cd-fd9d-436e-87dd-d1d8fb5b3398";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProactiveLiving.app/ProactiveLiving";
 			};
 			name = Release;
@@ -3381,13 +3398,13 @@
 		671C3D931C44FB72006A5423 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ProactiveLivingUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "187241ed-7f3e-438f-a52e-3bdee7925196";
+				PROVISIONING_PROFILE = "203ed9cd-fd9d-436e-87dd-d1d8fb5b3398";
 				TEST_TARGET_NAME = ProactiveLiving;
 				USES_XCTRUNNER = YES;
 			};
@@ -3396,13 +3413,13 @@
 		671C3D941C44FB72006A5423 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ProactiveLivingUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MaverickHitesh.ProactiveLivingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "187241ed-7f3e-438f-a52e-3bdee7925196";
+				PROVISIONING_PROFILE = "203ed9cd-fd9d-436e-87dd-d1d8fb5b3398";
 				TEST_TARGET_NAME = ProactiveLiving;
 				USES_XCTRUNNER = YES;
 			};

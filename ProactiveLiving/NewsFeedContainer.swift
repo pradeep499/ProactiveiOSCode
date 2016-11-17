@@ -8,6 +8,9 @@
 
 import UIKit
 
+var currentIndex = 0
+var isPostServiceCalled = false
+
 class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
     
     var arrData = [AnyObject]()
@@ -20,7 +23,7 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
     var fourthVC: NewsFeedsAllVC!
     var fifthVC: NewsFeedsAllVC!
 
-    var currentIndex = 0
+    
     
     
     @IBOutlet weak var screenTitle: UILabel!
@@ -59,20 +62,32 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         
         firstVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         firstVC.title = "ALL"
+     //   firstVC.feedsType = "ALL"
         
         secondVC = storyboard.instantiateViewControllerWithIdentifier("ExploreVC") as! ExploreVC
         secondVC.title = "EXPLORE"
         
+        
         thirdVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         thirdVC.title = "FRIENDS"
+  //      thirdVC.feedsType = "FRIENDS"
         
         fourthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         fourthVC.title = "COLLEAGUES"
+    //    fourthVC.feedsType = "COLLEAGUES"
         
         fifthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         fifthVC.title = "HEALTH CLUBS"
+     //   fifthVC.feedsType = "HEALTH CLUBS"
         
-        let containerVC = YSLContainerViewController(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
+        arrViewControllers = [firstVC, secondVC, thirdVC, fourthVC, fifthVC]
+        
+        let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
+        
+   //     let containerVC = YSLContainerViewController(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
+        
+        
+        
         containerVC.delegate = self
         containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
         containerVC.menuItemSelectedFont = UIFont(name: "Roboto-Bold", size: 11.5)

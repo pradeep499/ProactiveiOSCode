@@ -28,6 +28,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+     
+    
+    
     // Reset badge count
     [UIApplication sharedApplication].applicationIconBadgeNumber =0;
     
@@ -133,6 +136,8 @@
 {
     //register to receive notifications
     [application registerForRemoteNotifications];
+    
+    
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
