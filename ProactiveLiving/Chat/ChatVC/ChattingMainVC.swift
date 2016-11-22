@@ -4214,8 +4214,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let thumbImg = CommonMethodFunctions.generatePhotoThumbnail(tempImage);
                     let thumbImg1 = CommonMethodFunctions.generatePhotoThumbnail1(tempImage);
                     
-                    let data1 = UIImageJPEGRepresentation(thumbImg, 0.0)
-                    let base64String = data1!.base64EncodedStringWithOptions([])
+                    let thumbData = UIImageJPEGRepresentation(thumbImg, 0.0)
+                    let base64String = thumbData!.base64EncodedStringWithOptions([])
+                    
                     let data2 = UIImageJPEGRepresentation(thumbImg1, 1.0)
                     let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
                     let documentsDirectory = paths.stringByAppendingPathComponent("/ChatFile")
@@ -4229,10 +4230,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     var saveImagePath = documentsDirectory.stringByAppendingPathComponent("Thumb"+dateStr+".jpg")
                     data2!.writeToFile(saveImagePath, atomically: true)
                     
-                    let data = UIImageJPEGRepresentation(tempImage, 0.8)
+                    let imgData = UIImageJPEGRepresentation(tempImage, 0.8)
                     let saveFullImagePath = "full"+dateStr+".jpg"
                     saveImagePath = documentsDirectory.stringByAppendingPathComponent("full"+dateStr+".jpg")
-                    data!.writeToFile(saveImagePath, atomically: true)
+                    imgData!.writeToFile(saveImagePath, atomically: true)
                     var dict = Dictionary<String, AnyObject>()
                     dict["date"] = dateStr
                     dict["sortDate"] = dateStr
@@ -4309,7 +4310,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     NSOperationQueue.mainQueue().addOperationWithBlock() { () in
                         
                         let name = self.uniqueName("")
-                        UploadInS3.sharedGlobal().uploadImageTos3( data, type: 0, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
+                        UploadInS3.sharedGlobal().uploadImageTos3( thumbData, type: 0, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
                             
                             if bool_val == true
                             {

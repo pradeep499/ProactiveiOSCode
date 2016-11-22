@@ -223,7 +223,7 @@ class MeetUpsListingVC: UIViewController {
 
             var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
             let memberArr = someDict["members"] as! [AnyObject]
-            lblMembers.text = "\(memberArr.count) Going"
+            lblMembers.text = "\(memberArr.count)  Invited"
         }
         else {
             

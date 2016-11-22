@@ -33,7 +33,7 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_blured_heigh" translatesAutoresizingMaskIntoConstraints="NO" id="Kdi-yj-rsX" userLabel="blured">
                         <rect key="frame" x="0.0" y="0.0" width="140" height="245"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.080000000000000002" colorSpace="calibratedWhite"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" tag="222" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hbj-W1-hhx">
                         <rect key="frame" x="65" y="5" width="70" height="70"/>

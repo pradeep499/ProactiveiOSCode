@@ -27,6 +27,7 @@
 		600F1CEB1DBA436000BCBC12 /* BroadcastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */; };
 		601AF81D1DDAE6B3006ABB5F /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */; };
 		60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A7CADE1DDD6BB10033BA1E /* Social.framework */; };
+		60CD2A011DE2C3C000125457 /* CommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CD2A001DE2C3C000125457 /* CommentsVC.swift */; };
 		60D471C71DC07D9900EAD7D9 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D471C61DC07D9900EAD7D9 /* MenuVC.swift */; };
 		671C3D611C44FB72006A5423 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D601C44FB72006A5423 /* main.m */; };
 		671C3D671C44FB72006A5423 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D661C44FB72006A5423 /* LoginVC.m */; };
@@ -470,6 +471,7 @@
 		600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastVC.swift; sourceTree = "<group>"; };
 		601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
 		60A7CADE1DDD6BB10033BA1E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		60CD2A001DE2C3C000125457 /* CommentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentsVC.swift; path = View/NewsFeeds/CommentsVC.swift; sourceTree = "<group>"; };
 		60D471C61DC07D9900EAD7D9 /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		671C3D5C1C44FB72006A5423 /* ProactiveLiving.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProactiveLiving.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		671C3D601C44FB72006A5423 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1495,6 +1497,7 @@
 				BA9AE87C1D9D05E000830B40 /* HeaderCollectionCell.swift */,
 				BA9AE87E1D9D219200830B40 /* CollectionHeaderCustomView.xib */,
 				BA9AE8801D9E6B0900830B40 /* OrgProfileVC.swift */,
+				60CD2A001DE2C3C000125457 /* CommentsVC.swift */,
 			);
 			name = NewsFeeds;
 			sourceTree = "<group>";
@@ -3090,6 +3093,7 @@
 				BA0B653C1D93B48000CB6BB8 /* NewsFeedContainer.swift in Sources */,
 				BAD8D6401CBCCDCB0037ED23 /* UIView+AnimatedFrame.m in Sources */,
 				BAD9099A1CFD797C00E12422 /* SettingsContactsVC.m in Sources */,
+				60CD2A011DE2C3C000125457 /* CommentsVC.swift in Sources */,
 				BA5900D71D364EFD006142AC /* AppContactList+CoreDataProperties.swift in Sources */,
 				BA5900F11D364EFD006142AC /* ChatHelper.swift in Sources */,
 				BA59010C1D364EFD006142AC /* ChatHomeVC.swift in Sources */,
@@ -3311,7 +3315,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -3342,7 +3346,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;

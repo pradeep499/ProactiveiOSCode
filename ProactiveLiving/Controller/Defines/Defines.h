@@ -38,7 +38,7 @@
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 
 //Server URL
-//#define BASE_URL @"http://52.23.211.77:3000/api/v1/"
+#define BASE_URL @"http://52.23.211.77:3000/api/v1/"
 
 //Production URL
 //#define BASE_URL @"http://52.89.149.60:3000/api/v1/"

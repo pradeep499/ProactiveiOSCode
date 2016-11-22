@@ -19,6 +19,9 @@
 @property (strong, nonatomic) NSMutableArray *dataArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (assign, atomic)int positionOfSelectedDate;
+
+
 @end
 
 @implementation AppointmentListingVC
@@ -27,6 +30,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self getAppointmentListingData];
+    
+    self.positionOfSelectedDate = -1;
 
 }
 
@@ -60,10 +65,18 @@
                      
                      self.dataArray=[[responseDict objectForKey:@"result"] mutableCopy];
                      
-                     if([self.arrEvents count]>0)
-                         [self filterArrayUsingEvents:self.arrEvents];
+                    if([self.arrEvents count]>0){
+                   
+                    //     [self filterArrayUsingEvents:self.arrEvents];
+                        
+                        [self getSelectedDatePositionInTableArr:self.arrEvents];
+                        [self.tableView reloadData];
+                        [self performSelector:@selector(moveCellToTop) withObject:nil afterDelay:0.5];
+                   
+                   }
+                   
                      
-                     [self.tableView reloadData];
+                     
                  }
                  else
                  {
@@ -98,7 +111,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.lblTitle.text=[[self.dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
-    
+   /*
     //showing selected date
     if (indexPath.row == 0 && [self.title isEqualToString:@"ALL"]) {
         cell.lblDD.text= [[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:1];
@@ -116,6 +129,26 @@
         cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
     
     }
+    */
+    
+    // to display Calendar Selected date on cell
+    if ((self.positionOfSelectedDate > -1) && (indexPath.row == self.positionOfSelectedDate) && [self.title isEqualToString:@"ALL"]) {
+        cell.lblDD.text= [[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:1];
+        cell.lblEEE.text=[[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:0];
+        
+        NSDateFormatter *df = [[NSDateFormatter alloc]init];
+        [df setDateFormat:@"yyyy/MM/dd"];
+        
+        cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[df stringFromDate:_selectedRecurrenceDate],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
+        
+    }else{
+        cell.lblDD.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:1];
+        cell.lblEEE.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:0];
+        
+        cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
+        
+    }
+    
     
     cell.sideBarView.backgroundColor=[AppHelper colorFromHexString:[[self.dataArray objectAtIndex:indexPath.row] valueForKey:@"bookingColor"] alpha:1.0];
     
@@ -143,6 +176,37 @@
     return cell;
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+        
+        if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"meetup"])
+        {
+            MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
+            vc.screenName = @"MEET UPS";
+            
+            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"webinvite"])
+        {
+            
+            MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
+            vc.screenName = @"WEB INVITES";
+            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else
+        {
+            AppointmentDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsVC"];
+            vc.dataDict=[self.dataArray objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+}
+
+#pragma mark-
 // filter on array to move events to top
 -(void)filterArrayUsingEvents:(NSArray *)arrEvents
 {
@@ -157,6 +221,36 @@
         [self.dataArray removeObjectAtIndex:index];
         [self.dataArray insertObject:obj atIndex:0];
     }
+}
+
+
+-(void)getSelectedDatePositionInTableArr:(NSArray *)arrEvents
+{
+    for(CKCalendarEvent *event in arrEvents) {
+        NSString *eventID=[event.info valueForKey:@"_id"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%K == %@)", @"_id",eventID];
+        NSMutableArray *filteredarray = [[self.dataArray filteredArrayUsingPredicate:predicate] mutableCopy];
+        NSLog(@"array %@",eventID);
+        
+        NSInteger index = [self.dataArray indexOfObject:filteredarray[0]];
+        
+         self.positionOfSelectedDate = (int) index;
+       
+        
+    }
+    
+    
+    
+}
+
+-(void)moveCellToTop{
+   
+    NSIndexPath *indexPath  = [NSIndexPath indexPathForRow: (NSInteger) self.positionOfSelectedDate inSection:0];
+    
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    
+    
+    
 }
 
 //moving an object to another location
@@ -216,34 +310,6 @@
     return strDate2;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-        
-        if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"meetup"])
-        {
-            MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
-            vc.screenName = @"MEET UPS";
-            
-            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        else if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"webinvite"])
-        {
-            
-            MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
-            vc.screenName = @"WEB INVITES";
-            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        else
-        {
-            AppointmentDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsVC"];
-            vc.dataDict=[self.dataArray objectAtIndex:indexPath.row];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-    }
-}
 
 -(void)btnEditBookingClick:(UIButton *)sender
 {
