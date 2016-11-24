@@ -44,7 +44,7 @@ class ChatListner: NSObject {
         //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
         
         //Test Server
-         socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
+      //   socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
     }
 
     deinit{
@@ -1418,11 +1418,22 @@ func connectToSocket() -> Void{
                 }
                // print(dic)
 
-                if  dic["userid"] as? String != ChatHelper.userDefaultForKey("userId") as String! && grpMembrName != "notvalue"{
+                /* changed by Badru
+                 if  dic["userid"] as? String != ChatHelper.userDefaultForKey("userId") as String! && grpMembrName != "notvalue"{
                     dict["username"]  = dic["user_firstName"] as! String
                 } else {
                     dict["username"] = dic["phoneNumber"] as! String
                 }
+ */
+                //added by Badru
+                if let name = dic["user_firstName"] as? String {
+                    
+                    dict["username"] = name
+                }else{
+                    
+                    dict["username"] = "Dummy Name"
+                }
+                
              
                 dict["imgUrl"] = "" as String!
                 dict["isNameAvail"] = "0"
@@ -1596,13 +1607,13 @@ func connectToSocket() -> Void{
             if socket == nil {
                 //socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
                 //Server URL
-            //    socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
+                socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
                 
                 //Production URL
                 //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
                 
                 //Test Server
-                socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
+           //     socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
             }
             //self.closeConnection();
             if socket.status != .Connected {

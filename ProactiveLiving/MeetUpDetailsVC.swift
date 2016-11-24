@@ -38,6 +38,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     @IBOutlet weak var imgSure: UIImageView!
     @IBOutlet weak var imgSorry: UIImageView!
     
+    @IBOutlet weak var btnChat: UIButton!
     
     override func viewDidLoad() {
         
@@ -241,7 +242,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID0, forIndexPath: indexPath) as! MeetUpProfileCell
             cell.selectionStyle = .None
             cell.lblName.text=self.dataDict["for"] as? String
-            cell.lblCreatedBy.text="by \(self.dataDict["createdBy"] as! String)"
+            cell.lblCreatedBy.text="by \(self.dataDict["createdBy"]!["firstName"] as! String)"
             
             if(!(self.fwBy == ""))
             {
@@ -525,7 +526,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                         
                     }
                     
-                    if((self.dataDict["createdBy"] as! String) == ChatHelper.userDefaultForKey("userId"))
+                    if((self.dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
                     {
                         self.btnSure.enabled=false
                         //self.imgSure.hidden=true
@@ -541,6 +542,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     }
                     
                     self.tableMeetUpDetails.reloadData()
+                    
+                    self.showHideChatBtn()
                 }
                 else
                 {
@@ -602,6 +605,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     func btnAcceptClick(sender: UIButton)  {
         
+        self.btnChat.hidden = false
         
         var dict = Dictionary<String,AnyObject>()
         
@@ -617,7 +621,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
         //group info
         var groupDict = Dictionary<String,AnyObject>()
-        groupDict["userid"] = self.dataDict["createdBy"] as! String
+        groupDict["userid"] = self.dataDict["createdBy"]!["_id"] as! String
         groupDict["groupid"] = self.dataDict["groupId"] as! String
         groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
         groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
@@ -630,6 +634,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     }
     
     func btnDeclineClick(sender: UIButton)  {
+        
+        self.btnChat.hidden = true
         
         var dict = Dictionary<String,AnyObject>()
         if(self.screenName == "MEET UPS") {
@@ -644,7 +650,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
         //group info
         var groupDict = Dictionary<String,AnyObject>()
-        groupDict["userid"] = self.dataDict["createdBy"] as! String
+        groupDict["userid"] = self.dataDict["createdBy"]!["_id"] as! String
         groupDict["groupid"] = self.dataDict["groupId"] as! String
         groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
         groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
@@ -851,7 +857,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             
             let actionSheet : UIActionSheet!
             
-            if((self.dataDict["createdBy"] as! String) == ChatHelper.userDefaultForKey("userId"))
+            if((self.dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
             {
                 actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle,buttonTwoTitle,buttonThreeTitle)
             }
@@ -872,7 +878,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             }))
             
             
-            if((self.dataDict["createdBy"] as! String) == ChatHelper.userDefaultForKey("userId"))
+            if((self.dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
             {
                 actionSheet.addAction(UIAlertAction(title: buttonTwoTitle, style: UIAlertActionStyle.Default, handler:
                     { (ACTION :UIAlertAction!)in
@@ -911,6 +917,14 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
         let imgProfile = cell.contentView.viewWithTag(111) as! UIImageView
         let imgStatus = cell.contentView.viewWithTag(222) as! UIImageView
         let lblName = cell.contentView.viewWithTag(333) as! UILabel
+        
+        imgProfile.layer.borderWidth = 1.0
+        imgProfile.contentMode = .ScaleAspectFill
+        imgProfile.backgroundColor = UIColor.whiteColor()
+        imgProfile.layer.masksToBounds = false
+        imgProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
+        imgProfile.layer.cornerRadius = imgProfile.frame.size.height/2
+        imgProfile.clipsToBounds = true
 
         
         let dataArr = self.dataDict["members"] as! [AnyObject]
@@ -936,11 +950,36 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
 
         }
         
+        
+        
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+    }
+     // show or hide chat icon by badru
+    func showHideChatBtn() -> Void {
+        
+        let dataArr = self.dataDict["members"] as! [AnyObject]
+        
+        for dict in dataArr {
+            
+            if ((dict["memberId"] as! String) == ChatHelper.userDefaultForKey("userId") &&  ((dict["status"] as! String) == "1")) {
+                
+                btnChat.hidden = false
+                break
+            }
+            else
+            {
+                btnChat.hidden = true
+                
+            }
+            
+            
+        }
+        
+        
     }
 }
 

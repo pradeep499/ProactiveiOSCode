@@ -452,7 +452,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     //MARK: - Group User Info Methods
     
     func getGroupUserInfo() {
-        groupUserName = ""
+        groupUserName = " "
         let str:String = ChatHelper.userDefaultForKey("userId") as String!
         let str1:String = self.recentChatObj.groupId as String!
         let strPred:String = "loginUserId contains[cd] \"\(str)\" AND groupId LIKE \"\(str1)\""
@@ -465,8 +465,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             self.groupUserDic[groupObj.userId!] = groupObj.userName
            // print(groupObj.userName)
            // print(self.groupUserDic[groupObj.userId])
-            let nameStr = groupObj.userName! as String
-            let mb = ChatHelper.userDefaultForKey("PhoneNumber") as String
+            
+       //     let nameStr = groupObj.userName! as String
+      //      let mb = ChatHelper.userDefaultForKey("PhoneNumber") as String
             
      //       let trimmedString = nameStr.stringByReplacingOccurrencesOfString("+91", withString: "")
      //       let trimmedString1 = mb.stringByReplacingOccurrencesOfString("+91", withString: "")

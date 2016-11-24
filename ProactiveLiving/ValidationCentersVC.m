@@ -403,7 +403,11 @@
 #pragma mark - uitableview
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     //set height of cell
+    if ([self.orgType isEqualToString:@"Physicians"]) {
+        return 132;
+    }
     return 120;
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //number of rows in tableview

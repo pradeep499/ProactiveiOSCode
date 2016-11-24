@@ -517,13 +517,13 @@ type = 3 for yeary basis
                              
                              [eventsArray addObject:event];
                              
-                             if (title == nil || [title isEqualToString:@"<nil>"] || title.length == 0) {
+                             if (([title isKindOfClass:[NSNull class]]) || title == nil || [title isEqualToString:@"<nil>"] || title.length == 0) {
                                  printf("Nil checking");
                                  
                              }
                              
                              // create recurrence of meet up if have. 1 = have, 0 = not have
-                             if ((title == nil || [title isEqualToString:@"<nil>"] || title.length == 0) && [[[[groups objectForKey:key] objectAtIndex:i] valueForKeyPath:@"meetupInviteId.isrecur"] integerValue] == 1) {
+                             if (([title isKindOfClass:[NSNull class]]) || (title == nil || [title isEqualToString:@"<nil>"] || title.length == 0) && [[[[groups objectForKey:key] objectAtIndex:i] valueForKeyPath:@"meetupInviteId.isrecur"] integerValue] == 1) {
                                  
                                  NSDictionary *recurrenceDict = [[[groups objectForKey:key] objectAtIndex:i] valueForKeyPath:@"meetupInviteId.recurrence"];
                                //  NSString *startDate = [recurrenceDict valueForKey:@""];

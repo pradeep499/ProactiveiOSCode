@@ -104,14 +104,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         grpNameTxtF.text=groupObj.groupName
         txtGroupName.text=groupObj.groupName
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
-        let date = dateFormatter.dateFromString(groupObj.createdDate!)
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let dateStr = dateFormatter.stringFromDate(date!)
-        createdDate.text = "Created by XYZ, "+dateStr
+        self.setLblCreatedDate(" ")
         
         groupUserList = NSMutableArray()
         groupUserPassArr = NSMutableArray()
@@ -177,6 +170,21 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
     override func viewWillDisappear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "groupCreateNotification", object: nil)
+    }
+    
+    //MARK: -
+    
+    func setLblCreatedDate( name:String!) -> Void {
+        
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
+        let date = dateFormatter.dateFromString(groupObj.createdDate!)
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let dateStr = dateFormatter.stringFromDate(date!)
+        createdDate.text = "Created by " + name + ", "+dateStr
     }
     
     func groupCreatedOrUpdatedListener(note:NSNotification)
@@ -367,6 +375,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         {
             adminLabel.hidden = false
             //deleteBtn.hidden = true
+            self.setLblCreatedDate(anObject.userName)
         }else
         {
             adminLabel.hidden = true

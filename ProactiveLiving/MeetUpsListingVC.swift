@@ -140,7 +140,7 @@ class MeetUpsListingVC: UIViewController {
             statusBG.hidden = true
         }
         
-        eventTypeBy.text = "\(self.arrData[indexPath.row]["for"] as! String), by \(self.arrData[indexPath.row]["createdBy"] as! String)"
+        eventTypeBy.text = "\(self.arrData[indexPath.row]["for"] as! String), by \(self.arrData[indexPath.row]["createdBy"]!!["firstName"] as! String)"
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
         lblDate.text = self.arrData[indexPath.row]["eventDate"] as? String
         
@@ -199,7 +199,7 @@ class MeetUpsListingVC: UIViewController {
             
         }
         
-        if((dataDict["createdBy"] as! String) == ChatHelper.userDefaultForKey("userId"))
+        if((dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
         {
             cell.btnAccept.enabled=false
             cell.btnDecline.enabled=false
@@ -298,7 +298,7 @@ class MeetUpsListingVC: UIViewController {
         
         //group info
         var groupDict = Dictionary<String,AnyObject>()
-        groupDict["userid"] = someDict["createdBy"] as! String
+        groupDict["userid"] = someDict["createdBy"]!["_id"] as! String
         groupDict["groupid"] = someDict["groupId"] as! String
         groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
         groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
@@ -337,7 +337,7 @@ class MeetUpsListingVC: UIViewController {
         
         //group info
         var groupDict = Dictionary<String,AnyObject>()
-        groupDict["userid"] = someDict["createdBy"] as! String
+        groupDict["userid"] = someDict["createdBy"]!["_id"] as! String
         groupDict["groupid"] = someDict["groupId"] as! String
         groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
         groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
