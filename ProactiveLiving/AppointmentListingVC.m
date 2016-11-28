@@ -38,6 +38,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
 
 }
 
@@ -137,7 +139,7 @@
         cell.lblEEE.text=[[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:0];
         
         NSDateFormatter *df = [[NSDateFormatter alloc]init];
-        [df setDateFormat:@"yyyy/MM/dd"];
+        [df setDateFormat:@"MM/dd/yyyy"];
         
         cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[df stringFromDate:_selectedRecurrenceDate],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
         

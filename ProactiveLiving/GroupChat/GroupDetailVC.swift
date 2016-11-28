@@ -182,7 +182,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
         let date = dateFormatter.dateFromString(groupObj.createdDate!)
-        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.dateFormat = "MM/yyyy"
         let dateStr = dateFormatter.stringFromDate(date!)
         createdDate.text = "Created by " + name + ", "+dateStr
     }
