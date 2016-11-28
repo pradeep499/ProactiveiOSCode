@@ -33,6 +33,7 @@
 @property (nonatomic, copy) NSString *aboutPAS;
 @property (strong,nonatomic) NSMutableDictionary *notyDic;
 @property(strong,nonatomic) UITabBarItem *barItemForChat;
+@property(strong,nonatomic) UITabBarController *tabbarController;
 
 @end
 

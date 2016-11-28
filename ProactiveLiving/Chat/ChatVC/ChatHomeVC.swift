@@ -88,6 +88,10 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
         //self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         //self.navigationController!.navigationBar.shadowImage = UIImage()
         //self.navigationController!.navigationBar.translucent = true
+        
+        
+        
+
     }
     
     func toggleDeleteChats(status:Bool) {
@@ -195,6 +199,17 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
         })
         
         recent_chatTable.reloadData()
+        
+        // Update Msg Badge
+        
+        if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
+            AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = String(DataBaseController.sharedInstance.fetchUnreadCount())
+        }else{
+            AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = nil
+        }
+        
+        
+        
     }
     
     func callNotification()->Void {

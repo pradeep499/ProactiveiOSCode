@@ -1195,24 +1195,19 @@ func connectToSocket() -> Void{
         NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector:  #selector(ChatListner.hideAlert), userInfo: nil, repeats: false)
         
      
-        let instance = DataBaseController.sharedInstance
-        let unreadCount=instance.fetchUnreadCount()   //Manage unread count.
-        let myString:String = String(unreadCount)
+ 
         
-        print(myString)
-
-        /*
-        if AppDelegate.getAppDelegate().barItemForChat != nil {
-            AppDelegate.getAppDelegate().barItemForChat.badgeValue = myString as String
-            
-            if myString == "0" {
-                AppDelegate.getAppDelegate().barItemForChat.badgeValue=nil;
-                
-            } else {
-                AppDelegate.getAppDelegate().barItemForChat.badgeValue = myString
-            }
+        //BAdru
+        
+      //  print("Unread Msg = ", String(DataBaseController.sharedInstance.fetchUnreadCount()))
+        
+        // Update Msg Badge
+        if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
+            AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = String(DataBaseController.sharedInstance.fetchUnreadCount())
+        }else{
+            AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = nil
         }
-        */
+ 
     }
     
     func updateMessageInRecentChatFromGroup(dic : NSDictionary) {

@@ -458,7 +458,7 @@ class DataBaseController : NSObject
         
     }
 
-    func fetchUnreadCount()->NSInteger
+    func fetchUnreadCount()-> NSInteger
     {
         var unreadcount:Int = 0
         let instance = DataBaseController.sharedInstance
@@ -478,7 +478,7 @@ class DataBaseController : NSObject
                 }
                 else
                 {
-                    unreadcount = unreadcount + 1;
+                    unreadcount = unreadcount + Int(anObject.notificationCount!)!
                     
                 }
             }

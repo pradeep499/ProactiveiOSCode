@@ -130,8 +130,24 @@
 
     
     self.tabBarController = [[CustonTabBarController alloc] init];
+    
+    
     [self.tabBarController setViewControllers:@[firstNavigationController, secondNavigationController,
                                            thirdNavigationController,fourthNavigationController,fifthNavigationController]];
+    
+    //set up badge Icon
+    [AppDelegate getAppDelegate].tabbarController = self.tabBarController;
+    
+    if ([[DataBaseController sharedInstance] fetchUnreadCount] > 0) {
+        
+        [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = [NSString stringWithFormat:@"%zd",  [[DataBaseController sharedInstance] fetchUnreadCount]  ];
+    }else{
+        [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = nil;
+    }
+    
+    
+    
+    
     
     [self.navigationController pushViewController:self.tabBarController animated:YES];
     //OR
