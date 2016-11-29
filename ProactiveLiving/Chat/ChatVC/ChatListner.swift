@@ -607,8 +607,9 @@ func connectToSocket() -> Void{
     
     func addOffLineReceiveMsgHandlers() {
        ChatListner .getChatListnerObj().socket.on("recieveMessageAll") {[weak self] data, ack in
-            self?.playSoundBool = false
-            var receiveMsgDict = Dictionary<String,AnyObject>()
+        
+        self?.playSoundBool = false
+        var receiveMsgDict = Dictionary<String,AnyObject>()
             receiveMsgDict = data[0] as! Dictionary
             print(receiveMsgDict)
         
@@ -830,6 +831,7 @@ func connectToSocket() -> Void{
                 
                     if receiveMsgDic["type"] as! String != "text" && receiveMsgDic["type"] as! String != "audio" {
                         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+                            
                             let mediaStr = receiveMsgDic["mediaThumb"] as! String
                             let trimmedString = mediaStr.stringByReplacingOccurrencesOfString("\n", withString: "")
                             let mediaThumbStr = receiveMsgDic["mediaUrl"] as! String
@@ -894,6 +896,14 @@ func connectToSocket() -> Void{
                 let str:String = ChatHelper .userDefaultForKey("chatId") as String
                 if str.characters.count == 0 {
                     AudioServicesPlaySystemSound(1002);
+                    
+                    
+                    // Update Msg Badge
+                    if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
+                        AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = String(DataBaseController.sharedInstance.fetchUnreadCount())
+                    }else{
+                        AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = nil
+                    }
                 }
             }
         }

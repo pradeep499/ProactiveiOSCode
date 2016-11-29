@@ -225,17 +225,13 @@
                     }
                 }
                 
-                NSInteger aChatPushCount = [[DataBaseController sharedInstance] fetchUnreadCount];
-                if ([AppDelegate getAppDelegate].barItemForChat) {
-                    if (aChatPushCount>0) {
-                        
-                        [AppDelegate getAppDelegate].barItemForChat.badgeValue=[NSString stringWithFormat:@"%ld",(long)[[DataBaseController sharedInstance] fetchUnreadCount]];
-                    }
-                    else
-                    {
-                        [AppDelegate getAppDelegate].barItemForChat.badgeValue=nil;
-                    }
+                //set up badge Icon
+                
+                if ([[DataBaseController sharedInstance] fetchUnreadCount] > 0) {
                     
+                    [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = [NSString stringWithFormat:@"%zd",  [[DataBaseController sharedInstance] fetchUnreadCount]  ];
+                }else{
+                    [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = nil;
                 }
                 
             }
@@ -364,6 +360,11 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [AppHelper saveToUserDefaults:@"didBecomeActive" withKey:@"APP_STATUS"];
     [[ChatListner getChatListnerObj] createConnection];
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+     
+    sleep(4);
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

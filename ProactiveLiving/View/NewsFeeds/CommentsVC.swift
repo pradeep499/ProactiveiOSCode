@@ -11,6 +11,7 @@ import UIKit
 class CommentsVC: UIViewController, UITextViewDelegate {
 
     
+    @IBOutlet weak var view_tableHeader: UIView!
     @IBOutlet weak var iv_CommentsProfile: UIImageView!
     @IBOutlet weak var lbl_CommentsTitle: UILabel!
     @IBOutlet weak var lbl_timeAgo: UILabel!
@@ -41,6 +42,26 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         //hide separotor while cell empty
         self.table_view.tableFooterView = UIView.init()
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        
+        //dynamic Header view height
+        let newString = self.selectedCommentDict["text"]!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
+        
+        //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
+        //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
+        let w = self.table_view.bounds.size.width - 30
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
+        
+        let height = size.height + 140
+        
+        var fm = self.view_tableHeader.frame
+        fm.size.height = height
+        
+        self.view_tableHeader.frame = fm
     }
 
     override func didReceiveMemoryWarning() {
@@ -132,6 +153,10 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             lbl_organizationName.text = ""
         }
         print("Dict = ", self.selectedCommentDict)
+        
+        
+        
+        
         
         if let arr = self.selectedCommentDict["comments"] {
             commentsArr =   arr as! [AnyObject]
@@ -260,6 +285,30 @@ class CommentsVC: UIViewController, UITextViewDelegate {
 
 
 extension CommentsVC:UITableViewDataSource{
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+   
+        let dict = commentsArr[indexPath.row] as! NSDictionary
+        
+        
+        
+        let newString = dict["comment"]!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
+        
+        //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
+        //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
+        let w = tableView.bounds.size.width - 30
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
+        
+        let height = size.height + 120
+        
+        
+        return height
+        
+        
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

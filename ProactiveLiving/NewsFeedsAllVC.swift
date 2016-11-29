@@ -561,6 +561,46 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     //MARK:- Collection DataSource
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    //    return CGSize(width: 100.0, height: 100.0)
+        
+        var dict = NSDictionary()
+        
+        if self.title == "ALL" {
+            dict = self.postAllArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "FRIENDS" {
+            dict = self.postFriendsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "COLLEAGUES" {
+            dict = self.postColleagueArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "HEALTH CLUBS" {
+            dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        
+        
+        let newString = dict["text"]!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
+        
+        //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
+        //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
+        let w = collectionView.bounds.size.width - 30
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
+        
+        let height = size.height + 150
+        let width = size.width
+        
+        return CGSize(width: w, height: height)
+        
+        
+    
+    }
+
+
+
+    
+    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         
         return 1
@@ -703,14 +743,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-       /* if (indexPath.row == 0){
-            return CGSize(width: collectionView.frame.size.width-20, height: 145)
-        } */
-        return CGSize(width: collectionView.frame.size.width-20, height: 160)
-        
-    }
+    
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)

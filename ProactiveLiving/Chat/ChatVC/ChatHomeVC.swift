@@ -115,6 +115,13 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
         
         navigationTitleLable.attributedText = getNavigationTitle()
         self.navigationItem.titleView = navigationTitleLable
+        
+        // Update Msg Badge
+        if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
+            AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = String(DataBaseController.sharedInstance.fetchUnreadCount())
+        }else{
+            AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = nil
+        }
     }
     
     func isPushed(note:NSNotification) {

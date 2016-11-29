@@ -11582,15 +11582,15 @@
                                                     <rect key="frame" x="0.0" y="10" width="320" height="141"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_booking_profilepic" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-hE-wYG">
-                                                            <rect key="frame" x="8" y="8" width="45" height="45"/>
+                                                            <rect key="frame" x="8" y="8" width="55" height="55"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="45" id="W8Q-Bk-mmt"/>
-                                                                <constraint firstAttribute="height" constant="45" id="v35-9L-bPA"/>
+                                                                <constraint firstAttribute="width" constant="55" id="W8Q-Bk-mmt"/>
+                                                                <constraint firstAttribute="height" constant="55" id="v35-9L-bPA"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asim shared a post." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epe-6E-kXT" userLabel="nameLable">
-                                                            <rect key="frame" x="63" y="8" width="249" height="21"/>
+                                                            <rect key="frame" x="73" y="8" width="239" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="0kc-Xc-fc6"/>
                                                             </constraints>
@@ -11598,12 +11598,17 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Been to the Gym three days straight!!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TLc-Na-JIf" userLabel="detailLable">
-                                                            <rect key="frame" x="8" y="61" width="304" height="17"/>
+                                                            <rect key="frame" x="8" y="65" width="304" height="13"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="17" id="U6g-Xh-EhQ"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="16"/>
                                                             <nil key="highlightedColor"/>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="U6g-Xh-EhQ"/>
+                                                                </mask>
+                                                            </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gym PAC" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBU-pP-pDg">
                                                             <rect key="frame" x="256" y="84" width="56" height="15"/>
@@ -11654,7 +11659,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16 min ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYj-AR-i1C" userLabel="detailLable">
-                                                            <rect key="frame" x="63" y="29" width="100" height="16"/>
+                                                            <rect key="frame" x="73" y="29" width="100" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="FJt-Oq-Whb"/>
                                                                 <constraint firstAttribute="width" constant="100" id="TUG-Ei-OTI"/>
@@ -11689,6 +11694,7 @@
                                                         <constraint firstItem="JZz-Zd-jXK" firstAttribute="top" secondItem="xNs-Xq-tZy" secondAttribute="bottom" constant="6" id="C0y-Sa-jB4"/>
                                                         <constraint firstItem="JZz-Zd-jXK" firstAttribute="leading" secondItem="yyn-S3-IYO" secondAttribute="trailing" constant="18" id="Emg-MK-Xft"/>
                                                         <constraint firstAttribute="bottom" secondItem="JZz-Zd-jXK" secondAttribute="bottom" constant="4" id="I9i-XJ-YcV"/>
+                                                        <constraint firstItem="TLc-Na-JIf" firstAttribute="top" secondItem="CpZ-hE-wYG" secondAttribute="bottom" constant="2" id="IdR-gU-hPi"/>
                                                         <constraint firstItem="bBU-pP-pDg" firstAttribute="top" secondItem="TLc-Na-JIf" secondAttribute="bottom" constant="6" id="NWk-Nj-Wlo"/>
                                                         <constraint firstItem="BYj-AR-i1C" firstAttribute="leading" secondItem="CpZ-hE-wYG" secondAttribute="trailing" constant="10" id="W0M-hJ-sk5"/>
                                                         <constraint firstItem="CpZ-hE-wYG" firstAttribute="leading" secondItem="c6O-kW-B5U" secondAttribute="leading" constant="8" id="XfD-zK-eml"/>
@@ -16103,15 +16109,15 @@
                                             <rect key="frame" x="15" y="15" width="290" height="121"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_booking_profilepic" translatesAutoresizingMaskIntoConstraints="NO" id="Siz-Fd-U1o">
-                                                    <rect key="frame" x="10" y="5" width="45" height="45"/>
+                                                    <rect key="frame" x="10" y="5" width="55" height="55"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="45" id="Hxr-rR-egZ"/>
-                                                        <constraint firstAttribute="width" constant="45" id="qxz-27-RjB"/>
+                                                        <constraint firstAttribute="height" constant="55" id="Hxr-rR-egZ"/>
+                                                        <constraint firstAttribute="width" constant="55" id="qxz-27-RjB"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asim shared a post." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHW-zV-22s" userLabel="nameLable">
-                                                    <rect key="frame" x="65" y="15" width="215" height="21"/>
+                                                    <rect key="frame" x="75" y="15" width="205" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="Bxa-xZ-7R5"/>
                                                         <constraint firstAttribute="height" constant="21" id="bo5-s2-G5S"/>
@@ -16120,7 +16126,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Been to the Gym three days straight!! " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8E-Hy-Ox2" userLabel="detailLable">
-                                                    <rect key="frame" x="15" y="60" width="260" height="22"/>
+                                                    <rect key="frame" x="15" y="70" width="260" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="304" id="C0m-Qt-gtJ"/>
                                                         <constraint firstAttribute="height" constant="17" id="Jht-1N-Tal"/>
@@ -16135,7 +16141,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gym PAC" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZI-aI-e9M">
-                                                    <rect key="frame" x="75" y="87" width="200" height="15"/>
+                                                    <rect key="frame" x="75" y="101" width="200" height="15"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="200" id="FTX-rj-d4z"/>
@@ -16146,7 +16152,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16 min ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjQ-R4-Oey" userLabel="ago">
-                                                    <rect key="frame" x="65" y="36" width="100" height="16"/>
+                                                    <rect key="frame" x="75" y="36" width="100" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="6Ac-7P-95y"/>
                                                         <constraint firstAttribute="width" constant="100" id="GOw-Cc-8QN"/>
@@ -16160,14 +16166,14 @@
                                             <constraints>
                                                 <constraint firstItem="Siz-Fd-U1o" firstAttribute="top" secondItem="Cck-1P-rx4" secondAttribute="top" constant="5" id="592-pd-c1a"/>
                                                 <constraint firstItem="HHW-zV-22s" firstAttribute="top" secondItem="Cck-1P-rx4" secondAttribute="top" constant="15" id="6f5-iJ-EhT"/>
-                                                <constraint firstItem="TZI-aI-e9M" firstAttribute="top" secondItem="y8E-Hy-Ox2" secondAttribute="bottom" constant="5" id="Cem-mq-xDK"/>
+                                                <constraint firstItem="TZI-aI-e9M" firstAttribute="top" secondItem="y8E-Hy-Ox2" secondAttribute="bottom" constant="3" id="Cem-mq-xDK"/>
                                                 <constraint firstItem="TZI-aI-e9M" firstAttribute="top" secondItem="y8E-Hy-Ox2" secondAttribute="bottom" constant="5" id="GTj-TV-xwe"/>
                                                 <constraint firstItem="Siz-Fd-U1o" firstAttribute="leading" secondItem="Cck-1P-rx4" secondAttribute="leading" constant="10" id="Lc4-kD-qkl"/>
                                                 <constraint firstItem="y8E-Hy-Ox2" firstAttribute="top" secondItem="Siz-Fd-U1o" secondAttribute="bottom" constant="10" id="OAq-bR-CkS"/>
                                                 <constraint firstItem="rjQ-R4-Oey" firstAttribute="top" secondItem="HHW-zV-22s" secondAttribute="bottom" id="Pr7-qm-6ZI"/>
                                                 <constraint firstAttribute="trailing" secondItem="HHW-zV-22s" secondAttribute="trailing" constant="10" id="S43-Ax-JJi"/>
                                                 <constraint firstAttribute="trailing" secondItem="TZI-aI-e9M" secondAttribute="trailing" constant="15" id="UES-FK-kDS"/>
-                                                <constraint firstAttribute="bottom" secondItem="TZI-aI-e9M" secondAttribute="bottom" constant="19" id="UJK-Gx-fNG"/>
+                                                <constraint firstAttribute="bottom" secondItem="TZI-aI-e9M" secondAttribute="bottom" constant="5" id="UJK-Gx-fNG"/>
                                                 <constraint firstItem="HHW-zV-22s" firstAttribute="leading" secondItem="Siz-Fd-U1o" secondAttribute="trailing" constant="10" id="hhY-g6-LLB"/>
                                                 <constraint firstAttribute="trailing" secondItem="y8E-Hy-Ox2" secondAttribute="trailing" constant="15" id="ig5-vV-sgv"/>
                                                 <constraint firstItem="rjQ-R4-Oey" firstAttribute="leading" secondItem="Siz-Fd-U1o" secondAttribute="trailing" constant="10" id="mMB-zV-oQu"/>
@@ -16216,7 +16222,7 @@
                                                     <rect key="frame" x="20" y="7" width="280" height="121"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16 min ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2h6-cz-yFe" userLabel="ago">
-                                                            <rect key="frame" x="65" y="36" width="100" height="16"/>
+                                                            <rect key="frame" x="75" y="36" width="100" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="100" id="0m0-ke-mbE"/>
                                                                 <constraint firstAttribute="height" constant="16" id="Jwc-C1-W5d"/>
@@ -16225,13 +16231,8 @@
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Been to the Gym three days straight!! " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcG-aF-CTf" userLabel="detailLable">
-                                                            <rect key="frame" x="65" y="60" width="200" height="45"/>
-                                                            <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="16"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asim shared a post." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnV-6r-eEg" userLabel="nameLable">
-                                                            <rect key="frame" x="65" y="15" width="205" height="21"/>
+                                                            <rect key="frame" x="75" y="15" width="195" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="xzU-dM-DOE"/>
                                                             </constraints>
@@ -16239,18 +16240,23 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_booking_profilepic" translatesAutoresizingMaskIntoConstraints="NO" id="Cac-Pf-2yX">
-                                                            <rect key="frame" x="10" y="5" width="45" height="45"/>
+                                                            <rect key="frame" x="10" y="5" width="55" height="55"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="45" id="UMa-ga-766"/>
-                                                                <constraint firstAttribute="width" constant="45" id="lhX-93-XuG"/>
+                                                                <constraint firstAttribute="height" constant="55" id="UMa-ga-766"/>
+                                                                <constraint firstAttribute="width" constant="55" id="lhX-93-XuG"/>
                                                             </constraints>
                                                         </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Been to the Gym three days straight!! " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcG-aF-CTf" userLabel="detailLable">
+                                                            <rect key="frame" x="65" y="57" width="200" height="61"/>
+                                                            <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="16"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="Cac-Pf-2yX" firstAttribute="leading" secondItem="zXG-zT-IcD" secondAttribute="leading" constant="10" id="0mq-KW-Anf"/>
-                                                        <constraint firstItem="RcG-aF-CTf" firstAttribute="top" secondItem="2h6-cz-yFe" secondAttribute="bottom" constant="8" id="Eyx-KM-JQB"/>
+                                                        <constraint firstItem="RcG-aF-CTf" firstAttribute="top" secondItem="2h6-cz-yFe" secondAttribute="bottom" constant="5" id="Eyx-KM-JQB"/>
                                                         <constraint firstItem="RcG-aF-CTf" firstAttribute="leading" secondItem="zXG-zT-IcD" secondAttribute="leading" constant="65" id="FBi-Vd-UrJ"/>
                                                         <constraint firstAttribute="trailing" secondItem="WnV-6r-eEg" secondAttribute="trailing" constant="10" id="Icw-Zk-0bw"/>
                                                         <constraint firstItem="Cac-Pf-2yX" firstAttribute="top" secondItem="zXG-zT-IcD" secondAttribute="top" constant="5" id="WvJ-QX-u3K"/>
@@ -16258,7 +16264,7 @@
                                                         <constraint firstItem="2h6-cz-yFe" firstAttribute="leading" secondItem="Cac-Pf-2yX" secondAttribute="trailing" constant="10" id="grs-i9-ODi"/>
                                                         <constraint firstAttribute="trailing" secondItem="RcG-aF-CTf" secondAttribute="trailing" constant="15" id="k9O-3q-ksc"/>
                                                         <constraint firstItem="WnV-6r-eEg" firstAttribute="top" secondItem="zXG-zT-IcD" secondAttribute="top" constant="15" id="odX-TM-Kbb"/>
-                                                        <constraint firstAttribute="bottom" secondItem="RcG-aF-CTf" secondAttribute="bottom" constant="16" id="vAC-Iy-iwh"/>
+                                                        <constraint firstAttribute="bottom" secondItem="RcG-aF-CTf" secondAttribute="bottom" constant="3" id="vAC-Iy-iwh"/>
                                                         <constraint firstItem="2h6-cz-yFe" firstAttribute="top" secondItem="WnV-6r-eEg" secondAttribute="bottom" id="z4W-yp-aV8"/>
                                                     </constraints>
                                                 </view>
@@ -16280,16 +16286,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dC6-5l-iKd">
                                 <rect key="frame" x="0.0" y="508" width="320" height="60"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Leave Your Comments..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PLB-Tr-PRr">
-                                        <rect key="frame" x="10" y="10" width="235" height="40"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="LC0-Bc-CL1" id="OV4-0D-zph"/>
-                                        </connections>
-                                    </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wav-7m-i1d">
                                         <rect key="frame" x="265" y="13" width="40" height="35"/>
                                         <constraints>
@@ -16301,6 +16297,16 @@
                                             <action selector="onClickSendBtn:" destination="LC0-Bc-CL1" eventType="touchUpInside" id="xI2-Ye-5gE"/>
                                         </connections>
                                     </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Leave Your Comments..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PLB-Tr-PRr">
+                                        <rect key="frame" x="10" y="10" width="235" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="LC0-Bc-CL1" id="OV4-0D-zph"/>
+                                        </connections>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.95591770369999995" green="0.95591770369999995" blue="0.95591770369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -16344,6 +16350,7 @@
                         <outlet property="lbl_timeAgo" destination="rjQ-R4-Oey" id="cOw-Yo-6jA"/>
                         <outlet property="table_view" destination="FHk-HW-3Fe" id="Yml-3p-rWX"/>
                         <outlet property="tv_writeComment" destination="PLB-Tr-PRr" id="1wF-7F-ntp"/>
+                        <outlet property="view_tableHeader" destination="2SS-zs-kwH" id="Gf5-qk-TQy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k1b-jg-Whk" userLabel="First Responder" sceneMemberID="firstResponder"/>
