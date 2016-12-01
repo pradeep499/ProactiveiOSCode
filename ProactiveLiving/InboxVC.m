@@ -27,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCreateNew;
 @property (weak, nonatomic) IBOutlet UIButton *btnContacts;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *layout_widthOfBtnCreateNew;
+
+
 
 @end
 
@@ -66,7 +69,7 @@
     //UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     
     mesagesVC = [storyboard instantiateViewControllerWithIdentifier:@"ChatHomeVC"];
-    mesagesVC.title = @"MESSAGES";
+    mesagesVC.title = @"MESSAGES   ";
     
     meetUpVC = [storyboard instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
     meetUpVC.title = @"MEET UPS";
@@ -90,6 +93,7 @@
     containerVC.menuItemTitleColor=[UIColor whiteColor];
     containerVC.menuItemSelectedTitleColor=[UIColor whiteColor];
     containerVC.view.frame=CGRectMake(0, 64, containerVC.view.frame.size.width, containerVC.view.frame.size.height-64);
+  //  containerVC.view.backgroundColor = [UIColor greenColor];
     
     [self.view addSubview:containerVC.view];
 }
@@ -102,10 +106,16 @@
     NSLog(@"current controller : %@",controller);
     currentIndex=index;
     
-    if(currentIndex==0)
+    if(currentIndex==0){
         self.btnEdit.hidden=NO;
-    else
+        self.layout_widthOfBtnCreateNew.constant = 0;
+        self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+    else{
         self.btnEdit.hidden=YES;
+        self.layout_widthOfBtnCreateNew.constant = 46;
+        self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 19, 0, 0);
+    }
     
     [controller viewWillAppear:YES];
 }

@@ -38,11 +38,16 @@
     [self setUpViewControllers];
     [self.btnDone setHidden:YES];
     
-    if([self.fromVC isEqualToString:@"Inbox"])
+     if([self.fromVC isEqualToString:@"Inbox"])
         [self.btnCreateNewGroup setHidden:NO];
-    else
-        [self.btnCreateNewGroup setHidden:YES];
-
+     else{
+         
+         [self.btnCreateNewGroup setHidden:YES];
+         //badru
+         [self.btnDone setHidden:NO];
+     }
+    
+ 
 }
 -(void)someAction
 {
@@ -161,17 +166,26 @@
 - (IBAction)btnDoneClick:(id)sender {
     
     //[self.btnDone setHidden:YES];
+    if([self.fromVC isEqualToString:@"Inbox"]){
+        
+        if([currentController isKindOfClass:[ContactsVC class]])
+        {
+            ContactsVC *currentVC=(ContactsVC*) currentController;
+            [currentVC createGroupWithContacts];
+        }
+        else if([currentController isKindOfClass:[ContactFriendsVC class]])
+        {
+            ContactFriendsVC *currentVC=(ContactFriendsVC*) currentController;
+            //[currentVC createGroupWithContacts];
+        }
+    }else{
+        //badru
+        //Create MeetUp
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"POP_CONTCT_VC" object:self];
+    }
     
-    if([currentController isKindOfClass:[ContactsVC class]])
-    {
-        ContactsVC *currentVC=(ContactsVC*) currentController;
-        [currentVC createGroupWithContacts];
-    }
-    else if([currentController isKindOfClass:[ContactFriendsVC class]])
-    {
-        ContactFriendsVC *currentVC=(ContactFriendsVC*) currentController;
-        //[currentVC createGroupWithContacts];
-    }
+    
     
 }
 

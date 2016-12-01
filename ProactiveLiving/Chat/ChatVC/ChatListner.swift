@@ -34,6 +34,7 @@ class ChatListner: NSObject {
     var pushNotificationView:UIView!
     var isConnectionStable = false
     var currentOperationDict : NSMutableDictionary!
+    var timerConnectingStatus:NSTimer!
 
     override init(){
         //socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
@@ -44,7 +45,7 @@ class ChatListner: NSObject {
         //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
         
         //Test Server
-      //   socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
+      //    socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
     }
 
     deinit{
@@ -72,7 +73,7 @@ func connectToSocket() -> Void{
     if let value:String = ChatHelper.userDefaultForKey(_ID)  {
         //Registered user
         
-        print_debug("hiiiii")
+        
         
         if isConnectionStable == false{
             
@@ -108,6 +109,8 @@ func connectToSocket() -> Void{
                 weakself.getGroupInfoListner()
                 weakself.deleteUserFromGroupListner()
                 //weakself.doNotSleepListener()
+                
+                //to show connecting Status
                 
             }
             
@@ -1156,14 +1159,14 @@ func connectToSocket() -> Void{
        
         if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil) {
             if senderid != ChatHelper .userDefaultForAny("friendId") as! String {
-                self.showSucessswithString("\(chatMsg)", width: screenWidth)
+                self.showSucessswithString("\(chatMsg)", alertType:"notification",  width: screenWidth)
             }
         } else {
-            self.showSucessswithString("\(chatMsg)", width: screenWidth)
+            self.showSucessswithString("\(chatMsg)", alertType:"notification",  width: screenWidth)
         }
     }
     
-    func showSucessswithString(alertStr:String, width:CGFloat) {
+    func showSucessswithString(alertStr:String, alertType:String, width:CGFloat) {
        // print(" showSucessswithString: ")
         
         if (pushNotificationView != nil) {
@@ -1202,23 +1205,32 @@ func connectToSocket() -> Void{
                 self.pushNotificationView.frame=CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
         })
         
-        NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector:  #selector(ChatListner.hideAlert), userInfo: nil, repeats: false)
-        
-     
- 
-        
-        //BAdru
-        
-      //  print("Unread Msg = ", String(DataBaseController.sharedInstance.fetchUnreadCount()))
-        
-        // Update Msg Badge
-        if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
-            AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = String(DataBaseController.sharedInstance.fetchUnreadCount())
-        }else{
-            AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = nil
+        if alertType == "notification" {
+            
+            NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector:  #selector(ChatListner.hideAlert), userInfo: nil, repeats: false)
+            
+            //BAdru
+            
+            //  print("Unread Msg = ", String(DataBaseController.sharedInstance.fetchUnreadCount()))
+            
+            // Update Msg Badge
+            if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
+                AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = String(DataBaseController.sharedInstance.fetchUnreadCount())
+            }else{
+                AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = nil
+            }
         }
+        else{
+            // Connectiong to Socket IO
+            
+            timerConnectingStatus = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector:  #selector(ChatListner.hideAlertConnectingToServer), userInfo: nil, repeats: true)
+            
+        }
+       
  
     }
+    
+    
     
     func updateMessageInRecentChatFromGroup(dic : NSDictionary) {
         let instance = DataBaseController.sharedInstance
@@ -1528,6 +1540,24 @@ func connectToSocket() -> Void{
         })
     }
     
+    func hideAlertConnectingToServer() {
+        
+        if socket != nil{
+            if socket.status == .Connected  {
+                
+            
+                timerConnectingStatus.invalidate()
+                timerConnectingStatus = nil
+                
+                UIView.animateWithDuration(0.5, animations:
+                    {
+                        self.pushNotificationView.frame=CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70)
+                })
+            }
+        }
+        
+    }
+    
     
     func performActionForNotification() {
        // print("navigation")
@@ -1618,7 +1648,7 @@ func connectToSocket() -> Void{
                 //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
                 
                 //Test Server
-           //     socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
+              //   socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
             }
             //self.closeConnection();
             if socket.status != .Connected {

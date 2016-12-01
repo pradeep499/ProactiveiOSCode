@@ -131,6 +131,17 @@ class ChatHelper: NSObject {
         return stringValue!
     }
     
+    class func convertDateFormat(currentFormat:String, desireFormat:String, dateStr:String) -> String {
+        
+        let df = NSDateFormatter.init()
+        df.dateFormat = currentFormat
+        let date = df.dateFromString(dateStr)
+        
+        df.dateFormat = desireFormat
+        
+        return df.stringFromDate(date!)
+    }
+    
     //MARK:- Dynamic Height for Label
     class func heightForLabel(text:String, font:UIFont, width:CGFloat, numberOfLines:Int) -> CGFloat
     {

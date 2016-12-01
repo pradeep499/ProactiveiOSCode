@@ -72,7 +72,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         return stringValue
     }
     //MARK:- Convert Number to String
-    class func convertNumberToString(numValue:NSNumber)->String
+    static func convertNumberToString(numValue:NSNumber)->String
     {
         let nf = NSNumberFormatter()
         nf.numberStyle = .DecimalStyle

@@ -142,7 +142,13 @@ class MeetUpsListingVC: UIViewController {
         
         eventTypeBy.text = "\(self.arrData[indexPath.row]["for"] as! String), by \(self.arrData[indexPath.row]["createdBy"]!!["firstName"] as! String)"
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
-        lblDate.text = self.arrData[indexPath.row]["eventDate"] as? String
+        
+        if let dateStr =  self.arrData[indexPath.row]["eventDate"] as? String {
+            
+            lblDate.text = ChatHelper.convertDateFormat("dd/MM/yyyy", desireFormat: "MM/dd/yyyy",  dateStr: dateStr)
+        }
+        
+         
         
         //lblLink.text = (self.arrData[indexPath.row]["links"] as! Array).joinWithSeparator(",")
         //lblPhone.text = self.arrData[indexPath.row]["dialInNumber"] as? String

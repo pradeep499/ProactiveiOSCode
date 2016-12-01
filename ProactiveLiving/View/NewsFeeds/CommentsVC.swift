@@ -366,9 +366,26 @@ extension CommentsVC:UITableViewDataSource{
             
             let df = NSDateFormatter.init()
             df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             //   df.timeZone = NSTimeZone(name: "UTC")
             
-            lbl_timeAgo.text = HelpingClass.timeAgoSinceDate(df.dateFromString(createdDate)!, numericDates: false)
+            
+            
+            df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+            df.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+            let tempDate = df.dateFromString(createdDate) as NSDate!
+            
+            df.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
+            let dateStr = df.stringFromDate(tempDate)
+            /* df.dateFormat = "HH:mm:ss.sss"
+             df.timeZone = NSTimeZone()
+             let timeStr = df.stringFromDate(tempDate)
+             
+             */
+            
+            lbl_timeAgo.text = HelpingClass.timeAgoSinceDate(df.dateFromString(dateStr)!, numericDates: false)
+            
+            
             
             lbl_details.text =  dict["comment"] as? String
             // will display Organisation name

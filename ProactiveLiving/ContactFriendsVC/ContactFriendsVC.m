@@ -100,6 +100,7 @@
 }
 
 
+
 #pragma mark - preferredStatusBarStyle
 -(UIStatusBarStyle)preferredStatusBarStyle {
     // to set the light color of status bar

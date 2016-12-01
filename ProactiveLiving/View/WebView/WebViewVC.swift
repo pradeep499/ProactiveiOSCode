@@ -21,7 +21,7 @@ class WebViewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+       self.urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0"
         
     }
     
@@ -63,6 +63,13 @@ class WebViewVC: UIViewController {
             break
         default:
             break
+        }
+        
+        if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!)) {
+            UIApplication.sharedApplication().openURL(NSURL(string:
+                "comgooglemaps://?center=40.765819,-73.975866&zoom=14&views=traffic")!)
+        } else {
+            print("Can't use comgooglemaps://");
         }
     }
     
@@ -147,5 +154,7 @@ extension WebViewVC:UIWebViewDelegate{
     func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
         self.indicator.stopAnimating()
         self.indicator.hidden = true
+        
+        AppHelper.showAlertWithTitle(AppName, message: "Can't load the url.", tag: 0, delegate: nil, cancelButton: "OK", otherButton:""  )
     }
 }

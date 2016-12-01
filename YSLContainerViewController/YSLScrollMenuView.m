@@ -37,6 +37,8 @@ static const CGFloat kYSLIndicatorHeight = 3;
         _scrollView = [[UIScrollView alloc]initWithFrame:self.bounds];
         _scrollView.showsHorizontalScrollIndicator = NO;
         [self addSubview:_scrollView];
+        
+      //  self.scrollView.backgroundColor = [UIColor redColor];
     }
     return self;
 }
@@ -85,6 +87,8 @@ static const CGFloat kYSLIndicatorHeight = 3;
             CGRect frame = CGRectMake(0, 0, kYSLScrollMenuViewWidth, CGRectGetHeight(self.frame));
             UILabel *itemView = [[UILabel alloc] initWithFrame:frame];
             [self.scrollView addSubview:itemView];
+            
+            
             itemView.tag = i;
             itemView.text = itemTitleArray[i];
             itemView.userInteractionEnabled = YES;
@@ -185,6 +189,7 @@ static const CGFloat kYSLIndicatorHeight = 3;
         frame.origin.x = 0;
         frame.size.width = self.frame.size.width;
     }
+    
     self.scrollView.frame = frame;
 }
 

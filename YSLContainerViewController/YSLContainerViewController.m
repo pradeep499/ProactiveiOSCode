@@ -66,6 +66,7 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     _contentScrollView.scrollsToTop = NO;
     [self.view addSubview:_contentScrollView];
     _contentScrollView.contentSize = CGSizeMake(_contentScrollView.frame.size.width * self.childControllers.count, _contentScrollView.frame.size.height);
+   // _contentScrollView.backgroundColor = [UIColor yellowColor];
     
     // ContentViewController setup
     for (int i = 0; i < self.childControllers.count; i++) {
@@ -93,6 +94,7 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     [_menuView setShadowView];
     
     [self scrollMenuViewSelectedIndex:0];
+  //  _menuView.backgroundColor = [UIColor greenColor];
 }
 
 #pragma mark -- private

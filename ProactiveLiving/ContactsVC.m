@@ -39,6 +39,10 @@
     [AppHelper setBorderOnView:self.tableView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCreateGroup:) name:NOTIFICATION_SHOW_GROUP_VIEW_CLICKED object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(POP_CONTCT_VC) name:@"POP_CONTCT_VC" object:nil];
+    
+    
     self.selectedRowsArray=[NSMutableArray new];
     self.constrHeightGroupView.constant=0;
     self.lblTotalSelected.text=[NSString stringWithFormat:@"(%@ Selected)",@0];
@@ -71,6 +75,19 @@
     
     [self.tableView reloadData];
 }
+
+-(void)POP_CONTCT_VC{
+    
+     CreateMeetUpVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
+    
+    for (NSDictionary *dict in self.selectedRowsArray) {
+        [previousVC addCotact:dict];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark:- 
+
 
 -(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
 {
@@ -232,22 +249,37 @@
     cell.lblName.text=[NSString stringWithFormat:@"%@",[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"firstName"]];
     cell.lblDesc.text=[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"membership"];
     
+    //badru
     if(self.constrHeightGroupView.constant == 0)
     {
-        [cell.imgCellSelection setHidden:YES];
+        //[cell.imgCellSelection setHidden:YES];
+        
+        //for multiple contact selection
+        
+        if ([self.selectedRowsArray containsObject:[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]])
+        {
+             [cell.imgCellSelection setHidden:NO];
+            [cell.imgCellSelection setImage:[UIImage imageNamed:@"check_round"]];
+        }
+        else {
+          //  [cell.imgCellSelection setImage:[UIImage imageNamed:@"uncheck_round"]];
+            [cell.imgCellSelection setHidden:YES];
+        }
+        
     }
-    else
-    {
+    else{
+        
         [cell.imgCellSelection setHidden:NO];
-
-    if ([self.selectedRowsArray containsObject:[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]])
-    {
-        [cell.imgCellSelection setImage:[UIImage imageNamed:@"check_round"]];
+        
+        if ([self.selectedRowsArray containsObject:[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]])
+        {
+            [cell.imgCellSelection setImage:[UIImage imageNamed:@"check_round"]];
+        }
+        else {
+            [cell.imgCellSelection setImage:[UIImage imageNamed:@"uncheck_round"]];
+        }
     }
-    else {
-        [cell.imgCellSelection setImage:[UIImage imageNamed:@"uncheck_round"]];
-    }
-    }
+ 
     
     return cell;
 }
@@ -258,63 +290,24 @@
     {
     if(self.constrHeightGroupView.constant == 0) //if not creating a group
     {
-    if([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[MyPAStodoVC class]])
-    {
-        [self.delegate getSelectedPhone:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"mobilePhone"]];
-    }
-    else if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
-    {
-        NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-        NSLog(@"%@",frndDict);
-        
-        NSString * login_id = [AppHelper userDefaultsForKey:uId];
-        NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
-        DataBaseController *dbInstance = [DataBaseController sharedInstance];
-        //RecentChatList * recentObj = [dbInstance fetchDataRecentChatObject:@"RecentChatList" predicate:predicate];
-        
-        
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-        ChattingMainVC *chatMainVC = [storyboard instantiateViewControllerWithIdentifier:@"ChattingMainVC"];
-        
-        ChatContactModelClass *anobject = [[ChatContactModelClass alloc] init];
-        anobject.userId =[frndDict  valueForKey:@"_id"];
-        anobject.loginUserId =[AppHelper userDefaultsForKey:_ID];
-        anobject.name =  [frndDict valueForKey:@"firstName"];
-        anobject.email = @"etrfgg";
-        anobject.isBlock = @"0";
-        anobject.isReport = @"0";
-        anobject.isFav = @"no";
-        anobject.isFriend = @"yes";
-        anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
-        anobject.isFromCont = @"yes";
-        anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
-        anobject.firstName = [frndDict valueForKey:@"firstName"];
-        
-        chatMainVC.contObj=anobject;
-        chatMainVC.isFromClass = @"chatd";
-        chatMainVC.isGroup = @"0";
-        chatMainVC.isFromDeatilScreen = @"0";
-        //chatMainVC.recentChatObj = recentObj;
-        chatMainVC.recentChatObj = nil;
-
-        [self.navigationController pushViewController:chatMainVC animated:YES];
-    }
-    else //if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
-    {
-        NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-        NSLog(@"%@",frndDict);
-        
-        NSString * login_id = [AppHelper userDefaultsForKey:uId];
-        NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
-        DataBaseController *dbInstance = [DataBaseController sharedInstance];
-        //RecentChatList * recentObj = [dbInstance fetchDataRecentChatObject:@"RecentChatList" predicate:predicate];
-        
-        //if let classObject = NSClassFromString("YOURAPPNAME.MyClass") as? MyClass.Type {
-            //let object = classObject.init()
-        //}
-        if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[GroupDetailVC class]])
+        if([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[MyPAStodoVC class]])
         {
-            GroupDetailVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
+            [self.delegate getSelectedPhone:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"mobilePhone"]];
+        }
+        else if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
+        {
+            NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+            NSLog(@"%@",frndDict);
+            
+            NSString * login_id = [AppHelper userDefaultsForKey:uId];
+            NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
+            DataBaseController *dbInstance = [DataBaseController sharedInstance];
+            //RecentChatList * recentObj = [dbInstance fetchDataRecentChatObject:@"RecentChatList" predicate:predicate];
+            
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            ChattingMainVC *chatMainVC = [storyboard instantiateViewControllerWithIdentifier:@"ChattingMainVC"];
+            
             ChatContactModelClass *anobject = [[ChatContactModelClass alloc] init];
             anobject.userId =[frndDict  valueForKey:@"_id"];
             anobject.loginUserId =[AppHelper userDefaultsForKey:_ID];
@@ -327,29 +320,74 @@
             anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
             anobject.isFromCont = @"yes";
             anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
-             anobject.firstName = [frndDict valueForKey:@"firstName"];
+            anobject.firstName = [frndDict valueForKey:@"firstName"];
             
-            [previousVC addNewFrndIngrp:anobject];
-
-            [self.delegate1 addMemberInGroup:previousVC withInfo:(ChatContactModelClass *)anobject];
+            chatMainVC.contObj=anobject;
+            chatMainVC.isFromClass = @"chatd";
+            chatMainVC.isGroup = @"0";
+            chatMainVC.isFromDeatilScreen = @"0";
+            //chatMainVC.recentChatObj = recentObj;
+            chatMainVC.recentChatObj = nil;
+            
+            [self.navigationController pushViewController:chatMainVC animated:YES];
         }
-        else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[CreateMeetUpVC class]])
+        else //if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
         {
-         
-            CreateMeetUpVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
-            [previousVC addCotact:frndDict];
-            [self.navigationController popViewControllerAnimated:YES];
-
+            NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+            NSLog(@"%@",frndDict);
+            
+            NSString * login_id = [AppHelper userDefaultsForKey:uId];
+            NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
+            DataBaseController *dbInstance = [DataBaseController sharedInstance];
+            //RecentChatList * recentObj = [dbInstance fetchDataRecentChatObject:@"RecentChatList" predicate:predicate];
+            
+            //if let classObject = NSClassFromString("YOURAPPNAME.MyClass") as? MyClass.Type {
+            //let object = classObject.init()
+            //}
+            if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[GroupDetailVC class]])
+            {
+                GroupDetailVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
+                ChatContactModelClass *anobject = [[ChatContactModelClass alloc] init];
+                anobject.userId =[frndDict  valueForKey:@"_id"];
+                anobject.loginUserId =[AppHelper userDefaultsForKey:_ID];
+                anobject.name =  [frndDict valueForKey:@"firstName"];
+                anobject.email = @"etrfgg";
+                anobject.isBlock = @"0";
+                anobject.isReport = @"0";
+                anobject.isFav = @"no";
+                anobject.isFriend = @"yes";
+                anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
+                anobject.isFromCont = @"yes";
+                anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
+                anobject.firstName = [frndDict valueForKey:@"firstName"];
+                
+                [previousVC addNewFrndIngrp:anobject];
+                
+                [self.delegate1 addMemberInGroup:previousVC withInfo:(ChatContactModelClass *)anobject];
+            }
+            else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[CreateMeetUpVC class]])
+            {
+                
+               
+                //for multiple contact selection
+                
+                //badru
+                // CreateMeetUpVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
+               // [previousVC addCotact:frndDict];
+              //  [self.navigationController popViewControllerAnimated:YES];
+                
+                [self insertRemoveToSelecetedRowArray:frndDict];
+                
+            }
+            else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[MeetUpDetailsVC class]])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GET_CONTACT_CLICKED object:self userInfo:frndDict];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            }
+            
         }
-         else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[MeetUpDetailsVC class]])
-         {
-             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GET_CONTACT_CLICKED object:self userInfo:frndDict];
-             
-             [self.navigationController popViewControllerAnimated:YES];
-
-         }
-        
-    }
     }
     else //If creating a group
     {
@@ -372,6 +410,22 @@
     }
     }
 }
+
+#pragma Mark - 
+
+-(void)insertRemoveToSelecetedRowArray:(NSDictionary *) dict{
+    
+    if ([self.selectedRowsArray containsObject:dict])
+    {
+        [self.selectedRowsArray removeObject:dict];
+    }
+    else
+    {
+        [self.selectedRowsArray addObject:dict];
+    }
+    [self.tableView reloadData];
+}
+
 
 -(void)createGroupWithContacts
 {

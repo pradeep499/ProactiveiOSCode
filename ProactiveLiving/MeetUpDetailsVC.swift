@@ -150,7 +150,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             //up or down arrow depending on the bool
             let upDownArrow = UIImageView(image: UIImage(named: "ic_filterservice_arrow")!)
             upDownArrow.autoresizingMask = .FlexibleLeftMargin
-            upDownArrow.frame = CGRectMake(screenWidth - 34, 19, 7, 12)
+            upDownArrow.frame = CGRectMake(screenWidth - 27, 19, 7, 12)
             headerView.addSubview(upDownArrow)
             UIView.animateWithDuration(0.3, animations: {() -> Void in
                 if manyCells {
@@ -253,7 +253,12 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             {
                 cell.lblForwardBy.hidden=true
             }
-            cell.lblDate.text=self.dataDict["eventDate"] as? String
+            
+            if let dateStr =  self.dataDict["eventDate"] as? String {
+                
+                cell.lblDate.text = ChatHelper.convertDateFormat("dd/MM/yyyy", desireFormat: "MM/dd/yyyy",  dateStr: dateStr)
+            }
+            
             cell.lblTime.text=self.dataDict["eventTime"] as? String
             /* ... */
             return cell
@@ -468,6 +473,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                         self.btnSure.setTitle("Sure!", forState: UIControlState.Normal)
                         self.btnSorry.setTitle("Sorry!", forState: UIControlState.Normal)
                         self.btnLike.hidden=true
+                        let addressGesture =  UITapGestureRecognizer(target: self, action: Selector("addressGesture:"))
+                        self.lblLike.addGestureRecognizer(addressGesture)
                         
                     }
                     else
@@ -559,6 +566,10 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     }
 
     // MARK: - gesture tapped
+    
+    func addressGesture(gestureRecognizer: UITapGestureRecognizer) -> Void {
+        print("Address Gesture.....")
+    }
     
     func sectionHeaderTapped(gestureRecognizer: UITapGestureRecognizer) {
         

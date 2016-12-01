@@ -1184,7 +1184,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
 //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
 //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
                     
-                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 14 , width: 221.0, fontName: "Roboto-Regular")
+                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 15 , width: 221.0, fontName: "Roboto-Regular")
                     
                     let height = size.height
                     let width = size.width
@@ -1230,7 +1230,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                  //   let fontName = AppHelper .userDefaultForAny("fontName") as String
                  //   let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
                     
-                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 14 , width: 221.0, fontName: "Roboto-Regular")
+                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 15 , width: 221.0, fontName: "Roboto-Regular")
                     
                     let height = size.height
                     let width = size.width
