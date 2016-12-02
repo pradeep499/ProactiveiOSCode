@@ -44,7 +44,7 @@
 //#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
 
 //Testing ULR
-//#define BASE_URL @"http://192.168.3.106:90/api/v1/"
+// #define BASE_URL @"http://192.168.3.185:90/api/v1/"
 
 #define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 

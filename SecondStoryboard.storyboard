@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--MapVC-->
+        <scene sceneID="sRD-w4-8Bt">
+            <objects>
+                <viewController storyboardIdentifier="MapVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Mp9-wp-EJI" customClass="MapVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fVG-aU-yID"/>
+                        <viewControllerLayoutGuide type="bottom" id="16q-tL-OD7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TpF-Fq-7ac">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IK5-jZ-EFP" userLabel="View - topNav">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7V-1H-jDx">
+                                        <rect key="frame" x="61" y="28" width="198" height="23"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="23" id="giq-pD-4rP"/>
+                                            <constraint firstAttribute="width" constant="198" id="hwZ-wa-s2J"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDd-lf-hx2">
+                                        <rect key="frame" x="0.0" y="14" width="60" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="0ex-JQ-rSd"/>
+                                            <constraint firstAttribute="height" constant="50" id="zbn-Js-CKL"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" image="signupBack">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onClickBackBtn:" destination="Mp9-wp-EJI" eventType="touchUpInside" id="vOJ-kx-X3X"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="X7V-1H-jDx" secondAttribute="bottom" constant="13" id="8xj-5h-7Ye"/>
+                                    <constraint firstAttribute="bottom" secondItem="WDd-lf-hx2" secondAttribute="bottom" id="EZD-uv-aTK"/>
+                                    <constraint firstItem="WDd-lf-hx2" firstAttribute="leading" secondItem="IK5-jZ-EFP" secondAttribute="leading" id="R5C-qw-N5R"/>
+                                    <constraint firstAttribute="height" constant="64" id="rO5-gF-g7p"/>
+                                    <constraint firstItem="X7V-1H-jDx" firstAttribute="centerX" secondItem="IK5-jZ-EFP" secondAttribute="centerX" id="yaw-Sl-yTm"/>
+                                </constraints>
+                            </view>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yTp-Gg-8g6">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Mp9-wp-EJI" id="W2L-FC-Dlq"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yTp-Gg-8g6" firstAttribute="top" secondItem="IK5-jZ-EFP" secondAttribute="bottom" id="BeV-d9-zsS"/>
+                            <constraint firstAttribute="trailing" secondItem="IK5-jZ-EFP" secondAttribute="trailing" id="Gu2-7U-UeB"/>
+                            <constraint firstItem="IK5-jZ-EFP" firstAttribute="leading" secondItem="TpF-Fq-7ac" secondAttribute="leading" id="ghQ-Aj-KVA"/>
+                            <constraint firstItem="yTp-Gg-8g6" firstAttribute="leading" secondItem="TpF-Fq-7ac" secondAttribute="leading" id="iwu-2P-Yee"/>
+                            <constraint firstAttribute="trailing" secondItem="yTp-Gg-8g6" secondAttribute="trailing" id="m1E-nb-IeD"/>
+                            <constraint firstItem="IK5-jZ-EFP" firstAttribute="top" secondItem="TpF-Fq-7ac" secondAttribute="top" id="wA8-lC-ZwR"/>
+                            <constraint firstAttribute="bottom" secondItem="yTp-Gg-8g6" secondAttribute="bottom" id="wqC-Rs-9wa"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="map_view" destination="yTp-Gg-8g6" id="VQ7-NE-fHu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YE6-a4-zSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-479" y="-414"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="signupBack" width="10" height="18"/>
+    </resources>
+</document>

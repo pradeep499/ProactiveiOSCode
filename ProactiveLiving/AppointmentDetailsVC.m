@@ -13,7 +13,7 @@
 #import "Defines.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "LocationManagerSingleton.h"
-#import "ProactiveLiving-Bridging-Header.h"
+#import "ProactiveLiving-Swift.h"
 
 @interface AppointmentDetailsVC ()
 
@@ -58,7 +58,7 @@
 
 -(void)updateUserInterface
 {
-    NSString* date = [HelpingClass convertDateFormat:@"yyyy/MM/dd" desireFormat:@"MM/dd/yyyyy" dateStr:[self.dataDict valueForKey:@"bookingDate"]];
+    NSString* date = [HelpingClass  convertDateFormat:@"yyyy/MM/dd" desireFormat:@"MM/dd/yyyyy" dateStr:[self.dataDict valueForKey:@"bookingDate"]];
     
     self.lblDateTime.text=[NSString stringWithFormat:@"Your Appointment is confirmed for %@ at %@ ETS",date,[self timeFormatted:[[self.dataDict valueForKey:@"bookingTime"] intValue]]];
     

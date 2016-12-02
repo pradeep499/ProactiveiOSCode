@@ -112,7 +112,7 @@ let chatCDNbaseUrl = "http://52.89.149.60:3000/proactiveliving"
 //let ChatBaseMediaUrl = "http://52.89.149.60:3000/"
 
 //Testing URL
-//let ChatBaseMediaUrl = "http://192.168.3.106:90/"
+//let ChatBaseMediaUrl = "http://192.168.3.185:90/"
 
 let ChatMediaPath = "api/v1/sendMedia"
 

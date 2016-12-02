@@ -81,6 +81,17 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         return stringValue!
     }
     
+    class func convertDateFormat(currentFormat:String, desireFormat:String, dateStr:String) -> String {
+        
+        let df = NSDateFormatter.init()
+        df.dateFormat = currentFormat
+        let date = df.dateFromString(dateStr)
+        
+        df.dateFormat = desireFormat
+        
+        return df.stringFromDate(date!)
+    }
+    
     class func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
         
         let calendar = NSCalendar.currentCalendar()

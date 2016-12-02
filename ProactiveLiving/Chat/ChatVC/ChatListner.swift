@@ -32,6 +32,7 @@ class ChatListner: NSObject {
     var chatProgressV : NSMutableDictionary!
     var playSoundBool  = true
     var pushNotificationView:UIView!
+    var userInteractionDisableView:UIView!
     var isConnectionStable = false
     var currentOperationDict : NSMutableDictionary!
     var timerConnectingStatus:NSTimer!
@@ -45,7 +46,7 @@ class ChatListner: NSObject {
         //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
         
         //Test Server
-      //    socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
+       //  socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.185:90")!, options: [.Log(true), .ForcePolling(true)])
     }
 
     deinit{
@@ -1197,15 +1198,14 @@ func connectToSocket() -> Void{
         label.attributedText = attrString
         
         pushNotificationView.addSubview(label)
-        AppDelegate.getAppDelegate().window?.addSubview(pushNotificationView)
-        AppDelegate.getAppDelegate().window?.bringSubviewToFront(pushNotificationView)
         
-        UIView.animateWithDuration(0.5, animations:
-            {
-                self.pushNotificationView.frame=CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
-        })
+        
+       
         
         if alertType == "notification" {
+            
+            AppDelegate.getAppDelegate().window?.addSubview(pushNotificationView)
+            AppDelegate.getAppDelegate().window?.bringSubviewToFront(pushNotificationView)
             
             NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector:  #selector(ChatListner.hideAlert), userInfo: nil, repeats: false)
             
@@ -1223,9 +1223,29 @@ func connectToSocket() -> Void{
         else{
             // Connectiong to Socket IO
             
+            //Add a View On Screen to disable user Interaction
+            if (userInteractionDisableView != nil) {
+                userInteractionDisableView.removeFromSuperview()
+            }
+            
+            userInteractionDisableView = UIView(frame: CGRectMake(0,0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
+            
+            userInteractionDisableView.addSubview(pushNotificationView)
+            
+            AppDelegate.getAppDelegate().window?.addSubview(userInteractionDisableView)
+            AppDelegate.getAppDelegate().window?.bringSubviewToFront(userInteractionDisableView)
+            
+            
+            userInteractionDisableView.backgroundColor = UIColor.clearColor()
+            
             timerConnectingStatus = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector:  #selector(ChatListner.hideAlertConnectingToServer), userInfo: nil, repeats: true)
             
         }
+        
+        UIView.animateWithDuration(0.5, animations:
+            {
+                self.pushNotificationView.frame=CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
+        })
        
  
     }
@@ -1551,7 +1571,8 @@ func connectToSocket() -> Void{
                 
                 UIView.animateWithDuration(0.5, animations:
                     {
-                        self.pushNotificationView.frame=CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70)
+                        self.pushNotificationView.frame = CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70)
+                        self.userInteractionDisableView.frame = CGRectMake(0, -UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
                 })
             }
         }
@@ -1648,7 +1669,7 @@ func connectToSocket() -> Void{
                 //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
                 
                 //Test Server
-              //   socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.106:90")!, options: [.Log(true), .ForcePolling(true)])
+               //   socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.184:90")!, options: [.Log(true), .ForcePolling(true)])
             }
             //self.closeConnection();
             if socket.status != .Connected {

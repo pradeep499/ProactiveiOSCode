@@ -10627,7 +10627,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kW7-8b-Oca">
-                                                            <rect key="frame" x="43" y="0.0" width="147" height="40"/>
+                                                            <rect key="frame" x="43" y="0.0" width="140" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="144" id="i89-ci-gkx"/>
                                                             </constraints>
@@ -10641,10 +10641,10 @@
                                                             </variation>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uiP-Uo-H8z">
-                                                            <rect key="frame" x="195" y="7" width="110" height="26"/>
+                                                            <rect key="frame" x="188" y="7" width="117" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="26" id="Uds-Eq-ot5"/>
-                                                                <constraint firstAttribute="width" constant="110" id="zgh-94-Gmz"/>
+                                                                <constraint firstAttribute="width" constant="117" id="zgh-94-Gmz"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                             <state key="normal" title="forward"/>
@@ -11112,6 +11112,7 @@
                         <outlet property="imgMeetUp" destination="RjL-eD-w1j" id="oPd-SJ-d4a"/>
                         <outlet property="imgSorry" destination="zcR-Xd-jjx" id="nm5-fo-1z6"/>
                         <outlet property="imgSure" destination="Dhz-O9-uE1" id="sfP-cl-iXm"/>
+                        <outlet property="layout_forwartBtnWidth" destination="zgh-94-Gmz" id="w3O-1h-N3R"/>
                         <outlet property="lblLike" destination="kW7-8b-Oca" id="Q6c-41-oHx"/>
                         <outlet property="screenTitle" destination="bYj-st-Uuz" id="T8N-sE-8N4"/>
                         <outlet property="tableMeetUpDetails" destination="o40-HF-TTb" id="v0Z-c4-XaT"/>

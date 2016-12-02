@@ -315,7 +315,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
         
         //NSLog(anObject.friendImageUrl!)
         let imageString = NSString(format:"%@", anObject.friendImageUrl!) as String
-        userName.text=anObject.friendName
+        userName.text = anObject.friendName
         
         if anObject.isTyping != "0" {
             lastMessage.text=anObject.isTyping

@@ -38,6 +38,7 @@
 #import "SettingsMainVC.h"
 #import "AboutPASInstVC.h"
 #import "LoginVC.h"
+#import "MapVC.h"
 
 #import "UIImageView+WebCache.h"
 //#import "UIImageView+AFNetworking.h"

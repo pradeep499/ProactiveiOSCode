@@ -40,6 +40,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     @IBOutlet weak var btnChat: UIButton!
     
+    
+    @IBOutlet weak var layout_forwartBtnWidth: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         
         self.fetchDataForMeetUpOrWebInvite()
@@ -86,6 +89,10 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
 
         btnLink.addTarget(self, action: #selector(btnLinkClick(_:)), forControlEvents: .TouchUpInside)
         btnDialUp.addTarget(self, action: #selector(btnDialUpClick(_:)), forControlEvents: .TouchUpInside)
+        
+        if(self.screenName == "WEB INVITES") {
+            self.layout_forwartBtnWidth.constant = 125
+        }
         
 
     }
@@ -242,7 +249,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID0, forIndexPath: indexPath) as! MeetUpProfileCell
             cell.selectionStyle = .None
             cell.lblName.text=self.dataDict["for"] as? String
-            cell.lblCreatedBy.text="by \(self.dataDict["createdBy"]!["firstName"] as! String)"
+            
+            cell.lblCreatedBy.text="by \(self.dataDict["createdBy"]!["firstName"] as! String)" + "  \(self.dataDict["createdBy"]!["lastName"] as! String)"
             
             if(!(self.fwBy == ""))
             {
@@ -256,7 +264,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             
             if let dateStr =  self.dataDict["eventDate"] as? String {
                 
-                cell.lblDate.text = ChatHelper.convertDateFormat("dd/MM/yyyy", desireFormat: "MM/dd/yyyy",  dateStr: dateStr)
+                cell.lblDate.text = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "MM/dd/yyyy",  dateStr: dateStr)
             }
             
             cell.lblTime.text=self.dataDict["eventTime"] as? String
@@ -473,8 +481,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                         self.btnSure.setTitle("Sure!", forState: UIControlState.Normal)
                         self.btnSorry.setTitle("Sorry!", forState: UIControlState.Normal)
                         self.btnLike.hidden=true
-                        let addressGesture =  UITapGestureRecognizer(target: self, action: Selector("addressGesture:"))
+                        let addressGesture =  UITapGestureRecognizer(target: self, action: #selector(MeetUpDetailsVC.addressGesture(_:)))
                         self.lblLike.addGestureRecognizer(addressGesture)
+                        self.lblLike.userInteractionEnabled = true
                         
                     }
                     else
@@ -487,6 +496,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                         self.btnSure.setTitle("Accept", forState: UIControlState.Normal)
                         self.btnSorry.setTitle("Decline", forState: UIControlState.Normal)
                         self.btnLike.hidden=false
+                        
+                        
+                        
                     }
                     
                     
@@ -546,6 +558,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     if(!(self.dataDict["isAllow"] as! Bool))
                     {
                         self.btnForward.hidden=true
+                        self.layout_forwartBtnWidth.constant = 0
                     }
                     
                     self.tableMeetUpDetails.reloadData()
@@ -569,6 +582,11 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     func addressGesture(gestureRecognizer: UITapGestureRecognizer) -> Void {
         print("Address Gesture.....")
+        let VC = AppHelper.getSecondStoryBoard().instantiateViewControllerWithIdentifier("MapVC") as! MapVC
+        VC.address = self.lblLike.text
+        
+        
+        self.navigationController?.pushViewController(VC, animated: true)
     }
     
     func sectionHeaderTapped(gestureRecognizer: UITapGestureRecognizer) {

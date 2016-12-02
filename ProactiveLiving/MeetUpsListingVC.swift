@@ -140,12 +140,18 @@ class MeetUpsListingVC: UIViewController {
             statusBG.hidden = true
         }
         
-        eventTypeBy.text = "\(self.arrData[indexPath.row]["for"] as! String), by \(self.arrData[indexPath.row]["createdBy"]!!["firstName"] as! String)"
+        
+        let forr = self.arrData[indexPath.row]["for"] as! String
+        let fName =  self.arrData[indexPath.row]["createdBy"]!!["firstName"] as! String
+        let lName = self.arrData[indexPath.row]["createdBy"]!!["lastName"] as! String
+        
+        eventTypeBy.text = forr + ", by " +  fName + " " + lName
+        
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
         
         if let dateStr =  self.arrData[indexPath.row]["eventDate"] as? String {
             
-            lblDate.text = ChatHelper.convertDateFormat("dd/MM/yyyy", desireFormat: "MM/dd/yyyy",  dateStr: dateStr)
+            lblDate.text = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "MM/dd/yyyy",  dateStr: dateStr)
         }
         
          

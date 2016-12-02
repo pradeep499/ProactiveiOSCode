@@ -29,5 +29,9 @@
 +(NSString *)timeFormattedFromSeconds:(int)totalSeconds;
 +(NSString *)dayFromDateString:(NSString *)dateString;
 +(NSString *)convertUTCFormattedDate:(NSString *)strDate;
+
 +(UIStoryboard*)getStoryBoard;
++(UIStoryboard*)getSecondStoryBoard;
+
+
 @end

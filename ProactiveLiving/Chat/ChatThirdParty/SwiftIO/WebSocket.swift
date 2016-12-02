@@ -540,7 +540,7 @@ public class WebSocket : NSObject, NSStreamDelegate {
             fragBuffer = NSData(buffer: buffer)
             return emptyBuffer
         }
-        if let response = response where response.bytesLeft > 0 {
+        if let response = response  where response.bytesLeft > 0 {
             var len = response.bytesLeft
             var extra = bufferLen - response.bytesLeft
             if response.bytesLeft > bufferLen {

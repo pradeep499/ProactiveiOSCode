@@ -95,8 +95,8 @@ class WebViewVC: UIViewController {
     
     func getTermsNPolicyContentfromUrl() -> Void{
         self.indicator.startAnimating()
-        
-        let myURLString = "http://52.23.211.77:3000/users/termsPolicy"
+         
+        let myURLString =  "http://52.23.211.77:3000/users/termsPolicy"
         guard let myURL = NSURL(string: myURLString) else {
             print("Error: \(myURLString) doesn't seem to be a valid URL")
             return
