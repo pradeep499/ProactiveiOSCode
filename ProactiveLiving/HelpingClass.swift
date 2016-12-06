@@ -64,6 +64,28 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         
     }
     
+    class func showAlertControllerWithType(type:UIAlertControllerStyle , fromController viewController:UIViewController, title:String, message:String?, cancelButtonTitle:String?, otherButtonTitle:[String]?, completion:(str:String)-> Void )
+    {
+        
+        let alertController = UIAlertController(title:AppName, message:message, preferredStyle: type)
+        alertController.addAction(UIAlertAction(title: cancelButtonTitle, style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        for title in otherButtonTitle! {
+            
+            alertController.addAction(UIAlertAction(title: title, style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
+                
+                completion(str: ACTION.title!)
+                
+                
+            }))
+        }
+        
+        
+        viewController.presentViewController(alertController, animated: true, completion: nil)
+    }
+
+    
+    
     //MARK:-  Convert Int value to String
     class func convertIntToString(intValue:Int)->String
     {

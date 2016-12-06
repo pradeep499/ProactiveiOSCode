@@ -38,15 +38,10 @@ class ChatListner: NSObject {
     var timerConnectingStatus:NSTimer!
 
     override init(){
-        //socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
-        //Server URL
-         socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
         
-        //Production URL
-        //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
         
-        //Test Server
-       //  socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.185:90")!, options: [.Log(true), .ForcePolling(true)])
+         socket = SocketIOClient(socketURL: NSURL(string: socketIO_BaseURL)!, options: [.Log(true), .ForcePolling(true)])
+        
     }
 
     deinit{
@@ -1661,6 +1656,11 @@ func connectToSocket() -> Void{
         if (AppHelper.userDefaultsForKey("userId")) != nil {
             
             if socket == nil {
+                
+                
+                socket = SocketIOClient(socketURL: NSURL(string: socketIO_BaseURL)!, options: [.Log(true), .ForcePolling(true)])
+                
+                /*
                 //socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
                 //Server URL
                 socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
@@ -1669,7 +1669,9 @@ func connectToSocket() -> Void{
                 //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
                 
                 //Test Server
-               //   socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.184:90")!, options: [.Log(true), .ForcePolling(true)])
+                  socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.185:90")!, options: [.Log(true), .ForcePolling(true)])
+              */
+                
             }
             //self.closeConnection();
             if socket.status != .Connected {

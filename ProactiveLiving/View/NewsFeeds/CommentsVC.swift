@@ -125,12 +125,12 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         iv_CommentsProfile.clipsToBounds = true
         
         
-        if let name = (self.selectedCommentDict as NSDictionary).valueForKeyPath("postedBy.firstName") as? String {
+        if let name = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String {
             
             lbl_CommentsTitle.text = name + " Shared a Post"
         }
         
-        if let logoUrlStr = (self.selectedCommentDict as NSDictionary).valueForKeyPath("postedBy.imgUrl") as? String    {
+        if let logoUrlStr = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
             
             let image_url = NSURL(string: logoUrlStr )
             if (image_url != nil) {

@@ -6877,7 +6877,6 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         for (index, asset) in assets.enumerate()
             
             
-            
         {
             if ServiceClass.checkNetworkReachabilityWithoutAlert()
             {
@@ -7029,6 +7028,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     
                     let name = self.uniqueName("")
                     let pathSelected = NSIndexPath(forRow:dict["index"] as! Int,inSection:0)
+                    
                     UploadInS3.sharedGlobal().uploadMultipleImagesOnChatTos3(data, type: 0, dictInfo: dict, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
                         
                         
