@@ -251,7 +251,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
     }
     
-    @IBAction func onClickImageBtn(sender: AnyObject) {
+    @IBAction func onClickPlayVideoBtn(sender: AnyObject) {
         
         var resultData = [String:AnyObject]()
         
@@ -275,7 +275,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         let postType = resultData["postType"] as! String
         
-        if postType != "image" {
+        if postType == "image" {
             
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let fullImageVC: FullScreenImageVC = storyBoard.instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
@@ -283,15 +283,31 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             fullImageVC.downLoadPath="1"
             self.navigationController?.pushViewController(fullImageVC, animated: true)
             
-        }else if(postType != "video"){
+        }else if(postType == "video"){
             
-            let url:NSURL = NSURL(string: (resultData["attachments"] as! [String]).first!)!
+            let thumbNailName = resultData["thumNailName"] as! String
+            var videoName = thumbNailName.stringByReplacingOccurrencesOfString("Thumb", withString: "Video")
+            videoName = videoName.stringByReplacingOccurrencesOfString(".jpg", withString: ".mp4")
+            let imgUrls = resultData["attachments"] as! [String]
             
-            moviePlayerController = MPMoviePlayerController(contentURL:url)
-            moviePlayerController.movieSourceType = MPMovieSourceType.Streaming
-            self.view.addSubview(moviePlayerController.view)
-            moviePlayerController.fullscreen = true
-            moviePlayerController.play()
+            self.isFileExistsAtPath(directory: "/ChatFile", fileName: videoName, completion: {(isExistPath, fileUrl) -> Void in
+                
+                if isExistPath{
+                    
+                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL.fileURLWithPath(fileUrl!))
+                    
+                }else{
+                    
+                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL(string: imgUrls.first!))
+                }
+                
+                //moviePlayerController.movieSourceType = MPMovieSourceType.Streaming
+                self.view.addSubview(self.moviePlayerController.view)
+                self.moviePlayerController.fullscreen = true
+                self.moviePlayerController.play()
+            })
+            
+            
             
         }
         
@@ -360,7 +376,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         self.attachmentViewS.backgroundColor=UIColor.redColor()
         
-        self.layoutAttachmetBottom.constant = 200;
+        self.layoutAttachmetBottom.constant = 120;
         self.view.bringSubviewToFront(self.attachmentViewS)
         
         UIView.animateWithDuration(0.5, animations:
@@ -414,6 +430,41 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.tf_share.resignFirstResponder()
         
     }
+    
+    
+    func clickUserImage(recognizer: UITapGestureRecognizer )
+    {
+        
+        let pointInTable = recognizer.locationInView(self.collectionView)
+        let indexPath:NSIndexPath = self.collectionView.indexPathForItemAtPoint(pointInTable)!
+        
+        var dict = NSDictionary()
+        
+        if self.title == "ALL" {
+            dict = self.postAllArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "FRIENDS" {
+            dict = self.postFriendsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "COLLEAGUES" {
+            dict = self.postColleagueArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "HEALTH CLUBS" {
+            dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        
+        
+        let imgUrls = dict["attachments"] as! [String]
+        
+        
+        
+        let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
+        fullImageVC.imagePath = imgUrls.first
+        fullImageVC.downLoadPath = "3"
+        
+        self.navigationController?.pushViewController(fullImageVC, animated: true)
+    }
+
     
     //MARK: - TextField Delegate
     
@@ -1011,7 +1062,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
              let thumbNailName = dict["thumNailName"] as! String
                
             //check the thumbNail name is exist ? or generate from video url and save to db
-            self.fileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
+            self.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
                 
                 if dict["postType"] as! String == "image"{
                     
@@ -1084,9 +1135,24 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
     
     
-    //MARK:- (result: Bool, url:NSURL?) -> Void
+    //MARK:-
     
-    func fileExistsAtPath(directory directryName:String, fileName:String, completion: (isExistPath: Bool, fileUrl:String?) -> Void){
+    func generateLocalFilePath(directory directryName:String, fileName:String) -> String {
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            NSLog("Unable to create directory \(error.debugDescription)")
+        }
+        let path = documentsDirectory.stringByAppendingPathComponent(fileName)
+        
+        return path;
+    }
+    
+    func isFileExistsAtPath(directory directryName:String, fileName:String, completion: (isExistPath: Bool, fileUrl:String?) -> Void){
         
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
@@ -1172,39 +1238,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
     
 
-    
-    func clickUserImage(recognizer: UITapGestureRecognizer )
-    {
-        
-        let pointInTable = recognizer.locationInView(self.collectionView)
-        let indexPath:NSIndexPath = self.collectionView.indexPathForItemAtPoint(pointInTable)!
-        
-        var dict = NSDictionary()
-        
-        if self.title == "ALL" {
-            dict = self.postAllArr[indexPath.row ] as! [String:AnyObject]
-        }
-        else if self.title == "FRIENDS" {
-            dict = self.postFriendsArr[indexPath.row ] as! [String:AnyObject]
-        }
-        else if self.title == "COLLEAGUES" {
-            dict = self.postColleagueArr[indexPath.row ] as! [String:AnyObject]
-        }
-        else if self.title == "HEALTH CLUBS" {
-            dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
-        }
-        
-        
-        let imgUrls = dict["attachments"] as! [String]
-        
-        
-        
-        let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
-        fullImageVC.imagePath = imgUrls.first
-        fullImageVC.downLoadPath = "3"
-        
-        self.navigationController?.pushViewController(fullImageVC, animated: true)
-    }
     
     //MARK:- Collection Delegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -1682,23 +1715,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     func uploadVideo(videoUrl:NSURL, captionText:
         String?) -> Void {
         
-            let locId = CommonMethodFunctions.nextIdentifies()
-            let strId = String(locId)
+        let locId = CommonMethodFunctions.nextIdentifies()
+        let strId = String(locId)
         
-            let timeStamp = generateTimeStamp()
-        
-        
-        
+        let timeStamp = generateTimeStamp()
         
         let videoName = "Video"+timeStamp+".mp4"
+        let thumbNailName = "Thumb" + timeStamp + ".jpg"
         
-        
-        
+       
+       
         // generate thumb image from video url and save to path
         let thumbImg = CommonMethodFunctions.getThumbNail(videoUrl);
         let thumbData = UIImageJPEGRepresentation(thumbImg, 1.0)
-        let thumbNailName = "Thumb"+timeStamp+".jpg"
-       
         
         self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
             
@@ -1708,27 +1737,72 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
         })
         
-        let videoData =  NSData(contentsOfURL: NSURL.fileURLWithPath(videoUrl.path!))
         
-       
-
-            NSOperationQueue.mainQueue().addOperationWithBlock() { () in
-                
-                let name = self.uniqueName("")
-                UploadInS3.sharedGlobal().uploadImageTos3( videoData, type: 1, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
-                    if bool_val == true
-                    {
-                        let fileName =  UploadInS3.sharedGlobal().strFilesName
-                        //  progressV.hidden = true
-                        if fileName != nil{
-                           self.sendPostToServer("video", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText,thumNailName:thumbNailName )
+        //Make low quality and save to DB
+        
+        let outPutPath = self.generateLocalFilePath(directory: "/ChatFile", fileName: videoName)
+        
+        CommonMethodFunctions.convertVideoToLowQuailtyWithInputURL(videoUrl, outputURL: NSURL.fileURLWithPath(outPutPath), handler: { (exportSession : AVAssetExportSession!) -> Void in
+            switch(exportSession.status)
+            {
+            case .Completed:
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    let compressedVideoData =  NSData(contentsOfURL: NSURL.fileURLWithPath(outPutPath))
+                    
+                    self.writeToPath(directory: "/ChatFile", fileName: videoName, dataToWrite: compressedVideoData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                        
+                        if isWritten{
+                            
                         }
+                        
+                    })
+                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock() { () in
+                        
+                        let name = self.uniqueName("")
+                        UploadInS3.sharedGlobal().uploadImageTos3( compressedVideoData, type: 1, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
+                            if bool_val == true
+                            {
+                                let fileName =  UploadInS3.sharedGlobal().strFilesName
+                                //  progressV.hidden = true
+                                if fileName != nil{
+                                    self.sendPostToServer("video", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText,thumNailName:thumbNailName )
+                                }
+                            }
+                            
+                            }, completionProgress: { ( bool_val : Bool, progress) -> Void in
+                                
+                        })
                     }
                     
-                    }, completionProgress: { ( bool_val : Bool, progress) -> Void in
-                        
-                })
+                    
+                });
+                break
+            default:
+                break
+               
             }
+                
+            })
+            
+            
+
+                    
+                    
+                    //------------------------
+        
+       
+       /*
+        
+        
+        
+        
+        let videoData =  NSData(contentsOfURL: NSURL.fileURLWithPath(videoUrl.path!))
+        */
+       
+
+
         }
     
     
