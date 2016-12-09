@@ -119,7 +119,7 @@ let ChatMediaPath = "api/v1/sendMedia"
 
 //----------------************Socket IO URL **************-------------
 // Test Server
-let socketIO_BaseURL = "http://192.168.3.185:90"
+let socketIO_BaseURL =  "http://192.168.3.185:90"
 
 //Live Server
 //let socketIO_BaseURL = "http://52.23.211.77:3000"

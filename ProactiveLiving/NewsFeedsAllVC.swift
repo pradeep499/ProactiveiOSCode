@@ -8,6 +8,8 @@
 
 import UIKit
 import Social
+import MediaPlayer
+import AVKit
 
 class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDataSource, UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,  UIActionSheetDelegate, DKImagePickerControllerDelegate {
     
@@ -36,6 +38,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var postHealthClubsArr:NSMutableArray = NSMutableArray()
     
     var tapGesture = UITapGestureRecognizer()
+    var moviePlayerController = MPMoviePlayerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -240,13 +243,65 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 }
                 
                 
-                self.sendPostToServer(true, createdDict: resultData)
+                self.sendPostToServer(resultData["postType"] as! String, isShared: true, createdDict: resultData, imgOrVideoUlr: nil, captionText: nil, thumNailName:nil)
                 
             
             }
             })
         
     }
+    
+    @IBAction func onClickImageBtn(sender: AnyObject) {
+        
+        var resultData = [String:AnyObject]()
+        
+        let buttonPosition = sender.convertPoint(CGPointZero, toView: self.collectionView)
+        let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
+        if indexPath != nil {
+            
+            if self.title == "ALL" {
+                resultData = self.postAllArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.title == "FRIENDS" {
+                resultData = self.postFriendsArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.title == "COLLEAGUES" {
+                resultData = self.postColleagueArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.title == "HEALTH CLUBS" {
+                resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
+            }
+        }
+        
+        let postType = resultData["postType"] as! String
+        
+        if postType != "image" {
+            
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let fullImageVC: FullScreenImageVC = storyBoard.instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
+            fullImageVC.imagePath = (resultData["attachments"] as! [String]).first!
+            fullImageVC.downLoadPath="1"
+            self.navigationController?.pushViewController(fullImageVC, animated: true)
+            
+        }else if(postType != "video"){
+            
+            let url:NSURL = NSURL(string: (resultData["attachments"] as! [String]).first!)!
+            
+            moviePlayerController = MPMoviePlayerController(contentURL:url)
+            moviePlayerController.movieSourceType = MPMovieSourceType.Streaming
+            self.view.addSubview(moviePlayerController.view)
+            moviePlayerController.fullscreen = true
+            moviePlayerController.play()
+            
+        }
+        
+        
+
+        
+        
+    }
+    
+    
     
     
     @IBAction func onClickFBBtn(sender: AnyObject) {
@@ -347,7 +402,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
    
     @IBAction func onClickPostBtn(sender: AnyObject) {
         
-        self.sendPostToServer(false, createdDict: nil)
+        if self.tf_share.text?.characters.count < 1 {
+            AppHelper.showAlertWithTitle(AppName, message: "Post text can't be blank.", tag: 0, delegate: nil, cancelButton: "OK", otherButton: nil)
+            return
+        }
+
+        self.sendPostToServer("text", isShared: false, createdDict: nil, imgOrVideoUlr: nil, captionText: nil, thumNailName:nil)
+      
         
         self.tf_share.text = ""
         self.tf_share.resignFirstResponder()
@@ -397,8 +458,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     //MARK: - Socket
     
-    //mark- Fetch Meetups/Invites listing data
-    func sendPostToServer(isShared:Bool, createdDict:NSDictionary?) {
+    //mark- post type - text/image/video 
+    //isShared - if text then y or n else n
+    //createdDict - if isShared = y then get value from it
+    //imgOrVideoUlr - if img or video not for text
+    //text - if posttype img or video
+    
+    func sendPostToServer(postType:String, isShared:Bool,  createdDict:NSDictionary?, imgOrVideoUlr:String?, captionText:String?, thumNailName:String?) {
         
         
         
@@ -422,25 +488,75 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.title == "HEALTH CLUBS" {
                 dict["section"] = "HEALTH CLUBS"
             }
-            
+            //=======
             if isShared{
                 
-                dict["createdBy"] = (createdDict! as NSDictionary).valueForKeyPath("createdBy._id") as? String
-                
-                dict["sharedBy"] =  ChatHelper.userDefaultForKey(_ID)
-                dict["text"] = createdDict!["text"] as? String
+                if postType == "text" {
+                    
+                    dict["createdBy"] = (createdDict! as NSDictionary).valueForKeyPath("createdBy._id") as? String
+                    
+                    dict["sharedBy"] =  ChatHelper.userDefaultForKey(_ID)
+                    dict["text"] = createdDict!["text"] as? String
+                    
+                }else{
+                    let imgUrls = createdDict!["attachments"] as! [String]
+                    
+                    dict["createdBy"] = (createdDict! as NSDictionary).valueForKeyPath("createdBy._id") as? String
+                    
+                    dict["sharedBy"] =  ChatHelper.userDefaultForKey(_ID)
+                    dict["text"] = createdDict!["text"] as? String
+                    dict["url"] = imgUrls.first!
+                    dict["thumNailName"] = createdDict!["thumNailName"] as! String
+                    
+                }
                 
                 
             }else{
+                if postType == "text" {
+                    
+                    dict["text"] = self.tf_share.text
+                    dict["createdBy"] = ChatHelper.userDefaultForKey(_ID)
+                }else{
+                    
+                    dict["url"] = imgOrVideoUlr
+                    dict["text"] = captionText!
+                    dict["createdBy"] = ChatHelper.userDefaultForKey(_ID)
+                    
+                    dict["thumNailName"] = thumNailName
                 
-                if self.tf_share.text?.characters.count < 1 {
-                    AppHelper.showAlertWithTitle(AppName, message: "Post text can't be blank.", tag: 0, delegate: nil, cancelButton: "OK", otherButton: nil)
-                    return
+                
+                }
+            }
+            //==============
+       /*     if postType == "text" {
+               
+                if isShared{
+                    
+                    dict["createdBy"] = (createdDict! as NSDictionary).valueForKeyPath("createdBy._id") as? String
+                    
+                    dict["sharedBy"] =  ChatHelper.userDefaultForKey(_ID)
+                    dict["text"] = createdDict!["text"] as? String
+                    
+                }else{
+                    
+                    
+                    dict["text"] = self.tf_share.text
+                    dict["createdBy"] = ChatHelper.userDefaultForKey(_ID)
                 }
                 
-                dict["text"] = self.tf_share.text
+            }else{
+                 dict["url"] = imgOrVideoUlr
+                 dict["text"] = captionText!
                 dict["createdBy"] = ChatHelper.userDefaultForKey(_ID)
-            }
+                
+               dict["thumNailName"] = thumNailName
+                
+                
+            }*/
+            
+             dict["postType"] = postType
+            
+            
             
             print("Request dict = ", dict)
             
@@ -503,7 +619,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
                 let indexPath = NSIndexPath(forRow: 0, inSection: 0)
                 
-                self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true);
+             //   self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true);
             }
             else
             {
@@ -676,6 +792,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         
+        
         let newString = dict["text"]!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         let str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
         
@@ -684,8 +801,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let w = collectionView.bounds.size.width - 30
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
         
-        let height = size.height + 150
-        let width = size.width
+        var height = size.height + (150)
+        
+        if dict["postType"] as! String != "text" {
+            
+            height = height + (360 - 150)
+        }
         
         return CGSize(width: w, height: height)
         
@@ -724,7 +845,32 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellAll", forIndexPath: indexPath) as UICollectionViewCell
+        var dict = NSDictionary()
+        
+        if self.title == "ALL" {
+            dict = self.postAllArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "FRIENDS" {
+            dict = self.postFriendsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "COLLEAGUES" {
+            dict = self.postColleagueArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "HEALTH CLUBS" {
+            dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        
+        //cell type Text or image Or video
+        var  cell:UICollectionViewCell!
+        if dict["postType"] as! String == "text" {
+            
+            cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellAll", forIndexPath: indexPath) as UICollectionViewCell
+        }else{
+            
+            cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellAttachment", forIndexPath: indexPath) as UICollectionViewCell
+        }
+        
+        
         
         let lpgrMain : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ExploreVC.handleLongPress(_:)))
         lpgrMain.minimumPressDuration = 0.5
@@ -755,31 +901,21 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         btn_like.setImage(UIImage(named: "like_nav_color"), forState: .Selected)
         
         
-        var dict = NSDictionary()
         
-        if self.title == "ALL" {
-            dict = self.postAllArr[indexPath.row ] as! [String:AnyObject]
-        }
-        else if self.title == "FRIENDS" {
-            dict = self.postFriendsArr[indexPath.row ] as! [String:AnyObject]
-        }
-        else if self.title == "COLLEAGUES" {
-            dict = self.postColleagueArr[indexPath.row ] as! [String:AnyObject]
-        }
-        else if self.title == "HEALTH CLUBS" {
-            dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
-        }
         
         //shared by name
-        if let name = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
+        if let sharedByName = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
+            
+            let sharedByID = (dict as NSDictionary).valueForKeyPath("sharedBy._id") as? String
+            
             let ownerID = (dict as NSDictionary).valueForKeyPath("createdBy._id") as? String
             let ownerName = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String
-            if ownerID != ChatHelper.userDefaultForKey(_ID){
+            if (sharedByID != ownerID) {
                 
-                lbl_name.text = name + " Shared a " + ownerName! + "'s Post"
+                lbl_name.text = sharedByName + " shared a " + ownerName! + "'s post"
                 
             }else{
-                lbl_name.text = name + " Shared a Post"
+                lbl_name.text = sharedByName + " shared a post"
             }
             
             
@@ -789,7 +925,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             if let name = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String {
                 
-                lbl_name.text = name + " Shared a Post"
+                lbl_name.text = name + " shared a post"
             }
         }
         
@@ -864,7 +1000,71 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         btn_comments.setTitle(String((dict["comments"] as? [AnyObject])!.count), forState: .Normal)
     
         
-        
+        if dict["postType"] as! String != "text" {
+            
+            let thumbIV =  cell.viewWithTag(20) as! UIImageView
+            let btn_videoPlay =  cell.viewWithTag(21) as! UIButton
+            
+            let imgUrls = dict["attachments"] as! [String]
+            
+            
+             let thumbNailName = dict["thumNailName"] as! String
+               
+            //check the thumbNail name is exist ? or generate from video url and save to db
+            self.fileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
+                
+                if dict["postType"] as! String == "image"{
+                    
+                    let recognizer = UITapGestureRecognizer(target: self, action:#selector(NewsFeedsAllVC.clickUserImage(_:)))
+                    recognizer.delegate = self
+                    thumbIV.addGestureRecognizer(recognizer)
+                    thumbIV.userInteractionEnabled = true
+                    
+                    btn_videoPlay.hidden = true
+                    
+                    
+                    
+                    if isExistPath {
+                        thumbIV.image = UIImage(contentsOfFile: fileUrl!)
+                    }else{
+                        
+                        thumbIV.sd_setImageWithURL(NSURL(string: imgUrls.first!), placeholderImage: UIImage(named:  "cell_blured_heigh"))
+                        
+                    }
+                    
+                    
+                }else{
+                    //for video
+                    
+                    btn_videoPlay.hidden = false
+                    
+                    
+                    
+                    if isExistPath {
+                        thumbIV.image = UIImage(contentsOfFile: fileUrl!)
+                    } else {
+                        
+                        //generate thumb from video url    and display on cell
+                        let img = self.generateThumnail(sourceURL: NSURL(string: imgUrls.first!)!)
+                        thumbIV.image = img
+                        
+                        //write to db
+                        let imgData = UIImagePNGRepresentation(img) as NSData?
+                        
+                        self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                            
+                            if isWritten{
+                                
+                            }
+                        })
+                    }
+                    
+                }
+                
+                
+            })
+           
+        }
         
         return cell
     }
@@ -881,6 +1081,129 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 0
+    }
+    
+    
+    //MARK:- (result: Bool, url:NSURL?) -> Void
+    
+    func fileExistsAtPath(directory directryName:String, fileName:String, completion: (isExistPath: Bool, fileUrl:String?) -> Void){
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
+        let filePath = documentsDirectory.stringByAppendingPathComponent(fileName as String)
+        
+        
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
+            completion(isExistPath: true, fileUrl: filePath)
+        }else{
+            completion(isExistPath: false, fileUrl: nil)
+        }
+        
+        
+        
+    }
+    
+    func writeToPath(directory directoryName:String, fileName:String, dataToWrite:NSData, completion:(isWritten:Bool, err:NSError?) -> Void) {
+        
+        //get the chat path
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let documentsDirectory = paths.stringByAppendingPathComponent(directoryName)
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            NSLog("Unable to create directory \(error.debugDescription)")
+        }
+        
+        let saveImagePath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        dataToWrite.writeToFile(saveImagePath, atomically: true)
+        
+        completion(isWritten: true, err: nil)
+        
+    }
+    
+  /*(  func writeToURL(named:String, completion: (result: Bool, url:NSURL?) -> Void)  {
+        
+        let filePath = NSTemporaryDirectory() + named
+        //var success:Bool = false
+        let tmpURL = NSURL( fileURLWithPath:  filePath )
+        weak var weakSelf = self
+        
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            //write to URL atomically
+            if weakSelf!.writeToURL(tmpURL, atomically: true) {
+                
+                if NSFileManager.defaultManager().fileExistsAtPath( filePath ) {
+                    completion(result: true, url:tmpURL)
+                } else {
+                    completion (result: false, url:tmpURL)
+                }
+            }
+        })
+    }
+    */
+    
+    func generateTimeStamp() -> String {
+        
+        let date = NSDate()
+        var dateStr : String
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateStr = dateFormatter.stringFromDate(date)
+        
+        return dateStr
+        
+    }
+    
+    func generateThumnail(sourceURL sourceURL:NSURL) -> UIImage {
+        let asset = AVAsset(URL: sourceURL)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        let time = CMTime(seconds: 1, preferredTimescale: 1)
+        
+        do {
+            let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
+            return UIImage(CGImage: imageRef)
+        } catch {
+            print(error)
+            return UIImage(named: "some generic thumbnail")!
+        }
+    }
+    
+
+    
+    func clickUserImage(recognizer: UITapGestureRecognizer )
+    {
+        
+        let pointInTable = recognizer.locationInView(self.collectionView)
+        let indexPath:NSIndexPath = self.collectionView.indexPathForItemAtPoint(pointInTable)!
+        
+        var dict = NSDictionary()
+        
+        if self.title == "ALL" {
+            dict = self.postAllArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "FRIENDS" {
+            dict = self.postFriendsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "COLLEAGUES" {
+            dict = self.postColleagueArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "HEALTH CLUBS" {
+            dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        
+        
+        let imgUrls = dict["attachments"] as! [String]
+        
+        
+        
+        let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
+        fullImageVC.imagePath = imgUrls.first
+        fullImageVC.downLoadPath = "3"
+        
+        self.navigationController?.pushViewController(fullImageVC, animated: true)
     }
     
     //MARK:- Collection Delegate
@@ -1254,181 +1577,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 UIApplication.sharedApplication().statusBarStyle = .LightContent
         })
         
+     //   self.addCaptionOnPost(assets, cameraImage: nil, videoUrl: nil)
         
-        
-        for (index, asset) in assets.enumerate() {
-            
-            
-                let locId = CommonMethodFunctions.nextIdentifies()
-                let strId = String(locId)
-                var date = NSDate()
-                var dateStr : String
-                var timeStr : String
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                dateStr = dateFormatter.stringFromDate(date)
-                dateFormatter.dateFormat = "HH:mm:ss.sss"
-                timeStr = dateFormatter.stringFromDate(date)
-                
-                let tempImage = UIImageView(image: asset.fullScreenImage)
-                let thumbImg = UIImageView(image: asset.thumbnailImage)
-                let thumbImg1 = UIImageView(image: asset.thumbnailImage)
-                
-                let data1 = UIImageJPEGRepresentation(thumbImg.image!, 0.0)
-                let base64String = data1!.base64EncodedStringWithOptions([])
-                
-                let data2 = UIImageJPEGRepresentation(thumbImg1.image!, 1.0)
-                let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-                let documentsDirectory = paths.stringByAppendingPathComponent("/ChatFile")
-                let fileManager = NSFileManager.defaultManager()
-                
-                do {
-                    try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
-                } catch let error as NSError {
-                    NSLog("Unable to create directory \(error.debugDescription)")
-                }
-                
-                let indexes = String(index)
-                
-                let saveThumbImagePath = "Thumb"+dateStr+indexes+".jpg"
-                
-                var saveImagePath = documentsDirectory.stringByAppendingPathComponent("Thumb"+dateStr+indexes+".jpg")
-                data2!.writeToFile(saveImagePath, atomically: true)
-                
-                let data = UIImageJPEGRepresentation(tempImage.image!, 0.8)
-                let saveFullImagePath = "full"+dateStr+indexes+".jpg"
-                saveImagePath = documentsDirectory.stringByAppendingPathComponent("full"+dateStr+indexes+".jpg")
-                data!.writeToFile(saveImagePath, atomically: true)
-                
-                var dict = Dictionary<String, AnyObject>()
-                
-                dict["date"] = dateStr
-                dict["sortDate"] = dateStr
-                dict["time"] = timeStr
-                dict["message"] = ""
-                dict["type"] = "image"
-                dict["localThumbPath"] = saveThumbImagePath
-                dict["localFullPath"] = saveFullImagePath
-                dict["mediaUrl"] = ""
-                dict["mediaThumbUrl"] = ""
-                dict["localmsgid"] = strId
-                dict["mediaThumb"] = base64String
-                
-            
-           /*
-                dict["sender"] = ChatHelper .userDefaultForAny("userId") as! NSString
-                if contObj != nil
-                {
-                    dict["receiver"] = contObj.userId
-                }else
-                {
-                    dict["receiver"] = recentChatObj.friendId
-                }
-                
-                let instance = DataBaseController.sharedInstance
-                
-            
-                dict["index"] = chatArray.count-1
-            
-                arrayImageIndex += [NSIndexPath(forRow:dict["index"] as! Int,inSection:0)]
-                */
-                var path = [NSIndexPath]()
-                path.append(NSIndexPath(forRow:dict["index"] as! Int,inSection:0))
-                
-                
-            
-                
-                NSOperationQueue.mainQueue().addOperationWithBlock() { () in
-                    
-                    let name = self.uniqueName("")
-                    let pathSelected = NSIndexPath(forRow:dict["index"] as! Int,inSection:0)
-                    
-                    UploadInS3.sharedGlobal().uploadMultipleImagesOnChatTos3(data, type: 0, dictInfo: dict, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
-                        
-                        
-                        if bool_val == true
-                            
-                        {
-                            //  var fileName : NSString
-                            
-                            //print((UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray))
-                            
-                            //for( var index:Int = 0 ; index < (UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray).count; index += 1  )
-                            for  index in  0 ..< (UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray).count {
-                                // print("Upload image 1 === \(UploadInS3.sharedGlobal().chatImagesFiles)")
-                                
-                                if let citiesArr = UploadInS3.sharedGlobal().chatImagesFiles{
-                                    
-                                    //print("Upload image 2 === \(citiesArr)")
-                                    
-                                    var fileName = Dictionary<String, AnyObject>()
-                                    
-                                    //  fileName = citiesArr[index] as Dictionary
-                                    if let _:Dictionary<String, AnyObject> = citiesArr[index] as? Dictionary
-                                    {
-                                        fileName = citiesArr[index] as! Dictionary
-                                        let strFileName : String = fileName["chatImagesName"] as! String
-                                        let nsDict = fileName["chatImgDicInfo"] as! NSDictionary
-                                        
-                                        self.sendImageFilePathToChatServer(nsDict, filePath: pathUrl, index:-1)
-                                    }
-                                    else
-                                    {
-                                        //  fileName = citiesArr[index] as Dictionary
-                                    }
-                                    
-                                    
-                                    // print("Upload image 3  ===  \(citiesArr[index])")
-                                    
-                                    
-                                    
-                                    
-                                }
-                            }
-                            
-                            
-                            
-                            
-                            (UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray) .removeAllObjects()
-                            
-                            
-                            
-                        }
-                        
-                        
-                        
-                        } , completionProgress: { ( bool_val : Bool, progress) -> Void in
-                            
-                         /*
-                            
-                            let visibleCell : NSArray = self.chatTableView.indexPathsForVisibleRows!
-                            if(visibleCell.containsObject(pathSelected))
-                            {
-                                if     let cell:ChatImageCell = self.chatTableView.cellForRowAtIndexPath(pathSelected)! as? ChatImageCell
-                                {
-                                    let progressV = cell.contentView.viewWithTag(22) as! PICircularProgressView
-                                    progressV.hidden = false
-                                    progressV.progress=progress
-                                    
-                                    if(progress == 1.0)
-                                    {
-                                        progressV.hidden = true
-                                        
-                                    }
-                                }
-                            }*/
-                        })
-                    
-                }
-                
-            
-                
-            
-            
-        }
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
+         self.handleMultipleImages(assets!, captionText: "")
         
     }
     
@@ -1460,454 +1611,241 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         if(info["UIImagePickerControllerMediaType"] as! String == "public.image") {
             
             if ServiceClass.checkNetworkReachabilityWithoutAlert() {
-                let locId = CommonMethodFunctions.nextIdentifies()
-                let strId = String(locId)
                 
-                var date = NSDate()
-                var dateStr : String
-                var timeStr : String
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                dateStr = dateFormatter.stringFromDate(date)
-                dateFormatter.dateFormat = "HH:mm:ss.sss"
-                timeStr = dateFormatter.stringFromDate(date)
-                
-                let tempImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-                let thumbImg = CommonMethodFunctions.generatePhotoThumbnail(tempImage);
-                let thumbImg1 = CommonMethodFunctions.generatePhotoThumbnail1(tempImage);
-                
-                let thumbData = UIImageJPEGRepresentation(thumbImg, 0.0)
-                let base64String = thumbData!.base64EncodedStringWithOptions([])
-                
-                let data2 = UIImageJPEGRepresentation(thumbImg1, 1.0)
-                let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-                let documentsDirectory = paths.stringByAppendingPathComponent("/ChatFile")
-                let fileManager = NSFileManager.defaultManager()
-                do {
-                    try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
-                } catch let error as NSError {
-                    NSLog("Unable to create directory \(error.debugDescription)")
-                }
-                let saveThumbImagePath = "Thumb"+dateStr+".jpg"
-                var saveImagePath = documentsDirectory.stringByAppendingPathComponent("Thumb"+dateStr+".jpg")
-                data2!.writeToFile(saveImagePath, atomically: true)
-                
-                let imgData = UIImageJPEGRepresentation(tempImage, 0.8)
-                let saveFullImagePath = "full"+dateStr+".jpg"
-                saveImagePath = documentsDirectory.stringByAppendingPathComponent("full"+dateStr+".jpg")
-                imgData!.writeToFile(saveImagePath, atomically: true)
-                var dict = Dictionary<String, AnyObject>()
-                dict["date"] = dateStr
-                dict["sortDate"] = dateStr
-                dict["time"] = timeStr
-                dict["message"] = ""
-                dict["type"] = "image"
-                dict["localThumbPath"] = saveThumbImagePath
-                dict["localFullPath"] = saveFullImagePath
-                dict["mediaUrl"] = ""
-                dict["mediaThumbUrl"] = ""
-                dict["localmsgid"] = strId
-                dict["mediaThumb"] = base64String
-            /*
-                dict["sender"] = ChatHelper .userDefaultForAny("userId") as! String
-                if contObj != nil
-                {
-                    dict["receiver"] = contObj.userId
-                }else
-                {
-                    dict["receiver"] = recentChatObj.friendId
-                }
-                
-                let instance = DataBaseController.sharedInstance
-                
-                
-                
-                
-                NSOperationQueue.mainQueue().addOperationWithBlock() { () in
-                    
-                    let name = self.uniqueName("")
-                    UploadInS3.sharedGlobal().uploadImageTos3( thumbData, type: 0, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
-                        
-                        if bool_val == true
-                        {
-                            let fileName =  UploadInS3.sharedGlobal().strFilesName
-                            
-                            if fileName != nil{
-                                self.sendImageFilePathToChatServer(dict, filePath: fileName, index:-1)
-                            }
-                        }
-                        else
-                        {
-                            
-                            //
-                            
-                            
-                            if self.isGroup == "0"
-                            {
-                                //NSIndexPath(forRow:dict["index"] as Int,inSection:0)
-                                instance.multimediaChatStatusChangeSingleChat(self.chatArray.objectAtIndex(dict["index"] as! Int) as! UserChat)
-                                
-                            }
-                            else
-                            {
-                                
-                                instance.multimediaChatStatusChangeGroupChat(self.chatArray.objectAtIndex(dict["index"] as! Int) as! GroupChat)
-                                
-                            }
-                            
-                            self.chatTableView.beginUpdates()
-                            self.chatTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:dict["index"] as! Int,inSection:0)], withRowAnimation: UITableViewRowAnimation.None)
-                            self.chatTableView.endUpdates()
-                        }
-                        
-                        }
-                        , completionProgress: { ( bool_val : Bool, progress) -> Void in
-                            
-                            
-                            
-                            let newIndexPath:NSIndexPath = NSIndexPath(forRow:dict["index"] as! Int,inSection:0)
-                            
-                            let visibleCell : NSArray = self.chatTableView.indexPathsForVisibleRows!
-                            
-                            if(visibleCell.containsObject(newIndexPath))
-                            {
-                                if     let cell:ChatImageCell = self.chatTableView.cellForRowAtIndexPath(newIndexPath)! as? ChatImageCell
-                                {
-                                    let progressV = cell.contentView.viewWithTag(22) as! PICircularProgressView
-                                    progressV.hidden = false
-                                    progressV.progress=progress
-                                    
-                                    if(progress == 1.0)
-                                    {
-                                        progressV.hidden = true
-                                        
-                                    }
-                                }
-                            }
-                        }
-                    )
-                    
-                    
-                    // (void)uploadImageTos3:(NSData *)imageToUpload type:(int)imageOrVideo fromDist:(NSString*)classType meldID:(NSString*)meldFileName completion:(s3Handler)completionBlock{
-                }*/
-                
-                // self.sendImageToServer(dict, imageData: data, index: chatArray.count-1)
+                self.addCaptionOnPost(nil, cameraImage: info[UIImagePickerControllerOriginalImage] as? UIImage, videoUrl: nil)
             }
         }else if(info["UIImagePickerControllerMediaType"] as! String == "public.movie")
         {
-            if ServiceClass.checkNetworkReachabilityWithoutAlert()
-            {
-                let locId = CommonMethodFunctions.nextIdentifies()
-                let strId = String(locId)
-                
-                var date = NSDate()
-                var dateStr : String
-                var timeStr : String
-                
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                dateStr = dateFormatter.stringFromDate(date)
-                dateFormatter.dateFormat = "HH:mm:ss.sss"
-                timeStr = dateFormatter.stringFromDate(date)
-                
-                let tempUrl = info[UIImagePickerControllerMediaURL] as! NSURL
-                
-                let videoName = "Video"+dateStr+".mp4"
-                
-                let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-                let documentsDirectory = paths.stringByAppendingPathComponent("/ChatFile")
-                let fileManager = NSFileManager.defaultManager()
-                do {
-                    try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
-                } catch let error as NSError {
-                    NSLog("Unable to create directory \(error.debugDescription)")
-                }
-                let saveVideoPath = documentsDirectory.stringByAppendingPathComponent(videoName)
-                let thumbImg = CommonMethodFunctions.getThumbNail(tempUrl);
-                var data = UIImageJPEGRepresentation(thumbImg, 1.0)
-                let saveThumbImagePath = "Thumb"+dateStr+".jpg"
-                let saveImagePath = documentsDirectory.stringByAppendingPathComponent(saveThumbImagePath)
-                
-                // print("saveImagePath = \(saveImagePath)")
-                data!.writeToFile(saveImagePath, atomically: true)
-                
-                let thumbImg1 = CommonMethodFunctions.generatePhotoThumbnail(thumbImg);
-                let data1 = UIImageJPEGRepresentation(thumbImg1, 0.0)
-                let base64String = data1!.base64EncodedStringWithOptions([])
-                var dict = Dictionary<String, AnyObject>()
-                dict["date"] = dateStr
-                dict["sortDate"] = dateStr
-                dict["time"] = timeStr
-                dict["message"] = ""
-                dict["type"] = "video"
-                dict["localThumbPath"] = saveThumbImagePath
-                dict["localFullPath"] = videoName
-                dict["mediaUrl"] = ""
-                dict["mediaThumbUrl"] = ""
-                dict["localmsgid"] = strId
-                dict["mediaThumb"] = base64String
-                
-         /*       dict["sender"] = ChatHelper .userDefaultForAny("userId") as! String
-                if contObj != nil
-                {
-                    dict["receiver"] = contObj.userId
-                }else
-                {
-                    dict["receiver"] = recentChatObj.friendId
-                }
-                
-                let instance = DataBaseController.sharedInstance
-                if isGroup == "0"
-                {
-                    self.checkDateIsDifferent(dict)
-                    date = NSDate()
-                    dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                    dateStr = dateFormatter.stringFromDate(date)
-                    dict["date"] = dateStr
-                    
-                    let chatObj =  instance.insertChatMessageInDb1("UserChat", params: dict) as UserChat
-                    let fileObj =  instance.insertChatFileInDb1("UserChatFile", params: dict) as UserChatFile
-                    
-                    chatArray.addObject(chatObj)
-                    // arrayofMessage += [chatObj]
-                    chatObj.chatFile = fileObj
-                    
-                    if self.recentChatObj == nil || chatArray.count == 2
-                    {
-                        self.saveRecentChat()
-                    }
-                }else
-                {
-                    self.checkDateIsDifferent(dict)
-                    date = NSDate()
-                    dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                    dateStr = dateFormatter.stringFromDate(date)
-                    dict["date"] = dateStr
-                    
-                    dict["groupid"] = self.recentChatObj.groupId
-                    dict["sendername"] = ""
-                    let chatObj =  instance.insertGroupChatMessageInDb1("GroupChat", params: dict) as GroupChat
-                    let fileObj =  instance.insertGroupChatFileInDb1("GroupChatFile", params: dict) as GroupChatFile
-                    chatArray.addObject(chatObj)
-                    
-                    chatObj.groupChatFile = fileObj
-                }
-                
-                homeCoreData.saveContext()
-                growingTextView.text=""
-                dict["index"] = self.chatArray.count-1
-                
-                var path = [NSIndexPath]()
-                path.append(NSIndexPath(forRow:dict["index"] as! Int,inSection:0))
-                chatTableView.insertRowsAtIndexPaths(path, withRowAnimation: UITableViewRowAnimation.None)
-                if chatArray.count > 2
-                {
-                    chatTableView.scrollToRowAtIndexPath(NSIndexPath(forRow:dict["index"] as! Int,inSection:0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
-                }
-          */      // New pic by PK
-                
-         /*       //    print("sent frow ====\(myRow)")
-                
-                CommonMethodFunctions.convertVideoToLowQuailtyWithInputURL(tempUrl, outputURL: NSURL.fileURLWithPath(saveVideoPath), handler: { (exportSession : AVAssetExportSession!) -> Void in
-                    switch(exportSession.status)
-                    {
-                    case .Completed:
-                        dispatch_async(dispatch_get_main_queue(), {
-                            
-                            
-                            
-                            // print("saveVideoPath = \(saveVideoPath)")
-                            data =  NSData(contentsOfURL: NSURL.fileURLWithPath(saveVideoPath))
-                            
-                            var imageSize   = data!.length as Int
-                            imageSize = imageSize/1024
-                            
-                            
-                            
-                            // print_debug(imageSize)
-                            
-                            data!.writeToFile(saveVideoPath, atomically: false)
-                            
-                            
-                            
-                            // bellow code is commented by pk on 2 dec 2015
-                            
-                            // self.sendVideoToServer(dict, videoData: data, index: self.chatArray.count-1)
-                            
-                            // bellow code is WRITTEN by pk on 2 dec 2015
-                            NSOperationQueue.mainQueue().addOperationWithBlock() { () in
-                                
-                                let name = self.uniqueName("")
-                                UploadInS3.sharedGlobal().uploadImageTos3( data, type: 1, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
-                                    if bool_val == true
-                                    {
-                                        let fileName =  UploadInS3.sharedGlobal().strFilesName
-                                        //  progressV.hidden = true
-                                        if fileName != nil{
-                                            self.sendVideoFilePathToChatServer(dict, filePath: fileName, index:-1)
-                                        }
-                                    }
-                                    else
-                                    {
-                                        
-                                        if self.isGroup == "0"
-                                        {
-                                            
-                                            instance.multimediaChatStatusChangeSingleChat(self.chatArray.objectAtIndex(dict["index"] as! Int) as! UserChat)
-                                            
-                                        }
-                                            
-                                        else
-                                        {
-                                            
-                                            instance.multimediaChatStatusChangeGroupChat(self.chatArray.objectAtIndex(dict["index"] as! Int) as! GroupChat)
-                                            
-                                        }
-                                        
-                                        
-                                        self.chatTableView.beginUpdates()
-                                        self.chatTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:dict["index"] as! Int,inSection:0)], withRowAnimation: UITableViewRowAnimation.None)
-                                        self.chatTableView.endUpdates()
-                                        
-                                    }
-                                    
-                                    }
-                                    , completionProgress: { ( bool_val : Bool, progress) -> Void in
-                                        
-                                        
-                                        
-                                        let newIndexPath:NSIndexPath = NSIndexPath(forRow:dict["index"] as! Int,inSection:0)
-                                        
-                                        let visibleCell : NSArray = self.chatTableView.indexPathsForVisibleRows!
-                                        
-                                        if(visibleCell.containsObject(newIndexPath))
-                                        {
-                                            if     let cell:ChatImageCell = self.chatTableView.cellForRowAtIndexPath(newIndexPath)! as? ChatImageCell
-                                            {
-                                                let progressV = cell.contentView.viewWithTag(22) as! PICircularProgressView
-                                                
-                                                progressV.hidden = false
-                                                progressV.progress=progress
-                                                
-                                                if(progress == 1.0)
-                                                {
-                                                    progressV.hidden = true
-                                                    
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                )
-                                
-                            }
-                        });
-                        break
-                    default:
-                        break
-                    }
-                    
-                })  */
-                
+            if ServiceClass.checkNetworkReachabilityWithoutAlert(){
+                self.addCaptionOnPost(nil, cameraImage: nil, videoUrl: info[UIImagePickerControllerMediaURL] as? NSURL)
                 
                 
             }
+            
         }
     }
     
+    //MARK:- upload 
     
-    //MARK:- 
+    func uploadImage(uploadImage:UIImage, captionText: String?) -> Void {
+        
+        let locId = CommonMethodFunctions.nextIdentifies()
+        let strId = String(locId)
+        
+         let timeStamp = generateTimeStamp()
+        
+        
+        // let imgData = UIImageJPEGRepresentation(uploadImage, 0.8)
+        
+        let thumbImg = CommonMethodFunctions.generatePhotoThumbnail(uploadImage);
+        let thumbData = UIImageJPEGRepresentation(thumbImg, 0.0)
+        let thumbNailName = "Thumb" + timeStamp + ".jpg"
+        
+        
+        self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+            
+            if isWritten{
+                
+            }
+            
+        })
+        
+        NSOperationQueue.mainQueue().addOperationWithBlock() { () in
+            
+            let name = self.uniqueName("")
+            UploadInS3.sharedGlobal().uploadImageTos3( thumbData, type: 0, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
+                
+                if bool_val == true
+                {
+                    let fileName =  UploadInS3.sharedGlobal().strFilesName
+                    
+                    if fileName != nil{
+                        
+                         self.sendPostToServer("image", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText, thumNailName:thumbNailName)
+                    }
+                }
+                else{}
+                
+                
+                }
+                , completionProgress: { ( bool_val : Bool, progress) -> Void in
+                    
+                    
+                    
+                }
+            )
+            
+        }
+        
+    }
     
-    func sendImageFilePathToChatServer(dic : NSDictionary, filePath: String!, index: Int) -> Void
-    {
-        // print("sendImageFilePathToChatServer ====== sendMsgD to server====0")
+    func uploadVideo(videoUrl:NSURL, captionText:
+        String?) -> Void {
+        
+            let locId = CommonMethodFunctions.nextIdentifies()
+            let strId = String(locId)
+        
+            let timeStamp = generateTimeStamp()
+        
+        
+        
+        
+        let videoName = "Video"+timeStamp+".mp4"
+        
+        
+        
+        // generate thumb image from video url and save to path
+        let thumbImg = CommonMethodFunctions.getThumbNail(videoUrl);
+        let thumbData = UIImageJPEGRepresentation(thumbImg, 1.0)
+        let thumbNailName = "Thumb"+timeStamp+".jpg"
        
-    /*    var newIndexPath:NSIndexPath = NSIndexPath(forRow:index,inSection:0)
-        if index == -1
-        {
-            newIndexPath = NSIndexPath(forRow:dic["index"] as! Int,inSection:0)
-        }
         
-        let visibleCell : NSArray = chatTableView.indexPathsForVisibleRows!
-        let str : String = dic["localmsgid"] as! String
-        
-        if(visibleCell.containsObject(newIndexPath))
-        {
+        self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
             
-            // let newIndexPath:NSIndexPath = NSIndexPath(forRow:index,inSection:0)
-            let cell:UITableViewCell = chatTableView.cellForRowAtIndexPath(newIndexPath)!
-            let progressV = cell.contentView.viewWithTag(22) as! PICircularProgressView
-            progressV.hidden = false
-            
-            // let str : String = dic["localmsgid"] as String!
-            ChatListner .getChatListnerObj().chatProgressV[str] = progressV
-            
-            // New below code open by prabodh 14 dec 2015
-            
-            ChatListner .getChatListnerObj().chatProgressV.removeObjectForKey(str)
-            
-            // New above code open by prabodh 14 dec 2015
-        }
-        */
-        
-        
-        
-        var sendMsgD = Dictionary<String, AnyObject>()
-        
-        sendMsgD["userid"] = ChatHelper .userDefaultForAny("userId") as! String
-        sendMsgD["message"] = "image"
-        sendMsgD["localmsgid"] = dic["localmsgid"]
-        sendMsgD["type"] = "image"
-        sendMsgD["mediaThumb"] = dic["mediaThumb"]
-    /*
-        if isGroup == "0"
-        {
-            sendMsgD["chatType"] = "oneToOne"
-            
-            if (AppHelper.userDefaultsForKey("user_firstName")) != nil
-            {
-                sendMsgD["user_firstName"] = AppHelper.userDefaultsForKey("user_firstName") as! String
-            }
-            if (AppHelper.userDefaultsForKey("user_imageUrl")) != nil
-            {
-                sendMsgD["profile_image"] = AppHelper.userDefaultsForKey("user_imageUrl") as! String
+            if isWritten{
+                
             }
             
-            
-            
-            // sendMsgD["user_firstName"] = ChatHelper.userDefaultForKey("user_firstName") as NSString // NEW LINE ADDED BY ME 18 OCT
-            // sendMsgD["profile_image"] = ChatHelper.userDefaultForKey("user_imageUrl") as NSString // NEW LINE ADDED BY ME 18 OCT
-            
-            sendMsgD["phoneNumber"] = ChatHelper.userDefaultForKey("PhoneNumber") as String
-            sendMsgD["recieverid"] = dic["receiver"]
-        }else
-        {
-            sendMsgD["user_firstName"] = ChatHelper .userDefaultForAny("user_firstName") as! String // NEW LINE ADDED BY ME 8 dec
-            sendMsgD["profile_image"] = ChatHelper .userDefaultForAny("user_imageUrl") as! String // NEW LINE ADDED BY ME  8 dec
-            
-            sendMsgD["chatType"] = "groupChat"
-            sendMsgD["groupid"] = recentChatObj.groupId
-            
-            
-            sendMsgD["chatType"] = "groupChat"
-            sendMsgD["groupid"] = recentChatObj.groupId
+        })
+        
+        let videoData =  NSData(contentsOfURL: NSURL.fileURLWithPath(videoUrl.path!))
+        
+       
+
+            NSOperationQueue.mainQueue().addOperationWithBlock() { () in
+                
+                let name = self.uniqueName("")
+                UploadInS3.sharedGlobal().uploadImageTos3( videoData, type: 1, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
+                    if bool_val == true
+                    {
+                        let fileName =  UploadInS3.sharedGlobal().strFilesName
+                        //  progressV.hidden = true
+                        if fileName != nil{
+                           self.sendPostToServer("video", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText,thumNailName:thumbNailName )
+                        }
+                    }
+                    
+                    }, completionProgress: { ( bool_val : Bool, progress) -> Void in
+                        
+                })
+            }
         }
-        */
-        sendMsgD["mediaUrl"] = filePath
+    
+    
+    //MARK:-
+    
+    func addCaptionOnPost(assets: [DKAsset]?, cameraImage:UIImage?, videoUrl:NSURL?) -> Void {
         
-        ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
+        //1. Create the alert controller.
+        let alert = UIAlertController(title: AppName, message: "Say something about this photo...", preferredStyle: .Alert)
         
-     
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+           // textField.text = "Some default text."
+        })
         
+        //3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { [weak alert] (action) -> Void in
+            let textField = alert!.textFields![0] as UITextField
+            print("Text field: \(textField.text)")
+            
+            if(assets != nil){
+                //multiple images
+                self.handleMultipleImages(assets!, captionText: textField.text!)
+                
+            }else if(cameraImage != nil){
+                // from camera
+                self.uploadImage(cameraImage!, captionText: textField.text)
+            }else{
+                //either from record or video from gallery
+                
+                self.uploadVideo(videoUrl!,captionText: textField.text)
+                
+                
+            }
+            
+            
+            
+            
+            
+            
+            }))
         
+        // 4. Present the alert.
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
- 
+    func handleMultipleImages(assets: [DKAsset]!, captionText:String?) -> Void {
+        
+        for (index, asset) in assets.enumerate() {
+            
+            
+            let locId = CommonMethodFunctions.nextIdentifies()
+            let strId = String(locId)
+            
+            let timeStamp = generateTimeStamp()
+            
+            let tempImage = UIImageView(image: asset.fullScreenImage)
+            //     let thumbImg = UIImageView(image: asset.thumbnailImage)
+            
+            let imgData = UIImageJPEGRepresentation(tempImage.image!, 0.8)
+            
+            //    let thumbImg = CommonMethodFunctions.generatePhotoThumbnail(uploadImage);
+            //   let thumbData = UIImageJPEGRepresentation(thumbImg, 0.0)
+            let thumbNailName = "Thumb" + timeStamp + ".jpg"
+            
+            
+            self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                
+                if isWritten{
+                    
+                }
+                
+            })
+           
+            var dict = Dictionary<String, AnyObject>()
+            
+        
+            dict["message"] = ""
+            dict["type"] = "image"
+       //     dict["localThumbPath"] = saveThumbImagePath
+       //     dict["localFullPath"] = saveFullImagePath
+            dict["mediaUrl"] = ""
+            dict["mediaThumbUrl"] = ""
+            dict["localmsgid"] = strId
+        //    dict["mediaThumb"] = base64String
+            
+            NSOperationQueue.mainQueue().addOperationWithBlock() { () in
+                
+                let name = self.uniqueName("")
+                
+                
+                UploadInS3.sharedGlobal().uploadMultipleImagesOnChatTos3(imgData, type: 0, dictInfo: dict, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
+                    
+                    
+                    if bool_val == true{
+                        self.sendPostToServer("image", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText, thumNailName:thumbNailName)
+                     
+                    }
+                    
+                    
+                    } , completionProgress: { ( bool_val : Bool, progress) -> Void in
+                       
+                })
+            }
+        }
+        
+      //  self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+
     
-    
-    
+
+
+
+
+
+
 }
 
 // MARK: - FooterAllReUsableView

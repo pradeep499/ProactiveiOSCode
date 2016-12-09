@@ -26,6 +26,9 @@ class FullScreenImageVC: UIViewController {
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FullScreenImageVC.showDownloadedImage(_:)),name:"showImageFOrFullScreen", object:nil)
             }
         } else if downLoadPath == "3" {
+            //load from url path
+            fullImageView.sd_setImageWithURL(NSURL(string: imagePath), placeholderImage: UIImage(named:  "cell_blured_heigh"))
+            self.navigationController?.navigationBarHidden = true
         } else {
             activitIndc.hidden = false
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FullScreenImageVC.showDownloadedImage(_:)),name:"showImageFOrFullScreen", object:nil)

@@ -621,6 +621,8 @@
             break;
     }
     
+    
+    
     UIGraphicsBeginImageContext(bounds.size);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
