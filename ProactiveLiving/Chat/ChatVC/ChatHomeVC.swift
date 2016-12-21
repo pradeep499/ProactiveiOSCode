@@ -300,7 +300,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
         let lastMessageTime = cell.contentView.viewWithTag(4) as! UILabel
         let messageCount = cell.contentView.viewWithTag(5) as! UILabel
         
-        messageCount.layer.cornerRadius=12
+        messageCount.layer.cornerRadius = 6
         messageCount.clipsToBounds=true
         
         userImage.image=nil;

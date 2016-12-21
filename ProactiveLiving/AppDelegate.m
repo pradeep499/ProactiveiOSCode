@@ -353,9 +353,14 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [[ChatListner getChatListnerObj]createConnection];
     
-    [[ChatListner getChatListnerObj] showSucessswithString:@"Connecting to server..." alertType:@"ConnectionStatus" width:SCREEN_WIDTH];
+    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+        
+        [[ChatListner getChatListnerObj]createConnection];
+        
+        [[ChatListner getChatListnerObj] showSucessswithString:@"Connecting to server..." alertType:@"ConnectionStatus" width:SCREEN_WIDTH];
+    }
+    
     
 }
 

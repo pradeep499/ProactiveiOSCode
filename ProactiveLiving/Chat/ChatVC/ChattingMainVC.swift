@@ -544,8 +544,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
 
         } else {
             ChatHelper .saveToUserDefault("Roboto-Regular", key: "fontName")
-            ChatHelper .saveToUserDefault(14.0, key: "fontSize")
+            
         }
+        
+        ChatHelper .saveToUserDefault(17.0, key: "fontSize")
         
         chatArray=NSMutableArray()
         recordObj=RecordAndPlayAudio()
@@ -1184,7 +1186,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
 //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
 //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
                     
-                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 15 , width: 221.0, fontName: "Roboto-Regular")
+                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 18 , width: 221.0, fontName: "Roboto-Regular")
                     
                     let height = size.height
                     let width = size.width
@@ -1230,7 +1232,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                  //   let fontName = AppHelper .userDefaultForAny("fontName") as String
                  //   let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
                     
-                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 15 , width: 221.0, fontName: "Roboto-Regular")
+                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 18 , width: 221.0, fontName: "Roboto-Regular")
                     
                     let height = size.height
                     let width = size.width
@@ -3110,17 +3112,17 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     {
         if (IS_IPHONE_5 || IS_IPHONE_4)
         {
-            growingTextView = HPGrowingTextView(frame: CGRectMake(45, 6, 190, 33))
+            growingTextView = HPGrowingTextView(frame: CGRectMake(45, 6, 180, 33))
             textViewLineWidthConst.constant = 190;
         }
         else if (IS_IPHONE_6)
         {
-            growingTextView = HPGrowingTextView(frame: CGRectMake(45, 6, 245, 33))
+            growingTextView = HPGrowingTextView(frame: CGRectMake(45, 6, 235, 33))
             textViewLineWidthConst.constant = 245;
             
         }else
         {
-            growingTextView = HPGrowingTextView(frame: CGRectMake(45, 6, 285, 33))
+            growingTextView = HPGrowingTextView(frame: CGRectMake(45, 6, 275, 33))
             textViewLineWidthConst.constant = 285;
         }
          self.view.layoutIfNeeded()
@@ -3130,7 +3132,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         growingTextView.minNumberOfLines = 1;
         growingTextView.maxNumberOfLines = 6;
         growingTextView.returnKeyType = .Default; //just as an example
-        growingTextView.font = UIFont(name: "Roboto-Regular", size: 14);
+        growingTextView.font = UIFont(name: "Roboto-Regular", size: 16);
         growingTextView.delegate = self;
         growingTextView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(2, 0, 2, 0);
         growingTextView.clipsToBounds = true;

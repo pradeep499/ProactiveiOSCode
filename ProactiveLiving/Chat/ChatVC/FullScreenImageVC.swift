@@ -12,13 +12,17 @@ class FullScreenImageVC: UIViewController {
 
     @IBOutlet weak var activitIndc: UIActivityIndicatorView!
     @IBOutlet weak var fullImageView: UIImageView!
+    var bottomTabBar : CustonTabBarController!
+
     var imagePath : String!
     var downLoadPath : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         activitIndc.hidden = true
-      
+        bottomTabBar = self.tabBarController as? CustonTabBarController
+        
+        
         if downLoadPath == "0" {
              fullImageView.image = UIImage(contentsOfFile: imagePath)
             if fullImageView.image == nil {
@@ -28,7 +32,7 @@ class FullScreenImageVC: UIViewController {
         } else if downLoadPath == "3" {
             //load from url path
             fullImageView.sd_setImageWithURL(NSURL(string: imagePath), placeholderImage: UIImage(named:  "cell_blured_heigh"))
-            self.navigationController?.navigationBarHidden = true
+            self.navigationController?.navigationBarHidden = false
         } else {
             activitIndc.hidden = false
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FullScreenImageVC.showDownloadedImage(_:)),name:"showImageFOrFullScreen", object:nil)
@@ -39,6 +43,13 @@ class FullScreenImageVC: UIViewController {
         navigationItem.leftBarButtonItem = backBtn
         
     }
+    override func viewWillAppear(animated: Bool) {
+        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
+            // print(finish)
+        }
+        super.viewWillAppear(animated)
+    }
+    
     
     func showDownloadedImage(note:NSNotification) {
             let imgStr : String = note.valueForKey("userInfo")?.valueForKey("imagePath") as! String

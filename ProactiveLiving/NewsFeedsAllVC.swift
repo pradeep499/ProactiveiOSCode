@@ -14,7 +14,7 @@ import AVKit
 class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDataSource, UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,  UIActionSheetDelegate, DKImagePickerControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet var collectionView: UICollectionView!
     
     @IBOutlet weak var view_share: UIView!
     @IBOutlet weak var view_post: UIView!
@@ -39,10 +39,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerController()
+    var globalAssets: [DKAsset]?
+    var isFromGallery:Bool!
+    var viewWillAppaerCount:Int!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isFromGallery = false
+        viewWillAppaerCount = 0
         
      tapGesture = UITapGestureRecognizer(target: self, action: "hideSocialSharingView")
      
@@ -74,8 +81,21 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
         
+      /*  //to avoid blocking the UI
+        if (isFromGallery == true) {
+            
+            viewWillAppaerCount = viewWillAppaerCount + 1
+            if viewWillAppaerCount == 4 {
+                
+                isFromGallery = false
+                viewWillAppaerCount = 0
+            }else{
+                isFromGallery = true
+            }
+            
+            return
+        }*/
         
         
         if self.title == "ALL" || self.title == "EXPLORE" {
@@ -95,6 +115,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.collectionView.reloadData()
         
         self.layoutAttachmetBottom.constant = -200;
+        
+        super.viewWillAppear(true)
     }
     
     
@@ -374,7 +396,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     @IBAction func onClickPhotoBtn(sender: AnyObject) {
         
-        self.attachmentViewS.backgroundColor=UIColor.redColor()
+        self.attachmentViewS.backgroundColor=UIColor.lightGrayColor()
         
         self.layoutAttachmetBottom.constant = 120;
         self.view.bringSubviewToFront(self.attachmentViewS)
@@ -461,6 +483,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
         fullImageVC.imagePath = imgUrls.first
         fullImageVC.downLoadPath = "3"
+        fullImageVC.hidesBottomBarWhenPushed = true
+        
+        let nav = UINavigationController.init(rootViewController: fullImageVC)
         
         self.navigationController?.pushViewController(fullImageVC, animated: true)
     }
@@ -611,6 +636,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             print("Request dict = ", dict)
             
+           
+            
             ChatListner .getChatListnerObj().socket.emit("createPost", dict)
             
             
@@ -650,23 +677,36 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 if resultDict["section"] as! String == "all" {
                     
                    self.postAllArr.insertObject(resultDict, atIndex: 0)
+                 //  self.title = "ALL"
+                    
                 }
                 else if resultDict["section"] as! String  == "friends" {
                     
                    self.postFriendsArr.insertObject(resultDict, atIndex: 0)
+                   // self.title =  "FRIENDS"
                     
                 }
                     
                 else if resultDict["section"] as! String  == "colleagues" {
                     
                     self.postColleagueArr.insertObject(resultDict, atIndex: 0)
+                  //  self.title = "COLLEAGUES"
                 }
                 else if resultDict["section"] as! String  == "health clubs" {
                     
                     self.postHealthClubsArr.insertObject(resultDict, atIndex: 0)
+                    
+                  //  self.title =  "HEALTH CLUBS"
                 }
                 
-                self.collectionView.reloadData()
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    self.collectionView.reloadData()
+//                }
+                
+                let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+                dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                    self.collectionView.reloadData()
+                })
                 
                 let indexPath = NSIndexPath(forRow: 0, inSection: 0)
                 
@@ -856,7 +896,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         if dict["postType"] as! String != "text" {
             
-            height = height + (360 - 150)
+            height = height + (380 - 200)
         }
         
         return CGSize(width: w, height: height)
@@ -1598,21 +1638,25 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     //MARK:- DKImagePickerController  Delegates
     
     func imagePickerControllerCancelled() {
+        
+        isFromGallery = true
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidSelectedAssets(assets: [DKAsset]!)
     {
+        isFromGallery = true
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         delay(0.1,
               closure: {
                 UIApplication.sharedApplication().statusBarHidden = false;
                 UIApplication.sharedApplication().statusBarStyle = .LightContent
         })
+         self.globalAssets = assets
+      //   self.addCaptionOnPost(assets, cameraImage: nil, videoUrl: nil)
         
-     //   self.addCaptionOnPost(assets, cameraImage: nil, videoUrl: nil)
-        
-         self.handleMultipleImages(assets!, captionText: "")
+        self.handleMultipleImages(assets!, captionText: "")
         
     }
     
@@ -1621,7 +1665,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     //MARK:- Image Picker Delegates
     func imagePickerControllerDidCancel(picker:UIImagePickerController)
     {
-        
+        isFromGallery = true
         
         self.dismissViewControllerAnimated(true, completion: nil)
         delay(0.1,
@@ -1632,6 +1676,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        isFromGallery = true
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         delay(0.1,
               closure: {
@@ -1683,10 +1730,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
         })
         
+        
         NSOperationQueue.mainQueue().addOperationWithBlock() { () in
+            
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
             
             let name = self.uniqueName("")
             UploadInS3.sharedGlobal().uploadImageTos3( thumbData, type: 0, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
+                
+                 AppDelegate.dismissProgressHUD()
                 
                 if bool_val == true
                 {
@@ -1759,9 +1811,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     })
                     
                     NSOperationQueue.mainQueue().addOperationWithBlock() { () in
+                        AppDelegate.showProgressHUDWithStatus("Please wait..")
+                        
                         
                         let name = self.uniqueName("")
                         UploadInS3.sharedGlobal().uploadImageTos3( compressedVideoData, type: 1, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
+                            
+                            AppDelegate.dismissProgressHUD()
+                            
+                            
                             if bool_val == true
                             {
                                 let fileName =  UploadInS3.sharedGlobal().strFilesName
@@ -1770,6 +1828,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                                     self.sendPostToServer("video", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText,thumNailName:thumbNailName )
                                 }
                             }
+                            
+                            
                             
                             }, completionProgress: { ( bool_val : Bool, progress) -> Void in
                                 
@@ -1851,7 +1911,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func handleMultipleImages(assets: [DKAsset]!, captionText:String?) -> Void {
         
-        for (index, asset) in assets.enumerate() {
+        for (_, asset) in assets!.enumerate() {
             
             
             let locId = CommonMethodFunctions.nextIdentifies()
@@ -1891,11 +1951,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             NSOperationQueue.mainQueue().addOperationWithBlock() { () in
                 
-                let name = self.uniqueName("")
+                AppDelegate.showProgressHUDWithStatus("Please wait..")
                 
+                let name = self.uniqueName("")                
                 
                 UploadInS3.sharedGlobal().uploadMultipleImagesOnChatTos3(imgData, type: 0, dictInfo: dict, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
                     
+                    AppDelegate.dismissProgressHUD()
                     
                     if bool_val == true{
                         self.sendPostToServer("image", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText, thumNailName:thumbNailName)
