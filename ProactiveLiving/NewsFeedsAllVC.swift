@@ -40,15 +40,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerController()
     var globalAssets: [DKAsset]?
-    var isFromGallery:Bool!
-    var viewWillAppaerCount:Int!
+ //   var isFromGallery:Bool!
+    
+    var isBackFromChildVC:Bool!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        isFromGallery = false
+     //   isFromGallery = false
+        isBackFromChildVC = false
         viewWillAppaerCount = 0
         
      tapGesture = UITapGestureRecognizer(target: self, action: "hideSocialSharingView")
@@ -82,21 +84,24 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     override func viewWillAppear(animated: Bool) {
         
-      /*  //to avoid blocking the UI
-        if (isFromGallery == true) {
+         //to avoid blocking the UI
+        if (viewWillAppaerCount > 0) {
             
             viewWillAppaerCount = viewWillAppaerCount + 1
-            if viewWillAppaerCount == 4 {
+            
+            if viewWillAppaerCount == 5{
                 
-                isFromGallery = false
                 viewWillAppaerCount = 0
-            }else{
-                isFromGallery = true
             }
             
+            
             return
-        }*/
+        }
         
+        if isBackFromChildVC == true{
+            isBackFromChildVC = false
+            return
+        }
         
         if self.title == "ALL" || self.title == "EXPLORE" {
             
@@ -112,11 +117,21 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             self.fetchPostDataFromServer()
         }
         
+        
         self.collectionView.reloadData()
         
         self.layoutAttachmetBottom.constant = -200;
         
         super.viewWillAppear(true)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        // When user comes back from gallery Does not post come on time line
+        self.getPostEvent()
+        self.getLikeUpdate()
+        
+       
     }
     
     
@@ -477,15 +492,32 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         
         let imgUrls = dict["attachments"] as! [String]
+        let thumbNailName = dict["thumNailName"] as! String
         
         
         
         let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
-        fullImageVC.imagePath = imgUrls.first
-        fullImageVC.downLoadPath = "3"
-        fullImageVC.hidesBottomBarWhenPushed = true
         
-        let nav = UINavigationController.init(rootViewController: fullImageVC)
+        fullImageVC.hidesBottomBarWhenPushed = true
+        fullImageVC.parentNewsFeed = self
+        
+        
+        
+        
+        //check the thumbNail name is exist ? or generate from video url and save to db
+        self.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
+            
+            if isExistPath {
+                fullImageVC.imagePath = fileUrl
+                fullImageVC.downLoadPath = "4"
+            }else{
+                fullImageVC.imagePath = imgUrls.first
+                fullImageVC.downLoadPath = "3"
+            }
+            
+            })
+        
+       
         
         self.navigationController?.pushViewController(fullImageVC, animated: true)
     }
@@ -895,8 +927,21 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         var height = size.height + (150)
         
         if dict["postType"] as! String != "text" {
+         /*   if IS_IPHONE_7{
+                height = height + (410 - 200)
+                
+            }else if IS_IPHONE_6plus{
+                height = height + (400 - 200)
+                
+            }else if IS_IPHONE_6{
+                height = height + (390 - 200)
+                
+            }else{
+                height = height + (380 - 200)
+            }*/
             
             height = height + (380 - 200)
+            
         }
         
         return CGSize(width: w, height: height)
@@ -952,13 +997,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         //cell type Text or image Or video
-        var  cell:UICollectionViewCell!
+        var  cell:CellNewsFeed!
         if dict["postType"] as! String == "text" {
             
-            cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellAll", forIndexPath: indexPath) as UICollectionViewCell
+            cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellText", forIndexPath: indexPath) as! CellNewsFeed
         }else{
             
-            cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellAttachment", forIndexPath: indexPath) as UICollectionViewCell
+            cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellAttachment", forIndexPath: indexPath) as! CellNewsFeed
         }
         
         
@@ -995,18 +1040,25 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         
         //shared by name
-        if let sharedByName = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
+        if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
+            
+            
+            let sharedByLName = (dict as NSDictionary).valueForKeyPath("sharedBy.lastName") as? String
+            
             
             let sharedByID = (dict as NSDictionary).valueForKeyPath("sharedBy._id") as? String
             
             let ownerID = (dict as NSDictionary).valueForKeyPath("createdBy._id") as? String
-            let ownerName = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String
+            
+            let ownerFName = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String
+            let ownerLName = (dict as NSDictionary).valueForKeyPath("createdBy.lastName") as? String
+            
             if (sharedByID != ownerID) {
                 
-                lbl_name.text = sharedByName + " shared a " + ownerName! + "'s post"
+                lbl_name.text = sharedByFname + " " + sharedByLName! + " shared " + ownerFName! + " "+ownerLName! + "'s post"
                 
             }else{
-                lbl_name.text = sharedByName + " shared a post"
+                lbl_name.text = sharedByFname + " " + sharedByLName! +  " shared post"
             }
             
             
@@ -1014,11 +1066,27 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }else{
             //Posted by name
             
-            if let name = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String {
+            if let fName = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String {
                 
-                lbl_name.text = name + " shared a post"
+                let lName = (dict as NSDictionary).valueForKeyPath("createdBy.lastName") as? String
+                
+                lbl_name.text = fName + " " + lName! + " shared post"
             }
         }
+        
+        //height of lbl
+        
+        
+        let text = lbl_name.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let str = text.stringByReplacingEmojiCheatCodesWithUnicode()
+        
+        let w = collectionView.bounds.size.width - 82
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 18 , width: Float(w) , fontName: "Roboto-Regular")
+        
+        cell.layOut_lbl_Name_height.constant = size.height
+        
+        
+        
         
         //shared by profile image
         if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("sharedBy.imgUrl") as? String    {
@@ -1095,6 +1163,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             let thumbIV =  cell.viewWithTag(20) as! UIImageView
             let btn_videoPlay =  cell.viewWithTag(21) as! UIButton
+            
+            thumbIV.contentMode = .ScaleToFill
             
             let imgUrls = dict["attachments"] as! [String]
             
@@ -1639,13 +1709,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func imagePickerControllerCancelled() {
         
-        isFromGallery = true
+     //   isFromGallery = true
+        viewWillAppaerCount = 1
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidSelectedAssets(assets: [DKAsset]!)
     {
-        isFromGallery = true
+    //    isFromGallery = true
         
         self.dismissViewControllerAnimated(true, completion: nil)
         delay(0.1,
@@ -1665,7 +1736,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     //MARK:- Image Picker Delegates
     func imagePickerControllerDidCancel(picker:UIImagePickerController)
     {
-        isFromGallery = true
+      //  isFromGallery = true
+        viewWillAppaerCount = 1
         
         self.dismissViewControllerAnimated(true, completion: nil)
         delay(0.1,
@@ -1677,7 +1749,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        isFromGallery = true
+      //  isFromGallery = true
         
         self.dismissViewControllerAnimated(true, completion: nil)
         delay(0.1,
@@ -1717,8 +1789,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         // let imgData = UIImageJPEGRepresentation(uploadImage, 0.8)
         
-        let thumbImg = CommonMethodFunctions.generatePhotoThumbnail(uploadImage);
-        let thumbData = UIImageJPEGRepresentation(thumbImg, 0.0)
+     //   let thumbImg = CommonMethodFunctions.generatePhotoThumbnail(uploadImage);
+        let thumbData = UIImageJPEGRepresentation(uploadImage, 0.0)
         let thumbNailName = "Thumb" + timeStamp + ".jpg"
         
         
@@ -2004,5 +2076,13 @@ class FooterAllReUsableView: UICollectionReusableView{
     func myCustomInit() {
         print("hello there from SupView")
     }
+    
+}
+
+
+
+class CellNewsFeed:UICollectionViewCell{
+    
+    @IBOutlet weak var layOut_lbl_Name_height: NSLayoutConstraint!
     
 }

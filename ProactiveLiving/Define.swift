@@ -35,7 +35,8 @@ let APP_NAME = "ProactiveLiving"
 let IS_IOS_7 = UIDevice.currentDevice().systemVersion.hasPrefix("7")
 let IS_IOS_8 = UIDevice.currentDevice().systemVersion.hasPrefix("8")
 
-let IS_IPHONE_6plus = UIScreen.mainScreen().bounds.size.height > 667.0
+let IS_IPHONE_7 = UIScreen.mainScreen().bounds.size.height > 736.0
+let IS_IPHONE_6plus = UIScreen.mainScreen().bounds.size.height == 736.0
 let IS_IPHONE_6 = UIScreen.mainScreen().bounds.size.height == 667.0
 let IS_IPHONE_5 = UIScreen.mainScreen().bounds.size.height == 568.0
 let IS_IPHONE_4 = UIScreen.mainScreen().bounds.size.height == 480.0
@@ -107,22 +108,22 @@ let chatCDNbaseUrl = "http://52.89.149.60:3000/proactiveliving"
 //for chat profile images
 
 // Live Server URL
- let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
+// let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
 
 //Production URL
 //let ChatBaseMediaUrl = "http://52.89.149.60:3000/"
 
 //Testing URL
-//let ChatBaseMediaUrl = "http://192.168.3.185:90/"
+let ChatBaseMediaUrl = "http://192.168.3.185:90/"
 
 let ChatMediaPath = "api/v1/sendMedia"
 
 //----------------************Socket IO URL **************-------------
 // Test Server
-//let socketIO_BaseURL =  "http://192.168.3.185:90"
+let socketIO_BaseURL =  "http://192.168.3.185:90"
 
 //Live Server
-let socketIO_BaseURL = "http://52.23.211.77:3000"
+//let socketIO_BaseURL = "http://52.23.211.77:3000"
 
 //Production Serever
 //let socketIO_BaseURL = "http://52.89.149.60:3000"

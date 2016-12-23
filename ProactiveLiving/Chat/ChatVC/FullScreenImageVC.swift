@@ -16,11 +16,13 @@ class FullScreenImageVC: UIViewController {
 
     var imagePath : String!
     var downLoadPath : String!
+    var parentNewsFeed:NewsFeedsAllVC!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         activitIndc.hidden = true
         bottomTabBar = self.tabBarController as? CustonTabBarController
+        fullImageView.contentMode = .ScaleAspectFit
         
         
         if downLoadPath == "0" {
@@ -33,7 +35,12 @@ class FullScreenImageVC: UIViewController {
             //load from url path
             fullImageView.sd_setImageWithURL(NSURL(string: imagePath), placeholderImage: UIImage(named:  "cell_blured_heigh"))
             self.navigationController?.navigationBarHidden = false
-        } else {
+        }else if downLoadPath == "4" {
+            //load from local path
+            self.fullImageView.image = UIImage(contentsOfFile: imagePath)
+            self.navigationController?.navigationBarHidden = false
+            
+        }else {
             activitIndc.hidden = false
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FullScreenImageVC.showDownloadedImage(_:)),name:"showImageFOrFullScreen", object:nil)
         }
@@ -65,6 +72,10 @@ class FullScreenImageVC: UIViewController {
     @IBAction func backBtnClick() {
          self.navigationController?.popViewControllerAnimated(true)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "receiveMsgObserverUpdate", object: nil)
+        
+        if parentNewsFeed != nil{
+            parentNewsFeed.isBackFromChildVC = true
+        }
     }
 
     /*

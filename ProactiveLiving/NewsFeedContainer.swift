@@ -10,6 +10,7 @@ import UIKit
 
 var currentIndex = 0
 var isPostServiceCalled = false
+var viewWillAppaerCount:Int!
 
 class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
     
@@ -29,6 +30,7 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
     @IBOutlet weak var screenTitle: UILabel!
     @IBOutlet var btnEdit: UIButton!
     @IBOutlet var btnContacts: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
