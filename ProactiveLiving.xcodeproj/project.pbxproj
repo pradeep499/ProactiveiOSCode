@@ -26,8 +26,17 @@
 		600F1CE61DBA293B00BCBC12 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CD61DBA293B00BCBC12 /* UIView+WebCacheOperation.m */; };
 		600F1CEB1DBA436000BCBC12 /* BroadcastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */; };
 		601AF81D1DDAE6B3006ABB5F /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */; };
+		602414F01E10F64200718633 /* CTCarrier+CountryCallingCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 602414EF1E10F64200718633 /* CTCarrier+CountryCallingCode.m */; };
+		602414FC1E11092900718633 /* SettingsConCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 602414F31E11092900718633 /* SettingsConCell.m */; };
+		602414FD1E11092900718633 /* SettingsContactsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 602414F51E11092900718633 /* SettingsContactsVC.m */; };
+		602414FE1E11092900718633 /* SettingsMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 602414F71E11092900718633 /* SettingsMainVC.m */; };
+		602414FF1E11092900718633 /* SettingsOrganizationsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 602414F91E11092900718633 /* SettingsOrganizationsVC.m */; };
+		602415001E11092900718633 /* SettingsOrgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 602414FB1E11092900718633 /* SettingsOrgCell.m */; };
+		602415041E11094100718633 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 602415031E11094100718633 /* MapVC.m */; };
+		602415071E1109AB00718633 /* ChangeNumberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602415061E1109AB00718633 /* ChangeNumberVC.swift */; };
+		602415091E1109C100718633 /* DeleteACVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602415081E1109C100718633 /* DeleteACVC.swift */; };
+		6024150B1E1109E900718633 /* OTPVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024150A1E1109E900718633 /* OTPVC.swift */; };
 		6083242A1DF155B10020CF83 /* SecondStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 608324291DF155B10020CF83 /* SecondStoryboard.storyboard */; };
-		6083242E1DF156930020CF83 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6083242D1DF156930020CF83 /* MapVC.m */; };
 		60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A7CADE1DDD6BB10033BA1E /* Social.framework */; };
 		60CD2A011DE2C3C000125457 /* CommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CD2A001DE2C3C000125457 /* CommentsVC.swift */; };
 		60D471C71DC07D9900EAD7D9 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D471C61DC07D9900EAD7D9 /* MenuVC.swift */; };
@@ -391,11 +400,6 @@
 		BAD8D6481CBCCDCB0037ED23 /* CKCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD8D6331CBCCDCB0037ED23 /* CKCalendarViewController.m */; };
 		BAD8D6491CBCCDCB0037ED23 /* CKCalendarViewControllerInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD8D6351CBCCDCB0037ED23 /* CKCalendarViewControllerInternal.m */; };
 		BAD8D64F1CBD12EB0037ED23 /* CalendarCellDot.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD8D64E1CBD12EB0037ED23 /* CalendarCellDot.m */; };
-		BAD909941CFD791B00E12422 /* SettingsMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD909931CFD791B00E12422 /* SettingsMainVC.m */; };
-		BAD909971CFD795500E12422 /* SettingsOrganizationsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD909961CFD795500E12422 /* SettingsOrganizationsVC.m */; };
-		BAD9099A1CFD797C00E12422 /* SettingsContactsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD909991CFD797C00E12422 /* SettingsContactsVC.m */; };
-		BAD9099D1CFD7A2100E12422 /* SettingsOrgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD9099C1CFD7A2100E12422 /* SettingsOrgCell.m */; };
-		BAD909A01CFD7A3800E12422 /* SettingsConCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD9099F1CFD7A3800E12422 /* SettingsConCell.m */; };
 		BAD98DC31CAA75C900EF2723 /* AppointmentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD98DC21CAA75C900EF2723 /* AppointmentVC.m */; };
 		BADE153B1CBE7F2200E59661 /* CustomUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = BADE153A1CBE7F2200E59661 /* CustomUISwitch.m */; };
 		BADFD6F41D1D31C7008B1FA9 /* MyPAStodoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BADFD6F31D1D31C7008B1FA9 /* MyPAStodoVC.m */; };
@@ -472,9 +476,24 @@
 		600F1CD61DBA293B00BCBC12 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastVC.swift; sourceTree = "<group>"; };
 		601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
+		602414EE1E10F64200718633 /* CTCarrier+CountryCallingCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTCarrier+CountryCallingCode.h"; sourceTree = "<group>"; };
+		602414EF1E10F64200718633 /* CTCarrier+CountryCallingCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CTCarrier+CountryCallingCode.m"; sourceTree = "<group>"; };
+		602414F21E11092900718633 /* SettingsConCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsConCell.h; sourceTree = "<group>"; };
+		602414F31E11092900718633 /* SettingsConCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsConCell.m; sourceTree = "<group>"; };
+		602414F41E11092900718633 /* SettingsContactsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsContactsVC.h; sourceTree = "<group>"; };
+		602414F51E11092900718633 /* SettingsContactsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsContactsVC.m; sourceTree = "<group>"; };
+		602414F61E11092900718633 /* SettingsMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsMainVC.h; sourceTree = "<group>"; };
+		602414F71E11092900718633 /* SettingsMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsMainVC.m; sourceTree = "<group>"; };
+		602414F81E11092900718633 /* SettingsOrganizationsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsOrganizationsVC.h; sourceTree = "<group>"; };
+		602414F91E11092900718633 /* SettingsOrganizationsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsOrganizationsVC.m; sourceTree = "<group>"; };
+		602414FA1E11092900718633 /* SettingsOrgCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsOrgCell.h; sourceTree = "<group>"; };
+		602414FB1E11092900718633 /* SettingsOrgCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsOrgCell.m; sourceTree = "<group>"; };
+		602415021E11094100718633 /* MapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapVC.h; sourceTree = "<group>"; };
+		602415031E11094100718633 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
+		602415061E1109AB00718633 /* ChangeNumberVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeNumberVC.swift; sourceTree = "<group>"; };
+		602415081E1109C100718633 /* DeleteACVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteACVC.swift; sourceTree = "<group>"; };
+		6024150A1E1109E900718633 /* OTPVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPVC.swift; sourceTree = "<group>"; };
 		608324291DF155B10020CF83 /* SecondStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SecondStoryboard.storyboard; sourceTree = "<group>"; };
-		6083242C1DF156930020CF83 /* MapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapVC.h; sourceTree = "<group>"; };
-		6083242D1DF156930020CF83 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
 		60A7CADE1DDD6BB10033BA1E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		60CD2A001DE2C3C000125457 /* CommentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentsVC.swift; path = View/NewsFeeds/CommentsVC.swift; sourceTree = "<group>"; };
 		60D471C61DC07D9900EAD7D9 /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
@@ -996,16 +1015,6 @@
 		BAD8D6351CBCCDCB0037ED23 /* CKCalendarViewControllerInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKCalendarViewControllerInternal.m; sourceTree = "<group>"; };
 		BAD8D64D1CBD12EB0037ED23 /* CalendarCellDot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarCellDot.h; sourceTree = "<group>"; };
 		BAD8D64E1CBD12EB0037ED23 /* CalendarCellDot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarCellDot.m; sourceTree = "<group>"; };
-		BAD909921CFD791B00E12422 /* SettingsMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsMainVC.h; sourceTree = "<group>"; };
-		BAD909931CFD791B00E12422 /* SettingsMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsMainVC.m; sourceTree = "<group>"; };
-		BAD909951CFD795500E12422 /* SettingsOrganizationsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsOrganizationsVC.h; sourceTree = "<group>"; };
-		BAD909961CFD795500E12422 /* SettingsOrganizationsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsOrganizationsVC.m; sourceTree = "<group>"; };
-		BAD909981CFD797C00E12422 /* SettingsContactsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsContactsVC.h; sourceTree = "<group>"; };
-		BAD909991CFD797C00E12422 /* SettingsContactsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsContactsVC.m; sourceTree = "<group>"; };
-		BAD9099B1CFD7A2100E12422 /* SettingsOrgCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsOrgCell.h; sourceTree = "<group>"; };
-		BAD9099C1CFD7A2100E12422 /* SettingsOrgCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsOrgCell.m; sourceTree = "<group>"; };
-		BAD9099E1CFD7A3800E12422 /* SettingsConCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsConCell.h; sourceTree = "<group>"; };
-		BAD9099F1CFD7A3800E12422 /* SettingsConCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsConCell.m; sourceTree = "<group>"; };
 		BAD98DC11CAA75C900EF2723 /* AppointmentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppointmentVC.h; path = ../AppointmentVC.h; sourceTree = "<group>"; };
 		BAD98DC21CAA75C900EF2723 /* AppointmentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppointmentVC.m; path = ../AppointmentVC.m; sourceTree = "<group>"; };
 		BADE15391CBE7F2200E59661 /* CustomUISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUISwitch.h; sourceTree = "<group>"; };
@@ -1155,11 +1164,74 @@
 			path = View/WebView;
 			sourceTree = "<group>";
 		};
+		602414EB1E10F64200718633 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				602414EC1E10F64200718633 /* ThirdParties */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		602414EC1E10F64200718633 /* ThirdParties */ = {
+			isa = PBXGroup;
+			children = (
+				602414ED1E10F64200718633 /* CountryCode */,
+			);
+			path = ThirdParties;
+			sourceTree = "<group>";
+		};
+		602414ED1E10F64200718633 /* CountryCode */ = {
+			isa = PBXGroup;
+			children = (
+				602414EE1E10F64200718633 /* CTCarrier+CountryCallingCode.h */,
+				602414EF1E10F64200718633 /* CTCarrier+CountryCallingCode.m */,
+			);
+			path = CountryCode;
+			sourceTree = "<group>";
+		};
+		602414F11E11092900718633 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				602414F21E11092900718633 /* SettingsConCell.h */,
+				602414F31E11092900718633 /* SettingsConCell.m */,
+				602414F41E11092900718633 /* SettingsContactsVC.h */,
+				602414F51E11092900718633 /* SettingsContactsVC.m */,
+				602414F61E11092900718633 /* SettingsMainVC.h */,
+				602414F71E11092900718633 /* SettingsMainVC.m */,
+				602414F81E11092900718633 /* SettingsOrganizationsVC.h */,
+				602414F91E11092900718633 /* SettingsOrganizationsVC.m */,
+				602414FA1E11092900718633 /* SettingsOrgCell.h */,
+				602414FB1E11092900718633 /* SettingsOrgCell.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		602415011E11094100718633 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				602415021E11094100718633 /* MapVC.h */,
+				602415031E11094100718633 /* MapVC.m */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		602415051E11098700718633 /* ChangeDeleteAC */ = {
+			isa = PBXGroup;
+			children = (
+				602415061E1109AB00718633 /* ChangeNumberVC.swift */,
+				602415081E1109C100718633 /* DeleteACVC.swift */,
+				6024150A1E1109E900718633 /* OTPVC.swift */,
+			);
+			name = ChangeDeleteAC;
+			path = Settings/ChangeDeleteAC;
+			sourceTree = "<group>";
+		};
 		6083242B1DF156830020CF83 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				6083242C1DF156930020CF83 /* MapVC.h */,
-				6083242D1DF156930020CF83 /* MapVC.m */,
+				602415051E11098700718633 /* ChangeDeleteAC */,
+				602415011E11094100718633 /* Map */,
+				602414F11E11092900718633 /* Settings */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1204,6 +1276,7 @@
 		671C3D5E1C44FB72006A5423 /* ProactiveLiving */ = {
 			isa = PBXGroup;
 			children = (
+				602414EB1E10F64200718633 /* Libs */,
 				6083242B1DF156830020CF83 /* VC */,
 				671C3D961C44FEE6006A5423 /* Views */,
 				671C3D981C44FEF6006A5423 /* ControllerClasses */,
@@ -1262,7 +1335,6 @@
 				BAFDA8E61D40AAFB00301C01 /* GroupChat */,
 				BA59FFF41D364EFD006142AC /* Chat */,
 				BA02E2BB1D05BFCB00FC5489 /* PAS-Share */,
-				BAD909911CFD78D500E12422 /* Settings */,
 				BA18B0421CF5EB2D00C1086A /* Chat Old */,
 				BA1BF0DC1CEB4B05000CC4EA /* Inbox */,
 				BAA411F51CE9A7B300CDE467 /* AllContactsVC */,
@@ -2496,23 +2568,6 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		BAD909911CFD78D500E12422 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				BAD909921CFD791B00E12422 /* SettingsMainVC.h */,
-				BAD909931CFD791B00E12422 /* SettingsMainVC.m */,
-				BAD909951CFD795500E12422 /* SettingsOrganizationsVC.h */,
-				BAD909961CFD795500E12422 /* SettingsOrganizationsVC.m */,
-				BAD909981CFD797C00E12422 /* SettingsContactsVC.h */,
-				BAD909991CFD797C00E12422 /* SettingsContactsVC.m */,
-				BAD9099B1CFD7A2100E12422 /* SettingsOrgCell.h */,
-				BAD9099C1CFD7A2100E12422 /* SettingsOrgCell.m */,
-				BAD9099E1CFD7A3800E12422 /* SettingsConCell.h */,
-				BAD9099F1CFD7A3800E12422 /* SettingsConCell.m */,
-			);
-			name = Settings;
-			sourceTree = "<group>";
-		};
 		BAD98DC01CAA759700EF2723 /* Instructional Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2896,6 +2951,7 @@
 				BA6E72651D7DAD95008081FC /* MeetUpDetailsVC.swift in Sources */,
 				BAB0E4F61D5DE59B00906C10 /* SocketEngineWebsocket.swift in Sources */,
 				BA59019C1D36579D006142AC /* IQNSArray+Sort.swift in Sources */,
+				602414FD1E11092900718633 /* SettingsContactsVC.m in Sources */,
 				BAB0E4ED1D5DE59B00906C10 /* SocketAckManager.swift in Sources */,
 				BA59010B1D364EFD006142AC /* ChatAudioSenderCell.swift in Sources */,
 				BA1D70851CD8B29B00978F2F /* ActivityDetailVC.m in Sources */,
@@ -2909,7 +2965,6 @@
 				BAFFA5BC1D8AB8A300969211 /* MeetUpProfileCell.swift in Sources */,
 				BA48590A1DC9DE4700DED552 /* RSDFDatePickerViewController.m in Sources */,
 				BA48591C1DC9DEF800DED552 /* RSDFCustomDatePickerMonthHeader.m in Sources */,
-				BAD909941CFD791B00E12422 /* SettingsMainVC.m in Sources */,
 				BA88882C1C6493BA0083C857 /* FilterFourCell.m in Sources */,
 				BA5901131D364EFD006142AC /* ChatVC.swift in Sources */,
 				BAD5F0AB1D068D26002186B4 /* NSDate+Utils.m in Sources */,
@@ -2921,7 +2976,6 @@
 				BAAF57021C92D6E5000D54F6 /* JCCollectionViewTagFlowLayout.m in Sources */,
 				BA5900E51D364EFD006142AC /* RecentChat+CoreDataProperties.swift in Sources */,
 				BA893DE91C6322AE00E94DBE /* YSLContainerViewController.m in Sources */,
-				BAD909A01CFD7A3800E12422 /* SettingsConCell.m in Sources */,
 				BAA471AD1CCF7ED600CF90D7 /* CollectionHeaderView.m in Sources */,
 				600F1CD71DBA293B00BCBC12 /* MKAnnotationView+WebCache.m in Sources */,
 				BAD8D6431CBCCDCB0037ED23 /* CKCalendarEvent.m in Sources */,
@@ -2941,7 +2995,6 @@
 				673D9A4E1C5111E9009DD48A /* PushSegue.m in Sources */,
 				671C3D671C44FB72006A5423 /* LoginVC.m in Sources */,
 				BA5901151D364EFD006142AC /* mediaCell.swift in Sources */,
-				6083242E1DF156930020CF83 /* MapVC.m in Sources */,
 				BAA471B01CCF9D1100CF90D7 /* CertDetailsVC.m in Sources */,
 				600F1CDB1DBA293B00BCBC12 /* SDWebImageDecoder.m in Sources */,
 				BAB0E5021D5DE59B00906C10 /* SocketTypes.swift in Sources */,
@@ -2966,11 +3019,11 @@
 				BA5900EE1D364EFD006142AC /* UserChat.swift in Sources */,
 				601AF81D1DDAE6B3006ABB5F /* WebViewVC.swift in Sources */,
 				BAB0E5051D5DE59B00906C10 /* WebSocket.swift in Sources */,
-				BAD9099D1CFD7A2100E12422 /* SettingsOrgCell.m in Sources */,
 				679AA7201C461F85002D96AE /* ForgotPasswordVC.m in Sources */,
 				BA48591D1DC9DEF800DED552 /* RSDFCustomDatePickerView.m in Sources */,
 				BAB0E4F01D5DE59B00906C10 /* SocketClientSpec.swift in Sources */,
 				BAD63F061D9A8EEA002BDF0A /* ExploreDynamicVC.swift in Sources */,
+				602414F01E10F64200718633 /* CTCarrier+CountryCallingCode.m in Sources */,
 				BA59010E1D364EFD006142AC /* ChatListner.swift in Sources */,
 				BA4859041DC9DDDE00DED552 /* RSDFDatePickerDaysOfWeekView.m in Sources */,
 				BAD63F0A1D9A9007002BDF0A /* JMCFlexibleDatasource.swift in Sources */,
@@ -2978,6 +3031,7 @@
 				BAD8D6421CBCCDCB0037ED23 /* CKCalendarCell.m in Sources */,
 				671C3DA21C45017C006A5423 /* CoreDataFunction.m in Sources */,
 				BAB0E4CE1D5DE39900906C10 /* ContactFriendsVC.m in Sources */,
+				602415091E1109C100718633 /* DeleteACVC.swift in Sources */,
 				BA4859061DC9DDDE00DED552 /* RSDFDatePickerView.m in Sources */,
 				BA5900DE1D364EFD006142AC /* GroupChat.swift in Sources */,
 				BAB0E4F51D5DE59B00906C10 /* SocketEngineSpec.swift in Sources */,
@@ -3025,7 +3079,6 @@
 				BA5900ED1D364EFD006142AC /* UserChat+CoreDataProperties.swift in Sources */,
 				BAE565CF1CE4B1BE007D6959 /* AllPACirclesVC.m in Sources */,
 				BA7414131C75A4900041B8D4 /* ProfileVCTableCell2.m in Sources */,
-				BAD909971CFD795500E12422 /* SettingsOrganizationsVC.m in Sources */,
 				BA5901481D364F86006142AC /* OAuth+Additions.m in Sources */,
 				BA59011F1D364EFD006142AC /* PICircularProgressView.m in Sources */,
 				92E091F31D37767A00BEC575 /* NSString+Calculation.m in Sources */,
@@ -3039,6 +3092,7 @@
 				BAD8D63C1CBCCDCB0037ED23 /* NSDate+Description.m in Sources */,
 				BAD8D63D1CBCCDCB0037ED23 /* NSDateComponents+AllComponents.m in Sources */,
 				600F1CEB1DBA436000BCBC12 /* BroadcastVC.swift in Sources */,
+				602414FE1E11092900718633 /* SettingsMainVC.m in Sources */,
 				BAB0E4FE1D5DE59B00906C10 /* SocketLogger.swift in Sources */,
 				BAF2D9991CA2B0D5000FBD1F /* BookingPopUp.m in Sources */,
 				BA5900EC1D364EFD006142AC /* Test.swift in Sources */,
@@ -3061,6 +3115,7 @@
 				BA5901091D364EFD006142AC /* AllChatFriendsVC.swift in Sources */,
 				BA5901211D364EFD006142AC /* TableViewCell_Extension.swift in Sources */,
 				BA48591B1DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.m in Sources */,
+				602415071E1109AB00718633 /* ChangeNumberVC.swift in Sources */,
 				600F1CE61DBA293B00BCBC12 /* UIView+WebCacheOperation.m in Sources */,
 				BA7A4B191C61F481005CA80C /* ValidationFiltersVC.m in Sources */,
 				BAF1E5571CABAB2300FA5CC5 /* PASInstVideoVC.m in Sources */,
@@ -3072,6 +3127,7 @@
 				BA5901111D364EFD006142AC /* ChatTextCell1.swift in Sources */,
 				BAD63F081D9A8FF0002BDF0A /* JMCFlexibleLayout.swift in Sources */,
 				BA5900E71D364EFD006142AC /* RecentChatList+CoreDataProperties.swift in Sources */,
+				6024150B1E1109E900718633 /* OTPVC.swift in Sources */,
 				BA59019F1D36579D006142AC /* IQUIView+Hierarchy.swift in Sources */,
 				BAB0E5011D5DE59B00906C10 /* SocketStringReader.swift in Sources */,
 				BA01EEE01D7D7C92009548D6 /* MeetUpsListingVC.swift in Sources */,
@@ -3104,14 +3160,15 @@
 				BAD5F1121CB5214B00C8F206 /* AppointmentDetailsVC.m in Sources */,
 				BA5901B51D365FCD006142AC /* Reachability.swift in Sources */,
 				BAB0E4F41D5DE59B00906C10 /* SocketEnginePollable.swift in Sources */,
+				602414FF1E11092900718633 /* SettingsOrganizationsVC.m in Sources */,
 				BAB0E4C31D5DE23700906C10 /* Message.m in Sources */,
 				BA5901A21D36579D006142AC /* IQKeyboardManagerConstants.swift in Sources */,
 				BA59011A1D364EFD006142AC /* DKImagePickerController.swift in Sources */,
 				BAD5F10F1CB5213300C8F206 /* AppointmentListingVC.m in Sources */,
+				602415001E11092900718633 /* SettingsOrgCell.m in Sources */,
 				BAD8D6461CBCCDCB0037ED23 /* CKTableViewCell.m in Sources */,
 				BA0B653C1D93B48000CB6BB8 /* NewsFeedContainer.swift in Sources */,
 				BAD8D6401CBCCDCB0037ED23 /* UIView+AnimatedFrame.m in Sources */,
-				BAD9099A1CFD797C00E12422 /* SettingsContactsVC.m in Sources */,
 				60CD2A011DE2C3C000125457 /* CommentsVC.swift in Sources */,
 				BA5900D71D364EFD006142AC /* AppContactList+CoreDataProperties.swift in Sources */,
 				BA5900F11D364EFD006142AC /* ChatHelper.swift in Sources */,
@@ -3157,6 +3214,7 @@
 				BAF1E55A1CABAB3E00FA5CC5 /* PASInstTextVC.m in Sources */,
 				BAB0E4FB1D5DE59B00906C10 /* SocketIOClientOption.swift in Sources */,
 				BAD5F10B1CB512D700C8F206 /* CustonTabBarController.m in Sources */,
+				602415041E11094100718633 /* MapVC.m in Sources */,
 				BA8FC7A61C5F814C00BCA20E /* ZSPinAnnotation.m in Sources */,
 				BA5901A51D36579D006142AC /* IQKeyboardReturnKeyHandler.swift in Sources */,
 				BA5901A71D36579D006142AC /* IQBarButtonItem.swift in Sources */,
@@ -3176,6 +3234,7 @@
 				BA27071F1CA96F4600C1E242 /* BookTableCell.m in Sources */,
 				BAED01F81CF6E03C0017E124 /* UITabBarController+MiddleButton.m in Sources */,
 				BA5900EB1D364EFD006142AC /* Test+CoreDataProperties.swift in Sources */,
+				602414FC1E11092900718633 /* SettingsConCell.m in Sources */,
 				BA59019D1D36579D006142AC /* IQUIScrollView+Additions.swift in Sources */,
 				BA1EC3D51D64922700818739 /* CustomTextField.swift in Sources */,
 			);

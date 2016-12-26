@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "AppHelper.h"
 #import "Defines.h"
+#import "ProactiveLiving-swift.h"
 
 @interface SettingsMainVC ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -31,7 +32,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //number of rows in tableview
-    return 2;
+    return 4;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -47,6 +48,12 @@
             break;
         case 1:
             headerLabel.text=@"Contacts";
+            break;
+        case 2:
+            headerLabel.text=@"Change Number";
+            break;
+        case 3:
+            headerLabel.text=@"Delete Account";
             break;
         default:
             break;
@@ -162,6 +169,26 @@
                     [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
                 
             }
+            break;
+        case 2:
+            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+                
+                
+                ChangeNumberVC * VC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"ChangeNumberVC"];
+                
+                [self.navigationController pushViewController:VC animated:YES];
+                
+            }
+            
+            break;
+        case 3:
+            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+                
+                DeleteACVC * VC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"DeleteACVC"];
+                
+                [self.navigationController pushViewController:VC animated:YES];
+            }
+            
             break;
         default:
             break;

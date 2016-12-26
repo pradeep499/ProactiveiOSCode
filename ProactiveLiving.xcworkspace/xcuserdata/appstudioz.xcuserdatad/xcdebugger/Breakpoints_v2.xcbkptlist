@@ -265,22 +265,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProactiveLiving/MenuVC.swift"
-            timestampString = "502263974.51228"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/MyPAStodoVC.m"
             timestampString = "499167136.522054"
             startingColumnNumber = "9223372036854775807"
@@ -314,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/MenuVC.swift"
-            timestampString = "499244280.408644"
+            timestampString = "504430821.530375"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "searchBarSearchButtonClicked(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -346,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/MenuVC.swift"
-            timestampString = "502263974.51228"
+            timestampString = "504430821.530375"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -518,7 +502,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/RSDFDatePickerViewController.m"
@@ -792,7 +776,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/CreateMeetUpVC.swift"
-                  timestampString = "504092522.737982"
+                  timestampString = "504450557.288223"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -807,7 +791,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/CreateMeetUpVC.swift"
-                  timestampString = "504092522.73826"
+                  timestampString = "504450557.288394"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -822,7 +806,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/CreateMeetUpVC.swift"
-                  timestampString = "504092522.738499"
+                  timestampString = "504450557.288554"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -837,7 +821,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/CreateMeetUpVC.swift"
-                  timestampString = "504092522.738662"
+                  timestampString = "504450557.288705"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -1077,22 +1061,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProactiveLiving/MenuVC.swift"
-            timestampString = "502263974.51228"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/View/WebView/WebViewVC.swift"
             timestampString = "500885923.5926"
             startingColumnNumber = "9223372036854775807"
@@ -1196,7 +1164,7 @@
             startingLineNumber = "71"
             endingLineNumber = "71"
             landmarkName = "viewDidLoad()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1211,8 +1179,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "250"
             endingLineNumber = "250"
-            landmarkName = "onClickComments(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickComments(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1227,8 +1195,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "221"
             endingLineNumber = "221"
-            landmarkName = "onClickComments(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickComments(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1243,8 +1211,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "385"
             endingLineNumber = "385"
-            landmarkName = "onClickTwiterBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickTwiterBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1371,8 +1339,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "539"
             endingLineNumber = "539"
-            landmarkName = "textFieldShouldReturn(textField:)"
-            landmarkType = "7">
+            landmarkName = "textFieldShouldReturn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1451,8 +1419,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "403"
             endingLineNumber = "403"
-            landmarkName = "onClickSnapChatBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickSnapChatBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1467,8 +1435,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "275"
             endingLineNumber = "275"
-            landmarkName = "onClickShareBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickShareBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1954,7 +1922,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/LoginVC.m"
@@ -2102,7 +2070,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/MeetUpsListingVC.swift"
-                  timestampString = "504092522.825556"
+                  timestampString = "504450557.344733"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "152"
@@ -2117,7 +2085,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/MeetUpsListingVC.swift"
-                  timestampString = "504092522.825831"
+                  timestampString = "504450557.344922"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "152"
@@ -2418,7 +2386,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/Chat/ChatVC/ChatListner.swift"
@@ -2443,8 +2411,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "161"
             endingLineNumber = "161"
-            landmarkName = "actionSheet(actionSheet:clickedButtonAtIndex:)"
-            landmarkType = "7">
+            landmarkName = "actionSheet(_:clickedButtonAtIndex:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2459,8 +2427,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "279"
             endingLineNumber = "279"
-            landmarkName = "onClickShareBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickShareBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2571,8 +2539,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1932"
             endingLineNumber = "1932"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2630,7 +2598,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.854516"
+                  timestampString = "504450557.368002"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2645,7 +2613,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.854686"
+                  timestampString = "504450557.368364"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2660,7 +2628,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.854845"
+                  timestampString = "504450557.368613"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2675,7 +2643,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.855002"
+                  timestampString = "504450557.368883"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2690,7 +2658,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.855166"
+                  timestampString = "504450557.369138"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2705,7 +2673,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.855311"
+                  timestampString = "504450557.369323"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2720,7 +2688,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.855455"
+                  timestampString = "504450557.369478"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2735,7 +2703,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.855599"
+                  timestampString = "504450557.369631"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2750,7 +2718,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.855742"
+                  timestampString = "504450557.369795"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2765,7 +2733,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.855882"
+                  timestampString = "504450557.369942"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7220"
@@ -2803,8 +2771,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2046"
             endingLineNumber = "2046"
-            landmarkName = "handleMultipleImages(assets:captionText:)"
-            landmarkType = "7">
+            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2819,14 +2787,14 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1821"
             endingLineNumber = "1821"
-            landmarkName = "uploadImage(uploadImage:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadImage(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/Chat/ChatVC/ChatListner.swift"
@@ -2884,7 +2852,7 @@
             startingLineNumber = "707"
             endingLineNumber = "707"
             landmarkName = "getPostEvent()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2915,8 +2883,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1354"
             endingLineNumber = "1354"
-            landmarkName = "collectionView(collectionView:didSelectItemAtIndexPath:)"
-            landmarkType = "7">
+            landmarkName = "collectionView(_:didSelectItemAtIndexPath:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2931,8 +2899,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "292"
             endingLineNumber = "292"
-            landmarkName = "onClickPlayVideoBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickPlayVideoBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2974,7 +2942,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/FullScreenImageVC.swift"
-                  timestampString = "504092522.869441"
+                  timestampString = "504450557.381386"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "62"
@@ -2989,7 +2957,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/FullScreenImageVC.swift"
-                  timestampString = "504092522.8696"
+                  timestampString = "504450557.381547"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "62"
@@ -3086,7 +3054,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.873107"
+                  timestampString = "504450557.386736"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "2740"
@@ -3101,7 +3069,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "504092522.873265"
+                  timestampString = "504450557.386906"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "2648"
@@ -3219,8 +3187,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1929"
             endingLineNumber = "1929"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3236,7 +3204,7 @@
             startingLineNumber = "1337"
             endingLineNumber = "1337"
             landmarkName = "generateThumnail(sourceURL:)"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3251,8 +3219,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1785"
             endingLineNumber = "1785"
-            landmarkName = "uploadImage(uploadImage:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadImage(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3267,8 +3235,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2031"
             endingLineNumber = "2031"
-            landmarkName = "handleMultipleImages(assets:captionText:)"
-            landmarkType = "7">
+            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3283,8 +3251,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2005"
             endingLineNumber = "2005"
-            landmarkName = "handleMultipleImages(assets:captionText:)"
-            landmarkType = "7">
+            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3299,8 +3267,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2028"
             endingLineNumber = "2028"
-            landmarkName = "handleMultipleImages(assets:captionText:)"
-            landmarkType = "7">
+            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3315,8 +3283,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2035"
             endingLineNumber = "2035"
-            landmarkName = "handleMultipleImages(assets:captionText:)"
-            landmarkType = "7">
+            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3331,8 +3299,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2034"
             endingLineNumber = "2034"
-            landmarkName = "handleMultipleImages(assets:captionText:)"
-            landmarkType = "7">
+            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3347,8 +3315,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2032"
             endingLineNumber = "2032"
-            landmarkName = "handleMultipleImages(assets:captionText:)"
-            landmarkType = "7">
+            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3363,8 +3331,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "282"
             endingLineNumber = "282"
-            landmarkName = "onClickShareBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickShareBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3379,8 +3347,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "600"
             endingLineNumber = "600"
-            landmarkName = "sendPostToServer(postType:isShared:createdDict:imgOrVideoUlr:captionText:thumNailName:)"
-            landmarkType = "7">
+            landmarkName = "sendPostToServer(_:isShared:createdDict:imgOrVideoUlr:captionText:thumNailName:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3395,8 +3363,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1872"
             endingLineNumber = "1872"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3411,8 +3379,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1874"
             endingLineNumber = "1874"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3427,8 +3395,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1875"
             endingLineNumber = "1875"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3443,8 +3411,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1878"
             endingLineNumber = "1878"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3459,8 +3427,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1889"
             endingLineNumber = "1889"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3475,8 +3443,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1897"
             endingLineNumber = "1897"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3491,8 +3459,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1845"
             endingLineNumber = "1845"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3507,8 +3475,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "324"
             endingLineNumber = "324"
-            landmarkName = "onClickPlayVideoBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickPlayVideoBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3523,8 +3491,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "474"
             endingLineNumber = "474"
-            landmarkName = "clickUserImage(recognizer:)"
-            landmarkType = "7">
+            landmarkName = "clickUserImage(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3539,8 +3507,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "314"
             endingLineNumber = "314"
-            landmarkName = "onClickPlayVideoBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickPlayVideoBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3555,8 +3523,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1895"
             endingLineNumber = "1895"
-            landmarkName = "uploadVideo(videoUrl:captionText:)"
-            landmarkType = "7">
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3571,8 +3539,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
             endingLineNumber = "331"
-            landmarkName = "onClickPlayVideoBtn(sender:)"
-            landmarkType = "7">
+            landmarkName = "onClickPlayVideoBtn(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3588,7 +3556,7 @@
             startingLineNumber = "685"
             endingLineNumber = "685"
             landmarkName = "getPostEvent()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3604,7 +3572,7 @@
             startingLineNumber = "706"
             endingLineNumber = "706"
             landmarkName = "getPostEvent()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3619,8 +3587,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "983"
             endingLineNumber = "983"
-            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
-            landmarkType = "7">
+            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3635,8 +3603,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "963"
             endingLineNumber = "963"
-            landmarkName = "collectionView(collectionView:numberOfItemsInSection:)"
-            landmarkType = "7">
+            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3651,8 +3619,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1171"
             endingLineNumber = "1171"
-            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
-            landmarkType = "7">
+            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3667,8 +3635,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1185"
             endingLineNumber = "1185"
-            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
-            landmarkType = "7">
+            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3683,8 +3651,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1176"
             endingLineNumber = "1176"
-            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
-            landmarkType = "7">
+            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3699,8 +3667,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1001"
             endingLineNumber = "1001"
-            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
-            landmarkType = "7">
+            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3716,7 +3684,7 @@
             startingLineNumber = "834"
             endingLineNumber = "834"
             landmarkName = "getLikeUpdate()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3732,7 +3700,7 @@
             startingLineNumber = "1393"
             endingLineNumber = "1393"
             landmarkName = "fetchExploreDataFromServer()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3748,7 +3716,7 @@
             startingLineNumber = "1463"
             endingLineNumber = "1463"
             landmarkName = "fetchPostDataFromServer()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3764,7 +3732,7 @@
             startingLineNumber = "1419"
             endingLineNumber = "1419"
             landmarkName = "fetchPostDataFromServer()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3780,7 +3748,7 @@
             startingLineNumber = "1449"
             endingLineNumber = "1449"
             landmarkName = "fetchPostDataFromServer()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3796,7 +3764,7 @@
             startingLineNumber = "738"
             endingLineNumber = "738"
             landmarkName = "getPostEvent()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3812,7 +3780,7 @@
             startingLineNumber = "737"
             endingLineNumber = "737"
             landmarkName = "getPostEvent()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3876,7 +3844,7 @@
             startingLineNumber = "1714"
             endingLineNumber = "1714"
             landmarkName = "imagePickerControllerCancelled()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3891,8 +3859,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
             endingLineNumber = "87"
-            landmarkName = "viewWillAppear(animated:)"
-            landmarkType = "7">
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3908,7 +3876,7 @@
             startingLineNumber = "51"
             endingLineNumber = "51"
             landmarkName = "viewDidLoad()"
-            landmarkType = "7">
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3955,8 +3923,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "101"
             endingLineNumber = "101"
-            landmarkName = "viewWillAppear(animated:)"
-            landmarkType = "7">
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3971,8 +3939,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
             endingLineNumber = "128"
-            landmarkName = "viewDidAppear(animated:)"
-            landmarkType = "7">
+            landmarkName = "viewDidAppear(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3987,8 +3955,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
             endingLineNumber = "130"
-            landmarkName = "viewDidAppear(animated:)"
-            landmarkType = "7">
+            landmarkName = "viewDidAppear(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4003,8 +3971,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
             endingLineNumber = "86"
-            landmarkName = "viewWillAppear(animated:)"
-            landmarkType = "7">
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4035,8 +4003,136 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "509"
             endingLineNumber = "509"
-            landmarkName = "clickUserImage(recognizer:)"
-            landmarkType = "7">
+            landmarkName = "clickUserImage(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/SettingsMainVC.m"
+            timestampString = "504432634.941333"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Settings/ChangeDeleteAC/ChangeNumberVC.swift"
+            timestampString = "504446817.298758"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "requestOTPAPI()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Settings/ChangeDeleteAC/ChangeNumberVC.swift"
+            timestampString = "504448017.223652"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "requestOTPAPI()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProactiveLiving.ChangeNumberVC.requestOTPAPI () -&gt; ()"
+                  moduleName = "ProactiveLiving"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/VC/Settings/ChangeDeleteAC/ChangeNumberVC.swift"
+                  timestampString = "504450557.427844"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "2101">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProactiveLiving.ChangeNumberVC.(requestOTPAPI () -&gt; ()).(closure #1)"
+                  moduleName = "ProactiveLiving"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appstudioz/Desktop/Proactive/ProactiveLiving/VC/Settings/ChangeDeleteAC/ChangeNumberVC.swift"
+                  timestampString = "504450557.428018"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "104"
+                  endingLineNumber = "104"
+                  offsetFromSymbolStart = "66">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Settings/ChangeDeleteAC/ChangeNumberVC.swift"
+            timestampString = "504448017.223652"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "requestOTPAPI()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/Controller/Services/Services.m"
+            timestampString = "504444769.515002"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "+postRequest:parameters:completionHandler:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/Controller/Services/Services.m"
+            timestampString = "504444772.947982"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "+postRequest:parameters:completionHandler:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

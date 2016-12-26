@@ -85,6 +85,10 @@
 #define ServiceGetAllStories            @"getStories"
 #define ServiceGetSubscribedStories     @"getSubscribeStories"
 #define ServiceGetNewsFeed              @"getNewsFeed"
+#define ServiceRequestOTP               @"users/requestOTP"
+#define ServiceChangeMobile             @"users/changeMobile"
+
+
 
 #define maxLength                       25
 #define maxPhoneLength                  15

@@ -14,9 +14,13 @@
             <string>Roboto-Medium</string>
             <string>Roboto-Medium</string>
             <string>Roboto-Medium</string>
-            <string>Roboto-Medium</string>
         </mutableArray>
         <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
@@ -108,10 +112,10 @@
             </objects>
             <point key="canvasLocation" x="-493" y="-429"/>
         </scene>
-        <!--Change Number-->
+        <!--Change NumberVC-->
         <scene sceneID="uq1-6s-xKY">
             <objects>
-                <viewController storyboardIdentifier="ChangeNumber" useStoryboardIdentifierAsRestorationIdentifier="YES" id="etj-fr-3SM" customClass="ChangeNumber" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChangeNumberVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="etj-fr-3SM" customClass="ChangeNumberVC" customModule="ProactiveLiving" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="enZ-1x-MKT"/>
                         <viewControllerLayoutGuide type="bottom" id="tlt-Cz-kLK"/>
@@ -144,7 +148,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onClickBackBtn:" destination="etj-fr-3SM" eventType="touchUpInside" id="o7U-yf-Ifc"/>
+                                            <action selector="onClickBackBtn:" destination="etj-fr-3SM" eventType="touchUpInside" id="ESd-1I-DMS"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -158,44 +162,44 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Voq-1T-BmC">
-                                <rect key="frame" x="30" y="104" width="260" height="110"/>
+                                <rect key="frame" x="40" y="104" width="240" height="130"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aVg-M6-x5m">
-                                        <rect key="frame" x="0.0" y="0.0" width="80" height="110"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone" translatesAutoresizingMaskIntoConstraints="NO" id="aVg-M6-x5m">
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="130"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="7cB-g1-VcD"/>
+                                            <constraint firstAttribute="width" constant="75" id="7cB-g1-VcD"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rKW-fO-q7l">
-                                        <rect key="frame" x="180" y="0.0" width="80" height="110"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone" translatesAutoresizingMaskIntoConstraints="NO" id="rKW-fO-q7l">
+                                        <rect key="frame" x="165" y="0.0" width="75" height="130"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="Cab-JA-11b"/>
+                                            <constraint firstAttribute="width" constant="75" id="Cab-JA-11b"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gjf-wp-phQ">
-                                        <rect key="frame" x="93" y="45" width="75" height="20"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right" translatesAutoresizingMaskIntoConstraints="NO" id="gjf-wp-phQ">
+                                        <rect key="frame" x="95" y="58" width="50" height="15"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="75" id="qyt-kw-3Gq"/>
-                                            <constraint firstAttribute="height" constant="20" id="wuQ-sG-r3Z"/>
+                                            <constraint firstAttribute="width" constant="50" id="qyt-kw-3Gq"/>
+                                            <constraint firstAttribute="height" constant="15" id="wuQ-sG-r3Z"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="rKW-fO-q7l" secondAttribute="trailing" id="7hv-1g-nSv"/>
                                     <constraint firstItem="gjf-wp-phQ" firstAttribute="centerX" secondItem="Voq-1T-BmC" secondAttribute="centerX" id="LxD-eI-HEA"/>
                                     <constraint firstItem="aVg-M6-x5m" firstAttribute="top" secondItem="Voq-1T-BmC" secondAttribute="top" id="POW-0v-E2k"/>
                                     <constraint firstItem="aVg-M6-x5m" firstAttribute="leading" secondItem="Voq-1T-BmC" secondAttribute="leading" id="TaP-7r-TUd"/>
-                                    <constraint firstAttribute="height" constant="110" id="aKc-BL-C1c"/>
+                                    <constraint firstAttribute="height" constant="130" id="aKc-BL-C1c"/>
                                     <constraint firstAttribute="bottom" secondItem="aVg-M6-x5m" secondAttribute="bottom" id="cQ2-MN-1B5"/>
-                                    <constraint firstAttribute="width" constant="260" id="eTV-rK-c3z"/>
+                                    <constraint firstAttribute="width" constant="240" id="eTV-rK-c3z"/>
                                     <constraint firstItem="rKW-fO-q7l" firstAttribute="top" secondItem="Voq-1T-BmC" secondAttribute="top" id="fqL-s7-j8E"/>
                                     <constraint firstAttribute="bottom" secondItem="rKW-fO-q7l" secondAttribute="bottom" id="jKF-2c-zm8"/>
                                     <constraint firstItem="gjf-wp-phQ" firstAttribute="centerY" secondItem="Voq-1T-BmC" secondAttribute="centerY" id="lel-bh-Fsw"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIw-Xt-Xv2">
-                                <rect key="frame" x="15" y="254" width="290" height="40"/>
+                                <rect key="frame" x="15" y="274" width="290" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1w-YL-t0h">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
@@ -207,21 +211,27 @@
                                         <rect key="frame" x="30" y="0.0" width="40" height="40"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="etj-fr-3SM" id="Hmm-5U-jdl"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="85h-Mh-MBA" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Old Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="85h-Mh-MBA" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
                                         <rect key="frame" x="80" y="0.0" width="210" height="40"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="etj-fr-3SM" id="Boo-Mj-F6m"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="NoL-y5-IbJ"/>
                                     <constraint firstAttribute="height" constant="40" id="dSw-tO-oce"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AzJ-SG-kYq">
-                                <rect key="frame" x="15" y="314" width="290" height="40"/>
+                                <rect key="frame" x="15" y="334" width="290" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nXW-Sl-TLM">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
@@ -233,21 +243,27 @@
                                         <rect key="frame" x="30" y="0.0" width="40" height="40"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="etj-fr-3SM" id="Oms-yx-fd2"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aoa-b6-Qo4" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="New Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aoa-b6-Qo4" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
                                         <rect key="frame" x="80" y="0.0" width="210" height="40"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="etj-fr-3SM" id="cee-2q-Psg"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="5Vb-UZ-1qb"/>
                                     <constraint firstAttribute="height" constant="40" id="XR1-hE-xdA"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhB-Cr-CLa">
-                                <rect key="frame" x="15" y="454" width="290" height="40"/>
+                                <rect key="frame" x="15" y="474" width="290" height="40"/>
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="BFe-i3-nZm"/>
@@ -255,9 +271,12 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                 <state key="normal" title="Send OTP"/>
+                                <connections>
+                                    <action selector="onClickSendOTPBtn:" destination="etj-fr-3SM" eventType="touchUpInside" id="cdN-bo-aAT"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A verifiaction OTP will be sent to your Email ID" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jKy-hx-nCE">
-                                <rect key="frame" x="35" y="504" width="250" height="41"/>
+                                <rect key="frame" x="35" y="524" width="250" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="fsn-jX-8sJ"/>
                                     <constraint firstAttribute="height" constant="41" id="tOI-0a-yK0"/>
@@ -267,13 +286,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mi7-Tk-1hN" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
-                                <rect key="frame" x="15" y="374" width="290" height="40"/>
+                                <rect key="frame" x="15" y="394" width="290" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="290" id="8Hk-2G-EVg"/>
                                     <constraint firstAttribute="height" constant="40" id="wsc-Dj-zD8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="etj-fr-3SM" id="HBc-un-Nrb"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -296,6 +318,13 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="tf_OldMb" destination="85h-Mh-MBA" id="hq6-hz-7yW"/>
+                        <outlet property="tf_OldMbCountryCode" destination="y9c-bU-fbz" id="axK-SJ-z0Q"/>
+                        <outlet property="tf_newMb" destination="aoa-b6-Qo4" id="hLL-Qa-GXb"/>
+                        <outlet property="tf_newMbCountryCode" destination="amE-T2-IiC" id="F86-Fl-uf3"/>
+                        <outlet property="tf_pwd" destination="mi7-Tk-1hN" id="h6P-2s-sfB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a8E-PU-h8p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -304,7 +333,7 @@
         <!--OTPVC-->
         <scene sceneID="18q-gn-UDa">
             <objects>
-                <viewController storyboardIdentifier="OTP" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kC7-dk-e9W" customClass="OTPVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OTPVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kC7-dk-e9W" customClass="OTPVC" customModule="ProactiveLiving" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X1g-4y-uFH"/>
                         <viewControllerLayoutGuide type="bottom" id="9al-13-DGy"/>
@@ -337,7 +366,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onClickBackBtn:" destination="kC7-dk-e9W" eventType="touchUpInside" id="ceE-YB-dR1"/>
+                                            <action selector="onClickBackBtn:" destination="kC7-dk-e9W" eventType="touchUpInside" id="hU7-WW-nug"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -351,7 +380,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83L-V7-fxU">
-                                <rect key="frame" x="15" y="418" width="290" height="40"/>
+                                <rect key="frame" x="15" y="438" width="290" height="40"/>
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="3ub-au-O6s"/>
@@ -359,16 +388,19 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                 <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="onClickSubmitBtn:" destination="kC7-dk-e9W" eventType="touchUpInside" id="iCY-8b-ux0"/>
+                                </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WK9-Wo-agF">
-                                <rect key="frame" x="110" y="117" width="100" height="110"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone_msg" translatesAutoresizingMaskIntoConstraints="NO" id="WK9-Wo-agF">
+                                <rect key="frame" x="110" y="117" width="100" height="130"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Vf2-N1-rfN"/>
-                                    <constraint firstAttribute="height" constant="110" id="cpB-vg-jaE"/>
+                                    <constraint firstAttribute="height" constant="130" id="cpB-vg-jaE"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A verifiaction OTP has been sent to your Email ID" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fU6-Pe-Z3o">
-                                <rect key="frame" x="68" y="252" width="183" height="41"/>
+                                <rect key="frame" x="68" y="272" width="183" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="dB9-L1-dft"/>
                                     <constraint firstAttribute="width" constant="183" id="eiP-Ur-xz5"/>
@@ -377,10 +409,10 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvE-ur-N0W">
-                                <rect key="frame" x="15" y="353" width="290" height="40"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvE-ur-N0W" userLabel="ViewOTP">
+                                <rect key="frame" x="15" y="373" width="290" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter OTP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V40-NB-H7T" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter OTP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V40-NB-H7T">
                                         <rect key="frame" x="4" y="0.0" width="213" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="UxS-WT-Ifh"/>
@@ -388,6 +420,9 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="kC7-dk-e9W" id="jWQ-pn-uLh"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMo-KV-Uz4">
                                         <rect key="frame" x="221" y="0.0" width="64" height="40"/>
@@ -396,9 +431,12 @@
                                         <state key="normal" title="Resend OTP">
                                             <color key="titleColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onClickResendOTPBtn:" destination="kC7-dk-e9W" eventType="touchUpInside" id="0iK-lI-T6q"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="FMo-KV-Uz4" firstAttribute="leading" secondItem="V40-NB-H7T" secondAttribute="trailing" constant="4" id="05b-C5-uUp"/>
                                     <constraint firstAttribute="bottom" secondItem="FMo-KV-Uz4" secondAttribute="bottom" id="GeO-l7-EPa"/>
@@ -427,15 +465,19 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="tf_otp" destination="V40-NB-H7T" id="wSI-Gv-Ylg"/>
+                        <outlet property="viewOTP" destination="bvE-ur-N0W" id="6lj-Cn-xkK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1oM-gz-Siu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="176" y="-424"/>
         </scene>
-        <!--OTPVC-->
+        <!--DeleteACVC-->
         <scene sceneID="aKG-ni-xwN">
             <objects>
-                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="OPf-yP-tcp" customClass="OTPVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DeleteACVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OPf-yP-tcp" customClass="DeleteACVC" customModule="ProactiveLiving" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L0a-VV-qKh"/>
                         <viewControllerLayoutGuide type="bottom" id="QMz-Yl-ACe"/>
@@ -468,7 +510,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onClickBackBtn:" destination="OPf-yP-tcp" eventType="touchUpInside" id="Icd-M7-JjS"/>
+                                            <action selector="onClickBackBtn:" destination="OPf-yP-tcp" eventType="touchUpInside" id="8ou-qr-2Vs"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -482,7 +524,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qAG-HI-F2A">
-                                <rect key="frame" x="15" y="418" width="290" height="40"/>
+                                <rect key="frame" x="15" y="495" width="290" height="40"/>
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="AK6-rU-qch"/>
@@ -490,74 +532,181 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                 <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="onClickSubmitBtn:" destination="OPf-yP-tcp" eventType="touchUpInside" id="O9l-8G-zau"/>
+                                </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DdL-zZ-tOO">
-                                <rect key="frame" x="110" y="117" width="100" height="110"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="delete_ac" translatesAutoresizingMaskIntoConstraints="NO" id="DdL-zZ-tOO">
+                                <rect key="frame" x="115" y="94" width="90" height="130"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="g5T-C5-HC0"/>
-                                    <constraint firstAttribute="height" constant="110" id="iaY-hh-eDB"/>
+                                    <constraint firstAttribute="width" constant="90" id="g5T-C5-HC0"/>
+                                    <constraint firstAttribute="height" constant="130" id="iaY-hh-eDB"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A verifiaction OTP has been sent to your Email ID" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AR3-OV-dWU">
-                                <rect key="frame" x="68" y="252" width="183" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To delete your account, confirm your        country code and enter your phone number." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AR3-OV-dWU">
+                                <rect key="frame" x="20" y="244" width="280" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="d7d-dr-Xlb"/>
-                                    <constraint firstAttribute="width" constant="183" id="ngZ-U5-IKc"/>
+                                    <constraint firstAttribute="width" constant="280" id="ngZ-U5-IKc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnC-jd-hLB">
-                                <rect key="frame" x="15" y="353" width="290" height="40"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnC-jd-hLB" userLabel="ViewCountry">
+                                <rect key="frame" x="15" y="305" width="290" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter OTP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OXm-fy-mJz" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
-                                        <rect key="frame" x="4" y="0.0" width="213" height="40"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OXm-fy-mJz" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
+                                        <rect key="frame" x="4" y="0.0" width="286" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="213" id="QFp-M4-GEA"/>
                                             <constraint firstAttribute="height" constant="40" id="fuO-66-pt6"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="QFp-M4-GEA"/>
+                                            </mask>
+                                        </variation>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uA7-AR-rvc">
-                                        <rect key="frame" x="221" y="0.0" width="64" height="40"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="10"/>
-                                        <state key="normal" title="Resend OTP">
-                                            <color key="titleColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropdown_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="QOU-7D-cwR">
+                                        <rect key="frame" x="264" y="16" width="15" height="7"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="7" id="7Q4-gA-AF1"/>
+                                            <constraint firstAttribute="width" constant="15" id="fXC-nY-fmq"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkK-j9-don">
+                                        <rect key="frame" x="10" y="0.0" width="272" height="40"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onClickCountryBtn:" destination="OPf-yP-tcp" eventType="touchUpInside" id="IuD-QK-aBl"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="uA7-AR-rvc" secondAttribute="bottom" id="65c-bk-0ff"/>
-                                    <constraint firstAttribute="trailing" secondItem="uA7-AR-rvc" secondAttribute="trailing" constant="5" id="B6I-k9-lhQ"/>
-                                    <constraint firstItem="uA7-AR-rvc" firstAttribute="leading" secondItem="OXm-fy-mJz" secondAttribute="trailing" constant="4" id="OUG-He-PLf"/>
+                                    <constraint firstAttribute="trailing" secondItem="QOU-7D-cwR" secondAttribute="trailing" constant="11" id="GaD-CX-rJ7"/>
+                                    <constraint firstItem="tkK-j9-don" firstAttribute="top" secondItem="gnC-jd-hLB" secondAttribute="top" id="IQe-PQ-jq3"/>
+                                    <constraint firstAttribute="trailing" secondItem="OXm-fy-mJz" secondAttribute="trailing" id="SbA-Iu-Pmh"/>
+                                    <constraint firstAttribute="bottom" secondItem="tkK-j9-don" secondAttribute="bottom" id="UM6-um-S25"/>
                                     <constraint firstAttribute="width" constant="290" id="aQ9-Mf-S2H"/>
+                                    <constraint firstAttribute="trailing" secondItem="tkK-j9-don" secondAttribute="trailing" constant="8" id="aqx-vK-M6O"/>
                                     <constraint firstItem="OXm-fy-mJz" firstAttribute="leading" secondItem="gnC-jd-hLB" secondAttribute="leading" constant="4" id="ffr-D6-AX9"/>
-                                    <constraint firstItem="uA7-AR-rvc" firstAttribute="top" secondItem="gnC-jd-hLB" secondAttribute="top" id="lB3-Lo-lL7"/>
+                                    <constraint firstItem="QOU-7D-cwR" firstAttribute="centerY" secondItem="gnC-jd-hLB" secondAttribute="centerY" id="hz8-tH-yJj"/>
                                     <constraint firstAttribute="height" constant="40" id="mJZ-G8-0IP"/>
+                                    <constraint firstItem="tkK-j9-don" firstAttribute="leading" secondItem="gnC-jd-hLB" secondAttribute="leading" constant="10" id="nVC-yE-fhy"/>
                                     <constraint firstItem="OXm-fy-mJz" firstAttribute="top" secondItem="gnC-jd-hLB" secondAttribute="top" id="od0-P6-Dbv"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PI2-H6-Hi0">
+                                <rect key="frame" x="15" y="365" width="290" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hrw-h2-Drz">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="line" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HRL-U0-2Vd" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="0.0" width="40" height="40"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="etj-fr-3SM" id="u5R-dK-tMY"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vxs-9O-3n1" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
+                                        <rect key="frame" x="80" y="0.0" width="210" height="40"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="etj-fr-3SM" id="KE0-4e-eDE"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290" id="lPq-Do-hh7"/>
+                                    <constraint firstAttribute="height" constant="40" id="nO0-cg-ZXL"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hdp-2N-E37" customClass="CustomTextField" customModule="ProactiveLiving" customModuleProvider="target">
+                                <rect key="frame" x="15" y="425" width="290" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290" id="i5r-aE-6tV"/>
+                                    <constraint firstAttribute="height" constant="40" id="oUi-5u-O7C"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="etj-fr-3SM" id="zUM-Z8-au8"/>
+                                </connections>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ma9-oM-EUO" userLabel="ViewTable">
+                                <rect key="frame" x="15" y="95" width="290" height="128"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bnN-dp-9mN">
+                                        <rect key="frame" x="0.0" y="0.0" width="290" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="OPf-yP-tcp" id="jEK-QG-zZL"/>
+                                            <outlet property="delegate" destination="OPf-yP-tcp" id="3gt-rF-8a5"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.45882352939999999" green="0.81568627449999997" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="bnN-dp-9mN" secondAttribute="bottom" id="8hD-wk-W6O"/>
+                                    <constraint firstItem="bnN-dp-9mN" firstAttribute="top" secondItem="ma9-oM-EUO" secondAttribute="top" id="GpZ-ns-vJP"/>
+                                    <constraint firstAttribute="height" constant="128" id="Ttd-kQ-lXZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="bnN-dp-9mN" secondAttribute="trailing" id="Uix-ed-qrr"/>
+                                    <constraint firstAttribute="width" constant="290" id="hIZ-SN-Rgk"/>
+                                    <constraint firstItem="bnN-dp-9mN" firstAttribute="leading" secondItem="ma9-oM-EUO" secondAttribute="leading" id="zwz-dJ-8gK"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="hqH-AH-zZy" secondAttribute="trailing" id="59n-fS-9fH"/>
+                            <constraint firstItem="PI2-H6-Hi0" firstAttribute="centerX" secondItem="39d-we-2VX" secondAttribute="centerX" id="5Fk-Sa-0P4"/>
                             <constraint firstItem="qAG-HI-F2A" firstAttribute="top" secondItem="gnC-jd-hLB" secondAttribute="bottom" constant="25" id="6d6-ve-mRM"/>
+                            <constraint firstItem="hdp-2N-E37" firstAttribute="centerX" secondItem="39d-we-2VX" secondAttribute="centerX" id="7IR-Q5-9yw"/>
+                            <constraint firstItem="hdp-2N-E37" firstAttribute="top" secondItem="PI2-H6-Hi0" secondAttribute="bottom" constant="20" id="9cR-3m-xOt"/>
                             <constraint firstItem="AR3-OV-dWU" firstAttribute="centerX" secondItem="39d-we-2VX" secondAttribute="centerX" id="9uP-S7-m82"/>
-                            <constraint firstItem="DdL-zZ-tOO" firstAttribute="top" secondItem="hqH-AH-zZy" secondAttribute="bottom" constant="53" id="Bbl-MD-aZG"/>
+                            <constraint firstItem="DdL-zZ-tOO" firstAttribute="top" secondItem="hqH-AH-zZy" secondAttribute="bottom" constant="30" id="Bbl-MD-aZG"/>
                             <constraint firstItem="hqH-AH-zZy" firstAttribute="leading" secondItem="39d-we-2VX" secondAttribute="leading" id="BkI-u0-WEz"/>
-                            <constraint firstItem="AR3-OV-dWU" firstAttribute="top" secondItem="DdL-zZ-tOO" secondAttribute="bottom" constant="25" id="Hgl-Uu-oq4"/>
+                            <constraint firstItem="hdp-2N-E37" firstAttribute="top" secondItem="PI2-H6-Hi0" secondAttribute="bottom" constant="20" id="Du8-Iw-4uZ"/>
+                            <constraint firstItem="ma9-oM-EUO" firstAttribute="top" secondItem="gnC-jd-hLB" secondAttribute="bottom" constant="-250" id="EhQ-Ss-ysp"/>
+                            <constraint firstItem="AR3-OV-dWU" firstAttribute="top" secondItem="DdL-zZ-tOO" secondAttribute="bottom" constant="20" id="Hgl-Uu-oq4"/>
                             <constraint firstItem="hqH-AH-zZy" firstAttribute="top" secondItem="39d-we-2VX" secondAttribute="top" id="OGK-US-0Yt"/>
                             <constraint firstItem="qAG-HI-F2A" firstAttribute="centerX" secondItem="39d-we-2VX" secondAttribute="centerX" id="PQx-ls-SKI"/>
                             <constraint firstItem="DdL-zZ-tOO" firstAttribute="centerX" secondItem="39d-we-2VX" secondAttribute="centerX" id="SDY-Dg-Sen"/>
                             <constraint firstItem="gnC-jd-hLB" firstAttribute="centerX" secondItem="39d-we-2VX" secondAttribute="centerX" id="efs-s6-FCw"/>
-                            <constraint firstItem="gnC-jd-hLB" firstAttribute="top" secondItem="AR3-OV-dWU" secondAttribute="bottom" constant="60" id="meM-XV-ABr"/>
+                            <constraint firstItem="gnC-jd-hLB" firstAttribute="top" secondItem="AR3-OV-dWU" secondAttribute="bottom" constant="20" id="meM-XV-ABr"/>
+                            <constraint firstItem="ma9-oM-EUO" firstAttribute="centerX" secondItem="39d-we-2VX" secondAttribute="centerX" id="pkH-W2-ieE"/>
+                            <constraint firstItem="qAG-HI-F2A" firstAttribute="top" secondItem="hdp-2N-E37" secondAttribute="bottom" constant="30" id="qNc-9D-vaK"/>
+                            <constraint firstItem="PI2-H6-Hi0" firstAttribute="top" secondItem="gnC-jd-hLB" secondAttribute="bottom" constant="20" id="xAp-os-xdK"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="9cR-3m-xOt"/>
+                                <exclude reference="6d6-ve-mRM"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="btn_countryCode" destination="tkK-j9-don" id="dGe-ms-YoH"/>
+                        <outlet property="tableView_countryList" destination="bnN-dp-9mN" id="Exe-bV-IZ4"/>
+                        <outlet property="tf_countryCode" destination="HRL-U0-2Vd" id="Wez-PS-VQo"/>
+                        <outlet property="tf_phoneNo" destination="vxs-9O-3n1" id="HZF-Tg-q6V"/>
+                        <outlet property="tf_pwd" destination="hdp-2N-E37" id="Gf0-t5-Wnx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fgf-x6-5Th" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -565,6 +714,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow_right" width="47" height="26"/>
+        <image name="delete_ac" width="65" height="90"/>
+        <image name="dropdown_arrow" width="12" height="6"/>
+        <image name="phone" width="46" height="86"/>
+        <image name="phone_msg" width="76" height="103"/>
         <image name="signupBack" width="10" height="18"/>
     </resources>
 </document>
