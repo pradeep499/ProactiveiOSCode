@@ -267,16 +267,16 @@ class AllChatFriendsVC: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell! {
         if (tableView == self.searchDisplayController!.searchResultsTableView) {
-            var cell: AllChatFriendCell = self.table_contact.dequeueReusableCellWithIdentifier("Cell") as! AllChatFriendCell
+            let cell: AllChatFriendCell = self.table_contact.dequeueReusableCellWithIdentifier("Cell") as! AllChatFriendCell
             
             cell.selectionStyle = .None
-            var userName = cell.userName as UILabel
-            var userImage = cell.userImage as UIImageView
+            let userName = cell.userName as UILabel
+            let userImage = cell.userImage as UIImageView
             userImage.image=nil;
             var anObject : AppContactList!
             if segmentOutletCheck.selectedSegmentIndex==0 {
                 anObject = searchListArray[indexPath.row] as! AppContactList
-                var imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
+                let imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
                 userName.text=anObject.name
                 
                 if (anObject.userImgString!.characters.count > 2) {
@@ -286,7 +286,7 @@ class AllChatFriendsVC: UIViewController {
                 }
             } else if segmentOutletCheck.selectedSegmentIndex==1 {
                 anObject = searchListArray[indexPath.row] as! AppContactList
-                var imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
+                let imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
                 userName.text=anObject.phoneName
                 if (anObject.userImgString!.characters.count > 2) {
                     userImage.setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"ic_booking_profilepic"))
@@ -295,7 +295,7 @@ class AllChatFriendsVC: UIViewController {
                 }
             } else if segmentOutletCheck.selectedSegmentIndex==2 {
                 anObject = searchListArray[indexPath.row] as! AppContactList
-                var imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
+                let imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
                 if anObject.isFromFB == "1" {
                     userName.text=anObject.phoneName
                 } else {
@@ -313,10 +313,10 @@ class AllChatFriendsVC: UIViewController {
             userName.adjustsFontSizeToFitWidth = true
             return cell
         } else {
-            var cell: UITableViewCell = table_contact.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+            let cell: UITableViewCell = table_contact.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
             cell.selectionStyle = .None
-            var userName = cell.contentView.viewWithTag(2) as! UILabel
-            var userImage = cell.contentView.viewWithTag(1) as! UIImageView
+            let userName = cell.contentView.viewWithTag(2) as! UILabel
+            let userImage = cell.contentView.viewWithTag(1) as! UIImageView
             userImage.image=nil;
             var temp : NSDictionary!
             if segmentOutletCheck.selectedSegmentIndex==0 {
@@ -326,8 +326,8 @@ class AllChatFriendsVC: UIViewController {
                 var array=[]
                 array = appListIndexDic[airportCodes[indexPath.section]] as! [AppContactList];
                 
-                var anObject = array[indexPath.row] as! AppContactList
-                var imageString = ""//NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
+                let anObject = array[indexPath.row] as! AppContactList
+                let imageString = ""//NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
                 userName.text=anObject.name
                 if (anObject.userImgString!.characters.count > 2) {
                     userImage.setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"ic_booking_profilepic"))
@@ -340,8 +340,8 @@ class AllChatFriendsVC: UIViewController {
                 var array=[]
                 array = fbListIndexDic[airportCodes[indexPath.section]] as! [AppContactList];
                 
-                var anObject = array[indexPath.row] as! AppContactList
-                var imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
+                let anObject = array[indexPath.row] as! AppContactList
+                let imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
                 userName.text=anObject.phoneName
                 if (anObject.userImgString!.characters.count > 2) {
                     userImage.setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"profile.png"))
@@ -354,8 +354,8 @@ class AllChatFriendsVC: UIViewController {
                 var array=[]
                 array = favListIndexDic[airportCodes[indexPath.section]] as! [AppContactList];
                 
-                var anObject = array[indexPath.row] as! AppContactList
-                var imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
+                let anObject = array[indexPath.row] as! AppContactList
+                let imageString = "" //NSString(format:"%@%@", Base_imgurl,anObject.userImgString) as String
                 if anObject.isFromFB == "1" {
                     userName.text=anObject.phoneName
                 } else {

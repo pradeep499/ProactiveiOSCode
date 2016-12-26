@@ -242,7 +242,7 @@ class HeaderScrollerView: UICollectionReusableView{
     override init(frame: CGRect) {
         super.init(frame: frame)
      
-   customView = NSBundle.mainBundle().loadNibNamed("CollectionHeaderCustomView", owner: nil, options: nil)[0] as? CollectionHeaderCustomView
+   customView = NSBundle.mainBundle().loadNibNamed("CollectionHeaderCustomView", owner: nil, options: nil)![0] as? CollectionHeaderCustomView
     customView!.frame = CGRectMake(0, 0,screen.width,370)
     self.addSubview(customView!)
 

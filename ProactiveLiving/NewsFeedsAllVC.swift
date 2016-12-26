@@ -53,7 +53,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         isBackFromChildVC = false
         viewWillAppaerCount = 0
         
-     tapGesture = UITapGestureRecognizer(target: self, action: "hideSocialSharingView")
+     tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewsFeedsAllVC.hideSocialSharingView))
      
         
         self.view_share.hidden = true
@@ -71,8 +71,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         
         
@@ -780,7 +780,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
                 
                 
-                var predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
+                let predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
                 if resultDict["section"] as! String == "all" {
                     
                     
@@ -789,7 +789,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     print("ID = \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
-                        var index = self.postAllArr.indexOfObject( filteredarray[0])
+                        let index = self.postAllArr.indexOfObject( filteredarray[0])
                         self.postAllArr.replaceObjectAtIndex(index, withObject: resultDict)
                     }
 
@@ -801,7 +801,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     
                     if filteredarray.count > 0 {
                         
-                        var index = self.postFriendsArr.indexOfObject( filteredarray[0])
+                        let index = self.postFriendsArr.indexOfObject( filteredarray[0])
                         self.postFriendsArr.replaceObjectAtIndex(index, withObject: resultDict)
                     }
 
@@ -814,7 +814,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     print("ID =  \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
-                        var index = self.postColleagueArr.indexOfObject( filteredarray[0])
+                        let index = self.postColleagueArr.indexOfObject( filteredarray[0])
                         self.postColleagueArr.replaceObjectAtIndex(index, withObject: resultDict)
                     }
 
@@ -825,7 +825,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     print("ID =  \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
-                        var index = self.postHealthClubsArr.indexOfObject( filteredarray[0])
+                        let index = self.postHealthClubsArr.indexOfObject( filteredarray[0])
                         self.postHealthClubsArr.replaceObjectAtIndex(index, withObject: resultDict)
                     }
 

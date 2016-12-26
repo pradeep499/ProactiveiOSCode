@@ -623,7 +623,7 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         color.setFill()
         UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return image
     }
@@ -687,9 +687,9 @@ extension UIImage {
         // Now we draw the underlying CGImage into a new context, applying the transform
         // calculated above.
         let ctx: CGContextRef = CGBitmapContextCreate(nil, Int(self.size.width), Int(self.size.height),
-                                                      CGImageGetBitsPerComponent(self.CGImage), 0,
-                                                      CGImageGetColorSpace(self.CGImage),
-                                                      CGImageGetBitmapInfo(self.CGImage).rawValue)!;
+                                                      CGImageGetBitsPerComponent(self.CGImage!), 0,
+                                                      CGImageGetColorSpace(self.CGImage!)!,
+                                                      CGImageGetBitmapInfo(self.CGImage!).rawValue)!;
         
         CGContextConcatCTM(ctx, transform)
         
@@ -697,9 +697,9 @@ extension UIImage {
             self.imageOrientation == UIImageOrientation.LeftMirrored ||
             self.imageOrientation == UIImageOrientation.Right ||
             self.imageOrientation == UIImageOrientation.RightMirrored ) {
-            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.height,self.size.width), self.CGImage)
+            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.height,self.size.width), self.CGImage!)
         } else {
-            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.width,self.size.height), self.CGImage)
+            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.width,self.size.height), self.CGImage!)
         }
         
         // And now we just create a new UIImage from the drawing context and return it

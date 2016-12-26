@@ -235,7 +235,7 @@ class JMCFlexibleLayout{
     
     
     /**Scales entire UIIMage to fit the size - it doesn't care about the aspect ratio*/
-    func scaleUIImageToSize(let image: UIImage, let size: CGSize) -> UIImage {
+    func scaleUIImageToSize( image: UIImage, size: CGSize) -> UIImage {
         let hasAlpha = false
         let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
         
@@ -245,11 +245,11 @@ class JMCFlexibleLayout{
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return scaledImage
+        return scaledImage!
     }
     
     /**Returns size of the image scaled to fit square of side widht equal to maxSide*/
-    func scaledSize(let image: UIImage, maxSide:CGFloat) -> CGSize {
+    func scaledSize( image: UIImage, maxSide:CGFloat) -> CGSize {
         
         
         let w = image.size.width

@@ -1196,7 +1196,7 @@
             startingLineNumber = "71"
             endingLineNumber = "71"
             landmarkName = "viewDidLoad()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1211,8 +1211,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "250"
             endingLineNumber = "250"
-            landmarkName = "onClickComments(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickComments(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1227,8 +1227,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "221"
             endingLineNumber = "221"
-            landmarkName = "onClickComments(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickComments(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1243,8 +1243,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "385"
             endingLineNumber = "385"
-            landmarkName = "onClickTwiterBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickTwiterBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1371,8 +1371,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "539"
             endingLineNumber = "539"
-            landmarkName = "textFieldShouldReturn(_:)"
-            landmarkType = "5">
+            landmarkName = "textFieldShouldReturn(textField:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1451,8 +1451,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "403"
             endingLineNumber = "403"
-            landmarkName = "onClickSnapChatBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickSnapChatBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1467,8 +1467,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "275"
             endingLineNumber = "275"
-            landmarkName = "onClickShareBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickShareBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2443,8 +2443,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "161"
             endingLineNumber = "161"
-            landmarkName = "actionSheet(_:clickedButtonAtIndex:)"
-            landmarkType = "5">
+            landmarkName = "actionSheet(actionSheet:clickedButtonAtIndex:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2459,8 +2459,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "279"
             endingLineNumber = "279"
-            landmarkName = "onClickShareBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickShareBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2571,8 +2571,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1932"
             endingLineNumber = "1932"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2803,8 +2803,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2046"
             endingLineNumber = "2046"
-            landmarkName = "handleMultipleImages(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "handleMultipleImages(assets:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2819,8 +2819,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1821"
             endingLineNumber = "1821"
-            landmarkName = "uploadImage(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadImage(uploadImage:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2884,7 +2884,7 @@
             startingLineNumber = "707"
             endingLineNumber = "707"
             landmarkName = "getPostEvent()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2915,8 +2915,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1354"
             endingLineNumber = "1354"
-            landmarkName = "collectionView(_:didSelectItemAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "collectionView(collectionView:didSelectItemAtIndexPath:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2931,8 +2931,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "292"
             endingLineNumber = "292"
-            landmarkName = "onClickPlayVideoBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickPlayVideoBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3219,8 +3219,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1929"
             endingLineNumber = "1929"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3236,7 +3236,7 @@
             startingLineNumber = "1337"
             endingLineNumber = "1337"
             landmarkName = "generateThumnail(sourceURL:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3251,8 +3251,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1785"
             endingLineNumber = "1785"
-            landmarkName = "uploadImage(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadImage(uploadImage:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3267,8 +3267,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2031"
             endingLineNumber = "2031"
-            landmarkName = "handleMultipleImages(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "handleMultipleImages(assets:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3283,8 +3283,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2005"
             endingLineNumber = "2005"
-            landmarkName = "handleMultipleImages(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "handleMultipleImages(assets:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3299,8 +3299,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2028"
             endingLineNumber = "2028"
-            landmarkName = "handleMultipleImages(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "handleMultipleImages(assets:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3315,8 +3315,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2035"
             endingLineNumber = "2035"
-            landmarkName = "handleMultipleImages(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "handleMultipleImages(assets:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3331,8 +3331,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2034"
             endingLineNumber = "2034"
-            landmarkName = "handleMultipleImages(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "handleMultipleImages(assets:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3347,8 +3347,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2032"
             endingLineNumber = "2032"
-            landmarkName = "handleMultipleImages(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "handleMultipleImages(assets:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3363,8 +3363,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "282"
             endingLineNumber = "282"
-            landmarkName = "onClickShareBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickShareBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3379,8 +3379,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "600"
             endingLineNumber = "600"
-            landmarkName = "sendPostToServer(_:isShared:createdDict:imgOrVideoUlr:captionText:thumNailName:)"
-            landmarkType = "5">
+            landmarkName = "sendPostToServer(postType:isShared:createdDict:imgOrVideoUlr:captionText:thumNailName:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3395,8 +3395,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1872"
             endingLineNumber = "1872"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3411,8 +3411,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1874"
             endingLineNumber = "1874"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3427,8 +3427,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1875"
             endingLineNumber = "1875"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3443,8 +3443,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1878"
             endingLineNumber = "1878"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3459,8 +3459,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1889"
             endingLineNumber = "1889"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3475,8 +3475,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1897"
             endingLineNumber = "1897"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3491,8 +3491,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1845"
             endingLineNumber = "1845"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3507,8 +3507,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "324"
             endingLineNumber = "324"
-            landmarkName = "onClickPlayVideoBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickPlayVideoBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3523,8 +3523,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "474"
             endingLineNumber = "474"
-            landmarkName = "clickUserImage(_:)"
-            landmarkType = "5">
+            landmarkName = "clickUserImage(recognizer:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3539,8 +3539,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "314"
             endingLineNumber = "314"
-            landmarkName = "onClickPlayVideoBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickPlayVideoBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3555,8 +3555,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1895"
             endingLineNumber = "1895"
-            landmarkName = "uploadVideo(_:captionText:)"
-            landmarkType = "5">
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3571,8 +3571,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
             endingLineNumber = "331"
-            landmarkName = "onClickPlayVideoBtn(_:)"
-            landmarkType = "5">
+            landmarkName = "onClickPlayVideoBtn(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3588,7 +3588,7 @@
             startingLineNumber = "685"
             endingLineNumber = "685"
             landmarkName = "getPostEvent()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3604,7 +3604,7 @@
             startingLineNumber = "706"
             endingLineNumber = "706"
             landmarkName = "getPostEvent()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3619,8 +3619,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "983"
             endingLineNumber = "983"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3635,8 +3635,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "963"
             endingLineNumber = "963"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
-            landmarkType = "5">
+            landmarkName = "collectionView(collectionView:numberOfItemsInSection:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3651,8 +3651,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1171"
             endingLineNumber = "1171"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3667,8 +3667,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1185"
             endingLineNumber = "1185"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3683,8 +3683,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1176"
             endingLineNumber = "1176"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3699,8 +3699,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1001"
             endingLineNumber = "1001"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3716,7 +3716,7 @@
             startingLineNumber = "834"
             endingLineNumber = "834"
             landmarkName = "getLikeUpdate()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3732,7 +3732,7 @@
             startingLineNumber = "1393"
             endingLineNumber = "1393"
             landmarkName = "fetchExploreDataFromServer()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3748,7 +3748,7 @@
             startingLineNumber = "1463"
             endingLineNumber = "1463"
             landmarkName = "fetchPostDataFromServer()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3764,7 +3764,7 @@
             startingLineNumber = "1419"
             endingLineNumber = "1419"
             landmarkName = "fetchPostDataFromServer()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3780,7 +3780,7 @@
             startingLineNumber = "1449"
             endingLineNumber = "1449"
             landmarkName = "fetchPostDataFromServer()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3796,7 +3796,7 @@
             startingLineNumber = "738"
             endingLineNumber = "738"
             landmarkName = "getPostEvent()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3812,7 +3812,7 @@
             startingLineNumber = "737"
             endingLineNumber = "737"
             landmarkName = "getPostEvent()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3876,7 +3876,7 @@
             startingLineNumber = "1714"
             endingLineNumber = "1714"
             landmarkName = "imagePickerControllerCancelled()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3891,8 +3891,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
             endingLineNumber = "87"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "5">
+            landmarkName = "viewWillAppear(animated:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3908,7 +3908,7 @@
             startingLineNumber = "51"
             endingLineNumber = "51"
             landmarkName = "viewDidLoad()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3955,8 +3955,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "101"
             endingLineNumber = "101"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "5">
+            landmarkName = "viewWillAppear(animated:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3971,8 +3971,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
             endingLineNumber = "128"
-            landmarkName = "viewDidAppear(_:)"
-            landmarkType = "5">
+            landmarkName = "viewDidAppear(animated:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3987,8 +3987,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
             endingLineNumber = "130"
-            landmarkName = "viewDidAppear(_:)"
-            landmarkType = "5">
+            landmarkName = "viewDidAppear(animated:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4003,8 +4003,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
             endingLineNumber = "86"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "5">
+            landmarkName = "viewWillAppear(animated:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4035,8 +4035,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "509"
             endingLineNumber = "509"
-            landmarkName = "clickUserImage(_:)"
-            landmarkType = "5">
+            landmarkName = "clickUserImage(recognizer:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

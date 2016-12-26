@@ -32,12 +32,12 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CommentsVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CommentsVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
 
         self.setUpHeader()
         self.getPostUpdate()
-        tapGesture = UITapGestureRecognizer(target: self, action: "returnKeyBoard")
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(CommentsVC.returnKeyBoard))
         
         //hide separotor while cell empty
         self.table_view.tableFooterView = UIView.init()

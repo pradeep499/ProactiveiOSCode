@@ -135,8 +135,8 @@ class VideosVC: UIViewController {
         
         let startPoint = CGPointMake(image.size.width / 2, image.size.height / 2)
         let endPoint = CGPointMake(image.size.width / 2, image.size.height)
-        CGContextDrawLinearGradient(context, gradient, startPoint, endPoint,CGGradientDrawingOptions(rawValue: 0))
-        let finalImage = UIGraphicsGetImageFromCurrentImageContext() as UIImage
+        CGContextDrawLinearGradient(context!, gradient!, startPoint, endPoint,CGGradientDrawingOptions(rawValue: 0))
+        let finalImage = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
         UIGraphicsEndImageContext()
         
         return finalImage

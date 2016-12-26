@@ -516,7 +516,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
             if imageChanged == true
             {
                 showActivityIndicator(self.view)
-                var imageData = UIImageJPEGRepresentation(grpImgV.image!, 0.8)
+                let imageData = UIImageJPEGRepresentation(grpImgV.image!, 0.8)
                 var dict = Dictionary<String,AnyObject>()
                 
                 dict["userid"]=ChatHelper.userDefaultForKey("userId") as String
@@ -569,7 +569,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
                 {
                     showActivityIndicator(self.view)
 
-                    var myString: String = groupObj.groupImage!;
+                    let myString: String = groupObj.groupImage!;
                     var myStringArr = myString.componentsSeparatedByString("?")
                     showActivityIndicator(self.view)
                     var dict = Dictionary<String,AnyObject>()
@@ -734,7 +734,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
             //To check if camera is available
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
             {
-                var imagePicker = UIImagePickerController()
+                let imagePicker = UIImagePickerController()
                 
                 imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
                 imagePicker.mediaTypes = [String(kUTTypeImage)]

@@ -28,7 +28,7 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
     public let emitQueue = dispatch_queue_create("com.socketio.engineEmitQueue", DISPATCH_QUEUE_SERIAL)
     public let handleQueue = dispatch_queue_create("com.socketio.engineHandleQueue", DISPATCH_QUEUE_SERIAL)
     public let parseQueue = dispatch_queue_create("com.socketio.engineParseQueue", DISPATCH_QUEUE_SERIAL)
-
+    
     public var connectParams: [String: AnyObject]? {
         didSet {
             (urlPolling, urlWebSocket) = createURLs()
@@ -57,11 +57,11 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
     public private(set) var urlWebSocket = NSURL()
     public private(set) var websocket = false
     public private(set) var ws: WebSocket?
-
+    
     public weak var client: SocketEngineClient?
     
     private weak var sessionDelegate: NSURLSessionDelegate?
-
+    
     private let logType = "SocketEngine"
     private let url: NSURL
     
@@ -79,7 +79,7 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
     private var security: SSLSecurity?
     private var selfSigned = false
     private var voipEnabled = false
-
+    
     public init(client: SocketEngineClient, url: NSURL, options: Set<SocketIOClientOption>) {
         self.client = client
         self.url = url
@@ -152,12 +152,12 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
             client?.engineDidError("Got unknown error from server \(msg)")
         }
     }
-
+    
     private func checkIfMessageIsBase64Binary(message: String) -> Bool {
         if message.hasPrefix("b4") {
             // binary in base64 string
             let noPrefix = message[message.startIndex.advancedBy(2)..<message.endIndex]
-
+            
             if let data = NSData(base64EncodedString: noPrefix, options: .IgnoreUnknownCharacters) {
                 client?.parseEngineBinaryData(data)
             }
@@ -213,19 +213,19 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
         
         doLongPoll(reqPolling)
     }
-
+    
     private func createURLs() -> (NSURL, NSURL) {
         if client == nil {
             return (NSURL(), NSURL())
         }
-
+        
         let urlPolling = NSURLComponents(string: url.absoluteString)!
         let urlWebSocket = NSURLComponents(string: url.absoluteString)!
         var queryString = ""
         
         urlWebSocket.path = socketPath
         urlPolling.path = socketPath
-
+        
         if secure {
             urlPolling.scheme = "https"
             urlWebSocket.scheme = "wss"
@@ -233,22 +233,22 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
             urlPolling.scheme = "http"
             urlWebSocket.scheme = "ws"
         }
-
+        
         if connectParams != nil {
             for (key, value) in connectParams! {
                 let keyEsc   = key.urlEncode()!
                 let valueEsc = "\(value)".urlEncode()!
-
+                
                 queryString += "&\(keyEsc)=\(valueEsc)"
             }
         }
-
+        
         urlWebSocket.percentEncodedQuery = "transport=websocket" + queryString
         urlPolling.percentEncodedQuery = "transport=polling&b64=1" + queryString
         
         return (urlPolling.URL!, urlWebSocket.URL!)
     }
-
+    
     private func createWebsocketAndConnect() {
         ws = WebSocket(url: urlWebSocketWithSid)
         
@@ -258,19 +258,19 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
                 ws?.headers[key] = value
             }
         }
-
+        
         if extraHeaders != nil {
             for (headerName, value) in extraHeaders! {
                 ws?.headers[headerName] = value
             }
         }
-
+        
         ws?.queue = handleQueue
         ws?.voipEnabled = voipEnabled
         ws?.delegate = self
         ws?.selfSignedSSL = selfSigned
         ws?.security = security
-
+        
         ws?.connect()
     }
     
@@ -307,13 +307,13 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
             self.closeOutEngine(reason)
         }
     }
-
+    
     public func doFastUpgrade() {
         if waitingForPoll {
             DefaultSocketLogger.Logger.error("Outstanding poll when switched to WebSockets," +
                 "we'll probably disconnect soon. You should report this.", type: logType)
         }
-
+        
         sendWebSocketMessage("", withType: .Upgrade, withData: [])
         websocket = true
         polling = false
@@ -321,10 +321,10 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
         probing = false
         flushProbeWait()
     }
-
+    
     private func flushProbeWait() {
         DefaultSocketLogger.Logger.log("Flushing probe wait", type: logType)
-
+        
         dispatch_async(emitQueue) {
             for waiter in self.probeWait {
                 self.write(waiter.msg, withType: waiter.type, withData: waiter.data)
@@ -349,40 +349,40 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
         
         postWait.removeAll(keepCapacity: true)
     }
-
+    
     private func handleClose(reason: String) {
         client?.engineDidClose(reason)
     }
-
+    
     private func handleMessage(message: String) {
         client?.parseEngineMessage(message)
     }
-
+    
     private func handleNOOP() {
         doPoll()
     }
-
+    
     private func handleOpen(openData: String) {
         do {
             let json = try openData.toNSDictionary()
             
             if let sid = json["sid"] as? String {
                 let upgradeWs: Bool
-
+                
                 self.sid = sid
                 connected = true
-
+                
                 if let upgrades = json["upgrades"] as? [String] {
                     upgradeWs = upgrades.contains("websocket")
                 } else {
                     upgradeWs = false
                 }
-
+                
                 if let pingInterval = json["pingInterval"] as? Double, pingTimeout = json["pingTimeout"] as? Double {
                     self.pingInterval = pingInterval / 1000.0
                     self.pingTimeout = pingTimeout / 1000.0
                 }
-
+                
                 if !forcePolling && !forceWebsockets && upgradeWs {
                     createWebsocketAndConnect()
                 }
@@ -399,10 +399,10 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
             didError("Error parsing open packet")
         }
     }
-
+    
     private func handlePong(pongMessage: String) {
         pongsMissed = 0
-
+        
         // We should upgrade
         if pongMessage == "3probe" {
             upgradeTransport()
@@ -413,13 +413,13 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
         DefaultSocketLogger.Logger.log("Got binary data: %@", type: "SocketEngine", args: data)
         client?.parseEngineBinaryData(data.subdataWithRange(NSMakeRange(1, data.length - 1)))
     }
-
+    
     public func parseEngineMessage(message: String, fromPolling: Bool) {
         DefaultSocketLogger.Logger.log("Got message: %@", type: logType, args: message)
         
         let reader = SocketStringReader(message: message)
         let fixedString: String
-
+        
         guard let type = SocketEnginePacketType(rawValue: Int(reader.currentCharacter) ?? -1) else {
             if !checkIfMessageIsBase64Binary(message) {
                 checkAndHandleEngineError(message)
@@ -427,13 +427,13 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
             
             return
         }
-
+        
         if fromPolling && type != .Noop && doubleEncodeUTF8 {
             fixedString = fixDoubleUTF8(message)
         } else {
             fixedString = message
         }
-
+        
         switch type {
         case .Message:
             handleMessage(fixedString[fixedString.startIndex.successor()..<fixedString.endIndex])
@@ -459,14 +459,14 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
         probing = false
         invalidated = false
         session = NSURLSession(configuration: .defaultSessionConfiguration(),
-            delegate: sessionDelegate,
-            delegateQueue: NSOperationQueue.mainQueue())
+                               delegate: sessionDelegate,
+                               delegateQueue: NSOperationQueue.mainQueue())
         sid = ""
         waitingForPoll = false
         waitingForPost = false
         websocket = false
     }
-
+    
     private func sendPing() {
         if !connected {
             return
@@ -493,13 +493,13 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
     private func upgradeTransport() {
         if ws?.isConnected ?? false {
             DefaultSocketLogger.Logger.log("Upgrading transport to WebSockets", type: logType)
-
+            
             fastUpgrade = true
             sendPollMessage("", withType: .Noop, withData: [])
             // After this point, we should not send anymore polling messages
         }
     }
-
+    
     /// Write a message, independent of transport.
     public func write(msg: String, withType type: SocketEnginePacketType, withData data: [NSData]) {
         dispatch_async(emitQueue) {
@@ -507,11 +507,11 @@ public final class SocketEngine : NSObject, NSURLSessionDelegate, SocketEnginePo
             
             if self.websocket {
                 DefaultSocketLogger.Logger.log("Writing ws: %@ has data: %@",
-                    type: self.logType, args: msg, data.count != 0)
+                                               type: self.logType, args: msg, data.count != 0)
                 self.sendWebSocketMessage(msg, withType: type, withData: data)
             } else if !self.probing {
                 DefaultSocketLogger.Logger.log("Writing poll: %@ has data: %@",
-                    type: self.logType, args: msg, data.count != 0)
+                                               type: self.logType, args: msg, data.count != 0)
                 self.sendPollMessage(msg, withType: type, withData: data)
             } else {
                 self.probeWait.append((msg, type, data))
