@@ -87,6 +87,7 @@
 #define ServiceGetNewsFeed              @"getNewsFeed"
 #define ServiceRequestOTP               @"users/requestOTP"
 #define ServiceChangeMobile             @"users/changeMobile"
+#define ServiceDeleteAC                 @"users/deleteAccount"
 
 
 

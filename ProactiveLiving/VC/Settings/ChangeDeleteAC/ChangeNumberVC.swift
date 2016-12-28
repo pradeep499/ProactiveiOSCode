@@ -25,13 +25,29 @@ class ChangeNumberVC: UIViewController, UITextFieldDelegate {
 
         self.navigationController?.navigationBarHidden = true
         
+        IQKeyboardManager.sharedManager().enable=true
+        IQKeyboardManager.sharedManager().enableAutoToolbar=true
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    func resignTextField() -> Void{
+        
+        self.tf_newMbCountryCode.resignFirstResponder()
+        self.tf_OldMbCountryCode.resignFirstResponder()
+        self.tf_newMb.resignFirstResponder()
+        self.tf_OldMb.resignFirstResponder()
+        self.tf_pwd.resignFirstResponder()
+        
+    }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.resignTextField()
+    }
     
     //MARK: textfield Delegate
     
@@ -74,6 +90,7 @@ class ChangeNumberVC: UIViewController, UITextFieldDelegate {
         
         self.requestOTPAPI()
         
+        self.resignTextField()
         
         
     }

@@ -1163,8 +1163,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             let thumbIV =  cell.viewWithTag(20) as! UIImageView
             let btn_videoPlay =  cell.viewWithTag(21) as! UIButton
+            let indicator = cell.viewWithTag(22) as! UIActivityIndicatorView
             
-            thumbIV.contentMode = .ScaleToFill
+            
+             thumbIV.contentMode = .ScaleAspectFill
             
             let imgUrls = dict["attachments"] as! [String]
             
@@ -1182,14 +1184,25 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     thumbIV.userInteractionEnabled = true
                     
                     btn_videoPlay.hidden = true
+                    indicator.startAnimating()
                     
-                    
+                    indicator.hidden = false
                     
                     if isExistPath {
                         thumbIV.image = UIImage(contentsOfFile: fileUrl!)
+                        indicator.hidden = true
+                        indicator.stopAnimating()
                     }else{
+                        thumbIV.sd_setImageWithURL(NSURL(string: imgUrls.first!), placeholderImage: UIImage(named:  "cell_blured_heigh")) {
+                            (img,  err,  cacheType,  imgUrl) -> Void in
+                            
+                            thumbIV.image = img
+                            indicator.hidden = true
+                            indicator.stopAnimating()
+                            
+                        }
                         
-                        thumbIV.sd_setImageWithURL(NSURL(string: imgUrls.first!), placeholderImage: UIImage(named:  "cell_blured_heigh"))
+                        
                         
                     }
                     
@@ -1441,28 +1454,24 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                   if ((responseDict["error"] as! Int) == 0) {
                     
                     
+                    if let resultArr = responseDict["result"]  as? NSArray{
                         
-                        guard let resultArr = responseDict["result"]  as? NSMutableArray   else
-                        {
-                            return
+                        if self.title == "ALL" {
+                            self.postAllArr = NSMutableArray.init(array: resultArr)
                         }
-                    
-                    if self.title == "ALL" {
-                        self.postAllArr = NSMutableArray.init(array: resultArr)
+                        else if self.title == "FRIENDS" {
+                            self.postFriendsArr = NSMutableArray.init(array: resultArr)
+                        }
+                        else if self.title == "COLLEAGUES" {
+                            self.postColleagueArr = NSMutableArray.init(array: resultArr)
+                        }
+                        else if self.title == "HEALTH CLUBS" {
+                            self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
+                        }
+                        
+                        self.collectionView.reloadData()
                     }
-                    else if self.title == "FRIENDS" {
-                        self.postFriendsArr = NSMutableArray.init(array: resultArr)
-                    }
-                    else if self.title == "COLLEAGUES" {
-                        self.postColleagueArr = NSMutableArray.init(array: resultArr)
-                    }
-                    else if self.title == "HEALTH CLUBS" {
-                        self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
-                    }
-                    
-                    self.collectionView.reloadData()
-                    
-                    } else {
+                  } else {
                         
                         AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                     }

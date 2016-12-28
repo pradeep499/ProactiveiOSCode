@@ -24,26 +24,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
 
         // Do any additional setup after loading the view.
         
-        var countries: [String] = []
-        var countriesPHNOCode: [String] = []
         
-        for code in NSLocale.ISOCountryCodes() as [String] {
-            let id = NSLocale.localeIdentifierFromComponents([NSLocaleCountryCode: code])
-            let name = NSLocale(localeIdentifier: "en_UK").displayNameForKey(NSLocaleIdentifier, value: id) ?? "Country not found for code: \(code)"
-            
-            let carrier =  CTCarrier.init()
-            if let phCode =  carrier.countryCallingCode(code){
-               
-                countriesPHNOCode.append(phCode)
-                countries.append(name)
-            }
-            
-            
-         
-            
-        }
-        
-        print(countries)
         
     }
 

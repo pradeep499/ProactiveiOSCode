@@ -2416,8 +2416,6 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     resendBtn.addTarget(self, action: #selector(ChattingMainVC.reSendMultiMedia(_:)), forControlEvents:
                         UIControlEvents.TouchUpInside)
                     
-                    
-                    
                     let myImage = UIImage(named: "sender_bg.png")!
                     bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     let tempStr = chatObj.groupChatFile!.mediaLocalPath! as String
@@ -6487,8 +6485,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                didFinishWithResult result: MFMailComposeResult,
                                                    error: NSError?){
             
-            switch(result.rawValue){
-            case MFMailComposeResultSent.rawValue:
+            switch(result){
+            case .Sent:
                 print("Email sent")
                 
             default:

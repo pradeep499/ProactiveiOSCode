@@ -8,6 +8,8 @@
 
 import UIKit
 import Foundation
+import CoreTelephony
+
 
 var activityIndicator:UIActivityIndicatorView? 
 class ChatHelper: NSObject {
@@ -29,6 +31,29 @@ class ChatHelper: NSObject {
         }
         return Static.instance!
     }
+    
+    
+     class func getCountryLitWithTelePhoneCode(completion: (countries:[String], codes:[String]) -> Void){
+        
+        var countries: [String] = []
+        var countriesPHNOCode: [String] = []
+        
+        for code in NSLocale.ISOCountryCodes() as [String] {
+            let id = NSLocale.localeIdentifierFromComponents([NSLocaleCountryCode: code])
+            let name = NSLocale(localeIdentifier: "en_UK").displayNameForKey(NSLocaleIdentifier, value: id) ?? "Country not found for code: \(code)"
+            
+            let carrier =  CTCarrier.init()
+            if let phCode =  carrier.countryCallingCode(code){
+                
+                countriesPHNOCode.append(phCode)
+                countries.append(name)
+            }
+        }
+        
+        completion(countries: countries, codes: countriesPHNOCode)
+    }
+    
+   
     
     //MARK: UserDefault
     class func saveToUserDefault(value:AnyObject, key:String)
@@ -171,6 +196,9 @@ class ChatHelper: NSObject {
         
         return label.frame.width
     }
+    
+    
+    
 }
 
 //MARK:- Add Delay

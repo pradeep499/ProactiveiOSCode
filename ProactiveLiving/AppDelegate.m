@@ -14,6 +14,7 @@
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "ProactiveLiving-Swift.h"
+
 @interface AppDelegate ()
 {
     UIImageView *splashView;

@@ -12,6 +12,7 @@
 #import "Services.h"
 #import "AppDelegate.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "ProactiveLiving-swift.h"
 
 @interface SignUpVC ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
     
@@ -24,10 +25,18 @@
     NSString *password;
     NSString *confirmPassword;
     NSString *zipCode;
+    NSMutableArray *countryArr, *countryCodeArr;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *termsAndConditionsButton;
 @property (strong, nonatomic) NSDictionary *detailDictionary;
+@property (weak, nonatomic) IBOutlet UITableView *tableView_country;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *layout_viewCountryTop;
+
+@property (weak, nonatomic)  UIButton *btnCountryName;
+@property (weak, nonatomic)  CustomTextField *tf_countryCode;
+@property (weak, nonatomic)  CustomTextField *tf_cellNo;
+
 
 @end
 
@@ -37,6 +46,13 @@
     [super viewDidLoad];
     [self setInitialView];
     
+   [ChatHelper getCountryLitWithTelePhoneCode:^(NSArray<NSString *> * _Nonnull countries, NSArray<NSString *> * _Nonnull codes) {
+       
+       countryArr = [[NSMutableArray alloc]initWithArray:countries];
+       countryCodeArr = [[NSMutableArray alloc]initWithArray:codes];
+   }];
+    
+    self.layout_viewCountryTop.constant = 1000;
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
@@ -96,89 +112,177 @@
 }
 #pragma mark - uitableview
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (tableView == self.tableView_country) {
+        return 45;
+    }
     //set height of cell
+    if (indexPath.row == 3) {
+        return 110;
+    }
     return 55;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //number of rows in tableview
+   
+    if (tableView == self.tableView_country) {
+        return countryArr.count;
+    }
+    
     return 8;
 }
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"SignUpCell";
-    SignUpCell *cell = (SignUpCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    
-    cell.textField.text = @"";
-    cell.imageView.image = nil;
-    cell.leadingImageViewConstraint.constant = 30;
-    [cell.textField setKeyboardType:UIKeyboardTypeDefault];
-    [cell.textField setReturnKeyType:UIReturnKeyNext];
-    cell.textField.inputAccessoryView = nil;
-    cell.textField.secureTextEntry = NO;
-
-    
-    if (indexPath.row == 0) {
-        cell.textField.placeholder = @"First Name";
-        [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-        cell.textField.text = firstName;
-        cell.imageView.image = [UIImage imageNamed:@"signupName"];
-
-    }
-    else if (indexPath.row == 1) {
-        cell.textField.placeholder = @"Middle Name";
-        [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-        cell.textField.text = middleName;
-        cell.imageView.image = [UIImage imageNamed:@"signupName"];
-    }
-    else if (indexPath.row == 2) {
-        cell.textField.placeholder = @"Last Name";
-        [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-        cell.textField.text = lastName;
-        cell.imageView.image = [UIImage imageNamed:@"signupName"];
-    }
-    else if (indexPath.row == 3) {
-        cell.textField.placeholder = @"Cell Number";
-        cell.textField.text = cellNumber;
-        cell.imageView.image = [UIImage imageNamed:@"signupCellNumber"];
-        [cell.textField setKeyboardType:UIKeyboardTypePhonePad];
+    if (tableView == self.tableView_country) {
         
-        UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-        numberToolbar.barStyle = UIBarStyleDefault;
-        numberToolbar.items = @[[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPhonePad)], [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], [[UIBarButtonItem alloc]initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(donePhonePad)]];
-        [numberToolbar sizeToFit];
-        cell.textField.inputAccessoryView = numberToolbar;
+        static NSString *CellIdentifier = @"Cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell==nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            
+        }
+        
+        NSString *text = [NSString stringWithFormat:@"%@ (%@ )",[countryArr objectAtIndex:indexPath.row], [countryCodeArr objectAtIndex:indexPath.row] ];
+        
+        cell.textLabel.text = text;
+        
+        return cell;
     }
-    else if (indexPath.row == 4) {
-        cell.textField.placeholder = @"Email ID";
-        cell.textField.text = emailId;
-        cell.imageView.image = [UIImage imageNamed:@"signupMail"];
-        [cell.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+    else{
+        
+        
+        
+        
+        if (indexPath.row == 3) {
+            // Country Cell
+            
+            static NSString *cellCountryIdentifier = @"CountryCell";
+            UITableViewCell *cellCountry = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:cellCountryIdentifier forIndexPath:indexPath];
+            cellCountry.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UIButton *btnCountry = [cellCountry viewWithTag:1];
+            CustomTextField *tf_countryCode = [cellCountry viewWithTag:2];
+            CustomTextField *tf_cellNo = [cellCountry viewWithTag:3];
+            
+            self.btnCountryName = btnCountry;
+            self.tf_countryCode = tf_countryCode;
+            self.tf_cellNo = tf_cellNo;
+            
+            
+            //   tf_cellNo.leftViewMode = UITextFieldViewModeAlways;
+            UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 32, 32)];
+            iv.image = [UIImage imageNamed:@"signupCellNumber"];
+            tf_cellNo.leftView = iv;
+            [tf_cellNo setKeyboardType:UIKeyboardTypePhonePad];
+            
+            
+            UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+            numberToolbar.barStyle = UIBarStyleDefault;
+            numberToolbar.items = @[[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPhonePad)], [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], [[UIBarButtonItem alloc]initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(donePhonePad)]];
+            [numberToolbar sizeToFit];
+            tf_cellNo.inputAccessoryView = numberToolbar;
+            
+            
+            
+            
+            return cellCountry;
+        }
+        
+        
+        static NSString *cellIdentifier = @"SignUpCell";
+        SignUpCell *cell = (SignUpCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        
+        
+        
+        
+        
+        cell.textField.text = @"";
+        cell.imageView.image = nil;
+        cell.leadingImageViewConstraint.constant = 30;
+        [cell.textField setKeyboardType:UIKeyboardTypeDefault];
+        [cell.textField setReturnKeyType:UIReturnKeyNext];
+        cell.textField.inputAccessoryView = nil;
+        cell.textField.secureTextEntry = NO;
+        
+        
+        if (indexPath.row == 0) {
+            cell.textField.placeholder = @"First Name";
+            [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+            cell.textField.text = firstName;
+            cell.imageView.image = [UIImage imageNamed:@"signupName"];
+            
+        }
+        else if (indexPath.row == 1) {
+            cell.textField.placeholder = @"Middle Name";
+            [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+            cell.textField.text = middleName;
+            cell.imageView.image = [UIImage imageNamed:@"signupName"];
+        }
+        else if (indexPath.row == 2) {
+            cell.textField.placeholder = @"Last Name";
+            [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+            cell.textField.text = lastName;
+            cell.imageView.image = [UIImage imageNamed:@"signupName"];
+        }
+        /*   else if (indexPath.row == 3) {
+         cell.textField.placeholder = @"Cell Number";
+         cell.textField.text = cellNumber;
+         cell.imageView.image = [UIImage imageNamed:@"signupCellNumber"];
+         [cell.textField setKeyboardType:UIKeyboardTypePhonePad];
+         
+         UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+         numberToolbar.barStyle = UIBarStyleDefault;
+         numberToolbar.items = @[[[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPhonePad)], [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], [[UIBarButtonItem alloc]initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(donePhonePad)]];
+         [numberToolbar sizeToFit];
+         cell.textField.inputAccessoryView = numberToolbar;
+         } */
+        else if (indexPath.row == 4) {
+            cell.textField.placeholder = @"Email ID";
+            cell.textField.text = emailId;
+            cell.imageView.image = [UIImage imageNamed:@"signupMail"];
+            [cell.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+        }
+        else if (indexPath.row == 5) {
+            cell.textField.placeholder = @"Password";
+            cell.textField.text = password;
+            cell.imageView.image = [UIImage imageNamed:@"signupPassword"];
+            cell.textField.secureTextEntry = YES;
+        }
+        else if (indexPath.row == 6) {
+            cell.textField.placeholder = @"Confirm Password";
+            cell.textField.text = confirmPassword;
+            cell.imageView.image = [UIImage imageNamed:@"signupConfirmPassword"];
+            cell.leadingImageViewConstraint.constant = 33;
+            cell.textField.secureTextEntry = YES;
+        }
+        else if (indexPath.row == 7){
+            cell.textField.placeholder = @"ZipCode";
+            cell.textField.text = zipCode;
+            cell.imageView.image = [UIImage imageNamed:@"signupLocation"];
+            [cell.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+            [cell.textField setReturnKeyType:UIReturnKeyDone];
+        }
+        
+        return cell;
+        
     }
-    else if (indexPath.row == 5) {
-        cell.textField.placeholder = @"Password";
-        cell.textField.text = password;
-        cell.imageView.image = [UIImage imageNamed:@"signupPassword"];
-        cell.textField.secureTextEntry = YES;
-    }
-    else if (indexPath.row == 6) {
-        cell.textField.placeholder = @"Confirm Password";
-        cell.textField.text = confirmPassword;
-        cell.imageView.image = [UIImage imageNamed:@"signupConfirmPassword"];
-        cell.leadingImageViewConstraint.constant = 33;
-        cell.textField.secureTextEntry = YES;
-    }
-    else {
-        cell.textField.placeholder = @"ZipCode";
-        cell.textField.text = zipCode;
-        cell.imageView.image = [UIImage imageNamed:@"signupLocation"];
-        [cell.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-        [cell.textField setReturnKeyType:UIReturnKeyDone];
-    }
-    return cell;
+    
+    return nil;
+    
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.view endEditing:YES];
+    
+    if (tableView == self.tableView_country) {
+        
+        self.layout_viewCountryTop.constant = 1000;
+        [self.btnCountryName setTitle:[countryArr objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+        NSString *code = [countryCodeArr objectAtIndex:indexPath.row];
+        self.tf_countryCode.text = [code substringFromIndex:1] ;
+    }
 }
 #pragma mark - cancelPhonePad
 -(void)cancelPhonePad {
@@ -343,11 +447,18 @@
                 cell= (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
                 [cell.textField becomeFirstResponder];
             }
-            else if ([[cellNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
+          /*  else if ([[cellNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
                 indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
                 cell= (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
                 [cell.textField becomeFirstResponder];
+            }*/
+            //Country Cell
+            else if ([[self.tf_cellNo.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
+                indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
+                cell= (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+                [self.tf_cellNo becomeFirstResponder];
             }
+            
             else if ([[emailId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
                 indexPath = [NSIndexPath indexPathForRow:4 inSection:0];
                 cell= (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -414,7 +525,7 @@
     else if ([[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
         return NO;
     }
-    else if ([[cellNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
+    else if ([[self.tf_cellNo.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
         return NO;
     }
     else if ([[emailId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
@@ -464,6 +575,12 @@
 }
 
 #pragma mark - signUp
+
+- (IBAction)onClickCountryBtn:(id)sender {
+    
+    self.layout_viewCountryTop.constant = 297;
+}
+
 - (IBAction)signUp:(id)sender {
     [self.view endEditing:YES];
     
@@ -472,7 +589,7 @@
         alert.tag = 100;
         [alert show];
     }
-    else if ([[cellNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] < minimumPhoneLength){
+    else if ([[self.tf_cellNo.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] < minimumPhoneLength){
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:requiredTitle message:validCellNumber delegate:self cancelButtonTitle:ok otherButtonTitles:nil, nil];
         alert.tag = 104;
         [alert show];
@@ -507,8 +624,10 @@
                            @"lastName" : lastName,
                            @"email" : emailId,
                            @"password" : password,
-                           @"mobilePhone" : cellNumber,
-                           @"zipCode" : zipCode};
+                           @"mobilePhone" : self.tf_cellNo.text,
+                           @"zipCode" : zipCode,
+                           @"countryCode" : self.tf_countryCode.text,
+                           };
             
             [Services serviceCallWithPath:ServiceRegister withParam:parameters success:^(NSDictionary *responseDict) {
                 [SVProgressHUD dismiss];
@@ -525,7 +644,7 @@
                         [alert show];
                     }
                     else if ([[self.detailDictionary objectForKey:@"error"] intValue] == 1){
-                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:userExist delegate:nil cancelButtonTitle:ok otherButtonTitles:nil, nil];
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:[self.detailDictionary objectForKey:@"errorMsg"] delegate:nil cancelButtonTitle:ok otherButtonTitles:nil, nil];
                         [alert show];
                     }
                     else {

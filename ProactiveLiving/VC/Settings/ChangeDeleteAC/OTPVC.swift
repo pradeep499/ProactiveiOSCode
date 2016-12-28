@@ -32,25 +32,51 @@ class OTPVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.resignTextField()
+    }
+    
+    func resignTextField() -> Void {
+        self.tf_otp.resignFirstResponder()
+        
+    }
+    
     @IBAction func onClickBackBtn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
 
     @IBAction func onClickResendOTPBtn(sender: AnyObject) {
    
+        self.requestOTPAPI()
+        self.resignTextField()
     
     }
     
     
     
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
+        
+        
+        
+        if  self.tf_otp.text?.characters.count < 1 {
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "OTP cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return
+        }
+        
+        self.sendOTPAPI()
+        
+        self.tf_otp.text = ""
+        self.resignTextField()
+        
+        
     }
     
     
     
     
     
-    //MARKS: - Service Call
+    //MARK: - API
     
     
     func requestOTPAPI() {
@@ -119,7 +145,7 @@ class OTPVC: UIViewController {
             parameters["newMobile"] = self.newMBStr
             
             //call global web service class latest
-            Services.postRequest(ServiceRequestOTP, parameters: parameters, completionHandler:{
+            Services.postRequest(ServiceChangeMobile, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 

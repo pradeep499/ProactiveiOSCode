@@ -323,7 +323,7 @@
                         // success login
                         
                         if (![[self.detailDictionary objectForKey:@"result"] isKindOfClass:[NSNull class]] && [self.detailDictionary objectForKey:@"result"]) {
-                            [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"UserID"] withKey:uId];
+                            [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"_id"] withKey:uId];
                             
                             //CHAT RELATED
                             [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"_id"] key:_ID];
@@ -361,7 +361,7 @@
 
                     }
                     else if ([[self.detailDictionary objectForKey:@"error"] intValue] == 1){
-                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:invalidPassword delegate:nil cancelButtonTitle:ok otherButtonTitles:nil, nil];
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:[self.detailDictionary objectForKey:@"errorMsg"]  delegate:nil cancelButtonTitle:ok otherButtonTitles:nil, nil];
                         [alert show];
                     }
                     else {
