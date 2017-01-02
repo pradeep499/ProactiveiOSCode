@@ -666,7 +666,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             
             
-            print("Request dict = ", dict)
+            print("emit dict = ", dict)
             
            
             
@@ -687,7 +687,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         ChatListner .getChatListnerObj().socket.on("getPost") {data, ack in
             
             
-            print("value error_code\(data[0]["status"] as! String))")
+      //      print("value error_code\(data[0]["status"] as! String))")
             
             let errorCode = (data[0]["status"] as? String) ?? "1"
             
@@ -940,7 +940,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 height = height + (380 - 200)
             }*/
             
-            height = height + (380 - 200)
+            height = height + (400 - 210)
             
         }
         
@@ -1083,7 +1083,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let w = collectionView.bounds.size.width - 82
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 18 , width: Float(w) , fontName: "Roboto-Regular")
         
-        cell.layOut_lbl_Name_height.constant = size.height
+        cell.layOut_lbl_Name_height.constant = size.height + 5
         
         
         
@@ -1166,7 +1166,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             let indicator = cell.viewWithTag(22) as! UIActivityIndicatorView
             
             
-             thumbIV.contentMode = .ScaleAspectFill
+           //  thumbIV.contentMode = .ScaleAspectFit
             
             let imgUrls = dict["attachments"] as! [String]
             
@@ -1189,14 +1189,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     indicator.hidden = false
                     
                     if isExistPath {
-                        thumbIV.image = UIImage(contentsOfFile: fileUrl!)
+                        let img = UIImage(contentsOfFile: fileUrl!)
+                        thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
                         indicator.hidden = true
                         indicator.stopAnimating()
                     }else{
                         thumbIV.sd_setImageWithURL(NSURL(string: imgUrls.first!), placeholderImage: UIImage(named:  "cell_blured_heigh")) {
                             (img,  err,  cacheType,  imgUrl) -> Void in
                             
-                            thumbIV.image = img
+                            thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
                             indicator.hidden = true
                             indicator.stopAnimating()
                             
@@ -1215,12 +1216,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     
                     
                     if isExistPath {
-                        thumbIV.image = UIImage(contentsOfFile: fileUrl!)
+                        let img = UIImage(contentsOfFile: fileUrl!)
+                        thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
                     } else {
                         
                         //generate thumb from video url    and display on cell
-                        let img = self.generateThumnail(sourceURL: NSURL(string: imgUrls.first!)!)
-                        thumbIV.image = img
+                        let img =  CommonMethodFunctions.generateThumbImage(NSURL(string: imgUrls.first!)!) //self.generateThumnail(sourceURL: NSURL(string: imgUrls.first!)!)
+                        thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
                         
                         //write to db
                         let imgData = UIImagePNGRepresentation(img) as NSData?
@@ -1338,14 +1340,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let date = NSDate()
         var dateStr : String
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
+        dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss.sss"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateStr = dateFormatter.stringFromDate(date)
+        
+        print("time stam ", dateStr);
         
         return dateStr
         
     }
-    
+    /*
     func generateThumnail(sourceURL sourceURL:NSURL) -> UIImage {
         let asset = AVAsset(URL: sourceURL)
         let imageGenerator = AVAssetImageGenerator(asset: asset)
@@ -1359,7 +1363,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             return UIImage(named: "some generic thumbnail")!
         }
     }
-    
+   */
 
     
     //MARK:- Collection Delegate
@@ -1438,14 +1442,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
             parameters["section"] = self.title
             
-            print("Dict = \(parameters)")
+         //   print("Dict = \(parameters)")
             //call global web service class latest
             Services.postRequest(ServiceGetNewsFeed, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 isPostServiceCalled = false
                 
-                print("Response = \(responseDict)")
+          //      print("Response = \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
@@ -1733,10 +1737,110 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 UIApplication.sharedApplication().statusBarHidden = false;
                 UIApplication.sharedApplication().statusBarStyle = .LightContent
         })
-         self.globalAssets = assets
+       //  self.globalAssets = assets
       //   self.addCaptionOnPost(assets, cameraImage: nil, videoUrl: nil)
         
-        self.handleMultipleImages(assets!, captionText: "")
+       // self.handleMultipleImages(self.globalAssets!, captionText: "")
+        
+        //handle muliple image
+        
+       var count = 0
+        var thumbArr: NSMutableArray = NSMutableArray()
+        
+        for (index, asset) in assets.enumerate(){
+            
+            count = index
+            
+            let locId = CommonMethodFunctions.nextIdentifies()
+            let strId = String(locId)
+            
+            let timeStamp = generateTimeStamp() + String("-") + String(index)
+            
+            
+            let tempImage = UIImageView(image: asset.fullScreenImage)
+            //     let thumbImg = UIImageView(image: asset.thumbnailImage)
+            
+            let imgData = UIImageJPEGRepresentation(tempImage.image!, 0.8)
+            let thumbNailName = "Thumb" + timeStamp + ".jpg"
+            
+            thumbArr.insertObject(thumbNailName, atIndex: 0)
+            
+            self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                
+                if isWritten{
+                    
+                }
+                })
+            
+            
+            var dict = Dictionary<String, AnyObject>()
+            
+            
+            dict["message"] = ""
+            dict["type"] = "image"
+            dict["mediaUrl"] = ""
+            dict["mediaThumbUrl"] = ""
+            dict["localmsgid"] = strId
+            
+            NSOperationQueue.mainQueue().addOperationWithBlock() { () in
+                
+                AppDelegate.showProgressHUDWithStatus("Please wait..")
+                
+                let name = self.uniqueName("")   + String("-") + String(index)
+                
+                
+                
+                
+                UploadInS3.sharedGlobal().uploadMultipleImagesOnChatTos3(imgData, type: 0, dictInfo: dict, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
+                    
+                    
+                    
+                    if bool_val == true{
+                        
+                        count = count - 1
+                        
+                        /* for  index in  0 ..< (UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray).count {
+                            
+                            
+                            if let citiesArr = UploadInS3.sharedGlobal().chatImagesFiles{
+                                
+                                var fileName = Dictionary<String, AnyObject>()
+                                if let _:Dictionary<String, AnyObject> = citiesArr[index] as? Dictionary
+                                {
+                                    fileName = citiesArr[index] as! Dictionary
+                                    let strFileName : String = fileName["chatImagesName"] as! String
+                                    
+                                    
+                                        
+                                    
+                                    
+                                    
+                                }
+                                else {}
+                            }
+                        }*/
+                        
+                        let thumbNameTemp = String(thumbArr.lastObject)
+                        
+                        self.sendPostToServer("image", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: "", thumNailName:thumbNameTemp)
+                        
+                        thumbArr.removeLastObject()
+                        
+                        if count == -1 {
+                            AppDelegate.dismissProgressHUD()
+                        }
+                        
+                    }
+                    
+                    
+                    } , completionProgress: { ( bool_val : Bool, progress) -> Void in
+                        
+                })
+            }
+        }
+        
+          self.dismissViewControllerAnimated(true, completion: nil)
+    
         
     }
     
@@ -1859,7 +1963,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
        
        
         // generate thumb image from video url and save to path
-        let thumbImg = CommonMethodFunctions.getThumbNail(videoUrl);
+      // let thumbImg = CommonMethodFunctions.getThumbNail(videoUrl);
+        let thumbImg = CommonMethodFunctions.generateThumbImage(videoUrl)
         let thumbData = UIImageJPEGRepresentation(thumbImg, 1.0)
         
         self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
@@ -1992,21 +2097,21 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func handleMultipleImages(assets: [DKAsset]!, captionText:String?) -> Void {
         
+        var i = 1
+        
         for (_, asset) in assets!.enumerate() {
             
             
             let locId = CommonMethodFunctions.nextIdentifies()
             let strId = String(locId)
             
-            let timeStamp = generateTimeStamp()
+            let timeStamp = generateTimeStamp() + String(" ") + String(i)
+            i = i + 1
             
             let tempImage = UIImageView(image: asset.fullScreenImage)
             //     let thumbImg = UIImageView(image: asset.thumbnailImage)
             
             let imgData = UIImageJPEGRepresentation(tempImage.image!, 0.8)
-            
-            //    let thumbImg = CommonMethodFunctions.generatePhotoThumbnail(uploadImage);
-            //   let thumbData = UIImageJPEGRepresentation(thumbImg, 0.0)
             let thumbNailName = "Thumb" + timeStamp + ".jpg"
             
             
@@ -2023,18 +2128,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
             dict["message"] = ""
             dict["type"] = "image"
-       //     dict["localThumbPath"] = saveThumbImagePath
-       //     dict["localFullPath"] = saveFullImagePath
             dict["mediaUrl"] = ""
             dict["mediaThumbUrl"] = ""
             dict["localmsgid"] = strId
-        //    dict["mediaThumb"] = base64String
             
             NSOperationQueue.mainQueue().addOperationWithBlock() { () in
                 
                 AppDelegate.showProgressHUDWithStatus("Please wait..")
                 
-                let name = self.uniqueName("")                
+                let name = self.uniqueName("")   + String(" ") + String(i)
                 
                 UploadInS3.sharedGlobal().uploadMultipleImagesOnChatTos3(imgData, type: 0, dictInfo: dict, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
                     
@@ -2042,6 +2144,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     
                     if bool_val == true{
                         self.sendPostToServer("image", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText, thumNailName:thumbNailName)
+                    //    print("image path~~~~~~ = ", pathUrl)
                      
                     }
                     

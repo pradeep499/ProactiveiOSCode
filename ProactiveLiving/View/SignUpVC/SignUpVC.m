@@ -225,7 +225,7 @@
             cell.textField.placeholder = @"Last Name";
             [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
             cell.textField.text = lastName;
-            cell.imageView.image = [UIImage imageNamed:@"signupName"];
+            cell.imageView.image = [UIImage imageNamed:@"signupName"]; 
         }
         /*   else if (indexPath.row == 3) {
          cell.textField.placeholder = @"Cell Number";
@@ -354,7 +354,7 @@
         [cell.textField becomeFirstResponder];
     }
     else if (rowNo == 2) {
-        [cell.textField becomeFirstResponder];
+        [self.tf_cellNo becomeFirstResponder];
     }
     else if (rowNo == 3) {
         [cell.textField becomeFirstResponder];

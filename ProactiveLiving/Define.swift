@@ -126,7 +126,7 @@ let socketIO_BaseURL =  "http://192.168.3.185:90"
 //let socketIO_BaseURL = "http://52.23.211.77:3000"
 
 //Production Serever
-//let socketIO_BaseURL = "http://52.89.149.60:3000"
+ //let socketIO_BaseURL = "http://52.89.149.60:3000"
 
 
 //----------------************Socket IO URL **************-------------

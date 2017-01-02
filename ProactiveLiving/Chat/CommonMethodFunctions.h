@@ -43,6 +43,8 @@
 +(UIImage *)generatePhotoThumbnail1:(UIImage *)image;
 
 +(UIImage *)getThumbNail:(NSURL*)videoURL;
++(UIImage *)generateThumbImage: (NSURL *)fileUrl;
+    
 + (void)convertVideoToLowQuailtyWithInputURL:(NSURL*)inputURL
                                    outputURL:(NSURL*)outputURL
                                      handler:(void (^)(AVAssetExportSession*))handler;
@@ -52,6 +54,8 @@
 
 +(NSInteger)nextIdentifies;
 +(NSInteger)nextChatIdentifies;
+
++(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width;
 @end
 
 @interface NSObject (NullCheck)

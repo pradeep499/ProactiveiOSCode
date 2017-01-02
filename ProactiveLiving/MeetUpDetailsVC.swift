@@ -473,7 +473,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     {
                         self.lblLike.text = self.dataDict["address"] as? String
                         self.imgLike.image = UIImage(named: "location_pin_white")
-                        self.btnForward.setTitle("Forward Meet Up", forState: .Normal)
+                        self.btnForward.setTitle("Forward", forState: .Normal)
                         self.headerView.frame.size.height = self.headerView.frame.size.height-40
                         self.dialUpView.hidden = true
                         //self.HConstDialUpView.constant=0;
@@ -956,7 +956,8 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
         imgProfile.clipsToBounds = true
 
         
-        let dataArr = self.dataDict["members"] as! [AnyObject]
+        let dataArr = self.arrangeMembers()
+        
         let dataDict = dataArr[indexPath.row] as! [String : AnyObject]
 
 
@@ -989,8 +990,14 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
     }
      // show or hide chat icon by badru
     func showHideChatBtn() -> Void {
+        //meetup is canceled
+        if  self.dataDict["isDeleted"] as! Bool  {
+            btnChat.hidden = true
+            return
+        }
         
         let dataArr = self.dataDict["members"] as! [AnyObject]
+        
         
         for dict in dataArr {
             
@@ -1009,6 +1016,30 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
         }
         
         
+    }
+    
+    func arrangeMembers() -> [AnyObject] {
+        
+        let adminId = self.dataDict["createdBy"]!["_id"] as! String
+        
+        let arr = self.dataDict["members"] as! [AnyObject]
+        
+        var  acceptedArr:[AnyObject] = [AnyObject]()
+        var  notAcceptedArr:[AnyObject] = [AnyObject]()
+        
+        for dict in arr {
+            
+            if adminId == dict["memberId"] as! String {
+                acceptedArr.insert(dict, atIndex: 0)
+            }else if ((dict["status"] as! String) == "1") {
+                acceptedArr.append(dict)
+            }else{
+                notAcceptedArr.append(dict)
+            }
+        }
+        
+        let finalArr = acceptedArr + notAcceptedArr        
+        return finalArr
     }
 }
 

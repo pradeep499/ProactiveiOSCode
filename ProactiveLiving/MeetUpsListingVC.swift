@@ -107,14 +107,17 @@ class MeetUpsListingVC: UIViewController {
         let statusBG = cell.contentView.viewWithTag(13) as! UIImageView
         let eventTypeBy = cell.contentView.viewWithTag(15) as! UILabel
         let eventDesc = cell.contentView.viewWithTag(16) as! UILabel
-        let lblDate = cell.contentView.viewWithTag(18) as! UILabel
+        let lblMembers = cell.contentView.viewWithTag(18) as! UILabel
         let imglink = cell.contentView.viewWithTag(19) as! UIImageView
         let txtLink = cell.contentView.viewWithTag(20) as! UILabel
         let txtPIN = cell.contentView.viewWithTag(21) as! UILabel
         let imgCall = cell.contentView.viewWithTag(23) as! UIImageView
         let lblCall = cell.contentView.viewWithTag(24) as! UILabel
-        let lblMembers = cell.contentView.viewWithTag(27) as! UILabel
+        let lbl_createdDate = cell.contentView.viewWithTag(27) as! UILabel
         let lblAddress = cell.contentView.viewWithTag(28) as! UITextView
+        let lbl_eventDate = cell.contentView.viewWithTag(80) as! UILabel
+        
+        
         lblAddress.textContainer.lineFragmentPadding = 0;
         lblAddress.textContainerInset = UIEdgeInsetsZero;
         
@@ -149,10 +152,28 @@ class MeetUpsListingVC: UIViewController {
         
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
         
+        
+        if let dateStr =  self.arrData[indexPath.row]["createdDate"] as? String {
+            
+            lbl_createdDate.text = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "dd MMM hh:mm a",  dateStr: dateStr)
+        }
+        
+        
         if let dateStr =  self.arrData[indexPath.row]["eventDate"] as? String {
             
-            lblDate.text = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "MM/dd/yyyy",  dateStr: dateStr)
+            let eventDate = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE MMM D ",  dateStr: dateStr)
+            if let eventTime =   self.arrData[indexPath.row]["eventStartTime"] as? String{
+                            
+              lbl_eventDate.text =  String(HelpingClass.convertDateFormat("EEE MMM D hh:mm a", desireFormat: "EEE MMM    D HH:mm",  dateStr: eventDate + eventTime)).capitalizedString
+            }else{
+                
+                lbl_eventDate.text = eventDate
+            }
+            
+            
         }
+        
+        
         
          
         
@@ -228,7 +249,7 @@ class MeetUpsListingVC: UIViewController {
             lblAddress.hidden=false
             txtLink.hidden=true
             txtPIN.hidden=true
-            lblAddress.text = self.arrData[indexPath.row]["address"] as? String
+            lblAddress.text = self.arrData[indexPath.row]["locationName"] as? String
             imglink.image=UIImage(named:"address")
             imgCall.hidden=true
             lblCall.hidden=true

@@ -49,6 +49,8 @@
 
 +(CGSize)sizeOfCell:(NSString*)str fontSize:(CGFloat)size width:(float)weigth fontName:(NSString*)fontName;
 +(CGFloat)widthOfText:(NSString*)str fontSize:(int)size height:(float)height fontName:(NSString*)fontName;
++(UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width;
++(UIImage *)generateThumbImage: (NSURL *)fileUrl;
 
 +(NSInteger)nextIdentifies;
 +(NSInteger)nextChatIdentifies;

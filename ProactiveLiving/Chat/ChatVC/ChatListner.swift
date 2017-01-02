@@ -73,13 +73,14 @@ func connectToSocket() -> Void{
         
         if isConnectionStable == false{
             
-            self.isConnectionStable = true
             
             chatProgressV = NSMutableDictionary()
             currentOperationDict = NSMutableDictionary()
             
             if ChatListner.getChatListnerObj().socket.status != .Connected {
-                
+                self.isConnectionStable = true
+                self.socket.reconnects = false
+
                 self.socket.connect()
                 unowned let weakself = self
                 weakself.socket.off("recieveMessage")
@@ -1560,9 +1561,10 @@ func connectToSocket() -> Void{
         if socket != nil{
             if socket.status == .Connected  {
                 
-            
-                timerConnectingStatus.invalidate()
+                if let time = timerConnectingStatus{
+                time.invalidate()
                 timerConnectingStatus = nil
+                }
                 
                 UIView.animateWithDuration(0.5, animations:
                     {
