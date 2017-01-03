@@ -92,11 +92,29 @@ class MeetUpsListingVC: UIViewController {
     }
     
      func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        
+        let w = self.tableView.bounds.size.width - 30
+        
+        var str:String = String()
     
-        return 200
+        if(self.title == "MEET UPS") {
+            str = (self.arrData[indexPath.row]["address"] as? String)!
+        }else{
+            str = (self.arrData[indexPath.row]["webLink"] as? String)!
+        }
+        str = str.stringByReplacingEmojiCheatCodesWithUnicode()
+        
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 13 , width: Float(w) , fontName: "Roboto-Regular")
+        
+        let height = size.height + (185)
+        
+        return height
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let w = self.tableView.bounds.size.width - 30
         
         let cell = self.tableView.dequeueReusableCellWithIdentifier("CellMeetUps", forIndexPath: indexPath) as! MeetUpListingCell
         cell.selectionStyle = .None
@@ -108,18 +126,23 @@ class MeetUpsListingVC: UIViewController {
         let eventTypeBy = cell.contentView.viewWithTag(15) as! UILabel
         let eventDesc = cell.contentView.viewWithTag(16) as! UILabel
         let lblMembers = cell.contentView.viewWithTag(18) as! UILabel
-        let imglink = cell.contentView.viewWithTag(19) as! UIImageView
+        let lbl_createdDate = cell.contentView.viewWithTag(27) as! UILabel
+        let lbl_eventDate = cell.contentView.viewWithTag(80) as! UILabel
+        
+        let lblAddress = cell.contentView.viewWithTag(20) as! UILabel
+         let imgAddress = cell.contentView.viewWithTag(33) as! UIImageView
+        
+        //
+        
+      /*  let imglink = cell.contentView.viewWithTag(19) as! UIImageView
         let txtLink = cell.contentView.viewWithTag(20) as! UILabel
         let txtPIN = cell.contentView.viewWithTag(21) as! UILabel
         let imgCall = cell.contentView.viewWithTag(23) as! UIImageView
         let lblCall = cell.contentView.viewWithTag(24) as! UILabel
-        let lbl_createdDate = cell.contentView.viewWithTag(27) as! UILabel
-        let lblAddress = cell.contentView.viewWithTag(28) as! UITextView
-        let lbl_eventDate = cell.contentView.viewWithTag(80) as! UILabel
+        */
         
-        
-        lblAddress.textContainer.lineFragmentPadding = 0;
-        lblAddress.textContainerInset = UIEdgeInsetsZero;
+     //   lblAddress.textContainer.lineFragmentPadding = 0;
+     //   lblAddress.textContainerInset = UIEdgeInsetsZero;
         
         eventName.text = self.arrData[indexPath.row]["title"] as? String
         
@@ -246,14 +269,27 @@ class MeetUpsListingVC: UIViewController {
             
             acceptButton.titleLabel?.text="Sure!"
             declineButton.titleLabel?.text="Sorry!"
-            lblAddress.hidden=false
+       /*     lblAddress.hidden=false
             txtLink.hidden=true
             txtPIN.hidden=true
             lblAddress.text = self.arrData[indexPath.row]["locationName"] as? String
             imglink.image=UIImage(named:"address")
             imgCall.hidden=true
-            lblCall.hidden=true
-
+            lblCall.hidden=true*/
+            
+            lblAddress.text = self.arrData[indexPath.row]["address"] as? String
+            imgAddress.image=UIImage(named:"address")
+            
+            
+       /*     // set the address height
+            var str = self.arrData[indexPath.row]["address"] as? String
+            str = str!.stringByReplacingEmojiCheatCodesWithUnicode()
+            
+            let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 13 , width: Float(w) , fontName: "Roboto-Regular")
+            
+            cell.layOut_addressHeight.constant = size.height + 3
+*/
+            
             var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
             let memberArr = someDict["members"] as! [AnyObject]
             lblMembers.text = "\(memberArr.count)  Invited"
@@ -265,8 +301,8 @@ class MeetUpsListingVC: UIViewController {
 
             acceptButton.titleLabel?.text="Accept"
             declineButton.titleLabel?.text="Decline"
-            lblAddress.hidden=true
-            txtLink.hidden=false
+         /*   lblAddress.hidden=true
+             txtLink.hidden=false
             txtPIN.hidden=false
             imgCall.hidden=false
             lblCall.hidden=false
@@ -275,11 +311,22 @@ class MeetUpsListingVC: UIViewController {
             lblCall.text = self.arrData[indexPath.row]["dialInNumber"] as? String
             txtPIN.text = "(PIN: \(self.arrData[indexPath.row]["pin"] as! String))"
             imglink.image=UIImage(named:"web_invite_link")
-           
+           */
+            lblAddress.text = self.arrData[indexPath.row]["webLink"] as? String
+            imgAddress.image=UIImage(named:"web_invite_link")
             
+            // set the address height
+       /*     var str = self.arrData[indexPath.row]["webLink"] as? String
+            str = str!.stringByReplacingEmojiCheatCodesWithUnicode()
+            
+            let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 13 , width: Float(w) , fontName: "Roboto-Regular")
+            
+            cell.layOut_addressHeight.constant = size.height + 3
+            */
             var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
             let memberArr = someDict["members"] as! [AnyObject]
-            lblMembers.text = "\(memberArr.count) Attending"        }
+            lblMembers.text = "\(memberArr.count) Attending"
+        }
         
         acceptButton.addTarget(self, action: #selector(btnAcceptClick(_:)), forControlEvents: .TouchUpInside)
         declineButton.addTarget(self, action: #selector(btnDeclineClick(_:)), forControlEvents: .TouchUpInside)

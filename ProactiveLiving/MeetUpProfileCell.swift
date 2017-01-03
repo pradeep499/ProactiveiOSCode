@@ -17,6 +17,8 @@ class MeetUpProfileCell: UITableViewCell {
     @IBOutlet weak var lblForwardBy: UILabel!
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var lblTime: UILabel!
+    @IBOutlet weak var img_recurance: UIImageView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

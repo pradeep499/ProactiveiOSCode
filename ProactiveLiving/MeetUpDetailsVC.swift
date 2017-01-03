@@ -234,6 +234,17 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         self.tableMeetUpDetails.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    func daySuffix(from date: NSDate) -> String {
+        let calendar = NSCalendar.currentCalendar()
+        let dayOfMonth = calendar.component(.Day, fromDate: date)
+        switch dayOfMonth {
+        case 1, 21, 31: return "st"
+        case 2, 22: return "nd"
+        case 3, 23: return "rd"
+        default: return "th"
+        }
+    }
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -242,13 +253,16 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         let kCustomCellID2 = "AdditionalInfoCell"
         let kCustomCellID3 = "AllMembersCell"
         
+        let df = NSDateFormatter.init()
+        df.dateFormat = "dd/MM/yyyy"
+        
         
 
         switch (indexPath.section) {
         case (0):
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID0, forIndexPath: indexPath) as! MeetUpProfileCell
             cell.selectionStyle = .None
-            cell.lblName.text=self.dataDict["for"] as? String
+            cell.lblName.text=self.dataDict["title"] as? String
             
             cell.lblCreatedBy.text="by \(self.dataDict["createdBy"]!["firstName"] as! String)" + "  \(self.dataDict["createdBy"]!["lastName"] as! String)"
             
@@ -264,10 +278,27 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             
             if let dateStr =  self.dataDict["eventDate"] as? String {
                 
-                cell.lblDate.text = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "MM/dd/yyyy",  dateStr: dateStr)
+                let dayTH = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE, d",  dateStr: dateStr)
+                
+                let date = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: " MMM, yy",  dateStr: dateStr)
+                
+                let eventDate = dayTH + self.daySuffix(from:df.dateFromString(dateStr)! ) + date
+                
+                cell.lblDate.text = eventDate
+                
+                if let eventStartTime =  self.dataDict["eventStartTime"] as? String {
+                    cell.lblDate.text = eventDate + "  " + eventStartTime
+                }
             }
             
-            cell.lblTime.text=self.dataDict["eventTime"] as? String
+            if   self.dataDict["isrecur"] as? Bool == true {
+                
+                cell.img_recurance.hidden = false
+            }else{
+                cell.img_recurance.hidden = true
+            }
+            
+           // cell.lblTime.text=self.dataDict["eventTime"] as? String
             /* ... */
             return cell
         case (1):
@@ -451,7 +482,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     
                     //let controller = (self.parentViewController as! YSLContainerViewController).parentViewController as! MeetUpContainerVC
                     //controller.screenTitle.text = self.dataDict["title"] as? String
-                    self.screenTitle.text = self.dataDict["title"] as? String
+                    self.screenTitle.text = self.dataDict["for"] as? String
                     self.btnLink.setTitle((self.dataDict["webLink"] as! String), forState: .Normal)
                     self.btnDialUp.setTitle((self.dataDict["dialInNumber"] as! String), forState: .Normal)
 

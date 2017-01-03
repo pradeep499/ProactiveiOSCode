@@ -17,6 +17,9 @@ class MeetUpListingCell: UITableViewCell {
     @IBOutlet weak var imgAccept: UIImageView!
     @IBOutlet weak var imgDecline: UIImageView!
     
+    @IBOutlet weak var layOut_addressHeight: NSLayoutConstraint!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

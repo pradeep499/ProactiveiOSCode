@@ -457,6 +457,23 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         activeTextField = textField
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+            if textField == self.txtFieldTitle {
+                
+                let maxLength = 23
+                let currentString: NSString = textField.text!
+                let newString: NSString =
+                    currentString.stringByReplacingCharactersInRange(range, withString: string)
+                return newString.length <= maxLength
+            }
+           
+            
+            
+            return true
+        }
+    
+    
     
     //mark- UITableview Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
