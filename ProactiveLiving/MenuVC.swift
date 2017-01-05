@@ -53,6 +53,66 @@ class MenuVC: UIViewController, UISearchBarDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.search_bar.resignFirstResponder()
     }
+    
+    
+    
+    //MARKS: - Service Call
+    
+    func sendStatusAPI(textStr:String) {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["userStatus"] = textStr
+            
+            //call global web service class latest
+            Services.postRequest(ServiceUpdateProfileStatus, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print(responseDict["result"])
+                        
+                         
+                        
+                        if let result = responseDict["result"] {
+                            
+                       //     AppHelper.showAlertWithTitle(AppName, message: "Status is  " + String(otp), tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                            AppHelper.saveToUserDefaults(result, withKey: userProfileStatus)
+                            
+                            self.table_view.reloadData()
+                            
+                        }
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
 }
 
 extension MenuVC: UITableViewDataSource{
@@ -67,7 +127,7 @@ extension MenuVC: UITableViewDataSource{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 10
+        return 12
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -102,15 +162,27 @@ extension MenuVC: UITableViewDataSource{
             
             break
             
+        case 1:
+            let lbl_title = cell.contentView.viewWithTag(2) as! UILabel
             
-        case 4:
+            if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
+                lbl_title.text = status as? String
+            }else{
+                lbl_title.text = "Share your status here."
+            }
+            
+            
+            
+            break
+            
+      /*  case 4:
             cell.selectionStyle = .None
             cell.accessoryType = .None
             tableView.separatorStyle = UITableViewCellSeparatorStyle.None
             cell.layoutMargins = UIEdgeInsetsZero;
-            break
+            break*/
             
-        case 9:
+        case 11:
             cell.selectionStyle = .Default
             cell.accessoryType = .None
             break
@@ -125,27 +197,103 @@ extension MenuVC: UITableViewDataSource{
     }
 }
 extension MenuVC:UITableViewDelegate{
+    
+    
+    //MARK:-
+    
+    func showAlert() -> Void {
+        
+        //1. Create the alert controller.
+        let alert = UIAlertController(title: AppName, message: "Update your status.", preferredStyle: .Alert)
+        
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+            // textField.text = "Some default text."
+        })
+        
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        
+        //3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { [weak alert] (action) -> Void in
+            let textField = alert!.textFields![0] as UITextField
+            print("Text field: \(textField.text)")
+            
+            // hit API
+            self.sendStatusAPI(textField.text!)
+            
+            }))
+        
+        // 4. Present the alert.
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         switch indexPath.row {
+            
+            //Profile
+        case 0:
+            break
+            
+            //Profile status
+        case 1:
+            self.showAlert()
+            break
+            
+            //Contacts
+        case 2:
+            break
+            
+           // Invite Friend
+        case 3:
+            break
+            
+            //add afriend
+        case 4:
+            break
+            
+            //Get my pass
         case 5:
+            break
+            
+            //Fav
+        case 6:
+            break
+        
+            
+            
+            //Settings
+        case 7:
             
             let settingVC: SettingsMainVC = self.storyboard!.instantiateViewControllerWithIdentifier("SettingsMainVC") as! SettingsMainVC
             
             self.navigationController?.pushViewController(settingVC, animated: true)
             break
-        case 7:
+            
+        //Help
+        case 8:
+            break
+            
+         
+            
+            
+            //TERMS N POLICIES
+        case 9:
             let WebVC:WebViewVC = self.storyboard!.instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
             WebVC.pageName = "TERMSNPOLICIES"
             self.navigationController?.pushViewController(WebVC, animated: true)
             break
-        case 8:
+            //About Us
+        case 10:
             let aboutVC: AboutPASInstVC = self.storyboard!.instantiateViewControllerWithIdentifier("AboutPASInstVC") as! AboutPASInstVC
             
             self.navigationController?.pushViewController(aboutVC, animated: true)
             break
-        case 9:
+            
+            //LogOut
+        case 11:
             
             let alertController = UIAlertController(title:APP_NAME, message: "Do you want to logout ?" , preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in

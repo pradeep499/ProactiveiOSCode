@@ -1053,6 +1053,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             let ownerFName = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String
             let ownerLName = (dict as NSDictionary).valueForKeyPath("createdBy.lastName") as? String
             
+            
             if (sharedByID != ownerID) {
                 
                 lbl_name.text = sharedByFname + " " + sharedByLName! + " shared " + ownerFName! + " "+ownerLName! + "'s post"
@@ -1080,10 +1081,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let text = lbl_name.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         let str = text.stringByReplacingEmojiCheatCodesWithUnicode()
         
-        let w = collectionView.bounds.size.width - 82
+        let w = collectionView.bounds.size.width - 90
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 18 , width: Float(w) , fontName: "Roboto-Regular")
         
-        cell.layOut_lbl_Name_height.constant = size.height + 5
+        cell.layOut_lbl_Name_height.constant = size.height + 30
         
         
         

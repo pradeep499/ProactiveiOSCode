@@ -324,6 +324,9 @@
                         
                         if (![[self.detailDictionary objectForKey:@"result"] isKindOfClass:[NSNull class]] && [self.detailDictionary objectForKey:@"result"]) {
                             [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"_id"] withKey:uId];
+                            [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"userStatus"] withKey:userProfileStatus];
+                            
+                            
                             
                             //CHAT RELATED
                             [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"_id"] key:_ID];

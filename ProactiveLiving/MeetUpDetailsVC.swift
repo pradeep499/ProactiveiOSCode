@@ -979,7 +979,7 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
         let lblName = cell.contentView.viewWithTag(333) as! UILabel
         
         imgProfile.layer.borderWidth = 1.0
-        imgProfile.contentMode = .ScaleAspectFill
+        imgProfile.contentMode = .ScaleAspectFit
         imgProfile.backgroundColor = UIColor.whiteColor()
         imgProfile.layer.masksToBounds = false
         imgProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
