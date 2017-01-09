@@ -115,6 +115,8 @@
 #define pwd                             @"pwd"// remember password
 #define cellNum                         @"cellNum"
 #define userFirstName                   @"firstName"
+#define userLastName                   @"lastName"
+#define userAddress                    @"address"
 #define uImage                          @"uImage"
 #define _ID                             @"userId"
 

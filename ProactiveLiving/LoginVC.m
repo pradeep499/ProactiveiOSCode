@@ -332,6 +332,7 @@
                             [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"_id"] key:_ID];
                             [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"mobilePhone"] key:cellNum];
                             [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"firstName"] key:userFirstName];
+                            [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"lastName"] key:userLastName];
                             
 
                             if ([[self.detailDictionary objectForKey:@"result"] valueForKey:@"imgUrl"]) {

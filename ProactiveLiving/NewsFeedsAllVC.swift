@@ -1228,7 +1228,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         //write to db
                         let imgData = UIImagePNGRepresentation(img) as NSData?
                         
-                        self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                        HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
                             
                             if isWritten{
                                 
@@ -1295,24 +1295,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
     }
     
-    func writeToPath(directory directoryName:String, fileName:String, dataToWrite:NSData, completion:(isWritten:Bool, err:NSError?) -> Void) {
-        
-        //get the chat path
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let documentsDirectory = paths.stringByAppendingPathComponent(directoryName)
-        let fileManager = NSFileManager.defaultManager()
-        do {
-            try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            NSLog("Unable to create directory \(error.debugDescription)")
-        }
-        
-        let saveImagePath = documentsDirectory.stringByAppendingPathComponent(fileName)
-        dataToWrite.writeToFile(saveImagePath, atomically: true)
-        
-        completion(isWritten: true, err: nil)
-        
-    }
+
     
   /*(  func writeToURL(named:String, completion: (result: Bool, url:NSURL?) -> Void)  {
         
@@ -1766,7 +1749,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             thumbArr.insertObject(thumbNailName, atIndex: 0)
             
-            self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+            HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
                 
                 if isWritten{
                     
@@ -1908,7 +1891,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let thumbNailName = "Thumb" + timeStamp + ".jpg"
         
         
-        self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+        HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
             
             if isWritten{
                 
@@ -1968,7 +1951,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let thumbImg = CommonMethodFunctions.generateThumbImage(videoUrl)
         let thumbData = UIImageJPEGRepresentation(thumbImg, 1.0)
         
-        self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+        HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
             
             if isWritten{
                 
@@ -1989,7 +1972,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     
                     let compressedVideoData =  NSData(contentsOfURL: NSURL.fileURLWithPath(outPutPath))
                     
-                    self.writeToPath(directory: "/ChatFile", fileName: videoName, dataToWrite: compressedVideoData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                    HelpingClass.writeToPath(directory: "/ChatFile", fileName: videoName, dataToWrite: compressedVideoData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
                         
                         if isWritten{
                             
@@ -2116,7 +2099,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             let thumbNailName = "Thumb" + timeStamp + ".jpg"
             
             
-            self.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+            HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
                 
                 if isWritten{
                     

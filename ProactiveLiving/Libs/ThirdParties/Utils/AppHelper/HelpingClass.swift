@@ -85,6 +85,24 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
     }
 
     
+    class func writeToPath(directory directoryName:String, fileName:String, dataToWrite:NSData, completion:(isWritten:Bool, err:NSError?) -> Void) {
+        
+        //get the chat path
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let documentsDirectory = paths.stringByAppendingPathComponent(directoryName)
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            NSLog("Unable to create directory \(error.debugDescription)")
+        }
+        
+        let saveImagePath = documentsDirectory.stringByAppendingPathComponent(fileName)
+        dataToWrite.writeToFile(saveImagePath, atomically: true)
+        
+        completion(isWritten: true, err: nil)
+        
+    }
     
     //MARK:-  Convert Int value to String
     class func convertIntToString(intValue:Int)->String

@@ -32,6 +32,7 @@
 
 +(UIStoryboard*)getStoryBoard;
 +(UIStoryboard*)getSecondStoryBoard;
++(UIStoryboard*)getProfileStoryBoard;
 
 
 @end

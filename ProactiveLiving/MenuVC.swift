@@ -9,6 +9,11 @@
 import UIKit
 import CoreTelephony
 
+enum userType {
+    case Own
+    case Friend
+}
+
 class MenuVC: UIViewController, UISearchBarDelegate {
 
     
@@ -235,6 +240,11 @@ extension MenuVC:UITableViewDelegate{
             
             //Profile
         case 0:
+            let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+            vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
+            self.navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.navigationBarHidden = true
+     
             break
             
             //Profile status

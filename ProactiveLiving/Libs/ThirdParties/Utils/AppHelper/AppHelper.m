@@ -21,6 +21,11 @@
     return [UIStoryboard storyboardWithName:@"SecondStoryboard" bundle:[NSBundle mainBundle]];
 }
 
++(UIStoryboard*)getProfileStoryBoard{
+ 
+    return [UIStoryboard storyboardWithName:@"Profile" bundle:[NSBundle mainBundle]];
+}
+
 #pragma mark - saveToUserDefaults
 +(void)saveToUserDefaults:(id)value withKey:(NSString*)key {
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
