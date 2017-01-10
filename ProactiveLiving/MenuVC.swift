@@ -21,6 +21,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var table_view: UITableView!
     
+    var bottomTabBar : CustonTabBarController!
     
     
     
@@ -29,8 +30,19 @@ class MenuVC: UIViewController, UISearchBarDelegate {
 
         // Do any additional setup after loading the view.
         
+        bottomTabBar = self.tabBarController as? CustonTabBarController
         
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+        
+        
+        
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+            // print(finish)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -242,7 +254,8 @@ extension MenuVC:UITableViewDelegate{
         case 0:
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
             vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
-            self.navigationController?.pushViewController(vc, animated: true)
+            let v = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
+            self.navigationController?.pushViewController(vc , animated: true)
             self.navigationController?.navigationBarHidden = true
      
             break

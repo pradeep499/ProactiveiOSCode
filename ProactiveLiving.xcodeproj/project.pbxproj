@@ -17,6 +17,8 @@
 		603863851E234BBF00FE1598 /* ProfileContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603863841E234BBF00FE1598 /* ProfileContainerVC.swift */; };
 		603863871E2363AC00FE1598 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603863861E2363AC00FE1598 /* ProfileVC.swift */; };
 		603863891E23755900FE1598 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 603863881E23755900FE1598 /* bg.png */; };
+		603AFCD21E24BB480081F246 /* GenericProfileTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */; };
+		603AFCD41E24DDD90081F246 /* GenericProfileCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603AFCD31E24DDD90081F246 /* GenericProfileCollectionVC.swift */; };
 		605EAC281E1E63C60048EA8F /* ASStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 605EAB6D1E1E63C60048EA8F /* ASStarRatingView.m */; };
 		605EAC291E1E63C60048EA8F /* NSCalendar+Components.m in Sources */ = {isa = PBXBuildFile; fileRef = 605EAB741E1E63C60048EA8F /* NSCalendar+Components.m */; };
 		605EAC2A1E1E63C60048EA8F /* NSCalendar+DateComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = 605EAB761E1E63C60048EA8F /* NSCalendar+DateComparison.m */; };
@@ -454,6 +456,8 @@
 		603863841E234BBF00FE1598 /* ProfileContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileContainerVC.swift; sourceTree = "<group>"; };
 		603863861E2363AC00FE1598 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		603863881E23755900FE1598 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericProfileTableVC.swift; sourceTree = "<group>"; };
+		603AFCD31E24DDD90081F246 /* GenericProfileCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericProfileCollectionVC.swift; sourceTree = "<group>"; };
 		605EAB6C1E1E63C60048EA8F /* ASStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASStarRatingView.h; sourceTree = "<group>"; };
 		605EAB6D1E1E63C60048EA8F /* ASStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASStarRatingView.m; sourceTree = "<group>"; };
 		605EAB6F1E1E63C60048EA8F /* CalendarKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarKit.h; sourceTree = "<group>"; };
@@ -1164,6 +1168,8 @@
 			children = (
 				603863841E234BBF00FE1598 /* ProfileContainerVC.swift */,
 				603863861E2363AC00FE1598 /* ProfileVC.swift */,
+				603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */,
+				603AFCD31E24DDD90081F246 /* GenericProfileCollectionVC.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -3097,6 +3103,7 @@
 				BA53301D1CC6096100887DBF /* PASLevelVC.m in Sources */,
 				BAD5F0AE1D069A8E002186B4 /* PASInviteOrGiftVC.m in Sources */,
 				BA5900DD1D364EFD006142AC /* GroupChat+CoreDataProperties.swift in Sources */,
+				603AFCD21E24BB480081F246 /* GenericProfileTableVC.swift in Sources */,
 				605EAC901E1E640B0048EA8F /* OTPVC.swift in Sources */,
 				BAA471B41CCFA4FC00CF90D7 /* ExpertsDetailVC.m in Sources */,
 				BA5901A91D36579D006142AC /* IQToolbar.swift in Sources */,
@@ -3162,6 +3169,7 @@
 				BAA01E201D6B140E00E1B80D /* ChatContactModelClass.swift in Sources */,
 				BAF4AE741CCA3BD800C76F99 /* CertificationsVC.m in Sources */,
 				605EAC8E1E1E640B0048EA8F /* ChangeNumberVC.swift in Sources */,
+				603AFCD41E24DDD90081F246 /* GenericProfileCollectionVC.swift in Sources */,
 				BAB0E4EF1D5DE59B00906C10 /* SocketClientManager.swift in Sources */,
 				605EAC761E1E63C70048EA8F /* UINavigationController+Rotation.m in Sources */,
 				BA8983A31C6DEA1E00495E9B /* FilterThreeCell.m in Sources */,

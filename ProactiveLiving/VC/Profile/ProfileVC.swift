@@ -103,7 +103,7 @@ extension ProfileVC : UICollectionViewDataSource{
             break
         
         case 7:
-            iv.image = UIImage(named: "pf_inspirational")
+            iv.image = UIImage(named: "pf_Inspirational")
             lbl.text = "Inspirational"
             break
         
@@ -138,10 +138,15 @@ extension ProfileVC : UICollectionViewDataSource{
 extension ProfileVC: UICollectionViewDelegate{
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        let profileStoryBoard = AppHelper.getProfileStoryBoard()
+        self.navigationController?.navigationBarHidden = true
         
         switch indexPath.row {
         case 0:
+            
+            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileTableVC") as! GenericProfileTableVC
+            vc.genericType = .AboutMe
+            self.navigationController?.pushViewController(vc, animated: true)
             break
         case 1:
             break
@@ -150,12 +155,18 @@ extension ProfileVC: UICollectionViewDelegate{
             break
             
         case 3:
+            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
+            vc.genericType = .Photos
+            self.navigationController?.pushViewController(vc, animated: true)
             break
             
         case 4:
             break
             
         case 5:
+            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
+            vc.genericType = .Followers
+            self.navigationController?.pushViewController(vc, animated: true)
             break
             
         case 6:
@@ -171,6 +182,9 @@ extension ProfileVC: UICollectionViewDelegate{
             break
             
         case 10:
+            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
+            vc.genericType = .Friends
+            self.navigationController?.pushViewController(vc, animated: true)
             break
             
         case 11:

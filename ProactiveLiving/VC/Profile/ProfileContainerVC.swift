@@ -74,17 +74,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         
         
-        if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
-            //Owner
-            
-            self.btnEditOrMore.setImage(UIImage(named: "pf_edit"), forState: .Normal)
-            
-        }else{
-            //Friend
-            
-            self.btnEditOrMore.setImage(UIImage(named: "pf_more"), forState: .Normal)
-            
-        }
+        
        
     }
     
@@ -102,7 +92,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         }
         
         self.setUpViewControllers()
-        self.setUpProfilePage()
+     //   self.setUpProfilePage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -171,7 +161,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
      //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
-        containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width, UIScreen.mainScreen().bounds.size.height - 400)
+        containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width,   0 )
         
         self.view.addSubview(containerVC.view)
     }
@@ -191,15 +181,20 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             let name = ((AppHelper.userDefaultsForKey(userFirstName) as? String)! + " " + (AppHelper.userDefaultsForKey(userLastName) as! String))
             
             self.lbl_name.text = name
-           
+            
+            self.btnSendRequest.hidden = true
+            self.btnChat.hidden = true
+            self.btnCall.hidden = true
             
         }else{
             //Friend
             
             self.btnEditOrMore.setImage(UIImage(named: "pf_more"), forState: .Normal)
-            self.btnChat.hidden = true
-            self.btnSendRequest.hidden = true
-            self.btnCall.hidden = true
+            
+            
+            self.btnSendRequest.hidden = false
+            self.btnChat.hidden = false
+            self.btnCall.hidden = false
             
         }
         
@@ -248,6 +243,9 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
             let profileTap = UITapGestureRecognizer(target: self, action: #selector(ProfileContainerVC.profilePictureTap(_:)))
             self.iv_profile.addGestureRecognizer(profileTap)
+            
+            self.iv_profileBg.userInteractionEnabled = true
+            self.iv_profile.userInteractionEnabled = true
             
             
         }else{
