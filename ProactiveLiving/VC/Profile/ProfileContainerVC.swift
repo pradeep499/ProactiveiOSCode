@@ -161,7 +161,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
      //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
-        containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width,   0 )
+        containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width,   300 )
         
         self.view.addSubview(containerVC.view)
     }

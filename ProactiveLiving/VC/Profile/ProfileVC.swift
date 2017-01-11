@@ -57,7 +57,7 @@ extension ProfileVC : UICollectionViewDataSource{
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        return 30
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -130,6 +130,8 @@ extension ProfileVC : UICollectionViewDataSource{
         default:
             break
         }
+        
+        cell.userInteractionEnabled = true
         
         return cell
     }

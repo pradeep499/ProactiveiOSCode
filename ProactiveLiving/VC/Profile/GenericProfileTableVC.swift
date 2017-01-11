@@ -17,6 +17,7 @@ enum ProfileGenericType{
 
 class GenericProfileTableVC: UIViewController {
     
+    @IBOutlet weak var btnRight: UIButton!
     var genericType:ProfileGenericType?
     
     @IBOutlet weak var lbl_title: UILabel!
@@ -35,6 +36,7 @@ class GenericProfileTableVC: UIViewController {
 
         if genericType == .AboutMe{
             self.lbl_title.text = "About Me"
+            self.btnRight.hidden = false
         }
          
     }
@@ -44,18 +46,16 @@ class GenericProfileTableVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     //MARK: Btn Click
+    
+    
+    @IBAction func onClickRightBtn(sender: AnyObject) {
+        
+        let editAboutVC = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("EditAboutMeVC") as! EditAboutMeVC
+        self.navigationController?.pushViewController(editAboutVC, animated: true)
+    }
+
     
     @IBAction func onClickBackBatn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
