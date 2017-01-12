@@ -509,11 +509,7 @@
         cellNumber = @"";
         [self.tableView reloadData];
         
-        NSIndexPath *indexPath;
-        SignUpCell *cell;
-        indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
-        cell = (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-        [cell.textField becomeFirstResponder];
+        [self.tf_cellNo becomeFirstResponder];
     }
 }
 #pragma mark - checkAllFieldsFilled

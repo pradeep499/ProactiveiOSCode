@@ -15,6 +15,8 @@ class EditAboutMeVC: UIViewController {
     @IBOutlet weak var btnMale: UIButton!
     @IBOutlet weak var btnFemale: UIButton!
     
+    @IBOutlet weak var btnBack: UIButton!
+    
     
     @IBOutlet weak var tv_summary: UITextView!
     @IBOutlet weak var tf_liveIn: CustomTextField!
@@ -33,6 +35,8 @@ class EditAboutMeVC: UIViewController {
     
     
     var errorStr:String?
+    var gendarStr:String?
+    var firstTimeLogin:String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +64,15 @@ class EditAboutMeVC: UIViewController {
         
         IQKeyboardManager.sharedManager().enable=true
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
+        
+        //first time user logged in
+        if firstTimeLogin == "1"{
+            
+            self.btnBack.hidden = true
+            return
+        }
+        
+        self.setUpInputedField()
     
         
     }
@@ -101,16 +114,146 @@ class EditAboutMeVC: UIViewController {
     }
     
     @IBAction func onClickMaleBtn(sender: AnyObject) {
+        gendarStr = "Male"
     }
     
     
     @IBAction func onClickFeMaleBtn(sender: AnyObject) {
+         gendarStr = "Female"
     }
     
     
     
+    func setUpInputedField() -> Void {
+        
+        //Beans.UserDetails.sharedInstance.gender
+       self.tv_summary.text = Beans.UserDetails.sharedInstance.summary
+       self.tf_liveIn.text = Beans.UserDetails.sharedInstance.liveIn
+       self.tf_workAt.text = Beans.UserDetails.sharedInstance.workAt
+       self.tf_grewUp.text = Beans.UserDetails.sharedInstance.grewUp
+       self.tf_highSchool.text = Beans.UserDetails.sharedInstance.highSchool
+       self.tf_sportsPlayed.text = Beans.UserDetails.sharedInstance.sportsPlayed
+       self.tf_college.text = Beans.UserDetails.sharedInstance.college
+       self.tf_graduateSchool.text = Beans.UserDetails.sharedInstance.graduateSchool
+       self.tv_interest.text = Beans.UserDetails.sharedInstance.intrests
+       self.tv_favQuote.text = Beans.UserDetails.sharedInstance.favFamousQuote
+       self.tv_myNotFavQuote.text = Beans.UserDetails.sharedInstance.notFamousQuote
+       self.tv_myBio.text = Beans.UserDetails.sharedInstance.bio
+    }
     
-    //MARKS: - Service Call
+    func setUpUserDetails(dict:[String:String]) -> Void {
+        
+        Beans.UserDetails.sharedInstance.gender = dict["gender"]!
+        Beans.UserDetails.sharedInstance.summary = dict["summary"]!
+        Beans.UserDetails.sharedInstance.liveIn = dict["liveIn"]!
+        Beans.UserDetails.sharedInstance.workAt = dict["workAt"]!
+        Beans.UserDetails.sharedInstance.grewUp = dict["grewup"]!
+        Beans.UserDetails.sharedInstance.highSchool = dict["highSchool"]!
+        Beans.UserDetails.sharedInstance.sportsPlayed = dict["sportsPlayed"]!
+        Beans.UserDetails.sharedInstance.college = dict["college"]!
+        Beans.UserDetails.sharedInstance.graduateSchool = dict["graduateSchool"]!
+        Beans.UserDetails.sharedInstance.intrests = dict["intrests"]!
+        Beans.UserDetails.sharedInstance.favFamousQuote = dict["favFamousQuote"]!
+        Beans.UserDetails.sharedInstance.notFamousQuote = dict["notFamousQuote"]!
+        Beans.UserDetails.sharedInstance.bio = dict["bio"]!
+    }
+    
+    
+    func setUpTabBar() -> Void {
+        
+    
+        let storyBoard = AppHelper.getStoryBoard()
+        
+        let firstVC = storyBoard.instantiateViewControllerWithIdentifier("CalendarVC") as! RSDFDatePickerViewController
+        firstVC.title =  "Calendar"
+        firstVC.tabBarItem.image = UIImage(named: "ic_more_tabar_calendar")
+        firstVC.calendar = NSCalendar.init(calendarIdentifier:NSCalendarIdentifierGregorian)
+        firstVC.calendar.locale = NSLocale.currentLocale()
+        
+        let firstNVC = UINavigationController.init(rootViewController: firstVC)
+        
+        
+        let secondVc = storyBoard.instantiateViewControllerWithIdentifier("InboxVC") as! InboxVC
+        secondVc.title = "Inbox";
+        secondVc.tabBarItem.image = UIImage(named: "ic_more_tabar_inbox")
+        
+        let secondNVC = UINavigationController.init(rootViewController: secondVc)
+        
+        //third vc
+        
+        let allVC = storyBoard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
+        allVC.title = "ALL";
+        
+        let exploreVC = storyBoard.instantiateViewControllerWithIdentifier("ExploreVC") as! ExploreVC
+        exploreVC.title = "Explore";
+        
+        let friendsVC = storyBoard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
+        allVC.title = "FRIENDS";
+        
+        let colleaguesVC = storyBoard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
+        colleaguesVC.title = "COLLEAGUES";
+        
+        
+        let healthClubsVC = storyBoard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
+        healthClubsVC.title = "HEALTH CLUBS";
+        
+         let arr = NSArray.init(objects: allVC, exploreVC , friendsVC, colleaguesVC, healthClubsVC)
+        
+        
+        let thirdVC = storyBoard.instantiateViewControllerWithIdentifier("NewsFeedContainer") as! NewsFeedContainer
+        thirdVC.title = "Home";
+        thirdVC.arrViewControllers = arr as [AnyObject];
+        thirdVC.tabBarItem.image = UIImage(named: "ic_more_tabar_home")
+        
+        let thirdNVC = UINavigationController.init(rootViewController: thirdVC)
+        
+        let fourthVC = storyBoard.instantiateViewControllerWithIdentifier("MyPAStodoVC") as!MyPAStodoVC
+        fourthVC.title = "Activate";
+        fourthVC.tabBarItem.image = UIImage(named:"ic_tabbar_activate");
+        
+        let fourthNVC = UINavigationController.init(rootViewController: fourthVC)
+        
+        let fifthVC = storyBoard.instantiateViewControllerWithIdentifier("MenuVC") as!MenuVC
+        fifthVC.title = " Menu";
+        fifthVC.tabBarItem.image = UIImage(named:"ic_more_tabar_menu")
+       
+        let fifthNVC = UINavigationController.init(rootViewController: fifthVC)
+        
+        
+        
+        
+        let tabBarController = CustonTabBarController.init()
+        
+         tabBarController.setViewControllers([firstNVC, secondNVC, thirdNVC, fourthNVC, fifthNVC], animated: true)
+
+        //set up badge Icon
+        AppDelegate.getAppDelegate().tabbarController = tabBarController
+        
+        if DataBaseController.sharedInstance.fetchUnreadCount() > 0 {
+            let items =  AppDelegate.getAppDelegate().tabbarController.tabBar.items![1]
+            items.badgeValue = String(DataBaseController.sharedInstance.fetchUnreadCount)
+            
+        }else{
+
+            let items =  AppDelegate.getAppDelegate().tabbarController.tabBar.items![1]
+            items.badgeValue = nil
+
+}
+        
+
+        self.navigationController?.pushViewController(tabBarController, animated: true)
+        
+        
+        
+        
+        
+        
+        
+    }
+  
+    
+    
+    //MARK: - Service Call
     
     func updateProfileAPI() {
         
@@ -120,11 +263,22 @@ class EditAboutMeVC: UIViewController {
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-        //    parameters["password"] = self.tf_pwd.text
-        //   parameters["oldMobile"] = self.tf_OldMb.text
+            parameters["summary"] = self.tv_summary.text
+            parameters["gender"] = gendarStr
+            parameters["liveIn"] = self.tf_liveIn.text
+            parameters["workAt"] = self.tf_workAt.text
+            parameters["grewup"] = self.tf_grewUp.text
+            parameters["highSchool"] = self.tf_highSchool.text
+            parameters["college"] = self.tf_college.text
+            parameters["graduateSchool"] = self.tf_graduateSchool.text
+            parameters["sportsPlayed"] = self.tf_sportsPlayed.text
+            parameters["intrests"] = self.tv_interest.text
+            parameters["favFamousQuote"] = self.tv_favQuote.text
+            parameters["notFamousQuote"] = self.tv_myNotFavQuote.text
+            parameters["bio"] = self.tv_myBio.text
             
             //call global web service class latest
-            Services.postRequest(ServiceRequestOTP, parameters: parameters, completionHandler:{
+            Services.postRequest(ServiceUpdateUserProfile, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 AppDelegate.dismissProgressHUD()
@@ -135,14 +289,39 @@ class EditAboutMeVC: UIViewController {
                         
                         print(responseDict["result"])
                         
+                        let result = responseDict["result"]
                         
+                        var dict = [String:String]()
                         
+                        dict["gender"] = result!["gender"] as? String ?? ""
+                        dict["summary"] = result!["summary"] as? String ?? ""
+                        dict["liveIn"] = result!["liveIn"] as? String ?? ""
+                        dict["workAt"] = result!["workAt"] as? String ?? ""
+                        dict["grewup"] = result!["grewup"] as? String ?? ""
+                        dict["highSchool"] = result!["highSchool"] as? String
+                        dict["college"] = result!["college"] as? String ?? ""
+                        dict["graduateSchool"] = result!["graduateSchool"] as? String ?? ""
+                        dict["sportsPlayed"] = result!["sportsPlayed"] as? String ?? ""
+                        dict["intrests"] = result!["intrests"] as? String ?? ""
+                        dict["favFamousQuote"] = result!["favFamousQuote"] as? String ?? ""
+                        dict["notFamousQuote"] = result!["notFamousQuote"] as? String ?? ""
+                        dict["bio"] = result!["bio"] as? String ?? ""
                         
-                        if let otp = responseDict["result"]{
+                        self.setUpUserDetails(dict)
+                        
+                        if self.firstTimeLogin == "1"{
+                            //goto tabbarcontroller page
                             
-                            AppHelper.showAlertWithTitle(AppName, message: "Your OTP is " + String(otp), tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                            self.setUpTabBar()
                             
+                            return
                         }
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: "Your Profile is updated.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                            
+                            
+                        
                         
                     } else {
                         

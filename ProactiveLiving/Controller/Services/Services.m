@@ -20,6 +20,8 @@
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:HeaderKey forHTTPHeaderField:@"custom_user_header_key"];
+    [manager.requestSerializer setValue:HeaderKey forHTTPHeaderField:@"key"];
+    [manager.requestSerializer setValue:HeaderKey forHTTPHeaderField:@"customuserheaderkey"];
 
     NSLog(@"%@",manager.requestSerializer.HTTPRequestHeaders);
     

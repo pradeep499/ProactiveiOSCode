@@ -358,10 +358,22 @@
                             [AppHelper removeFromUserDefaultsWithKey:isRememberUser];
                         }
                         
-                        [self setupTabBarController];
-                        //[self performSegueWithIdentifier:@"GetPasVC" sender:nil];
-                        //[self performSegueWithIdentifier:@"ValidationC" sender:nil];
-                        //[self performSegueWithIdentifier:@"HomeVCScreen" sender:nil];
+                        if ([[[self.detailDictionary objectForKey:@"result"] valueForKey:@"isFirstLogin"] boolValue]) {
+                            //first time logged in
+                            
+                            //goto Edit page
+                            
+                            EditAboutMeVC *editVC = (EditAboutMeVC *)[[AppHelper getProfileStoryBoard]instantiateViewControllerWithIdentifier:@"EditAboutMeVC"];
+                            
+                             editVC.firstTimeLogin = @"1";
+                            
+                            [self.navigationController pushViewController:editVC animated:true];
+                            
+                        }else
+                            [self setupTabBarController];
+                        
+                        
+                        
 
                     }
                     else if ([[self.detailDictionary objectForKey:@"error"] intValue] == 1){

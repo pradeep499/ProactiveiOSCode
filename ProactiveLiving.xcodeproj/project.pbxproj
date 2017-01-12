@@ -114,6 +114,7 @@
 		605EAC9F1E1E651B0048EA8F /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC9A1E1E651B0048EA8F /* Define.swift */; };
 		605EACA01E1E651B0048EA8F /* HelpingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC9C1E1E651B0048EA8F /* HelpingClass.swift */; };
 		60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A7CADE1DDD6BB10033BA1E /* Social.framework */; };
+		60B42E4E1E276B61001A4CB1 /* Beans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B42E4D1E276B61001A4CB1 /* Beans.swift */; };
 		60B755F31E1E6B94003650A1 /* TLTagsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B755F21E1E6B94003650A1 /* TLTagsControl.m */; };
 		60CD2A011DE2C3C000125457 /* CommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CD2A001DE2C3C000125457 /* CommentsVC.swift */; };
 		60D471C71DC07D9900EAD7D9 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D471C61DC07D9900EAD7D9 /* MenuVC.swift */; };
@@ -645,6 +646,7 @@
 		605EAC9C1E1E651B0048EA8F /* HelpingClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpingClass.swift; sourceTree = "<group>"; };
 		605EAC9D1E1E651B0048EA8F /* ProactiveLiving-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProactiveLiving-Bridging-Header.h"; sourceTree = "<group>"; };
 		60A7CADE1DDD6BB10033BA1E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		60B42E4D1E276B61001A4CB1 /* Beans.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beans.swift; sourceTree = "<group>"; };
 		60B755F11E1E6B94003650A1 /* TLTagsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTagsControl.h; sourceTree = "<group>"; };
 		60B755F21E1E6B94003650A1 /* TLTagsControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTagsControl.m; sourceTree = "<group>"; };
 		60CD2A001DE2C3C000125457 /* CommentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentsVC.swift; path = View/NewsFeeds/CommentsVC.swift; sourceTree = "<group>"; };
@@ -1625,6 +1627,14 @@
 			path = AppHelper;
 			sourceTree = "<group>";
 		};
+		60B42E4C1E276B22001A4CB1 /* ClassModel */ = {
+			isa = PBXGroup;
+			children = (
+				60B42E4D1E276B61001A4CB1 /* Beans.swift */,
+			);
+			path = ClassModel;
+			sourceTree = "<group>";
+		};
 		60B755F01E1E6B94003650A1 /* TLTagsControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -1670,6 +1680,7 @@
 		671C3D5E1C44FB72006A5423 /* ProactiveLiving */ = {
 			isa = PBXGroup;
 			children = (
+				60B42E4C1E276B22001A4CB1 /* ClassModel */,
 				603863751E2347C000FE1598 /* Recources */,
 				602414EB1E10F64200718633 /* Libs */,
 				605EAC791E1E640B0048EA8F /* VC */,
@@ -3211,6 +3222,7 @@
 				BA5901B51D365FCD006142AC /* Reachability.swift in Sources */,
 				603863851E234BBF00FE1598 /* ProfileContainerVC.swift in Sources */,
 				605EAC581E1E63C70048EA8F /* SDImageCache.m in Sources */,
+				60B42E4E1E276B61001A4CB1 /* Beans.swift in Sources */,
 				BAB0E4F41D5DE59B00906C10 /* SocketEnginePollable.swift in Sources */,
 				605EAC3A1E1E63C60048EA8F /* CKTableViewCell.m in Sources */,
 				BAB0E4C31D5DE23700906C10 /* Message.m in Sources */,

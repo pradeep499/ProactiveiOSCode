@@ -10,6 +10,7 @@
 
 @interface LoginVC : UIViewController
 
+-(void)setupTabBarController;
 
 @end
 
