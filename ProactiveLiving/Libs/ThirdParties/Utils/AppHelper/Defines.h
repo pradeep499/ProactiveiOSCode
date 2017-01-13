@@ -118,8 +118,9 @@
 #define userFirstName                   @"firstName"
 #define userLastName                   @"lastName"
 #define userAddress                    @"address"
-#define uImage                          @"uImage"
-#define _ID                             @"userId"
+#define uImage                         @"uImage"
+#define _ID                            @"userId"
+#define keyUserDetails                    @"userDetails"
 
 #define BookinTime                      @"BookinTime"
 #define SyncStatus                      @"SyncStatus"

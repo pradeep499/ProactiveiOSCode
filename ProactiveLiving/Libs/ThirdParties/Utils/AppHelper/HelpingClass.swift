@@ -32,6 +32,30 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         return ""
     }
     
+    
+    class func saveUserDetails(userObj:Beans.UserDetails) -> Void {
+    
+        // update the shared instance values
+       Beans.UserDetails.sharedInstance = userObj
+        
+        //archive user details and save to userdetails
+        let archiveUserDetails = NSKeyedArchiver.archivedDataWithRootObject(userObj )
+        
+        AppHelper.saveToUserDefaults(archiveUserDetails, withKey: keyUserDetails)
+    }
+    
+    class func getUserDetails() -> Beans.UserDetails {
+        
+        //fetch archive NSData and unarchive as obj type
+        if let archiveUserData = AppHelper.userDefaultsForKey(keyUserDetails){
+            
+            let obj:Beans.UserDetails = NSKeyedUnarchiver.unarchiveObjectWithData(archiveUserData as! NSData) as! Beans.UserDetails
+            
+            return obj
+        }
+        return Beans.UserDetails.sharedInstance
+    }
+    
     // remove from user default
     class  func removeFromUserDefaultForKey(key: NSString!) {
         let defaults = NSUserDefaults.standardUserDefaults()

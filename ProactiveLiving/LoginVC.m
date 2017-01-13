@@ -358,7 +358,7 @@
                             [AppHelper removeFromUserDefaultsWithKey:isRememberUser];
                         }
                         
-                        if ([[[self.detailDictionary objectForKey:@"result"] valueForKey:@"isFirstLogin"] boolValue]) {
+                        if ( [[[self.detailDictionary objectForKey:@"result"] valueForKey:@"isFirstLogin"] boolValue]) {
                             //first time logged in
                             
                             //goto Edit page
@@ -369,8 +369,37 @@
                             
                             [self.navigationController pushViewController:editVC animated:true];
                             
-                        }else
+                        }else{
                             [self setupTabBarController];
+                            //save user details to userDefault
+                            
+                            NSDictionary *dict = [self.detailDictionary objectForKey:@"result"];
+                            UserDetails *obj =   UserDetails.sharedInstance;
+                            
+                            obj.userID = [dict valueForKey:@"_id"];
+                            obj.userName = [NSString stringWithFormat:@"%@ %@", [dict valueForKey:@"firstName"], [dict valueForKey:@"lastName"]];
+                            obj.gender = [dict valueForKey:@"gender"];
+                            obj.summary = [dict valueForKey:@"summary"];
+                            obj.liveIn = [dict valueForKey:@"liveIn"];
+                            obj.workAt = [dict valueForKey:@"workAt"];
+                            obj.grewUp = [dict valueForKey:@"grewup"];
+                            obj.highSchool = [dict valueForKey:@"highSchool"];
+                            obj.college = [dict valueForKey:@"college"];
+                            obj.graduateSchool = [dict valueForKey:@"graduateSchool"];
+                            obj.sportsPlayed = [dict valueForKey:@"sportsPlayed"];
+                            obj.interests = [dict valueForKey:@"intrests"];
+                            obj.favFamousQuote = [dict valueForKey:@"favFamousQuote"];
+                            obj.notFamousQuote = [dict valueForKey:@"notFamousQuote"];
+                            obj.bio = [dict valueForKey:@"bio"];
+                            obj.imgUrl = [dict valueForKey:@"imgUrl"];
+                            obj.imgCoverUrl = [dict valueForKey:@"imgUrl"];
+                            
+                 
+                            
+                            
+                            [HelpingClass saveUserDetails:obj];
+                            
+                        }
                         
                         
                         

@@ -126,38 +126,49 @@ class EditAboutMeVC: UIViewController {
     
     func setUpInputedField() -> Void {
         
-        //Beans.UserDetails.sharedInstance.gender
-       self.tv_summary.text = Beans.UserDetails.sharedInstance.summary
-       self.tf_liveIn.text = Beans.UserDetails.sharedInstance.liveIn
-       self.tf_workAt.text = Beans.UserDetails.sharedInstance.workAt
-       self.tf_grewUp.text = Beans.UserDetails.sharedInstance.grewUp
-       self.tf_highSchool.text = Beans.UserDetails.sharedInstance.highSchool
-       self.tf_sportsPlayed.text = Beans.UserDetails.sharedInstance.sportsPlayed
-       self.tf_college.text = Beans.UserDetails.sharedInstance.college
-       self.tf_graduateSchool.text = Beans.UserDetails.sharedInstance.graduateSchool
-       self.tv_interest.text = Beans.UserDetails.sharedInstance.intrests
-       self.tv_favQuote.text = Beans.UserDetails.sharedInstance.favFamousQuote
-       self.tv_myNotFavQuote.text = Beans.UserDetails.sharedInstance.notFamousQuote
-       self.tv_myBio.text = Beans.UserDetails.sharedInstance.bio
+            let obj:Beans.UserDetails = HelpingClass.getUserDetails() 
+            
+            
+            self.tv_summary.text = obj.summary
+            self.tf_liveIn.text = obj.liveIn
+            self.tf_workAt.text = obj.workAt
+            self.tf_grewUp.text = obj.grewUp
+            self.tf_highSchool.text = obj.highSchool
+            self.tf_sportsPlayed.text = obj.sportsPlayed
+            self.tf_college.text = obj.college
+            self.tf_graduateSchool.text = obj.graduateSchool
+            self.tv_interest.text = obj.interests
+            self.tv_favQuote.text = obj.favFamousQuote
+            self.tv_myNotFavQuote.text = obj.notFamousQuote
+            self.tv_myBio.text = obj.bio
+        
+         
+       
     }
-    
+   /*
+     use less
     func setUpUserDetails(dict:[String:String]) -> Void {
         
-        Beans.UserDetails.sharedInstance.gender = dict["gender"]!
-        Beans.UserDetails.sharedInstance.summary = dict["summary"]!
-        Beans.UserDetails.sharedInstance.liveIn = dict["liveIn"]!
-        Beans.UserDetails.sharedInstance.workAt = dict["workAt"]!
-        Beans.UserDetails.sharedInstance.grewUp = dict["grewup"]!
-        Beans.UserDetails.sharedInstance.highSchool = dict["highSchool"]!
-        Beans.UserDetails.sharedInstance.sportsPlayed = dict["sportsPlayed"]!
-        Beans.UserDetails.sharedInstance.college = dict["college"]!
-        Beans.UserDetails.sharedInstance.graduateSchool = dict["graduateSchool"]!
-        Beans.UserDetails.sharedInstance.intrests = dict["intrests"]!
-        Beans.UserDetails.sharedInstance.favFamousQuote = dict["favFamousQuote"]!
-        Beans.UserDetails.sharedInstance.notFamousQuote = dict["notFamousQuote"]!
-        Beans.UserDetails.sharedInstance.bio = dict["bio"]!
+        //save to userDefault db
+        
+       // AppHelper.saveToUserDefaults(dict, withKey: keyUserDetails)
+        
+        
+        let obj:Beans.UserDetails = Beans.UserDetails(userName: dict["gender"]!, userId: "", imgUrl: dict["imgUrl"]!, imgCoverUrl: dict["imgUrl"]!, summary: dict["summary"]!, gender: dict["gender"]!, liveIn: dict["liveIn"]!, workAt: dict["workAt"]!, grewUp: dict["grewup"]!, highSchool:  dict["highSchool"]!, college: dict["college"]!, graduateSchool: dict["graduateSchool"]!, sportsPlayed: dict["sportsPlayed"]!, interest: dict["intrests"]!, favFamousQuote: dict["favFamousQuote"]!, notFamousQuote: dict["notFamousQuote"]!, bio: dict["bio"]!)
+        
+        
+        
+        
+        //archive user details and save to userdetails
+        let archiveUserDetails = NSKeyedArchiver.archivedDataWithRootObject(obj )
+        
+        AppHelper.saveToUserDefaults(archiveUserDetails, withKey: keyUserDetails)
+        
+        
+        
+        
     }
-    
+    */
     
     func setUpTabBar() -> Void {
         
@@ -293,21 +304,25 @@ class EditAboutMeVC: UIViewController {
                         
                         var dict = [String:String]()
                         
-                        dict["gender"] = result!["gender"] as? String ?? ""
-                        dict["summary"] = result!["summary"] as? String ?? ""
-                        dict["liveIn"] = result!["liveIn"] as? String ?? ""
-                        dict["workAt"] = result!["workAt"] as? String ?? ""
-                        dict["grewup"] = result!["grewup"] as? String ?? ""
-                        dict["highSchool"] = result!["highSchool"] as? String
-                        dict["college"] = result!["college"] as? String ?? ""
-                        dict["graduateSchool"] = result!["graduateSchool"] as? String ?? ""
-                        dict["sportsPlayed"] = result!["sportsPlayed"] as? String ?? ""
-                        dict["intrests"] = result!["intrests"] as? String ?? ""
-                        dict["favFamousQuote"] = result!["favFamousQuote"] as? String ?? ""
-                        dict["notFamousQuote"] = result!["notFamousQuote"] as? String ?? ""
-                        dict["bio"] = result!["bio"] as? String ?? ""
+                        let userObj = Beans.UserDetails.sharedInstance
                         
-                        self.setUpUserDetails(dict)
+                        userObj.gender = result!["gender"] as? String ?? ""
+                        userObj.summary = result!["summary"] as? String ?? ""
+                        userObj.liveIn = result!["liveIn"] as? String ?? ""
+                        userObj.workAt = result!["workAt"] as? String ?? ""
+                        userObj.grewUp = result!["grewup"] as? String ?? ""
+                        userObj.highSchool = (result!["highSchool"] as? String)!
+                        userObj.college = result!["college"] as? String ?? ""
+                        userObj.graduateSchool = result!["graduateSchool"] as? String ?? ""
+                        userObj.sportsPlayed = result!["sportsPlayed"] as? String ?? ""
+                        userObj.interests = result!["intrests"] as? String ?? ""
+                        userObj.favFamousQuote = result!["favFamousQuote"] as? String ?? ""
+                        userObj.notFamousQuote = result!["notFamousQuote"] as? String ?? ""
+                        userObj.bio = result!["bio"] as? String ?? ""
+                        
+                       
+                        
+                        HelpingClass.saveUserDetails(userObj)
                         
                         if self.firstTimeLogin == "1"{
                             //goto tabbarcontroller page
