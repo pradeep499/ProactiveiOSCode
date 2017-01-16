@@ -113,6 +113,7 @@
 		605EAC9E1E1E651B0048EA8F /* AppHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC991E1E651B0048EA8F /* AppHelper.m */; };
 		605EAC9F1E1E651B0048EA8F /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC9A1E1E651B0048EA8F /* Define.swift */; };
 		605EACA01E1E651B0048EA8F /* HelpingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC9C1E1E651B0048EA8F /* HelpingClass.swift */; };
+		606628871E2CAC0500E66659 /* AttachmentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606628861E2CAC0500E66659 /* AttachmentsVC.swift */; };
 		60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A7CADE1DDD6BB10033BA1E /* Social.framework */; };
 		60B42E4E1E276B61001A4CB1 /* Beans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B42E4D1E276B61001A4CB1 /* Beans.swift */; };
 		60B755F31E1E6B94003650A1 /* TLTagsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B755F21E1E6B94003650A1 /* TLTagsControl.m */; };
@@ -645,6 +646,7 @@
 		605EAC9B1E1E651B0048EA8F /* Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
 		605EAC9C1E1E651B0048EA8F /* HelpingClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpingClass.swift; sourceTree = "<group>"; };
 		605EAC9D1E1E651B0048EA8F /* ProactiveLiving-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProactiveLiving-Bridging-Header.h"; sourceTree = "<group>"; };
+		606628861E2CAC0500E66659 /* AttachmentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsVC.swift; sourceTree = "<group>"; };
 		60A7CADE1DDD6BB10033BA1E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		60B42E4D1E276B61001A4CB1 /* Beans.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beans.swift; sourceTree = "<group>"; };
 		60B755F11E1E6B94003650A1 /* TLTagsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTagsControl.h; sourceTree = "<group>"; };
@@ -1561,6 +1563,7 @@
 		605EAC791E1E640B0048EA8F /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				606628851E2CABE300E66659 /* Utils */,
 				603863831E234BBF00FE1598 /* Profile */,
 				605EAC7A1E1E640B0048EA8F /* Map */,
 				605EAC7E1E1E640B0048EA8F /* Settings */,
@@ -1625,6 +1628,14 @@
 				605EAC9D1E1E651B0048EA8F /* ProactiveLiving-Bridging-Header.h */,
 			);
 			path = AppHelper;
+			sourceTree = "<group>";
+		};
+		606628851E2CABE300E66659 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				606628861E2CAC0500E66659 /* AttachmentsVC.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		60B42E4C1E276B22001A4CB1 /* ClassModel */ = {
@@ -3085,6 +3096,7 @@
 				BAB0E4F01D5DE59B00906C10 /* SocketClientSpec.swift in Sources */,
 				BAD63F061D9A8EEA002BDF0A /* ExploreDynamicVC.swift in Sources */,
 				605EAC511E1E63C70048EA8F /* RSDFDatePickerCollectionViewLayout.m in Sources */,
+				606628871E2CAC0500E66659 /* AttachmentsVC.swift in Sources */,
 				605EAC921E1E640B0048EA8F /* SettingsContactsVC.m in Sources */,
 				BA59010E1D364EFD006142AC /* ChatListner.swift in Sources */,
 				605EAC551E1E63C70048EA8F /* RSDFDatePickerView.m in Sources */,

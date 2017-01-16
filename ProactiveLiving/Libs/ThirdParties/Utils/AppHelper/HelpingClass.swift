@@ -231,6 +231,22 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         label.sizeToFit()
         return label.frame.height
     }
+    //MARK - Generate Time Stamp
+    
+    class func generateTimeStamp() -> String {
+        
+        let date = NSDate()
+        var dateStr : String
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss.sss"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateStr = dateFormatter.stringFromDate(date)
+        
+        print("time stam ", dateStr);
+        
+        return dateStr
+        
+    }
     
     //MARK:- rounded corners
     class func  setViewWithRoundedCorners(anyView:UIView, color:UIColor, cornerRadius:CGFloat, borderColor:UIColor, borderWidth:CGFloat)
@@ -496,6 +512,44 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         return phoneResult
         
     }
+    
+    //MARK: - Local DB path
+    
+     
+    
+    class func generateLocalFilePath(directory directryName:String, fileName:String) -> String {
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            NSLog("Unable to create directory \(error.debugDescription)")
+        }
+        let path = documentsDirectory.stringByAppendingPathComponent(fileName)
+        
+        return path;
+    }
+    
+    class func isFileExistsAtPath(directory directryName:String, fileName:String, completion: (isExistPath: Bool, fileUrl:String?) -> Void){
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
+        let filePath = documentsDirectory.stringByAppendingPathComponent(fileName as String)
+        
+        
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
+            completion(isExistPath: true, fileUrl: filePath)
+        }else{
+            completion(isExistPath: false, fileUrl: nil)
+        }
+        
+        
+        
+    }
+    
+    
     
     
 }

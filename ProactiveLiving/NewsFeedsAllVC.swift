@@ -327,7 +327,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             videoName = videoName.stringByReplacingOccurrencesOfString(".jpg", withString: ".mp4")
             let imgUrls = resultData["attachments"] as! [String]
             
-            self.isFileExistsAtPath(directory: "/ChatFile", fileName: videoName, completion: {(isExistPath, fileUrl) -> Void in
+            HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: videoName, completion: {(isExistPath, fileUrl) -> Void in
                 
                 if isExistPath{
                     
@@ -505,7 +505,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         
         //check the thumbNail name is exist ? or generate from video url and save to db
-        self.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
+        HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
             
             if isExistPath {
                 fullImageVC.imagePath = fileUrl
@@ -1175,7 +1175,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
              let thumbNailName = dict["thumNailName"] as! String
                
             //check the thumbNail name is exist ? or generate from video url and save to db
-            self.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
+            HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
                 
                 if dict["postType"] as! String == "image"{
                     
@@ -1261,39 +1261,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
     
     
-    //MARK:-
-    
-    func generateLocalFilePath(directory directryName:String, fileName:String) -> String {
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
-        let fileManager = NSFileManager.defaultManager()
-        do {
-            try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            NSLog("Unable to create directory \(error.debugDescription)")
-        }
-        let path = documentsDirectory.stringByAppendingPathComponent(fileName)
-        
-        return path;
-    }
-    
-    func isFileExistsAtPath(directory directryName:String, fileName:String, completion: (isExistPath: Bool, fileUrl:String?) -> Void){
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
-        let filePath = documentsDirectory.stringByAppendingPathComponent(fileName as String)
-        
-        
-        if (NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
-            completion(isExistPath: true, fileUrl: filePath)
-        }else{
-            completion(isExistPath: false, fileUrl: nil)
-        }
-        
-        
-        
-    }
+
     
 
     
@@ -1962,7 +1930,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         //Make low quality and save to DB
         
-        let outPutPath = self.generateLocalFilePath(directory: "/ChatFile", fileName: videoName)
+        let outPutPath = HelpingClass.generateLocalFilePath(directory: "/ChatFile", fileName: videoName)
         
         CommonMethodFunctions.convertVideoToLowQuailtyWithInputURL(videoUrl, outputURL: NSURL.fileURLWithPath(outPutPath), handler: { (exportSession : AVAssetExportSession!) -> Void in
             switch(exportSession.status)

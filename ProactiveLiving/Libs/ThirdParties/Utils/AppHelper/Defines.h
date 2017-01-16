@@ -90,6 +90,12 @@
 #define ServiceDeleteAC                 @"users/deleteAccount"
 #define ServiceUpdateProfileStatus      @"users/updateStatus"
 #define ServiceUpdateUserProfile        @"users/updateUserProfile"
+#define ServiceUploadContent           @"users/uploadContent"
+#define ServiceGetProfileDataByCategory          @"users/getProfileDataByCategory"
+
+
+
+
 
 
 
