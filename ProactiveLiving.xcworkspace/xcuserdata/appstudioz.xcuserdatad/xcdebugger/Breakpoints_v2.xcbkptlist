@@ -776,7 +776,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/CreateMeetUpVC.swift"
-                  timestampString = "506262971.824326"
+                  timestampString = "506432496.763199"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -791,7 +791,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/CreateMeetUpVC.swift"
-                  timestampString = "506262971.826467"
+                  timestampString = "506432496.76536"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -806,7 +806,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/CreateMeetUpVC.swift"
-                  timestampString = "506262971.828603"
+                  timestampString = "506432496.767587"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -821,7 +821,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/CreateMeetUpVC.swift"
-                  timestampString = "506262971.831194"
+                  timestampString = "506432496.769729"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -1179,7 +1179,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "250"
             endingLineNumber = "250"
-            landmarkName = "onClickComments(_:)"
+            landmarkName = "onClickComments(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1195,7 +1195,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "221"
             endingLineNumber = "221"
-            landmarkName = "onClickComments(_:)"
+            landmarkName = "onClickComments(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1211,7 +1211,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "385"
             endingLineNumber = "385"
-            landmarkName = "onClickTwiterBtn(_:)"
+            landmarkName = "onClickTwiterBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1339,7 +1339,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "539"
             endingLineNumber = "539"
-            landmarkName = "textFieldShouldReturn(_:)"
+            landmarkName = "textFieldShouldReturn(textField:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1419,7 +1419,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "403"
             endingLineNumber = "403"
-            landmarkName = "onClickSnapChatBtn(_:)"
+            landmarkName = "onClickSnapChatBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1435,7 +1435,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "275"
             endingLineNumber = "275"
-            landmarkName = "onClickShareBtn(_:)"
+            landmarkName = "onClickShareBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2006,7 +2006,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/MeetUpsListingVC.swift"
-                  timestampString = "506262972.117407"
+                  timestampString = "506432497.032625"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "179"
@@ -2021,7 +2021,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/MeetUpsListingVC.swift"
-                  timestampString = "506262972.119907"
+                  timestampString = "506432497.034828"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "179"
@@ -2347,7 +2347,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "161"
             endingLineNumber = "161"
-            landmarkName = "actionSheet(_:clickedButtonAtIndex:)"
+            landmarkName = "actionSheet(actionSheet:clickedButtonAtIndex:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2363,7 +2363,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "279"
             endingLineNumber = "279"
-            landmarkName = "onClickShareBtn(_:)"
+            landmarkName = "onClickShareBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2475,7 +2475,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1998"
             endingLineNumber = "1998"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2534,7 +2534,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.249306"
+                  timestampString = "506432497.156413"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2549,7 +2549,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.251465"
+                  timestampString = "506432497.158588"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2564,7 +2564,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.253595"
+                  timestampString = "506432497.160846"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2579,7 +2579,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.255731"
+                  timestampString = "506432497.163091"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2594,7 +2594,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.257888"
+                  timestampString = "506432497.165256"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2609,7 +2609,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.260098"
+                  timestampString = "506432497.167521"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2624,7 +2624,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.262696"
+                  timestampString = "506432497.169693"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2639,7 +2639,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.264936"
+                  timestampString = "506432497.171859"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2654,7 +2654,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.267232"
+                  timestampString = "506432497.174015"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2669,7 +2669,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.269739"
+                  timestampString = "506432497.176151"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7218"
@@ -2707,7 +2707,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2110"
             endingLineNumber = "2110"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2723,7 +2723,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1886"
             endingLineNumber = "1886"
-            landmarkName = "uploadImage(_:captionText:)"
+            landmarkName = "uploadImage(uploadImage:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2771,7 +2771,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1323"
             endingLineNumber = "1323"
-            landmarkName = "collectionView(_:didSelectItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:didSelectItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2787,7 +2787,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "292"
             endingLineNumber = "292"
-            landmarkName = "onClickPlayVideoBtn(_:)"
+            landmarkName = "onClickPlayVideoBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2830,7 +2830,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/FullScreenImageVC.swift"
-                  timestampString = "506262972.321966"
+                  timestampString = "506432497.225371"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "62"
@@ -2845,7 +2845,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/FullScreenImageVC.swift"
-                  timestampString = "506262972.324142"
+                  timestampString = "506432497.227587"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "62"
@@ -2942,7 +2942,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.350505"
+                  timestampString = "506432497.251834"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "2738"
@@ -2957,7 +2957,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/Chat/ChatVC/ChattingMainVC.swift"
-                  timestampString = "506262972.352765"
+                  timestampString = "506432497.254001"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "2646"
@@ -3075,7 +3075,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1995"
             endingLineNumber = "1995"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3107,7 +3107,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1850"
             endingLineNumber = "1850"
-            landmarkName = "uploadImage(_:captionText:)"
+            landmarkName = "uploadImage(uploadImage:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3123,7 +3123,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2071"
             endingLineNumber = "2071"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3139,7 +3139,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2091"
             endingLineNumber = "2091"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3155,7 +3155,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "282"
             endingLineNumber = "282"
-            landmarkName = "onClickShareBtn(_:)"
+            landmarkName = "onClickShareBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3171,7 +3171,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1938"
             endingLineNumber = "1938"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3187,7 +3187,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1940"
             endingLineNumber = "1940"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3203,7 +3203,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1941"
             endingLineNumber = "1941"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3219,7 +3219,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1944"
             endingLineNumber = "1944"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3235,7 +3235,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1955"
             endingLineNumber = "1955"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3251,7 +3251,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1963"
             endingLineNumber = "1963"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3267,7 +3267,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1910"
             endingLineNumber = "1910"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3283,7 +3283,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "324"
             endingLineNumber = "324"
-            landmarkName = "onClickPlayVideoBtn(_:)"
+            landmarkName = "onClickPlayVideoBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3299,7 +3299,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "474"
             endingLineNumber = "474"
-            landmarkName = "clickUserImage(_:)"
+            landmarkName = "clickUserImage(recognizer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3315,7 +3315,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "314"
             endingLineNumber = "314"
-            landmarkName = "onClickPlayVideoBtn(_:)"
+            landmarkName = "onClickPlayVideoBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3331,7 +3331,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1961"
             endingLineNumber = "1961"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3347,7 +3347,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
             endingLineNumber = "331"
-            landmarkName = "onClickPlayVideoBtn(_:)"
+            landmarkName = "onClickPlayVideoBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3379,7 +3379,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "983"
             endingLineNumber = "983"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3395,7 +3395,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "963"
             endingLineNumber = "963"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            landmarkName = "collectionView(collectionView:numberOfItemsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3411,7 +3411,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1174"
             endingLineNumber = "1174"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3555,7 +3555,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "509"
             endingLineNumber = "509"
-            landmarkName = "clickUserImage(_:)"
+            landmarkName = "clickUserImage(recognizer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3614,7 +3614,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/VC/Settings/ChangeDeleteAC/ChangeNumberVC.swift"
-                  timestampString = "506262972.526012"
+                  timestampString = "506432497.411764"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "116"
@@ -3629,7 +3629,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/VC/Settings/ChangeDeleteAC/ChangeNumberVC.swift"
-                  timestampString = "506262972.529202"
+                  timestampString = "506432497.413952"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "121"
@@ -3902,7 +3902,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/View/SignUpVC/SignUpVC.m"
-                  timestampString = "506262972.615346"
+                  timestampString = "506432497.480537"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "628"
@@ -3917,7 +3917,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/View/SignUpVC/SignUpVC.m"
-                  timestampString = "506262972.618353"
+                  timestampString = "506432497.482696"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "628"
@@ -3971,7 +3971,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "243"
             endingLineNumber = "243"
-            landmarkName = "onClickComments(_:)"
+            landmarkName = "onClickComments(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4083,7 +4083,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2056"
             endingLineNumber = "2056"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4099,7 +4099,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "578"
             endingLineNumber = "578"
-            landmarkName = "sendPostToServer(_:isShared:createdDict:imgOrVideoUlr:captionText:thumNailName:)"
+            landmarkName = "sendPostToServer(postType:isShared:createdDict:imgOrVideoUlr:captionText:thumNailName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4115,7 +4115,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2053"
             endingLineNumber = "2053"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4131,7 +4131,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1703"
             endingLineNumber = "1703"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4195,7 +4195,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1686"
             endingLineNumber = "1686"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4211,7 +4211,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1701"
             endingLineNumber = "1701"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4227,7 +4227,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1753"
             endingLineNumber = "1753"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4243,7 +4243,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1755"
             endingLineNumber = "1755"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4275,7 +4275,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1783"
             endingLineNumber = "1783"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4366,7 +4366,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/MeetUpDetailsVC.swift"
-                  timestampString = "506262972.727996"
+                  timestampString = "506432497.613821"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "279"
@@ -4381,7 +4381,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/MeetUpDetailsVC.swift"
-                  timestampString = "506262972.73018"
+                  timestampString = "506432497.61679"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "279"
@@ -4595,7 +4595,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1057"
             endingLineNumber = "1057"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4611,7 +4611,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1086"
             endingLineNumber = "1086"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4638,12 +4638,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
-            timestampString = "505742775.414557"
+            timestampString = "506427029.523226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
-            landmarkName = "onClickEditOrMoreBtn(sender:)"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "onClickEditOrMoreBtn(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4654,12 +4654,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
-            timestampString = "505742775.414557"
+            timestampString = "506427029.523226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
-            landmarkName = "onClickEditOrMoreBtn(sender:)"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "onClickEditOrMoreBtn(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4670,12 +4670,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
-            timestampString = "505742775.414557"
+            timestampString = "506427029.523226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "274"
             endingLineNumber = "274"
-            landmarkName = "bgPictureTap(sender:)"
+            landmarkName = "bgPictureTap(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4686,12 +4686,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
-            timestampString = "505742775.414557"
+            timestampString = "506427029.523226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "278"
             endingLineNumber = "278"
-            landmarkName = "profilePictureTap(sender:)"
+            landmarkName = "profilePictureTap(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4702,12 +4702,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
-            timestampString = "505744535.586539"
+            timestampString = "506427029.523226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "onClickBackBtn(sender:)"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "onClickBackBtn(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4798,7 +4798,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/View/SignUpVC/SignUpVC.m"
-                  timestampString = "506262972.831448"
+                  timestampString = "506432497.739167"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "628"
@@ -4813,7 +4813,7 @@
                   moduleName = "ProactiveLiving"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/View/SignUpVC/SignUpVC.m"
-                  timestampString = "506262972.83358"
+                  timestampString = "506432497.741834"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "628"
@@ -5006,27 +5006,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506261011.81356"
+            timestampString = "506427029.523226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "setUpPage()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506262189.793244"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5038,60 +5022,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506262189.793244"
+            timestampString = "506438260.719053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
-            landmarkName = "setUpCell(collectionView:indexPath:dict:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506262189.793244"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "336"
-            endingLineNumber = "336"
-            landmarkName = "setUpCell(collectionView:indexPath:dict:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506261011.81356"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "setUpPage()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506261011.81356"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "didCancelBtnPressed()"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "setUpCell(_:indexPath:dict:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5118,12 +5054,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506261011.81356"
+            timestampString = "506438260.719053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "hideAttachmentView()"
+            startingLineNumber = "398"
+            endingLineNumber = "398"
+            landmarkName = "setUpCell(_:indexPath:dict:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProactiveLiving.GenericProfileCollectionVC.setUpCell (__ObjC.UICollectionView, indexPath : __ObjC.NSIndexPath, dict : Swift.ImplicitlyUnwrappedOptional&lt;Swift.Dictionary&lt;Swift.String, Swift.String&gt;&gt;) -&gt; __ObjC.UICollectionViewCell"
+                  moduleName = "ProactiveLiving"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+                  timestampString = "506432497.822227"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "401"
+                  endingLineNumber = "401"
+                  offsetFromSymbolStart = "2421">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProactiveLiving.GenericProfileCollectionVC.(setUpCell (__ObjC.UICollectionView, indexPath : __ObjC.NSIndexPath, dict : Swift.ImplicitlyUnwrappedOptional&lt;Swift.Dictionary&lt;Swift.String, Swift.String&gt;&gt;) -&gt; __ObjC.UICollectionViewCell).(closure #1)"
+                  moduleName = "ProactiveLiving"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+                  timestampString = "506432497.824454"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "404"
+                  endingLineNumber = "404"
+                  offsetFromSymbolStart = "254">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506438260.719053"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "414"
+            endingLineNumber = "414"
+            landmarkName = "setUpCell(_:indexPath:dict:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5134,11 +5118,395 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506261011.81356"
+            timestampString = "506438260.719053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
+            landmarkName = "setUpCell(_:indexPath:dict:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506329035.894429"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "623"
+            endingLineNumber = "623"
+            landmarkName = "sendToServerAPI(_:imgOrVideoUlr:thumNailName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProactiveLiving.AttachmentsVC.sendToServerAPI (Swift.String, imgOrVideoUlr : Swift.String, thumNailName : Swift.ImplicitlyUnwrappedOptional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "ProactiveLiving"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+                  timestampString = "506432497.839312"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "626"
+                  endingLineNumber = "626"
+                  offsetFromSymbolStart = "1073">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProactiveLiving.AttachmentsVC.(sendToServerAPI (Swift.String, imgOrVideoUlr : Swift.String, thumNailName : Swift.ImplicitlyUnwrappedOptional&lt;Swift.String&gt;) -&gt; ()).(closure #1)"
+                  moduleName = "ProactiveLiving"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+                  timestampString = "506432497.841465"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "629"
+                  endingLineNumber = "629"
+                  offsetFromSymbolStart = "66">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506329071.669371"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "611"
+            endingLineNumber = "611"
+            landmarkName = "sendToServerAPI(_:imgOrVideoUlr:thumNailName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506329155.512158"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
+            landmarkName = "uploadImage(_:captionText:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/HelpingClass.swift"
+            timestampString = "506329339.676199"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "generateTimeStamp()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506329380.667743"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
+            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506329383.836287"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506329406.267961"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
+            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506329527.514413"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "didFinishUpload(dict:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "collectionView(collectionView:layout:sizeForItemAtIndexPath:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
+            landmarkName = "clickUserImage(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
+            landmarkName = "clickUserImage(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
+            landmarkName = "clickUserImage(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
+            landmarkName = "clickUserImage(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506341050.82311"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "509"
+            endingLineNumber = "509"
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Utils/AttachmentsVC.swift"
+            timestampString = "506341055.891719"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "560"
+            endingLineNumber = "560"
+            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "profilePictureTap(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProactiveLiving.ProfileContainerVC.profilePictureTap (Swift.Optional&lt;__ObjC.UITapGestureRecognizer&gt;) -&gt; ()"
+                  moduleName = "ProactiveLiving"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+                  timestampString = "506432497.932671"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "278"
+                  endingLineNumber = "278"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ProactiveLiving.ProfileContainerVC.(profilePictureTap (Swift.Optional&lt;__ObjC.UITapGestureRecognizer&gt;) -&gt; ()).(default argument 0)"
+                  moduleName = "ProactiveLiving"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appstudioz/Desktop/proactive30thDec/Proactive-clone/ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+                  timestampString = "506432497.935322"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "277"
+                  endingLineNumber = "277"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "setUpProfilePage()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506427029.523226"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "setUpCollectionView()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/ProfileVC.swift"
+            timestampString = "506416894.71113"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5149,13 +5517,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506262189.793244"
+            filePath = "ProactiveLiving/VC/Profile/ProfileVC.swift"
+            timestampString = "506416969.182516"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
-            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "setUpCollectionView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5166,12 +5534,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506262534.522589"
+            timestampString = "506431558.832789"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
-            landmarkName = "setUpCell(collectionView:indexPath:dict:)"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
+            landmarkName = "clickUserImage(recognizer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5182,12 +5550,108 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
-            timestampString = "506263054.247435"
+            timestampString = "506431567.216471"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
-            landmarkName = "setUpCell(collectionView:indexPath:dict:)"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
+            landmarkName = "clickUserImage(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/GenericProfileCollectionVC.swift"
+            timestampString = "506431578.520498"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
+            landmarkName = "clickUserImage(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+            timestampString = "506432297.27658"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "425"
+            endingLineNumber = "425"
+            landmarkName = "getSelectedImgData(_:imgName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+            timestampString = "506431943.205797"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
+            landmarkName = "uploadImage(_:imgName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+            timestampString = "506431946.094092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "476"
+            endingLineNumber = "476"
+            landmarkName = "sendToServerAPI(_:thumNailName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+            timestampString = "506432297.27658"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "510"
+            endingLineNumber = "510"
+            landmarkName = "sendToServerAPI(_:thumNailName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProactiveLiving/VC/Profile/ProfileContainerVC.swift"
+            timestampString = "506432494.360734"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
+            landmarkName = "gotTOPhotosPage()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

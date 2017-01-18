@@ -11,8 +11,12 @@ import Social
 import MediaPlayer
 import AVKit
 
+protocol GenericProfileCollectionVCDelegate {
+    func getSelectedImgData(imgData:NSData, imgName:String) ;
+}
 
-class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate {
+
+class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var lbl_title: UILabel!
 
@@ -27,8 +31,10 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate {
     
     @IBOutlet weak var attachmentContainerView: UIView!
     
-    var photoListArr = [AnyObject]()
+    public var photoListArr = [AnyObject]()
     var moviePlayerController = MPMoviePlayerController()
+    var pageFrom:String?
+    var delegate:GenericProfileCollectionVCDelegate?
     
     
     
@@ -38,11 +44,17 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate {
         super.viewDidLoad()
 
         self.setUpPage()
+        self.setUpCollectionView()
         
         let attachments = AttachmentsVC()
         attachments.delegate = self
         
         self.getPhotosList()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        self.navigationController?.navigationBarHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,6 +84,19 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate {
         
     }
     
+    func setUpCollectionView() -> Void {
+        
+        let w = self.cv.bounds.size.width - 30
+        // Do any additional setup after loading the view, typically from a nib.
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+        
+        layout.itemSize = CGSize(width: w/3 - 5, height: w/3)
+        layout.minimumInteritemSpacing = 6
+        layout.minimumLineSpacing = 10
+        self.cv!.collectionViewLayout = layout
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "attachmentsSegue" {
             
@@ -92,80 +117,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate {
         
     }
     
-    func clickUserImage(recognizer: UITapGestureRecognizer )
-    {
-        
-        let pointInTable = recognizer.locationInView(self.cv)
-        let indexPath:NSIndexPath = self.cv.indexPathForItemAtPoint(pointInTable)!
-        
-        var dict = NSDictionary()
-        
-        
-        
-        let imgUrls = dict["attachments"] as! [String]
-        let thumbNailName = dict["thumNailName"] as! String
-        let postType = dict["type"] as! String
-        
-        
-        
-        
-        
-        if postType == "image"{
-        
-        let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
-        
-        fullImageVC.hidesBottomBarWhenPushed = true
-        
-        
-        
-        
-        
-        //check the thumbNail name is exist ? or generate from video url and save to db
-        HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
-            
-            if isExistPath {
-                fullImageVC.imagePath = fileUrl
-                fullImageVC.downLoadPath = "4"
-            }else{
-                fullImageVC.imagePath = imgUrls.first
-                fullImageVC.downLoadPath = "3"
-            }
-            
-        })
-        
-        
-        
-        self.navigationController?.pushViewController(fullImageVC, animated: true)
-        
-        
-        }else if(postType == "video"){
-            
-           
-            var videoName = thumbNailName.stringByReplacingOccurrencesOfString("Thumb", withString: "Video")
-            videoName = videoName.stringByReplacingOccurrencesOfString(".jpg", withString: ".mp4")
-            
-            
-            HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: videoName, completion: {(isExistPath, fileUrl) -> Void in
-                
-                if isExistPath{
-                    
-                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL.fileURLWithPath(fileUrl!))
-                    
-                }else{
-                    
-                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL(string: imgUrls.first!))
-                }
-                
-                //moviePlayerController.movieSourceType = MPMovieSourceType.Streaming
-                self.view.addSubview(self.moviePlayerController.view)
-                self.moviePlayerController.fullscreen = true
-                self.moviePlayerController.play()
-            })
-            
-            
-            
-        }
-    }
+    
     
     //MARK:- Attachment View
     
@@ -199,6 +151,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate {
     
     func didFinishUpload(dict: [String:String]) {
         self.photoListArr.append(dict)
+        self.cv.reloadData()
     }
     //MARK: API
     
@@ -258,6 +211,29 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate {
 
 extension GenericProfileCollectionVC:UICollectionViewDataSource{
     
+   
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        
+        let w = collectionView.bounds.size.width - 30
+        
+        return CGSize(width: w/3 - 5 , height: w/3)
+        
+    }
+   /*
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom:5, right: 10)
+    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 3
+    }
+    
+    */
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom:5, right: 10)
+    }
+    
+    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -287,9 +263,9 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
         }else if genericType == .Photos {
             
+            let dict = self.photoListArr[indexPath.row] as! [String : String]
             
-            
-            let cell = PhotoCell.setUpCell(collectionView, indexPath: indexPath, dict:self.photoListArr[indexPath.row] as! [String : String] )
+            let cell = self.setUpCell(collectionView, indexPath: indexPath, dict:dict )
             return cell
         }
         
@@ -300,39 +276,113 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("FollowerCell", forIndexPath: indexPath)
         return cell
     }
-}
+//}
 
 
-class FollowerCell: GenericProfileCollectionVC {
+
     
-    class func setUpCell(collectionView: UICollectionView, indexPath: NSIndexPath) -> UICollectionViewCell {
+
+//class PhotoCell: GenericProfileCollectionVC, UIGestureRecognizerDelegate {
+
+    
+    func clickUserImage(recognizer: UITapGestureRecognizer )
+    {
         
-        let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("FollowerCell", forIndexPath: indexPath) 
+        let pointInTable = recognizer.locationInView(self.cv)
+        let indexPath:NSIndexPath = self.cv.indexPathForItemAtPoint(pointInTable)!
         
-        let iv_profile = cell.viewWithTag(1) as! UIImageView
-        let lbl_name = cell.viewWithTag(2) as! UILabel
-        
-        iv_profile.layer.borderWidth = 1.0
-        iv_profile.contentMode = .ScaleAspectFill
-        iv_profile.backgroundColor = UIColor.whiteColor()
-        iv_profile.layer.masksToBounds = false
-        iv_profile.layer.borderColor = UIColor.lightGrayColor().CGColor
-        iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
-        iv_profile.clipsToBounds = true
-        
-        lbl_name.text = ""
+        let dict = self.photoListArr[indexPath.row]
         
         
-        return cell
+        
+        let imgUrl = dict["url"] as! String
+        let thumbNailName = dict["thumNailName"] as! String
+        let postType = dict["type"] as! String
+        
+        //return to ProfileContainer page
+        if (postType == "image" && pageFrom == "ProfileContainer") {
+            
+            let cell = self.cv.cellForItemAtIndexPath(indexPath)
+            cell!.layer.borderWidth = 2.0
+            cell!.layer.borderColor = UIColor.grayColor().CGColor
+
+            let thumbIV = cell!.viewWithTag(1) as! UIImageView
+            
+            let imgData = UIImagePNGRepresentation(thumbIV.image!)
+            
+            self.delegate!.getSelectedImgData(imgData!, imgName:thumbNailName)
+             self.navigationController?.popViewControllerAnimated(true)
+            
+            return
+            
+        }else{
+            
+            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "You cann't select video.", cancelButtonTitle: "OK", otherButtonTitle: nil, completion: { (str) in
+                
+            })
+            return
+        }
+        
+        
+        
+        if postType == "image"{
+            
+            let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
+            
+            fullImageVC.hidesBottomBarWhenPushed = true
+            
+            
+            
+            
+            
+            //check the thumbNail name is exist ? or generate from video url and save to db
+            HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
+                
+                if isExistPath {
+                    fullImageVC.imagePath = fileUrl
+                    fullImageVC.downLoadPath = "4"
+                }else{
+                    fullImageVC.imagePath = imgUrl
+                    fullImageVC.downLoadPath = "3"
+                }
+                
+            })
+            
+            
+            
+            self.navigationController?.pushViewController(fullImageVC, animated: true)
+            
+            
+        }else if(postType == "video"){
+            
+            
+            var videoName = thumbNailName.stringByReplacingOccurrencesOfString("Thumb", withString: "Video")
+            videoName = videoName.stringByReplacingOccurrencesOfString(".jpg", withString: ".mp4")
+            
+            
+            HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: videoName, completion: {(isExistPath, fileUrl) -> Void in
+                
+                if isExistPath{
+                    
+                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL.fileURLWithPath(fileUrl!))
+                    
+                }else{
+                    
+                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL(string: imgUrl))
+                }
+                
+                //moviePlayerController.movieSourceType = MPMovieSourceType.Streaming
+                self.view.addSubview(self.moviePlayerController.view)
+                self.moviePlayerController.fullscreen = true
+                self.moviePlayerController.play()
+            })
+            
+            
+            
+        }
     }
     
-}
-
-
-
-class PhotoCell: GenericProfileCollectionVC {
-    
-    class func setUpCell(collectionView: UICollectionView, indexPath: NSIndexPath, dict:[String:String]!) -> UICollectionViewCell {
+     func setUpCell(collectionView: UICollectionView, indexPath: NSIndexPath, dict:[String:String]!) -> UICollectionViewCell {
         
         let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath)
         
@@ -351,7 +401,7 @@ class PhotoCell: GenericProfileCollectionVC {
             
             
             let recognizer = UITapGestureRecognizer(target: self, action:#selector(GenericProfileCollectionVC.clickUserImage(_:)))
-        //    recognizer.delegate = PhotoCell
+            recognizer.delegate = self
             thumbIV.addGestureRecognizer(recognizer)
             thumbIV.userInteractionEnabled = true
             
@@ -389,11 +439,13 @@ class PhotoCell: GenericProfileCollectionVC {
                 
                 iv_videoIcon.hidden = false
                 
-                
+                indicator.hidden = false
+                indicator.startAnimating()
                 
                 if isExistPath {
                     let img = UIImage(contentsOfFile: fileUrl!)
                     thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                    indicator.hidden = true
                 } else {
                     
                     //generate thumb from video url    and display on cell
@@ -404,12 +456,14 @@ class PhotoCell: GenericProfileCollectionVC {
                     let imgData = UIImagePNGRepresentation(img) as NSData?
                     
                     HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                        indicator.hidden = true
                         
                         if isWritten{
                             
                         }
                     })
                 }
+                indicator.stopAnimating()
                 
             }
             
@@ -424,4 +478,34 @@ class PhotoCell: GenericProfileCollectionVC {
         return cell
     }
     
+    
+    
+    
 }
+
+
+
+class FollowerCell: GenericProfileCollectionVC {
+    
+    class func setUpCell(collectionView: UICollectionView, indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("FollowerCell", forIndexPath: indexPath)
+        
+        let iv_profile = cell.viewWithTag(1) as! UIImageView
+        let lbl_name = cell.viewWithTag(2) as! UILabel
+        
+        iv_profile.layer.borderWidth = 1.0
+        iv_profile.contentMode = .ScaleAspectFill
+        iv_profile.backgroundColor = UIColor.whiteColor()
+        iv_profile.layer.masksToBounds = false
+        iv_profile.layer.borderColor = UIColor.lightGrayColor().CGColor
+        iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
+        iv_profile.clipsToBounds = true
+        
+        lbl_name.text = ""
+        
+        
+        return cell
+}
+}
+

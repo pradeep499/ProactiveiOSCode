@@ -366,7 +366,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                          }
                          }*/
                         
-                        let thumbNameTemp = String(thumbArr.lastObject)
+                        let thumbNameTemp =  thumbArr.lastObject as! String
                         
                       //  self.sendPostToServer("image", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: "", thumNailName:thumbNameTemp)
                         
@@ -605,7 +605,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
     
     
     
-    func sendToServerAPI(postType:String, imgOrVideoUlr:String?, thumNailName:String?) {
+    func sendToServerAPI(postType:String, imgOrVideoUlr:String, thumNailName:String!) {
         
         
         

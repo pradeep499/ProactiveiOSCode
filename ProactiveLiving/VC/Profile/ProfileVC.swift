@@ -13,6 +13,9 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var lbl_profileStatus: UILabel!
     
+    @IBOutlet weak var layout_CollectionViewBottomHeight: NSLayoutConstraint!
+    
+    var cvHeight:CGFloat = 0.0;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +23,8 @@ class ProfileVC: UIViewController {
         if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
             self.lbl_profileStatus.text = "Status: " + (status as! String) as? String
         }
+        
+        self.setUpCollectionView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,7 +32,23 @@ class ProfileVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func setUpCollectionView() -> Void {
+        
+        let w = self.collectionView.bounds.size.width - 30
+        // Do any additional setup after loading the view, typically from a nib.
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+        
+        layout.itemSize = CGSize(width: w/3 - 5, height: w/3 + 30)
+        layout.minimumInteritemSpacing = 6
+        layout.minimumLineSpacing = 10
+        self.collectionView!.collectionViewLayout = layout
+        
+        self.layout_CollectionViewBottomHeight.constant = cvHeight
+    }
+    
+    
+  
     
 
     /*
@@ -46,10 +67,14 @@ extension ProfileVC : UICollectionViewDataSource{
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        let w = collectionView.bounds.size.width / 3.5
         
-         return CGSize(width: w, height: w)
+        let w = collectionView.bounds.size.width - 30
         
+        return CGSize(width: w/3 - 5 , height: w/3 + 30)
+        
+    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom:5, right: 10)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -57,7 +82,7 @@ extension ProfileVC : UICollectionViewDataSource{
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return 6
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -77,8 +102,8 @@ extension ProfileVC : UICollectionViewDataSource{
             lbl.text = "PACs"
             break
             
-        case 2:
-            iv.image = UIImage(named: "pf_")
+     /*   case 2:
+            iv.image = UIImage(named: "pf_promotions")
             lbl.text = "Promotions"
             break
             
@@ -125,13 +150,35 @@ extension ProfileVC : UICollectionViewDataSource{
         case 11:
             iv.image = UIImage(named: "pf_social")
             lbl.text = "Social Networks"
+            break*/
+            
+        case 2:
+            iv.image = UIImage(named: "pf_friends")
+            lbl.text = "Friends"
             break
+            
+        case 3:
+            iv.image = UIImage(named: "pf_photos")
+            lbl.text = "Photos"
+            break
+            
+        case 4:
+            iv.image = UIImage(named: "pf_videos")
+            lbl.text = "Videos"
+            break
+            
+        case 5:
+            iv.image = UIImage(named: "pf_social")
+            lbl.text = "Social Networks"
+            break
+            
+       
             
         default:
             break
         }
         
-        cell.userInteractionEnabled = true
+       // cell.userInteractionEnabled = true
         
         return cell
     }
@@ -154,6 +201,10 @@ extension ProfileVC: UICollectionViewDelegate{
             break
             
         case 2:
+            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
+            vc.genericType = .Friends
+            self.navigationController?.pushViewController(vc, animated: true)
+            
             break
             
         case 3:
@@ -162,47 +213,19 @@ extension ProfileVC: UICollectionViewDelegate{
             self.navigationController?.pushViewController(vc, animated: true)
             break
             
-        case 4:
+        case 4: //Videos
+            
+            
             break
             
-        case 5:
-            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
-            vc.genericType = .Followers
-            self.navigationController?.pushViewController(vc, animated: true)
+        case 5: // Social Network
+            
+            
             break
             
-        case 6:
-            break
+        
             
-        case 7:
-            break
-            
-        case 8:
-            break
-            
-        case 9:
-            break
-            
-        case 10:
-            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
-            vc.genericType = .Friends
-            self.navigationController?.pushViewController(vc, animated: true)
-            break
-            
-        case 11:
-            break
-            
-        case 12:
-            break
-            
-        case 13:
-            break
-            
-        case 14:
-            break
-            
-        case 15:
-            break
+         
             
         default:
             break

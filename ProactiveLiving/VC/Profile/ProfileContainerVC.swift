@@ -11,7 +11,7 @@ import UIKit
 
  
 
-class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate {
+class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, GenericProfileCollectionVCDelegate {
     
     var firstVC: ProfileVC!
     var secondVC: MyPAStodoVC!
@@ -19,6 +19,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     var fourthVC: RSDFDatePickerViewController!
     
     var viewerUserID:String!
+    var imgUploadType:String?
     
     
     
@@ -40,27 +41,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     @IBOutlet weak var layOutConstrain_ivBg_height: NSLayoutConstraint!
     
-    /*
  
-     // Calendar
-     
-     RSDFDatePickerViewController *firstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarVC"];
-     firstViewController.title=@"Calendar";
-     firstViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_calendar"];
-     firstViewController.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-     firstViewController.calendar.locale = [NSLocale currentLocale];
-     UIViewController *firstNavigationController = [[UINavigationController alloc] initWithRootViewController:firstViewController];
-     
-     
-     
-     //Activity
-     
-     MyPAStodoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPAStodoVC"];
-     fourthViewController.title=@"Activate";
-     fourthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_tabbar_activate"];
-     UIViewController *fourthNavigationController = [[UINavigationController alloc]
-     initWithRootViewController:fourthViewController];
- */
     
     var arrViewControllers = [AnyObject]()
  
@@ -92,7 +73,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         }
         
         self.setUpViewControllers()
-     //   self.setUpProfilePage()
+        self.setUpProfilePage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -120,7 +101,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
         firstVC.title = "PROFILE"
-        //   firstVC.feedsType = "ALL"
+        firstVC.cvHeight = 230 // as profile y position is y = 230
+         
         let nav = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = storyboard.instantiateViewControllerWithIdentifier("MyPAStodoVC") as! MyPAStodoVC
@@ -145,11 +127,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
         
-        //        thirdVC.collectionView.tag=222
-        //        fourthVC.collectionView.tag=333
-        //        fifthVC.collectionView.tag=444
-        
-        //     let containerVC = YSLContainerViewController(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
         
         
         
@@ -161,7 +138,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
      //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
-        containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width,   300 )
+        containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width,   screenHeight - 300 )
         
         self.view.addSubview(containerVC.view)
     }
@@ -172,17 +149,25 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
             //Owner
             
-            self.btnEditOrMore.setImage(UIImage(named: "pf_edit"), forState: .Normal)
+            
             
             let url = NSURL(string: AppHelper.userDefaultsForKey("user_imageUrl") as! String)
+            let bgUrl = NSURL(string: HelpingClass.getUserDetails().imgCoverUrl)
             
             self.iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
+            self.iv_profileBg.sd_setImageWithURL(bgUrl, placeholderImage: UIImage(named: ""))
+            
+            
             
             let name = ((AppHelper.userDefaultsForKey(userFirstName) as? String)! + " " + (AppHelper.userDefaultsForKey(userLastName) as! String))
             
             self.lbl_name.text = name
+            self.lbl_address.text = HelpingClass.getUserDetails().liveIn
             
-            self.btnSendRequest.hidden = true
+            
+            self.btnEditOrMore.setImage(UIImage(named: "pf_edit"), forState: .Normal)
+            self.btnSendRequest.hidden = false
+            self.btnSendRequest.setImage(UIImage(named: "pf_edit"), forState: .Normal)
             self.btnChat.hidden = true
             self.btnCall.hidden = true
             
@@ -237,7 +222,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
             //Owner
             //show edit btn
-            
+            /*
             let bgTap = UITapGestureRecognizer(target: self, action: #selector(ProfileContainerVC.bgPictureTap(_:)))
             self.iv_profileBg.addGestureRecognizer(bgTap)
             
@@ -246,8 +231,13 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
             self.iv_profileBg.userInteractionEnabled = true
             self.iv_profile.userInteractionEnabled = true
-            
-            
+            */
+            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile background image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+                if str == "Yes"{
+                    self.gotTOPhotosPage()
+                    self.imgUploadType = "bg"
+                }
+            })
         }else{
             //Friend
             
@@ -259,6 +249,16 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     
     @IBAction func onClickSendRequestBtn(sender: AnyObject) {
+        if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+            //Owner show edit btn
+        
+        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile  image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+            if str == "Yes"{
+                self.gotTOPhotosPage()
+                self.imgUploadType = "profile"
+            }
+        })
+        }
     }
     
     @IBAction func onClickCallBtn(sender: AnyObject) {
@@ -318,6 +318,14 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
             self.presentViewController(actionSheet, animated: true, completion: nil)
         }
+    }
+    func gotTOPhotosPage() -> Void {
+        
+        let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
+        vc.genericType = .Photos
+        vc.pageFrom = "ProfileContainer"
+        vc.delegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -388,7 +396,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
             if ServiceClass.checkNetworkReachabilityWithoutAlert() {
                 
-                self.uploadImage((info[UIImagePickerControllerOriginalImage] as? UIImage)!)
+             //   self.uploadImage((info[UIImagePickerControllerOriginalImage] as? UIImage)!)
             }
         }
     }
@@ -411,30 +419,126 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
     }
     
-    func uploadImage(uploadImage:UIImage) -> Void {
+    //MARK:- Generic Delegate
+    
+    func getSelectedImgData(imgData:NSData, imgName:String) -> Void {
         
-        let locId = CommonMethodFunctions.nextIdentifies()
-        let strId = String(locId)
+       // self.performSelector(Selector(""), withObject: imgData, afterDelay: 0.5)
+        self.uploadImage(imgData, imgName: imgName)
         
-        let timeStamp = generateTimeStamp()
-        let thumbNailName = "bg" + timeStamp + ".jpg"
+    }
+    
+    //MARK:- upload
+    
+    func uploadImage(imgData:NSData, imgName: String) -> Void {
         
+       
         
-        
-        // let imgData = UIImageJPEGRepresentation(uploadImage, 0.8)
-        
-        //   let thumbImg = CommonMethodFunctions.generatePhotoThumbnail(uploadImage);
-        let thumbData = UIImageJPEGRepresentation(uploadImage, 0.0)
-        
-        
-        HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: thumbData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+        NSOperationQueue.mainQueue().addOperationWithBlock() { () in
             
-            if isWritten{
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            
+            
+            UploadInS3.sharedGlobal().uploadImageTos3( imgData, type: 0, fromDist: "chat", meldID: imgName, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
                 
+                AppDelegate.dismissProgressHUD()
+                
+                if bool_val == true
+                {
+                    let fileName =  UploadInS3.sharedGlobal().strFilesName
+                    
+                    if fileName != nil{
+                        
+                        self.sendToServerAPI(pathUrl, thumNailName: imgName)
+                    }
+                }
+                else{
+                    AppDelegate.dismissProgressHUD()
+                }
+                
+                
+                }
+                , completionProgress: { ( bool_val : Bool, progress) -> Void in
+                    
+                    
+                    
+                }
+            )
+            
+        }
+        
+    }
+    
+    
+    func sendToServerAPI( imgUrl:String, thumNailName:String!) {
+        
+        
+        
+        if ServiceClass.checkNetworkReachabilityWithoutAlert()
+        {
+            
+            var dict = Dictionary<String,AnyObject>()
+            
+            dict["userId"] = ChatHelper.userDefaultForKey(_ID)
+            
+            if imgUploadType == "bg" {
+                
+                dict["imgCoverUrl"] = imgUrl
+                dict["imgUrl"] = HelpingClass.getUserDetails().imgUrl
+                
+            }else{
+                
+                dict["imgUrl"] = imgUrl
+                dict["imgCoverUrl"] =  HelpingClass.getUserDetails().imgCoverUrl
             }
             
-        })
-        
+            
+            
+            //call global web service class latest
+            Services.postRequest(ServiceUpdateUserProfile, parameters: dict, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print(responseDict["result"])
+                        
+                        let userObj = HelpingClass.getUserDetails()
+                        
+                        if self.imgUploadType == "bg" {
+                            
+                            
+                            
+                           // userObj.imgCoverUrl = responseDict["result"]!["imgCoverUrl"]
+                            
+                        }else{
+                          //  userObj.imgCoverUrl = responseDict["result"]!["imgUrl"]
+                        }
+                        
+                        
+                        HelpingClass.saveUserDetails(userObj)
+                        
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
     }
     
     

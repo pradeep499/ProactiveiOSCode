@@ -181,7 +181,7 @@
     
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [manager.requestSerializer setValue:HeaderKey forHTTPHeaderField:@"custom_user_header_key"];
+    [manager.requestSerializer setValue:HeaderKey forHTTPHeaderField:@"customuserheaderkey"];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
