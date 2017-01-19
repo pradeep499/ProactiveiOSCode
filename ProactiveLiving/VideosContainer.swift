@@ -11,6 +11,11 @@ import UIKit
 var dataArr = Array<AnyObject>()
 var dataArrForHeader = Array<AnyObject>()
 
+enum VideoContainerType {
+    case Profile
+    case Explore
+}
+
 class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
     
     var arrServices = [AnyObject]()
@@ -23,9 +28,13 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
     var thirdVC: VideosVC!
     
     var currentIndex = 0
+    var videoContainerType:VideoContainerType?
     
     
     @IBOutlet weak var screenTitle: UILabel!
+    
+    
+    @IBOutlet weak var btnRight: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,22 +66,38 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         
         firstVC = storyboard.instantiateViewControllerWithIdentifier("VideosVC") as! VideosVC
         firstVC.title = "PROMOTIONAL"
-        if let val = dataDict!["Promotional"] as? [AnyObject]   {
-            firstVC.dataArra = val
+        firstVC.videoContainerType = videoContainerType
+        
+        if videoContainerType == .Explore {
+            
+            if let val = dataDict!["Promotional"] as? [AnyObject]   {
+                firstVC.dataArra = val
+            }
         }
+        
         
         secondVC = storyboard.instantiateViewControllerWithIdentifier("VideosVC") as! VideosVC
-        secondVC.title = "EDUCATIONAL"        
+        secondVC.title = "EDUCATIONAL"
+        secondVC.videoContainerType = videoContainerType
         
-        if let val = dataDict!["Educational"] as? [AnyObject] {
-            secondVC.dataArra = val
+        if videoContainerType == .Explore {
+            if let val = dataDict!["Educational"] as? [AnyObject] {
+                secondVC.dataArra = val
+            }
         }
+        
+        
         
         thirdVC = storyboard.instantiateViewControllerWithIdentifier("VideosVC") as! VideosVC
         thirdVC.title = "EXTERNAL"
-        if let val = dataDict!["External"]  as? [AnyObject]  {
-            thirdVC.dataArra =  val
+        thirdVC.videoContainerType = videoContainerType
+        
+        if videoContainerType == .Explore {
+            if let val = dataDict!["External"]  as? [AnyObject]  {
+                thirdVC.dataArra =  val
+            }
         }
+        
         
 
         let containerVC = YSLContainerViewController(controllers: [firstVC,secondVC, thirdVC], topBarHeight: 0, parentViewController: self)
@@ -84,6 +109,14 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
         containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width, containerVC.view.frame.size.height - 64)
         self.view.addSubview(containerVC.view)
+        
+        
+        //hide right btn
+        if videoContainerType == .Explore {
+            self.btnRight.hidden = true
+        }else if videoContainerType == .Explore {
+            self.btnRight.hidden = false
+        }
     }
     
     // MARK: -- YSLContainerViewControllerDelegate
@@ -106,4 +139,8 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func onClickRightBtn(sender: AnyObject) {
+    
+    
+    }
 }

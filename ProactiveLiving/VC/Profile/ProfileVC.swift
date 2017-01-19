@@ -214,12 +214,17 @@ extension ProfileVC: UICollectionViewDelegate{
             break
             
         case 4: //Videos
-            
+            let videosContainer: VideosContainer = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("VideosContainer") as!VideosContainer
+            videosContainer.videoContainerType = .Profile
+            self.navigationController?.pushViewController(videosContainer, animated: true)
             
             break
             
         case 5: // Social Network
-            
+            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
+            vc.genericType = .SocialNetworks
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
             
             break
             

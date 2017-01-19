@@ -23,9 +23,9 @@ class EditAboutMeVC: UIViewController {
     @IBOutlet weak var tf_workAt: CustomTextField!
     @IBOutlet weak var tf_grewUp: CustomTextField!
     @IBOutlet weak var tf_highSchool: CustomTextField!
-    @IBOutlet weak var tf_sportsCer: CustomTextField!
+    @IBOutlet weak var tf_highSchoolSpotsPlayed: CustomTextField!
     @IBOutlet weak var tf_college: CustomTextField!
-    @IBOutlet weak var tf_sportsPlayed: CustomTextField!
+    @IBOutlet weak var tf_collegeSportsPlayed: CustomTextField!
     @IBOutlet weak var tf_graduateSchool: CustomTextField!
     @IBOutlet weak var tf_currentSports: CustomTextField!
     @IBOutlet weak var tv_interest: UITextView!
@@ -69,6 +69,7 @@ class EditAboutMeVC: UIViewController {
         if firstTimeLogin == "1"{
             
             self.btnBack.hidden = true
+            gendarStr = "Male"
             return
         }
         
@@ -134,9 +135,11 @@ class EditAboutMeVC: UIViewController {
             self.tf_workAt.text = obj.workAt
             self.tf_grewUp.text = obj.grewUp
             self.tf_highSchool.text = obj.highSchool
-            self.tf_sportsPlayed.text = obj.sportsPlayed
+            self.tf_highSchoolSpotsPlayed.text = obj.highSchoolSportsPlayed
+            self.tf_collegeSportsPlayed.text = obj.collegeSportsPlayed
             self.tf_college.text = obj.college
             self.tf_graduateSchool.text = obj.graduateSchool
+            self.tf_currentSports.text = obj.currentSport
             self.tv_interest.text = obj.interests
             self.tv_favQuote.text = obj.favFamousQuote
             self.tv_myNotFavQuote.text = obj.notFamousQuote
@@ -282,7 +285,9 @@ class EditAboutMeVC: UIViewController {
             parameters["highSchool"] = self.tf_highSchool.text
             parameters["college"] = self.tf_college.text
             parameters["graduateSchool"] = self.tf_graduateSchool.text
-            parameters["sportsPlayed"] = self.tf_sportsPlayed.text
+            parameters["highSchoolSportsPlayed"] = self.tf_highSchoolSpotsPlayed.text
+            parameters["collegeSportsPlayed"] = self.tf_collegeSportsPlayed.text
+            parameters["currentSport"] = self.tf_currentSports.text
             parameters["intrests"] = self.tv_interest.text
             parameters["favFamousQuote"] = self.tv_favQuote.text
             parameters["notFamousQuote"] = self.tv_myNotFavQuote.text
@@ -314,7 +319,9 @@ class EditAboutMeVC: UIViewController {
                         userObj.highSchool = (result!["highSchool"] as? String)!
                         userObj.college = result!["college"] as? String ?? ""
                         userObj.graduateSchool = result!["graduateSchool"] as? String ?? ""
-                        userObj.sportsPlayed = result!["sportsPlayed"] as? String ?? ""
+                        userObj.highSchoolSportsPlayed = result!["highSchoolSportsPlayed"] as? String ?? ""
+                        userObj.collegeSportsPlayed = result!["collegeSportsPlayed"] as? String ?? ""
+                        userObj.currentSport = result!["currentSport"] as? String ?? ""
                         userObj.interests = result!["intrests"] as? String ?? ""
                         userObj.favFamousQuote = result!["favFamousQuote"] as? String ?? ""
                         userObj.notFamousQuote = result!["notFamousQuote"] as? String ?? ""

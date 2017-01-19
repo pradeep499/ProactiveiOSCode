@@ -386,7 +386,10 @@
                             obj.highSchool = [dict valueForKey:@"highSchool"];
                             obj.college = [dict valueForKey:@"college"];
                             obj.graduateSchool = [dict valueForKey:@"graduateSchool"];
-                            obj.sportsPlayed = [dict valueForKey:@"sportsPlayed"];
+                            obj.highSchoolSportsPlayed = [dict valueForKey:@"highSchoolSportsPlayed"];
+                            obj.collegeSportsPlayed = [dict valueForKey:@"collegeSportsPlayed"];
+                            obj.currentSport = [dict valueForKey:@"currentSport"];
+                            
                             obj.interests = [dict valueForKey:@"intrests"];
                             obj.favFamousQuote = [dict valueForKey:@"favFamousQuote"];
                             obj.notFamousQuote = [dict valueForKey:@"notFamousQuote"];

@@ -15,6 +15,11 @@ class VideosVC: UIViewController {
     var dataArra = [AnyObject]?()
     var yourArray = [String]()
     var moviePlayer = MPMoviePlayerViewController()
+    var profilePersionalArr = [AnyObject]()
+    var profileEducationalArr  = [AnyObject]()
+    var profileInspirationalArr = [AnyObject]()
+    
+    var videoContainerType:VideoContainerType?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,67 +31,100 @@ class VideosVC: UIViewController {
     
     //mark- UITableview Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataArra!.count
+        
+        if videoContainerType == .Explore {
+            return dataArra!.count
+        }else if videoContainerType == .Profile{
+            
+          /*  if self.title == "PERSIONAL" {
+                return self.profilePersionalArr.count
+            }else if self.title == "EDUCATIONAL" {
+                return self.profileEducationalArr.count
+            }else if self.title == "INSPIRARIONAL" {
+                return self.profileInspirationalArr.count
+            }*/
+            return 5
+        }
+        
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        if videoContainerType == .Explore {
+            
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("CellVideos", forIndexPath: indexPath)
+            cell.selectionStyle = .None
+            
+            let thumbVideo = cell.contentView.viewWithTag(1) as! UIImageView
+            
+            let lbl_duration = cell.contentView.viewWithTag(2) as! UILabel
+            let lbl_title = cell.contentView.viewWithTag(3) as! UILabel
+            let lbl_author = cell.contentView.viewWithTag(4) as! UILabel
+            
+            let btn_views = cell.contentView.viewWithTag(5) as! UIButton
+            let btn_comments = cell.contentView.viewWithTag(6) as! UIButton
+            let btn_like = cell.contentView.viewWithTag(7) as! UIButton
+            let btn_share = cell.contentView.viewWithTag(8) as! UIButton
+            
+            self.btnImgInsect(btn_comments)
+            self.btnImgInsect(btn_like)
+            
+            //thumbVideo.addTarget(self, action: #selector(self.btnPlayVideoClick(_:)), forControlEvents: .TouchUpInside)
+            //var escapedString = self.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
+            
+            let datDict = self.dataArra![indexPath.row] as? [String:String]
+            
+            if let val = datDict!["title"] {
+                lbl_title.text = val
+            }
+            if let val = datDict!["author"] {
+                lbl_author.text = "By: " + val
+            }
+            
+            if let imageUrlStr = datDict!["link"]  {
+                let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
+                let image_url = NSURL(string: (imageUrlStr.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet))! )
+                if (image_url != nil) {
+                    
+                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+                    dispatch_async(backgroundQueue, {
+                        
+                        let grabTime = 0.5
+                        if let image = self.generateThumnail(image_url!, fromTime: Float64(grabTime))
+                        {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                //thumbVideo.setImage(image, forState: .Normal)
+                                thumbVideo.image = self.addGradientOnImage(image)
+                            })
+                        }
+                        else
+                        {
+                            print("No image")
+                        }
+                    })
+                    
+                }
+            }
+            
+            return cell
+            
+        }else if videoContainerType == .Profile{
+            
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("ProfileVideoCell", forIndexPath: indexPath)
+            cell.selectionStyle = .None
+            
+            return cell
+            
+        }
+        
         let cell = self.tableView.dequeueReusableCellWithIdentifier("CellVideos", forIndexPath: indexPath)
         cell.selectionStyle = .None
         
-        let thumbVideo = cell.contentView.viewWithTag(1) as! UIImageView
+        return cell;
         
-        let lbl_duration = cell.contentView.viewWithTag(2) as! UILabel
-        let lbl_title = cell.contentView.viewWithTag(3) as! UILabel
-        let lbl_author = cell.contentView.viewWithTag(4) as! UILabel
         
-        let btn_views = cell.contentView.viewWithTag(5) as! UIButton
-        let btn_comments = cell.contentView.viewWithTag(6) as! UIButton
-        let btn_like = cell.contentView.viewWithTag(7) as! UIButton
-        let btn_share = cell.contentView.viewWithTag(8) as! UIButton
-        
-        self.btnImgInsect(btn_comments)
-        self.btnImgInsect(btn_like)
-        
-        //thumbVideo.addTarget(self, action: #selector(self.btnPlayVideoClick(_:)), forControlEvents: .TouchUpInside)
-        //var escapedString = self.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
-        
-        let datDict = self.dataArra![indexPath.row] as? [String:String]
-        
-        if let val = datDict!["title"] {
-            lbl_title.text = val
-        }
-        if let val = datDict!["author"] {
-            lbl_author.text = "By: " + val
-        }
-
-        if let imageUrlStr = datDict!["link"]  {
-            let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
-            let image_url = NSURL(string: (imageUrlStr.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet))! )
-            if (image_url != nil) {
-                
-                let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-                let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-                dispatch_async(backgroundQueue, {
-                    
-                    let grabTime = 0.5
-                    if let image = self.generateThumnail(image_url!, fromTime: Float64(grabTime))
-                    {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        //thumbVideo.setImage(image, forState: .Normal)
-                        thumbVideo.image = self.addGradientOnImage(image)
-                    })
-                    }
-                    else
-                    {
-                        print("No image")
-                    }
-                })
-            
-            }
-        }
-        
-        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -94,6 +132,16 @@ class VideosVC: UIViewController {
         self.playVideoOnCellTap(indexPath)
 
     }
+    
+    
+    @IBAction func onClickEditCellBtn(sender: AnyObject) {
+    }
+    
+    
+    @IBAction func onClickRemoveCellBtn(sender: AnyObject) {
+    }
+    
+    
     //MARK: - btnImgInsect with btnTitle
     func btnImgInsect(btn:UIButton) -> Void {
         

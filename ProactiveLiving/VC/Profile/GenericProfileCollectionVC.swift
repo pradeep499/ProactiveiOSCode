@@ -31,7 +31,9 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     
     @IBOutlet weak var attachmentContainerView: UIView!
     
-    public var photoListArr = [AnyObject]()
+    var photoListArr = [AnyObject]()
+    var socialNetworkListArr = [AnyObject]()
+    
     var moviePlayerController = MPMoviePlayerController()
     var pageFrom:String?
     var delegate:GenericProfileCollectionVCDelegate?
@@ -43,18 +45,16 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.setUpPage()
+        
         self.setUpCollectionView()
         
-        let attachments = AttachmentsVC()
-        attachments.delegate = self
         
-        self.getPhotosList()
     }
     
     override func viewWillAppear(animated: Bool) {
         
         self.navigationController?.navigationBarHidden = true
+        self.setUpPage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,10 +77,31 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             self.btnRight.hidden = false
             self.btnRight.setImage(UIImage(named: "pf_add"), forState: .Normal)
             
+            
+            
+            let attachments = AttachmentsVC()
+            attachments.delegate = self
+            
+            self.getPhotosOrSocialNetworkList("photos")
+            
+            
+        }else if genericType == .SocialNetworks {
+            
+            self.lbl_title.text = "Social Networks"
+            self.btnRight.hidden = false
+            self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
+            self.btnRight.setTitle("Add", forState: .Normal)
+            
+            self.getPhotosOrSocialNetworkList("socialNetworks")
+            
         }
         
-        self.cv.reloadData()
+        //hide Attachment VC
+        
         self.layOut_attachmetBottom.constant = -350;
+        self.cv.reloadData()
+        
+        
         
     }
     
@@ -94,7 +115,17 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         layout.itemSize = CGSize(width: w/3 - 5, height: w/3)
         layout.minimumInteritemSpacing = 6
         layout.minimumLineSpacing = 10
+        
+        
+        
+       if genericType == .SocialNetworks {
+            
+            layout.itemSize = CGSize(width: w/4 - 5, height: w/4)
+            
+        }
         self.cv!.collectionViewLayout = layout
+        
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -113,7 +144,22 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
  
     @IBAction func onClickRightBtn(sender: AnyObject) {
       
-        self.showAttachmentView()
+        
+        if genericType == .Photos {
+            
+            self.showAttachmentView()
+            
+        }else if genericType == .SocialNetworks {
+            
+            //go to Generic Table VC
+            
+            let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("GenericProfileTableVC") as! GenericProfileTableVC
+            vc.genericType = .SocialNetworks
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }
+        
         
     }
     
@@ -155,7 +201,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     }
     //MARK: API
     
-    func getPhotosList() -> Void {
+    func getPhotosOrSocialNetworkList(type:String) -> Void {
         
         if AppDelegate.checkInternetConnection() {
             //show indicator on screen
@@ -163,7 +209,10 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["category"] = "photos"
+            
+            
+            
+            parameters["category"] = type
             
             
             //call global web service class latest
@@ -176,13 +225,31 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
                         
-                        if let content = responseDict["result"]!["content"]{
                         
-                            self.photoListArr = content as! [AnyObject]
-                            self.cv.reloadData()
+                       
+                            
+                            if type == "photos" {
+                                
+                                print("Photo Response = ", responseDict["result"])
+                                
+                                 if let content = responseDict["result"]!["content"]{
+                                
+                                self.photoListArr = content as! [AnyObject]
+                                }
+                                
+                            }else if type == "socialNetworks"{
+                                
+                                print("Social Network Response = ", responseDict["result"])
+                                
+                                 if let socialNetwork = responseDict["result"]!["socialNetwork"]{
+                                self.socialNetworkListArr = socialNetwork as! [AnyObject]
+                            }
                         }
+                        
+                            
+                            self.cv.reloadData()
+                        
                         
                         
                     } else {
@@ -217,6 +284,12 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         
         let w = collectionView.bounds.size.width - 30
         
+        if genericType == .SocialNetworks {
+            
+            return CGSize(width: w/4 - 5 , height: w/4)
+            
+        }
+        
         return CGSize(width: w/3 - 5 , height: w/3)
         
     }
@@ -246,6 +319,8 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             return 15
         }else if genericType == .Photos {
             return self.photoListArr.count
+        }else if genericType == .SocialNetworks{
+            return self.socialNetworkListArr.count
         }
         return 0
     }
@@ -256,17 +331,22 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
            
             
             
-        }else if genericType == .Followers {
+        }/*else if genericType == .Followers {
             
             let cell = FollowerCell.setUpCell(collectionView, indexPath: indexPath)
             return cell
             
-        }else if genericType == .Photos {
+        } */else if genericType == .Photos {
             
             let dict = self.photoListArr[indexPath.row] as! [String : String]
             
-            let cell = self.setUpCell(collectionView, indexPath: indexPath, dict:dict )
+            let cell = self.setUpPhotoCell(collectionView, indexPath: indexPath, dict:dict )
             return cell
+        }else if genericType == .SocialNetworks {
+            
+            let cell = self.setUpSocialNetworkCell(collectionView, indexPath: indexPath)
+            return cell
+            
         }
         
         
@@ -315,9 +395,9 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             return
             
-        }else{
+        }else if (postType != "image" && pageFrom == "ProfileContainer"){
             
-            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "You cann't select video.", cancelButtonTitle: "OK", otherButtonTitle: nil, completion: { (str) in
+            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "You cann't select video.", cancelButtonTitle:nil, otherButtonTitle: ["OK"], completion: { (str) in
                 
             })
             return
@@ -382,7 +462,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         }
     }
     
-     func setUpCell(collectionView: UICollectionView, indexPath: NSIndexPath, dict:[String:String]!) -> UICollectionViewCell {
+     func setUpPhotoCell(collectionView: UICollectionView, indexPath: NSIndexPath, dict:[String:String]!) -> UICollectionViewCell {
         
         let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath)
         
@@ -453,15 +533,19 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                     thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
                     
                     //write to db
-                    let imgData = UIImagePNGRepresentation(img) as NSData?
-                    
-                    HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
-                        indicator.hidden = true
+                    if img != nil{
                         
-                        if isWritten{
+                        let imgData = UIImagePNGRepresentation(img) as NSData?
+                        
+                        HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                            indicator.hidden = true
                             
-                        }
-                    })
+                            if isWritten{
+                                
+                            }
+                        })
+                    }
+                    
                 }
                 indicator.stopAnimating()
                 
@@ -479,9 +563,60 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
     }
     
     
+    func setUpSocialNetworkCell(collectionView: UICollectionView, indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("SocialNetworkCell", forIndexPath: indexPath)
+        
+        
+        
+        let iv_social = cell.viewWithTag(1) as! UIImageView
+        
+        switch indexPath.row {
+        case 0:
+            iv_social.image = UIImage(named: "facebook")
+            break
+        case 1:
+            iv_social.image = UIImage(named: "google")
+            break
+        case 2:
+            iv_social.image = UIImage(named: "linkden")
+            break
+        case 3:
+            iv_social.image = UIImage(named: "twitter")
+            break
+        case 4:
+            iv_social.image = UIImage(named: "insta")
+            break
+        
+            
+        default:
+            break
+        }
+        
+        
+        
+        
+        
+        
+        return cell
+    }
+    
     
     
 }
+
+extension GenericProfileCollectionVC:UICollectionViewDelegate{
+        
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+       
+        
+        
+        if genericType == .SocialNetworks {
+            
+            // socialNetwork             {type:"facebook",url:"asdfdfsd"}
+        }
+    }
+    }
 
 
 

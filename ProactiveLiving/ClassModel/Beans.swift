@@ -16,7 +16,9 @@ class Beans: NSObject {
     @objc
         class UserDetails: NSObject, NSCoding{
         
-        static var sharedInstance:UserDetails = UserDetails(userName: "", userId: "", imgUrl: "", imgCoverUrl: "", summary: "", gender: "", liveIn: "", workAt: "", grewUp: "", highSchool: "", college: "", graduateSchool: "", sportsPlayed: "", interest: "", favFamousQuote: "", notFamousQuote: "", bio: "")
+       
+        
+        static var sharedInstance:UserDetails = UserDetails(userName: "", userId: "", imgUrl: "", imgCoverUrl: "", summary: "", gender: "", liveIn: "", workAt: "", grewUp: "", highSchool: "",  highSchoolSportsPlayed:"", college: "",  collegeSportsPlayed: "", graduateSchool: "", currentSport:"",  interest: "", favFamousQuote: "", notFamousQuote: "", bio: "")
         
         
         var userName:String = ""
@@ -30,8 +32,10 @@ class Beans: NSObject {
         var grewUp:String = ""
         var highSchool:String = ""
         var college:String = ""
+        var highSchoolSportsPlayed:String = ""
+        var collegeSportsPlayed:String = ""
         var graduateSchool:String = ""
-        var sportsPlayed:String = ""
+        var currentSport:String = ""
         var interests:String = ""
         var favFamousQuote:String = ""
         var notFamousQuote:String = ""
@@ -41,7 +45,8 @@ class Beans: NSObject {
 //            super.init()
 //        }
         
-        init(userName:String, userId:String, imgUrl:String, imgCoverUrl:String, summary:String, gender:String, liveIn:String, workAt:String, grewUp:String, highSchool:String, college:String, graduateSchool:String, sportsPlayed:String, interest:String, favFamousQuote:String, notFamousQuote:String, bio:String  ) {
+        init(userName:String, userId:String, imgUrl:String, imgCoverUrl:String, summary:String, gender:String, liveIn:String, workAt:String, grewUp:String, highSchool:String, highSchoolSportsPlayed:String, college:String,
+             collegeSportsPlayed:String, graduateSchool:String, currentSport:String,interest:String,  favFamousQuote:String, notFamousQuote:String, bio:String  ) {
             
             self.userName = userName
             self.userID = userId
@@ -55,7 +60,9 @@ class Beans: NSObject {
             self.highSchool = highSchool
             self.college = college
             self.graduateSchool = graduateSchool
-            self.sportsPlayed = sportsPlayed
+            self.highSchoolSportsPlayed = highSchoolSportsPlayed
+            self.collegeSportsPlayed = collegeSportsPlayed
+            self.currentSport = currentSport
             self.interests = interest
             self.favFamousQuote = favFamousQuote
             self.notFamousQuote = notFamousQuote
@@ -78,8 +85,10 @@ class Beans: NSObject {
             self.highSchool = aDecoder.decodeObjectForKey("highSchool") as! String
             self.college = aDecoder.decodeObjectForKey("college") as! String
             self.graduateSchool = aDecoder.decodeObjectForKey("graduateSchool") as! String
-            self.sportsPlayed = aDecoder.decodeObjectForKey("sportsPlayed") as! String
+            self.highSchoolSportsPlayed = aDecoder.decodeObjectForKey("highSchoolSportsPlayed") as! String
+            self.collegeSportsPlayed = aDecoder.decodeObjectForKey("collegeSportsPlayed") as! String
             self.interests = aDecoder.decodeObjectForKey("interests") as! String
+            self.currentSport = aDecoder.decodeObjectForKey("currentSport") as! String
             self.favFamousQuote = aDecoder.decodeObjectForKey("favFamousQuote") as! String
             self.notFamousQuote = aDecoder.decodeObjectForKey("notFamousQuote") as! String
             self.bio = aDecoder.decodeObjectForKey("bio") as! String
@@ -99,7 +108,9 @@ class Beans: NSObject {
             aCoder.encodeObject(highSchool, forKey: "highSchool")
             aCoder.encodeObject(college, forKey: "college")
             aCoder.encodeObject(graduateSchool, forKey: "graduateSchool")
-            aCoder.encodeObject(sportsPlayed, forKey: "sportsPlayed")
+            aCoder.encodeObject(highSchoolSportsPlayed, forKey: "highSchoolSportsPlayed")
+            aCoder.encodeObject(collegeSportsPlayed, forKey: "collegeSportsPlayed")
+            aCoder.encodeObject(currentSport, forKey: "currentSport")
             aCoder.encodeObject(interests, forKey: "interests")
             aCoder.encodeObject(favFamousQuote, forKey: "favFamousQuote")
             aCoder.encodeObject(notFamousQuote, forKey: "notFamousQuote")

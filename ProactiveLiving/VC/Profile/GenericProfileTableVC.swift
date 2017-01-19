@@ -13,6 +13,7 @@ enum ProfileGenericType{
     case Friends
     case Followers
     case Photos
+    case SocialNetworks
 }
 
 class GenericProfileTableVC: UIViewController {
@@ -24,7 +25,12 @@ class GenericProfileTableVC: UIViewController {
     @IBOutlet weak var lbl_summary: UILabel!
     @IBOutlet weak var tv: UITableView!
     
+    @IBOutlet weak var headerView_AboutMe: UIView!    
+    @IBOutlet weak var headerView_socialNetwork: UIView!
     
+    
+    
+    var tf_fb:UITextField?, tf_google:UITextField?, tf_linkedIn:UITextField?, tf_twitter:UITextField?, tf_inst:UITextField?
     
     
     
@@ -34,10 +40,7 @@ class GenericProfileTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if genericType == .AboutMe{
-            self.lbl_title.text = "About Me"
-            self.btnRight.hidden = false
-        }
+        self.setUpPage()
          
     }
 
@@ -46,14 +49,58 @@ class GenericProfileTableVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func setUpPage() -> Void {
+        
+        
+        
+        if genericType == .AboutMe{
+            self.lbl_title.text = "About Me"
+            self.btnRight.hidden = false
+            
+            self.headerView_socialNetwork.hidden = true
+            self.headerView_socialNetwork = nil
+            
+            
+            
+        }else if genericType == .SocialNetworks {
+            
+            self.lbl_title.text = "Social Networks"
+            self.btnRight.hidden = false
+            self.btnRight.setTitle("Save", forState: .Normal)
+            self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
+            
+            self.headerView_AboutMe.hidden = true
+            self.headerView_AboutMe = nil
+            
+            self.tv.tableHeaderView = self.headerView_socialNetwork
+            
+            
+        }
+        
+        
+    }
+    
     
     //MARK: Btn Click
     
     
     @IBAction func onClickRightBtn(sender: AnyObject) {
         
-        let editAboutVC = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("EditAboutMeVC") as! EditAboutMeVC
-        self.navigationController?.pushViewController(editAboutVC, animated: true)
+        if genericType == .AboutMe{
+            
+            //go to Edit About Me
+            let editAboutVC = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("EditAboutMeVC") as! EditAboutMeVC
+            self.navigationController?.pushViewController(editAboutVC, animated: true)
+            
+        }else if genericType == .SocialNetworks {
+            
+            //save social Network link 
+            self.saveSocialLinkAPI()
+            
+            
+        }
+        
+        
     }
 
     
@@ -61,10 +108,122 @@ class GenericProfileTableVC: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     
     }
+    
+    
+    
+    //MARK: - Service Call
+    
+    func setSocialDict(tf:UITextField, type:String) -> [String:String] {
+        
+        var dict = [String:String]()
+        dict["type"] = type
+        dict["url"]  = tf.text
+        
+        return dict
+    }
+    
+    
+    
+    func saveSocialLinkAPI() {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+          
+            var socialArr = [AnyObject]()
+            
+            if self.tf_fb?.text?.characters.count > 0 {
+                
+                socialArr.append(self.setSocialDict(self.tf_fb!, type: "fb"))
+            }
+            
+            if self.tf_google?.text?.characters.count > 0 {
+                
+                socialArr.append(self.setSocialDict(self.tf_google!, type: "google"))
+                
+            }
+            
+            if self.tf_linkedIn?.text?.characters.count > 0 {
+                
+                socialArr.append(self.setSocialDict(self.tf_linkedIn!, type: "linkedIn"))
+                
+            }
+            
+            if self.tf_twitter?.text?.characters.count > 0 {
+                
+                socialArr.append(self.setSocialDict(self.tf_twitter!, type: "twitter"))
+                
+            }
+            if self.tf_inst?.text?.characters.count > 0 {
+                
+                socialArr.append(self.setSocialDict(self.tf_inst!, type: "inst"))
+                
+            }
+            
+            parameters["socialNetwork"] = socialArr
+            
+            
+            
+            
+            //call global web service class latest
+            Services.postRequest(ServiceUpdateUserProfile, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print(responseDict["result"])
+                        
+                      //  let result = responseDict["result"]
+                        
+                        
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: "Your Profile is updated.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                        
+                        
+                        
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
 
 }
 
 extension GenericProfileTableVC: UITableViewDataSource{
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat    {
+        
+        if genericType == .AboutMe{
+            return 120
+        }else if genericType == .SocialNetworks{
+            return 70
+        }
+        return 0
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -73,6 +232,8 @@ extension GenericProfileTableVC: UITableViewDataSource{
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
          if genericType == .AboutMe{
             return 14
+         }else if genericType == .SocialNetworks{
+            return 5
         }
         return 0
     }
@@ -81,9 +242,59 @@ extension GenericProfileTableVC: UITableViewDataSource{
        
          if genericType == .AboutMe{
             return AboutMeCell.setUpCell(tableView, indexPath:indexPath );
+        }else if genericType == .SocialNetworks{
+            
+            self.setUpSocialNetworkCell(tableView, indexPath: indexPath)
         }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        return cell
+    }
+    
+    
+    
+    
+    func setUpSocialNetworkCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell =  tv.dequeueReusableCellWithIdentifier("SocialNetworkCell", forIndexPath: indexPath)
+        
+        
+        
+        let iv_social = cell.viewWithTag(1) as! UIImageView
+        let tf = cell.viewWithTag(2) as! UITextField
+        
+        switch indexPath.row {
+        case 0:
+            iv_social.image = UIImage(named: "facebook")
+            self.tf_fb = tf
+            break
+        case 1:
+            iv_social.image = UIImage(named: "google")
+            self.tf_google = tf
+            break
+        case 2:
+            iv_social.image = UIImage(named: "linkden")
+            self.tf_linkedIn = tf
+            break
+        case 3:
+            iv_social.image = UIImage(named: "twitter")
+            self.tf_twitter = tf
+            break
+        case 4:
+            iv_social.image = UIImage(named: "insta")
+            self.tf_inst = tf
+            break
+            
+            
+        default:
+            break
+        }
+        
+        
+        
+        
+        
+        
         return cell
     }
 }
@@ -132,7 +343,7 @@ class AboutMeCell: GenericProfileTableVC {
             case 4:
                 iv.image = UIImage(named: "mp_sports_play")
                 lbl_title.text = "Sports Played"
-                lbl_details.text = obj.sportsPlayed
+                lbl_details.text = obj.highSchoolSportsPlayed
                 break
                 
             case 5:
@@ -144,7 +355,7 @@ class AboutMeCell: GenericProfileTableVC {
             case 6:
                 iv.image = UIImage(named: "mp_sports_played")
                 lbl_title.text = "Sports Played"
-                lbl_details.text = obj.sportsPlayed
+                lbl_details.text = obj.collegeSportsPlayed
                 break
                 
             case 7:
@@ -156,7 +367,7 @@ class AboutMeCell: GenericProfileTableVC {
             case 8:
                 iv.image = UIImage(named: "mp_current_sports")
                 lbl_title.text = "Current Sports"
-                lbl_details.text = obj.sportsPlayed
+                lbl_details.text = obj.currentSport
                 break
                 
             case 9:

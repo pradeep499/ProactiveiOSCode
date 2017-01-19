@@ -104,6 +104,7 @@ class OrgProfileVC: UIViewController {
         if(indexPath.row==2) {
             let videosContainer: VideosContainer = self.storyboard!.instantiateViewControllerWithIdentifier("VideosContainer") as! VideosContainer
             videosContainer.dataDict=dataDict["videos"] as! [String:AnyObject]
+            videosContainer.videoContainerType = .Explore
             self.navigationController?.pushViewController(videosContainer, animated: true)
             
         }
