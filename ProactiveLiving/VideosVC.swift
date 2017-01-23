@@ -15,9 +15,13 @@ class VideosVC: UIViewController {
     var dataArra = [AnyObject]?()
     var yourArray = [String]()
     var moviePlayer = MPMoviePlayerViewController()
+    
     var profilePersionalArr = [AnyObject]()
     var profileEducationalArr  = [AnyObject]()
     var profileInspirationalArr = [AnyObject]()
+    var videoId = String()
+    var removeVideoIndex = -1
+    
     
     var videoContainerType:VideoContainerType?
     
@@ -27,7 +31,33 @@ class VideosVC: UIViewController {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
         // Do any additional setup after loading the view.
+        
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(reloadTable),
+            name: "ProfileVideoNoti",
+            object: nil)
+        
+       
+        
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        if videoContainerType == .Profile{
+            self.getProfileVideosAPI()
+        }
+    }
+    
+    func reloadTable(notification: NSNotification){
+    
+        self.tableView.reloadData()
+    }
+    
     
     //mark- UITableview Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,14 +66,13 @@ class VideosVC: UIViewController {
             return dataArra!.count
         }else if videoContainerType == .Profile{
             
-          /*  if self.title == "PERSIONAL" {
-                return self.profilePersionalArr.count
+            if self.title == "PERSONAL" {
+                return profilePersionalArr.count
             }else if self.title == "EDUCATIONAL" {
-                return self.profileEducationalArr.count
-            }else if self.title == "INSPIRARIONAL" {
-                return self.profileInspirationalArr.count
-            }*/
-            return 5
+                return profileEducationalArr.count
+            }else if self.title == "INSPIRATIONAL" {
+                return profileInspirationalArr.count
+            }
         }
         
         return 0
@@ -115,6 +144,64 @@ class VideosVC: UIViewController {
             let cell = self.tableView.dequeueReusableCellWithIdentifier("ProfileVideoCell", forIndexPath: indexPath)
             cell.selectionStyle = .None
             
+            let thumbVideo = cell.contentView.viewWithTag(1) as! UIImageView
+            
+            let lbl_duration = cell.contentView.viewWithTag(2) as! UILabel
+            let lbl_title = cell.contentView.viewWithTag(3) as! UILabel
+            let lbl_author = cell.contentView.viewWithTag(4) as! UILabel
+            
+            var datDict = [String:String]()
+            
+            if self.title == "PERSONAL" {
+                datDict =  (profilePersionalArr[indexPath.row] as? [String:String])!
+            }else if self.title == "EDUCATIONAL" {
+                let data = profileEducationalArr[indexPath.row]
+                
+                print("Educational Data = ", data)
+                
+                
+                datDict =  (profileEducationalArr[indexPath.row] as? [String : String])!
+            }else if self.title == "INSPIRATIONAL" {
+                datDict =  (profileInspirationalArr[indexPath.row] as? [String:String])!
+            }
+            
+            
+            
+            if let val = datDict["title"] {
+                lbl_title.text = val
+            }
+            if let val = datDict["author"] {
+                lbl_author.text = "By: " + val
+            }
+            
+            if let imageUrlStr = datDict["url"]  {
+                let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
+                let image_url = NSURL(string: (imageUrlStr.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet))! )
+                if (image_url != nil) {
+                    
+                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+                    dispatch_async(backgroundQueue, {
+                        
+                        let grabTime = 0.5
+                        if let image = self.generateThumnail(image_url!, fromTime: Float64(grabTime))
+                        {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                //thumbVideo.setImage(image, forState: .Normal)
+                                thumbVideo.image = self.addGradientOnImage(image)
+                            })
+                        }
+                        else
+                        {
+                            print("No image")
+                        }
+                    })
+                    
+                }
+            
+            }
+            
+            
             return cell
             
         }
@@ -129,16 +216,81 @@ class VideosVC: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        self.playVideoOnCellTap(indexPath)
+        if videoContainerType == .Explore{
+            
+            self.playVideoOnCellTap(indexPath)
+        }
+        
+        
 
     }
     
     
     @IBAction func onClickEditCellBtn(sender: AnyObject) {
+        
+        let button: UIButton = sender as! UIButton
+        
+        let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableView)
+        let indexPath =  self.tableView.indexPathForRowAtPoint(buttonPosition)
+        
+        
+        let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("AddOrEditVideoVC") as! AddOrEditVideoVC
+        vc.videoType =  "Edit"
+        
+        
+        if indexPath != nil {
+            
+             if videoContainerType == .Profile{
+                
+                var datDict = [String:String]()
+                
+                if self.title == "PERSONAL" {
+                    datDict =  (profilePersionalArr[indexPath!.row] as? [String:String])!
+                }else if self.title == "EDUCATIONAL" {
+                    datDict =  (profileEducationalArr[indexPath!.row] as? [String : String])!
+                }else if self.title == "INSPIRATIONAL" {
+                    datDict =  (profileInspirationalArr[indexPath!.row] as? [String:String])!
+                }
+                vc.videoDict = datDict
+            }
+            
+        }
+        
+        
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
     @IBAction func onClickRemoveCellBtn(sender: AnyObject) {
+        
+        let button: UIButton = sender as! UIButton
+        let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableView)
+        let indexPath =  self.tableView.indexPathForRowAtPoint(buttonPosition)
+        
+        if indexPath != nil {
+            
+            if videoContainerType == .Profile{
+                
+                var datDict = [String:String]()
+                
+                if self.title == "PERSONAL" {
+                    datDict =  (profilePersionalArr[indexPath!.row] as? [String:String])!
+                }else if self.title == "EDUCATIONAL" {
+                    datDict =  (profileEducationalArr[indexPath!.row] as? [String : String])!
+                }else if self.title == "INSPIRATIONAL" {
+                    datDict =  (profileInspirationalArr[indexPath!.row] as? [String:String])!
+                }
+                
+              //  self.removeVideoAPI(datDict["_id"]!, index: indexPath!.row)
+                self.videoId = datDict["_id"]!
+                self.removeVideoIndex = indexPath!.row
+                
+            }
+        }
+        
+        AppHelper.showAlertWithTitle(AppName, message: "Do you want to delete video ?", tag: 11, delegate: self, cancelButton: "No", otherButton: "Yes")
+        
     }
     
     
@@ -289,8 +441,163 @@ class VideosVC: UIViewController {
         print("Movie finished!!!")
     }
     
+    
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    //MARK:- API
+    
+    
+    
+    func getProfileVideosAPI() -> Void {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            
+            
+            parameters["filter"] = "videos"
+            
+            
+            //call global web service class latest
+            Services.postRequest(ServiceGetProfileDataByFilter, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print("Photo Response = ", responseDict["result"])
+                        
+                        
+                        if let arr = responseDict["result"]  as? [AnyObject]   {
+                            
+                            for dict in arr {
+                                
+                                if (dict["_id"] as! String == "PERSONAL"){
+                                    
+                                    self.profilePersionalArr = dict["videos"] as! [AnyObject]
+                                    
+                                    
+                                }else if  (dict["_id"] as! String == "EDUCATIONAL"){
+                                    self.profileEducationalArr = dict["videos"] as! [AnyObject]
+                                    
+                                }else if  (dict["_id"] as! String == "INSPIRATIONAL"){
+                                    
+                                    self.profileInspirationalArr = dict["videos"] as! [AnyObject]
+                                    
+                                }
+                            }
+                            self.tableView.reloadData()
+                            
+                            
+                        }
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                }else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
+    func removeVideoAPI(videoID:String, index:Int) -> Void {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)            
+            
+            parameters["videoId"] = videoID
+            
+            
+            //call global web service class latest
+            Services.postRequest(ServiceDeleteVideo, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print("VIDEO REMOVED = ", responseDict["result"])
+                        
+                        if (self.title == "PERSONAL"){
+                            
+                            self.profilePersionalArr.removeAtIndex(index)
+                            
+                        }else if  (self.title == "EDUCATIONAL"){
+                            self.profileEducationalArr.removeAtIndex(index)
+                            
+                        }else if  (self.title == "INSPIRATIONAL"){
+                            
+                            self.profileInspirationalArr.removeAtIndex(index)
+                            
+                        }
+                      
+                        
+                       AppHelper.showAlertWithTitle(AppName, message: "Video is deleted.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                        self.tableView.reloadData()
+                            
+                    
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                }else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+}
+
+extension VideosVC:UIAlertViewDelegate{
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        
+        if alertView.tag == 11 && buttonIndex == 1 {
+            
+            self.removeVideoAPI(self.videoId, index: self.removeVideoIndex)
+        }
     }
 }

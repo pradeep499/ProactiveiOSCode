@@ -212,11 +212,11 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             
             
             
-            parameters["category"] = type
+            parameters["filter"] = type
             
             
             //call global web service class latest
-            Services.postRequest(ServiceGetProfileDataByCategory, parameters: parameters, completionHandler:{
+            Services.postRequest(ServiceGetProfileDataByFilter, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 AppDelegate.dismissProgressHUD()
@@ -233,7 +233,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                                 
                                 print("Photo Response = ", responseDict["result"])
                                 
-                                 if let content = responseDict["result"]!["content"]{
+                                 if let content = responseDict["result"]!["gallery"]{
                                 
                                 self.photoListArr = content as! [AnyObject]
                                 }
@@ -567,31 +567,48 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         
         let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("SocialNetworkCell", forIndexPath: indexPath)
         
-        
-        
         let iv_social = cell.viewWithTag(1) as! UIImageView
         
-        switch indexPath.row {
-        case 0:
+        let dict = self.socialNetworkListArr[indexPath.row] as! [String:String]
+        
+        if dict["type "] == "fb" {
+            
             iv_social.image = UIImage(named: "facebook")
+        }else if dict["type "] == "google" {
+            
+            iv_social.image = UIImage(named: "google")
+        }else if dict["type "] == "linkedIn" {
+            
+            iv_social.image = UIImage(named: "linkden")
+        }else if dict["type "] == "twitter" {
+            
+            iv_social.image = UIImage(named: "twitter")
+        }else if dict["type "] == "inst" {
+            
+            iv_social.image = UIImage(named: "insta")
+        }
+        
+    /*    switch indexPath.row {
+        case 0:
+            
             break
         case 1:
-            iv_social.image = UIImage(named: "google")
+            
             break
         case 2:
-            iv_social.image = UIImage(named: "linkden")
+            iv_social.image = UIImage(named: "")
             break
         case 3:
-            iv_social.image = UIImage(named: "twitter")
+            iv_social.image = UIImage(named: "")
             break
         case 4:
-            iv_social.image = UIImage(named: "insta")
+            iv_social.image = UIImage(named: "")
             break
         
             
         default:
             break
-        }
+        }*/
         
         
         
@@ -600,6 +617,8 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         
         return cell
     }
+    
+    
     
     
     
@@ -614,6 +633,13 @@ extension GenericProfileCollectionVC:UICollectionViewDelegate{
         if genericType == .SocialNetworks {
             
             // socialNetwork             {type:"facebook",url:"asdfdfsd"}
+            
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            
+            let dict = self.socialNetworkListArr[indexPath.row] as! [String:String]
+            
+            WebVC.urlStr = dict["url"]!
+            self.navigationController?.pushViewController(WebVC, animated: true)
         }
     }
     }

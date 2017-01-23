@@ -91,7 +91,10 @@
 #define ServiceUpdateProfileStatus      @"users/updateStatus"
 #define ServiceUpdateUserProfile        @"users/updateUserProfile"
 #define ServiceUploadContent           @"users/uploadContent"
-#define ServiceGetProfileDataByCategory          @"users/getProfileDataByCategory"
+#define ServiceGetProfileDataByFilter          @"users/getProfileDataByFilter"
+#define ServiceEditVideos          @"users/editVideos"
+#define ServiceUploadVideos          @"users/uploadVideos"
+#define ServiceDeleteVideo          @"users/deleteVideo"
 
 
 

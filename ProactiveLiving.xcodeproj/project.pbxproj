@@ -152,6 +152,7 @@
 		67BD40811C47AAC90084EFD4 /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BD406F1C47AAC90084EFD4 /* RobotoCondensed-Regular.ttf */; };
 		67C4179A1C4E69A6006B76DE /* ForgotPassword2VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C417991C4E69A6006B76DE /* ForgotPassword2VC.m */; };
 		828AC6886A372D9791CE4D69 /* libPods-ProactiveLiving.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E80E747E9528DEF38B7FFF /* libPods-ProactiveLiving.a */; };
+		8FAAA5EB1E346F6500232727 /* AddOrEditVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAAA5EA1E346F6500232727 /* AddOrEditVideoVC.swift */; };
 		92E091D31D3775AF00BEC575 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E091D11D3775AF00BEC575 /* AWSRuntime.framework */; };
 		92E091D41D3775AF00BEC575 /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E091D21D3775AF00BEC575 /* AWSS3.framework */; };
 		BA0025C81D07F9F300E4C708 /* InviteOrGiftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0025C71D07F9F300E4C708 /* InviteOrGiftCell.m */; };
@@ -700,6 +701,7 @@
 		67BD406F1C47AAC90084EFD4 /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "RobotoCondensed-Regular.ttf"; path = "Roboto/RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		67C417981C4E69A6006B76DE /* ForgotPassword2VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgotPassword2VC.h; path = View/ForgotPassword2VC/ForgotPassword2VC.h; sourceTree = "<group>"; };
 		67C417991C4E69A6006B76DE /* ForgotPassword2VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForgotPassword2VC.m; path = View/ForgotPassword2VC/ForgotPassword2VC.m; sourceTree = "<group>"; };
+		8FAAA5EA1E346F6500232727 /* AddOrEditVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditVideoVC.swift; sourceTree = "<group>"; };
 		92E091D11D3775AF00BEC575 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSRuntime.framework; sourceTree = "<group>"; };
 		92E091D21D3775AF00BEC575 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
 		BA0025C61D07F9F300E4C708 /* InviteOrGiftCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteOrGiftCell.h; sourceTree = "<group>"; };
@@ -1177,6 +1179,7 @@
 				603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */,
 				603AFCD31E24DDD90081F246 /* GenericProfileCollectionVC.swift */,
 				60370D751E2617AF00C0121B /* EditAboutMeVC.swift */,
+				8FAAA5EA1E346F6500232727 /* AddOrEditVideoVC.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -3073,6 +3076,7 @@
 				BAA471B01CCF9D1100CF90D7 /* CertDetailsVC.m in Sources */,
 				BAB0E5021D5DE59B00906C10 /* SocketTypes.swift in Sources */,
 				BAD63EF61D9960EB002BDF0A /* ExploreVC.swift in Sources */,
+				8FAAA5EB1E346F6500232727 /* AddOrEditVideoVC.swift in Sources */,
 				BA5901171D364EFD006142AC /* CustomViewController.m in Sources */,
 				BA5901B31D365F57006142AC /* ServiceClass.swift in Sources */,
 				BA04854D1CABFC4500196747 /* AboutPASInstVC.m in Sources */,

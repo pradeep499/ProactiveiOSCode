@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditAboutMeVC: UIViewController {
+class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
     
     
     
@@ -264,6 +264,14 @@ class EditAboutMeVC: UIViewController {
         
         
     }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+       
+        if buttonIndex == 0 {
+            
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
   
     
     
@@ -339,7 +347,7 @@ class EditAboutMeVC: UIViewController {
                             return
                         }
                         
-                        AppHelper.showAlertWithTitle(AppName, message: "Your Profile is updated.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        AppHelper.showAlertWithTitle(AppName, message: "Your Profile is updated.", tag: 11, delegate: self, cancelButton: ok, otherButton: nil)
                         
                             
                             

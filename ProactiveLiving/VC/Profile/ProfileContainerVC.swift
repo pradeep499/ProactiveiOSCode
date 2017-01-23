@@ -484,12 +484,12 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             if imgUploadType == "bg" {
                 
                 dict["imgCoverUrl"] = imgUrl
-                dict["imgUrl"] = HelpingClass.getUserDetails().imgUrl
+              //  dict["imgUrl"] = HelpingClass.getUserDetails().imgUrl
                 
             }else{
                 
                 dict["imgUrl"] = imgUrl
-                dict["imgCoverUrl"] =  HelpingClass.getUserDetails().imgCoverUrl
+              //  dict["imgCoverUrl"] =  HelpingClass.getUserDetails().imgCoverUrl
             }
             
             
@@ -506,13 +506,15 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         
                         print(responseDict["result"])
                         
+                        let resultDict = responseDict["result"] as! [String: AnyObject]
+                        
                         let userObj = HelpingClass.getUserDetails()
                         
                         if self.imgUploadType == "bg" {
                             
                             
                             
-                           // userObj.imgCoverUrl = responseDict["result"]!["imgCoverUrl"]
+                          //  userObj.imgCoverUrl = responseDict["result"]!["imgCoverUrl"]
                             
                         }else{
                           //  userObj.imgCoverUrl = responseDict["result"]!["imgUrl"]

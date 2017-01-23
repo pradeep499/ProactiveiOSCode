@@ -184,7 +184,7 @@ class GenericProfileTableVC: UIViewController {
                         
                         
                         
-                        AppHelper.showAlertWithTitle(AppName, message: "Your Profile is updated.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        AppHelper.showAlertWithTitle(AppName, message: "Your Profile is updated.", tag: 11, delegate: self, cancelButton: ok, otherButton: nil)
                         
                         
                         
@@ -213,12 +213,24 @@ class GenericProfileTableVC: UIViewController {
 
 }
 
+extension GenericProfileTableVC:UIAlertViewDelegate{
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        
+        if alertView.tag == 11 && buttonIndex == 0 {
+            
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
+}
+
 extension GenericProfileTableVC: UITableViewDataSource{
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat    {
         
         if genericType == .AboutMe{
-            return 120
+            
+            return  self.setAboutMeCellHeight(tableView, indexPath: indexPath)
         }else if genericType == .SocialNetworks{
             return 70
         }
@@ -231,7 +243,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
          if genericType == .AboutMe{
-            return 14
+            return 13
          }else if genericType == .SocialNetworks{
             return 5
         }
@@ -241,7 +253,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
          if genericType == .AboutMe{
-            return AboutMeCell.setUpCell(tableView, indexPath:indexPath );
+            return self.setUpAboutMeCell(tableView, indexPath:indexPath );
         }else if genericType == .SocialNetworks{
             
             self.setUpSocialNetworkCell(tableView, indexPath: indexPath)
@@ -252,7 +264,82 @@ extension GenericProfileTableVC: UITableViewDataSource{
     }
     
     
-    
+    func setAboutMeCellHeight(tv: UITableView, indexPath: NSIndexPath) -> CGFloat {
+        
+       
+        
+        let obj:Beans.UserDetails = HelpingClass.getUserDetails()
+        var newString = String()
+        
+        switch indexPath.row {
+        case 0:
+            newString =  obj.liveIn
+            break
+        case 1:
+            newString =  obj.workAt
+            break
+            
+        case 2:
+           newString =  obj.grewUp
+            break
+            
+        case 3:
+           newString =  obj.highSchool
+            break
+            
+        case 4:
+           newString = obj.highSchoolSportsPlayed
+            break
+            
+        case 5:
+            newString =  obj.college
+            break
+            
+        case 6:
+            newString = obj.collegeSportsPlayed
+            break
+            
+        case 7:
+           newString =  obj.graduateSchool
+            break
+            
+        case 8:
+            newString = obj.currentSport
+            break
+            
+        case 9:
+            newString = obj.interests
+            break
+            
+        case 10:
+            newString = obj.favFamousQuote
+            break
+            
+        case 11:
+            newString = obj.notFamousQuote
+            break
+            
+        case 12:
+            newString =  obj.bio
+            break
+        default:
+            break
+        }
+        
+       
+        
+        
+        let str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
+        
+        
+        let w = tv.bounds.size.width - 30
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 15 , width: Float(w) , fontName: "Roboto-Regular")
+        
+        var height = size.height + (40)
+
+        return height
+        
+    }
     
     func setUpSocialNetworkCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -297,16 +384,16 @@ extension GenericProfileTableVC: UITableViewDataSource{
         
         return cell
     }
-}
 
 
-class AboutMeCell: GenericProfileTableVC {
+
+
     
     
-    class func setUpCell(tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
+     func setUpAboutMeCell(tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("AboutMeCell", forIndexPath: indexPath)
         
         let iv = cell.viewWithTag(1) as! UIImageView
         let lbl_title = cell.viewWithTag(2) as! UILabel

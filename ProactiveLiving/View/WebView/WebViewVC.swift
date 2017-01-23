@@ -62,6 +62,7 @@ class WebViewVC: UIViewController {
             self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
             break
         default:
+            self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
             break
         }
         

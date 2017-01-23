@@ -11,6 +11,8 @@ import UIKit
 var dataArr = Array<AnyObject>()
 var dataArrForHeader = Array<AnyObject>()
 
+
+
 enum VideoContainerType {
     case Profile
     case Explore
@@ -27,6 +29,9 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
     var secondVC: VideosVC!
     var thirdVC: VideosVC!
     
+    
+    
+    
     var currentIndex = 0
     var videoContainerType:VideoContainerType?
     
@@ -40,6 +45,8 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.setUpViewControllers()
+        
+       
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -65,7 +72,7 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         
         firstVC = storyboard.instantiateViewControllerWithIdentifier("VideosVC") as! VideosVC
-        firstVC.title = "PROMOTIONAL"
+        
         firstVC.videoContainerType = videoContainerType
         
         if videoContainerType == .Explore {
@@ -73,6 +80,9 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
             if let val = dataDict!["Promotional"] as? [AnyObject]   {
                 firstVC.dataArra = val
             }
+            firstVC.title = "PROMOTIONAL"
+        }else{
+            firstVC.title = "PERSONAL"
         }
         
         
@@ -89,13 +99,16 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         
         
         thirdVC = storyboard.instantiateViewControllerWithIdentifier("VideosVC") as! VideosVC
-        thirdVC.title = "EXTERNAL"
         thirdVC.videoContainerType = videoContainerType
         
         if videoContainerType == .Explore {
             if let val = dataDict!["External"]  as? [AnyObject]  {
                 thirdVC.dataArra =  val
             }
+            thirdVC.title = "EXTERNAL"
+        }else{
+            
+            thirdVC.title = "INSPIRATIONAL"
         }
         
         
@@ -141,6 +154,16 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
     
     @IBAction func onClickRightBtn(sender: AnyObject) {
     
+        
+        let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("AddOrEditVideoVC") as! AddOrEditVideoVC
+        vc.videoType =  "Add"
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     
     }
+    
+    
+    
+    
 }

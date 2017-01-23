@@ -46,6 +46,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         //[self performSegueWithIdentifier:@"GetPasVC" sender:nil];
         [self setupTabBarController];        
@@ -315,6 +317,8 @@
                 NSLog(@"%@",responseDict);
                 
                 self.detailDictionary = responseDict;
+                
+                
                 
                 NSLog(@"%@",self.detailDictionary);
                 
