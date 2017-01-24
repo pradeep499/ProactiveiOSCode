@@ -19,10 +19,19 @@ class ProfileVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
+        self.lbl_profileStatus.text = "Status: "
+        
         if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
             self.lbl_profileStatus.text = "Status: " + (status as! String) as? String
         }
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         self.setUpCollectionView()
     }
@@ -159,7 +168,7 @@ extension ProfileVC : UICollectionViewDataSource{
             
         case 3:
             iv.image = UIImage(named: "pf_photos")
-            lbl.text = "Photos"
+            lbl.text = "Gallery"
             break
             
         case 4:
@@ -209,7 +218,7 @@ extension ProfileVC: UICollectionViewDelegate{
             
         case 3:
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
-            vc.genericType = .Photos
+            vc.genericType = .Gallery
             self.navigationController?.pushViewController(vc, animated: true)
             break
             

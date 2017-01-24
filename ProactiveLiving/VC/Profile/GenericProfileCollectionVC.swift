@@ -38,7 +38,8 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     var pageFrom:String?
     var delegate:GenericProfileCollectionVCDelegate?
     
-    
+    //if this page is back from attachment vc then don't call API
+    var willCallGetPhotosOrSocialNetworkList:Bool?
     
     
     
@@ -47,6 +48,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
 
         
         self.setUpCollectionView()
+        willCallGetPhotosOrSocialNetworkList = true
         
         
     }
@@ -71,9 +73,9 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             self.lbl_title.text = "Friends"
         }else if genericType == .Followers {
             self.lbl_title.text = "Followers"
-        }else if genericType == .Photos {
+        }else if genericType == .Gallery {
             
-            self.lbl_title.text = "Photos"
+            self.lbl_title.text = "Gallery"
             self.btnRight.hidden = false
             self.btnRight.setImage(UIImage(named: "pf_add"), forState: .Normal)
             
@@ -82,7 +84,11 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             let attachments = AttachmentsVC()
             attachments.delegate = self
             
-            self.getPhotosOrSocialNetworkList("photos")
+            
+            if willCallGetPhotosOrSocialNetworkList == true {
+                self.getPhotosOrSocialNetworkList("photos")
+            }
+            
             
             
         }else if genericType == .SocialNetworks {
@@ -145,8 +151,9 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     @IBAction func onClickRightBtn(sender: AnyObject) {
       
         
-        if genericType == .Photos {
+        if genericType == .Gallery {
             
+            willCallGetPhotosOrSocialNetworkList = false
             self.showAttachmentView()
             
         }else if genericType == .SocialNetworks {
@@ -155,6 +162,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("GenericProfileTableVC") as! GenericProfileTableVC
             vc.genericType = .SocialNetworks
+            vc.socialNetworkArr = self.socialNetworkListArr
             
             self.navigationController?.pushViewController(vc, animated: true)
             
@@ -192,10 +200,13 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     
     func didCancelBtnPressed() {
         
+        willCallGetPhotosOrSocialNetworkList = true
         self.hideAttachmentView()
     }
     
     func didFinishUpload(dict: [String:String]) {
+        
+        willCallGetPhotosOrSocialNetworkList = true
         self.photoListArr.append(dict)
         self.cv.reloadData()
     }
@@ -286,7 +297,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         
         if genericType == .SocialNetworks {
             
-            return CGSize(width: w/4 - 5 , height: w/4)
+            return CGSize(width: w/4 - 5 , height: w/4 - 5)
             
         }
         
@@ -317,7 +328,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             return 15
         }else if genericType == .Followers {
             return 15
-        }else if genericType == .Photos {
+        }else if genericType == .Gallery {
             return self.photoListArr.count
         }else if genericType == .SocialNetworks{
             return self.socialNetworkListArr.count
@@ -336,7 +347,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             let cell = FollowerCell.setUpCell(collectionView, indexPath: indexPath)
             return cell
             
-        } */else if genericType == .Photos {
+        } */else if genericType == .Gallery {
             
             let dict = self.photoListArr[indexPath.row] as! [String : String]
             
@@ -571,19 +582,19 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         
         let dict = self.socialNetworkListArr[indexPath.row] as! [String:String]
         
-        if dict["type "] == "fb" {
+        if dict["type"] == "fb" {
             
             iv_social.image = UIImage(named: "facebook")
-        }else if dict["type "] == "google" {
+        }else if dict["type"] == "google" {
             
             iv_social.image = UIImage(named: "google")
-        }else if dict["type "] == "linkedIn" {
+        }else if dict["type"] == "linkedIn" {
             
             iv_social.image = UIImage(named: "linkden")
-        }else if dict["type "] == "twitter" {
+        }else if dict["type"] == "twitter" {
             
             iv_social.image = UIImage(named: "twitter")
-        }else if dict["type "] == "inst" {
+        }else if dict["type"] == "inst" {
             
             iv_social.image = UIImage(named: "insta")
         }
@@ -637,7 +648,7 @@ extension GenericProfileCollectionVC:UICollectionViewDelegate{
             let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
             
             let dict = self.socialNetworkListArr[indexPath.row] as! [String:String]
-            
+            WebVC.title = "Social Network"
             WebVC.urlStr = dict["url"]!
             self.navigationController?.pushViewController(WebVC, animated: true)
         }

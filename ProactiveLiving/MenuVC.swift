@@ -163,7 +163,7 @@ extension MenuVC: UITableViewDataSource{
             let iv_profile = cell.contentView.viewWithTag(1) as! UIImageView
             let lbl_title = cell.contentView.viewWithTag(2) as! UILabel
             
-            let url = NSURL(string: AppHelper.userDefaultsForKey("user_imageUrl") as! String)
+            let url = NSURL(string: HelpingClass.getUserDetails().imgUrl)
             
             iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
             lbl_title.text = AppHelper.userDefaultsForKey("user_firstName") as? String
@@ -254,7 +254,7 @@ extension MenuVC:UITableViewDelegate{
         case 0:
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
             vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
-            let v = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
+       //     let v = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
             self.navigationController?.pushViewController(vc , animated: true)
             self.navigationController?.navigationBarHidden = true
      

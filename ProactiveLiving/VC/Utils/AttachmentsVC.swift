@@ -634,9 +634,9 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                         
                         print(responseDict["result"])
                         
-                        let resultDict = (responseDict["result"]?.firstObject) as! [String:String]
+                        let resultDict = responseDict["result"] as?    [String:String]
                         
-                        self.delegate?.didFinishUpload(resultDict)
+                        self.delegate?.didFinishUpload(resultDict!)
                         
                         
                     } else {

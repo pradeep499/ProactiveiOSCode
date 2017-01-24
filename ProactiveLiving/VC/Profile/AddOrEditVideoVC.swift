@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddOrEditVideoVC: UIViewController {
+class AddOrEditVideoVC: UIViewController,UIGestureRecognizerDelegate {
     
     
     
@@ -31,11 +31,15 @@ class AddOrEditVideoVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        IQKeyboardManager.sharedManager().enable=true
+        IQKeyboardManager.sharedManager().enableAutoToolbar=true
 
         self.isShowingTableView = false
         self.tv_videoType.hidden = true
         
         tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(AddOrEditVideoVC.subViewTaped(_:)))
+        tapGesture?.delegate = self
         self.subView.addGestureRecognizer(tapGesture!)
         
         self.tv_desc.layer.borderWidth = 0.4
@@ -58,6 +62,16 @@ class AddOrEditVideoVC: UIViewController {
     }
     
     
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        if touch.view != nil && touch.view!.isDescendantOfView(self.tv_videoType) {
+            return false
+        }
+        return true
+    }
+    
+    
+    
     func subViewTaped(gesture:UIGestureRecognizer) -> Void {
         
         if self.isShowingTableView == true {
@@ -76,7 +90,7 @@ class AddOrEditVideoVC: UIViewController {
     func setUpTf() -> Void {
         
         if videoDict!["category"] == "PERSONAL" {
-            self.tf_videoType.text = "Persional"
+            self.tf_videoType.text = "Personal"
         }else if videoDict!["category"] == "EDUCATIONAL" {
             self.tf_videoType.text = "Educational"
             
@@ -133,7 +147,7 @@ class AddOrEditVideoVC: UIViewController {
             {
                 url = "http://" + self.tf_videoUrl.text!
             }
-            
+            url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
             parameters["url"] = url
             
             parameters["description"] = self.tv_desc.text
@@ -216,18 +230,18 @@ extension AddOrEditVideoVC:UITextFieldDelegate{
             self.tv_videoType.hidden = false
             isShowingTableView = true
             
-            if tapGesture != nil {
+           /* if tapGesture != nil {
                 self.subView.removeGestureRecognizer(tapGesture!)
                 
-              /*  if self.tf_videoType.text?.characters.count > 1 {
+                 if self.tf_videoType.text?.characters.count > 1 {
                     
                     self.subView.addGestureRecognizer(tapGesture!)
                 }else{
                     
                     self.subView.removeGestureRecognizer(tapGesture!)
                     
-                }*/
-            }
+                }
+            }*/
                 
             
             

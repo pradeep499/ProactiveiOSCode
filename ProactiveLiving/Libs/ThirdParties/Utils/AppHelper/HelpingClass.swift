@@ -238,7 +238,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         let date = NSDate()
         var dateStr : String
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss.sss"
+        dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateStr = dateFormatter.stringFromDate(date)
         

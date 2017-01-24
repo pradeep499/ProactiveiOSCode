@@ -53,7 +53,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
 
         bottomTabBar = self.tabBarController as? CustonTabBarController
         
-        
+        self.setUpViewControllers()
+        self.setUpProfilePage()
         
         
        
@@ -66,15 +67,17 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     override func viewWillAppear(animated: Bool) {
         
-        super.viewWillAppear(true)
+        super.viewWillAppear(false)
+        
+        self.navigationController?.navigationBarHidden = true
         
         bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
             // print(finish)
         }
         
-        self.setUpViewControllers()
-        self.setUpProfilePage()
+        
     }
+ 
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -151,7 +154,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
             
             
-            let url = NSURL(string: AppHelper.userDefaultsForKey("user_imageUrl") as! String)
+            let url = NSURL(string: HelpingClass.getUserDetails().imgUrl)
             let bgUrl = NSURL(string: HelpingClass.getUserDetails().imgCoverUrl)
             
             self.iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
@@ -194,11 +197,50 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         self.iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
         self.iv_profile.clipsToBounds = true
         
+        self.iv_profileBg.userInteractionEnabled = true
+        self.iv_profile.userInteractionEnabled = true
         
+        let tapBgGesture = UITapGestureRecognizer.init(target: self, action: #selector(ProfileContainerVC.bgIvTaped(_:)))
+        self.iv_profileBg.addGestureRecognizer(tapBgGesture)
         
-        
-     //   self.lbl_address.text = AppHelper.userDefaultsForKey("user_address") as? String
+        let tapProfileGesture = UITapGestureRecognizer.init(target: self, action: #selector(ProfileContainerVC.profileIvTaped(_:)))
+        self.iv_profile.addGestureRecognizer(tapProfileGesture)
     }
+    
+    
+    func bgIvTaped(gesture:UIGestureRecognizer) -> Void {
+        
+        if String(HelpingClass.getUserDetails().imgCoverUrl).characters.count > 1 {
+            self.goToFullScreen(HelpingClass.getUserDetails().imgCoverUrl)
+        }
+        
+    
+    }
+    
+    func profileIvTaped(gesture:UIGestureRecognizer) -> Void {
+        
+        if String(HelpingClass.getUserDetails().imgUrl).characters.count > 1 {
+            self.goToFullScreen(HelpingClass.getUserDetails().imgUrl)
+        }
+        
+       
+    }
+    
+    
+    func goToFullScreen(urlStr:String) -> Void {
+        
+        
+        let fullImageVC: FullScreenImageVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
+        fullImageVC.imagePath = urlStr
+        fullImageVC.downLoadPath="3"
+        
+        self.navigationController?.pushViewController(fullImageVC, animated: true)
+        
+        
+    }
+    
+    
+    
     
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
@@ -322,7 +364,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     func gotTOPhotosPage() -> Void {
         
         let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
-        vc.genericType = .Photos
+        vc.genericType = .Gallery
         vc.pageFrom = "ProfileContainer"
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
@@ -508,16 +550,23 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         
                         let resultDict = responseDict["result"] as! [String: AnyObject]
                         
-                        let userObj = HelpingClass.getUserDetails()
+                        let userObj = HelpingClass.getUserDetails() as! Beans.UserDetails
                         
                         if self.imgUploadType == "bg" {
                             
+                            userObj.imgCoverUrl =  resultDict["imgCoverUrl"] as! String
                             
+                             let bgUrl = NSURL(string:userObj.imgCoverUrl)
+                            self.iv_profileBg.sd_setImageWithURL(bgUrl, placeholderImage: UIImage(named: ""))
                             
-                          //  userObj.imgCoverUrl = responseDict["result"]!["imgCoverUrl"]
                             
                         }else{
-                          //  userObj.imgCoverUrl = responseDict["result"]!["imgUrl"]
+                            userObj.imgUrl =  resultDict["imgUrl"] as! String
+                            
+                            let url = NSURL(string:userObj.imgUrl)
+                            self.iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
+                            
+                          
                         }
                         
                         

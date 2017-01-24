@@ -33,6 +33,7 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
     @IBOutlet weak var tv_myNotFavQuote: UITextView!
     @IBOutlet weak var tv_myBio: UITextView!
     
+  
     
     var errorStr:String?
     var gendarStr:String?
@@ -75,7 +76,7 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
         
         self.setUpInputedField()
     
-        
+      
     }
 
     override func didReceiveMemoryWarning() {
@@ -116,11 +117,15 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
     
     @IBAction func onClickMaleBtn(sender: AnyObject) {
         gendarStr = "Male"
+        self.btnMale.setImage(UIImage(named: "radio_selected"), forState: .Normal)
+        self.btnFemale.setImage(UIImage(named: "radio"), forState: .Normal)
     }
     
     
     @IBAction func onClickFeMaleBtn(sender: AnyObject) {
          gendarStr = "Female"
+        self.btnFemale.setImage(UIImage(named: "radio_selected"), forState: .Normal)
+        self.btnMale.setImage(UIImage(named: "radio"), forState: .Normal)
     }
     
     
@@ -145,7 +150,13 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
             self.tv_myNotFavQuote.text = obj.notFamousQuote
             self.tv_myBio.text = obj.bio
         
-         
+        if obj.gender == "Male" {
+            self.btnMale.setImage(UIImage(named: "radio_selected"), forState: .Normal)
+            self.btnFemale.setImage(UIImage(named: "radio"), forState: .Normal)
+        }else{
+            self.btnFemale.setImage(UIImage(named: "radio_selected"), forState: .Normal)
+            self.btnMale.setImage(UIImage(named: "radio"), forState: .Normal)
+        }
        
     }
    /*

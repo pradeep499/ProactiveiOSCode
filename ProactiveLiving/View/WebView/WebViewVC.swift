@@ -21,7 +21,7 @@ class WebViewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       self.urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0"
+      // self.urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0"
         
     }
     
@@ -61,7 +61,10 @@ class WebViewVC: UIViewController {
             self.lblTitle.text = "OrgDetailsLink"
             self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
             break
+            
+            
         default:
+            self.lblTitle.text = self.title
             self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
             break
         }
@@ -156,6 +159,6 @@ extension WebViewVC:UIWebViewDelegate{
         self.indicator.stopAnimating()
         self.indicator.hidden = true
         
-        AppHelper.showAlertWithTitle(AppName, message: "Can't load the url.", tag: 0, delegate: nil, cancelButton: "OK", otherButton:""  )
+        AppHelper.showAlertWithTitle(AppName, message: "Invalid url.", tag: 0, delegate: nil, cancelButton: "Ok", otherButton:nil  )
     }
 }

@@ -49,7 +49,12 @@ class VideosVC: UIViewController {
         super.viewWillAppear(animated)
         
         if videoContainerType == .Profile{
+            
             self.getProfileVideosAPI()
+            
+            self.profilePersionalArr = [AnyObject]()
+            self.profileEducationalArr  = [AnyObject]()
+            self.profileInspirationalArr  = [AnyObject]()
         }
     }
     
@@ -216,10 +221,8 @@ class VideosVC: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if videoContainerType == .Explore{
-            
-            self.playVideoOnCellTap(indexPath)
-        }
+        self.playVideoOnCellTap(indexPath)
+        
         
         
 
@@ -383,12 +386,35 @@ class VideosVC: UIViewController {
 
     //MARK: - play Video On Cell Tap
     func playVideoOnCellTap(indexPath: NSIndexPath ) -> Void {
+       
+        var urlStr = String?()
         
-        let dataDict = self.dataArra![indexPath.row] as? [String:String]
-        
-        if let urlString = dataDict!["link"]{
+        if videoContainerType == .Explore{
             
-            self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlString)!)
+            let dataDict = self.dataArra![indexPath.row] as? [String:String]
+            urlStr = dataDict!["link"]
+            
+        }else{
+            // ProfileVideo
+            
+            var dataDict = [String:String]()
+            
+            if self.title == "PERSONAL" {
+                dataDict =  (profilePersionalArr[indexPath.row] as? [String:String])!
+            }else if self.title == "EDUCATIONAL" {
+               dataDict =  (profileEducationalArr[indexPath.row] as? [String : String])!
+            }else if self.title == "INSPIRATIONAL" {
+                dataDict =  (profileInspirationalArr[indexPath.row] as? [String:String])!
+            }
+            
+            urlStr = dataDict["url"]
+        }
+        
+        
+        
+        if  urlStr != nil {
+            
+            self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlStr!)!)
             self.moviePlayer.moviePlayer.movieSourceType = .Unknown
             self.moviePlayer.moviePlayer.prepareToPlay()
             self.moviePlayer.moviePlayer.shouldAutoplay = true

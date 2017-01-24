@@ -12,7 +12,7 @@ enum ProfileGenericType{
     case AboutMe
     case Friends
     case Followers
-    case Photos
+    case Gallery
     case SocialNetworks
 }
 
@@ -28,6 +28,8 @@ class GenericProfileTableVC: UIViewController {
     @IBOutlet weak var headerView_AboutMe: UIView!    
     @IBOutlet weak var headerView_socialNetwork: UIView!
     
+    var socialNetworkArr = [AnyObject]?()
+    
     
     
     var tf_fb:UITextField?, tf_google:UITextField?, tf_linkedIn:UITextField?, tf_twitter:UITextField?, tf_inst:UITextField?
@@ -41,6 +43,9 @@ class GenericProfileTableVC: UIViewController {
         super.viewDidLoad()
 
         self.setUpPage()
+        
+        IQKeyboardManager.sharedManager().enable=true
+        IQKeyboardManager.sharedManager().enableAutoToolbar=true
          
     }
 
@@ -60,7 +65,7 @@ class GenericProfileTableVC: UIViewController {
             self.headerView_socialNetwork.hidden = true
             self.headerView_socialNetwork = nil
             
-            
+            self.lbl_summary.text = HelpingClass.getUserDetails().summary
             
         }else if genericType == .SocialNetworks {
             
@@ -94,6 +99,12 @@ class GenericProfileTableVC: UIViewController {
             
         }else if genericType == .SocialNetworks {
             
+            
+            self.tf_fb?.resignFirstResponder()
+            self.tf_google?.resignFirstResponder()
+            self.tf_linkedIn?.resignFirstResponder()
+            self.tf_twitter?.resignFirstResponder()
+            self.tf_inst?.resignFirstResponder()
             //save social Network link 
             self.saveSocialLinkAPI()
             
@@ -115,9 +126,24 @@ class GenericProfileTableVC: UIViewController {
     
     func setSocialDict(tf:UITextField, type:String) -> [String:String] {
         
+        
         var dict = [String:String]()
         dict["type"] = type
-        dict["url"]  = tf.text
+        
+        var url = String()
+        
+        if((tf.text! as String).hasPrefix("http://") || (tf.text! as! String).hasPrefix("https://")){
+            
+            url = tf.text!
+        }
+        else
+        {
+            url = "http://" + tf.text!
+        }
+        
+        url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+        
+        dict["url"]  = url
         
         return dict
     }
@@ -213,6 +239,19 @@ class GenericProfileTableVC: UIViewController {
 
 }
 
+extension GenericProfileTableVC:UITextFieldDelegate{
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+       
+        if genericType == .SocialNetworks {
+            
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
+}
 extension GenericProfileTableVC:UIAlertViewDelegate{
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
@@ -256,7 +295,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
             return self.setUpAboutMeCell(tableView, indexPath:indexPath );
         }else if genericType == .SocialNetworks{
             
-            self.setUpSocialNetworkCell(tableView, indexPath: indexPath)
+            return self.setUpSocialNetworkCell(tableView, indexPath: indexPath)
         }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
@@ -335,7 +374,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
         let w = tv.bounds.size.width - 30
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 15 , width: Float(w) , fontName: "Roboto-Regular")
         
-        var height = size.height + (40)
+        var height = size.height + (75)
 
         return height
         
@@ -349,6 +388,8 @@ extension GenericProfileTableVC: UITableViewDataSource{
         
         let iv_social = cell.viewWithTag(1) as! UIImageView
         let tf = cell.viewWithTag(2) as! UITextField
+        
+        tf.delegate = self
         
         switch indexPath.row {
         case 0:
@@ -376,6 +417,35 @@ extension GenericProfileTableVC: UITableViewDataSource{
         default:
             break
         }
+        
+        if (self.socialNetworkArr != nil) {
+ 
+            
+            for dict in  self.socialNetworkArr! {
+                let type = dict["type"] as? String
+                let url = dict["url"] as? String
+                
+                if ( type == "fb") {
+                    
+                    self.tf_fb?.text = url
+                }else if (type == "google" ){
+                    
+                    self.tf_google?.text = url
+                }else if (type ) == "linkedIn" {
+                    
+                    self.tf_inst?.text = url
+                }else if (type ) == "twitter" {
+                    
+                    self.tf_twitter?.text = url
+                }else if (type ) == "inst" {
+                    
+                    self.tf_inst?.text   = url
+                }
+                
+                
+            }
+        }
+
         
         
         
