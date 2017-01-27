@@ -32,8 +32,8 @@ class AddOrEditVideoVC: UIViewController,UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        IQKeyboardManager.sharedManager().enable=true
-        IQKeyboardManager.sharedManager().enableAutoToolbar=true
+        IQKeyboardManager.sharedManager().enable=false
+        IQKeyboardManager.sharedManager().enableAutoToolbar=false
 
         self.isShowingTableView = false
         self.tv_videoType.hidden = true

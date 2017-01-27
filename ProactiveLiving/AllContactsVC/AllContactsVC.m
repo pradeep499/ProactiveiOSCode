@@ -40,6 +40,11 @@
     
      if([self.fromVC isEqualToString:@"Inbox"])
         [self.btnCreateNewGroup setHidden:NO];
+    
+     else if([self.fromVC isEqualToString:@"Menu"]){
+         [self.btnCreateNewGroup setHidden:YES];
+         [self.btnDone setHidden:YES];
+     }
      else{
          
          [self.btnCreateNewGroup setHidden:YES];

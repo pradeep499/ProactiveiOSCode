@@ -46,6 +46,8 @@ class GenericProfileTableVC: UIViewController {
         
         IQKeyboardManager.sharedManager().enable=true
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
+        
+       
          
     }
 
@@ -64,6 +66,8 @@ class GenericProfileTableVC: UIViewController {
             
             self.headerView_socialNetwork.hidden = true
             self.headerView_socialNetwork = nil
+            self.tv.tableFooterView = UIView(frame: CGRectMake(0, 0, 0, 0))
+            self.tv.tableHeaderView = self.headerView_AboutMe
             
             self.lbl_summary.text = HelpingClass.getUserDetails().summary
             
@@ -554,7 +558,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
             default:
                 break
             }
-        
+        cell.userInteractionEnabled = true
         
         return cell
     }

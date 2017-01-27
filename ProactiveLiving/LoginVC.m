@@ -399,7 +399,7 @@
                             obj.notFamousQuote = [dict valueForKey:@"notFamousQuote"];
                             obj.bio = [dict valueForKey:@"bio"];
                             obj.imgUrl = [dict valueForKey:@"imgUrl"];
-                            obj.imgCoverUrl = [dict valueForKey:@"imgUrl"];
+                            obj.imgCoverUrl = [dict valueForKey:@"imgCoverUrl"];
                             
                  
                             

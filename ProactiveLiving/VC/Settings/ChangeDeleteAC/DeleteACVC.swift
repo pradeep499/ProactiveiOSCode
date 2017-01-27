@@ -9,24 +9,32 @@
 import UIKit
 import CoreTelephony
 
+enum DeleteACVCType {
+    case DeleteAc
+    case AddFriend
+}
 class DeleteACVC: UIViewController, UIAlertViewDelegate {
 
     @IBOutlet weak var tableView_countryList: UITableView!
-   
     @IBOutlet weak var tf_countryCode: CustomTextField!
-    
     @IBOutlet weak var tf_phoneNo: CustomTextField!
-    
     @IBOutlet weak var tf_pwd: CustomTextField!
-    
-    
     @IBOutlet weak var btn_countryCode: UIButton!
-    
     @IBOutlet weak var layout_viewCountryListTop: NSLayoutConstraint!
+    
+   
+    
+    
+    @IBOutlet weak var ivHeader: UIImageView!
+    
+    @IBOutlet weak var layoutTf_PwdHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var lbl_title: UILabel!
+    
     var countries: [String] = []
     var countriesPHNOCode: [String] = []
     
-    
+    var vcType:DeleteACVCType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +54,15 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         
         IQKeyboardManager.sharedManager().enable=true
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
+        
+        if vcType == .AddFriend {
+            self.layoutTf_PwdHeight.constant = 0
+            self.lbl_title.text = "Add a Friend"
+            self.ivHeader.image = UIImage(named: "")
+        }else{
+            self.lbl_title.text = "Delete Account"
+            self.ivHeader.image = UIImage(named: "delete_ac")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,15 +85,25 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
     
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
         
+        
+        
         if  self.tf_countryCode.text?.characters.count < 1 {
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Country Code cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         
         if  self.tf_phoneNo.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Phone no Code cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Phone no  cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
+        
+        if vcType == .AddFriend {
+            
+            self.sendFriendRequestAPI()
+            return
+        }
+        
+        
         if  self.tf_pwd.text?.characters.count < 1 {
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Password Code cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
@@ -140,7 +167,88 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
     }
    
     
+    func openDefaultSharing(textStr:String) -> Void {
+        
+        let textToShare = textStr
+        
+        if let myWebsite = NSURL(string: "http://www.proactively.com/") {
+            let objectsToShare = [textToShare, myWebsite]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            
+            //New Excluded Activities Code
+            activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+             
+            
+            //  activityVC.popoverPresentationController?.sourceView = sender
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
+    }
+    
+    
     //MARK: API
+    
+    func sendFriendRequestAPI() {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["friendMobile"] = self.tf_phoneNo.text
+            
+            //call global web service class latest
+            Services.postRequest(ServiceSendFriendRequest, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print(responseDict["result"])
+                        
+                        
+                    } else {
+                        
+                        
+                        
+                        if responseDict["errorMsg"] as! String == "Friend Not Found"{
+                            
+                            
+                            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: "Do You want to invite ? " + String(self.tf_phoneNo.text) , cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+                                
+                                if str == "Yes"{
+                                    self.openDefaultSharing("")
+                                }
+                                
+                            })
+                        }else{
+                            
+                            AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        }
+                        
+                        
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
     
     
     func deleteACAPI() {

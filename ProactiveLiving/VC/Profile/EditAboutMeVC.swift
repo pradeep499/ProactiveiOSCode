@@ -71,6 +71,8 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
             
             self.btnBack.hidden = true
             gendarStr = "Male"
+            self.btnMale.setImage(UIImage(named: "radio_selected"), forState: .Normal)
+            self.btnFemale.setImage(UIImage(named: "radio"), forState: .Normal)
             return
         }
         

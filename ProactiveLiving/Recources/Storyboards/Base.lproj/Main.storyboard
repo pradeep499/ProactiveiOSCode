@@ -10292,7 +10292,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BY:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfa-T1-qWb" userLabel="detailLable">
-                                                            <rect key="frame" x="119" y="53" width="195" height="17"/>
+                                                            <rect key="frame" x="119" y="49" width="195" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="195" id="8nK-LD-bQS"/>
                                                                 <constraint firstAttribute="height" constant="17" id="t9R-ZY-WrG"/>
@@ -10361,7 +10361,7 @@
                                                         <constraint firstItem="va5-ye-oyv" firstAttribute="leading" secondItem="9uu-EQ-PG4" secondAttribute="trailing" constant="5" id="Gko-ua-tFK"/>
                                                         <constraint firstAttribute="bottom" secondItem="9uu-EQ-PG4" secondAttribute="bottom" constant="8" id="RgZ-40-mTF"/>
                                                         <constraint firstItem="8MB-kZ-cQ5" firstAttribute="bottom" secondItem="9uu-EQ-PG4" secondAttribute="bottom" constant="-10" id="WEp-Km-Ecz"/>
-                                                        <constraint firstItem="qfa-T1-qWb" firstAttribute="top" secondItem="va5-ye-oyv" secondAttribute="bottom" constant="5" id="Yx7-Q0-CMn"/>
+                                                        <constraint firstItem="qfa-T1-qWb" firstAttribute="top" secondItem="va5-ye-oyv" secondAttribute="bottom" constant="1" id="Yx7-Q0-CMn"/>
                                                         <constraint firstItem="qfa-T1-qWb" firstAttribute="leading" secondItem="9uu-EQ-PG4" secondAttribute="trailing" constant="5" id="cq2-VD-udT"/>
                                                         <constraint firstItem="92L-B0-wNJ" firstAttribute="leading" secondItem="9uu-EQ-PG4" secondAttribute="trailing" constant="8" id="lVT-yW-8kt"/>
                                                         <constraint firstItem="9uu-EQ-PG4" firstAttribute="leading" secondItem="Apl-h7-EMZ" secondAttribute="leading" constant="7" id="zXm-hZ-2LB"/>
@@ -13170,7 +13170,7 @@
                                                     <rect key="frame" x="0.0" y="156" width="290" height="63"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDx-Hr-dI5" userLabel="Mon">
-                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="70.5" height="30"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="28a-eq-SdC"/>
@@ -13182,7 +13182,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FbT-54-jaC" userLabel="Tue">
-                                                            <rect key="frame" x="73" y="0.0" width="71" height="30"/>
+                                                            <rect key="frame" x="73.5" y="0.0" width="70" height="30"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="MNY-DY-iCa"/>
@@ -13194,7 +13194,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qB8-yC-9Sk" userLabel="Wed">
-                                                            <rect key="frame" x="147" y="0.0" width="70" height="30"/>
+                                                            <rect key="frame" x="146.5" y="0.0" width="70.5" height="30"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="EX5-u6-XuU"/>
@@ -13218,7 +13218,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HlA-eD-Lp7" userLabel="Sat">
-                                                            <rect key="frame" x="73" y="33" width="71" height="30"/>
+                                                            <rect key="frame" x="73.5" y="33" width="70" height="30"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="Awf-U3-AeC"/>
@@ -13230,7 +13230,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAu-2L-fx6" userLabel="Fri">
-                                                            <rect key="frame" x="0.0" y="33" width="70" height="30"/>
+                                                            <rect key="frame" x="0.0" y="33" width="70.5" height="30"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="lPp-ob-8Dc"/>
@@ -13242,7 +13242,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WL6-eG-sD3" userLabel="Sun">
-                                                            <rect key="frame" x="147" y="33" width="70" height="30"/>
+                                                            <rect key="frame" x="146.5" y="33" width="70.5" height="30"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="7tw-2v-LCt"/>
@@ -13254,7 +13254,7 @@
                                                             </connections>
                                                         </button>
                                                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7NV-QS-wGW" userLabel="false">
-                                                            <rect key="frame" x="220" y="35" width="70" height="28"/>
+                                                            <rect key="frame" x="220" y="33" width="70" height="30"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                                             <state key="normal" title="THUR"/>
@@ -16106,7 +16106,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="701.25" y="-1110"/>
+            <point key="canvasLocation" x="-1097" y="-1385"/>
         </scene>
         <!--Web ViewVC-->
         <scene sceneID="zYi-nS-wAm">

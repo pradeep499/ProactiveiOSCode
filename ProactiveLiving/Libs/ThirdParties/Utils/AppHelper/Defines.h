@@ -95,6 +95,7 @@
 #define ServiceEditVideos          @"users/editVideos"
 #define ServiceUploadVideos          @"users/uploadVideos"
 #define ServiceDeleteVideo          @"users/deleteVideo"
+#define ServiceSendFriendRequest          @"users/sendFriendRequest"
 
 
 

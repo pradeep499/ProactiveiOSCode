@@ -23,6 +23,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
     
     var bottomTabBar : CustonTabBarController!
     
+    @IBOutlet var viewAddFriend: UIView!
     
     
     override func viewDidLoad() {
@@ -255,7 +256,7 @@ extension MenuVC:UITableViewDelegate{
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
             vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
        //     let v = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
-            self.navigationController?.pushViewController(vc , animated: true)
+            self.navigationController?.pushViewController(vc , animated: false)
             self.navigationController?.navigationBarHidden = true
      
             break
@@ -267,14 +268,27 @@ extension MenuVC:UITableViewDelegate{
             
             //Contacts
         case 2:
+            
+            
+            let vc = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
+            vc.fromVC = "Menu";
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+            
             break
             
            // Invite Friend
         case 3:
-            break
+            self.openDefaultSharing("")
+            
+             break
             
             //add afriend
         case 4:
+            
+            let vc = AppHelper.getSecondStoryBoard().instantiateViewControllerWithIdentifier("DeleteACVC") as! DeleteACVC
+            vc.vcType = .AddFriend
+            self.navigationController?.pushViewController(vc, animated: true)
             break
             
             //Get my pass
@@ -371,5 +385,26 @@ extension MenuVC:UITableViewDelegate{
         self.search_bar.resignFirstResponder()
         
     }
+    
+
+
+    func openDefaultSharing(textStr:String) -> Void {
+        
+        let textToShare = textStr
+        
+        if let myWebsite = NSURL(string: "http://www.proactively.com/") {
+            let objectsToShare = [textToShare, myWebsite]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            
+            //New Excluded Activities Code
+            activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList]
+            //
+            
+            //  activityVC.popoverPresentationController?.sourceView = sender
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
+    }
+
+
 
 }

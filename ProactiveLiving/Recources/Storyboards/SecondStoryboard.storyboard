@@ -313,7 +313,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a8E-PU-h8p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-156" y="-424"/>
+            <point key="canvasLocation" x="-56" y="280"/>
         </scene>
         <!--OTPVC-->
         <scene sceneID="18q-gn-UDa">
@@ -467,7 +467,7 @@
                         <viewControllerLayoutGuide type="bottom" id="9iA-EQ-MmD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="6Cp-sH-kPv">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qj3-DY-Xun" userLabel="View - topNav">
@@ -692,9 +692,14 @@
                             <constraint firstItem="qj3-DY-Xun" firstAttribute="leading" secondItem="6Cp-sH-kPv" secondAttribute="leading" id="v3L-9u-5GT"/>
                         </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="700"/>
                     <connections>
                         <outlet property="btn_countryCode" destination="eIN-Ta-Bqc" id="avF-8s-WuZ"/>
+                        <outlet property="ivHeader" destination="Nl2-Jf-Jkm" id="7vr-cL-CYh"/>
+                        <outlet property="layoutTf_PwdHeight" destination="xrq-Wn-ds3" id="9WR-sD-mY9"/>
                         <outlet property="layout_viewCountryListTop" destination="2qZ-B2-1Oe" id="BTf-Bx-tyC"/>
+                        <outlet property="lbl_title" destination="dNC-eF-MbC" id="Ycw-wD-1Gu"/>
                         <outlet property="tableView_countryList" destination="HpU-wi-Lx1" id="Y5H-Wu-kbF"/>
                         <outlet property="tf_countryCode" destination="75D-jK-rkO" id="Qi7-tr-8FR"/>
                         <outlet property="tf_phoneNo" destination="pGi-ig-buH" id="1CF-fS-irG"/>
@@ -703,7 +708,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nk9-2S-rF1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="526" y="-429"/>
+            <point key="canvasLocation" x="885" y="-406"/>
         </scene>
     </scenes>
     <resources>

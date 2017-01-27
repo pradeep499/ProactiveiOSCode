@@ -41,6 +41,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     @IBOutlet weak var layOutConstrain_ivBg_height: NSLayoutConstraint!
     
+    @IBOutlet weak var btnBgImg: UIButton!
+    @IBOutlet weak var btnProfileImg: UIButton!
  
     
     var arrViewControllers = [AnyObject]()
@@ -77,7 +79,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         
     }
- 
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -168,9 +170,11 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             self.lbl_address.text = HelpingClass.getUserDetails().liveIn
             
             
-            self.btnEditOrMore.setImage(UIImage(named: "pf_edit"), forState: .Normal)
-            self.btnSendRequest.hidden = false
-            self.btnSendRequest.setImage(UIImage(named: "pf_edit"), forState: .Normal)
+            self.btnEditOrMore.setImage(UIImage(named: ""), forState: .Normal)
+            self.btnEditOrMore.setTitle("Edit", forState: .Normal)
+            self.btnBgImg.hidden = true
+            self.btnProfileImg.hidden = true
+            self.btnSendRequest.hidden = true
             self.btnChat.hidden = true
             self.btnCall.hidden = true
             
@@ -183,6 +187,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             self.btnSendRequest.hidden = false
             self.btnChat.hidden = false
             self.btnCall.hidden = false
+            self.btnBgImg.hidden = true
+            self.btnProfileImg.hidden = true
             
         }
         
@@ -264,22 +270,21 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
             //Owner
             //show edit btn
-            /*
-            let bgTap = UITapGestureRecognizer(target: self, action: #selector(ProfileContainerVC.bgPictureTap(_:)))
-            self.iv_profileBg.addGestureRecognizer(bgTap)
             
-            let profileTap = UITapGestureRecognizer(target: self, action: #selector(ProfileContainerVC.profilePictureTap(_:)))
-            self.iv_profile.addGestureRecognizer(profileTap)
+            if self.btnEditOrMore.titleLabel?.text == "Edit" {
+                
+                self.btnEditOrMore.setTitle("Done", forState: .Normal)
+                self.btnBgImg.hidden = false
+                self.btnProfileImg.hidden = false
+            }else{
+                self.btnEditOrMore.setTitle("Edit", forState: .Normal)
+                self.btnBgImg.hidden = true
+                self.btnProfileImg.hidden = true
+                
+                
+                
+            }
             
-            self.iv_profileBg.userInteractionEnabled = true
-            self.iv_profile.userInteractionEnabled = true
-            */
-            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile background image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
-                if str == "Yes"{
-                    self.gotTOPhotosPage()
-                    self.imgUploadType = "bg"
-                }
-            })
         }else{
             //Friend
             
@@ -294,14 +299,31 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
             //Owner show edit btn
         
+        }
+    }
+    
+    @IBAction func onClickProfileImg(sender: AnyObject) {
+        
+        
         HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile  image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
             if str == "Yes"{
                 self.gotTOPhotosPage()
                 self.imgUploadType = "profile"
             }
         })
-        }
     }
+    
+    @IBAction func onClickBgImgBtn(sender: AnyObject) {
+        
+        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile background image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+            if str == "Yes"{
+                self.gotTOPhotosPage()
+                self.imgUploadType = "bg"
+            }
+        })
+    }
+    
+    
     
     @IBAction func onClickCallBtn(sender: AnyObject) {
     }

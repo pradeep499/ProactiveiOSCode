@@ -17,6 +17,10 @@ class ProfileVC: UIViewController {
     
     var cvHeight:CGFloat = 0.0;
     
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
