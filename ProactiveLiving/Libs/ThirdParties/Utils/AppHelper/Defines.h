@@ -96,6 +96,14 @@
 #define ServiceUploadVideos          @"users/uploadVideos"
 #define ServiceDeleteVideo          @"users/deleteVideo"
 #define ServiceSendFriendRequest          @"users/sendFriendRequest"
+#define ServiceGetUserProfile          @"users/getUserProfile"
+#define ServiceGetAllRequest         @"users/getAllRequest"
+#define ServiceFriendRequestAction         @"users/friendRequestAction"
+#define ServiceGetUserFriendList        @"users/getUserFriendList"
+
+
+
+
 
 
 

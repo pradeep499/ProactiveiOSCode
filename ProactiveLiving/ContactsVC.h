@@ -23,7 +23,8 @@
 - (void)someAction;
 @end
 
-@interface ContactsVC : UIViewController
+@interface ContactsVC : UIViewController<UIGestureRecognizerDelegate>
+
 @property (copy, nonatomic)  NSString *contactType;
 @property (nonatomic, weak) id <phoneSelectForInvite> delegate;
 @property (nonatomic, weak) id <GroupChatProtocol> delegate1;

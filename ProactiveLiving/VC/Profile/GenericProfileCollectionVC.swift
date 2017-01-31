@@ -33,6 +33,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     
     var photoListArr = [AnyObject]()
     var socialNetworkListArr = [AnyObject]()
+    var friendListArr = [AnyObject]()
     
     var moviePlayerController = MPMoviePlayerController()
     var pageFrom:String?
@@ -40,6 +41,8 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     
     //if this page is back from attachment vc then don't call API
     var willCallGetPhotosOrSocialNetworkList:Bool?
+    //to check owner or friend not nill all time
+    var viewerUserID:String!
     
     
     
@@ -71,6 +74,8 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         
         if genericType == .Friends {
             self.lbl_title.text = "Friends"
+            self.getFriendListAPI()
+            
         }else if genericType == .Followers {
             self.lbl_title.text = "Followers"
         }else if genericType == .Gallery {
@@ -107,6 +112,12 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         self.layOut_attachmetBottom.constant = -350;
         self.cv.reloadData()
         
+        //check logged in user or friend
+        if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+            //Friend
+            self.btnRight.hidden = true
+        }
+        
         
         
     }
@@ -130,6 +141,13 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             
         }
         self.cv!.collectionViewLayout = layout
+        
+        //check logged in user or friend
+        if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+            //Owner
+        }else{
+            //Friend
+        }
         
         
     }
@@ -219,7 +237,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
-            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["userId"] = viewerUserID // AppHelper.userDefaultsForKey(_ID)
             
             
             
@@ -260,6 +278,60 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                         
                             
                             self.cv.reloadData()
+                        
+                        
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
+    
+    
+    func getFriendListAPI() -> Void {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = viewerUserID // AppHelper.userDefaultsForKey(_ID)
+            
+            
+            
+            //call global web service class latest
+            Services.postRequest(ServiceGetUserFriendList, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print("Friends Response = ", responseDict["result"])
+                        
+                        if let content = responseDict["result"]{
+                            
+                            self.friendListArr = content as! [AnyObject]
+                        }
+                        self.cv.reloadData()
                         
                         
                         
@@ -325,7 +397,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if genericType == .Friends {
-            return 15
+            return self.friendListArr.count
         }else if genericType == .Followers {
             return 15
         }else if genericType == .Gallery {
@@ -340,8 +412,22 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         
         if genericType == .Friends {
            
+            let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("FollowerCell", forIndexPath: indexPath)
             
+            let iv_frImg = cell.viewWithTag(1) as! UIImageView
+            let lbl_name = cell.viewWithTag(2) as! UILabel
             
+            let dict = self.friendListArr[indexPath.row] as! [String:AnyObject]
+            
+            let placeholder = UIImage(named: "ic_booking_profilepic")
+            let imageUrlStr = dict["friendId"]!["imgUrl"] as! String!
+            let fName = dict["friendId"]!["firstName"] as? String
+            let lName = dict["friendId"]!["lastName"] as? String
+            
+            iv_frImg.sd_setImageWithURL(NSURL(string: imageUrlStr ), placeholderImage: placeholder)
+            lbl_name.text = fName! + " " + lName!
+            
+            return cell
         }/*else if genericType == .Followers {
             
             let cell = FollowerCell.setUpCell(collectionView, indexPath: indexPath)
@@ -651,6 +737,12 @@ extension GenericProfileCollectionVC:UICollectionViewDelegate{
             WebVC.title = "Social Network"
             WebVC.urlStr = dict["url"]!
             self.navigationController?.pushViewController(WebVC, animated: true)
+        }else if( genericType == .Friends ){
+            
+            let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+            vc.viewerUserID = viewerUserID
+            self.navigationController?.pushViewController(vc , animated: false)
+            
         }
     }
     }

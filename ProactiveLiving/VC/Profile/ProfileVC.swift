@@ -16,6 +16,8 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var layout_CollectionViewBottomHeight: NSLayoutConstraint!
     
     var cvHeight:CGFloat = 0.0;
+    //to check owner or friend not nill all time
+    var viewerUserID:String!
     
     
     
@@ -208,6 +210,7 @@ extension ProfileVC: UICollectionViewDelegate{
             
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileTableVC") as! GenericProfileTableVC
             vc.genericType = .AboutMe
+            vc.viewerUserID = viewerUserID
             self.navigationController?.pushViewController(vc, animated: true)
             break
         case 1:
@@ -216,6 +219,7 @@ extension ProfileVC: UICollectionViewDelegate{
         case 2:
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
             vc.genericType = .Friends
+            vc.viewerUserID = viewerUserID
             self.navigationController?.pushViewController(vc, animated: true)
             
             break
@@ -223,12 +227,14 @@ extension ProfileVC: UICollectionViewDelegate{
         case 3:
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
             vc.genericType = .Gallery
+            vc.viewerUserID = viewerUserID
             self.navigationController?.pushViewController(vc, animated: true)
             break
             
         case 4: //Videos
             let videosContainer: VideosContainer = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("VideosContainer") as!VideosContainer
             videosContainer.videoContainerType = .Profile
+            videosContainer.viewerUserID = viewerUserID
             self.navigationController?.pushViewController(videosContainer, animated: true)
             
             break
@@ -236,6 +242,7 @@ extension ProfileVC: UICollectionViewDelegate{
         case 5: // Social Network
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
             vc.genericType = .SocialNetworks
+            vc.viewerUserID = viewerUserID
             self.navigationController?.pushViewController(vc, animated: true)
             break
             

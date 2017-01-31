@@ -11,6 +11,7 @@
 #import "Defines.h"
 #import "AllContactsVC.h"
 #import "YSLContainerViewController.h"
+#import "FriendRequestVC.h"
 #import "ProactiveLiving-Swift.h"
 
 @interface InboxVC () <YSLContainerViewControllerDelegate>
@@ -76,13 +77,21 @@
     
     webInviteVC = [storyboard instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
     webInviteVC.title = @"WEB INVITES";
+    
+  //  FrRequestVC *requestVC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"FrRequestVC"];
+  //  requestVC.title = @"REQUESTS";
+   
+    FriendRequestVC *requestVC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"FriendRequestVC"];
+      requestVC.title = @"REQUESTS";
+    
+    
 
     // ContainerView
     //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     //float navigationHeight = self.navigationController.navigationBar.frame.size.height;
     
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]
-                                               initWithControllers:@[mesagesVC,meetUpVC,webInviteVC]
+                                               initWithControllers:@[mesagesVC,meetUpVC,webInviteVC, requestVC]
                                                topBarHeight:0
                                                parentViewController:self];
     

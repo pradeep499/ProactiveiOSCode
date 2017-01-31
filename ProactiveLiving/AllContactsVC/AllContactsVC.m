@@ -13,7 +13,7 @@
 #import "Defines.h"
 #import "ProactiveLiving-Swift.h"
 
-@interface AllContactsVC ()<YSLContainerViewControllerDelegate>
+@interface AllContactsVC ()<YSLContainerViewControllerDelegate, UIGestureRecognizerDelegate>
 {
     NSMutableArray *arrServices;
     NSMutableArray *arrTypes;

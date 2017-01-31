@@ -18,6 +18,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     var thirdVC: NewsFeedsAllVC!
     var fourthVC: RSDFDatePickerViewController!
     
+    
+    //to check owner or friend not nill all time
     var viewerUserID:String!
     var imgUploadType:String?
     
@@ -48,6 +50,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     var arrViewControllers = [AnyObject]()
  
     var bottomTabBar : CustonTabBarController!
+    var friendDict:[String:AnyObject]?
 
 
     override func viewDidLoad() {
@@ -73,9 +76,9 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         self.navigationController?.navigationBarHidden = true
         
-        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
+     //   bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
             // print(finish)
-        }
+     //   }
         
         
     }
@@ -106,6 +109,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
         firstVC.title = "PROFILE"
+        firstVC.viewerUserID = viewerUserID
         firstVC.cvHeight = 230 // as profile y position is y = 230
          
         let nav = UINavigationController.init(rootViewController: firstVC)
@@ -189,6 +193,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             self.btnCall.hidden = false
             self.btnBgImg.hidden = true
             self.btnProfileImg.hidden = true
+            
+            self.getFriendProfileDetailsAPI(viewerUserID)
             
         }
         
@@ -296,9 +302,11 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     
     @IBAction func onClickSendRequestBtn(sender: AnyObject) {
-        if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
-            //Owner show edit btn
-        
+        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to send friend request ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+            
+            if str == "Yes"{
+                self.sendFriendRequestAPI()
+            }
         }
     }
     
@@ -613,6 +621,126 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
         }
     }
+    
+    
+    
+    
+    
+    func getFriendProfileDetailsAPI(friendId:String) -> Void {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = friendId
+            
+            
+            
+            
+            //call global web service class latest
+            Services.postRequest(ServiceGetUserProfile, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                       
+                        print("Friend Details....", responseDict["result"])
+                        
+                        self.friendDict = responseDict["result"] as! [String:AnyObject]
+                        
+                        // set UI
+                        
+                        let url = NSURL(string: self.friendDict!["imgUrl"] as! String )
+                        let bgUrl = NSURL(string: self.friendDict!["imgCoverUrl"] as! String)
+                        
+                        self.iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
+                        self.iv_profileBg.sd_setImageWithURL(bgUrl, placeholderImage: UIImage(named: ""))
+                        
+                        
+                        
+                        let fName = self.friendDict!["firstName"] as! String
+                        let lName = self.friendDict!["lastName"] as! String
+                        
+                        self.lbl_name.text = fName + " " + lName
+                        self.lbl_address.text = self.friendDict!["liveIn"] as! String
+                        
+                        friendDetailsDict = self.friendDict!
+ 
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
+    
+    
+    
+    
+    func sendFriendRequestAPI() {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["friendMobile"] =  self.friendDict!["mobilePhone"] as! String
+            
+            //call global web service class latest
+            Services.postRequest(ServiceSendFriendRequest, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print(responseDict["result"])
+                        
+                        AppHelper.showAlertWithTitle(AppName, message:"Friend request sent successfuly.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                        
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
     
     
     

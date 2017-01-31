@@ -16,6 +16,8 @@ enum ProfileGenericType{
     case SocialNetworks
 }
 
+var friendDetailsDict:[String:AnyObject]?
+
 class GenericProfileTableVC: UIViewController {
     
     @IBOutlet weak var btnRight: UIButton!
@@ -29,6 +31,9 @@ class GenericProfileTableVC: UIViewController {
     @IBOutlet weak var headerView_socialNetwork: UIView!
     
     var socialNetworkArr = [AnyObject]?()
+    //to check owner or friend not nill all time
+    var viewerUserID:String!
+    
     
     
     
@@ -61,8 +66,11 @@ class GenericProfileTableVC: UIViewController {
         
         
         if genericType == .AboutMe{
+            
             self.lbl_title.text = "About Me"
-            self.btnRight.hidden = false
+            
+            
+            
             
             self.headerView_socialNetwork.hidden = true
             self.headerView_socialNetwork = nil
@@ -71,10 +79,22 @@ class GenericProfileTableVC: UIViewController {
             
             self.lbl_summary.text = HelpingClass.getUserDetails().summary
             
+            
+            //check logged in user or friend
+            if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+                //Owner
+                self.btnRight.hidden = false
+            }else{
+                //Friend
+                self.btnRight.hidden = true
+                self.lbl_summary.text = self.getFriendsValue("summary")
+            }
+            
+            
         }else if genericType == .SocialNetworks {
             
             self.lbl_title.text = "Social Networks"
-            self.btnRight.hidden = false
+            
             self.btnRight.setTitle("Save", forState: .Normal)
             self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
             
@@ -82,6 +102,15 @@ class GenericProfileTableVC: UIViewController {
             self.headerView_AboutMe = nil
             
             self.tv.tableHeaderView = self.headerView_socialNetwork
+            
+            //check logged in user or friend
+            if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+                //Owner
+                self.btnRight.hidden = false
+            }else{
+                //Friend
+                self.btnRight.hidden = true
+            }
             
             
         }
@@ -482,77 +511,144 @@ extension GenericProfileTableVC: UITableViewDataSource{
                 iv.image = UIImage(named: "mp_live_in")
                 lbl_title.text = "Live in"
                 lbl_details.text = obj.liveIn
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("liveIn")
+                }
                 break
             case 1:
                 iv.image = UIImage(named: "mp_work_at")
                 lbl_title.text = "Work at"
                 lbl_details.text = obj.workAt
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("workAt")
+                }
                 break
                 
             case 2:
                 iv.image = UIImage(named: "mp_grew_up")
                 lbl_title.text = "Grew Up In"
                 lbl_details.text = obj.grewUp
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("grewUp")
+                }
                 break
                 
             case 3:
                 iv.image = UIImage(named: "mp_high_school")
                 lbl_title.text = "High School"
                 lbl_details.text = obj.highSchool
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("highSchool")
+                }
                 break
                 
             case 4:
                 iv.image = UIImage(named: "mp_sports_play")
                 lbl_title.text = "Sports Played"
                 lbl_details.text = obj.highSchoolSportsPlayed
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("highSchoolSportsPlayed")
+                }
                 break
                 
             case 5:
                 iv.image = UIImage(named: "mp_college")
                 lbl_title.text = "College"
                 lbl_details.text = obj.college
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("college")
+                }
                 break
                 
             case 6:
                 iv.image = UIImage(named: "mp_sports_played")
                 lbl_title.text = "Sports Played"
                 lbl_details.text = obj.collegeSportsPlayed
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("collegeSportsPlayed")
+                }
                 break
                 
             case 7:
                 iv.image = UIImage(named: "mp_graduate_school")
                 lbl_title.text = "Graduate School"
                 lbl_details.text = obj.graduateSchool
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("graduateSchool")
+                }
+                
                 break
                 
             case 8:
                 iv.image = UIImage(named: "mp_current_sports")
                 lbl_title.text = "Current Sports"
                 lbl_details.text = obj.currentSport
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("currentSport")
+                }
+                
                 break
                 
             case 9:
                 iv.image = UIImage(named: "mp_intrests")
                 lbl_title.text = "Interests"
                 lbl_details.text = obj.interests
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("interests")
+                }
                 break
                 
             case 10:
                 iv.image = UIImage(named: "mp_quotes")
                 lbl_title.text = "Favorite Famous Quote"
                 lbl_details.text = obj.favFamousQuote
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("favFamousQuote")
+                }
                 break
                 
             case 11:
                 iv.image = UIImage(named: "mp_quotes")
                 lbl_title.text = "My Not-So-Famous Quote"
                 lbl_details.text = obj.notFamousQuote
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("notFamousQuote")
+                }
                 break
                 
             case 12:
                 iv.image = UIImage(named: "mp_my_bio")
                 lbl_title.text = "My Bio"
                 lbl_details.text = obj.bio
+                
+                //friends value
+                if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                    lbl_details.text = self.getFriendsValue("bio")
+                }
+                
                 break
                 
             default:
@@ -562,5 +658,18 @@ extension GenericProfileTableVC: UITableViewDataSource{
         
         return cell
     }
+    
+    func getFriendsValue(forKey:String) -> String {
+        
+        if  (friendDetailsDict![forKey] != nil)  {
+            
+            let value = friendDetailsDict![forKey] as? String ?? ""
+            
+            return value
+        }
+        
+        return ""
+    }
+    
 }
 

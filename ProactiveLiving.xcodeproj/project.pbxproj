@@ -114,11 +114,13 @@
 		605EAC9F1E1E651B0048EA8F /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC9A1E1E651B0048EA8F /* Define.swift */; };
 		605EACA01E1E651B0048EA8F /* HelpingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC9C1E1E651B0048EA8F /* HelpingClass.swift */; };
 		606628871E2CAC0500E66659 /* AttachmentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606628861E2CAC0500E66659 /* AttachmentsVC.swift */; };
+		609A99781E3F43B90085A15C /* FrRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609A99771E3F43B90085A15C /* FrRequestVC.swift */; };
 		60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A7CADE1DDD6BB10033BA1E /* Social.framework */; };
 		60B42E4E1E276B61001A4CB1 /* Beans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B42E4D1E276B61001A4CB1 /* Beans.swift */; };
 		60B755F31E1E6B94003650A1 /* TLTagsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B755F21E1E6B94003650A1 /* TLTagsControl.m */; };
 		60CD2A011DE2C3C000125457 /* CommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CD2A001DE2C3C000125457 /* CommentsVC.swift */; };
 		60D471C71DC07D9900EAD7D9 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D471C61DC07D9900EAD7D9 /* MenuVC.swift */; };
+		60E0F2C41E3F539E00DC4227 /* FriendRequestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E0F2C31E3F539E00DC4227 /* FriendRequestVC.m */; };
 		671C3D611C44FB72006A5423 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D601C44FB72006A5423 /* main.m */; };
 		671C3D671C44FB72006A5423 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D661C44FB72006A5423 /* LoginVC.m */; };
 		671C3D6D1C44FB72006A5423 /* ProactiveLiving.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D6B1C44FB72006A5423 /* ProactiveLiving.xcdatamodeld */; };
@@ -648,12 +650,15 @@
 		605EAC9C1E1E651B0048EA8F /* HelpingClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpingClass.swift; sourceTree = "<group>"; };
 		605EAC9D1E1E651B0048EA8F /* ProactiveLiving-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProactiveLiving-Bridging-Header.h"; sourceTree = "<group>"; };
 		606628861E2CAC0500E66659 /* AttachmentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsVC.swift; sourceTree = "<group>"; };
+		609A99771E3F43B90085A15C /* FrRequestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrRequestVC.swift; sourceTree = "<group>"; };
 		60A7CADE1DDD6BB10033BA1E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		60B42E4D1E276B61001A4CB1 /* Beans.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beans.swift; sourceTree = "<group>"; };
 		60B755F11E1E6B94003650A1 /* TLTagsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTagsControl.h; sourceTree = "<group>"; };
 		60B755F21E1E6B94003650A1 /* TLTagsControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTagsControl.m; sourceTree = "<group>"; };
 		60CD2A001DE2C3C000125457 /* CommentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentsVC.swift; path = View/NewsFeeds/CommentsVC.swift; sourceTree = "<group>"; };
 		60D471C61DC07D9900EAD7D9 /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
+		60E0F2C21E3F539E00DC4227 /* FriendRequestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRequestVC.h; sourceTree = "<group>"; };
+		60E0F2C31E3F539E00DC4227 /* FriendRequestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRequestVC.m; sourceTree = "<group>"; };
 		671C3D5C1C44FB72006A5423 /* ProactiveLiving.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProactiveLiving.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		671C3D601C44FB72006A5423 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		671C3D651C44FB72006A5423 /* LoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
@@ -1973,6 +1978,9 @@
 				BABB57DB1CEF105100F7C879 /* MessagesVC.m */,
 				BABB57DD1CEF161200F7C879 /* MessageCell.h */,
 				BABB57DE1CEF161200F7C879 /* MessageCell.m */,
+				609A99771E3F43B90085A15C /* FrRequestVC.swift */,
+				60E0F2C21E3F539E00DC4227 /* FriendRequestVC.h */,
+				60E0F2C31E3F539E00DC4227 /* FriendRequestVC.m */,
 			);
 			name = Inbox;
 			sourceTree = "<group>";
@@ -3116,6 +3124,7 @@
 				BAB0E4FA1D5DE59B00906C10 /* SocketIOClient.swift in Sources */,
 				BAFC7C7A1CB3903C00761462 /* PASToDoVC.m in Sources */,
 				BA5901491D364F86006142AC /* OAuthCore.m in Sources */,
+				609A99781E3F43B90085A15C /* FrRequestVC.swift in Sources */,
 				BAB0E4CA1D5DE33300906C10 /* AllContactsVC.m in Sources */,
 				BA5900D81D364EFD006142AC /* AppContactList.swift in Sources */,
 				BA02E0DC1CE9D4B3006DF10E /* ContactsCell.m in Sources */,
@@ -3194,6 +3203,7 @@
 				BA5901091D364EFD006142AC /* AllChatFriendsVC.swift in Sources */,
 				BA5901211D364EFD006142AC /* TableViewCell_Extension.swift in Sources */,
 				BA48591B1DC9DEF800DED552 /* RSDFCustomDatePickerDaysOfWeekView.m in Sources */,
+				60E0F2C41E3F539E00DC4227 /* FriendRequestVC.m in Sources */,
 				605EAC291E1E63C60048EA8F /* NSCalendar+Components.m in Sources */,
 				BA7A4B191C61F481005CA80C /* ValidationFiltersVC.m in Sources */,
 				BAF1E5571CABAB2300FA5CC5 /* PASInstVideoVC.m in Sources */,

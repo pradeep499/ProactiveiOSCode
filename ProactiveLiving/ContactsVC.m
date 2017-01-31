@@ -210,6 +210,59 @@
     
 }*/
 
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    
+    if([touch.view isKindOfClass:[UITableViewCell class]]) {
+        return NO;
+    }
+    // UITableViewCellContentView => UITableViewCell
+    if([touch.view.superview isKindOfClass:[UITableViewCell class]]) {
+        return NO;
+    }
+    // UITableViewCellContentView => UITableViewCellScrollView => UITableViewCell
+    if([touch.view.superview.superview isKindOfClass:[UITableViewCell class]]) {
+      //  return NO;
+    }
+    
+    return true;
+}
+
+-(void)goToProfilePage:(NSString *) userId{
+    
+    ProfileContainerVC *PFVC = [[AppHelper getProfileStoryBoard] instantiateViewControllerWithIdentifier:@"ProfileContainerVC"];
+    PFVC.viewerUserID = userId;
+    
+    
+    [self.navigationController pushViewController:PFVC animated:false];
+    
+}
+
+
+
+- (void)tapGestureTapProfileIcon:(UITapGestureRecognizer *)sender {
+    
+    CGPoint location = [sender locationInView:self.view];
+    
+    if (CGRectContainsPoint([self.view convertRect:self.tableView.frame fromView:self.tableView.superview], location))
+    {
+        CGPoint locationInTableview = [self.tableView convertPoint:location fromView:self.view];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:locationInTableview];
+        
+        if (indexPath){
+            
+            NSString *friendID = [[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"_id"];
+            
+            [self goToProfilePage:friendID];
+            
+        }
+        
+        
+        
+    }
+}
+
+    
+    
 #pragma mark - uitableview
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -230,11 +283,18 @@
     ContactsCell*cell =[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    NSURL *url = [NSURL URLWithString:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"profilePic"]];
+    NSURL *url = [NSURL URLWithString:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"imgUrl"]];
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     UIImage *placeholderImage = [UIImage imageNamed:@"ic_booking_profilepic"];
     
     __weak ContactsCell *weakCell = cell;
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureTapProfileIcon:)];
+    gesture.delegate = self;
+    cell.imgPerson.userInteractionEnabled = true;
+    [cell.imgPerson addGestureRecognizer:gesture];
+    
     
     [cell.imgPerson setImageWithURLRequest:request
                           placeholderImage:placeholderImage

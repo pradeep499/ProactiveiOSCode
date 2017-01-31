@@ -24,8 +24,11 @@ class VideosVC: UIViewController {
     
     
     var videoContainerType:VideoContainerType?
+    //to check owner or friend not nill all time
+    var viewerUserID:String!
     
     @IBOutlet weak var tableView: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -488,7 +491,7 @@ class VideosVC: UIViewController {
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
-            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["userId"] = viewerUserID // AppHelper.userDefaultsForKey(_ID)
             
             
             parameters["filter"] = "videos"

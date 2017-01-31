@@ -555,10 +555,16 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         frndImage.layer.masksToBounds = true
         frndImage.layer.cornerRadius = 20.0
         frndImage.layer.borderColor = UIColor(red: 14.0/255.0, green: 0.0/255.0, blue: 175.0/255.0, alpha: 1.0).CGColor
-        let imgRecognizer = UITapGestureRecognizer(target: self, action:#selector(ChattingMainVC.clickFrndImage(_:)))
-        imgRecognizer.delegate = self
-        frndImage.addGestureRecognizer(imgRecognizer)
-        frndImage.userInteractionEnabled = true
+        
+        if isGroup == 0 {
+           
+            let imgRecognizer = UITapGestureRecognizer(target: self, action:#selector(ChattingMainVC.clickFrndImage(_:)))
+            imgRecognizer.delegate = self
+            frndImage.addGestureRecognizer(imgRecognizer)
+            frndImage.userInteractionEnabled = true
+        }
+        
+        
 
         let recognizer = UITapGestureRecognizer(target: self, action:#selector(ChattingMainVC.clickChatTable(_:)))
         recognizer.delegate = self
@@ -737,12 +743,18 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     
     func clickFrndImage(recognizer: UITapGestureRecognizer) {
        
-        //HIDE++++++++++++++
-       /* let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let myprofileVc: MyProfileVCViewController = storyBoard.instantiateViewControllerWithIdentifier("MyProfileVCViewController") as MyProfileVCViewController
-        myprofileVc.ProfileId = ChatHelper.userDefaultForKey("friendId")
-            self.navigationController?.pushViewController(myprofileVc, animated: true)
- */
+       
+        
+        let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+        
+        if contObj != nil {
+            vc.viewerUserID = contObj.userId as String
+        } else {
+            vc.viewerUserID = recentChatObj.friendId! as String
+        } 
+        
+        self.navigationController?.pushViewController(vc , animated: false)
+        self.navigationController?.navigationBarHidden = true
     }
     
     func clickChatTable(recognizer: UITapGestureRecognizer) {

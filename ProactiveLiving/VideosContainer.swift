@@ -34,6 +34,8 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
     
     var currentIndex = 0
     var videoContainerType:VideoContainerType?
+    //to check owner or friend not nill all time
+    var viewerUserID:String!
     
     
     @IBOutlet weak var screenTitle: UILabel!
@@ -83,6 +85,7 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
             firstVC.title = "PROMOTIONAL"
         }else{
             firstVC.title = "PERSONAL"
+            firstVC.viewerUserID = viewerUserID
         }
         
         
@@ -93,6 +96,7 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         if videoContainerType == .Explore {
             if let val = dataDict!["Educational"] as? [AnyObject] {
                 secondVC.dataArra = val
+                secondVC.viewerUserID = viewerUserID
             }
         }
         
@@ -109,6 +113,7 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         }else{
             
             thirdVC.title = "INSPIRATIONAL"
+            thirdVC.viewerUserID = viewerUserID
         }
         
         
@@ -127,8 +132,15 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         //hide right btn
         if videoContainerType == .Explore {
             self.btnRight.hidden = true
-        }else if videoContainerType == .Explore {
-            self.btnRight.hidden = false
+        }else if videoContainerType == .Profile {
+            
+            if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+                //Owner
+                self.btnRight.hidden = false
+            }else{
+                //friends
+                self.btnRight.hidden = true
+            }
         }
     }
     
