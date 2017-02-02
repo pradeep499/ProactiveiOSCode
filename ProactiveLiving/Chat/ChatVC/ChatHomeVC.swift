@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
+class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var searchBar1: UISearchBar!
     @IBOutlet weak var recent_chatTable: UITableView!
@@ -356,10 +356,19 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
         
         if anObject.groupId == "0" {
             if (imageString.characters.count > 2) {
-                userImage.setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+                userImage.sd_setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"ic_booking_profilepic"))
             } else {
                 userImage.image=UIImage(named:"ic_booking_profilepic")
             }
+            
+            //go to profile page
+            
+            let imgRecognizer = UITapGestureRecognizer(target: self, action:#selector(ChattingMainVC.clickFrndImage(_:)))
+            imgRecognizer.delegate = self
+            userImage.addGestureRecognizer(imgRecognizer)
+            userImage.userInteractionEnabled = true
+            
+            
         } else {
             //Group Msg
            /* let dateFormatter = NSDateFormatter()
@@ -406,11 +415,40 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate {
             userImage.setImageWithURL(NSURL(string:anObject.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
         }
         userImage.layer.masksToBounds = true
-        userImage.layer.cornerRadius = 22.5
-       // messageCount.layer.masksToBounds = true
-       // messageCount.layer.cornerRadius = 5.0
+        userImage.layer.cornerRadius = userImage.frame.size.height/2
+       
+        
+            
+        
+        
+        
+        
         return cell;
     }
+    
+    func clickFrndImage(recognizer: UITapGestureRecognizer) {
+        
+        let location = recognizer.locationInView(recent_chatTable)
+        let indexPath = recent_chatTable.indexPathForRowAtPoint(location)
+        
+        let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+        
+        let anObject : RecentChatList!
+        
+        if recent_chatTable == self.searchDisplayController!.searchResultsTableView {
+            anObject = searchChatArray[indexPath!.row] as! RecentChatList
+        } else {
+            anObject = fetchedResultsController.objectAtIndexPath(indexPath!) as! RecentChatList
+        }
+        vc.viewerUserID = anObject.friendId
+        
+        
+        
+        self.navigationController?.pushViewController(vc , animated: false)
+        self.navigationController?.navigationBarHidden = true
+    }
+    
+    
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
         var anObject : RecentChatList!

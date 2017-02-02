@@ -93,11 +93,13 @@ class VideosContainer: UIViewController, YSLContainerViewControllerDelegate {
         secondVC.title = "EDUCATIONAL"
         secondVC.videoContainerType = videoContainerType
         
+        
         if videoContainerType == .Explore {
             if let val = dataDict!["Educational"] as? [AnyObject] {
                 secondVC.dataArra = val
-                secondVC.viewerUserID = viewerUserID
             }
+        }else{
+            secondVC.viewerUserID = viewerUserID
         }
         
         

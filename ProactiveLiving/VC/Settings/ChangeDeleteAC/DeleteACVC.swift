@@ -23,6 +23,8 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
     @IBOutlet weak var layout_viewCountryListTop: NSLayoutConstraint!
     
    
+    @IBOutlet weak var lbl_text: UILabel!
+    
     
     
     @IBOutlet weak var ivHeader: UIImageView!
@@ -58,10 +60,13 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         if vcType == .AddFriend {
             self.layoutTf_PwdHeight.constant = 0
             self.lbl_title.text = "Add a Friend"
-            self.ivHeader.image = UIImage(named: "")
+            self.ivHeader.image = UIImage(named: "add_friend")
+            self.lbl_text.text = "To add a friend, enter friend's country code and enter friend's phone number."
+            
         }else{
             self.lbl_title.text = "Delete Account"
             self.ivHeader.image = UIImage(named: "delete_ac")
+            self.lbl_text.text = "To delete your account, confirm your        country code and enter your phone number."
         }
     }
 

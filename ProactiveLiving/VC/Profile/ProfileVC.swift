@@ -29,9 +29,20 @@ class ProfileVC: UIViewController {
 
         self.lbl_profileStatus.text = "Status: "
         
-        if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
-            self.lbl_profileStatus.text = "Status: " + (status as! String) as? String
+        if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+            //Owner
+            if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
+                self.lbl_profileStatus.text = "Status: " + (status as! String)
+            }
+        }else{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: "NotifyFrDetails", object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "NotifyFrDetails:", name:"NotifyFrDetails", object: nil)
+            
+            
         }
+        
+        
         
         
     }
@@ -46,6 +57,8 @@ class ProfileVC: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
     func setUpCollectionView() -> Void {
         
@@ -63,7 +76,13 @@ class ProfileVC: UIViewController {
     }
     
     
-  
+    func NotifyFrDetails(notification: NSNotification){
+       
+        if let status = friendDetailsDict!["userStatus"]{
+            self.lbl_profileStatus.text = "Status: " + (status as! String)
+        }
+        
+    }
     
 
     /*

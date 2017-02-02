@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "Defines.h"
 #import "ChatVC_Old.h"
-#import <UIImageView+AFNetworking.h>
+#import "UIImageView+WebCache.h"
 
 @interface MessagesVC ()
 {
@@ -163,6 +163,9 @@
     
     __weak MessageCell *weakCell = cell;
     
+    [cell.imgPerson sd_setImageWithURL:url placeholderImage:placeholderImage];
+    
+   /*
     [cell.imgPerson setImageWithURLRequest:request
                           placeholderImage:placeholderImage
                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -171,7 +174,16 @@
                                        [weakCell setNeedsLayout];
                                        
                                    } failure:nil];
+    */
     
+    
+  /*  cell.imgPerson.layer.borderWidth = 1.0;
+    cell.imgPerson.contentMode = UIViewContentModeScaleAspectFill;
+    cell.imgPerson.layer.masksToBounds = true;
+    cell.imgPerson.layer.borderColor = [UIColor lightGrayColor].CGColor;
+  //  cell.imgPerson.layer.cornerRadius = cell.imgPerson.frame.size.height/2;
+    cell.imgPerson.clipsToBounds = true;
+    */
     cell.lblName.text=[NSString stringWithFormat:@"%@",[[self.dataArray objectAtIndex:indexPath.row][@"userDetails"] valueForKey:@"firstName"]];
     cell.lblDesc.text=[[self.dataArray objectAtIndex:indexPath.row][@"userDetails"] valueForKey:@"membership"];
     cell.txtMessage.text=[[self.dataArray objectAtIndex:indexPath.row] valueForKey:@"text"];

@@ -139,6 +139,10 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             
             layout.itemSize = CGSize(width: w/4 - 5, height: w/4)
             
+       }else if genericType == .Friends {
+        
+        layout.itemSize = CGSize(width: w/4 - 5, height: 150)
+        
         }
         self.cv!.collectionViewLayout = layout
         
@@ -371,7 +375,11 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             return CGSize(width: w/4 - 5 , height: w/4 - 5)
             
+        }else  if genericType == .Friends {
+            
+            return CGSize(width: w/3 - 5 , height:150  )
         }
+        
         
         return CGSize(width: w/3 - 5 , height: w/3)
         
@@ -416,6 +424,15 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             let iv_frImg = cell.viewWithTag(1) as! UIImageView
             let lbl_name = cell.viewWithTag(2) as! UILabel
+            
+            iv_frImg.layer.borderWidth = 1.0
+            iv_frImg.contentMode = .ScaleAspectFill
+            iv_frImg.backgroundColor = UIColor.whiteColor()
+            iv_frImg.layer.masksToBounds = false
+            iv_frImg.layer.borderColor = UIColor.lightGrayColor().CGColor
+            iv_frImg.layer.cornerRadius = iv_frImg.frame.size.height/2
+            iv_frImg.clipsToBounds = true
+            
             
             let dict = self.friendListArr[indexPath.row] as! [String:AnyObject]
             
@@ -740,7 +757,10 @@ extension GenericProfileCollectionVC:UICollectionViewDelegate{
         }else if( genericType == .Friends ){
             
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
-            vc.viewerUserID = viewerUserID
+            
+            let dict = self.friendListArr[indexPath.row] as! [String:AnyObject]
+            
+            vc.viewerUserID = dict["friendId"]!["_id"] as! String!
             self.navigationController?.pushViewController(vc , animated: false)
             
         }

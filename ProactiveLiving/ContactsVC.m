@@ -296,6 +296,8 @@
     [cell.imgPerson addGestureRecognizer:gesture];
     
     
+    [cell.imgPerson sd_setImageWithURL:url placeholderImage:placeholderImage];
+    /*
     [cell.imgPerson setImageWithURLRequest:request
                           placeholderImage:placeholderImage
                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -304,6 +306,13 @@
                                        [weakCell setNeedsLayout];
                                        
                                    } failure:nil];
+    */
+    cell.imgPerson.layer.borderWidth = 1.0;
+    cell.imgPerson.contentMode = UIViewContentModeScaleAspectFill;
+    cell.imgPerson.layer.masksToBounds = false;
+    cell.imgPerson.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    cell.imgPerson.layer.cornerRadius = cell.imgPerson.frame.size.height/2;
+    cell.imgPerson.clipsToBounds = true;
     
     
     cell.lblName.text=[NSString stringWithFormat:@"%@",[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"firstName"]];

@@ -338,7 +338,14 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         let userName = cell.contentView.viewWithTag(2) as! UILabel
         let adminLabel = cell.contentView.viewWithTag(4) as! UILabel
         
+        let imgRecognizer = UITapGestureRecognizer(target: self, action:#selector(ChattingMainVC.clickFrndImage(_:)))
+        imgRecognizer.delegate = self
+        userImage.addGestureRecognizer(imgRecognizer)
+        userImage.userInteractionEnabled = true
+        
+        
         let anObject = groupUserList[indexPath.row] as! GroupUserList
+        
         userImage.setImageWithURL(NSURL(string:anObject.userImage!), placeholderImage: UIImage(named:"profile.png"))
         
         let nameStr = anObject.userName! as String
@@ -432,6 +439,25 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
             //frndTableView.endUpdates()
             self.buttonDeleteClicked(indexPath)
         }
+    }
+    
+    //MARK: - 
+    
+    
+    func clickFrndImage(recognizer: UITapGestureRecognizer) {
+        
+        let location = recognizer.locationInView(frndTableView)
+        let indexPath = frndTableView.indexPathForRowAtPoint(location)
+        
+        let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+        
+        let anObject = groupUserList[indexPath!.row] as! GroupUserList
+        vc.viewerUserID = anObject.userId
+        
+         
+        
+        self.navigationController?.pushViewController(vc , animated: false)
+        self.navigationController?.navigationBarHidden = true
     }
     
     func buttonDeleteClicked(index: NSIndexPath)

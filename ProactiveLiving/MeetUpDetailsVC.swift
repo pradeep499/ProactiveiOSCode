@@ -979,7 +979,7 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
         let lblName = cell.contentView.viewWithTag(333) as! UILabel
         
         imgProfile.layer.borderWidth = 1.0
-        imgProfile.contentMode = .ScaleAspectFit
+        imgProfile.contentMode = .ScaleAspectFill
         imgProfile.backgroundColor = UIColor.whiteColor()
         imgProfile.layer.masksToBounds = false
         imgProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -1018,6 +1018,22 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+        
+        let dataArr = self.arrangeMembers()
+        
+        let dataDict = dataArr[indexPath.row] as! [String : AnyObject]
+        
+        
+        //goto profile
+        let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+        
+         vc.viewerUserID = dataDict["memberId"] as? String
+        
+        
+        
+        self.navigationController?.pushViewController(vc , animated: false)
+        self.navigationController?.navigationBarHidden = true
+        
     }
      // show or hide chat icon by badru
     func showHideChatBtn() -> Void {

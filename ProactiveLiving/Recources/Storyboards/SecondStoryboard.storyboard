@@ -341,13 +341,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kv5-Yn-2e2">
-                                                    <rect key="frame" x="82" y="12" width="228" height="21.5"/>
+                                                    <rect key="frame" x="82" y="12" width="228" height="19"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
                                                     <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Has sent you a friend request." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e78-5t-6ZW">
-                                                    <rect key="frame" x="82" y="49" width="222" height="23"/>
+                                                    <rect key="frame" x="82" y="46.5" width="222" height="23"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="23" id="qn0-Pb-ma4"/>
                                                     </constraints>
@@ -450,13 +450,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hN-0a-40t">
-                                            <rect key="frame" x="82" y="12" width="228" height="21.5"/>
+                                            <rect key="frame" x="82" y="12" width="228" height="19"/>
                                             <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
                                             <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Has sent you a friend request." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rbx-Rh-oJu">
-                                            <rect key="frame" x="82" y="49" width="222" height="23"/>
+                                            <rect key="frame" x="82" y="46.5" width="222" height="23"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="23" id="utf-oK-Mz2"/>
                                             </constraints>
@@ -919,6 +919,7 @@
                         <outlet property="ivHeader" destination="Nl2-Jf-Jkm" id="7vr-cL-CYh"/>
                         <outlet property="layoutTf_PwdHeight" destination="xrq-Wn-ds3" id="9WR-sD-mY9"/>
                         <outlet property="layout_viewCountryListTop" destination="2qZ-B2-1Oe" id="BTf-Bx-tyC"/>
+                        <outlet property="lbl_text" destination="Ljf-ha-0GS" id="chu-P0-DiY"/>
                         <outlet property="lbl_title" destination="dNC-eF-MbC" id="Ycw-wD-1Gu"/>
                         <outlet property="tableView_countryList" destination="HpU-wi-Lx1" id="Y5H-Wu-kbF"/>
                         <outlet property="tf_countryCode" destination="75D-jK-rkO" id="Qi7-tr-8FR"/>

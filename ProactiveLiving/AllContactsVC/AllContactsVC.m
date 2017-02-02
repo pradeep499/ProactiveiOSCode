@@ -18,7 +18,8 @@
     NSMutableArray *arrServices;
     NSMutableArray *arrTypes;
     ContactsVC *contactVC1;
-    ContactFriendsVC *contactVC2;
+   // ContactFriendsVC *contactVC2;
+    ContactsVC *contactVC2;
     ContactsVC *contactVC3;
     ContactsVC *contactVC4;
     ContactsVC *contactVC5;
@@ -89,9 +90,10 @@
     contactVC1.title = @"ALL";
     contactVC1.contactType=@"all";
     
-    contactVC2 = [storyboard instantiateViewControllerWithIdentifier:@"ContactFriendsVC"];
+//    contactVC2 = [storyboard instantiateViewControllerWithIdentifier:@"ContactFriendsVC"];
+    contactVC2 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC2.delegate = self;
-
+    contactVC2.contactType=@"friends";
     contactVC2.title = @"FRIENDS";
 
     contactVC3 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];

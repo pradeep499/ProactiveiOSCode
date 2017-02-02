@@ -9,6 +9,7 @@
 import UIKit
 
 
+
  
 
 class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, GenericProfileCollectionVCDelegate {
@@ -51,6 +52,11 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
  
     var bottomTabBar : CustonTabBarController!
     var friendDict:[String:AnyObject]?
+    
+    var popOverTableView:UITableView?
+    var popover:DXPopover = DXPopover()
+    var popoverHeight:CGFloat = 130
+    var popOverCellData = ["Block access to my profile", "Block access to my cell number", "Add to Favorites",  "Unfriend", "Report Member"]
 
 
     override func viewDidLoad() {
@@ -61,7 +67,12 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         self.setUpViewControllers()
         self.setUpProfilePage()
         
-        
+        //popover table
+        popOverTableView = UITableView()
+        popOverTableView?.frame = CGRectMake(0, 0, 170, popoverHeight)
+        popOverTableView?.dataSource = self
+        popOverTableView?.delegate = self
+      //  popOverTableView?.separatorStyle = .None
        
     }
     
@@ -294,7 +305,18 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         }else{
             //Friend
             
-            
+            let windowHeight = self.view.frame.size.height
+            let button = sender as? UIButton
+            //        NSLog("button tag \(button!.tag)")
+            let frameInWindow = button!.convertRect(button!.bounds, toView: self.view)
+            let popoverY = frameInWindow.origin.y
+            var startPoint = CGPointMake(frameInWindow.midX, frameInWindow.maxY)
+            var popoverPosition:DXPopoverPosition = .Down
+            if (windowHeight-popoverY<160){
+                startPoint = CGPointMake(frameInWindow.midX, frameInWindow.minY)
+                popoverPosition = .Up
+            }
+            self.popover.showAtPoint(startPoint, popoverPostion: popoverPosition, withContentView: self.popOverTableView, inView: self.view)
         }
     }
 
@@ -334,9 +356,50 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     
     @IBAction func onClickCallBtn(sender: AnyObject) {
+        let mobilePhone = self.friendDict!["mobilePhone"] as! String
+        if let phoneCallURL:NSURL = NSURL(string: "tel://\(mobilePhone)") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL);
+            }
+        }
+        
     }
     
     @IBAction func onClickChatBtn(sender: AnyObject) {
+        
+        
+        let chatMainVC: ChattingMainVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
+        //   chatMainObj.contObj = anObject
+      //  chatMainObj.isFromClass="ChatF"
+        chatMainVC.isGroup="0"
+        
+        //
+        let contObj = ChatContactModelClass()
+        contObj.userId = self.friendDict!["_id"] as! String
+        contObj.loginUserId = ChatHelper.userDefaultForKey(_ID)
+        contObj.name =  self.friendDict!["firstName"] as! String
+        contObj.email = self.friendDict!["email"] as! String
+        contObj.isBlock = "0";
+        contObj.isReport = "0";
+        contObj.isFav = "no";
+        contObj.isFriend = "yes";
+        contObj.userImgString = self.friendDict!["imgUrl"] as! String
+        contObj.isFromCont = "yes";
+        contObj.phoneNumber = self.friendDict!["mobilePhone"] as! String
+        contObj.firstName = self.friendDict!["firstName"] as! String
+        
+        chatMainVC.contObj = contObj;
+        chatMainVC.isFromClass = "";
+        chatMainVC.isGroup = "0";
+        chatMainVC.isFromDeatilScreen = "0";
+        //chatMainVC.recentChatObj = recentObj;
+        chatMainVC.recentChatObj = nil;
+        
+        
+        
+        self.navigationController?.pushViewController(chatMainVC, animated: true)
+        
     }
     
     
@@ -500,7 +563,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
     }
     
-    //MARK:- upload
+    //MARK:- API
     
     func uploadImage(imgData:NSData, imgName: String) -> Void {
         
@@ -669,6 +732,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         self.lbl_address.text = self.friendDict!["liveIn"] as! String
                         
                         friendDetailsDict = self.friendDict!
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName("NotifyFrDetails", object: self.friendDict!)
  
                         
                     } else {
@@ -741,8 +806,164 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
     }
     
+}
+
+extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == popOverTableView{
+            return 5
+        }
+        return 0
+    }
     
     
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if tableView == popOverTableView{
+            let cell = UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
+            cell.textLabel?.text = popOverCellData[indexPath.row]
+            cell.textLabel?.textAlignment = .Center
+            cell.selectionStyle = .None
+            return cell
+        }
+        
+        return UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        if tableView == popOverTableView{
+            NSLog("\(popOverCellData[indexPath.row]) selected")
+            self.popover.dismiss()
+            
+            if indexPath.row == 0 {
+                //block  member
+                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to block member's profile ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                    
+                    if str == "Yes"{
+                        self.blockFriendAPI()
+                    }
+                }
+                
+            }else if indexPath.row == 1 {
+                //block ceel number
+                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to block member's cell number ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                    
+                    if str == "Yes"{
+                        self.blockFriendAPI()
+                    }
+                }
+                
+            }else if indexPath.row == 2 {
+                
+            }else if indexPath.row == 3{
+                 //unfriend
+                
+                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want unfriend ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                    
+                    if str == "Yes"{
+                     }
+                }
+            }else{
+                self.sendMail()
+            }
+            
+        }
+    }
+    
+    
+   
+    
+    
+    func blockFriendAPI() {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["status"] = NSNumber.init(int: 3)
+            parameters["friendId"] = viewerUserID
+             
+            
+            //call global web service class latest
+            Services.postRequest(ServiceFriendRequestAction, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print(responseDict["result"])
+                        
+                        AppHelper.showAlertWithTitle(AppName, message:"Friend has been blocked.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                        
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+}
+
+extension ProfileContainerVC:MFMailComposeViewControllerDelegate{
+    
+    
+    func sendMail() -> Void {
+        
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available")
+            return
+        }
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        composeVC.setToRecipients(["support@proactively.com"])
+        composeVC.setSubject("Report Member.")
+        
+        let fName = self.friendDict!["firstName"] as! String
+        let lName = self.friendDict!["lastName"] as! String
+        let email = self.friendDict!["email"] as! String
+        let mobilePhone = self.friendDict!["mobilePhone"] as! String
+        
+        let body = "Name: " + fName + " " + lName + "/n" + "Mb: " + mobilePhone + "/n" + "Email: " + email
+        
+        composeVC.setMessageBody(body , isHTML: true)
+        
+        // Present the view controller modally.
+        self.presentViewController(composeVC, animated: true, completion: nil)
+    }
+    
+    
+    func mailComposeController(controller: MFMailComposeViewController,
+                               didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        // Check the result or perform other tasks.
+        
+        // Dismiss the mail compose view controller.
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     
 }

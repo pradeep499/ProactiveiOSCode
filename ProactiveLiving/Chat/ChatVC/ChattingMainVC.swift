@@ -556,7 +556,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         frndImage.layer.cornerRadius = 20.0
         frndImage.layer.borderColor = UIColor(red: 14.0/255.0, green: 0.0/255.0, blue: 175.0/255.0, alpha: 1.0).CGColor
         
-        if isGroup == 0 {
+        if isGroup == "0" {
            
             let imgRecognizer = UITapGestureRecognizer(target: self, action:#selector(ChattingMainVC.clickFrndImage(_:)))
             imgRecognizer.delegate = self

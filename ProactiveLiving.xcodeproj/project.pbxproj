@@ -114,7 +114,6 @@
 		605EAC9F1E1E651B0048EA8F /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC9A1E1E651B0048EA8F /* Define.swift */; };
 		605EACA01E1E651B0048EA8F /* HelpingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605EAC9C1E1E651B0048EA8F /* HelpingClass.swift */; };
 		606628871E2CAC0500E66659 /* AttachmentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606628861E2CAC0500E66659 /* AttachmentsVC.swift */; };
-		609A99781E3F43B90085A15C /* FrRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609A99771E3F43B90085A15C /* FrRequestVC.swift */; };
 		60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A7CADE1DDD6BB10033BA1E /* Social.framework */; };
 		60B42E4E1E276B61001A4CB1 /* Beans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B42E4D1E276B61001A4CB1 /* Beans.swift */; };
 		60B755F31E1E6B94003650A1 /* TLTagsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B755F21E1E6B94003650A1 /* TLTagsControl.m */; };
@@ -153,7 +152,7 @@
 		67BD40801C47AAC90084EFD4 /* RobotoCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BD406E1C47AAC90084EFD4 /* RobotoCondensed-LightItalic.ttf */; };
 		67BD40811C47AAC90084EFD4 /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BD406F1C47AAC90084EFD4 /* RobotoCondensed-Regular.ttf */; };
 		67C4179A1C4E69A6006B76DE /* ForgotPassword2VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C417991C4E69A6006B76DE /* ForgotPassword2VC.m */; };
-		828AC6886A372D9791CE4D69 /* libPods-ProactiveLiving.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0E80E747E9528DEF38B7FFF /* libPods-ProactiveLiving.a */; };
+		719949D2948D0BE9F2FE9CBD /* libPods-ProactiveLiving.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E71382609AD0AB059BF338 /* libPods-ProactiveLiving.a */; };
 		8FAAA5EB1E346F6500232727 /* AddOrEditVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAAA5EA1E346F6500232727 /* AddOrEditVideoVC.swift */; };
 		92E091D31D3775AF00BEC575 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E091D11D3775AF00BEC575 /* AWSRuntime.framework */; };
 		92E091D41D3775AF00BEC575 /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E091D21D3775AF00BEC575 /* AWSS3.framework */; };
@@ -451,7 +450,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		226D6395651946217E4B7158 /* Pods-ProactiveLiving.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProactiveLiving.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving.release.xcconfig"; sourceTree = "<group>"; };
+		404BE34E9F1AA2200DE7EBFE /* Pods-ProactiveLiving.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProactiveLiving.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving.debug.xcconfig"; sourceTree = "<group>"; };
 		600DA7AA1DD3331300A95595 /* RecurrenceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecurrenceVC.swift; path = Recurrence/RecurrenceVC.swift; sourceTree = "<group>"; };
 		600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastVC.swift; sourceTree = "<group>"; };
 		601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
@@ -650,7 +649,6 @@
 		605EAC9C1E1E651B0048EA8F /* HelpingClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpingClass.swift; sourceTree = "<group>"; };
 		605EAC9D1E1E651B0048EA8F /* ProactiveLiving-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProactiveLiving-Bridging-Header.h"; sourceTree = "<group>"; };
 		606628861E2CAC0500E66659 /* AttachmentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsVC.swift; sourceTree = "<group>"; };
-		609A99771E3F43B90085A15C /* FrRequestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrRequestVC.swift; sourceTree = "<group>"; };
 		60A7CADE1DDD6BB10033BA1E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		60B42E4D1E276B61001A4CB1 /* Beans.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beans.swift; sourceTree = "<group>"; };
 		60B755F11E1E6B94003650A1 /* TLTagsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTagsControl.h; sourceTree = "<group>"; };
@@ -706,6 +704,7 @@
 		67BD406F1C47AAC90084EFD4 /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "RobotoCondensed-Regular.ttf"; path = "Roboto/RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		67C417981C4E69A6006B76DE /* ForgotPassword2VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgotPassword2VC.h; path = View/ForgotPassword2VC/ForgotPassword2VC.h; sourceTree = "<group>"; };
 		67C417991C4E69A6006B76DE /* ForgotPassword2VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForgotPassword2VC.m; path = View/ForgotPassword2VC/ForgotPassword2VC.m; sourceTree = "<group>"; };
+		83E71382609AD0AB059BF338 /* libPods-ProactiveLiving.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ProactiveLiving.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FAAA5EA1E346F6500232727 /* AddOrEditVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditVideoVC.swift; sourceTree = "<group>"; };
 		92E091D11D3775AF00BEC575 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSRuntime.framework; sourceTree = "<group>"; };
 		92E091D21D3775AF00BEC575 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
@@ -1070,8 +1069,7 @@
 		BAFDA8FA1D40DFC500301C01 /* GroupHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupHomeVC.swift; path = GroupChat/GroupHomeVC.swift; sourceTree = "<group>"; };
 		BAFFA5BB1D8AB8A200969211 /* MeetUpProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetUpProfileCell.swift; sourceTree = "<group>"; };
 		BAFFA5BD1D8BF2CD00969211 /* MembersCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersCollectionCell.swift; sourceTree = "<group>"; };
-		D0E80E747E9528DEF38B7FFF /* libPods-ProactiveLiving.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ProactiveLiving.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D90F08CC7011E764884D8E58 /* Pods-ProactiveLiving.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProactiveLiving.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving.debug.xcconfig"; sourceTree = "<group>"; };
+		BB9527BB5D4093616748B87D /* Pods-ProactiveLiving.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProactiveLiving.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1083,7 +1081,7 @@
 				92E091D41D3775AF00BEC575 /* AWSS3.framework in Frameworks */,
 				92E091D31D3775AF00BEC575 /* AWSRuntime.framework in Frameworks */,
 				BAC8D2A21C58D50E0084AA47 /* MapKit.framework in Frameworks */,
-				828AC6886A372D9791CE4D69 /* libPods-ProactiveLiving.a in Frameworks */,
+				719949D2948D0BE9F2FE9CBD /* libPods-ProactiveLiving.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,21 +1102,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3AED3E943CFF67F6D5E06EDB /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D90F08CC7011E764884D8E58 /* Pods-ProactiveLiving.debug.xcconfig */,
-				226D6395651946217E4B7158 /* Pods-ProactiveLiving.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		3BD02C3FB4517E2652864AFB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				60A7CADE1DDD6BB10033BA1E /* Social.framework */,
 				BAC8D2A11C58D50E0084AA47 /* MapKit.framework */,
-				D0E80E747E9528DEF38B7FFF /* libPods-ProactiveLiving.a */,
+				83E71382609AD0AB059BF338 /* libPods-ProactiveLiving.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1682,7 +1671,7 @@
 				671C3D861C44FB72006A5423 /* ProactiveLivingUITests */,
 				671C3D5D1C44FB72006A5423 /* Products */,
 				3BD02C3FB4517E2652864AFB /* Frameworks */,
-				3AED3E943CFF67F6D5E06EDB /* Pods */,
+				BB2F864792B11862BCA271A5 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1978,7 +1967,6 @@
 				BABB57DB1CEF105100F7C879 /* MessagesVC.m */,
 				BABB57DD1CEF161200F7C879 /* MessageCell.h */,
 				BABB57DE1CEF161200F7C879 /* MessageCell.m */,
-				609A99771E3F43B90085A15C /* FrRequestVC.swift */,
 				60E0F2C21E3F539E00DC4227 /* FriendRequestVC.h */,
 				60E0F2C31E3F539E00DC4227 /* FriendRequestVC.m */,
 			);
@@ -2705,6 +2693,15 @@
 			name = GroupChat;
 			sourceTree = "<group>";
 		};
+		BB2F864792B11862BCA271A5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				404BE34E9F1AA2200DE7EBFE /* Pods-ProactiveLiving.debug.xcconfig */,
+				BB9527BB5D4093616748B87D /* Pods-ProactiveLiving.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2712,13 +2709,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 671C3D8C1C44FB72006A5423 /* Build configuration list for PBXNativeTarget "ProactiveLiving" */;
 			buildPhases = (
-				84B056BF4F6BB931157FADD6 /* 📦 Check Pods Manifest.lock */,
+				7F1753F4D5A753746924CD67 /* [CP] Check Pods Manifest.lock */,
 				671C3D581C44FB72006A5423 /* Sources */,
 				671C3D591C44FB72006A5423 /* Frameworks */,
 				671C3D5A1C44FB72006A5423 /* Resources */,
-				BD4A774529B99B96C0C31640 /* 📦 Embed Pods Frameworks */,
-				2B5B63BF3A930F4D1D136FA6 /* 📦 Copy Pods Resources */,
-				C81A74D8EA2981FDAADF49AB /* Embed Pods Frameworks */,
+				9B9005DD5681A92662F4195E /* [CP] Embed Pods Frameworks */,
+				D83413E62C834B87F6F2CEEC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2955,64 +2951,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2B5B63BF3A930F4D1D136FA6 /* 📦 Copy Pods Resources */ = {
+		7F1753F4D5A753746924CD67 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9B9005DD5681A92662F4195E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D83413E62C834B87F6F2CEEC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84B056BF4F6BB931157FADD6 /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		BD4A774529B99B96C0C31640 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C81A74D8EA2981FDAADF49AB /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -3124,7 +3105,6 @@
 				BAB0E4FA1D5DE59B00906C10 /* SocketIOClient.swift in Sources */,
 				BAFC7C7A1CB3903C00761462 /* PASToDoVC.m in Sources */,
 				BA5901491D364F86006142AC /* OAuthCore.m in Sources */,
-				609A99781E3F43B90085A15C /* FrRequestVC.swift in Sources */,
 				BAB0E4CA1D5DE33300906C10 /* AllContactsVC.m in Sources */,
 				BA5900D81D364EFD006142AC /* AppContactList.swift in Sources */,
 				BA02E0DC1CE9D4B3006DF10E /* ContactsCell.m in Sources */,
@@ -3475,14 +3455,14 @@
 		};
 		671C3D8D1C44FB72006A5423 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D90F08CC7011E764884D8E58 /* Pods-ProactiveLiving.debug.xcconfig */;
+			baseConfigurationReference = 404BE34E9F1AA2200DE7EBFE /* Pods-ProactiveLiving.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Bhupendra Singh Chauhan (5HKCR2945H)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bhupendra Singh Chauhan (5HKCR2945H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -3498,7 +3478,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a2980ead-a7df-4ccc-959b-46b0f378f824";
+				PROVISIONING_PROFILE = "ccca535e-05fe-4c6d-aace-4bd2b9fbf484";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
@@ -3508,14 +3488,14 @@
 		};
 		671C3D8E1C44FB72006A5423 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 226D6395651946217E4B7158 /* Pods-ProactiveLiving.release.xcconfig */;
+			baseConfigurationReference = BB9527BB5D4093616748B87D /* Pods-ProactiveLiving.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Bhupendra Singh Chauhan (5HKCR2945H)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bhupendra Singh Chauhan (5HKCR2945H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -3531,7 +3511,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a2980ead-a7df-4ccc-959b-46b0f378f824";
+				PROVISIONING_PROFILE = "ccca535e-05fe-4c6d-aace-4bd2b9fbf484";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 2.3;
