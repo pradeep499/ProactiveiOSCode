@@ -926,21 +926,18 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         var height = size.height + (150)
         
+        
+        
+        
         if dict["postType"] as! String != "text" {
-         /*   if IS_IPHONE_7{
-                height = height + (410 - 200)
-                
-            }else if IS_IPHONE_6plus{
-                height = height + (400 - 200)
-                
-            }else if IS_IPHONE_6{
-                height = height + (390 - 200)
-                
-            }else{
-                height = height + (380 - 200)
-            }*/
+         
             
             height = height + (400 - 210)
+            
+            //if the post is shared by then increase height of cell
+            if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
+             height = height + 10
+            }
             
         }
         
@@ -1082,9 +1079,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let str = text.stringByReplacingEmojiCheatCodesWithUnicode()
         
         let w = collectionView.bounds.size.width - 90
-        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 18 , width: Float(w) , fontName: "Roboto-Regular")
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
         
-        cell.layOut_lbl_Name_height.constant = size.height + 30
+        cell.layOut_lbl_Name_height.constant = size.height + 15
         
         
         
@@ -1212,13 +1209,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 }else{
                     //for video
                     
-                    btn_videoPlay.hidden = false
-                    
+                    btn_videoPlay.hidden = true
+                    indicator.hidden = false
+                    indicator.startAnimating()
                     
                     
                     if isExistPath {
                         let img = UIImage(contentsOfFile: fileUrl!)
                         thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                        indicator.hidden = true
+                        indicator.stopAnimating()
+                        btn_videoPlay.hidden = false
                     } else {
                         
                         //generate thumb from video url    and display on cell
@@ -1231,6 +1232,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
                             
                             if isWritten{
+                                
+                                indicator.hidden = true
+                                indicator.stopAnimating()
+                                btn_videoPlay.hidden = false
                                 
                             }
                         })

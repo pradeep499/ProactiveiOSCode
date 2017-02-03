@@ -70,7 +70,7 @@
 -(void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
     
     // bail if the current state matches the desired state
-    if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
+     if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
     
     // get a frame calculation ready
     CGFloat height = self.tabBar.frame.size.height+15;

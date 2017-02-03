@@ -11,6 +11,7 @@
 #import "Defines.h"
 #import "AppHelper.h"
 #import "UIImageView+WebCache.h"
+#import "ProactiveLiving-Swift.h"
 
 @interface FriendRequestVC ()
 
@@ -172,6 +173,7 @@
     
     UIImageView *iv_profile = (UIImageView *) [cell viewWithTag:1];
     UILabel *lbl_name = (UILabel *) [cell viewWithTag:2];
+    UILabel *lbl_time = (UILabel *) [cell viewWithTag:3];
     
     
     iv_profile.layer.borderWidth = 1.0;
@@ -196,8 +198,7 @@
     
     lbl_name.text = [NSString stringWithFormat:@"%@  %@",[[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"firstName"], [[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"lastName"]];
     
-    
-    
+    lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd hh:mm:ss" desireFormat:@"EEE MMM    D HH:mm" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
     
     return cell;
 }

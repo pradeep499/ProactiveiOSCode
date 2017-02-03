@@ -722,6 +722,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
     }
     
+    
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -737,7 +739,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
 //        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
-
+    override func viewDidDisappear(animated: Bool) {
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+            // print(finish)
+        }
+    }
     
      //MARK: - To show user image in full view  Method
     

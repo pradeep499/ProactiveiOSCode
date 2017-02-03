@@ -82,7 +82,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
                 
                 self.table_view.addGestureRecognizer(tapGesture)
-                layOutConstrain_view_writeComments_bottom.constant = keyboardHeight
+                layOutConstrain_view_writeComments_bottom.constant = keyboardHeight - 40
                 UIView.animateWithDuration(0.25, animations: { () -> Void in
                     self.view.layoutIfNeeded()
                 })

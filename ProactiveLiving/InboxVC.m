@@ -119,9 +119,17 @@
         self.btnEdit.hidden=NO;
         self.layout_widthOfBtnCreateNew.constant = 0;
         self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    }else if(currentIndex == 3){
+        self.btnEdit.hidden = true;
+        self.btnContacts.hidden = NO;
+        self.btnCreateNew.hidden = true;
+        self.layout_widthOfBtnCreateNew.constant = 0;
+        
     }
     else{
         self.btnEdit.hidden=YES;
+        self.btnContacts.hidden = NO;
+        self.btnCreateNew.hidden = NO;
         self.layout_widthOfBtnCreateNew.constant = 46;
         self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 19, 0, 0);
     }

@@ -199,7 +199,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         AppHelper.setBorderOnView(self.txtViewDesc)
 
         pickerView = UIPickerView()
-        pickerView.frame=CGRectMake(0, screenHeight-300, screenWidth, 300)
+        pickerView.frame=CGRectMake(0, screenHeight-240, screenWidth, 240)
         pickerView.backgroundColor = .whiteColor()
         
         pickerView.showsSelectionIndicator = true
@@ -218,7 +218,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         toolBar.setItems([spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
-        
+        pickerView.backgroundColor = UIColor.redColor()
         txtFieldFor.inputView = pickerView
         txtFieldFor.inputAccessoryView = toolBar
         
