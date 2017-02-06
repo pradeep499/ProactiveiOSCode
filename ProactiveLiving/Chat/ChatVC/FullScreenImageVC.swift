@@ -39,7 +39,7 @@ class FullScreenImageVC: UIViewController {
             //load from local path
             self.fullImageView.image = UIImage(contentsOfFile: imagePath)
             self.navigationController?.navigationBarHidden = false
-            
+             
         }else {
             activitIndc.hidden = false
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FullScreenImageVC.showDownloadedImage(_:)),name:"showImageFOrFullScreen", object:nil)

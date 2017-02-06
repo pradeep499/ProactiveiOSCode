@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendRequestVC : UITableViewController
+@interface FriendRequestVC : UITableViewController<UIGestureRecognizerDelegate>
 
 @end

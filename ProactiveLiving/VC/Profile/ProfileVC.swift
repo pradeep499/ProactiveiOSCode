@@ -78,7 +78,7 @@ class ProfileVC: UIViewController {
     
     func NotifyFrDetails(notification: NSNotification){
        
-        if let status = friendDetailsDict!["userStatus"]{
+        if let status = friendDetailsDict!["result"]!["userStatus"]{
             self.lbl_profileStatus.text = "Status: " + (status as! String)
         }
         

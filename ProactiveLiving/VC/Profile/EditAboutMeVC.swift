@@ -73,10 +73,18 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
             gendarStr = "Male"
             self.btnMale.setImage(UIImage(named: "radio_selected"), forState: .Normal)
             self.btnFemale.setImage(UIImage(named: "radio"), forState: .Normal)
-            return
+            
+        }else{
+            //Freeze the gender
+            
+            self.btnMale.userInteractionEnabled = false
+            self.btnFemale.userInteractionEnabled = false
+            self.setUpInputedField()
+            
+            
         }
         
-        self.setUpInputedField()
+        
     
       
     }

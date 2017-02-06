@@ -185,6 +185,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("GenericProfileTableVC") as! GenericProfileTableVC
             vc.genericType = .SocialNetworks
             vc.socialNetworkArr = self.socialNetworkListArr
+            vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
             
             self.navigationController?.pushViewController(vc, animated: true)
             

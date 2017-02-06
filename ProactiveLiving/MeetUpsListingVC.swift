@@ -187,7 +187,7 @@ class MeetUpsListingVC: UIViewController {
             let eventDate = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE MMM D ",  dateStr: dateStr)
             if let eventTime =   self.arrData[indexPath.row]["eventStartTime"] as? String{
                             
-              lbl_eventDate.text =  String(HelpingClass.convertDateFormat("EEE MMM D hh:mm a", desireFormat: "EEE MMM    D HH:mm",  dateStr: eventDate + eventTime)).capitalizedString
+              lbl_eventDate.text =  String(HelpingClass.convertDateFormat("EEE MMM D hh:mm a", desireFormat: "EEE MMM    d HH:mm",  dateStr: eventDate + eventTime)).capitalizedString
             }else{
                 
                 lbl_eventDate.text = eventDate

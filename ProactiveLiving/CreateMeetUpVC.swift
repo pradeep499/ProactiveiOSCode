@@ -120,7 +120,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.tokenField.reloadTagSubviews()
 
             txtFieldFor.text = self.dataDict["for"] as? String
-            txtFieldOn.text = self.dataDict["eventDate"] as? String
+            let on = self.dataDict["eventDate"] as? String
+        
+            txtFieldOn.text = HelpingClass.convertDateFormat("dd/MM/YYYY", desireFormat:"MM/dd/YYYY", dateStr: on!)
+            
             txtFieldAt.text = self.dataDict["eventStartTime"] as? String
             txtField_eventEndTime.text = self.dataDict["eventEndTime"] as? String
             txtFieldWhereFirst.text = self.dataDict["locationName"] as? String
@@ -172,7 +175,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.tokenField.reloadTagSubviews()
             
             txtFieldFor.text = self.dataDict["for"] as? String
-            txtFieldOn.text = self.dataDict["eventDate"] as? String
+            let on = self.dataDict["eventDate"] as? String
+            txtFieldOn.text = HelpingClass.convertDateFormat("dd/MM/YYYY", desireFormat:"MM/dd/YYYY", dateStr: on!)
+            
             txtFieldAt.text = self.dataDict["eventStartTime"] as? String
             txtField_eventEndTime.text = self.dataDict["eventEndTime"] as? String
             txtFieldWhereFirst.text = self.dataDict["webLink"] as? String
@@ -218,7 +223,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         toolBar.setItems([spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
-        pickerView.backgroundColor = UIColor.redColor()
+      //  pickerView.backgroundColor = UIColor.redColor()
         txtFieldFor.inputView = pickerView
         txtFieldFor.inputAccessoryView = toolBar
         
@@ -328,6 +333,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
+        
+        HelpingClass.getUserDetails()
     }
     
     func addCotact(contact : [String : AnyObject] ) -> Void {
@@ -421,7 +428,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         
         let dateFormatter1 = NSDateFormatter()
-        dateFormatter1.dateFormat = "dd/MM/yyyy"
+        dateFormatter1.dateFormat = "MM/dd/yyyy"
         let selectedDate = dateFormatter1.stringFromDate(datePicker.date)
       
         self.txtFieldOn.text = selectedDate
@@ -577,7 +584,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 dict["links"]=linksArray as [AnyObject]
                 dict["attachments"]="abc.png"
                 dict["createdBy"]=ChatHelper.userDefaultForKey("userId") as String
-                dict["eventDate"]=txtFieldOn.text
+                dict["eventDate"] =   HelpingClass.convertDateFormat("MM/dd/YYYY", desireFormat:"dd/MM/YYYY", dateStr: txtFieldOn.text!)
                 dict["eventStartTime"]=txtFieldAt.text
                 dict["eventEndTime"]=txtField_eventEndTime.text
                 dict["isAllow"]=isForwardAllowed

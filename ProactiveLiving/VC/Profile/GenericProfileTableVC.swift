@@ -24,7 +24,7 @@ class GenericProfileTableVC: UIViewController {
     var genericType:ProfileGenericType?
     
     @IBOutlet weak var lbl_title: UILabel!
-    @IBOutlet weak var lbl_summary: UILabel!
+    @IBOutlet weak var tv_summary: UITextView!
     @IBOutlet weak var tv: UITableView!
     
     @IBOutlet weak var headerView_AboutMe: UIView!    
@@ -77,7 +77,7 @@ class GenericProfileTableVC: UIViewController {
             self.tv.tableFooterView = UIView(frame: CGRectMake(0, 0, 0, 0))
             self.tv.tableHeaderView = self.headerView_AboutMe
             
-            self.lbl_summary.text = HelpingClass.getUserDetails().summary
+            self.tv_summary.text = HelpingClass.getUserDetails().summary
             
             
             //check logged in user or friend
@@ -87,7 +87,7 @@ class GenericProfileTableVC: UIViewController {
             }else{
                 //Friend
                 self.btnRight.hidden = true
-                self.lbl_summary.text = self.getFriendsValue("summary")
+                self.tv_summary.text = self.getFriendsValue("summary")
             }
             
             

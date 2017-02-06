@@ -55,8 +55,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     var popOverTableView:UITableView?
     var popover:DXPopover = DXPopover()
-    var popoverHeight:CGFloat = 130
-    var popOverCellData = ["Block access to my profile", "Block access to my cell number", "Add to Favorites",  "Unfriend", "Report Member"]
+    var popoverHeight:CGFloat = 240
+    var popOverCellData = [ "Add to Favorites",  "Unfriend", "Block access to my profile", "Block access to my cell number", "Report Member"]
 
 
     override func viewDidLoad() {
@@ -64,12 +64,15 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
 
         bottomTabBar = self.tabBarController as? CustonTabBarController
         
+        self.iv_profileBg.image = nil
+        self.lbl_name.text = ""
+        self.lbl_address.text = ""
         self.setUpViewControllers()
         self.setUpProfilePage()
         
         //popover table
         popOverTableView = UITableView()
-        popOverTableView?.frame = CGRectMake(0, 0, 170, popoverHeight)
+        popOverTableView?.frame = CGRectMake(0, 0, 270, popoverHeight)
         popOverTableView?.dataSource = self
         popOverTableView?.delegate = self
       //  popOverTableView?.separatorStyle = .None
@@ -356,7 +359,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     
     @IBAction func onClickCallBtn(sender: AnyObject) {
-        let mobilePhone = self.friendDict!["mobilePhone"] as! String
+        let mobilePhone = self.friendDict!["result"]!["mobilePhone"] as! String
         if let phoneCallURL:NSURL = NSURL(string: "tel://\(mobilePhone)") {
             let application:UIApplication = UIApplication.sharedApplication()
             if (application.canOpenURL(phoneCallURL)) {
@@ -376,18 +379,18 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         //
         let contObj = ChatContactModelClass()
-        contObj.userId = self.friendDict!["_id"] as! String
+        contObj.userId = self.friendDict!["result"]!["_id"] as! String
         contObj.loginUserId = ChatHelper.userDefaultForKey(_ID)
-        contObj.name =  self.friendDict!["firstName"] as! String
-        contObj.email = self.friendDict!["email"] as! String
+        contObj.name =  self.friendDict!["result"]!["firstName"] as! String
+        contObj.email = self.friendDict!["result"]!["email"] as! String
         contObj.isBlock = "0";
         contObj.isReport = "0";
         contObj.isFav = "no";
         contObj.isFriend = "yes";
-        contObj.userImgString = self.friendDict!["imgUrl"] as! String
+        contObj.userImgString = self.friendDict!["result"]!["imgUrl"] as! String
         contObj.isFromCont = "yes";
-        contObj.phoneNumber = self.friendDict!["mobilePhone"] as! String
-        contObj.firstName = self.friendDict!["firstName"] as! String
+        contObj.phoneNumber = self.friendDict!["result"]!["mobilePhone"] as! String
+        contObj.firstName = self.friendDict!["result"]!["firstName"] as! String
         
         chatMainVC.contObj = contObj;
         chatMainVC.isFromClass = "";
@@ -459,6 +462,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
         vc.genericType = .Gallery
         vc.pageFrom = "ProfileContainer"
+        vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -560,6 +564,32 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
        // self.performSelector(Selector(""), withObject: imgData, afterDelay: 0.5)
         self.uploadImage(imgData, imgName: imgName)
+        
+    }
+    
+    //MARK: - SetUp Fr Page
+    
+    func setUpFrPage() -> Void {
+        
+         let frStatus = self.friendDict!["friendCheck"]!["friendshipStatus"]! as! Int
+        
+        if frStatus == 0{
+            //Pending
+            self.btnSendRequest.setImage(UIImage(named: "fr_request_sent"), forState: .Normal)
+            self.btnSendRequest.userInteractionEnabled = true
+        }else if frStatus == 1{
+            //Pending
+            self.btnSendRequest.setImage(UIImage(named: "fr_added"), forState: .Normal)
+            self.btnSendRequest.userInteractionEnabled = true
+        }else if frStatus == 2{
+            //Pending
+            self.btnSendRequest.setImage(UIImage(named: "pf_add"), forState: .Normal)
+        }
+        
+        
+        
+        
+        
         
     }
     
@@ -696,7 +726,9 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
-            parameters["userId"] = friendId
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["friendId"] = friendId
+            
             
             
             
@@ -711,27 +743,29 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                     
                     if ((responseDict["error"] as! Int) == 0) {
                        
-                        print("Friend Details....", responseDict["result"])
+                        print("Friend Details....", responseDict)
                         
-                        self.friendDict = responseDict["result"] as! [String:AnyObject]
+                        self.friendDict = responseDict as! [String:AnyObject]// responseDict["result"] as! [String:AnyObject]
                         
                         // set UI
                         
-                        let url = NSURL(string: self.friendDict!["imgUrl"] as! String )
-                        let bgUrl = NSURL(string: self.friendDict!["imgCoverUrl"] as! String)
+                        let url = NSURL(string: self.friendDict!["result"]!["imgUrl"] as! String )
+                        let bgUrl = NSURL(string: self.friendDict!["result"]!["imgCoverUrl"] as! String)
                         
                         self.iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
                         self.iv_profileBg.sd_setImageWithURL(bgUrl, placeholderImage: UIImage(named: ""))
                         
                         
                         
-                        let fName = self.friendDict!["firstName"] as! String
-                        let lName = self.friendDict!["lastName"] as! String
+                        let fName = self.friendDict!["result"]!["firstName"] as! String
+                        let lName = self.friendDict!["result"]!["lastName"] as! String
                         
                         self.lbl_name.text = fName + " " + lName
-                        self.lbl_address.text = self.friendDict!["liveIn"] as! String
+                        self.lbl_address.text = self.friendDict!["result"]!["liveIn"] as! String
                         
                         friendDetailsDict = self.friendDict!
+                        
+                        self.setUpFrPage()
                         
                         NSNotificationCenter.defaultCenter().postNotificationName("NotifyFrDetails", object: self.friendDict!)
  
@@ -769,7 +803,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["friendMobile"] =  self.friendDict!["mobilePhone"] as! String
+            parameters["friendMobile"] =  self.friendDict!["result"]!["mobilePhone"] as! String
             
             //call global web service class latest
             Services.postRequest(ServiceSendFriendRequest, parameters: parameters, completionHandler:{
@@ -810,6 +844,21 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
 
 extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
     
+    func tableView(tableView:UITableView!, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat {
+        
+        if indexPath.row == 1 {
+            
+            let frStatus =  self.friendDict!["friendCheck"]!["friendshipStatus"]!  as! Int
+            
+             if frStatus == 2{
+                //Pending
+               return 0.0
+            }
+        }
+        
+        return 45
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -825,8 +874,27 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if tableView == popOverTableView{
             let cell = UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
+            
             cell.textLabel?.text = popOverCellData[indexPath.row]
-            cell.textLabel?.textAlignment = .Center
+            if indexPath.row == 1 {
+                
+                let frStatus =  self.friendDict!["friendCheck"]!["friendshipStatus"]!  as! Int
+                
+                if frStatus == 0{
+                    //Pending
+                    cell.textLabel?.text = "Cancel Request"
+                }else if frStatus == 1{
+                    //friend
+                    cell.textLabel?.text = "Unfriend"
+                }else if frStatus == 2{
+                    //send request
+                    cell.textLabel?.text = "Send Rquest"
+                }
+                
+                
+            }
+            
+            cell.textLabel?.textAlignment = .Left
             cell.selectionStyle = .None
             return cell
         }
@@ -839,7 +907,22 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
             NSLog("\(popOverCellData[indexPath.row]) selected")
             self.popover.dismiss()
             
-            if indexPath.row == 0 {
+            if indexPath.row == 0{
+                
+            
+                
+                
+                
+            }else if indexPath.row == 1{
+                //unfriend
+                
+                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want unfriend ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                    
+                    if str == "Yes"{
+                    }
+                }
+                
+            }else if indexPath.row == 2 {
                 //block  member
                 HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to block member's profile ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
                     
@@ -848,7 +931,10 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                     }
                 }
                 
-            }else if indexPath.row == 1 {
+                
+                
+            }else if indexPath.row == 3{
+                
                 //block ceel number
                 HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to block member's cell number ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
                     
@@ -856,18 +942,8 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                         self.blockFriendAPI()
                     }
                 }
-                
-            }else if indexPath.row == 2 {
-                
-            }else if indexPath.row == 3{
-                 //unfriend
-                
-                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want unfriend ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
-                    
-                    if str == "Yes"{
-                     }
-                }
             }else{
+                //report mem
                 self.sendMail()
             }
             
@@ -943,10 +1019,10 @@ extension ProfileContainerVC:MFMailComposeViewControllerDelegate{
         composeVC.setToRecipients(["support@proactively.com"])
         composeVC.setSubject("Report Member.")
         
-        let fName = self.friendDict!["firstName"] as! String
-        let lName = self.friendDict!["lastName"] as! String
-        let email = self.friendDict!["email"] as! String
-        let mobilePhone = self.friendDict!["mobilePhone"] as! String
+        let fName = self.friendDict!["result"]!["firstName"] as! String
+        let lName = self.friendDict!["result"]!["lastName"] as! String
+        let email = self.friendDict!["result"]!["email"] as! String
+        let mobilePhone = self.friendDict!["result"]!["mobilePhone"] as! String
         
         let body = "Name: " + fName + " " + lName + "/n" + "Mb: " + mobilePhone + "/n" + "Email: " + email
         

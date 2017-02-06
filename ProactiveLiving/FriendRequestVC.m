@@ -155,6 +155,43 @@
 
 
 
+-(void)goToProfilePage:(NSString *) userId{
+    
+    ProfileContainerVC *PFVC = [[AppHelper getProfileStoryBoard] instantiateViewControllerWithIdentifier:@"ProfileContainerVC"];
+    PFVC.viewerUserID = userId;
+    
+    
+    [self.navigationController pushViewController:PFVC animated:false];
+    
+}
+
+
+
+- (void)tapGestureTapProfileIcon:(UITapGestureRecognizer *)sender {
+    
+    CGPoint location = [sender locationInView:self.view];
+    
+    if (CGRectContainsPoint([self.view convertRect:self.tableView.frame fromView:self.tableView.superview], location))
+    {
+        CGPoint locationInTableview = [self.tableView convertPoint:location fromView:self.view];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:locationInTableview];
+        
+        if (indexPath){
+            
+            NSString *friendID = [[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"_id"];
+            
+            [self goToProfilePage:friendID];
+            
+        }
+        
+        
+        
+    }
+}
+
+
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -174,6 +211,11 @@
     UIImageView *iv_profile = (UIImageView *) [cell viewWithTag:1];
     UILabel *lbl_name = (UILabel *) [cell viewWithTag:2];
     UILabel *lbl_time = (UILabel *) [cell viewWithTag:3];
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureTapProfileIcon:)];
+    gesture.delegate = self;
+    iv_profile.userInteractionEnabled = true;
+    [iv_profile addGestureRecognizer:gesture];
     
     
     iv_profile.layer.borderWidth = 1.0;
@@ -198,7 +240,7 @@
     
     lbl_name.text = [NSString stringWithFormat:@"%@  %@",[[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"firstName"], [[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"lastName"]];
     
-    lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd hh:mm:ss" desireFormat:@"EEE MMM    D HH:mm" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
+    lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd hh:mm:ss" desireFormat:@"dd MMM hh:mm a" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
     
     return cell;
 }

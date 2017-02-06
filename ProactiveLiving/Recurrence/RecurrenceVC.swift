@@ -312,7 +312,7 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
         self.setUpEndRecurrenceBtnImg(self.btn_noEndDate)
         
         self.tf_occurrence.text = "";
-        self.tf_endDateRangeofRecurrence.text = "31/12/2030"
+        self.tf_endDateRangeofRecurrence.text = " 12/31/2030"
         endDateOfRecurrenceStr = "No End Date";
         self.tf_endDateRangeofRecurrence.resignFirstResponder()
     }
@@ -341,7 +341,7 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
     func calculateEndDateOfRecurrence() -> Void {
         
         let df = NSDateFormatter()
-        df.dateFormat = "dd/MM/yyyy"
+        df.dateFormat = "MM/dd/yyyy"
         
         
         //check pattern
@@ -399,7 +399,7 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
         
        
         let dateFormatter1 = NSDateFormatter()
-        dateFormatter1.dateFormat = "dd/MM/yyyy"
+        dateFormatter1.dateFormat = "MM/dd/yyyy"
         let selectedDate = dateFormatter1.stringFromDate(datePicker.date)
         
         self.tf_endDateRangeofRecurrence.text = selectedDate
