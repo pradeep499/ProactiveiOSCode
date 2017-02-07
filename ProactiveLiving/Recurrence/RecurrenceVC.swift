@@ -229,7 +229,7 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
         dict["recurevery"] = String(self.tf_recureEvery.text!)
     
         let df = NSDateFormatter.init()
-        df .dateFormat = "dd/MM/yyyy"
+        df .dateFormat = "MM/dd/yyyy"
         let endDate = df.dateFromString(self.tf_endDateRangeofRecurrence.text!)
         
         df .dateFormat = "yyyy/MM/dd"

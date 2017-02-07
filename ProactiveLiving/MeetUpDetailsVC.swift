@@ -193,7 +193,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         if Bool(arrayForBool[indexPath.section] as NSNumber) {
             switch indexPath.section {
             case 0:
-                return 70
+                return 84
+                
             case 1:
                 return ((self.dataDict["desc"] as! String?)?.sizeWithFont(UIFont(name: FONT_LIGHT, size: 13.0)!, constrainedToWidth: screenWidth-16, lineBreakMode: .ByWordWrapping).height)!+10
             case 2:

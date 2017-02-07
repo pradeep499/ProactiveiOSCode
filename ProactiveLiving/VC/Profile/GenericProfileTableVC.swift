@@ -661,9 +661,9 @@ extension GenericProfileTableVC: UITableViewDataSource{
     
     func getFriendsValue(forKey:String) -> String {
         
-        if  (friendDetailsDict![forKey] != nil)  {
+        if  (friendDetailsDict!["result"]![forKey] != nil)  {
             
-            let value = friendDetailsDict![forKey] as? String ?? ""
+            let value = friendDetailsDict!["result"]![forKey] as? String ?? ""
             
             return value
         }

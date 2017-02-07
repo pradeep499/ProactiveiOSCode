@@ -55,7 +55,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     var popOverTableView:UITableView?
     var popover:DXPopover = DXPopover()
-    var popoverHeight:CGFloat = 240
+    var popoverHeight:CGFloat = 235
     var popOverCellData = [ "Add to Favorites",  "Unfriend", "Block access to my profile", "Block access to my cell number", "Report Member"]
 
 
@@ -72,7 +72,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         //popover table
         popOverTableView = UITableView()
-        popOverTableView?.frame = CGRectMake(0, 0, 270, popoverHeight)
+        popOverTableView?.frame = CGRectMake(0, 0, 275, popoverHeight)
         popOverTableView?.dataSource = self
         popOverTableView?.delegate = self
       //  popOverTableView?.separatorStyle = .None
@@ -494,9 +494,15 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                 
                 break;
             }
+        } 
+        
+        
+    }
+   
+    func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
+        if alertView.tag == 404{
+            self.navigationController?.popViewControllerAnimated(true)
         }
-        
-        
     }
     
     
@@ -586,7 +592,14 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             self.btnSendRequest.setImage(UIImage(named: "pf_add"), forState: .Normal)
         }
         
+        let blockContactStatus = self.friendDict!["friendCheck"]!["blockContactStatus"]! as! Int
         
+        if blockContactStatus == 0{
+            //unblock
+            self.btnCall.hidden = false
+        }else if blockContactStatus == 1{
+            self.btnCall.hidden = true
+        }
         
         
         
@@ -747,6 +760,12 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         
                         self.friendDict = responseDict as! [String:AnyObject]// responseDict["result"] as! [String:AnyObject]
                         
+                        
+                        if self.friendDict!["friendCheck"]!["blockProfileStatus"] as! Int == 1{
+                            
+                            AppHelper.showAlertWithTitle(AppName, message: "Blocked by member.", tag: 404, delegate: self, cancelButton: ok, otherButton: nil)
+                            return
+                        }
                         // set UI
                         
                         let url = NSURL(string: self.friendDict!["result"]!["imgUrl"] as! String )
@@ -766,6 +785,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         friendDetailsDict = self.friendDict!
                         
                         self.setUpFrPage()
+                        self.popOverTableView?.reloadData()
                         
                         NSNotificationCenter.defaultCenter().postNotificationName("NotifyFrDetails", object: self.friendDict!)
  
@@ -892,6 +912,26 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 }
                 
                 
+                
+                
+            }else if indexPath.row == 2  {
+                let ownerBlockProfileStatus = self.friendDict!["friendCheck"]!["ownerBlockProfileStatus"]! as! Int
+                
+                if ownerBlockProfileStatus == 1{
+                    
+                    cell.textLabel?.text = "Unblock access to my profile"
+                }else{
+                    cell.textLabel?.text = "Block access to my profile"
+                }
+            }else if indexPath.row == 3  {
+                  let ownerBlockContactStatus = self.friendDict!["friendCheck"]!["ownerBlockContactStatus"]! as! Int
+                
+                if ownerBlockContactStatus == 1{
+                    
+                    cell.textLabel?.text = "Unblock access to my cell number"
+                }else{
+                    cell.textLabel?.text = "Block access to my cell number"
+                }
             }
             
             cell.textLabel?.textAlignment = .Left
@@ -923,11 +963,22 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 }
                 
             }else if indexPath.row == 2 {
-                //block  member
-                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to block member's profile ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                //block  profile
+                
+                var msg = ""
+                let ownerBlockProfileStatus = self.friendDict!["friendCheck"]!["ownerBlockProfileStatus"]! as! Int
+                
+                if ownerBlockProfileStatus == 1{
+                    msg = "unblock"
+                }else{
+                    msg = "block"
+                }
+                
+                
+                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to " + msg + " member's profile ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
                     
                     if str == "Yes"{
-                        self.blockFriendAPI()
+                        self.blockFriendAPI(1)
                     }
                 }
                 
@@ -936,10 +987,20 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
             }else if indexPath.row == 3{
                 
                 //block ceel number
-                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to block member's cell number ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                
+                var msg = ""
+                let ownerBlockContactStatus = self.friendDict!["friendCheck"]!["ownerBlockContactStatus"]! as! Int
+                
+                if ownerBlockContactStatus == 1{
+                    msg = "unblock"
+                }else{
+                    msg = "block"
+                }
+                
+                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to " + msg + " cell number ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
                     
                     if str == "Yes"{
-                        self.blockFriendAPI()
+                        self.blockFriendAPI(0)
                     }
                 }
             }else{
@@ -954,7 +1015,8 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
    
     
     
-    func blockFriendAPI() {
+    func blockFriendAPI(blockType:Int) {
+        // 0 - contact block  1-profile block
         
         if AppDelegate.checkInternetConnection() {
             //show indicator on screen
@@ -962,12 +1024,36 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["status"] = NSNumber.init(int: 3)
+            parameters["blockType"] = NSNumber.init(integer: blockType)
             parameters["friendId"] = viewerUserID
-             
+            
+            if blockType == 0 {
+                
+                let ownerBlockContactStatus = self.friendDict!["friendCheck"]!["ownerBlockContactStatus"]! as! Int
+                
+                if ownerBlockContactStatus == 1{
+                    
+                    parameters["blockStatus"] = NSNumber.init(integer: 0)
+                }else{
+                    parameters["blockStatus"] = NSNumber.init(integer: 1)
+                }
+                
+            }else{
+                
+                let ownerBlockProfileStatus = self.friendDict!["friendCheck"]!["ownerBlockProfileStatus"]! as! Int
+                
+                if ownerBlockProfileStatus == 1{
+                    
+                    parameters["blockStatus"] = NSNumber.init(integer: 0)
+                }else{
+                    parameters["blockStatus"] = NSNumber.init(integer: 1)
+                }
+            }
+            
+            
             
             //call global web service class latest
-            Services.postRequest(ServiceFriendRequestAction, parameters: parameters, completionHandler:{
+            Services.postRequest(ServiceBlockUserAction, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 
@@ -980,8 +1066,36 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                         
                         print(responseDict["result"])
                         
-                        AppHelper.showAlertWithTitle(AppName, message:"Friend has been blocked.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        var msg = ""
+                        if blockType == 0{
+                            //cell
+                            let ownerBlockContactStatus = self.friendDict!["friendCheck"]!["ownerBlockContactStatus"]! as! Int
+                            
+                            if ownerBlockContactStatus == 1{
+                                msg = "Cell Number has been unblocked."
+                            }else{
+                                msg = "Cell Number has been blocked."
+                            }
+                            
+                        }else if blockType == 1{
+                            //profile
+                            
+                            
+                            let ownerBlockProfileStatus = self.friendDict!["friendCheck"]!["ownerBlockProfileStatus"]! as! Int
+                            
+                            if ownerBlockProfileStatus == 1{
+                                
+                                msg = "Friend has been unblocked."
+                            }else{
+                                msg = "Friend has been blocked."
+                            }
+                            
+                        }
                         
+                        AppHelper.showAlertWithTitle(AppName, message:msg, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                        
+                        self.getFriendProfileDetailsAPI(self.viewerUserID)
                         
                     }
                     

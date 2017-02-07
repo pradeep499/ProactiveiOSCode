@@ -100,6 +100,7 @@
 #define ServiceGetAllRequest         @"users/getAllRequest"
 #define ServiceFriendRequestAction         @"users/friendRequestAction"
 #define ServiceGetUserFriendList        @"users/getUserFriendList"
+#define ServiceBlockUserAction        @"users/blockUserAction"
 
 
 
