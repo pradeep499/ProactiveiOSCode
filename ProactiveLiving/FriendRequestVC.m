@@ -133,6 +133,14 @@
                     [requestArr  removeObjectAtIndex:indexPath.row];
                     [self.tableView reloadData];
                     
+                    if (isAccept) {
+                        [AppHelper showAlertWithTitle:AppName message:@"Friend request is accepted." tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                    }else{
+                        
+                        [AppHelper showAlertWithTitle:AppName message:@"Friend request is declined." tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                        
+                    }
+                    
                 }
                 else
                 {
@@ -240,7 +248,7 @@
     
     lbl_name.text = [NSString stringWithFormat:@"%@  %@",[[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"firstName"], [[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"lastName"]];
     
-    lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd hh:mm:ss" desireFormat:@"dd MMM hh:mm a" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
+    lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd HH:mm:ss" desireFormat:@"dd MMM hh:mm a" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
     
     return cell;
 }

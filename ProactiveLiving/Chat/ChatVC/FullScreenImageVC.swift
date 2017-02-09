@@ -23,7 +23,7 @@ class FullScreenImageVC: UIViewController {
         activitIndc.hidden = true
         bottomTabBar = self.tabBarController as? CustonTabBarController
         fullImageView.contentMode = .ScaleAspectFit
-        
+        fullImageView.image = nil
         
         if downLoadPath == "0" {
              fullImageView.image = UIImage(contentsOfFile: imagePath)

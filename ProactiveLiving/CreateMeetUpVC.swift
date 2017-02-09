@@ -597,7 +597,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 {
                     var tempDict = Dictionary<String,AnyObject>()
                     tempDict["userId"]=myobject["_id"] as! String
-                    tempDict["mobilePhone"]=myobject["mobilePhone"] as! String
+               //     tempDict["mobilePhone"]=myobject["mobilePhone"] as! String
                     
                     if let firstName = myobject["firstName"] as? String {
                         tempDict["firstName"] = firstName

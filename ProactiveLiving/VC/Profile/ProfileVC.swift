@@ -19,7 +19,7 @@ class ProfileVC: UIViewController {
     //to check owner or friend not nill all time
     var viewerUserID:String!
     
-    
+    var bottomTabBar : CustonTabBarController!
     
     
     
@@ -28,6 +28,9 @@ class ProfileVC: UIViewController {
         
 
         self.lbl_profileStatus.text = "Status: "
+        
+        bottomTabBar = self.tabBarController as? CustonTabBarController
+        
         
         if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
             //Owner
@@ -50,6 +53,10 @@ class ProfileVC: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        bottomTabBar = self.tabBarController as? CustonTabBarController
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+            // print(finish)
+        }
         self.setUpCollectionView()
     }
 
@@ -78,7 +85,7 @@ class ProfileVC: UIViewController {
     
     func NotifyFrDetails(notification: NSNotification){
        
-        if let status = friendDetailsDict!["result"]!["userStatus"]{
+        if let status = friendDetailsDict!["result"]!["userStatus"] ?? ""{
             self.lbl_profileStatus.text = "Status: " + (status as! String)
         }
         

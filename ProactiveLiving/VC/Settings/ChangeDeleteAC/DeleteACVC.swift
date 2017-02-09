@@ -90,6 +90,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
     
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
         
+        self.resignTextField()
         
         
         if  self.tf_countryCode.text?.characters.count < 1 {
@@ -117,6 +118,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         self.deleteACAPI()
         
         self.resignTextField()
+        
         
     }
     
@@ -215,6 +217,9 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                     if ((responseDict["error"] as! Int) == 0) {
                         
                         print(responseDict["result"])
+                        self.tf_phoneNo.text = ""
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: "Friend request has sent.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                         
                         
                     } else {
@@ -224,7 +229,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                         if responseDict["errorMsg"] as! String == "Friend Not Found"{
                             
                             
-                            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: "Do You want to invite ? " + String(self.tf_phoneNo.text) , cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+                            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: "Do You want " + String(self.tf_phoneNo.text!) + " to invite ? " , cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
                                 
                                 if str == "Yes"{
                                     self.openDefaultSharing("")

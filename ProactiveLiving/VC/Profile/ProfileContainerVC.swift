@@ -90,9 +90,9 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         self.navigationController?.navigationBarHidden = true
         
-     //   bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
             // print(finish)
-     //   }
+         }
         
         
     }
@@ -236,17 +236,45 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     func bgIvTaped(gesture:UIGestureRecognizer) -> Void {
         
-        if String(HelpingClass.getUserDetails().imgCoverUrl).characters.count > 1 {
-            self.goToFullScreen(HelpingClass.getUserDetails().imgCoverUrl)
+        if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+            //Owner
+            if String(HelpingClass.getUserDetails().imgCoverUrl).characters.count > 1 {
+                self.goToFullScreen(HelpingClass.getUserDetails().imgCoverUrl)
+            }
+        }else{
+            //friend
+            let imgCoverUrl = self.friendDict!["result"]!["imgCoverUrl"]! as! String
+            
+            if String(imgCoverUrl).characters.count > 1 {
+                self.goToFullScreen(imgCoverUrl)
+            }
+            
         }
+        
+        
+        
+        
         
     
     }
     
     func profileIvTaped(gesture:UIGestureRecognizer) -> Void {
         
-        if String(HelpingClass.getUserDetails().imgUrl).characters.count > 1 {
-            self.goToFullScreen(HelpingClass.getUserDetails().imgUrl)
+        
+        
+        if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+            //Owner
+            if String(HelpingClass.getUserDetails().imgUrl).characters.count > 1 {
+                self.goToFullScreen(HelpingClass.getUserDetails().imgUrl)
+            }
+        }else{
+            //friend
+            let imgUrl = self.friendDict!["result"]!["imgUrl"]! as! String
+            
+            if String(imgUrl).characters.count > 1 {
+                self.goToFullScreen(imgUrl)
+            }
+            
         }
         
        
@@ -841,7 +869,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         
                         AppHelper.showAlertWithTitle(AppName, message:"Friend request sent successfuly.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                         
-                        
+                        self.getFriendProfileDetailsAPI(self.viewerUserID)
                     }
                     
                 } else if (status == "Error"){
@@ -869,8 +897,12 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
         if indexPath.row == 1 {
             
             let frStatus =  self.friendDict!["friendCheck"]!["friendshipStatus"]!  as! Int
+            if frStatus == 0{
+                //cancel
+                return 0.0
+            }
             
-             if frStatus == 2{
+             if frStatus == 2 {
                 //Pending
                return 0.0
             }
@@ -954,13 +986,39 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 
                 
             }else if indexPath.row == 1{
-                //unfriend
                 
-                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want unfriend ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                let frStatus =  self.friendDict!["friendCheck"]!["friendshipStatus"]!  as! Int
+                
+                if frStatus == 0{
+                    //Pending
                     
-                    if str == "Yes"{
+                    HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want cancel sent request ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                        
+                        if str == "Yes"{
+                          //
+                        }
+                    }
+                }else if frStatus == 1{
+                    //unfriend
+                    
+                    HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want unfriend ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                        
+                        if str == "Yes"{
+                            self.unFriendAPI()
+                        }
+                    }
+                }else if frStatus == 2{
+                    //send request
+                    
+                    HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to send request ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                        
+                        if str == "Yes"{
+                            self.sendFriendRequestAPI()
+                        }
                     }
                 }
+                
+                
                 
             }else if indexPath.row == 2 {
                 //block  profile
@@ -1013,6 +1071,60 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
     
     
    
+    func unFriendAPI() {
+    
+  //  func unFriendAPI(blockType:Int) {
+        // 0 - contact block  1-profile block
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["status"] = NSNumber.init(integer: 2) // decline or unfriend
+            parameters["friendId"] = viewerUserID
+          
+            
+            //call global web service class latest
+            Services.postRequest(ServiceFriendRequestAction, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        print(responseDict["result"])
+                        
+                        let msg = "Member has been unfriend."
+                        
+                        
+                        AppHelper.showAlertWithTitle(AppName, message:msg, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                        
+                        self.getFriendProfileDetailsAPI(self.viewerUserID)
+                        
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
     
     
     func blockFriendAPI(blockType:Int) {

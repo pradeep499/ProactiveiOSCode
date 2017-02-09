@@ -153,6 +153,10 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         
         df.dateFormat = desireFormat
         
+        if date == nil {
+            return ""
+        }
+        
         return df.stringFromDate(date!)
     }
     

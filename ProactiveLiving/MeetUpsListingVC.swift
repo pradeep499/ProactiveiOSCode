@@ -184,10 +184,21 @@ class MeetUpsListingVC: UIViewController {
         
         if let dateStr =  self.arrData[indexPath.row]["eventDate"] as? String {
             
-            let eventDate = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE MMM D ",  dateStr: dateStr)
+            let eventDate = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE MMM d ",  dateStr: dateStr)
             if let eventTime =   self.arrData[indexPath.row]["eventStartTime"] as? String{
+                
+                //HH
+                let tempEvetDateStr =  HelpingClass.convertDateFormat("EEE MMM d HH:mm a", desireFormat: "EEE MMM d HH:mm",  dateStr: eventDate + eventTime)
+                
+                if tempEvetDateStr != "" {
+                    
+                    lbl_eventDate.text = String(tempEvetDateStr).capitalizedString
+                }else{
+                    //hh 
+                    lbl_eventDate.text = String(HelpingClass.convertDateFormat("EEE MMM d hh:mm a", desireFormat: "EEE MMM d HH:mm",  dateStr: eventDate + eventTime)).capitalizedString
+                }
                             
-              lbl_eventDate.text =  String(HelpingClass.convertDateFormat("EEE MMM D hh:mm a", desireFormat: "EEE MMM    d HH:mm",  dateStr: eventDate + eventTime)).capitalizedString
+              
             }else{
                 
                 lbl_eventDate.text = eventDate
