@@ -3378,8 +3378,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bhupendra Singh Chauhan (5HKCR2945H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bhupendra Singh Chauhan (5HKCR2945H)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
@@ -3403,7 +3403,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE = "143749cc-3583-408b-88a0-b63f59415d07";
+				PROVISIONING_PROFILE = "a2980ead-a7df-4ccc-959b-46b0f378f824";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3427,8 +3427,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bhupendra Singh Chauhan (5HKCR2945H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bhupendra Singh Chauhan (5HKCR2945H)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -3445,7 +3445,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE = "143749cc-3583-408b-88a0-b63f59415d07";
+				PROVISIONING_PROFILE = "a2980ead-a7df-4ccc-959b-46b0f378f824";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
