@@ -17,6 +17,7 @@
 #import "CollectionHeaderView.h"
 
 @interface ImproveVC ()
+@property (weak, nonatomic) IBOutlet UIButton *btnBack;
 
 - (IBAction)btnBackClick:(id)sender;
 
@@ -36,6 +37,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    self.btnBack.hidden = YES;
 }
 
 #pragma mark - preferredStatusBarStyle

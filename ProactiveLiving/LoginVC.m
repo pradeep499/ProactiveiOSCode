@@ -17,6 +17,7 @@
 #import "HomeVC.h"
 #import "MyPAStodoVC.h"
 //#import "CalendarVC.h"
+#import "ImproveVC.h"
 #import "RSDFDatePickerViewController.h"
 #import "InboxVC.h"
 #import "CustonTabBarController.h"
@@ -108,13 +109,54 @@
     thirdViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_home"];
     UIViewController *thirdNavigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:thirdViewController];
-    
+    /* Changed by client
+     
     MyPAStodoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPAStodoVC"];
     fourthViewController.title=@"Activate";
     fourthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_tabbar_activate"];
     UIViewController *fourthNavigationController = [[UINavigationController alloc]
                                                    initWithRootViewController:fourthViewController];
     
+    
+    
+    */
+    ImproveVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImproveVC"];
+    fourthViewController.menuTitle=@"";
+    fourthViewController.arrMenueImages=[NSArray arrayWithObjects:
+                       @"ic_improve_experts",
+                       @"ic_improve_webinars",
+                       @"ic_improve_webcasts",
+                       @"ic_improve_event",
+                       @"ic_improve_PAccircle",
+                       @"ic_improve_PASduel",
+                       @"ic_improve_education",
+                       @"ic_improve_prevention",
+                       @"ic_improve_volunteer",
+                       @"ic_improve_eatingguide",
+                       @"ic_improve_dietplans",
+                       @"ic_improve_healthymeals",
+                       @"ic_improve_wellnessapps",
+                       @"ic_improve_device",
+                       @"ic_improve_workout",
+                       @"ic_improve_inspotstionalvideos",
+                       @"ic_improve_inspirationalmessage",
+                       @"ic_improve_gratitudejournal",
+                       @"ic_improve_city",
+                       @"ic_improve_communityprograme",
+                       @"ic_improve_specialized",
+                       @"ic_improve_kids",
+                       @"ic_improve_youthprograms",
+                       @"ic_improve_seniorprograms",nil];
+    fourthViewController.title=@"Activate";
+    fourthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_tabbar_activate"];
+    
+    UIViewController *fourthNavigationController = [[UINavigationController alloc]
+                                                    initWithRootViewController:fourthViewController];
+    
+    
+    
+    
+
   /*  GetPasVC *fifthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GetPasVC"];
     fifthViewController.title=@" Menu";
     fifthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_menu"];
@@ -134,8 +176,8 @@
     self.tabBarController = [[CustonTabBarController alloc] init];
     
     
-    [self.tabBarController setViewControllers:@[firstNavigationController, secondNavigationController,
-                                           thirdNavigationController,fourthNavigationController,fifthNavigationController]];
+    [self.tabBarController setViewControllers:@[firstNavigationController , secondNavigationController, thirdNavigationController, fourthNavigationController,fifthNavigationController]];
+    [self.tabBarController setSelectedIndex:2];
     
     //set up badge Icon
     [AppDelegate getAppDelegate].tabbarController = self.tabBarController;

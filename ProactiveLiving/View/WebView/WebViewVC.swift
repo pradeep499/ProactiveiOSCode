@@ -34,7 +34,7 @@ class WebViewVC: UIViewController {
         
         switch pageName {
         case "TERMSNPOLICIES":
-            self.lblTitle.text = "TERMSNPOLICIES"
+            self.lblTitle.text = "Terms & Policies"
             self.performSelectorInBackground(#selector(self.getTermsNPolicyContentfromUrl), withObject: nil)
             break
         case "AboutUs":

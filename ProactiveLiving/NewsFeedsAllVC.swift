@@ -455,10 +455,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
    
     @IBAction func onClickPostBtn(sender: AnyObject) {
         
+        self.hideSocialSharingView()
+        
         if self.tf_share.text?.characters.count < 1 {
             AppHelper.showAlertWithTitle(AppName, message: "Post text can't be blank.", tag: 0, delegate: nil, cancelButton: "OK", otherButton: nil)
             return
         }
+        
+        
 
         self.sendPostToServer("text", isShared: false, createdDict: nil, imgOrVideoUlr: nil, captionText: nil, thumNailName:nil)
       
@@ -514,12 +518,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 fullImageVC.imagePath = imgUrls.first
                 fullImageVC.downLoadPath = "3"
             }
+            self.navigationController?.pushViewController(fullImageVC, animated: true)
             
             })
         
        
         
-        self.navigationController?.pushViewController(fullImageVC, animated: true)
+        
     }
 
     

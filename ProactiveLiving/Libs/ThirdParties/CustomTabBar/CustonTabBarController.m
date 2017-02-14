@@ -48,12 +48,25 @@
     [self.middleButton addTarget:self action:@selector(clicked:) forControlEvents:UIControlEventTouchUpInside];
     
     CGFloat heightDifference = buttonImage.size.height - self.tabBar.frame.size.height;
-    if (heightDifference < 0)
-        self.middleButton.center = self.tabBar.center;
+        
+        UIView *itemView = [self.tabBar.items.firstObject valueForKey:@"view"];
+        CGPoint X0Center = itemView.center;
+        
+        
+        if (heightDifference < 0){
+            self.middleButton.center = self.tabBar.center;
+          /*  //for 0 position
+            CGPoint X0 = self.middleButton.center;
+            X0.x = self.middleButton.frame.size.width/2 + 5;
+            self.middleButton.center = X0; */
+        }
     else
     {
         CGPoint center = self.tabBar.center;
         center.y = center.y - heightDifference/2.0;
+     /*   //for 0 position
+        center.x = self.middleButton.frame.size.width/2 + 5;
+        */
         self.middleButton.center = center;
     }
     

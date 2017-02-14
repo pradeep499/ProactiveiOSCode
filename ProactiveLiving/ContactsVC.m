@@ -94,7 +94,69 @@
     [self filter:text];
 }
 
+
 -(void)getContactsListing
+{
+    //check internet before hitting web service
+    if ([AppDelegate checkInternetConnection]) {
+        
+        //show indicator on screen
+        [AppDelegate showProgressHUDWithStatus:@"Please wait.."];
+        
+        NSMutableDictionary *parameters=[[NSMutableDictionary alloc]init];
+        [parameters setValue:AppKey forKey:@"AppKey"];
+        [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
+        [parameters setObject:@"00000000" forKey:@"mobilePhone"];
+        [parameters setObject:self.contactType forKey:@"filter"];
+        
+//        [Services requestPostUrlArr:ServiceGetContacts parameters:parameters completionHandler:^(NSError * err, NSArray *responseArr) {
+//            
+//        }];
+        
+        
+        
+        
+        //call global web service class
+        [Services postRequest:ServiceGetContacts parameters:parameters completionHandler:^(NSString *err, NSDictionary *responseDict) {
+            
+            [AppDelegate dismissProgressHUD];//dissmiss indicator
+            
+            if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
+            {
+                if ([[responseDict objectForKey:@"error"] intValue] == 0) {
+                    
+                    //Short coming array of dictionaries on Name key
+                    NSSortDescriptor *brandDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstName" ascending:YES];
+                    NSArray *sortDescriptors = [NSArray arrayWithObject:brandDescriptor];
+                    self.dataArray = [[responseDict objectForKey:@"result"] sortedArrayUsingDescriptors:sortDescriptors];
+                    
+                    //self.dataArray=[[responseDict objectForKey:@"result"] valueForKey:@"userDetails"];
+                    [self breakDataAlphabaticallyWithArray:self.dataArray];
+                    [self.tableView reloadData];
+                }
+                else
+                {
+                    [AppHelper showAlertWithTitle:[responseDict objectForKey:@"errorMsg"] message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                    [self.tableView reloadData];
+                    
+                }
+                
+            }
+            else
+                [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
+            
+        } ];
+         
+         
+       
+        
+    }
+    else
+        //show internet not available
+        [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
+}
+
+-(void)getContactsListingOLD
 {
     //check internet before hitting web service
     if ([AppDelegate checkInternetConnection]) {

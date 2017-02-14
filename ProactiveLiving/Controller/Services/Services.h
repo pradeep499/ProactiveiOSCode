@@ -11,5 +11,12 @@
 @interface Services : NSObject
 
 + (void)serviceCallWithPath:(NSString*)path withParam:(NSDictionary*)params success:(void (^)(NSDictionary *responseDict))success failure:(void (^)(NSError *error))failure;
+
 +(void)postRequest:(NSString *)urlStr parameters:(NSDictionary *)parametersDictionary completionHandler:(void (^)(NSString*, NSDictionary*))completionBlock;
+
+ 
+
++(void)requestPostUrlArr:(NSString *)strURL parameters:(NSDictionary *)params completionHandler:(void (^)(NSError*, NSArray*))completionBlock;
+
+
 @end

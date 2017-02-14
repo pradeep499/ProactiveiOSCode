@@ -226,6 +226,34 @@
     }];
 }
 
++(void)requestPostUrlArr:(NSString *)strURL parameters:(NSDictionary *)params completionHandler:(void (^)(NSError*, NSArray*))completionBlock{
+    
+    // replce UserID with _ID
+    params = [self replaceUserIDWith_ID:params];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+    
+    [manager POST:[BASE_URL stringByAppendingString:strURL] parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if([responseObject isKindOfClass:[NSDictionary class]]) {
+            
+            completionBlock(nil, responseObject);
+            
+            
+        }
+        else {
+            NSArray *responseArr = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+            
+            completionBlock(nil, responseObject);
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completionBlock(error, nil);
+        
+    }];
+}
+
+
 /*
  NSData *imageData = UIImagePNGRepresentation([UIImage imageNamed:@"attachment"]);
 

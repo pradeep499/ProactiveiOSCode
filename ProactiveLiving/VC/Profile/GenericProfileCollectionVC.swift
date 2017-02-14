@@ -53,13 +53,20 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         self.setUpCollectionView()
         willCallGetPhotosOrSocialNetworkList = true
         
+        self.setUpPage()
+        
         
     }
     
     override func viewWillAppear(animated: Bool) {
         
         self.navigationController?.navigationBarHidden = true
-        self.setUpPage()
+        
+        if genericType == .SocialNetworks {
+            
+            self.setUpPage()
+        }
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -540,12 +547,12 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                     fullImageVC.imagePath = imgUrl
                     fullImageVC.downLoadPath = "3"
                 }
-                
+                self.navigationController?.pushViewController(fullImageVC, animated: true)
             })
             
             
             
-            self.navigationController?.pushViewController(fullImageVC, animated: true)
+            
             
             
         }else if(postType == "video"){
@@ -592,6 +599,16 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         
         
         //check the thumbNail name is exist ? or generate from video url and save to db
+        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(backgroundQueue, {
+            print("This is run on the background queue")
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                print("This is run on the main queue, after the previous code in outer block")
+            })
+        })
+        
         HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
             
             

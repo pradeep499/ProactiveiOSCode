@@ -80,11 +80,16 @@ class AddOrEditVideoVC: UIViewController,UIGestureRecognizerDelegate {
             self.tv_videoType.hidden = true
         }else{
             
-            self.tf_videoTitle.resignFirstResponder()
-            self.tf_by.resignFirstResponder()
-            self.tf_videoUrl.resignFirstResponder()
-            self.tv_desc.resignFirstResponder()
+            self.resignTF()
         }
+    }
+    
+    func resignTF() -> Void {
+        self.tf_videoTitle.resignFirstResponder()
+        self.tf_by.resignFirstResponder()
+        self.tf_videoUrl.resignFirstResponder()
+        self.tv_desc.resignFirstResponder()
+        
     }
     
     func setUpTf() -> Void {
@@ -121,11 +126,14 @@ class AddOrEditVideoVC: UIViewController,UIGestureRecognizerDelegate {
     
     func submitVideoAPI() {
         
+        self.resignTF()
+        
         if (self.tf_videoType.text?.characters.count < 1 && self.tf_videoTitle.text?.characters.count < 1 && self.tf_by.text?.characters.count < 1 && self.tf_videoUrl.text?.characters.count < 1 && self.tv_desc.text?.characters.count < 1 ) {
         
             AppHelper.showAlertWithTitle(AppName, message: "All fields are mendatory.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
             return
         }
+        
         
         if AppDelegate.checkInternetConnection() {
             //show indicator on screen

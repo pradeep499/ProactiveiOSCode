@@ -538,16 +538,31 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
     
     class func isFileExistsAtPath(directory directryName:String, fileName:String, completion: (isExistPath: Bool, fileUrl:String?) -> Void){
         
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
-        let filePath = documentsDirectory.stringByAppendingPathComponent(fileName as String)
+        
+        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(backgroundQueue, {
+            print("This is run on the background queue")
+            
+            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+            let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
+            let filePath = documentsDirectory.stringByAppendingPathComponent(fileName as String)
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            //    print("This is run on the main queue, after the previous code in outer block")
+                
+                if (NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
+                    completion(isExistPath: true, fileUrl: filePath)
+                }else{
+                    completion(isExistPath: false, fileUrl: nil)
+                }
+            })
+        })
         
         
-        if (NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
-            completion(isExistPath: true, fileUrl: filePath)
-        }else{
-            completion(isExistPath: false, fileUrl: nil)
-        }
+        
+        
+        
         
         
         
