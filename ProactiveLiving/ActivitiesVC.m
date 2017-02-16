@@ -11,6 +11,7 @@
 #import "ActivityDetailVC.h"
 #import "AppHelper.h"
 #import "Defines.h"
+#import "ProactiveLiving-Swift.h"
 
 @interface ActivitiesVC ()
 
@@ -112,6 +113,18 @@
 -(void)collectionView:(UICollectionView*)collectionview didSelectItemAtIndexPath:(NSIndexPath*) indexPath
 {
     NSLog(@"%d",(int)indexPath.item);
+    
+
+    PacContainerVC *vc = [[AppHelper getPacStoryBoard] instantiateViewControllerWithIdentifier:@"PacContainerVC"];
+    vc.title = @"title";
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+    if (indexPath.row == 0) {
+        
+    }
+    
     
     /*
     switch ((int)indexPath.item) {

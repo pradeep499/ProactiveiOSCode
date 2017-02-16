@@ -10,6 +10,7 @@
 		600DA7AB1DD3331300A95595 /* RecurrenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600DA7AA1DD3331300A95595 /* RecurrenceVC.swift */; };
 		600F1CEB1DBA436000BCBC12 /* BroadcastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */; };
 		601AF81D1DDAE6B3006ABB5F /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */; };
+		601C56A81E557C5C00BFF6F3 /* GenericPacTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C56A71E557C5C00BFF6F3 /* GenericPacTableVC.swift */; };
 		60370D761E2617AF00C0121B /* EditAboutMeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60370D751E2617AF00C0121B /* EditAboutMeVC.swift */; };
 		6038637C1E2347C000FE1598 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603863771E2347C000FE1598 /* LaunchScreen.storyboard */; };
 		6038637D1E2347C000FE1598 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603863791E2347C000FE1598 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 		603863891E23755900FE1598 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 603863881E23755900FE1598 /* bg.png */; };
 		603AFCD21E24BB480081F246 /* GenericProfileTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */; };
 		603AFCD41E24DDD90081F246 /* GenericProfileCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603AFCD31E24DDD90081F246 /* GenericProfileCollectionVC.swift */; };
+		60527C4F1E542B5B00D65332 /* PAC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60527C4E1E542B5B00D65332 /* PAC.storyboard */; };
 		605EAC281E1E63C60048EA8F /* ASStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 605EAB6D1E1E63C60048EA8F /* ASStarRatingView.m */; };
 		605EAC291E1E63C60048EA8F /* NSCalendar+Components.m in Sources */ = {isa = PBXBuildFile; fileRef = 605EAB741E1E63C60048EA8F /* NSCalendar+Components.m */; };
 		605EAC2A1E1E63C60048EA8F /* NSCalendar+DateComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = 605EAB761E1E63C60048EA8F /* NSCalendar+DateComparison.m */; };
@@ -120,6 +122,8 @@
 		60CD2A011DE2C3C000125457 /* CommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CD2A001DE2C3C000125457 /* CommentsVC.swift */; };
 		60D471C71DC07D9900EAD7D9 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D471C61DC07D9900EAD7D9 /* MenuVC.swift */; };
 		60E0F2C41E3F539E00DC4227 /* FriendRequestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E0F2C31E3F539E00DC4227 /* FriendRequestVC.m */; };
+		60E109701E54585200D3B731 /* CreatePACVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E1096F1E54585200D3B731 /* CreatePACVC.swift */; };
+		60E109741E54789700D3B731 /* PacContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E109731E54789700D3B731 /* PacContainerVC.swift */; };
 		671C3D611C44FB72006A5423 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D601C44FB72006A5423 /* main.m */; };
 		671C3D671C44FB72006A5423 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D661C44FB72006A5423 /* LoginVC.m */; };
 		671C3D6D1C44FB72006A5423 /* ProactiveLiving.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 671C3D6B1C44FB72006A5423 /* ProactiveLiving.xcdatamodeld */; };
@@ -454,6 +458,7 @@
 		600DA7AA1DD3331300A95595 /* RecurrenceVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecurrenceVC.swift; path = Recurrence/RecurrenceVC.swift; sourceTree = "<group>"; };
 		600F1CEA1DBA436000BCBC12 /* BroadcastVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastVC.swift; sourceTree = "<group>"; };
 		601AF81C1DDAE6B3006ABB5F /* WebViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
+		601C56A71E557C5C00BFF6F3 /* GenericPacTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericPacTableVC.swift; sourceTree = "<group>"; };
 		60370D751E2617AF00C0121B /* EditAboutMeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAboutMeVC.swift; sourceTree = "<group>"; };
 		603863781E2347C000FE1598 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6038637A1E2347C000FE1598 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -464,6 +469,7 @@
 		603863881E23755900FE1598 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericProfileTableVC.swift; sourceTree = "<group>"; };
 		603AFCD31E24DDD90081F246 /* GenericProfileCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericProfileCollectionVC.swift; sourceTree = "<group>"; };
+		60527C4E1E542B5B00D65332 /* PAC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PAC.storyboard; sourceTree = "<group>"; };
 		605EAB6C1E1E63C60048EA8F /* ASStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASStarRatingView.h; sourceTree = "<group>"; };
 		605EAB6D1E1E63C60048EA8F /* ASStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASStarRatingView.m; sourceTree = "<group>"; };
 		605EAB6F1E1E63C60048EA8F /* CalendarKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarKit.h; sourceTree = "<group>"; };
@@ -657,6 +663,8 @@
 		60D471C61DC07D9900EAD7D9 /* MenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		60E0F2C21E3F539E00DC4227 /* FriendRequestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRequestVC.h; sourceTree = "<group>"; };
 		60E0F2C31E3F539E00DC4227 /* FriendRequestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRequestVC.m; sourceTree = "<group>"; };
+		60E1096F1E54585200D3B731 /* CreatePACVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePACVC.swift; sourceTree = "<group>"; };
+		60E109731E54789700D3B731 /* PacContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacContainerVC.swift; sourceTree = "<group>"; };
 		671C3D5C1C44FB72006A5423 /* ProactiveLiving.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProactiveLiving.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		671C3D601C44FB72006A5423 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		671C3D651C44FB72006A5423 /* LoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
@@ -1161,6 +1169,7 @@
 				603863791E2347C000FE1598 /* Main.storyboard */,
 				6038637B1E2347C000FE1598 /* SecondStoryboard.storyboard */,
 				6038637F1E23497300FE1598 /* Profile.storyboard */,
+				60527C4E1E542B5B00D65332 /* PAC.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1176,6 +1185,16 @@
 				8FAAA5EA1E346F6500232727 /* AddOrEditVideoVC.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		60527C4D1E5429EF00D65332 /* PAC */ = {
+			isa = PBXGroup;
+			children = (
+				60E1096F1E54585200D3B731 /* CreatePACVC.swift */,
+				60E109731E54789700D3B731 /* PacContainerVC.swift */,
+				601C56A71E557C5C00BFF6F3 /* GenericPacTableVC.swift */,
+			);
+			path = PAC;
 			sourceTree = "<group>";
 		};
 		605EAB6A1E1E63C60048EA8F /* ThirdParties */ = {
@@ -1560,6 +1579,7 @@
 		605EAC791E1E640B0048EA8F /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				60527C4D1E5429EF00D65332 /* PAC */,
 				606628851E2CABE300E66659 /* Utils */,
 				603863831E234BBF00FE1598 /* Profile */,
 				605EAC7A1E1E640B0048EA8F /* Map */,
@@ -2883,6 +2903,7 @@
 				BA5900AE1D364EFD006142AC /* patch_chat_white.png in Resources */,
 				BA5900A11D364EFD006142AC /* ic_chat_more@2x.png in Resources */,
 				BA5900C81D364EFD006142AC /* recevier_bg@2x.png in Resources */,
+				60527C4F1E542B5B00D65332 /* PAC.storyboard in Resources */,
 				BA5900981D364EFD006142AC /* chat_line@2x.png in Resources */,
 				BAD63F191D9A9413002BDF0A /* r1.jpg in Resources */,
 				BA5900B11D364EFD006142AC /* ic_chat_search@3x.png in Resources */,
@@ -3021,6 +3042,7 @@
 				BA5900DB1D364EFD006142AC /* ContactList+CoreDataProperties.swift in Sources */,
 				605EAC721E1E63C70048EA8F /* SOMessageCell.m in Sources */,
 				BA5901311D364F55006142AC /* UploadInS3.m in Sources */,
+				60E109741E54789700D3B731 /* PacContainerVC.swift in Sources */,
 				605EAC431E1E63C60048EA8F /* UITabBarController+MiddleButton.m in Sources */,
 				BA5900E11D364EFD006142AC /* GroupList+CoreDataProperties.swift in Sources */,
 				BAB0E5001D5DE59B00906C10 /* SocketParsable.swift in Sources */,
@@ -3144,6 +3166,7 @@
 				BA4859181DC9DEF800DED552 /* RSDFCustomDatePickerCollectionView.m in Sources */,
 				BA288ADC1DA4F58D00B7D88A /* VideosContainer.swift in Sources */,
 				BA9AE8771D9CEF0A00830B40 /* HeaderScrollerView.swift in Sources */,
+				60E109701E54585200D3B731 /* CreatePACVC.swift in Sources */,
 				BA5900ED1D364EFD006142AC /* UserChat+CoreDataProperties.swift in Sources */,
 				605EAC4F1E1E63C70048EA8F /* NSCalendar+RSDFAdditions.m in Sources */,
 				BAE565CF1CE4B1BE007D6959 /* AllPACirclesVC.m in Sources */,
@@ -3270,6 +3293,7 @@
 				BAFDA8FD1D40DFC500301C01 /* GroupHomeCell.swift in Sources */,
 				BAA411F81CE9B77500CDE467 /* ContactsVC.m in Sources */,
 				BA7BBE5B1C7357AB00EBC5BF /* ValidationCProfileVC.m in Sources */,
+				601C56A81E557C5C00BFF6F3 /* GenericPacTableVC.swift in Sources */,
 				BAFDA8FB1D40DFC500301C01 /* CreateChatGroupVC.swift in Sources */,
 				BA59011E1D364EFD006142AC /* RecordAndPlayAudio.m in Sources */,
 				BAB0E4D11D5DE46500906C10 /* SwiftyJSON.swift in Sources */,

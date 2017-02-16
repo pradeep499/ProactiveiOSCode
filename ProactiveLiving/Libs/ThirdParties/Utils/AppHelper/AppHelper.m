@@ -26,6 +26,10 @@
     return [UIStoryboard storyboardWithName:@"Profile" bundle:[NSBundle mainBundle]];
 }
 
++(UIStoryboard*)getPacStoryBoard{
+    return [UIStoryboard storyboardWithName:@"PAC" bundle:[NSBundle mainBundle]];
+}
+
 #pragma mark - saveToUserDefaults
 +(void)saveToUserDefaults:(id)value withKey:(NSString*)key {
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];

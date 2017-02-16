@@ -34,5 +34,7 @@
 +(UIStoryboard*)getSecondStoryBoard;
 +(UIStoryboard*)getProfileStoryBoard;
 
++(UIStoryboard*)getPacStoryBoard;
+
 
 @end

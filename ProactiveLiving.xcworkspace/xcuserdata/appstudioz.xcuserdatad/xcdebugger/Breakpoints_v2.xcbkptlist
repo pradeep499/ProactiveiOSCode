@@ -111,7 +111,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "351"
             endingLineNumber = "351"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            landmarkName = "tableView(tableView:cellForRowAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1307,7 +1307,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "544"
             endingLineNumber = "544"
-            landmarkName = "textFieldShouldReturn(_:)"
+            landmarkName = "textFieldShouldReturn(textField:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1435,7 +1435,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "367"
             endingLineNumber = "367"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            landmarkName = "tableView(tableView:cellForRowAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1451,7 +1451,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "383"
             endingLineNumber = "383"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            landmarkName = "tableView(tableView:cellForRowAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2491,7 +2491,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2008"
             endingLineNumber = "2008"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2571,7 +2571,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2120"
             endingLineNumber = "2120"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2587,7 +2587,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1896"
             endingLineNumber = "1896"
-            landmarkName = "uploadImage(_:captionText:)"
+            landmarkName = "uploadImage(uploadImage:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2635,7 +2635,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1333"
             endingLineNumber = "1333"
-            landmarkName = "collectionView(_:didSelectItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:didSelectItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3003,7 +3003,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2005"
             endingLineNumber = "2005"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3035,7 +3035,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1860"
             endingLineNumber = "1860"
-            landmarkName = "uploadImage(_:captionText:)"
+            landmarkName = "uploadImage(uploadImage:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3051,7 +3051,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2081"
             endingLineNumber = "2081"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3067,7 +3067,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2101"
             endingLineNumber = "2101"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3099,7 +3099,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1948"
             endingLineNumber = "1948"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3115,7 +3115,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1950"
             endingLineNumber = "1950"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3131,7 +3131,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1951"
             endingLineNumber = "1951"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3147,7 +3147,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1954"
             endingLineNumber = "1954"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3163,7 +3163,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1965"
             endingLineNumber = "1965"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3179,7 +3179,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1973"
             endingLineNumber = "1973"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3195,7 +3195,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1920"
             endingLineNumber = "1920"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3227,7 +3227,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "478"
             endingLineNumber = "478"
-            landmarkName = "clickUserImage(_:)"
+            landmarkName = "clickUserImage(recognizer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3259,7 +3259,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1971"
             endingLineNumber = "1971"
-            landmarkName = "uploadVideo(_:captionText:)"
+            landmarkName = "uploadVideo(videoUrl:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3307,7 +3307,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "985"
             endingLineNumber = "985"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3323,7 +3323,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "965"
             endingLineNumber = "965"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            landmarkName = "collectionView(collectionView:numberOfItemsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3339,7 +3339,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1176"
             endingLineNumber = "1176"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3515,7 +3515,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "513"
             endingLineNumber = "513"
-            landmarkName = "clickUserImage(_:)"
+            landmarkName = "clickUserImage(recognizer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4043,7 +4043,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2066"
             endingLineNumber = "2066"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4059,7 +4059,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "583"
             endingLineNumber = "583"
-            landmarkName = "sendPostToServer(_:isShared:createdDict:imgOrVideoUlr:captionText:thumNailName:)"
+            landmarkName = "sendPostToServer(postType:isShared:createdDict:imgOrVideoUlr:captionText:thumNailName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4075,7 +4075,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2063"
             endingLineNumber = "2063"
-            landmarkName = "handleMultipleImages(_:captionText:)"
+            landmarkName = "handleMultipleImages(assets:captionText:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4091,7 +4091,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1713"
             endingLineNumber = "1713"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4155,7 +4155,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1696"
             endingLineNumber = "1696"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4171,7 +4171,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1711"
             endingLineNumber = "1711"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4187,7 +4187,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1763"
             endingLineNumber = "1763"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4203,7 +4203,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1765"
             endingLineNumber = "1765"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4235,7 +4235,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1793"
             endingLineNumber = "1793"
-            landmarkName = "imagePickerControllerDidSelectedAssets(_:)"
+            landmarkName = "imagePickerControllerDidSelectedAssets(assets:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4555,7 +4555,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1059"
             endingLineNumber = "1059"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4571,7 +4571,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1088"
             endingLineNumber = "1088"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4603,7 +4603,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "318"
             endingLineNumber = "318"
-            landmarkName = "onClickEditOrMoreBtn(_:)"
+            landmarkName = "onClickEditOrMoreBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4619,7 +4619,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "317"
             endingLineNumber = "317"
-            landmarkName = "onClickEditOrMoreBtn(_:)"
+            landmarkName = "onClickEditOrMoreBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4635,7 +4635,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "440"
             endingLineNumber = "440"
-            landmarkName = "bgPictureTap(_:)"
+            landmarkName = "bgPictureTap(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4651,7 +4651,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "444"
             endingLineNumber = "444"
-            landmarkName = "profilePictureTap(_:)"
+            landmarkName = "profilePictureTap(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5195,7 +5195,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "443"
             endingLineNumber = "443"
-            landmarkName = "profilePictureTap(_:)"
+            landmarkName = "profilePictureTap(sender:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -5243,7 +5243,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "660"
             endingLineNumber = "660"
-            landmarkName = "uploadImage(_:imgName:)"
+            landmarkName = "uploadImage(imgData:imgName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5259,7 +5259,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "685"
             endingLineNumber = "685"
-            landmarkName = "sendToServerAPI(_:thumNailName:)"
+            landmarkName = "sendToServerAPI(imgUrl:thumNailName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5275,7 +5275,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "721"
             endingLineNumber = "721"
-            landmarkName = "sendToServerAPI(_:thumNailName:)"
+            landmarkName = "sendToServerAPI(imgUrl:thumNailName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5595,7 +5595,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "693"
             endingLineNumber = "693"
-            landmarkName = "sendToServerAPI(_:thumNailName:)"
+            landmarkName = "sendToServerAPI(imgUrl:thumNailName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6347,7 +6347,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "787"
             endingLineNumber = "787"
-            landmarkName = "getFriendProfileDetailsAPI(_:)"
+            landmarkName = "getFriendProfileDetailsAPI(friendId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6475,7 +6475,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "402"
             endingLineNumber = "402"
-            landmarkName = "onClickChatBtn(_:)"
+            landmarkName = "onClickChatBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6491,7 +6491,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "390"
             endingLineNumber = "390"
-            landmarkName = "onClickCallBtn(_:)"
+            landmarkName = "onClickCallBtn(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6779,7 +6779,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "972"
             endingLineNumber = "972"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            landmarkName = "collectionView(collectionView:numberOfItemsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6795,7 +6795,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1011"
             endingLineNumber = "1011"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6955,7 +6955,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "936"
             endingLineNumber = "936"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            landmarkName = "tableView(tableView:cellForRowAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6987,7 +6987,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "768"
             endingLineNumber = "768"
-            landmarkName = "getFriendProfileDetailsAPI(_:)"
+            landmarkName = "getFriendProfileDetailsAPI(friendId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7003,7 +7003,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "821"
             endingLineNumber = "821"
-            landmarkName = "getFriendProfileDetailsAPI(_:)"
+            landmarkName = "getFriendProfileDetailsAPI(friendId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7051,7 +7051,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "794"
             endingLineNumber = "794"
-            landmarkName = "getFriendProfileDetailsAPI(_:)"
+            landmarkName = "getFriendProfileDetailsAPI(friendId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7131,7 +7131,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "263"
             endingLineNumber = "263"
-            landmarkName = "profileIvTaped(_:)"
+            landmarkName = "profileIvTaped(gesture:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7147,7 +7147,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "255"
             endingLineNumber = "255"
-            landmarkName = "bgIvTaped(_:)"
+            landmarkName = "bgIvTaped(gesture:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7259,7 +7259,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "267"
             endingLineNumber = "267"
-            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
+            landmarkName = "collectionView(collectionView:cellForItemAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7275,7 +7275,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "334"
             endingLineNumber = "334"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            landmarkName = "tableView(tableView:cellForRowAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -7291,7 +7291,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "347"
             endingLineNumber = "347"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            landmarkName = "tableView(tableView:cellForRowAtIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
