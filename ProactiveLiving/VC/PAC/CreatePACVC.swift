@@ -60,10 +60,16 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     var arrAttachments = [AnyObject]()
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreatePACVC.NotifyCreatePacInvite(_:)),name:"NotifyCreatePacInvite", object:nil)
+        self.tv_CreatePac.dataSource = self
+        
+        self.setUpPage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,6 +103,36 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         IQKeyboardManager.sharedManager().enable=true
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
     }
+    
+    
+    
+    func reSetInviteTag(contact : [String : AnyObject] ) -> Void {
+        
+        if inviteStr == "admin" {
+            
+            
+            tokenF_inviteAdmin.tags.addObject(contact["firstName"]!)
+            tokenF_inviteAdmin.reloadTagSubviews()
+            
+        }else if inviteStr == "member" {
+            
+            tokenF_inviteMember.tags.addObject(contact["firstName"]!)
+            tokenF_inviteMember.reloadTagSubviews()
+            
+        }
+        
+        
+    }
+    
+    
+    func NotifyCreatePacInvite(notification:NSNotification) {
+      //  print(notification)
+        let dicContact = notification.object as! [String : AnyObject]
+        self.reSetInviteTag( dicContact   )
+    }
+    
+     
+
 
     
     
@@ -104,6 +140,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     func goToContact(type:String) -> Void {
         
+        inviteStr = type
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let friendListObj: AllContactsVC = storyBoard.instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
@@ -189,6 +226,21 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     
     @IBAction func onClickAgree(sender: AnyObject) {
+        
+        self.btnIAgree.selected = !self.btnIAgree.selected
+        
+        if self.btnIAgree.selected {
+            
+            self.btnIAgree.setImage(UIImage.init(named: "ic_bookingpopup_radioselected"), forState: .Normal)
+        }else{
+            
+            self.btnIAgree.setImage(UIImage.init(named: "ic_bookingpopup_radio"), forState: .Normal)
+        }
+        
+        
+        
+        
+        
     }
     
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
@@ -325,7 +377,186 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     }
     
     
-     
+    func submitAPI() -> Void {
+        
+      /*  if ServiceClass.checkNetworkReachabilityWithoutAlert()
+        {
+        //    let button = sender as! UIButton
+            
+            if (tokenF_inviteAdmin.count == 0) {
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select at least one contact.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                
+            }
+            else if (self.txtFieldFor.text!.characters.count == 0)
+            {
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select type.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+            else if (self.txtFieldOn.text!.characters.count == 0)
+            {
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select date.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+            else if (self.txtFieldAt.text!.characters.count == 0)
+            {
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select time.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+            else if (self.txtFieldWhereFirst.text!.characters.count == 0)
+            {
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter address.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+            else if (self.txtFieldTitle.text!.characters.count == 0)
+            {
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter title.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+            else if (self.txtViewDesc.text!.characters.count == 0)
+            {
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter description.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+            else
+            {
+                var linksArray : NSMutableArray!
+                linksArray = NSMutableArray()
+                
+                button.userInteractionEnabled=false
+                showActivityIndicator(self.view)
+                var dict = Dictionary<String,AnyObject>()
+                dict["title"] = self.tf_ProActiveName.text! as String
+                dict["desc"] = tv_desc.text
+                
+                for link in self.arrAttachments {
+                    var dicLinks = Dictionary<String,AnyObject>()
+                    dicLinks["title"] = link ["title"]
+                    dicLinks["url"] = link ["url"]
+                    linksArray.addObject(dicLinks)
+                }
+                
+                dict["links"]=linksArray as [AnyObject]
+                dict["attachments"]="abc.png"
+                dict["createdBy"]=ChatHelper.userDefaultForKey("userId") as String
+             //   dict["eventDate"] =   HelpingClass.convertDateFormat("MM/dd/YYYY", desireFormat:"dd/MM/YYYY", dateStr: txtFieldOn.text!)
+               
+                
+                var userIdAdminArr : NSMutableArray!
+                userIdAdminArr = NSMutableArray()
+                
+                for myobject : AnyObject in tokensAdmin
+                {
+                    var tempDict = Dictionary<String,AnyObject>()
+                //    tempDict["userId"]=myobject["_id"] as! String
+                    let userId = myobject["_id"] as! String
+                    
+                    userIdAdminArr.addObject(userId);
+                }
+                dict["admins"] = userIdAdminArr as [AnyObject]
+                
+                var userIdMemberArr : NSMutableArray!
+                userIdMemberArr = NSMutableArray()
+                
+                for myobject : AnyObject in tokensMember
+                {
+                    var tempDict = Dictionary<String,AnyObject>()
+                    //    tempDict["userId"]=myobject["_id"] as! String
+                    let userId = myobject["_id"] as! String
+                    
+                    userIdMemberArr.addObject(userId);
+                }
+                dict["members"] = userIdMemberArr as [AnyObject]
+                
+                
+                
+                print(dict)
+                
+                if self.imgCoverPic.image != nil
+                {
+                    let imageData = UIImageJPEGRepresentation(self.imgCoverPic.image!, 1.0)
+                    
+                    let baseUrlString = ChatBaseMediaUrl+ChatMediaPath
+                    let url = NSURL(string: baseUrlString)?.absoluteString
+                    let manager=AFHTTPRequestOperationManager()
+                    
+                    manager.POST(url, parameters: nil, constructingBodyWithBlock: {
+                        (formdata:AFMultipartFormData!)-> Void  in
+                        
+                        if(imageData != nil)
+                        {
+                            formdata.appendPartWithFileData(imageData, name: "files", fileName: "image.jpg" as String, mimeType: "image/jpeg")
+                        }
+                        
+                        
+                        }, success:
+                        {
+                            operation, response -> Void in
+                            
+                            //Parsing JSON
+                            var parsedData = JSON(response)
+                            //  println_debug(parsedData)
+                            dict["imgUrl"] = parsedData["filesUrl"].string
+                            
+                            button.userInteractionEnabled=true
+                            
+                            if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
+                            {
+                                ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
+                                dispatch_after(3, dispatch_get_main_queue(), {
+                                    stopActivityIndicator(self.view)
+                                    
+                                    self.navigationController?.popToRootViewControllerAnimated(true)
+                                })
+                            }
+                            else
+                            {
+                                ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
+                                dispatch_after(3, dispatch_get_main_queue(), {
+                                    stopActivityIndicator(self.view)
+                                    
+                                    self.navigationController?.popToRootViewControllerAnimated(true)
+                                })
+                            }
+                            
+                            
+                        }, failure:
+                        {
+                            operation, response -> Void in
+                            // println_debug(response)
+                            button.userInteractionEnabled=true
+                            stopActivityIndicator(self.view)
+                            
+                        }
+                    )
+                }else
+                {
+                    dict["imgUrl"] = ""
+                    if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
+                    {
+                        ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
+                        dispatch_after(3, dispatch_get_main_queue(), {
+                            stopActivityIndicator(self.view)
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        })
+                    }
+                    else
+                    {
+                        ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
+                        dispatch_after(3, dispatch_get_main_queue(), {
+                            stopActivityIndicator(self.view)
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        })
+                    }
+                    
+                    
+                }
+                
+                
+            }
+            
+        }else
+        {
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+        }*/
+    }
+    
+    
+    
+    
 
 }
 

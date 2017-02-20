@@ -15,6 +15,7 @@
 #import "MyPAStodoVC.h"
 #import "InboxVC.h"
 #import "ProactiveLiving-Swift.h"
+
 @interface ContactsVC ()
 {
 }
@@ -78,11 +79,27 @@
 
 -(void)POP_CONTCT_VC{
     
-     CreateMeetUpVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
-    
-    for (NSDictionary *dict in self.selectedRowsArray) {
-        [previousVC addCotact:dict];
+    if ([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[CreateMeetUpVC class]]   ) {
+        
+        CreateMeetUpVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
+        
+        for (NSDictionary *dict in self.selectedRowsArray) {
+            [previousVC addCotact:dict];
+            
+        }
+        
+        
+    }else if ([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[PacContainerVC class]]){
+        
+        PacContainerVC *containerVC   =  [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];  
+        
+        for (NSDictionary *dict in self.selectedRowsArray) {
+            [containerVC addCotact:dict];
+        }
+        
     }
+        
+     
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -496,16 +513,9 @@
                 
                 [self.delegate1 addMemberInGroup:previousVC withInfo:(ChatContactModelClass *)anobject];
             }
-            else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[CreateMeetUpVC class]])
+            // CreateMeetUpVC or Pac COn tainer for Create a pac
+            else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[CreateMeetUpVC class]] || [[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[PacContainerVC class]] )
             {
-                
-               
-                //for multiple contact selection
-                
-                //badru
-                // CreateMeetUpVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
-               // [previousVC addCotact:frndDict];
-              //  [self.navigationController popViewControllerAnimated:YES];
                 
                 [self insertRemoveToSelecetedRowArray:frndDict];
                 
@@ -517,7 +527,6 @@
                 [self.navigationController popViewControllerAnimated:YES];
                 
             }
-            
         }
     }
     else //If creating a group

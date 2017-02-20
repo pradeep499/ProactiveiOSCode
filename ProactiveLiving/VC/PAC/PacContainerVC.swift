@@ -8,6 +8,10 @@
 
 import UIKit
 
+var tokensAdmin = [AnyObject]()
+var tokensMember = [AnyObject]()
+var inviteStr = String()
+
 class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
 
     
@@ -25,6 +29,9 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
 
         self.lbl_title.text = self.title
         
+        tokensAdmin = [AnyObject]()
+        tokensMember = [AnyObject]()
+        
         self.setUpViewControllers()
     }
 
@@ -32,7 +39,30 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    //MARK:- 
+    
+    
+    func addCotact(contact : [String : AnyObject] ) -> Void {
+        if inviteStr == "admin" {
+            
+            if (tokensAdmin as NSArray).containsObject(contact) {
+                return
+            }
+            tokensAdmin.append(contact)
+            
+        }else if inviteStr == "member" {
+            
+            if (tokensMember as NSArray).containsObject(contact) {
+                return
+            }
+            tokensMember.append(contact)
+        }
+        
+
+        NSNotificationCenter.defaultCenter().postNotificationName("NotifyCreatePacInvite", object: contact)
+        
+    }
+    
+    //MARK:-
     
     @IBAction func onClickBackBtn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)

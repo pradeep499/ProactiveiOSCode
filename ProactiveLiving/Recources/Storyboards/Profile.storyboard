@@ -256,7 +256,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bbf-oY-ssY">
-                                <rect key="frame" x="0.0" y="105" width="375" height="542"/>
+                                <rect key="frame" x="0.0" y="105" width="375" height="312"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eYN-TX-M8F">
                                     <size key="itemSize" width="130" height="130"/>
@@ -306,7 +306,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SFh-AT-drg" firstAttribute="top" secondItem="bbf-oY-ssY" secondAttribute="bottom" constant="20" id="IFZ-x6-rvU"/>
+                            <constraint firstItem="SFh-AT-drg" firstAttribute="top" secondItem="bbf-oY-ssY" secondAttribute="bottom" constant="250" id="IFZ-x6-rvU"/>
                             <constraint firstItem="bbf-oY-ssY" firstAttribute="top" secondItem="cQ3-dM-pse" secondAttribute="bottom" constant="10" id="KJY-pa-tiq"/>
                             <constraint firstAttribute="trailing" secondItem="cQ3-dM-pse" secondAttribute="trailing" constant="15" id="fcr-a4-HP4"/>
                             <constraint firstItem="cQ3-dM-pse" firstAttribute="top" secondItem="U2r-hf-x7Y" secondAttribute="bottom" id="hpT-9a-1rG"/>
@@ -445,7 +445,7 @@
                                         <rect key="frame" x="0.0" y="180" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aWl-wI-zSB" id="4tv-Qo-C9k">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mp_live_in" translatesAutoresizingMaskIntoConstraints="NO" id="YBi-G1-fNL">
@@ -501,7 +501,7 @@
                                         <rect key="frame" x="0.0" y="270" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yhC-X3-I3G" id="fDF-bc-HUw">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facebook" translatesAutoresizingMaskIntoConstraints="NO" id="tK0-zd-v0o">
@@ -1816,7 +1816,7 @@
                                                     <rect key="frame" x="0.0" y="28" width="339" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DNJ-MT-CuW" id="955-TG-hAZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="339" height="43"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="339" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </tableViewCellContentView>
                                                     <color key="backgroundColor" white="0.0" alpha="0.050000000000000003" colorSpace="calibratedWhite"/>

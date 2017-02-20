@@ -69,9 +69,6 @@ class GenericProfileTableVC: UIViewController {
             
             self.lbl_title.text = "About Me"
             
-            
-            
-            
             self.headerView_socialNetwork.hidden = true
             self.headerView_socialNetwork = nil
             self.tv.tableFooterView = UIView(frame: CGRectMake(0, 0, 0, 0))
@@ -306,7 +303,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
         }else if genericType == .SocialNetworks{
             return 70
         }
-        return 0
+        return 0 
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

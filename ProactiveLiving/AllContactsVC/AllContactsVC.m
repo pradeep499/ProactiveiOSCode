@@ -187,7 +187,7 @@
         }
     }else{
         //badru
-        //Create MeetUp
+        //Create MeetUp or Creat a pac
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"POP_CONTCT_VC" object:self];
     }
