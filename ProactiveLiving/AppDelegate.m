@@ -19,7 +19,6 @@
 {
     UIImageView *splashView;
     
-    
 }
 
 @end
