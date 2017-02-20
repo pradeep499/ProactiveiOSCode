@@ -18,6 +18,8 @@
 @interface AppDelegate ()
 {
     UIImageView *splashView;
+    
+    
 }
 
 @end
