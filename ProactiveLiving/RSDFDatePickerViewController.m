@@ -449,10 +449,16 @@ type = 3 for yeary basis
                               }];
     
     
-    [alertActionSheet addAction:appointment];
-    [alertActionSheet addAction:meetup];
-    [alertActionSheet addAction:webinvite];
-    [alertActionSheet addAction:other];
+    if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
+        [alertActionSheet addAction:meetup];
+        [alertActionSheet addAction:webinvite];
+    }
+    else {
+        [alertActionSheet addAction:appointment];
+        [alertActionSheet addAction:meetup];
+        [alertActionSheet addAction:webinvite];
+        [alertActionSheet addAction:other];
+    }
     
     [alertActionSheet addAction:cancel];
     [self presentViewController:alertActionSheet animated:YES completion:nil];
