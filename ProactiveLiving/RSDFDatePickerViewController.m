@@ -50,6 +50,7 @@
 @property (nonatomic, strong) NSMutableDictionary *eventData;
 @property (strong, nonatomic) NSArray *dataArray;
 @property (weak, nonatomic) IBOutlet UIButton *btnSwitchView;
+@property (weak, nonatomic) IBOutlet UIButton *btnBack;
 
 @end
 
@@ -165,6 +166,14 @@ type = 3 for yeary basis
     //[self.datePickerView bringSubviewToFront:self.btnSwitchView];
     //self.btnSwitchView.layer.zPosition = 1;
     //[[UIApplication sharedApplication].keyWindow bringSubviewToFront:self.btnSwitchView];
+    
+    if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
+        [self.btnBack setHidden:NO];
+    }
+    else {
+        [self.btnBack setHidden:YES];
+
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -450,6 +459,10 @@ type = 3 for yeary basis
     
 }
 
+- (IBAction)onBackButtonTouch:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)onRestyleButtonTouch:(UIBarButtonItem *)sender
 {
     if (!self.datePickerView.hidden) {

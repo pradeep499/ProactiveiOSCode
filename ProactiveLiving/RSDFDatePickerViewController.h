@@ -30,5 +30,6 @@
 @interface RSDFDatePickerViewController : UIViewController
 
 @property (strong, nonatomic) NSCalendar *calendar;
+@property (copy, nonatomic) NSString *fromScreen;
 
 @end

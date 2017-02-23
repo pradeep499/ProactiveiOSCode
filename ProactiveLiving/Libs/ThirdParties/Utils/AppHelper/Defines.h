@@ -9,8 +9,9 @@
 
 //Custom Fonts
 #define FONT_BOLD @"Roboto-Bold" //15pix
-#define FONT_REGULAR @"Roboto-Regular" //14pix
+#define FONT_REGULAR @"Roboto-Regular" //15pix
 #define FONT_LIGHT @"Roboto-Light" //13pix
+#define FONT_LIGHT_SMALL @"Roboto-Light" //13pix
 #define FONT_THIN @"Roboto-Thin" //12pix
 
 //Device info
@@ -101,7 +102,7 @@
 #define ServiceFriendRequestAction         @"users/friendRequestAction"
 #define ServiceGetUserFriendList        @"users/getUserFriendList"
 #define ServiceBlockUserAction        @"users/blockUserAction"
-
+#define ServiceGetPACDetails            @"users/getPacDetail"
 
 
 

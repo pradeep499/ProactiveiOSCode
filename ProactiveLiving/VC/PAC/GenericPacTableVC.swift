@@ -109,6 +109,10 @@ extension GenericPacTableVC:  UITableViewDelegate{
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        let containerObj = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("PACGroupsContainerVC") as! PACGroupsContainerVC
+        containerObj.title = "TTDSD"
+        self.navigationController?.pushViewController(containerObj, animated: true)
+    
     }
     
 }

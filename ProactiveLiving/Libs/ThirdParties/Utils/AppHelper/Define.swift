@@ -56,16 +56,16 @@ let tabBarTintColor=UIColor(red: 110/255.0, green: 5/255.0, blue: 0/255.0, alpha
 
 
 
-//Font
+//Fonts Proactive
 
-let fontRegular = UIFont(name: "AvenirNextCyr-Regular", size: 15)
-let fontMedium = UIFont(name: "AvenirNextCyr-Medium", size: 15)
-let fontBold = UIFont(name: "AvenirNextCyr-Demi", size: 15)
-
+let fontBold = UIFont(name: "Roboto-Bold", size: 16)
+let fontRegular = UIFont(name: "Roboto-Regular", size: 16)
+let fontMedium = UIFont(name: "Roboto-Light", size: 14)
+let fontThin = UIFont(name: "Roboto-Thin", size: 14)
+let fontSmall = UIFont(name: "Roboto-Light", size: 12)
 
 
 // MARK: Alerts by msy
-
 
 let groupNameEmpty="Please enter Group Name"
 let groupMemberEmpty="Please select atleast one member"
