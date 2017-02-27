@@ -112,6 +112,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             for contact in self.tokens {
                  self.tokenField.tags.addObject(contact["firstName"]!!)
+                
             }
             
             self.arrAttachments = self.dataDict["links"] as! Array
@@ -356,6 +357,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func tagsControl(tagsControl: TLTagsControl!, tappedAtIndex index: Int) {
         print("Tag was tapped ", tagsControl.tags[index]);
     }
+    
     func tagsControl(tagsControl: TLTagsControl!, deletedAtIndex index: Int) {
         print("Tag was deleted ", tagsControl.tags[index]);
        
@@ -660,9 +662,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     dict["isrecur"] = String(false)
                 }
                 
-                
-                
-
+           
                 print(dict)
 
                 if self.imgCoverPic.image != nil

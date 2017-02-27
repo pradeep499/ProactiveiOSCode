@@ -27,10 +27,12 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.lbl_title.text = self.title
+        self.lbl_title.text = "Tennis"   //self.title
         
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
+       // btnRight.hidden = true
+        
         
         self.setUpViewControllers()
     }
@@ -87,15 +89,10 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
         
         secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
         secondVC.title = "    CREATE A PAC    "
-        
-        
-        
-        
+       
         arrViewControllers = [firstVC,secondVC]
         
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
-        
-        
         
         
         containerVC.delegate = self

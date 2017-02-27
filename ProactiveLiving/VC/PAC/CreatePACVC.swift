@@ -13,12 +13,9 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     @IBOutlet weak var tf_ProActiveName: CustomTextField!
     
-    @IBOutlet weak var tv_desc: UIPlaceHolderTextView!
+    @IBOutlet weak var tv_desc: UITextView!//UIPlaceHolderTextView!
     
     @IBOutlet weak var iv_coverPic: UIImageView!
-    
-    
-    
     
     @IBOutlet weak var tf_location: CustomTextField!
     
@@ -58,8 +55,14 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     var gpaViewController : GooglePlacesAutocomplete!
     var arrAttachments = [AnyObject]()
+  
+    var switchStatus = [1,1,1,1,1,1,1,1,1,1];
+    var parameters = [String: AnyObject]()
     
-    
+    var adminArr = [AnyObject]()
+    var memberArr = [AnyObject]()
+    var tagIDMember = [AnyObject]()
+    var tagIDAdmin = [AnyObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +71,20 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreatePACVC.NotifyCreatePacInvite(_:)),name:"NotifyCreatePacInvite", object:nil)
         self.tv_CreatePac.dataSource = self
+        
+        // self.tokenField.tapDelegate=self
+//        self.tokenF_inviteAdmin.delegate = self
+//        self.tokenF_inviteMember.delegate = self
+        
+        self.tokenF_inviteAdmin.tapDelegate = self
+        self.tokenF_inviteMember.tapDelegate = self
+
+        
+        
+        
+        self.tokenF_inviteAdmin.tagPlaceholder = "Add here"
+        self.tokenF_inviteMember.tagPlaceholder = "Add here"
+        
         
         self.setUpPage()
     }
@@ -79,9 +96,8 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     func setUpPage() -> Void {
         
-        
-        
-        let recognizer = UITapGestureRecognizer(target: self, action:#selector(GroupDetailVC.clickUserImage(_:)))
+       
+        let recognizer = UITapGestureRecognizer(target: self, action:#selector(GroupDetailVC.clickUserImage(_:)))  // need to change
         recognizer.delegate = self
         self.iv_coverPic.addGestureRecognizer(recognizer)
         self.iv_coverPic.userInteractionEnabled = true
@@ -90,7 +106,10 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         self.iv_coverPic.setImageWithURL(NSURL(string:""), placeholderImage: UIImage(named:"profile.png"))
         
         
-        self.tv_desc.placeholder = "Minimum 50 words"
+       // self.tv_desc.placeholder = "Minimum 50 words"
+        // by me
+        self.tv_desc.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
+        
         
         self.tf_location.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
         
@@ -105,19 +124,40 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     }
     
     
+  // MARK: Token add
+    
     
     func reSetInviteTag(contact : [String : AnyObject] ) -> Void {
         
         if inviteStr == "admin" {
             
             
-            tokenF_inviteAdmin.tags.addObject(contact["firstName"]!)
-            tokenF_inviteAdmin.reloadTagSubviews()
+//            tokenF_inviteAdmin.tags.addObject(contact["firstName"]!)
+//            tokenF_inviteAdmin.reloadTagSubviews()
+            tokenF_inviteAdmin.addTag(contact["firstName"]! as! String)
+        //    tokenF_inviteAdmin.tags.addObject(contact["firstName"]!)
+            
+            // tokenF_inviteAdmin.addTag(contact["firstName"]! as! String)
+            
+            // self.adminDict = contact
+            
+              self.adminArr.append(contact)
+            
+            
             
         }else if inviteStr == "member" {
             
-            tokenF_inviteMember.tags.addObject(contact["firstName"]!)
-            tokenF_inviteMember.reloadTagSubviews()
+//            tokenF_inviteMember.tags.addObject(contact["firstName"]!)
+//            tokenF_inviteMember.reloadTagSubviews()
+           
+            tokenF_inviteMember.addTag(contact["firstName"]! as! String)
+          //  tokenF_inviteMember.tags.addObject(contact["firstName"]!)
+          //  tokenF_inviteMember.addTag(contact["firstName"]! as! String)
+            
+          //  self.memberDict = contact
+            
+            self.memberArr.append(contact)
+            
             
         }
         
@@ -128,15 +168,50 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     func NotifyCreatePacInvite(notification:NSNotification) {
       //  print(notification)
         let dicContact = notification.object as! [String : AnyObject]
-        self.reSetInviteTag( dicContact   )
+        self.reSetInviteTag( dicContact )
     }
     
      
 
-
-    
-    
+ 
     //MARK:- Btn Action
+    
+    // UISwitch  action to change status
+    @IBAction func onSwitchValueChanged(sender: AnyObject) {
+        
+        var value = 1
+        if (sender as! UISwitch).on {
+            value = 1
+        } else {
+            value = 0
+        }
+        
+        switch(sender.tag) {
+        case 101:
+            switchStatus[0] = value
+        case 102:
+            switchStatus[1] = value
+        case 103:
+            switchStatus[2] = value
+        case 104:
+            switchStatus[3] = value
+        case 105:
+            switchStatus[4] = value
+        case 106:
+            switchStatus[5] = value
+        case 107:
+            switchStatus[6] = value
+        case 108:
+            switchStatus[7] = value
+        case 109:
+            switchStatus[8] = value
+        case 110:
+            switchStatus[9] = value
+        default :
+            break
+        }
+        print(switchStatus)
+    }
     
     func goToContact(type:String) -> Void {
         
@@ -146,6 +221,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         let friendListObj: AllContactsVC = storyBoard.instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
         friendListObj.fromVC="CREATEPAC"
         self.navigationController?.pushViewController(friendListObj, animated: true)
+        
     }
     
     
@@ -157,7 +233,9 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     
     @IBAction func onClickInviteMemberBtn(sender: AnyObject) {
+        
         self.goToContact("member")
+        
     }
     
     @IBAction func onClickAddLinkBtn(sender: AnyObject) {
@@ -224,65 +302,143 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
     }
     
-    
+    // Terms and condition
     @IBAction func onClickAgree(sender: AnyObject) {
         
         self.btnIAgree.selected = !self.btnIAgree.selected
         
         if self.btnIAgree.selected {
             
-            self.btnIAgree.setImage(UIImage.init(named: "ic_bookingpopup_radioselected"), forState: .Normal)
+            self.btnIAgree.setImage(UIImage.init(named: "ic_bookingpopup_radioselect"), forState: .Normal)
+            
+            self.btnIAgree.tag = 10
+            
+            
         }else{
             
             self.btnIAgree.setImage(UIImage.init(named: "ic_bookingpopup_radio"), forState: .Normal)
+            
+            self.btnIAgree.tag = 11
+            
         }
-        
-        
-        
-        
-        
+       
     }
     
+    
+    // MARK: Submit button for API hit
+    
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
+        
+        print("Submit btn pressed")
+       
+        if(isEmpty()){
+            
+             submitAPI()
+            
+        }
+        
     }
     
     //MARK: - Switch
     
     
-    @IBAction func onChangeSwitch_settingPrivate(sender: AnyObject) {
+//    @IBAction func onChangeSwitch_settingPrivate(sender: AnyObject) {
+//    
+//    }
+//    
+//    @IBAction func onChangeSwitch_settingCreateMeetUp(sender: AnyObject) {
+//    
+//    }
+//    
+//    @IBAction func onChangeSwitch_settingCreaeWebInvite(sender: AnyObject) {
+//    
+//    }
+//    
+//    
+//    
+//    @IBAction func onChangeSwitch_settingUploadPic(sender: AnyObject) {
+//    }
+//    
+//    
+//    @IBAction func onChangeSwitch_visibleEvery(sender: AnyObject) {
+//    }
+//    
+//    @IBAction func onChangeSwitch_visibleFriends(sender: AnyObject) {
+//    }
+//    
+//    @IBAction func onChangeSwitch_visibleColleagues(sender: AnyObject) {
+//    }
+//    
+//    
+//    @IBAction func onChangeSwitch_visibleHealthClub(sender: AnyObject) {
+//    }
+//    
+//    
+//    @IBAction func onChangeSwitch_visibleMale(sender: AnyObject) {
+//    }
+//    
+//    @IBAction func onChangeSwitch_visibleFemale(sender: AnyObject) {
+//    }
+//    
+    
+    //MARK:- Is Empty Validation
+    
+    func isEmpty() -> Bool {
+        
+        
+        let descriptionStr = tv_desc.text
+        
+        if ((tf_ProActiveName.text?.isEmpty) == true){
+        
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Title Field can't be left blank!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+
+            return false
+            
+        }
+        
+        else if descriptionStr.characters.count <= 50 {
+            
+             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Description Field should have minimum 50 words!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            
+            return false
+            
+        }
+        else if((tf_location.text?.isEmpty) == true){
+            
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Location Field can't be left blank!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            
+            return false
+
+           
+        }
+        else if((tf_zip.text?.isEmpty) == true){
+            
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Zip Field can't be left blank!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            
+            return false
+            
+        }
+        else if( tokenF_inviteMember.tags.count == 0){
+            
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please add at least one member!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            
+            return false
+        }
+        else if( self.btnIAgree.tag == 11){
+           
+            
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select the Terms & condition!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            
+            return false
+     
+        }
+  
+        return true
     }
     
-    @IBAction func onChangeSwitch_settingCreateMeetUp(sender: AnyObject) {
-    }
-    
-    @IBAction func onChangeSwitch_settingCreaeWebInvite(sender: AnyObject) {
-    }
     
     
     
-    @IBAction func onChangeSwitch_settingUploadPic(sender: AnyObject) {
-    }
-    
-    
-    @IBAction func onChangeSwitch_visibleEvery(sender: AnyObject) {
-    }
-    
-    @IBAction func onChangeSwitch_visibleFriends(sender: AnyObject) {
-    }
-    
-    @IBAction func onChangeSwitch_visibleColleagues(sender: AnyObject) {
-    }
-    
-    
-    @IBAction func onChangeSwitch_visibleHealthClub(sender: AnyObject) {
-    }
-    
-    
-    @IBAction func onChangeSwitch_visibleMale(sender: AnyObject) {
-    }
-    
-    @IBAction func onChangeSwitch_visibleFemale(sender: AnyObject) {
-    }
     
     //MARK:- Image Picker Delegates
     func imagePickerController(picker:UIImagePickerController, didFinishPickingMediaWithInfo info:[String : AnyObject])
@@ -295,7 +451,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
     }
     
-    
+    // Action for Upload Cover Picture
     func clickUserImage(recognizer:UITapGestureRecognizer)
     {
         
@@ -357,6 +513,26 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         presentViewController(documentPicker, animated: true, completion: nil)
     }
     
+    
+    
+    //MARK:- TLTagsControlDelegate
+    func tagsControl(tagsControl: TLTagsControl!, tappedAtIndex index: Int) {
+        print("Tag was tapped ", tagsControl.tags[index]);
+    }
+    
+    
+    
+    func tagsControl(tagsControl: TLTagsControl!, deletedAtIndex index: Int) {
+        print("Tag was deleted ", tagsControl.tags[index]);
+      
+     // self.tokens.removeAtIndex(index)
+        tagsControl.tags.removeObjectAtIndex(index)
+        self.tokenF_inviteMember.reloadTagSubviews()
+        
+    }
+    
+    
+    
     // MARK: - UIDocumentPickerDelegate Methods
     func documentPicker(controller: UIDocumentPickerViewController, didPickDocumentAtURL url: NSURL) {
         
@@ -377,7 +553,144 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     }
     
     
+    //MARK : API hit
+    
     func submitAPI() -> Void {
+        
+       // print("ADMIN TAG ### \(self.adminDict["_id"])")
+        
+        // self.tokenField.tags.addObject(contact["firstName"]!)
+       
+        print("MEMBER TAG ### \(self.memberArr)")
+        
+       
+        
+        for i in 0  ..< memberArr.count  {
+        
+            let str = memberArr[i]["_id"] as! String
+            self.tagIDMember.append(str)
+            
+        }
+        
+        for i in 0  ..< adminArr.count  {
+            
+            let str = adminArr[i]["_id"] as! String
+            self.tagIDAdmin.append(str)
+            
+        }
+
+        
+        
+        print("TEST hahah \(self.tagIDAdmin)")
+
+        
+        print("TEST hahah \(self.tagIDMember)")
+     
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+           
+            //  var parameters = [String: AnyObject]()
+            // parameters["AppKey"] = AppKey
+           // parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+           
+             parameters = ["name" : self.tf_ProActiveName.text!,
+                           "description" : self.tv_desc.text,
+                           "createdBy"   : AppHelper.userDefaultsForKey(_ID),
+                           "address"     : self.tf_location.text!,
+                           "zipcode"     : self.tf_zip.text!,
+                          "admins"       : self.tagIDAdmin,
+                         "members"       : self.tagIDMember,
+                         "attachements"  : self.arrAttachments,
+                         "private"       : self.switchStatus[0],
+                "allowToCreateMeetup"    : self.switchStatus[1],
+                "allowToCreateWebinvite"  : self.switchStatus[2],
+                "allowToUpload"           : self.switchStatus[3],
+                "everyone"                 : self.switchStatus[4],
+                "friends"                   : self.switchStatus[5],
+                "colleagues"               : self.switchStatus[6],
+                "healthClub"                : self.switchStatus[7],
+                "males"                     : self.switchStatus[8],
+                "females"                   : self.switchStatus[9],
+                "categoryId"                :["123sdfsd"]
+            
+  ]
+       
+            
+            print("Parameters before : \(parameters)")
+            
+            
+            if self.iv_coverPic.image != nil
+            {
+                let imageData = UIImageJPEGRepresentation(self.iv_coverPic.image!, 1.0)
+                
+                let baseUrlString = ChatBaseMediaUrl+ChatMediaPath
+                let url = NSURL(string: baseUrlString)?.absoluteString
+                let manager=AFHTTPRequestOperationManager()
+                
+                manager.POST(url, parameters: nil, constructingBodyWithBlock: {
+                    (formdata:AFMultipartFormData!)-> Void  in
+                    
+                    if(imageData != nil)
+                    {
+                        formdata.appendPartWithFileData(imageData, name: "files", fileName: "image.jpg" as String, mimeType: "image/jpeg")
+                    }
+                    
+                    
+                    }, success:
+                    {
+                        operation, response -> Void in
+                        
+                        //Parsing JSON
+                        var parsedData = JSON(response)
+                        self.parameters["imgUrl"] = parsedData["filesUrl"].string
+                        print("URL \(parsedData["filesUrl"].string)")
+                        //call global web service class latest
+                        Services.postRequest(ServiceCreatePAC, parameters: self.parameters, completionHandler:{
+                            (status,responseDict) in
+                            
+                            AppDelegate.dismissProgressHUD()
+                            
+                            if (status == "Success") {
+                                
+                                if ((responseDict["error"] as! Int) == 0) {
+                                    
+                                    print(responseDict["result"])
+                                    
+                                    let msg = "PAC created."
+                                    
+                                    
+                                    AppHelper.showAlertWithTitle(AppName, message:msg, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                    
+                                }
+                                
+                            } else if (status == "Error"){
+                                
+                                AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                
+                            }
+                        })
+              
+                    }, failure:
+                    {
+                        operation, response -> Void in
+                         print(response)
+                   
+                        stopActivityIndicator(self.view)
+                        
+                    }
+                )
+            }
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+
+        
+        
         
       /*  if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
@@ -553,13 +866,47 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
         }*/
     }
-    
-    
-    
-    
+   
 
 }
 
+//MARK:- TextView Delegate
+
+extension CreatePACVC : UITextViewDelegate{
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        
+        
+        tv_desc.textColor = UIColor.blackColor()
+        
+        
+        if tv_desc.text == "Minimum 50 words" {
+            
+            tv_desc.text = "" // clear the place holder text
+
+        }
+        
+
+    }
+    
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        
+        if tv_desc.text == "" {
+            tv_desc.textColor = UIColor.grayColor()
+            tv_desc.text = "Minimum 50 words"
+        }
+        
+    }
+    
+    
+    
+    
+}
+
+
+
+//MARK:- TableView DataSource n Delegate
 
 
 extension CreatePACVC: UITableViewDataSource{

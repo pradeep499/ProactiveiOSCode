@@ -101,16 +101,8 @@
 #define ServiceFriendRequestAction         @"users/friendRequestAction"
 #define ServiceGetUserFriendList        @"users/getUserFriendList"
 #define ServiceBlockUserAction        @"users/blockUserAction"
-
-
-
-
-
-
-
-
-
-
+#define ServiceCreatePAC               @"users/createPac"
+#define ServiceGetFindPAC               @"users/findPac"
 
 #define maxLength                       25
 #define maxPhoneLength                  15
