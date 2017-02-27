@@ -103,15 +103,8 @@
 #define ServiceGetUserFriendList        @"users/getUserFriendList"
 #define ServiceBlockUserAction        @"users/blockUserAction"
 #define ServiceGetPACDetails            @"users/getPacDetail"
-
-
-
-
-
-
-
-
-
+#define ServiceCreatePAC               @"users/createPac"
+#define ServiceGetFindPAC               @"users/findPac"
 
 #define maxLength                       25
 #define maxPhoneLength                  15
