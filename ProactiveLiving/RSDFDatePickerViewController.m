@@ -161,11 +161,11 @@ type = 3 for yeary basis
     
     self.customDatePickerView.hidden = YES;
     [self.view addSubview:self.datePickerView];
-    //[self.view addSubview:self.btnSwitchView];
-    //[self.view insertSubview:self.btnSwitchView atIndex:5];
-    //[self.datePickerView bringSubviewToFront:self.btnSwitchView];
-    //self.btnSwitchView.layer.zPosition = 1;
-    //[[UIApplication sharedApplication].keyWindow bringSubviewToFront:self.btnSwitchView];
+   
+    // To take button on front most
+    [self.view addSubview:self.btnSwitchView];
+    [self.datePickerView bringSubviewToFront:self.btnSwitchView];
+    [self.btnSwitchView addTarget:self action:@selector(onEventsButtonTouch:) forControlEvents:UIControlEventTouchUpInside];
     
     if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
         [self.btnBack setHidden:NO];
@@ -469,6 +469,12 @@ type = 3 for yeary basis
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (IBAction)onEventsButtonTouch:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)onRestyleButtonTouch:(UIBarButtonItem *)sender
 {
     if (!self.datePickerView.hidden) {
