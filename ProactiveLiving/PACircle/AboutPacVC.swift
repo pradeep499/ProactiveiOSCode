@@ -12,6 +12,9 @@ class AboutPacVC: UIViewController {
 
     var collapsed = true
     var dataDict = [String : AnyObject]()
+    var pacID = String()
+    var memberStatus = Bool()
+    
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var imageHeader: UIImageView!
     
@@ -39,7 +42,7 @@ class AboutPacVC: UIViewController {
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["pacId"] = "58a6984ffed5d155e3251c10"
+            parameters["pacId"] = self.pacID
 
             //call global web service class latest
             Services.postRequest(ServiceGetPACDetails, parameters: parameters, completionHandler:{
@@ -52,9 +55,18 @@ class AboutPacVC: UIViewController {
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
                         print(responseDict)
-                        self.dataDict = responseDict["result"] as! [String : AnyObject]
-                        //self.dataArr = items.map({$0["latestArticleLogoUrl"]! as! String}) as [String]
-                        //self.imageHeader.sd_setImageWithURL(NSURL.init(string:self.dataDict["imgUrl"] as! String))
+                        self.dataDict = (responseDict["result"]!["pac"] as! [String : AnyObject])
+                        let parentVC = self.parentViewController?.parentViewController as! PACGroupsContainerVC
+                        parentVC.btnLike.selected = responseDict["result"]!["likeStatus"] as! Bool
+                        self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
+                        parentVC.imgHeader.sd_setImageWithURL(NSURL.init(string:self.dataDict["imgUrl"] as! String))
+                        
+                        if((self.dataDict["likes"] as! [String]).count == 1) {
+                            parentVC.lblLikes.text = "\((self.dataDict["likes"] as! [String]).count) Like"
+                        }
+                        else {
+                            parentVC.lblLikes.text = "\((self.dataDict["likes"] as! [String]).count) Likes"
+                        }
                         self.tableView.reloadData()
                         
                     } else {
@@ -122,24 +134,31 @@ extension AboutPacVC: UITableViewDataSource{
         var numOfRows: Int = 0
         
        
-        if let settingsDict = self.dataDict["settings"] {
-
-        let isPrivate = settingsDict["private"] as! Bool
-
-        if(!isPrivate) {
-
+        if self.memberStatus == false {
+            
+            if let settingsDict = self.dataDict["settings"] {
+                
+                let isPrivate = settingsDict["private"] as! Bool
+                
+                if(!isPrivate) {
+                    
+                    numOfRows = 7
+                    tableView.backgroundView = nil
+                }
+                else
+                {
+                    numOfRows = 1
+                    let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+                    noDataLabel.text          = "Membership is Private"
+                    noDataLabel.textColor     = UIColor.blackColor()
+                    noDataLabel.textAlignment = .Center
+                    tableView.backgroundView  = noDataLabel
+                }
+            }
+        }
+        else {
             numOfRows = 7
             tableView.backgroundView = nil
-        }
-        else
-        {
-            numOfRows = 1
-            let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-            noDataLabel.text          = "Membership is Private"
-            noDataLabel.textColor     = UIColor.blackColor()
-            noDataLabel.textAlignment = .Center
-            tableView.backgroundView  = noDataLabel
-        }
         }
         return numOfRows
         
