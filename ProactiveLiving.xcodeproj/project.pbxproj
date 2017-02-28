@@ -314,6 +314,7 @@
 		BA6E72651D7DAD95008081FC /* MeetUpDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6E72641D7DAD95008081FC /* MeetUpDetailsVC.swift */; };
 		BA6F33601C7C9674008288F2 /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6F335F1C7C9674008288F2 /* TreeNode.m */; };
 		BA7414131C75A4900041B8D4 /* ProfileVCTableCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7414121C75A4900041B8D4 /* ProfileVCTableCell2.m */; };
+		BA79AEBA1E641F1100FFCD20 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79AEB91E641F1100FFCD20 /* Extensions.swift */; };
 		BA7A4B191C61F481005CA80C /* ValidationFiltersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7A4B181C61F481005CA80C /* ValidationFiltersVC.m */; };
 		BA7BBE581C73578900EBC5BF /* ValidationCMoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7BBE571C73578900EBC5BF /* ValidationCMoreVC.m */; };
 		BA7BBE5B1C7357AB00EBC5BF /* ValidationCProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7BBE5A1C7357AB00EBC5BF /* ValidationCProfileVC.m */; };
@@ -897,6 +898,7 @@
 		BA6F335F1C7C9674008288F2 /* TreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
 		BA7414111C75A4900041B8D4 /* ProfileVCTableCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileVCTableCell2.h; sourceTree = "<group>"; };
 		BA7414121C75A4900041B8D4 /* ProfileVCTableCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileVCTableCell2.m; sourceTree = "<group>"; };
+		BA79AEB91E641F1100FFCD20 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BA7A4B171C61F481005CA80C /* ValidationFiltersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidationFiltersVC.h; sourceTree = "<group>"; };
 		BA7A4B181C61F481005CA80C /* ValidationFiltersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidationFiltersVC.m; sourceTree = "<group>"; };
 		BA7BBE561C73578900EBC5BF /* ValidationCMoreVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidationCMoreVC.h; sourceTree = "<group>"; };
@@ -1625,6 +1627,7 @@
 		605EAC971E1E651B0048EA8F /* AppHelper */ = {
 			isa = PBXGroup;
 			children = (
+				BA79AEB91E641F1100FFCD20 /* Extensions.swift */,
 				605EAC981E1E651B0048EA8F /* AppHelper.h */,
 				605EAC991E1E651B0048EA8F /* AppHelper.m */,
 				605EAC9A1E1E651B0048EA8F /* Define.swift */,
@@ -3296,6 +3299,7 @@
 				BAB0E4C31D5DE23700906C10 /* Message.m in Sources */,
 				605EAC441E1E63C60048EA8F /* CustomTextField.swift in Sources */,
 				BA5901A21D36579D006142AC /* IQKeyboardManagerConstants.swift in Sources */,
+				BA79AEBA1E641F1100FFCD20 /* Extensions.swift in Sources */,
 				BA59011A1D364EFD006142AC /* DKImagePickerController.swift in Sources */,
 				BAD5F10F1CB5213300C8F206 /* AppointmentListingVC.m in Sources */,
 				605EAC611E1E63C70048EA8F /* UIImage+MultiFormat.m in Sources */,

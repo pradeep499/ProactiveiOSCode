@@ -20,6 +20,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     @IBOutlet weak var view_post: UIView!
     
     @IBOutlet weak var tf_share: CustomTextField!
+    @IBOutlet weak var layoutConstraint_collectionview_bottom: NSLayoutConstraint!
     
     
     @IBOutlet weak var layOutConstrain_view_Post_bottom: NSLayoutConstraint!
@@ -52,8 +53,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
      //   isFromGallery = false
         isBackFromChildVC = false
         viewWillAppaerCount = 0
-        
-     tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewsFeedsAllVC.hideSocialSharingView))
+        //layOutConstrain_view_Post_bottom.constant = 320
+        //layoutConstraint_collectionview_bottom.constant = 350
+        var viewFrame = self.view.bounds
+        viewFrame.size.height = screenHeight-200
+        //self.view.frame = viewFrame
+        IQKeyboardManager.sharedManager().enable = true
+        //IQKeyboardManager.sharedManager().enableAutoToolbar = false
+        tf_share.autocorrectionType = .No
+
+        //tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewsFeedsAllVC.hideSocialSharingView))
      
         
         self.view_share.hidden = true
@@ -71,8 +80,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         
         
@@ -412,8 +421,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     @IBAction func onClickPhotoBtn(sender: AnyObject) {
         
         self.attachmentViewS.backgroundColor=UIColor.lightGrayColor()
-        
+        tf_share.resignFirstResponder()
+
         self.layoutAttachmetBottom.constant = 120;
+
         self.view.bringSubviewToFront(self.attachmentViewS)
         
         UIView.animateWithDuration(0.5, animations:
@@ -437,8 +448,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
    
     @IBAction func onClickPlusBtn(sender: AnyObject) {
         
-        self.collectionView.removeGestureRecognizer(tapGesture)
-        self.collectionView.addGestureRecognizer(tapGesture)
+        //self.collectionView.removeGestureRecognizer(tapGesture)
+        //self.collectionView.addGestureRecognizer(tapGesture)
         
         self.view_share.alpha = 0
     //    UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(self.view_share)
@@ -538,7 +549,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
-        layOutConstrain_view_Post_bottom.constant = 125
+        //layOutConstrain_view_Post_bottom.constant = 125
         textField.resignFirstResponder()
         
         return true
@@ -546,27 +557,27 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     //MARK:- Keyborad
     
-    func keyboardWillShow(sender: NSNotification) {
-        if let userInfo = sender.userInfo {
-            if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
-                
-                layOutConstrain_view_Post_bottom.constant = keyboardHeight + 80
-                UIView.animateWithDuration(0.25, animations: { () -> Void in
-                    self.view.layoutIfNeeded()
-                })
-            }
-        }
-    }
-    
-    func keyboardWillHide(sender: NSNotification) {
-        if let userInfo = sender.userInfo {
-            if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
-                
-                layOutConstrain_view_Post_bottom.constant = 123
-                UIView.animateWithDuration(0.25, animations: { () -> Void in self.view.layoutIfNeeded() })
-            }
-        } }
-    
+//    func keyboardWillShow(sender: NSNotification) {
+//        if let userInfo = sender.userInfo {
+//            if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+//                
+//                layOutConstrain_view_Post_bottom.constant = keyboardHeight + 80
+//                UIView.animateWithDuration(0.25, animations: { () -> Void in
+//                    self.view.layoutIfNeeded()
+//                })
+//            }
+//        }
+//    }
+//    
+//    func keyboardWillHide(sender: NSNotification) {
+//        if let userInfo = sender.userInfo {
+//            if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+//                
+//                layOutConstrain_view_Post_bottom.constant = 123
+//                UIView.animateWithDuration(0.25, animations: { () -> Void in self.view.layoutIfNeeded() })
+//            }
+//        } }
+//    
     
     
     //MARK: - Socket
@@ -1467,8 +1478,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func cancelAttchView()-> Void
     {
-         self.layoutAttachmetBottom.constant = -200;
-        
+        self.layoutAttachmetBottom.constant = -200;
+
         UIView.animateWithDuration(0.5, animations:
             {
                 self.view.layoutIfNeeded()
