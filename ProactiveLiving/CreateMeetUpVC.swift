@@ -46,7 +46,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var isForwardAllowed : Bool!
     var dataDict = [String : AnyObject]()
     var strLatLong : String!
-    
+    var fromScreenFlag : String!
     var recurrenceDict:[String:String]!
 
     override func viewDidLoad() {
@@ -574,6 +574,14 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     dict["webLink"]=self.txtFieldWhereFirst.text
                 }
                 
+                
+                if(self.fromScreenFlag == "PAC") {
+                    dict["calendarType"]="pac"
+                }
+                else {
+                    dict["calendarType"]="private"
+                }
+                
                 dict["for"]=txtFieldFor.text
                 
                 for link in self.arrAttachments {
@@ -699,7 +707,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                                 dispatch_after(3, dispatch_get_main_queue(), {
                                     stopActivityIndicator(self.view)
                                     
-                                    self.navigationController?.popToRootViewControllerAnimated(true)
+                                    self.navigationController?.popViewControllerAnimated(true)
                                 })
                             }
                             else
@@ -708,7 +716,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                                 dispatch_after(3, dispatch_get_main_queue(), {
                                     stopActivityIndicator(self.view)
                                     
-                                    self.navigationController?.popToRootViewControllerAnimated(true)
+                                    self.navigationController?.popViewControllerAnimated(true)
                                 })
                             }
                             
@@ -730,7 +738,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
                         dispatch_after(3, dispatch_get_main_queue(), {
                             stopActivityIndicator(self.view)
-                            self.navigationController?.popToRootViewControllerAnimated(true)
+                            self.navigationController?.popViewControllerAnimated(true)
                         })
                     }
                     else
@@ -738,7 +746,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
                         dispatch_after(3, dispatch_get_main_queue(), {
                             stopActivityIndicator(self.view)
-                            self.navigationController?.popToRootViewControllerAnimated(true)
+                            self.navigationController?.popViewControllerAnimated(true)
                         })
                     }
                     

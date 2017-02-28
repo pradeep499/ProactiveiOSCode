@@ -55,7 +55,8 @@
         [parameters setValue:AppKey forKey:@"AppKey"];
         [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
         [parameters setObject:self.appointmnetType forKey:@"type"];
-        
+        [parameters setObject:self.fromScreenFlag forKey:@"calendarType"];
+
         //call global web service class
         [Services serviceCallWithPath:ServiceGetAppointmentList withParam:parameters success:^(NSDictionary *responseDict)
          {

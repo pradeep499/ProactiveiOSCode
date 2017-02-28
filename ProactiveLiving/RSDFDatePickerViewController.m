@@ -408,6 +408,9 @@ type = 3 for yeary basis
                                       UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
                                       CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
                                       vc.pushedFrom=@"MEETUPS";
+                                      if([self.fromScreen isEqualToString:@"AboutPacVC"])
+                                          vc.fromScreenFlag = @"PAC";
+
                                       [self.navigationController pushViewController:vc animated:YES];
                                   }
                                   [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
@@ -423,6 +426,9 @@ type = 3 for yeary basis
                                          UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
                                          CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
                                          vc.pushedFrom=@"WEBINVITES";
+                                         if([self.fromScreen isEqualToString:@"AboutPacVC"])
+                                             vc.fromScreenFlag = @"PAC";
+                                         
                                          [self.navigationController pushViewController:vc animated:YES];
                                      }
                                      
@@ -472,7 +478,14 @@ type = 3 for yeary basis
 
 - (IBAction)onEventsButtonTouch:(id)sender {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+        AllAppointmentsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllAppointmentsVC"];
+        if([self.fromScreen isEqualToString:@"AboutPacVC"])
+            vc.fromScreenFlag = @"pac";
+        else
+            vc.fromScreenFlag = @"private";
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)onRestyleButtonTouch:(UIBarButtonItem *)sender
@@ -499,6 +512,15 @@ type = 3 for yeary basis
         
         NSMutableDictionary *parameters=[[NSMutableDictionary alloc]init];
         [parameters setValue:AppKey forKey:@"AppKey"];
+        
+        if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
+            [parameters setValue:@"pac" forKey:@"calendarType"];
+        }
+        else {
+            [parameters setValue:@"private" forKey:@"calendarType"];
+        }
+
+        
         [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
         
         //call global web service class
@@ -666,8 +688,14 @@ type = 3 for yeary basis
             
         if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
             AllAppointmentsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllAppointmentsVC"];
-             vc.arrEvents=eventArray;
-             vc.selectedRecurrenceDate = date;
+            vc.arrEvents=eventArray;
+            vc.selectedRecurrenceDate = date;
+            
+            if([self.fromScreen isEqualToString:@"AboutPacVC"])
+                vc.fromScreenFlag = @"pac";
+            else
+                vc.fromScreenFlag = @"private";
+                
             [self.navigationController pushViewController:vc animated:YES];
         }
         NSLog(@"%lu",(unsigned long)eventArray.count);

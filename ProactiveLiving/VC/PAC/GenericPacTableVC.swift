@@ -199,6 +199,8 @@ extension GenericPacTableVC:  UITableViewDelegate{
         
         let containerObj = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("PACGroupsContainerVC") as! PACGroupsContainerVC
         containerObj.title = "TTDSD"
+        containerObj.pacID = self.pacDetailArr[indexPath.row]["_id"] as! String
+        
         self.navigationController?.pushViewController(containerObj, animated: true)
     
     }

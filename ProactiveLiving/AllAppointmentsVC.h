@@ -12,5 +12,6 @@
 
 @property (nonatomic,copy)NSArray *arrEvents;
 @property (nonatomic,copy)NSDate *selectedRecurrenceDate;
+@property (copy, nonatomic)  NSString *fromScreenFlag;
 
 @end
