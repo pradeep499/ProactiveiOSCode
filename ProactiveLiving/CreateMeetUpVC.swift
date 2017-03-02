@@ -47,6 +47,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var dataDict = [String : AnyObject]()
     var strLatLong : String!
     var fromScreenFlag : String!
+    var pacID : String!
     var recurrenceDict:[String:String]!
 
     override func viewDidLoad() {
@@ -577,6 +578,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
                 if(self.fromScreenFlag == "PAC") {
                     dict["calendarType"]="pac"
+                    dict["pacId"] = self.pacID
                 }
                 else {
                     dict["calendarType"]="private"

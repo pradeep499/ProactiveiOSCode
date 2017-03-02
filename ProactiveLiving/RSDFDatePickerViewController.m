@@ -408,8 +408,10 @@ type = 3 for yeary basis
                                       UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
                                       CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
                                       vc.pushedFrom=@"MEETUPS";
-                                      if([self.fromScreen isEqualToString:@"AboutPacVC"])
+                                      if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
                                           vc.fromScreenFlag = @"PAC";
+                                          vc.pacID = self.pacID;
+                                      }
 
                                       [self.navigationController pushViewController:vc animated:YES];
                                   }
@@ -427,8 +429,10 @@ type = 3 for yeary basis
                                          CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
                                          vc.pushedFrom=@"WEBINVITES";
                                          if([self.fromScreen isEqualToString:@"AboutPacVC"])
+                                         {
                                              vc.fromScreenFlag = @"PAC";
-                                         
+                                             vc.pacID = self.pacID;
+                                         }
                                          [self.navigationController pushViewController:vc animated:YES];
                                      }
                                      
@@ -480,8 +484,10 @@ type = 3 for yeary basis
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         AllAppointmentsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllAppointmentsVC"];
-        if([self.fromScreen isEqualToString:@"AboutPacVC"])
+        if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
             vc.fromScreenFlag = @"pac";
+            vc.pacID = self.pacID;
+        }
         else
             vc.fromScreenFlag = @"private";
         [self.navigationController pushViewController:vc animated:YES];
@@ -515,6 +521,7 @@ type = 3 for yeary basis
         
         if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
             [parameters setValue:@"pac" forKey:@"calendarType"];
+            [parameters setValue:self.pacID forKey:@"pacId"];
         }
         else {
             [parameters setValue:@"private" forKey:@"calendarType"];
@@ -691,8 +698,10 @@ type = 3 for yeary basis
             vc.arrEvents=eventArray;
             vc.selectedRecurrenceDate = date;
             
-            if([self.fromScreen isEqualToString:@"AboutPacVC"])
+            if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
                 vc.fromScreenFlag = @"pac";
+                vc.pacID = self.pacID;
+            }
             else
                 vc.fromScreenFlag = @"private";
                 

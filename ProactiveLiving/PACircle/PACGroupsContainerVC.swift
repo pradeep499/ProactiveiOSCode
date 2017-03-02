@@ -12,12 +12,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     
     @IBOutlet weak var btnRight: UIButton!
-    @IBOutlet weak var btnLike: UIButton!
-    @IBOutlet weak var lblLikes: UILabel!
-    @IBOutlet weak var btnInvite: UIButton!
     @IBOutlet weak var btnOpenCalender: UIButton!
     @IBOutlet weak var lbl_title: UILabel!
-    @IBOutlet weak var imgHeader: UIImageView!
     
     var tokensAdmin = [AnyObject]()
     var tokensMember = [AnyObject]()
@@ -25,7 +21,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var pacID = String()
     
     var firstVC:NewsFeedsAllVC!
-    var secondVC: NewsFeedsAllVC!
+    var secondVC: RSDFDatePickerViewController!
     var thirdVC : AboutPacVC!
     var arrViewControllers = [AnyObject]()
     
@@ -33,13 +29,15 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         super.viewDidLoad()
         
         //self.lbl_title.text = self.title
-        btnLike.addTarget(self, action: #selector(btnLikeClick(_:)), forControlEvents: .TouchUpInside)
-        btnLike.setImage(UIImage(named: "like_empty"), forState: .Normal)
-        btnLike.setImage(UIImage(named: "like_filled"), forState: .Selected)
-        
+         
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
         self.setUpViewControllers()
+        
+        // To take button on front most
+        self.view.addSubview(self.btnOpenCalender)
+        self.view.bringSubviewToFront(self.btnOpenCalender)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,6 +50,11 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         // SetUp ViewControllers
         
         firstVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
+        firstVC.title = "WALL"
+        
+        secondVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("CalendarVC") as! RSDFDatePickerViewController
+        secondVC.fromScreen = "AboutPacVC"
+        secondVC.pacID = self.pacID
         firstVC.title = "FRIENDS"
         
         thirdVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AboutPacVC") as! AboutPacVC
@@ -69,7 +72,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
         //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
-        containerVC.view.frame = CGRectMake(0, 64+220, containerVC.view.frame.size.width,   screenHeight - 64 )
+        containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
         
         self.view.addSubview(containerVC.view)
     }
@@ -84,67 +87,12 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
     }
     
-    //MARK:- Actions
-    
-    func btnLikeClick(sender: UIButton) {
-        sender.selected = !sender.selected
-        self.likePACServiceCall()
-    }
-    
-    func btnInviteClick(sender: UIButton) {
-        
-    }
-    
-    // To Like/Unlike PAC
-    func likePACServiceCall() {
-        
-        if AppDelegate.checkInternetConnection() {
-
-            var parameters = [String: AnyObject]()
-            parameters["AppKey"] = AppKey
-            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["pacId"] = self.pacID
-            parameters["likeStatus"] = self.btnLike.selected
-            
-            //call global web service
-            Services.postRequest(ServiceLikePAC, parameters: parameters, completionHandler:{
-                (status,responseDict) in
-                
-                if (status == "Success") {
-                    
-                    if ((responseDict["error"] as! Int) == 0) {
-                        print(responseDict)
-                        var resultDict = responseDict["result"] as! [String : AnyObject]
-                        if((resultDict["likes"] as! [String]).count == 1) {
-                            self.lblLikes.text = "\((resultDict["likes"] as! [String]).count) Like"
-                        }
-                        else {
-                            self.lblLikes.text = "\((resultDict["likes"] as! [String]).count) Likes"
-                        }
-                    } else {
-                        
-                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-                    }
-                    
-                } else if (status == "Error"){
-                    
-                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-                    
-                }
-            })
-            
-        }
-        else {
-            //show internet not available
-            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-        }
-        
-    }
-    
+    // MARK: --Actions
     @IBAction func btnOpenCalenderClick(sender: AnyObject) {
         
         let objCalendarVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("CalendarVC") as! RSDFDatePickerViewController
         objCalendarVC.fromScreen = "AboutPacVC"
+        objCalendarVC.pacID = self.pacID
         self.navigationController?.pushViewController(objCalendarVC, animated: true)
     }
     
