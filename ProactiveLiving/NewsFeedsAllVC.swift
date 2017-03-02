@@ -11,24 +11,12 @@ import Social
 import MediaPlayer
 import AVKit
 
-class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDataSource, UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,  UIActionSheetDelegate, DKImagePickerControllerDelegate {
+class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDataSource, UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,  UIActionSheetDelegate, DKImagePickerControllerDelegate , HPGrowingTextViewDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet var collectionView: UICollectionView!
-    
     @IBOutlet weak var view_share: UIView!
-    @IBOutlet weak var view_post: UIView!
-    
-    @IBOutlet weak var tf_share: CustomTextField!
-    @IBOutlet weak var layoutConstraint_collectionview_bottom: NSLayoutConstraint!
-    
-    
-    @IBOutlet weak var layOutConstrain_view_Post_bottom: NSLayoutConstraint!
     @IBOutlet weak var attachmentViewS: UIView!
-    
-    
-    @IBOutlet weak var layoutAttachmetBottom: NSLayoutConstraint!
-    
+    @IBOutlet weak var postContainerView: UIView!
     
     //  var dataArr = [AnyObject]()
     var profileArr = [String]()
@@ -37,7 +25,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var postFriendsArr:NSMutableArray = NSMutableArray()
     var postColleagueArr:NSMutableArray = NSMutableArray()
     var postHealthClubsArr:NSMutableArray = NSMutableArray()
-    
+    var textView:HPGrowingTextView = HPGrowingTextView()
+    var containerView: UIView = UIView()
+
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerController()
     var globalAssets: [DKAsset]?
@@ -58,18 +48,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         var viewFrame = self.view.bounds
         viewFrame.size.height = screenHeight-200
         //self.view.frame = viewFrame
-        IQKeyboardManager.sharedManager().enable = true
         //IQKeyboardManager.sharedManager().enableAutoToolbar = false
-        tf_share.autocorrectionType = .No
 
         //tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewsFeedsAllVC.hideSocialSharingView))
      
         
         self.view_share.hidden = true
-        
-        self.view_post.layer.borderWidth = 1.0
-        self.view_post.layer.borderColor = UIColor.lightGrayColor().CGColor
-        
         
        
         if self.title == "ALL" || self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS"{
@@ -80,18 +64,59 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
         }
         
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
+        self.setupGrowingTextView()
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
-        
-        
-        
-       
+        self.collectionView.keyboardDismissMode = .OnDrag
         
     }
     
+    //MARK:- Growing TextView mthods
+    func setupGrowingTextView() {
+        
+        containerView = UIView(frame: CGRectMake(0, self.collectionView.frame.size.height - 40, 320, 40))
+        containerView.backgroundColor = UIColor.redColor()
+        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(screenWidth-200), height: CGFloat(24)))
+        textView.isScrollable = false
+        textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
+        textView.minNumberOfLines = 1
+        textView.maxNumberOfLines = 6
+        // you can also set the maximum height in points with maxHeight
+        // textView.maxHeight = 200.0f;
+        //textView.returnKeyType = .Go
+        textView.font = UIFont.systemFontOfSize(13.0)
+        textView.delegate = self
+        textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0)
+        textView.backgroundColor = UIColor.whiteColor()
+        textView.setCornerRadiusWithBorderWidthAndColor(5.0, borderWidth: 1.0, borderColor: UIColor.grayColor())
+        textView.placeholder = "Share an update"
+        textView.autoresizingMask = .FlexibleWidth
+        postContainerView.addSubview(textView)
+        //self.view.addSubview(containerView)
+        //textView.animateHeightChange = NO; //turns off animation
+        
+    }
+    func growingTextView(growingTextView: HPGrowingTextView!, didChangeHeight height: Float) {
+        
+    }
+    func growingTextView(growingTextView: HPGrowingTextView!, willChangeHeight height: Float) {
+        let diff: CGFloat = CGFloat(growingTextView.frame.size.height - CGFloat(height))
+        var r: CGRect = postContainerView.frame
+        r.size.height -= diff
+        r.origin.y += diff
+        postContainerView.frame = r
+    }
     override func viewWillAppear(animated: Bool) {
+        
+        
+        super.viewWillAppear(animated)
+        self.attachmentViewS.hidden = true
+        
+        IQKeyboardManager.sharedManager().enable = false
+        IQKeyboardManager.sharedManager().enableAutoToolbar = false
         
          //to avoid blocking the UI
         if (viewWillAppaerCount > 0) {
@@ -129,25 +154,31 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         self.collectionView.reloadData()
         
-        self.layoutAttachmetBottom.constant = -200;
-        
-        super.viewWillAppear(true)
+        //self.layoutAttachmetBottom.constant = 200;
+
+
     }
     
     override func viewDidAppear(animated: Bool) {
-        
+
+        super.viewDidAppear(animated)
+
         // When user comes back from gallery Does not post come on time line
         self.getPostEvent()
         self.getLikeUpdate()
-        
-       
+
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        
+        super.viewWillDisappear(animated)
+        IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.sharedManager().enableAutoToolbar = true
+
+    }
     
     func hideSocialSharingView() -> Void {
-        
         self.view_share.hidden = true
-        self.collectionView.removeGestureRecognizer(tapGesture)
     }
     //MARK:- ActionSheet Delegate
     
@@ -376,7 +407,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
             let facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-            facebookSheet.setInitialText(self.tf_share.text
+            facebookSheet.setInitialText(self.textView.text
             )
             self.presentViewController(facebookSheet, animated: true, completion: nil)
         } else {
@@ -398,7 +429,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
             let twitterSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-            twitterSheet.setInitialText(self.tf_share.text)
+            twitterSheet.setInitialText(self.textView.text)
             self.presentViewController(twitterSheet, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Accounts", message: "Please login to a Twitter account to share.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -420,12 +451,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     @IBAction func onClickPhotoBtn(sender: AnyObject) {
         
-        self.attachmentViewS.backgroundColor=UIColor.lightGrayColor()
-        tf_share.resignFirstResponder()
-
-        self.layoutAttachmetBottom.constant = 120;
-
-        self.view.bringSubviewToFront(self.attachmentViewS)
+        //self.layoutAttachmetBottom.constant = 120;
+        self.attachmentViewS.hidden = false
+        self.textView.resignFirstResponder()
+        //self.view.bringSubviewToFront(self.attachmentViewS)
         
         UIView.animateWithDuration(0.5, animations:
             {
@@ -458,7 +487,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         UIView.animateWithDuration(0.3, animations: {
             self.view_share.alpha = 1.0
-            self.view_share.hidden = false
+            if(self.view_share.hidden) {
+                self.view_share.hidden = false
+            }
+            else {
+                self.view_share.hidden = true
+            }
         })
         
     }
@@ -468,7 +502,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         self.hideSocialSharingView()
         
-        if self.tf_share.text?.characters.count < 1 {
+        if self.textView.text?.characters.count < 1 {
             AppHelper.showAlertWithTitle(AppName, message: "Post text can't be blank.", tag: 0, delegate: nil, cancelButton: "OK", otherButton: nil)
             return
         }
@@ -478,8 +512,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.sendPostToServer("text", isShared: false, createdDict: nil, imgOrVideoUlr: nil, captionText: nil, thumNailName:nil)
       
         
-        self.tf_share.text = ""
-        self.tf_share.resignFirstResponder()
+        self.textView.text = ""
+        self.textView.resignFirstResponder()
         
     }
     
@@ -555,7 +589,44 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         return true
     }
     
-    //MARK:- Keyborad
+    //MARK:- Keyborad Delegates
+    
+    func keyboardWillShow(note: NSNotification) {
+        // get keyboard size and loctaion
+        // Need to translate the bounds to account for rotation.
+        var containerFrame = containerView.frame
+        var postViewFrame = postContainerView.frame
+
+        containerFrame.origin.y = self.collectionView.bounds.size.height - (210 + containerFrame.size.height)
+        postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + 335)
+
+        // animations settings
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        // set views with new info
+        containerView.frame = containerFrame
+        postContainerView.frame = postViewFrame
+        // commit animations
+        UIView.commitAnimations()
+    }
+    
+    
+    func keyboardWillHide(note: NSNotification) {
+        // get a rect for the textView frame
+        var containerFrame: CGRect = containerView.frame
+        var postViewFrame = postContainerView.frame
+        containerFrame.origin.y = self.collectionView.bounds.size.height - containerFrame.size.height
+        postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + 110)
+        // animations settings
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        // set views with new info
+        containerView.frame = containerFrame
+        postContainerView.frame = postViewFrame
+
+        // commit animations
+        UIView.commitAnimations()
+    }
     
 //    func keyboardWillShow(sender: NSNotification) {
 //        if let userInfo = sender.userInfo {
@@ -638,7 +709,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }else{
                 if postType == "text" {
                     
-                    dict["text"] = self.tf_share.text
+                    dict["text"] = self.textView.text
                     dict["createdBy"] = ChatHelper.userDefaultForKey(_ID)
                 }else{
                     
@@ -664,7 +735,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 }else{
                     
                     
-                    dict["text"] = self.tf_share.text
+                    dict["text"] = self.textView.text
                     dict["createdBy"] = ChatHelper.userDefaultForKey(_ID)
                 }
                 
@@ -1478,7 +1549,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func cancelAttchView()-> Void
     {
-        self.layoutAttachmetBottom.constant = -200;
+        //self.layoutAttachmetBottom.constant = -200;
+        self.attachmentViewS.hidden = true
+
 
         UIView.animateWithDuration(0.5, animations:
             {
