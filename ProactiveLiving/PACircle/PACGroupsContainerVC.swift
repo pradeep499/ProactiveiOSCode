@@ -50,12 +50,13 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         // SetUp ViewControllers
         
         firstVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
+        firstVC.pacID = self.pacID
         firstVC.title = "WALL"
-        
+
         secondVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("CalendarVC") as! RSDFDatePickerViewController
         secondVC.fromScreen = "AboutPacVC"
         secondVC.pacID = self.pacID
-        firstVC.title = "FRIENDS"
+        secondVC.title = "FRIENDS"
         
         thirdVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AboutPacVC") as! AboutPacVC
         thirdVC.title = "ABOUT"
@@ -79,11 +80,11 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
-        //   self.view.endEditing(true)
+        self.view.endEditing(true)
         print("current Index : \(Int(index))")
         print("current controller : \(controller)")
-        //currentIndex = index
-        //   controller.viewWillAppear(true)
+        currentIndex = index
+        controller.viewWillAppear(true)
         
     }
     
