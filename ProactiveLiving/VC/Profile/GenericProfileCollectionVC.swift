@@ -779,7 +779,7 @@ extension GenericProfileCollectionVC:UICollectionViewDelegate{
             let dict = self.friendListArr[indexPath.row] as! [String:AnyObject]
             
             vc.viewerUserID = dict["friendId"]!["_id"] as! String!
-            self.navigationController?.pushViewController(vc , animated: false)
+            self.navigationController?.pushViewController(vc , animated: true)
             
         }
     }

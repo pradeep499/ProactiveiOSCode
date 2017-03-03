@@ -27,6 +27,7 @@
 
 
 }
+@property (weak, nonatomic) IBOutlet UIButton *btnCalendar;
 
 @end
 
@@ -35,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     [self setUpViewControllers];
 }
 
@@ -93,6 +95,11 @@
     containerVC.view.frame=CGRectMake(0, 64, containerVC.view.frame.size.width, containerVC.view.frame.size.height-64);
     
     [self.view addSubview:containerVC.view];
+    
+    // To take button on front most
+    [self.view addSubview:self.btnCalendar];
+    [self.view bringSubviewToFront:self.btnCalendar];
+
 }
 
 
@@ -106,7 +113,7 @@
 
 - (IBAction)btnBackClick:(id)sender {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
     
 }
 - (IBAction)btnCreateEventClick:(id)sender {

@@ -29,7 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self getAppointmentListingData];
     
     self.positionOfSelectedDate = -1;
 
@@ -38,8 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self.tableView reloadData];
+    [self getAppointmentListingData];
 
 }
 
@@ -68,11 +66,11 @@
                      
                      self.dataArray=[[responseDict objectForKey:@"result"] mutableCopy];
                      
-                    if([self.arrEvents count]>0){
+                    if([self.dataArray count]>0){
                    
                     //     [self filterArrayUsingEvents:self.arrEvents];
                         
-                        [self getSelectedDatePositionInTableArr:self.arrEvents];
+                        [self getSelectedDatePositionInTableArr:self.dataArray];
                         [self.tableView reloadData];
                         [self performSelector:@selector(moveCellToTop) withObject:nil afterDelay:0.5];
                    
@@ -231,10 +229,10 @@
 }
 
 
--(void)getSelectedDatePositionInTableArr:(NSArray *)arrEvents
+-(void)getSelectedDatePositionInTableArr:(NSMutableArray *)arrEvents
 {
     for(CKCalendarEvent *event in arrEvents) {
-        NSString *eventID=[event.info valueForKey:@"_id"];
+        NSString *eventID=[event valueForKey:@"_id"];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%K == %@)", @"_id",eventID];
         NSMutableArray *filteredarray = [[self.dataArray filteredArrayUsingPredicate:predicate] mutableCopy];
         NSLog(@"array %@",eventID);
