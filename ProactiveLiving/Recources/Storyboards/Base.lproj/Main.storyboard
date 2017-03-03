@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pzl-i3-Gc5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pzl-i3-Gc5">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -5995,6 +5995,7 @@
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="btnOpenCalender" destination="3c7-11-FLY" id="U1W-vE-MJB"/>
+                        <outlet property="btnRight" destination="ZR4-PH-K80" id="TRx-yM-KC0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oe2-wU-aR4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6229,7 +6230,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQN-Pk-TNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3678.75" y="-2418.75"/>
+            <point key="canvasLocation" x="3992" y="-2432"/>
         </scene>
         <!--Invite MainVC-->
         <scene sceneID="VZY-rJ-zDz">

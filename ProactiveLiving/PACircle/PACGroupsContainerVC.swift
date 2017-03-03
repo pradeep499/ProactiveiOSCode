@@ -18,12 +18,9 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var tokensAdmin = [AnyObject]()
     var tokensMember = [AnyObject]()
     var inviteStr = String()
-    var firstVC:WallPACVC!
+    var firstVC:NewsFeedsAllVC!
     var secondVC:ResourcesPACVC!
     var pacID = String()
-    
-    var firstVC:NewsFeedsAllVC!
-    var secondVC: RSDFDatePickerViewController!
     var thirdVC : AboutPacVC!
     var arrViewControllers = [AnyObject]()
     
@@ -76,7 +73,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         firstVC.pacID = self.pacID
         firstVC.title = "WALL"
 
-        secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("ResourcesPACVC") as! ResourcesPACVC
+        secondVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("ResourcesPACVC") as! ResourcesPACVC
         secondVC.title = "    RESOURCES    "
         
         thirdVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AboutPacVC") as! AboutPacVC
