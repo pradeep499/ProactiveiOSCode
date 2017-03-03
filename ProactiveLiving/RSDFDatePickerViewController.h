@@ -31,5 +31,6 @@
 
 @property (strong, nonatomic) NSCalendar *calendar;
 @property (copy, nonatomic) NSString *fromScreen;
+@property (copy, nonatomic) NSString *pacID;
 
 @end

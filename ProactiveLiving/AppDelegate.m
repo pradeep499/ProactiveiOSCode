@@ -77,6 +77,10 @@
     [[UINavigationBar appearance] setTintColor: [UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, [UIFont fontWithName:FONT_REGULAR size:16], NSFontAttributeName,nil]];
 
+    
+    //IQKeyboard Manager
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+
     /*
     BOOL isLoggedIn;
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId])

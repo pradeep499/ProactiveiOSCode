@@ -12,18 +12,28 @@ class AboutPacVC: UIViewController {
 
     var collapsed = true
     var dataDict = [String : AnyObject]()
+    var pacID = String()
+    var memberStatus = Bool()
+    
+    @IBOutlet weak var btnLike: UIButton!
+    @IBOutlet weak var lblLikes: UILabel!
+    @IBOutlet weak var btnInvite: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var imageHeader: UIImageView!
+    @IBOutlet weak var imageHeader: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.tableView.registerClass(PacCollectionCell.self, forCellReuseIdentifier: "PacCollectionCell")
         self.tableView.registerNib(UINib(nibName:"PACMenbersCell", bundle: nil), forCellReuseIdentifier: "PACMenbersCell")
         tableView.allowsSelection = false;
         tableView.separatorStyle = .None
         // Do any additional setup after loading the view.
+        btnLike.addTarget(self, action: #selector(btnLikeClick(_:)), forControlEvents: .TouchUpInside)
+        btnLike.setImage(UIImage(named: "like_empty"), forState: .Normal)
+        btnLike.setImage(UIImage(named: "like_filled"), forState: .Selected)
+
         self.fetchDataForAboutSection()
 
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +49,7 @@ class AboutPacVC: UIViewController {
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["pacId"] = "58a6984ffed5d155e3251c10"
+            parameters["pacId"] = self.pacID
 
             //call global web service class latest
             Services.postRequest(ServiceGetPACDetails, parameters: parameters, completionHandler:{
@@ -52,9 +62,17 @@ class AboutPacVC: UIViewController {
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
                         print(responseDict)
-                        self.dataDict = responseDict["result"] as! [String : AnyObject]
-                        //self.dataArr = items.map({$0["latestArticleLogoUrl"]! as! String}) as [String]
-                        //self.imageHeader.sd_setImageWithURL(NSURL.init(string:self.dataDict["imgUrl"] as! String))
+                        self.dataDict = (responseDict["result"]!["pac"] as! [String : AnyObject])
+                        self.btnLike.selected = responseDict["result"]!["likeStatus"] as! Bool
+                        self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
+                        self.imageHeader.sd_setImageWithURL(NSURL.init(string:self.dataDict["imgUrl"] as! String))
+                        
+                        if((self.dataDict["likes"] as! [String]).count == 1) {
+                            self.lblLikes.text = "\((self.dataDict["likes"] as! [String]).count) Like"
+                        }
+                        else {
+                            self.lblLikes.text = "\((self.dataDict["likes"] as! [String]).count) Likes"
+                        }
                         self.tableView.reloadData()
                         
                     } else {
@@ -80,13 +98,71 @@ class AboutPacVC: UIViewController {
     
     //MARK: - UIScrollView delegate to Animate Table Header
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        //let y: CGFloat = -scrollView.contentOffset.y
-        //if y > 0 {
-            //self.imageHeader.frame = CGRectMake(0, scrollView.contentOffset.y, screenWidth + y, 180 + y)
-            //self.imageHeader.center = CGPointMake(self.tableView.center.x, self.imageHeader.center.y)
-        //}
+        let y: CGFloat = -scrollView.contentOffset.y
+        if y > 0 {
+            self.imageHeader.frame = CGRectMake(0, scrollView.contentOffset.y, screenWidth + y, 220 + y)
+            self.imageHeader.center = CGPointMake(self.tableView.center.x, self.imageHeader.center.y)
+        }
     }
 
+    
+    //MARK:- Actions
+    
+    func btnLikeClick(sender: UIButton) {
+        sender.selected = !sender.selected
+        self.likePACServiceCall()
+    }
+    
+    func btnInviteClick(sender: UIButton) {
+        
+    }
+    
+    // To Like/Unlike PAC
+    func likePACServiceCall() {
+        
+        if AppDelegate.checkInternetConnection() {
+            
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["pacId"] = self.pacID
+            parameters["likeStatus"] = self.btnLike.selected
+            
+            //call global web service
+            Services.postRequest(ServiceLikePAC, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        print(responseDict)
+                        var resultDict = responseDict["result"] as! [String : AnyObject]
+                        if((resultDict["likes"] as! [String]).count == 1) {
+                            self.lblLikes.text = "\((resultDict["likes"] as! [String]).count) Like"
+                        }
+                        else {
+                            self.lblLikes.text = "\((resultDict["likes"] as! [String]).count) Likes"
+                        }
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
 }
 
 extension AboutPacVC: UITableViewDataSource{
@@ -99,7 +175,7 @@ extension AboutPacVC: UITableViewDataSource{
                 return 123
             }
             else {
-                return 340
+                return 350
             }
         case 1,2:
             return 55
@@ -122,24 +198,33 @@ extension AboutPacVC: UITableViewDataSource{
         var numOfRows: Int = 0
         
        
-        if let settingsDict = self.dataDict["settings"] {
-
-        let isPrivate = settingsDict["private"] as! Bool
-
-        if(!isPrivate) {
-
+        if self.memberStatus == false {
+            
+            if let settingsDict = self.dataDict["settings"] {
+                
+                let isPrivate = settingsDict["private"] as! Bool
+                
+                if(!isPrivate) {
+                    
+                    numOfRows = 7
+                    //tableView.backgroundView = nil
+                }
+                else
+                {
+                    numOfRows = 1
+                    let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-320, width: 320, height: 153))
+                    noDataLabel.image = UIImage(named: "private_user_texticon")
+                    self.tableView.backgroundColor = UIColor.clearColor()
+                    self.view.insertSubview(noDataLabel, belowSubview: self.tableView)
+                    //noDataLabel.center = tableView.center
+                    //let parentVC = self.parentViewController?.parentViewController as! PACGroupsContainerVC
+                    //parentVC.btnOpenCalender.hidden = true;
+                }
+            }
+        }
+        else {
             numOfRows = 7
-            tableView.backgroundView = nil
-        }
-        else
-        {
-            numOfRows = 1
-            let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-            noDataLabel.text          = "Membership is Private"
-            noDataLabel.textColor     = UIColor.blackColor()
-            noDataLabel.textAlignment = .Center
-            tableView.backgroundView  = noDataLabel
-        }
+            //tableView.backgroundView = nil
         }
         return numOfRows
         
@@ -148,6 +233,7 @@ extension AboutPacVC: UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = self.setUpTableCell(tableView, indexPath: indexPath)
+        cell.backgroundColor = UIColor.whiteColor()
         return cell
     }
     
@@ -291,18 +377,18 @@ extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
         switch collectionView.tag {
         case 3:
             namePerson.text = dataDict["createdBy"] as? String
-            imagePerson.sd_setImageWithURL(NSURL.init(string: (dataDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: ""))
+            imagePerson.sd_setImageWithURL(NSURL.init(string: (dataDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
         case 4:
             let dataArr = self.dataDict["admins"] as! [[String : AnyObject]]
             let adminDict = dataArr[indexPath.row]
             namePerson.text  = adminDict["firstName"] as? String
-            imagePerson.sd_setImageWithURL(NSURL.init(string: (adminDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: ""))
+            imagePerson.sd_setImageWithURL(NSURL.init(string: (adminDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
 
         case 5:
-            let dataArr = self.dataDict["admins"] as! [[String : AnyObject]]
+            let dataArr = self.dataDict["members"] as! [[String : AnyObject]]
             let memberDict = dataArr[indexPath.row]
             namePerson.text  = memberDict["firstName"] as? String
-            imagePerson.sd_setImageWithURL(NSURL.init(string: (memberDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: ""))
+            imagePerson.sd_setImageWithURL(NSURL.init(string: (memberDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
         default:
             namePerson.text  = ""
         }

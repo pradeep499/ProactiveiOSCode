@@ -12,9 +12,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     
     @IBOutlet weak var btnRight: UIButton!
-    @IBOutlet weak var btnLike: UIButton!
-    @IBOutlet weak var lblLikes: UILabel!
-    @IBOutlet weak var btnInvite: UIButton!
     @IBOutlet weak var btnOpenCalender: UIButton!
     @IBOutlet weak var lbl_title: UILabel!
     
@@ -23,6 +20,10 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var inviteStr = String()
     var firstVC:WallPACVC!
     var secondVC:ResourcesPACVC!
+    var pacID = String()
+    
+    var firstVC:NewsFeedsAllVC!
+    var secondVC: RSDFDatePickerViewController!
     var thirdVC : AboutPacVC!
     var arrViewControllers = [AnyObject]()
     
@@ -38,10 +39,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         super.viewDidLoad()
         
         //self.lbl_title.text = self.title
-        btnLike.addTarget(self, action: #selector(btnLikeClick(_:)), forControlEvents: .TouchUpInside)
-        btnLike.setImage(UIImage(named: "like_empty"), forState: .Normal)
-        btnLike.setImage(UIImage(named: "like_filled"), forState: .Selected)
-        
+         
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
         self.setUpViewControllers()
@@ -55,6 +53,9 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
  
         // hide the top right button
         self.btnRight.hidden = true
+        // To take button on front most
+        self.view.addSubview(self.btnOpenCalender)
+        self.view.bringSubviewToFront(self.btnOpenCalender)
         
     }
     
@@ -71,18 +72,16 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
         // SetUp ViewControllers
         
-        let profileStoryboard = AppHelper.getPacStoryBoard()
-        
-        firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("WallPACVC") as! WallPACVC
-        firstVC.title = "        WALL        "
-       // firstVC.genericType = .Find
-        
+        firstVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
+        firstVC.pacID = self.pacID
+        firstVC.title = "WALL"
+
         secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("ResourcesPACVC") as! ResourcesPACVC
         secondVC.title = "    RESOURCES    "
         
         thirdVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AboutPacVC") as! AboutPacVC
         thirdVC.title = "ABOUT"
-        
+        thirdVC.pacID = self.pacID
         
         arrViewControllers = [firstVC,secondVC,thirdVC]
         
@@ -95,7 +94,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
         //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
-        containerVC.view.frame = CGRectMake(0, 64+160, containerVC.view.frame.size.width,   screenHeight - 64 )
+        containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
         
         self.view.addSubview(containerVC.view)
         
@@ -105,11 +104,11 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
-        //   self.view.endEditing(true)
+        self.view.endEditing(true)
         print("current Index : \(Int(index))")
         print("current controller : \(controller)")
-        //currentIndex = index
-        //   controller.viewWillAppear(true)
+        currentIndex = index
+        controller.viewWillAppear(true)
         
         if index == 0 {
             
@@ -134,13 +133,16 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     }
     
     func btnInviteClick(sender: UIButton) {
+
         
     }
     
+    // MARK: --Actions
     @IBAction func btnOpenCalenderClick(sender: AnyObject) {
         
         let objCalendarVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("CalendarVC") as! RSDFDatePickerViewController
         objCalendarVC.fromScreen = "AboutPacVC"
+        objCalendarVC.pacID = self.pacID
         self.navigationController?.pushViewController(objCalendarVC, animated: true)
     }
     

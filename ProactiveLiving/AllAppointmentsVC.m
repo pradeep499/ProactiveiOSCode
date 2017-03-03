@@ -27,6 +27,7 @@
 
 
 }
+@property (weak, nonatomic) IBOutlet UIButton *btnCalendar;
 
 @end
 
@@ -35,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     [self setUpViewControllers];
 }
 
@@ -48,30 +50,40 @@
     appointVC1.appointmnetType=@"";
     appointVC1.arrEvents=self.arrEvents;
     appointVC1.selectedRecurrenceDate = self.selectedRecurrenceDate;
-    
+    appointVC1.fromScreenFlag = self.fromScreenFlag;
     
     appointVC2 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC2.title = @"APPOINTMENTS";
     appointVC2.appointmnetType=@"appointment";
-    
+    appointVC2.fromScreenFlag = self.fromScreenFlag;
+
     appointVC3 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC3.title = @"MEET UPS";
     appointVC3.appointmnetType=@"meetup";
-    
+    appointVC3.fromScreenFlag = self.fromScreenFlag;
+
     appointVC4 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC4.title = @"WEB INVITES";
     appointVC4.appointmnetType=@"webinvite";
-    
+    appointVC4.fromScreenFlag = self.fromScreenFlag;
+
     appointVC8 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC8.title = @"OTHERS";
     appointVC8.appointmnetType=@"other";
+    appointVC8.fromScreenFlag = self.fromScreenFlag;
 
     
     // ContainerView
     //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     //float navigationHeight = self.navigationController.navigationBar.frame.size.height;
     
-    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:@[appointVC1,appointVC2,appointVC3,appointVC4,appointVC8]
+    NSArray *arrVCs;
+    if([self.fromScreenFlag isEqualToString:@"pac"])
+        arrVCs = @[appointVC1,appointVC3,appointVC4];
+    else
+        arrVCs = @[appointVC1,appointVC2,appointVC3,appointVC4,appointVC8];
+    
+    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:arrVCs
                                                                                         topBarHeight:0
                                                                                 parentViewController:self];
     containerVC.delegate = self;
@@ -83,6 +95,11 @@
     containerVC.view.frame=CGRectMake(0, 64, containerVC.view.frame.size.width, containerVC.view.frame.size.height-64);
     
     [self.view addSubview:containerVC.view];
+    
+    // To take button on front most
+    [self.view addSubview:self.btnCalendar];
+    [self.view bringSubviewToFront:self.btnCalendar];
+
 }
 
 
@@ -96,7 +113,7 @@
 
 - (IBAction)btnBackClick:(id)sender {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
     
 }
 - (IBAction)btnCreateEventClick:(id)sender {
@@ -125,6 +142,8 @@
                                            UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
                                            CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
                                            vc.pushedFrom=@"MEETUPS";
+                                           if([self.fromScreenFlag isEqualToString:@"pac"])
+                                               vc.fromScreenFlag = @"PAC";
                                            [self.navigationController pushViewController:vc animated:YES];
                                        }
                                        [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
@@ -140,6 +159,8 @@
                                            UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
                                            CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
                                            vc.pushedFrom=@"WEBINVITES";
+                                           if([self.fromScreenFlag isEqualToString:@"pac"])
+                                               vc.fromScreenFlag = @"PAC";
                                            [self.navigationController pushViewController:vc animated:YES];
                                        }
 
@@ -166,10 +187,18 @@
                              }];
     
     
-    [alertActionSheet addAction:appointment];
-    [alertActionSheet addAction:meetup];
-    [alertActionSheet addAction:webinvite];
-    [alertActionSheet addAction:other];
+    if([self.fromScreenFlag isEqualToString:@"pac"])
+    {
+        [alertActionSheet addAction:meetup];
+        [alertActionSheet addAction:webinvite];
+    }
+    else
+    {
+        [alertActionSheet addAction:appointment];
+        [alertActionSheet addAction:meetup];
+        [alertActionSheet addAction:webinvite];
+        [alertActionSheet addAction:other];
+    }
 
     [alertActionSheet addAction:cancel];
     [self presentViewController:alertActionSheet animated:YES completion:nil];

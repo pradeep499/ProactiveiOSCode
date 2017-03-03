@@ -109,6 +109,7 @@
 #define ServiceGetAllResource           @"users/getAllResource"
 #define ServiceDeleteResource           @"users/deleteResource"
 #define ServiceEditResource             @"users/editResource"
+#define ServiceLikePAC                  @"users/likePac"
 
 
 

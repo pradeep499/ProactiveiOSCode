@@ -256,7 +256,7 @@ extension MenuVC:UITableViewDelegate{
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
             vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
        //     let v = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
-            self.navigationController?.pushViewController(vc , animated: false)
+            self.navigationController?.pushViewController(vc , animated: true)
             self.navigationController?.navigationBarHidden = true
      
             break
