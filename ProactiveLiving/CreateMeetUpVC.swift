@@ -596,7 +596,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 dict["links"]=linksArray as [AnyObject]
                 dict["attachments"]="abc.png"
                 dict["createdBy"]=ChatHelper.userDefaultForKey("userId") as String
-                dict["eventDate"] =   HelpingClass.convertDateFormat("MM/dd/YYYY", desireFormat:"dd/MM/YYYY", dateStr: txtFieldOn.text!)
+                dict["eventDate"] =   HelpingClass.convertDateFormat("MM/dd/yyyy", desireFormat:"dd/MM/yyyy", dateStr: txtFieldOn.text!)
                 dict["eventStartTime"]=txtFieldAt.text
                 dict["eventEndTime"]=txtField_eventEndTime.text
                 dict["isAllow"]=isForwardAllowed
