@@ -312,7 +312,7 @@
     PFVC.viewerUserID = userId;
     
     
-    [self.navigationController pushViewController:PFVC animated:false];
+    [self.navigationController pushViewController:PFVC animated:true];
     
 }
 

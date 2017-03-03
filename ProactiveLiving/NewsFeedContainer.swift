@@ -65,7 +65,6 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         firstVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         firstVC.title = "ALL"
      //   firstVC.feedsType = "ALL"
-        let nav = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = storyboard.instantiateViewControllerWithIdentifier("ExploreVC") as! ExploreVC
         secondVC.title = "EXPLORE"
