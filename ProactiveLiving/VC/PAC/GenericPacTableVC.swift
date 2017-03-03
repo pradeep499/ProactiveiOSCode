@@ -19,12 +19,12 @@ class GenericPacTableVC: UIViewController {
     
     var pacDetailArr = [AnyObject]()
    
-    
+// MARK :- view life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         fetchPostDataFromServer()  // service call
-        
+       
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -37,7 +37,7 @@ class GenericPacTableVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    //MARK:- Service Hit
     func fetchPostDataFromServer() {
         
         if AppDelegate.checkInternetConnection() {
@@ -66,7 +66,7 @@ class GenericPacTableVC: UIViewController {
                         
                         if let resultArr = responseDict["result"]  as? NSArray{
                             
-                           // print("TESTING FIND PAC \(resultArr)")
+                            print("TESTING FIND PAC \(resultArr)")
                             
                          
                             self.pacDetailArr = resultArr as [AnyObject]
@@ -95,6 +95,9 @@ class GenericPacTableVC: UIViewController {
     }
 }
 
+
+// MARK :- tableView UITableViewDataSource
+
 extension GenericPacTableVC: UITableViewDataSource{
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat    {
@@ -103,7 +106,8 @@ extension GenericPacTableVC: UITableViewDataSource{
             
            // return  self.setAboutMeCellHeight(tableView, indexPath: indexPath)
         }
-        return 200
+        return 150
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -122,6 +126,7 @@ extension GenericPacTableVC: UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FindCell", forIndexPath: indexPath)
         
+        cell.selectionStyle = .None
         
         let iv_item = cell.viewWithTag(1) as! UIImageView
     //    let iv_itemDec = cell.viewWithTag(2) as! UIImageView
@@ -136,8 +141,8 @@ extension GenericPacTableVC: UITableViewDataSource{
         
         
         
-        iv_item.sd_setImageWithURL(NSURL.init(string: (self.pacDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: ""))
-        
+        iv_item.sd_setImageWithURL(NSURL.init(string: (self.pacDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "ic_certifications_sustainable"))
+
         
         let firstName = self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String
         let lastName =  self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["lastName"] as? String
@@ -199,6 +204,9 @@ extension GenericPacTableVC:  UITableViewDelegate{
         
         let containerObj = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("PACGroupsContainerVC") as! PACGroupsContainerVC
         containerObj.title = "TTDSD"
+        AppHelper.saveToUserDefaults(pacDetailArr[indexPath.row]["_id"], withKey:"pacId")
+        
+        
         self.navigationController?.pushViewController(containerObj, animated: true)
     
     }

@@ -105,6 +105,12 @@
 #define ServiceGetPACDetails            @"users/getPacDetail"
 #define ServiceCreatePAC               @"users/createPac"
 #define ServiceGetFindPAC               @"users/findPac"
+#define ServiceCreateResource           @"users/addResource"
+#define ServiceGetAllResource           @"users/getAllResource"
+#define ServiceDeleteResource           @"users/deleteResource"
+#define ServiceEditResource             @"users/editResource"
+
+
 
 #define maxLength                       25
 #define maxPhoneLength                  15

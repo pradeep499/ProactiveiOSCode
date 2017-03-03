@@ -21,10 +21,18 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var tokensAdmin = [AnyObject]()
     var tokensMember = [AnyObject]()
     var inviteStr = String()
-    var firstVC:GenericPacTableVC!
-    var secondVC:CreatePACVC!
+    var firstVC:WallPACVC!
+    var secondVC:ResourcesPACVC!
     var thirdVC : AboutPacVC!
     var arrViewControllers = [AnyObject]()
+    
+    // Right button DXPopOver
+    var popOverTableView:UITableView?
+    var popover:DXPopover = DXPopover()
+    var popoverHeight:CGFloat = 90
+    var popOverCellData = [ "Edit",  "Create New"]
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +45,17 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
         self.setUpViewControllers()
+        
+        //popover table
+        popOverTableView = UITableView()
+        popOverTableView?.frame = CGRectMake(0, 0, 150, popoverHeight)
+        popOverTableView?.dataSource = self
+        popOverTableView?.delegate = self
+        popOverTableView?.separatorStyle = .None
+ 
+        // hide the top right button
+        self.btnRight.hidden = true
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,24 +63,28 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         // Dispose of any resources that can be recreated.
     }
     
+    
+   
+   
+    
     func setUpViewControllers() {
         
         // SetUp ViewControllers
         
         let profileStoryboard = AppHelper.getPacStoryBoard()
         
-        firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("GenericPacTableVC") as! GenericPacTableVC
-        firstVC.title = "        FIND        "
-        firstVC.genericType = .Find
+        firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("WallPACVC") as! WallPACVC
+        firstVC.title = "        WALL        "
+       // firstVC.genericType = .Find
         
-        secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
-        secondVC.title = "    CREATE A PAC    "
+        secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("ResourcesPACVC") as! ResourcesPACVC
+        secondVC.title = "    RESOURCES    "
         
         thirdVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AboutPacVC") as! AboutPacVC
-        thirdVC.title = "About"
+        thirdVC.title = "ABOUT"
         
         
-        arrViewControllers = [thirdVC]
+        arrViewControllers = [firstVC,secondVC,thirdVC]
         
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
         containerVC.delegate = self
@@ -75,7 +98,10 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         containerVC.view.frame = CGRectMake(0, 64+160, containerVC.view.frame.size.width,   screenHeight - 64 )
         
         self.view.addSubview(containerVC.view)
+        
     }
+    
+    
     
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
@@ -85,6 +111,19 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         //currentIndex = index
         //   controller.viewWillAppear(true)
         
+        if index == 0 {
+            
+            self.btnRight.hidden = true
+            
+        }
+        else if index == 1 {
+            self.btnRight.hidden = false
+            
+        }
+        else {
+            self.btnRight.hidden = true
+
+        }
     }
     
     //MARK:- Actions
@@ -112,7 +151,104 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     @IBAction func onClickRightBtn(sender: AnyObject) {
         
+        let windowHeight = self.view.frame.size.height
+        let button = sender as? UIButton
+        //        NSLog("button tag \(button!.tag)")
+        let frameInWindow = button!.convertRect(button!.bounds, toView: self.view)
+        let popoverY = frameInWindow.origin.y
+        var startPoint = CGPointMake(frameInWindow.midX, frameInWindow.maxY)
+        var popoverPosition:DXPopoverPosition = .Down
+        if (windowHeight-popoverY<160){
+            startPoint = CGPointMake(frameInWindow.midX, frameInWindow.minY)
+            popoverPosition = .Up
+        }
+        self.popover.showAtPoint(startPoint, popoverPostion: popoverPosition, withContentView: self.popOverTableView, inView: self.view)
+   
+     
     }
     
     
 }
+
+// MARK:- Extension
+
+extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+       // return popOverCellData.count
+        
+        if tableView == popOverTableView{
+            return popOverCellData.count
+        }
+        return 0
+        
+        
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+       // if tableView == popOverTableView{
+            let cell = UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
+            cell.textLabel?.text = popOverCellData[indexPath.row]
+            //            cell.textLabel?.textAlignment = .Center
+            cell.selectionStyle = .None
+            return cell
+      //  }
+        
+        
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+          let profileStoryboard = AppHelper.getPacStoryBoard()
+        
+       // if tableView == popOverTableView{
+            self.popover.dismiss()
+            if indexPath.row == 0 {
+                
+                
+                
+                if self.secondVC.isHidden  {
+                    
+                    self.secondVC.isHidden = false
+                    self.secondVC.tableViewResource.reloadData()
+                    
+                    popOverCellData[0] = "Done"
+                    popOverTableView?.reloadData()
+                    
+                    
+                }
+                else {
+                    
+                    self.secondVC.isHidden = true
+                    self.secondVC.tableViewResource.reloadData()
+                    
+                    popOverCellData[0] = "Edit"
+                    popOverTableView?.reloadData()
+
+                    
+                    
+                    
+                }
+       
+    }
+            else{
+                
+                let createEditResourcePACVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreateEditResourcePACVC") as! CreateEditResourcePACVC
+                 createEditResourcePACVC.pageTitle = "Create Resource"
+                self.navigationController?.pushViewController(createEditResourcePACVC, animated: true)
+                
+        }
+        
+        
+    
+    }
+    
+    
+}
+
+
+
