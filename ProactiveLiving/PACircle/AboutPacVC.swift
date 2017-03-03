@@ -377,18 +377,18 @@ extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
         switch collectionView.tag {
         case 3:
             namePerson.text = dataDict["createdBy"] as? String
-            imagePerson.sd_setImageWithURL(NSURL.init(string: (dataDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: ""))
+            imagePerson.sd_setImageWithURL(NSURL.init(string: (dataDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
         case 4:
             let dataArr = self.dataDict["admins"] as! [[String : AnyObject]]
             let adminDict = dataArr[indexPath.row]
             namePerson.text  = adminDict["firstName"] as? String
-            imagePerson.sd_setImageWithURL(NSURL.init(string: (adminDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: ""))
+            imagePerson.sd_setImageWithURL(NSURL.init(string: (adminDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
 
         case 5:
-            let dataArr = self.dataDict["admins"] as! [[String : AnyObject]]
+            let dataArr = self.dataDict["members"] as! [[String : AnyObject]]
             let memberDict = dataArr[indexPath.row]
             namePerson.text  = memberDict["firstName"] as? String
-            imagePerson.sd_setImageWithURL(NSURL.init(string: (memberDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: ""))
+            imagePerson.sd_setImageWithURL(NSURL.init(string: (memberDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
         default:
             namePerson.text  = ""
         }
