@@ -17,6 +17,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     @IBOutlet weak var view_share: UIView!
     @IBOutlet weak var attachmentViewS: UIView!
     @IBOutlet weak var postContainerView: UIView!
+    @IBOutlet weak var plusButton: UIButton!
     
     //  var dataArr = [AnyObject]()
     var profileArr = [String]()
@@ -25,9 +26,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var postFriendsArr:NSMutableArray = NSMutableArray()
     var postColleagueArr:NSMutableArray = NSMutableArray()
     var postHealthClubsArr:NSMutableArray = NSMutableArray()
+    var pacWallArr:NSMutableArray = NSMutableArray()
     var textView:HPGrowingTextView = HPGrowingTextView()
     var containerView: UIView = UIView()
-
+    var pacID:String = String()
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerController()
     var globalAssets: [DKAsset]?
@@ -56,7 +58,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.view_share.hidden = true
         
        
-        if self.title == "ALL" || self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS"{
+        if self.title == "ALL" || self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL"{
             
             self.collectionView.registerClass(HeaderScrollerView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderScrollerView")
             
@@ -104,19 +106,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
     func growingTextView(growingTextView: HPGrowingTextView!, willChangeHeight height: Float) {
         let diff: CGFloat = CGFloat(growingTextView.frame.size.height - CGFloat(height))
-        var r: CGRect = postContainerView.frame
+        var r: CGRect = self.postContainerView.frame
         r.size.height -= diff
         r.origin.y += diff
-        postContainerView.frame = r
+        self.postContainerView.frame = r
     }
     override func viewWillAppear(animated: Bool) {
-        
         
         super.viewWillAppear(animated)
         self.attachmentViewS.hidden = true
         
         IQKeyboardManager.sharedManager().enable = false
-        IQKeyboardManager.sharedManager().enableAutoToolbar = false
         
          //to avoid blocking the UI
         if (viewWillAppaerCount > 0) {
@@ -141,7 +141,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             self.fetchExploreDataFromServer()
         }
-        if self.title == "ALL" || self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS"{
+        if self.title == "ALL" || self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL" {
             
             self.getPostEvent()
             self.getLikeUpdate()
@@ -173,8 +173,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         super.viewWillDisappear(animated)
         IQKeyboardManager.sharedManager().enable = true
-        IQKeyboardManager.sharedManager().enableAutoToolbar = true
-
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: self.view.window)
     }
     
     func hideSocialSharingView() -> Void {
@@ -247,6 +247,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.title == "HEALTH CLUBS" {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
+            else if self.title == "WALL" {
+                resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
+            }
             
            
             dict["typeId"] = resultData["_id"] as! String
@@ -277,6 +280,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             else if self.title == "HEALTH CLUBS" {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.title == "WALL" {
+                resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
             
         }
@@ -317,6 +323,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     else if self.title == "HEALTH CLUBS" {
                         resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
                     }
+                    else if self.title == "WALL" {
+                        resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
+                    }
                 }
                 
                 
@@ -347,6 +356,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             else if self.title == "HEALTH CLUBS" {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.title == "WALL" {
+                resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
         }
         
@@ -481,6 +493,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //self.collectionView.addGestureRecognizer(tapGesture)
         
         self.view_share.alpha = 0
+        
+
     //    UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(self.view_share)
     //    self.view_share.layer.zPosition = 1;
     //    self.view_share.superview!.bringSubviewToFront(self.view_share)
@@ -489,9 +503,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             self.view_share.alpha = 1.0
             if(self.view_share.hidden) {
                 self.view_share.hidden = false
+                self.plusButton.transform = CGAffineTransformRotate(self.plusButton.transform, CGFloat(M_PI_4))
+
             }
             else {
                 self.view_share.hidden = true
+                self.plusButton.transform = CGAffineTransformRotate(self.plusButton.transform, CGFloat(-M_PI_4))
             }
         })
         
@@ -537,6 +554,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         else if self.title == "HEALTH CLUBS" {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "WALL" {
+            dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
         }
         
         
@@ -591,41 +611,47 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     //MARK:- Keyborad Delegates
     
-    func keyboardWillShow(note: NSNotification) {
-        // get keyboard size and loctaion
-        // Need to translate the bounds to account for rotation.
-        var containerFrame = containerView.frame
-        var postViewFrame = postContainerView.frame
-
-        containerFrame.origin.y = self.collectionView.bounds.size.height - (210 + containerFrame.size.height)
-        postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + 335)
-
-        // animations settings
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        // set views with new info
-        containerView.frame = containerFrame
-        postContainerView.frame = postViewFrame
-        // commit animations
-        UIView.commitAnimations()
+    func keyboardWillShow(sender: NSNotification) {
+        
+        UIView.animateWithDuration(0.1, animations: {
+           
+        })
+        
+        let userInfo: [NSObject : AnyObject] = sender.userInfo!
+        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
+        
+        if keyboardSize.height == offset.height {
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                
+                var postViewFrame = self.postContainerView.frame
+                postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + keyboardSize.height + 60)
+                self.postContainerView.frame = postViewFrame
+                
+                //self.view.frame.origin.y -= keyboardSize.height
+            })
+        } else {
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                
+                var postViewFrame = self.postContainerView.frame
+                postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + (keyboardSize.height - offset.height) + 60)
+                self.postContainerView.frame = postViewFrame
+                
+                //self.view.frame.origin.y += keyboardSize.height - offset.height
+            })
+        }
+        
     }
     
     
-    func keyboardWillHide(note: NSNotification) {
-        // get a rect for the textView frame
-        var containerFrame: CGRect = containerView.frame
-        var postViewFrame = postContainerView.frame
-        containerFrame.origin.y = self.collectionView.bounds.size.height - containerFrame.size.height
-        postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + 110)
-        // animations settings
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        // set views with new info
-        containerView.frame = containerFrame
-        postContainerView.frame = postViewFrame
-
-        // commit animations
-        UIView.commitAnimations()
+    func keyboardWillHide(sender: NSNotification) {
+        
+        UIView.animateWithDuration(0.1, animations: {
+            var postViewFrame = self.postContainerView.frame
+            postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + 110)
+            self.postContainerView.frame = postViewFrame
+        })
+      
     }
     
 //    func keyboardWillShow(sender: NSNotification) {
@@ -682,6 +708,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             else if self.title == "HEALTH CLUBS" {
                 dict["section"] = "HEALTH CLUBS"
+            }
+            else if self.title == "WALL" {
+                dict["section"] = "PAC"
+                dict["pacId"] = self.pacID
             }
             //=======
             if isShared{
@@ -817,6 +847,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     
                   //  self.title =  "HEALTH CLUBS"
                 }
+                else if resultDict["section"] as! String  == "pac" {
+                    
+                    self.pacWallArr.insertObject(resultDict, atIndex: 0)
+                    
+                    //  self.title =  "HEALTH CLUBS"
+                }
                 
 //                dispatch_async(dispatch_get_main_queue()) {
 //                    self.collectionView.reloadData()
@@ -917,6 +953,18 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     }
 
                 }
+                else if resultDict["section"] as! String  == "pac" {
+                    var filteredarray:[AnyObject] = self.pacWallArr.filteredArrayUsingPredicate(predicate)
+                    print("ID =  \(resultDict["_id"])")
+                    
+                    if filteredarray.count > 0 {
+                        
+                        let index = self.pacWallArr.indexOfObject( filteredarray[0])
+                        self.pacWallArr.replaceObjectAtIndex(index, withObject: resultDict)
+                    }
+                    
+                    
+                }
                 
                 self.collectionView.reloadData()
             }
@@ -958,7 +1006,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        if self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS"{
+        if self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL"{
         
             return CGSizeZero
         }
@@ -999,6 +1047,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         else if self.title == "HEALTH CLUBS" {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "WALL" {
+            dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
         }
         
         
@@ -1059,6 +1110,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else if self.title == "HEALTH CLUBS" {
             return self.postHealthClubsArr.count
         }
+        else if self.title == "WALL" {
+            return self.pacWallArr.count
+        }
         return 0
         
     }
@@ -1078,6 +1132,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         else if self.title == "HEALTH CLUBS" {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.title == "WALL" {
+            dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
         }
         
         //cell type Text or image Or video
@@ -1210,7 +1267,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             df.timeZone = NSTimeZone(forSecondsFromGMT: 0)
             let tempDate = df.dateFromString(createdDate) as NSDate!
             
-            df.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
+            df.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
             let dateStr = df.stringFromDate(tempDate)
            /* df.dateFormat = "HH:mm:ss.sss"
             df.timeZone = NSTimeZone()
@@ -1384,7 +1441,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let date = NSDate()
         var dateStr : String
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss.sss"
+        dateFormatter.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss.sss"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateStr = dateFormatter.stringFromDate(date)
         
@@ -1478,13 +1535,21 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         if AppDelegate.checkInternetConnection() {
             isPostServiceCalled = true
-            
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
             
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["section"] = self.title
+            
+            if self.title == "WALL" {
+                parameters["section"] = "PAC"
+                parameters["pacId"] = self.pacID
+            }
+            else {
+                parameters["section"] = self.title
+            }
+            
+            
             
          //   print("Dict = \(parameters)")
             //call global web service class latest
@@ -1515,6 +1580,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         }
                         else if self.title == "HEALTH CLUBS" {
                             self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
+                        }
+                        else if self.title == "WALL" {
+                            self.pacWallArr = NSMutableArray.init(array: resultArr)
                         }
                         
                         self.collectionView.reloadData()

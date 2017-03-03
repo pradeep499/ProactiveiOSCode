@@ -412,7 +412,9 @@ type = 3 for yeary basis
                                           vc.fromScreenFlag = @"PAC";
                                           vc.pacID = self.pacID;
                                       }
-
+                                      else {
+                                          vc.fromScreenFlag = @"private";
+                                      }
                                       [self.navigationController pushViewController:vc animated:YES];
                                   }
                                   [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
@@ -432,6 +434,9 @@ type = 3 for yeary basis
                                          {
                                              vc.fromScreenFlag = @"PAC";
                                              vc.pacID = self.pacID;
+                                         }
+                                         else {
+                                             vc.fromScreenFlag = @"private";
                                          }
                                          [self.navigationController pushViewController:vc animated:YES];
                                      }
@@ -488,9 +493,10 @@ type = 3 for yeary basis
             vc.fromScreenFlag = @"pac";
             vc.pacID = self.pacID;
         }
-        else
+        else {
             vc.fromScreenFlag = @"private";
-        [self.navigationController pushViewController:vc animated:YES];
+        }
+        [self.navigationController pushViewController:vc animated:NO];
     }
 }
 
