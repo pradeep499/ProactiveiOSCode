@@ -50,5 +50,8 @@
 #import  "InboxVC.h"
 #import   "CustonTabBarController.h"
 #import   "DXPopover.h"
+#import   "ActivitiesVC.h"
+
+
 
 #endif /* ProactiveLiving_Bridging_Header_h */

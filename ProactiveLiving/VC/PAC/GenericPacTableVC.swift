@@ -50,7 +50,7 @@ class GenericPacTableVC: UIViewController {
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
         
             //call global web service class latest
-            Services.postRequest(ServiceGetFindPAC, parameters: parameters, completionHandler:{
+            Services.postRequest(ServiceGetMyPAC, parameters: parameters, completionHandler:{  //  ServiceGetFindPAC (Changed)
                 (status,responseDict) in
                 
                 isPostServiceCalled = false
@@ -132,8 +132,8 @@ extension GenericPacTableVC: UITableViewDataSource{
     //    let iv_itemDec = cell.viewWithTag(2) as! UIImageView
         let lbl_title = cell.viewWithTag(3) as! UILabel
         let lbl_by = cell.viewWithTag(4) as! UILabel
-      //  let lbl_members = cell.viewWithTag(5) as! UILabel
-     //   let lbl_activateTime = cell.viewWithTag(6) as! UILabel
+        let lbl_members = cell.viewWithTag(5) as! UILabel
+        let lbl_activateTime = cell.viewWithTag(6) as! UILabel
       //  let lbl_privacy = cell.viewWithTag(7) as! UILabel
         let lbl_desc = cell.viewWithTag(8) as! UILabel
         let lbl_createdAt = cell.viewWithTag(9) as! UILabel
@@ -144,17 +144,32 @@ extension GenericPacTableVC: UITableViewDataSource{
         iv_item.sd_setImageWithURL(NSURL.init(string: (self.pacDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "ic_certifications_sustainable"))
 
         
-        let firstName = self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String
-        let lastName =  self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["lastName"] as? String
+        // Accessing the Name (First n Last)
+        
+        let createdByArr = self.pacDetailArr[indexPath.row].valueForKey("createdBy")
+        let firstNameArr = createdByArr!["firstName"] as? [String]
+        let firstName = firstNameArr![0]
+        
+        let lastNameArr = createdByArr!["lastName"] as? [String]
+        let lastName = lastNameArr![0]
+        let fullName = "By " + firstName + " " + lastName
+        
+        
+        let dateStr = self.pacDetailArr[indexPath.row]["createdDate"] as? String
+        let dateCreated = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "dd/MM/yyyy", dateStr: dateStr!)
+        let dateModifiedStr = self.pacDetailArr[indexPath.row]["modifiedDate"] as? String
+        let dateModified = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MMM d, yyyy", dateStr: dateModifiedStr!)
 
-        let fullName = firstName! + " " + lastName!
         
         
+        let memberCount = self.pacDetailArr[indexPath.row]["membercount"] as? Int
+        
+        lbl_members.text = "\(memberCount!) Members"   //self.pacDetailArr[indexPath.row]["membercount"] as? String
         lbl_title.text = self.pacDetailArr[indexPath.row]["name"] as? String
         lbl_desc.text = self.pacDetailArr[indexPath.row]["description"] as? String
-        lbl_createdAt.text = self.pacDetailArr[indexPath.row]["createdDate"] as? String
-        lbl_by.text = fullName  //self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String
-        
+        lbl_createdAt.text = dateCreated //self.pacDetailArr[indexPath.row]["createdDate"] as? String
+        lbl_by.text = fullName
+        lbl_activateTime.text = dateModified //self.pacDetailArr[indexPath.row]["modifiedDate"] as? String
         print(self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String)
 
       

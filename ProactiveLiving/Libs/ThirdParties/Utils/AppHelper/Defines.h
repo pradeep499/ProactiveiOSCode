@@ -113,6 +113,7 @@
 #define ServiceGetPACRole               @"users/getPacRole"
 #define ServiceAddMemberToPac           @"users/addMemberToPac"
 #define ServicePACActionProfile         @"users/pacActionProfile"
+#define ServiceGetMyPAC                 @"users/getMyPacListing"
 
 
 #define maxLength                       25
