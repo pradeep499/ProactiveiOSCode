@@ -116,12 +116,14 @@ class ResourcesPACVC: UIViewController {
         
         print("Resource Detail Array \((resourceDetailArr[indexPath!.section]))")
         
+        
+        
         //let resourceData = (resourceDetailArr[indexPath!.section])
         let profileStoryboard = AppHelper.getPacStoryBoard()
         let createEditResourcePACVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreateEditResourcePACVC") as! CreateEditResourcePACVC
         createEditResourcePACVC.pageTitle = "Edit Resource"
         createEditResourcePACVC.isEdit = true
-        createEditResourcePACVC.resourceDict = (resourceDetailArr[indexPath!.section] as? Dictionary<String, String>)! //resourceData as! Dictionary<String, String>   //resourceDetailArr[indexPath!.section] as! [AnyObject]
+        createEditResourcePACVC.resourceDict = (resourceDetailArr[indexPath!.section] as? Dictionary<String, AnyObject>)! //resourceData as! Dictionary<String, String>   //resourceDetailArr[indexPath!.section] as! [AnyObject]
         self.navigationController?.pushViewController(createEditResourcePACVC, animated: true)
         
       
@@ -258,10 +260,15 @@ class ResourcesPACVC: UIViewController {
 
 extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     
+    // numberOfSectionsInTableView
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return resourceDetailArr.count
+        
     }
+   
     
+    
+    // numberOfRowsInSection
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         
@@ -280,6 +287,8 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
     }
     
+    
+    //  heightForRowAtIndexPath
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         
@@ -287,13 +296,24 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             return 120
         }
         else {
-             return 90
+            
+            // Making height dynamic
+            var processedIndexPath = indexPath.row
+            processedIndexPath = processedIndexPath-1
+
+            if (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type"))! as! String == "link" ||  self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type") as? String == "attachment"
+            {
+                return 45
+            }
+            else {
+                return 90
+            }
             
         }
     
     }
     
-    
+    //  cellForRowAtIndexPath
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -325,7 +345,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
                 
                 deleteBtn.addTarget(self, action: #selector(ResourcesPACVC.btnActionDelete(_:)), forControlEvents: .TouchUpInside)
                 editBtn.addTarget(self, action: #selector(ResourcesPACVC.btnActionEdit(_:)), forControlEvents: .TouchUpInside)
-//                editBtn.addTarget(self, action: #selector(ResourcesPACVC.startEditing(_:)), forControlEvents: .TouchUpInside);
+
             }
             else {
                 deleteBtn.hidden = true
@@ -333,9 +353,6 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
 
                 
             }
-            
-          //  txtViewDetail.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
-            
             
             return cell
             
@@ -350,7 +367,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
     }
     
-    // Method to set up cells for attachment
+    // MARK:-    Method to set up cells for attachment
     
     func setUpAttachmentCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -405,9 +422,42 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
    
          let videoLinkImage = cellVideo.viewWithTag(16) as! UIImageView
           print("Image URL\((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!))")
+         videoLinkImage.sd_setImageWithURL(NSURL.init(string: (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!), placeholderImage: UIImage.init(named: "ic_instruction_video"))
             
-         
-         videoLinkImage.sd_setImageWithURL(NSURL.init(string: (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!), placeholderImage: UIImage.init(named: "ic_certifications_sustainable"))
+            
+            // 8 th March
+            
+            if let imageUrlStr = self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String //datDict!["link"]
+            {
+                let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
+                let image_url = NSURL(string: (imageUrlStr.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet))! )
+                if (image_url != nil) {
+                    
+                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+                    dispatch_async(backgroundQueue, {
+                        
+                        let grabTime = 0.5
+                        if let image = self.generateThumnail(image_url!, fromTime: Float64(grabTime))
+                        {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                //thumbVideo.setImage(image, forState: .Normal)
+                                videoLinkImage.image = self.addGradientOnImage(image)
+                            })
+                        }
+                        else
+                        {
+                            print("No image")
+                        }
+                    })
+                    
+                }
+            }
+            
+            
+            
+            
+            
          
          return cellVideo
          
@@ -417,6 +467,59 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
         return UITableViewCell()
     }
+    
+    
+    
+    //MARK: - addGradientOnImage
+    
+    
+    func addGradientOnImage(image: UIImage) -> UIImage
+    {
+        
+        UIGraphicsBeginImageContext(image.size)
+        let context = UIGraphicsGetCurrentContext()
+        
+        image.drawAtPoint(CGPointMake(0, 0))
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let locations:[CGFloat] = [0.0, 1.0]
+        let top = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0).CGColor
+        let bottom = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).CGColor
+        let gradient = CGGradientCreateWithColors(colorSpace,
+                                                  [top, bottom], locations)
+        
+        let startPoint = CGPointMake(image.size.width / 2, image.size.height / 2)
+        let endPoint = CGPointMake(image.size.width / 2, image.size.height)
+        CGContextDrawLinearGradient(context!, gradient!, startPoint, endPoint,CGGradientDrawingOptions(rawValue: 0))
+        let finalImage = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
+        UIGraphicsEndImageContext()
+        
+        return finalImage
+        
+    }
+    
+    
+    
+    
+    // MARK:- Thumbnail 
+    func generateThumnail(url : NSURL, fromTime:Float64) -> UIImage? {
+        
+        let asset : AVAsset = AVAsset(URL: url )
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform = true
+        let time = CMTimeMakeWithSeconds(0.5, 1000)
+        var actualTime = kCMTimeZero
+        var thumbnail : CGImageRef?
+        do {
+            thumbnail = try imageGenerator.copyCGImageAtTime(time, actualTime: &actualTime)
+            return UIImage(CGImage: thumbnail!)
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
+            return UIImage(named: "ic_instruction_video")!
+        }
+        
+    }
+    
     
     
     

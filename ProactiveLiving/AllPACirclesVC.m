@@ -14,19 +14,24 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "Services.h"
 #import "PACircleVC.h"
+#import "ProactiveLiving-Swift.h"
+//#import "MyPACVC.swift"
 
+@class MyPACVC;
 @interface AllPACirclesVC ()<YSLContainerViewControllerDelegate>
 {
     NSMutableArray *arrServices;
     NSMutableArray *arrTypes;
     PACircleVC *PACircleVC1;
-    PACircleVC *PACircleVC2;
-    PACircleVC *PACircleVC3;
-    PACircleVC *PACircleVC4;
+  //  PACircleVC *PACircleVC2;
+ //    PACircleVC *PACircleVC3;
+ //    PACircleVC *PACircleVC4;
     
-}
+    MyPACVC *myPACVC;
 
+}
 @end
+
 
 @implementation AllPACirclesVC
 
@@ -40,7 +45,7 @@
 {
     // SetUp ViewControllers
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PACircleVC1 = [storyboard instantiateViewControllerWithIdentifier:@"PACircleVC"];
     PACircleVC1.title = @"FIND";
     PACircleVC1.menuTitle=@"";
@@ -49,9 +54,13 @@
                                 @"ic_expert_personaltrainers",
                                 @"ic_expert_more", nil];
     
-    PACircleVC2 = [storyboard instantiateViewControllerWithIdentifier:@"PACircleVC"];
-    PACircleVC2.title = @"MY PAC";
-    PACircleVC2.menuTitle=@"";
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"PAC" bundle:nil];
+    
+    myPACVC = [story instantiateViewControllerWithIdentifier:@"MyPACVC"];
+    myPACVC.title = @"MY PAC";
+    
+    
+    
 //    PACircleVC2.arrMenueImages=[NSArray arrayWithObjects:
 //                       @"ic_expert_physicians",
 //                       @"ic_expert_personaltrainers",
@@ -64,9 +73,9 @@
 //                       @"ic_expert_corpwellness",
 //                       @"ic_expert_more", nil];
     
-    PACircleVC3 = [storyboard instantiateViewControllerWithIdentifier:@"PACircleVC"];
-    PACircleVC3.title = @"CREATE A PAC";
-    PACircleVC3.menuTitle=@"";
+//    PACircleVC3 = [storyboard instantiateViewControllerWithIdentifier:@"PACircleVC"];
+//    PACircleVC3.title = @"CREATE A PAC";
+//    PACircleVC3.menuTitle=@"";
 //    PACircleVC3.arrMenueImages=[NSArray arrayWithObjects:
 //                       @"ic_expert_physicians",
 //                       @"ic_expert_personaltrainers",
@@ -79,9 +88,9 @@
 //                       @"ic_expert_corpwellness",
 //                       @"ic_expert_more", nil];
     
-    PACircleVC4 = [storyboard instantiateViewControllerWithIdentifier:@"PACircleVC"];
-    PACircleVC4.title = @"INVITE";
-    PACircleVC4.menuTitle=@"";
+//    PACircleVC4 = [storyboard instantiateViewControllerWithIdentifier:@"PACircleVC"];
+//    PACircleVC4.title = @"INVITE";
+//    PACircleVC4.menuTitle=@"";
 //    PACircleVC4.arrMenueImages=[NSArray arrayWithObjects:
 //                       @"ic_expert_physicians",
 //                       @"ic_expert_personaltrainers",
@@ -98,10 +107,17 @@
     //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     //float navigationHeight = self.navigationController.navigationBar.frame.size.height;
     
-    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:
-                                            @[PACircleVC1,PACircleVC2,PACircleVC3,PACircleVC4]
-                                            topBarHeight:0
-                                            parentViewController:self];
+//    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:
+//                                            @[PACircleVC1,PACircleVC2,PACircleVC3,PACircleVC4]
+//                                            topBarHeight:0
+//                                            parentViewController:self];
+    // modified by aseem 06/03/2016
+  
+    
+    NSArray * arrForVC = @[PACircleVC1,myPACVC];
+    
+    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers: arrForVC topBarHeight:0 parentViewController:self];
+    
     containerVC.delegate = self;
     containerVC.menuItemFont = [UIFont fontWithName:@"Roboto-Regular" size:11];
     containerVC.menuItemSelectedFont = [UIFont fontWithName:@"Roboto-Bold" size:11.5];
