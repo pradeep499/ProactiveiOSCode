@@ -23,9 +23,9 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     var arrAttachments = [AnyObject]()
     var isEdit : Bool?
     var resourceArr = [AnyObject]()
-    var resourceDict = Dictionary<String, String>()
-    
-    
+    var resourceDict = Dictionary<String, AnyObject>()
+    var resourceID = ""
+    var url = ""
     
     //MARK:- View Life Cycle
     override func viewDidLoad() {
@@ -45,9 +45,10 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         // from Edit
         
         if isEdit == true {
-        txtFieldTitle.text = resourceDict["title"]
-        txtViewDescription.text = resourceDict["description"]
+        txtFieldTitle.text = resourceDict["title"] as? String
+        txtViewDescription.text = resourceDict["description"] as! String
         arrAttachments = (resourceDict["attachments"] as? [AnyObject])!
+        resourceID = resourceDict["_id"] as! String
             
         }
         
@@ -97,7 +98,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             var dict = Dictionary<String,AnyObject>()
             
             
-            // validating url
+            // appending url
             var url = String()
             if((linkTextField.text! as String).hasPrefix("http://") || (linkTextField.text! ).hasPrefix("https://")){
                 
@@ -111,7 +112,8 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
             
             
-            
+            // validating url
+
             if !(self.validateUrl(url)){
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             }
@@ -242,9 +244,36 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
         
         print("Submit Button pressed!!!")
-        serviceHit()
+        
+        if isEmpty() == true {
+            serviceHit()
+        }
+       
        
     }
+    
+    
+    // MARK:- Validation
+    func isEmpty() -> Bool {
+        
+        
+        
+      let descriptionStr = txtViewDescription.text
+        
+       if descriptionStr.characters.count <= 50 {
+            
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Description Field should have minimum 50 words!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            
+            return false
+            
+        }
+        
+        return true
+        
+    }
+    
+    
+    
     
     //MARK:- Regex
     // Is valid URL
@@ -267,18 +296,35 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
               var parameters = [String: AnyObject]()
             // parameters["AppKey"] = AppKey
            
-            parameters = [ "userId" : AppHelper.userDefaultsForKey(_ID),
-                           "pacId" : (AppHelper.userDefaultsForKey("pacId") as? String)!,
-                                "title" : self.txtFieldTitle.text!,
-                          "description" : self.txtViewDescription.text!,
-                          "attachments" : arrAttachments
-            ]
             
+            if isEdit == true {
+                
+                parameters = [ "userId" : AppHelper.userDefaultsForKey(_ID),
+                               "pacId" : (AppHelper.userDefaultsForKey("pacId") as? String)!,
+                               "title" : self.txtFieldTitle.text!,
+                               "description" : self.txtViewDescription.text!,
+                               "attachments" : arrAttachments,
+                               "resourceId" : resourceID
+                ]
+                url = ServiceEditResource
+            }
+            else {
+                
+                parameters = [ "userId" : AppHelper.userDefaultsForKey(_ID),
+                               "pacId" : (AppHelper.userDefaultsForKey("pacId") as? String)!,
+                               "title" : self.txtFieldTitle.text!,
+                               "description" : self.txtViewDescription.text!,
+                               "attachments" : arrAttachments
+                ]
+                url = ServiceCreateResource
+                
+            }
             
+           
             print("PARAMETERS \(parameters)")
             
             //call global web service class latest
-            Services.postRequest(ServiceCreateResource, parameters:parameters, completionHandler:{
+            Services.postRequest(url, parameters:parameters, completionHandler:{
                 (status,responseDict) in
                 
                 AppDelegate.dismissProgressHUD()
@@ -319,9 +365,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
 
     }
     
-    
-    
-    
+   
     // MARK: - UIDocumentPickerDelegate Methods
     func documentPicker(controller: UIDocumentPickerViewController, didPickDocumentAtURL url: NSURL) {
         
@@ -349,6 +393,42 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     }
    
 }
+
+//MARK:- TextView Delegate
+
+extension CreateEditResourcePACVC : UITextViewDelegate{
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        
+        
+        txtViewDescription.textColor = UIColor.blackColor()
+        
+        
+        if txtViewDescription.text == "Minimum 50 words" {
+            
+            txtViewDescription.text = "" // clear the place holder text
+            
+        }
+        
+        
+    }
+    
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        
+        if txtViewDescription.text == "" {
+            txtViewDescription.textColor = UIColor.grayColor()
+            txtViewDescription.text = "Minimum 50 words"
+        }
+        
+    }
+    
+    
+    
+    
+}
+
+
 
 //MARK:- TableView DataSource n Delegate
 

@@ -110,7 +110,7 @@
 #define ServiceDeleteResource           @"users/deleteResource"
 #define ServiceEditResource             @"users/editResource"
 #define ServiceLikePAC                  @"users/likePac"
-
+#define ServiceGetMyPAC                 @"users/getMyPacListing"
 
 
 #define maxLength                       25

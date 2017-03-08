@@ -662,8 +662,19 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                                     
                                     AppHelper.showAlertWithTitle(AppName, message:msg, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                                     
+                                    self.navigationController?.popViewControllerAnimated(true)
+                                    
+                                }
+                                else if ((responseDict["error"] as! Int) == 1) {
+                                    
+                                    AppHelper.showAlertWithTitle(AppName, message:responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                    
                                 }
                                 
+                                /*
+                                 { error: 1, errorMsg: 'Please enter valid zipcode.' }
+                                 
+                                 */
                             } else if (status == "Error"){
                                 
                                 AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)

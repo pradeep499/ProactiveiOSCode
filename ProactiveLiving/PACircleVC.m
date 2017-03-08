@@ -12,8 +12,16 @@
 #import "AppHelper.h"
 #import "Defines.h"
 #import "ActivitiesVC.h"
+#import "ProactiveLiving-Swift.h"
 
-@interface PACircleVC ()
+
+
+@interface PACircleVC (){
+    
+    PACContainerViewController *pACContainerViewController;
+    
+    
+}
 - (IBAction)btnBackClick:(id)sender;
 
 @end
@@ -115,72 +123,76 @@
     switch ((int)indexPath.item) {
         case 0:
              if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-             ActivitiesVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ActivitiesVC"];
-             vc.menuTitle=@"";
-             vc.arrMenueImages=[NSArray arrayWithObjects:
-             @"ic_activities_badminton",
-             @"ic_activities_baseball",
-             @"ic_activities_basketball",
-             @"ic_activities_flagfootball",
-             @"ic_activities_football",
-             @"ic_activities_golf",
-             @"ic_activities_hockey",
-             @"ic_activities_kickball",
-             @"ic_activities_softball",
-             @"ic_activities_soccer",
-             @"ic_activities_skiing",
-             @"ic_activities_swimming",
-             @"ic_activities_tennis",
-             @"ic_activities_volleyball",
-             @"ic_activities_more", nil];
-             [self.navigationController pushViewController:vc animated:YES];
+                 
+                 
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PAC" bundle:nil];
+            pACContainerViewController  = [storyboard instantiateViewControllerWithIdentifier:@"PACContainerViewController"];
+
+//             vc.menuTitle=@"";
+//             vc.arrMenueImages=[NSArray arrayWithObjects:
+//             @"ic_activities_badminton",
+//             @"ic_activities_baseball",
+//             @"ic_activities_basketball",
+//             @"ic_activities_flagfootball",
+//             @"ic_activities_football",
+//             @"ic_activities_golf",
+//             @"ic_activities_hockey",
+//             @"ic_activities_kickball",
+//             @"ic_activities_softball",
+//             @"ic_activities_soccer",
+//             @"ic_activities_skiing",
+//             @"ic_activities_swimming",
+//             @"ic_activities_tennis",
+//             @"ic_activities_volleyball",
+//             @"ic_activities_more", nil];
+             [self.navigationController pushViewController:pACContainerViewController animated:YES];
              }
             break;
         case 1:
-            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-                ActivitiesVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ActivitiesVC"];
-                vc.menuTitle=@"";
-                vc.arrMenueImages=[NSArray arrayWithObjects:
-                                   @"ic_activities_badminton",
-                                   @"ic_activities_baseball",
-                                   @"ic_activities_basketball",
-                                   @"ic_activities_flagfootball",
-                                   @"ic_activities_football",
-                                   @"ic_activities_golf",
-                                   @"ic_activities_hockey",
-                                   @"ic_activities_kickball",
-                                   @"ic_activities_softball",
-                                   @"ic_activities_soccer",
-                                   @"ic_activities_skiing",
-                                   @"ic_activities_swimming",
-                                   @"ic_activities_tennis",
-                                   @"ic_activities_volleyball",
-                                   @"ic_activities_more", nil];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+//            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+//                ActivitiesVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ActivitiesVC"];
+//                vc.menuTitle=@"";
+//                vc.arrMenueImages=[NSArray arrayWithObjects:
+//                                   @"ic_activities_badminton",
+//                                   @"ic_activities_baseball",
+//                                   @"ic_activities_basketball",
+//                                   @"ic_activities_flagfootball",
+//                                   @"ic_activities_football",
+//                                   @"ic_activities_golf",
+//                                   @"ic_activities_hockey",
+//                                   @"ic_activities_kickball",
+//                                   @"ic_activities_softball",
+//                                   @"ic_activities_soccer",
+//                                   @"ic_activities_skiing",
+//                                   @"ic_activities_swimming",
+//                                   @"ic_activities_tennis",
+//                                   @"ic_activities_volleyball",
+//                                   @"ic_activities_more", nil];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }
             break;
         case 2:
-            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-                ActivitiesVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ActivitiesVC"];
-                vc.menuTitle=@"";
-                vc.arrMenueImages=[NSArray arrayWithObjects:
-                                   @"ic_activities_badminton",
-                                   @"ic_activities_baseball",
-                                   @"ic_activities_basketball",
-                                   @"ic_activities_flagfootball",
-                                   @"ic_activities_football",
-                                   @"ic_activities_golf",
-                                   @"ic_activities_hockey",
-                                   @"ic_activities_kickball",
-                                   @"ic_activities_softball",
-                                   @"ic_activities_soccer",
-                                   @"ic_activities_skiing",
-                                   @"ic_activities_swimming",
-                                   @"ic_activities_tennis",
-                                   @"ic_activities_volleyball",
-                                   @"ic_activities_more", nil];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
+//            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
+//                ActivitiesVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ActivitiesVC"];
+//                vc.menuTitle=@"";
+//                vc.arrMenueImages=[NSArray arrayWithObjects:
+//                                   @"ic_activities_badminton",
+//                                   @"ic_activities_baseball",
+//                                   @"ic_activities_basketball",
+//                                   @"ic_activities_flagfootball",
+//                                   @"ic_activities_football",
+//                                   @"ic_activities_golf",
+//                                   @"ic_activities_hockey",
+//                                   @"ic_activities_kickball",
+//                                   @"ic_activities_softball",
+//                                   @"ic_activities_soccer",
+//                                   @"ic_activities_skiing",
+//                                   @"ic_activities_swimming",
+//                                   @"ic_activities_tennis",
+//                                   @"ic_activities_volleyball",
+//                                   @"ic_activities_more", nil];
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }
             break;
         
         default:
