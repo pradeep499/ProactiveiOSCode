@@ -89,7 +89,8 @@
         }
         
         
-    }else if ([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[PacContainerVC class]]){
+    }
+    else if ([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[PacContainerVC class]]){
         
         PacContainerVC *containerVC   =  [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];  
         
@@ -98,8 +99,27 @@
         }
         
     }
+    else if ([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[PACGroupsContainerVC class]]){
         
-     
+        
+        NSMutableArray *userIdArray = [NSMutableArray new];
+        
+        
+        for (NSDictionary *anObject in self.selectedRowsArray)
+        {
+            //NSMutableDictionary *tempDict = [NSMutableDictionary new];
+            //tempDict[@"userid"]=[anObject valueForKey:@"_id"];
+            //tempDict[@"phoneNumber"]=[anObject valueForKey:@"mobilePhone"];
+            //tempDict[@"user_firstName"]=[anObject valueForKey:@"firstName"];
+            
+            [userIdArray addObject:[anObject valueForKey:@"_id"]];
+        }
+
+        NSDictionary * infoDict = [NSDictionary dictionaryWithObject:userIdArray forKey:@"userIDs"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_INVITE_CONTACT_PAC object:self userInfo:infoDict];
+
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -436,6 +456,8 @@
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId])
     {
+        
+        //In case One on One Chat
     if(self.constrHeightGroupView.constant == 0) //if not creating a group
     {
         if([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[MyPAStodoVC class]])
@@ -527,9 +549,16 @@
                 [self.navigationController popViewControllerAnimated:YES];
                 
             }
+            else if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[PACGroupsContainerVC class]])
+            {
+                
+                //[self.navigationController popViewControllerAnimated:YES];
+                [self insertRemoveToSelecetedRowArray:frndDict];
+                
+            }
         }
     }
-    else //If creating a group
+    else //In case Group Chat
     {
         if (indexPath != nil)
         {

@@ -17,53 +17,130 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     var tokensAdmin = [AnyObject]()
     var tokensMember = [AnyObject]()
-    var inviteStr = String()
     var firstVC:NewsFeedsAllVC!
     var secondVC:ResourcesPACVC!
     var pacID = String()
     var thirdVC : AboutPacVC!
     var arrViewControllers = [AnyObject]()
-    
+    var memberStatus = Bool()
+    var adminStatus = Bool()
+    var creatorStatus = Bool()
+
     // Right button DXPopOver
     var popOverTableView:UITableView?
     var popover:DXPopover = DXPopover()
-    var popoverHeight:CGFloat = 90
-    var popOverCellData = [ "Edit",  "Create New"]
+    var popoverWidth:CGFloat = 150
+    var popoverHeight:CGFloat = 200
+    var popOverCellData = [String]()
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let alert = UIAlertView()
+        alert.show()
         
-        //self.lbl_title.text = self.title
-         
+        self.lbl_title.text = self.title
+        self.btnRight.hidden = true
+
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
         self.setUpViewControllers()
         
-        //popover table
-        popOverTableView = UITableView()
-        popOverTableView?.frame = CGRectMake(0, 0, 150, popoverHeight)
-        popOverTableView?.dataSource = self
-        popOverTableView?.delegate = self
-        popOverTableView?.separatorStyle = .None
- 
-        // hide the top right button
-        self.btnRight.hidden = true
         // To take button on front most
         self.view.addSubview(self.btnOpenCalender)
         self.view.bringSubviewToFront(self.btnOpenCalender)
         
     }
     
+    func fetchDataForPACRole() {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["pacId"] = self.pacID
+            
+            //call global web service class latest
+            Services.postRequest(ServiceGetPACRole, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    //dissmiss indicator
+                    if ((responseDict["error"] as! Int) == 0) {
+                        print(responseDict)
+                        self.creatorStatus = responseDict["result"]!["creatorStatus"] as! Bool
+                        self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
+                        self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
+    
+                        if(self.memberStatus == false) {
+                            self.btnRight.hidden = true
+                        }
+                        else {
+                            self.btnRight.hidden = false
+                            
+                            if(currentIndex == 0) {
+                                self.popOverCellData = [ "Edit",  "Create New"]
+                                self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
+                            }
+                            else if(currentIndex == 1) {
+                                
+                                self.popOverCellData = [ "Edit",  "Create New"]
+                                self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
+                            
+                            }
+                            else if(currentIndex == 2) {
+                                
+                                if(self.adminStatus == true) {
+                                    // five options
+                                    self.popOverCellData = ["Don't list on my Profile", "Exit PAC", "Report PAC", "Delete PAC", "Edit PAC"]
+                                    self.popOverTableView?.frame = CGRectMake(0, 0, 220, 45*5)
+                                    
+                                }
+                                else {
+                                    //three options
+                                    self.popOverCellData = ["Don't list on my Profile", "Exit PAC", "Report PAC"]
+                                    self.popOverTableView?.frame = CGRectMake(0, 0, 220, 45*3)
+                                }
+
+                            }
+
+
+                            self.popOverTableView?.reloadData()
+
+                        }
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-   
-   
     
     func setUpViewControllers() {
         
@@ -74,7 +151,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         firstVC.title = "WALL"
 
         secondVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("ResourcesPACVC") as! ResourcesPACVC
-        secondVC.title = "    RESOURCES    "
+        secondVC.title = "RESOURCES"
         
         thirdVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AboutPacVC") as! AboutPacVC
         thirdVC.title = "ABOUT"
@@ -92,7 +169,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
         containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
-        
+    
         self.view.addSubview(containerVC.view)
         
     }
@@ -107,17 +184,30 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         currentIndex = index
         controller.viewWillAppear(true)
         
+        //popover table
+        if(popOverTableView == nil) {
+        popOverTableView = UITableView()
+        }
+        popOverTableView?.dataSource = self
+        popOverTableView?.delegate = self
+        popOverTableView?.separatorStyle = .None
+        
         if index == 0 {
             
-            self.btnRight.hidden = true
+            popOverTableView?.frame = CGRectMake(0, 0, 220, 45*0)
+            popOverCellData = ["", ""]
+            popOverTableView?.reloadData()
+            //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
             
         }
         else if index == 1 {
-            self.btnRight.hidden = false
+            self.fetchDataForPACRole()
+            //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
             
         }
         else {
-            self.btnRight.hidden = true
+            self.fetchDataForPACRole()
+            //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
 
         }
     }
@@ -126,11 +216,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     func btnLikeClick(sender: UIButton) {
         sender.selected = !sender.selected
-        
-    }
-    
-    func btnInviteClick(sender: UIButton) {
-
         
     }
     
@@ -202,46 +287,58 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-          let profileStoryboard = AppHelper.getPacStoryBoard()
-        
-       // if tableView == popOverTableView{
-            self.popover.dismiss()
-            if indexPath.row == 0 {
-                
-                
-                
-                if self.secondVC.isHidden  {
-                    
-                    self.secondVC.isHidden = false
-                    self.secondVC.tableViewResource.reloadData()
-                    
-                    popOverCellData[0] = "Done"
-                    popOverTableView?.reloadData()
-                    
-                    
-                }
-                else {
-                    
-                    self.secondVC.isHidden = true
-                    self.secondVC.tableViewResource.reloadData()
-                    
-                    popOverCellData[0] = "Edit"
-                    popOverTableView?.reloadData()
+        self.popover.dismiss()
 
-                    
-                    
-                    
-                }
-       
-    }
-            else{
-                
-                let createEditResourcePACVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreateEditResourcePACVC") as! CreateEditResourcePACVC
-                 createEditResourcePACVC.pageTitle = "Create Resource"
-                self.navigationController?.pushViewController(createEditResourcePACVC, animated: true)
-                
-        }
+        let currentCell = tableView.cellForRowAtIndexPath(indexPath)! as UITableViewCell
+        print(currentCell.textLabel?.text)
         
+        if(currentCell.textLabel?.text == "Edit") {
+            
+            if self.secondVC.isHidden  {
+                
+                self.secondVC.isHidden = false
+                self.secondVC.tableViewResource.reloadData()
+                
+                popOverCellData[0] = "Done"
+                popOverTableView?.reloadData()
+                
+            }
+            else {
+                
+                self.secondVC.isHidden = true
+                self.secondVC.tableViewResource.reloadData()
+                
+                popOverCellData[0] = "Edit"
+                popOverTableView?.reloadData()
+                
+            }
+        }
+        else if(currentCell.textLabel?.text == "Create New") {
+            
+            let profileStoryboard = AppHelper.getPacStoryBoard()
+            let createEditResourcePACVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreateEditResourcePACVC") as! CreateEditResourcePACVC
+            createEditResourcePACVC.pageTitle = "Create Resource"
+            self.navigationController?.pushViewController(createEditResourcePACVC, animated: true)
+            
+        }
+        else if(currentCell.textLabel?.text == "Don't list on my Profile") {
+            
+        }
+        else if(currentCell.textLabel?.text == "Exit PAC") {
+            
+        }
+        else if(currentCell.textLabel?.text == "Report PAC") {
+            
+        }
+        else if(currentCell.textLabel?.text == "Delete PAC") {
+            
+        }
+        else if(currentCell.textLabel?.text == "Edit PAC") {
+            
+        }
+        else {
+            
+        }
         
     
     }

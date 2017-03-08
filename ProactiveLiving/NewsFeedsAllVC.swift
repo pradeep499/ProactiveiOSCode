@@ -28,7 +28,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var postHealthClubsArr:NSMutableArray = NSMutableArray()
     var pacWallArr:NSMutableArray = NSMutableArray()
     var textView:HPGrowingTextView = HPGrowingTextView()
-    var containerView: UIView = UIView()
+    //var containerView: UIView = UIView()
     var pacID:String = String()
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerController()
@@ -79,13 +79,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     //MARK:- Growing TextView mthods
     func setupGrowingTextView() {
         
-        containerView = UIView(frame: CGRectMake(0, self.collectionView.frame.size.height - 40, 320, 40))
-        containerView.backgroundColor = UIColor.redColor()
-        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(screenWidth-200), height: CGFloat(24)))
+        //containerView = UIView(frame: CGRectMake(0, self.collectionView.frame.size.height - 40, 320, 40))
+        //containerView.backgroundColor = UIColor.redColor()
+        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(postContainerView.frame.width-10), height: CGFloat(24)))
         textView.isScrollable = false
         textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
         textView.minNumberOfLines = 1
-        textView.maxNumberOfLines = 6
+        textView.maxNumberOfLines = 5
         // you can also set the maximum height in points with maxHeight
         // textView.maxHeight = 200.0f;
         //textView.returnKeyType = .Go
@@ -95,7 +95,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         textView.backgroundColor = UIColor.whiteColor()
         textView.setCornerRadiusWithBorderWidthAndColor(5.0, borderWidth: 1.0, borderColor: UIColor.grayColor())
         textView.placeholder = "Share an update"
-        textView.autoresizingMask = .FlexibleWidth
+        textView.autoresizingMask = .FlexibleHeight
         postContainerView.addSubview(textView)
         //self.view.addSubview(containerView)
         //textView.animateHeightChange = NO; //turns off animation
@@ -109,6 +109,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         var r: CGRect = self.postContainerView.frame
         r.size.height -= diff
         r.origin.y += diff
+        
+        print(r)
         self.postContainerView.frame = r
     }
     override func viewWillAppear(animated: Bool) {
@@ -147,9 +149,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             self.getLikeUpdate()
         }
         
-        if !isPostServiceCalled  {
+        //if !isPostServiceCalled  {
             self.fetchPostDataFromServer()
-        }
+        //}
         
         
         self.collectionView.reloadData()

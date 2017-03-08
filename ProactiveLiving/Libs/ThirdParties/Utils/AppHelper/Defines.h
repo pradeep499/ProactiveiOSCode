@@ -110,7 +110,9 @@
 #define ServiceDeleteResource           @"users/deleteResource"
 #define ServiceEditResource             @"users/editResource"
 #define ServiceLikePAC                  @"users/likePac"
-
+#define ServiceGetPACRole               @"users/getPacRole"
+#define ServiceAddMemberToPac           @"users/addMemberToPac"
+#define ServicePACActionProfile         @"users/pacActionProfile"
 
 
 #define maxLength                       25
@@ -178,7 +180,7 @@
 #define NOTIFICATION_SYNCCONTACT_CLICKED @"NOTIFICATION_SYNCCONTACT_CLICKED"
 #define NOTIFICATION_SHOW_GROUP_VIEW_CLICKED @"NOTIFICATION_SHOW_GROUP_VIEW_CLICKED"
 #define NOTIFICATION_GET_CONTACT_CLICKED @"NOTIFICATION_GET_CONTACT_CLICKED"
-
+#define NOTIFICATION_INVITE_CONTACT_PAC @"NOTIFICATION_INVITE_CONTACT_PAC"
 
 #define BOOK_POPUP_HEIGHT 392
 

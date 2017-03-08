@@ -8,12 +8,15 @@
 
 import UIKit
 
-class AboutPacVC: UIViewController {
+class AboutPacVC: UIViewController, UIAlertViewDelegate {
 
     var collapsed = true
     var dataDict = [String : AnyObject]()
     var pacID = String()
     var memberStatus = Bool()
+    var adminStatus = Bool()
+    var creatorStatus = Bool()
+    var privateStatus = Bool()
     
     @IBOutlet weak var btnLike: UIButton!
     @IBOutlet weak var lblLikes: UILabel!
@@ -30,6 +33,10 @@ class AboutPacVC: UIViewController {
         btnLike.addTarget(self, action: #selector(btnLikeClick(_:)), forControlEvents: .TouchUpInside)
         btnLike.setImage(UIImage(named: "like_empty"), forState: .Normal)
         btnLike.setImage(UIImage(named: "like_filled"), forState: .Selected)
+        
+        btnInvite.addTarget(self, action: #selector(btnInviteClick(_:)), forControlEvents: .TouchUpInside)
+        btnInvite.setCornerRadiusWithBorderWidthAndColor(3.0, borderWidth: 2.0, borderColor: UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0))
+        btnInvite.hidden = true
 
         self.fetchDataForAboutSection()
 
@@ -65,6 +72,13 @@ class AboutPacVC: UIViewController {
                         self.dataDict = (responseDict["result"]!["pac"] as! [String : AnyObject])
                         self.btnLike.selected = responseDict["result"]!["likeStatus"] as! Bool
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
+                        self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
+                        self.creatorStatus = responseDict["result"]!["creatorStatus"] as! Bool
+                        
+                        if let settingsDict = self.dataDict["settings"] {
+                            self.privateStatus = settingsDict["private"] as! Bool
+                        }
+
                         self.imageHeader.sd_setImageWithURL(NSURL.init(string:self.dataDict["imgUrl"] as! String))
                         
                         if((self.dataDict["likes"] as! [String]).count == 1) {
@@ -73,6 +87,20 @@ class AboutPacVC: UIViewController {
                         else {
                             self.lblLikes.text = "\((self.dataDict["likes"] as! [String]).count) Likes"
                         }
+                        
+                        if(responseDict["result"]!["memberStatus"] as! Bool == false) {
+                            self.btnInvite.hidden = false
+                            self.btnInvite.setTitle("Join", forState: .Normal)
+                        }
+                        else {
+                            
+                            self.btnInvite.hidden = true
+                            if(responseDict["result"]!["adminStatus"] as! Bool == true || responseDict["result"]!["creatorStatus"] as! Bool == true) {
+                                self.btnInvite.hidden = false
+                                self.btnInvite.setTitle("Invite", forState: .Normal)
+                            }
+                        }
+                        
                         self.tableView.reloadData()
                         
                     } else {
@@ -113,11 +141,146 @@ class AboutPacVC: UIViewController {
         self.likePACServiceCall()
     }
     
-    func btnInviteClick(sender: UIButton) {
+    func btnInviteClick(sender: UIButton)  {
+        
+        if(sender.titleLabel?.text == "Invite") {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name:NOTIFICATION_INVITE_CONTACT_PAC, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(inviteFriendCall(_:)), name:NOTIFICATION_INVITE_CONTACT_PAC, object: nil)
+        
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let friendListObj: AllContactsVC = storyBoard.instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
+        self.navigationController?.pushViewController(friendListObj, animated: true)
+        }
+        else if(sender.titleLabel?.text == "Join"){
+            let arrIDs = [AppHelper.userDefaultsForKey(_ID) as! String]
+            self.inviteOrJoinServiceCall(arrIDs, callType: "Join")
+        }
         
     }
     
-    // To Like/Unlike PAC
+    func inviteFriendCall(notification: NSNotification) {
+        
+        print(notification.userInfo)
+
+        if let arrIDs = notification.userInfo?["userIDs"] as? [String] {
+            self.inviteOrJoinServiceCall(arrIDs, callType: "Invite")
+        }
+    }
+
+    // MARK:- Join/Invite Service Call
+    func inviteOrJoinServiceCall(arrIDs : [String], callType : String) {
+        
+        if AppDelegate.checkInternetConnection() {
+            
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["pacId"] = self.pacID
+            parameters["users"] = arrIDs
+            
+            //call global web service
+            Services.postRequest(ServiceAddMemberToPac, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        print(responseDict)
+                        if(callType == "Invite") {
+                            AppHelper.showAlertWithTitle(AppName, message: responseDict["result"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        }
+                        else if(callType == "Join"){
+                            if(self.privateStatus == true) {
+                                let title = "Your request to join has been sent."
+                                let detail = "If approved, show your membership in this PAC on your Profile screen?"
+                                AppHelper.showAlertWithTitle(title, message: detail, tag: 100, delegate: self, cancelButton: yes, otherButton: no)
+                            }
+                            else {
+                                let title = "Congrats on Joining!"
+                                let detail = "Show your membership in this PAC on your Profile screen?"
+                                AppHelper.showAlertWithTitle(title, message: detail, tag: 100, delegate: self, cancelButton: yes, otherButton: no)
+                            }
+
+                        }
+                        self.fetchDataForAboutSection()
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
+    //MARK:- UIAlert delegate
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+
+        if(alertView.tag == 100)
+        {
+            switch buttonIndex{
+                
+            case 0:
+                self.ServiceCallPacActionProfile(true)
+                break;
+            case 1:
+                break;
+            default:
+                break;
+            }
+        }
+        
+    }
+    
+    //MARK:- servce call for PAC action Profile
+    func ServiceCallPacActionProfile(status : Bool) {
+        
+        if AppDelegate.checkInternetConnection() {
+            
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["pacId"] = self.pacID
+            parameters["status"] = status
+            
+            //call global web service
+            Services.postRequest(ServicePACActionProfile, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        print(responseDict)
+                    } else {
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+        }
+        else {
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+
+    
+    //MARK:- Service call for Like/Unlike PAC
     func likePACServiceCall() {
         
         if AppDelegate.checkInternetConnection() {
