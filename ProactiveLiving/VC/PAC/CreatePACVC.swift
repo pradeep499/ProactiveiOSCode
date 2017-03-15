@@ -103,7 +103,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         self.iv_coverPic.userInteractionEnabled = true
         self.iv_coverPic.layer.cornerRadius = self.iv_coverPic.frame.height/2
         self.iv_coverPic.clipsToBounds = true
-        self.iv_coverPic.setImageWithURL(NSURL(string:""), placeholderImage: UIImage(named:"profile.png"))
+        //self.iv_coverPic.setImageWithURL(NSURL(string:""), placeholderImage: UIImage(named:"profile.png"))
         
         
        // self.tv_desc.placeholder = "Minimum 50 words"
@@ -418,12 +418,12 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             return false
             
         }
-        else if( tokenF_inviteMember.tags.count == 0){
-            
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please add at least one member!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-            
-            return false
-        }
+//        else if( tokenF_inviteMember.tags.count == 0){
+//            
+//            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please add at least one member!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+//            
+//            return false
+//        }
         else if( self.btnIAgree.tag == 11){
            
             
@@ -568,14 +568,22 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         for i in 0  ..< memberArr.count  {
         
             let str = memberArr[i]["_id"] as! String
-            self.tagIDMember.append(str)
+          
+            // to make unique
+            if(!self.tagIDMember.contains({ $0 as! String == str })){
+                self.tagIDMember.append(str)
+            }
             
         }
         
         for i in 0  ..< adminArr.count  {
             
             let str = adminArr[i]["_id"] as! String
-            self.tagIDAdmin.append(str)
+            
+            // to make unique
+            if(!self.tagIDAdmin.contains({ $0 as! String == str })){
+                self.tagIDAdmin.append(str)
+            }
             
         }
 
@@ -601,18 +609,19 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                            "zipcode"     : self.tf_zip.text!,
                           "admins"       : self.tagIDAdmin,
                          "members"       : self.tagIDMember,
-                         "attachements"  : self.arrAttachments,
+                         "links"         : self.arrAttachments,
+                         "files"         : self.arrAttachments,
                          "private"       : self.switchStatus[0],
                 "allowToCreateMeetup"    : self.switchStatus[1],
-                "allowToCreateWebinvite"  : self.switchStatus[2],
-                "allowToUpload"           : self.switchStatus[3],
-                "everyone"                 : self.switchStatus[4],
-                "friends"                   : self.switchStatus[5],
-                "colleagues"               : self.switchStatus[6],
-                "healthClub"                : self.switchStatus[7],
-                "males"                     : self.switchStatus[8],
-                "females"                   : self.switchStatus[9],
-                "categoryId"                :["123sdfsd"]
+                "allowToCreateWebinvite" : self.switchStatus[2],
+                "allowToUpload"          : self.switchStatus[3],
+                "everyone"               : self.switchStatus[4],
+                "friends"                : self.switchStatus[5],
+                "colleagues"             : self.switchStatus[6],
+                "healthClub"             : self.switchStatus[7],
+                "males"                  : self.switchStatus[8],
+                "females"                : self.switchStatus[9],
+                "categoryId"             :["123sdfsd"]
             
   ]
        
@@ -631,11 +640,9 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                 manager.POST(url, parameters: nil, constructingBodyWithBlock: {
                     (formdata:AFMultipartFormData!)-> Void  in
                     
-                    if(imageData != nil)
-                    {
-                        formdata.appendPartWithFileData(imageData, name: "files", fileName: "image.jpg" as String, mimeType: "image/jpeg")
-                    }
-                    
+                        if(imageData != nil) {
+                            formdata.appendPartWithFileData(imageData, name: "files", fileName: "image.jpg" as String, mimeType: "image/jpeg")
+                        }
                     
                     }, success:
                     {
@@ -645,54 +652,25 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                         var parsedData = JSON(response)
                         self.parameters["imgUrl"] = parsedData["filesUrl"].string
                         print("URL \(parsedData["filesUrl"].string)")
+                        
                         //call global web service class latest
-                        Services.postRequest(ServiceCreatePAC, parameters: self.parameters, completionHandler:{
-                            (status,responseDict) in
-                            
-                            AppDelegate.dismissProgressHUD()
-                            
-                            if (status == "Success") {
-                                
-                                if ((responseDict["error"] as! Int) == 0) {
-                                    
-                                    print(responseDict["result"])
-                                    
-                                    let msg = "PAC created."
-                                    
-                                    
-                                    AppHelper.showAlertWithTitle(AppName, message:msg, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-                                    
-                                    self.navigationController?.popViewControllerAnimated(true)
-                                    
-                                }
-                                else if ((responseDict["error"] as! Int) == 1) {
-                                    
-                                    AppHelper.showAlertWithTitle(AppName, message:responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-                                    
-                                }
-                                
-                                /*
-                                 { error: 1, errorMsg: 'Please enter valid zipcode.' }
-                                 
-                                 */
-                            } else if (status == "Error"){
-                                
-                                AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-                                
-                            }
-                        })
-              
+                        self.serviceCallWithData()
+                        
                     }, failure:
                     {
                         operation, response -> Void in
-                         print(response)
-                   
+                        print(response)
                         stopActivityIndicator(self.view)
                         
                     }
                 )
             }
-            
+            else {
+                //In case of NO image
+                self.parameters["imgUrl"] = ""
+                //call global web service class latest
+                self.serviceCallWithData()
+            }
         }
         else {
             AppDelegate.dismissProgressHUD()
@@ -700,184 +678,46 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
         }
 
-        
-        
-        
-      /*  if ServiceClass.checkNetworkReachabilityWithoutAlert()
-        {
-        //    let button = sender as! UIButton
-            
-            if (tokenF_inviteAdmin.count == 0) {
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select at least one contact.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                
-            }
-            else if (self.txtFieldFor.text!.characters.count == 0)
-            {
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select type.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-            }
-            else if (self.txtFieldOn.text!.characters.count == 0)
-            {
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select date.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-            }
-            else if (self.txtFieldAt.text!.characters.count == 0)
-            {
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select time.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-            }
-            else if (self.txtFieldWhereFirst.text!.characters.count == 0)
-            {
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter address.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-            }
-            else if (self.txtFieldTitle.text!.characters.count == 0)
-            {
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter title.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-            }
-            else if (self.txtViewDesc.text!.characters.count == 0)
-            {
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter description.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-            }
-            else
-            {
-                var linksArray : NSMutableArray!
-                linksArray = NSMutableArray()
-                
-                button.userInteractionEnabled=false
-                showActivityIndicator(self.view)
-                var dict = Dictionary<String,AnyObject>()
-                dict["title"] = self.tf_ProActiveName.text! as String
-                dict["desc"] = tv_desc.text
-                
-                for link in self.arrAttachments {
-                    var dicLinks = Dictionary<String,AnyObject>()
-                    dicLinks["title"] = link ["title"]
-                    dicLinks["url"] = link ["url"]
-                    linksArray.addObject(dicLinks)
-                }
-                
-                dict["links"]=linksArray as [AnyObject]
-                dict["attachments"]="abc.png"
-                dict["createdBy"]=ChatHelper.userDefaultForKey("userId") as String
-             //   dict["eventDate"] =   HelpingClass.convertDateFormat("MM/dd/YYYY", desireFormat:"dd/MM/YYYY", dateStr: txtFieldOn.text!)
-               
-                
-                var userIdAdminArr : NSMutableArray!
-                userIdAdminArr = NSMutableArray()
-                
-                for myobject : AnyObject in tokensAdmin
-                {
-                    var tempDict = Dictionary<String,AnyObject>()
-                //    tempDict["userId"]=myobject["_id"] as! String
-                    let userId = myobject["_id"] as! String
-                    
-                    userIdAdminArr.addObject(userId);
-                }
-                dict["admins"] = userIdAdminArr as [AnyObject]
-                
-                var userIdMemberArr : NSMutableArray!
-                userIdMemberArr = NSMutableArray()
-                
-                for myobject : AnyObject in tokensMember
-                {
-                    var tempDict = Dictionary<String,AnyObject>()
-                    //    tempDict["userId"]=myobject["_id"] as! String
-                    let userId = myobject["_id"] as! String
-                    
-                    userIdMemberArr.addObject(userId);
-                }
-                dict["members"] = userIdMemberArr as [AnyObject]
-                
-                
-                
-                print(dict)
-                
-                if self.imgCoverPic.image != nil
-                {
-                    let imageData = UIImageJPEGRepresentation(self.imgCoverPic.image!, 1.0)
-                    
-                    let baseUrlString = ChatBaseMediaUrl+ChatMediaPath
-                    let url = NSURL(string: baseUrlString)?.absoluteString
-                    let manager=AFHTTPRequestOperationManager()
-                    
-                    manager.POST(url, parameters: nil, constructingBodyWithBlock: {
-                        (formdata:AFMultipartFormData!)-> Void  in
-                        
-                        if(imageData != nil)
-                        {
-                            formdata.appendPartWithFileData(imageData, name: "files", fileName: "image.jpg" as String, mimeType: "image/jpeg")
-                        }
-                        
-                        
-                        }, success:
-                        {
-                            operation, response -> Void in
-                            
-                            //Parsing JSON
-                            var parsedData = JSON(response)
-                            //  println_debug(parsedData)
-                            dict["imgUrl"] = parsedData["filesUrl"].string
-                            
-                            button.userInteractionEnabled=true
-                            
-                            if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
-                            {
-                                ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
-                                dispatch_after(3, dispatch_get_main_queue(), {
-                                    stopActivityIndicator(self.view)
-                                    
-                                    self.navigationController?.popToRootViewControllerAnimated(true)
-                                })
-                            }
-                            else
-                            {
-                                ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                                dispatch_after(3, dispatch_get_main_queue(), {
-                                    stopActivityIndicator(self.view)
-                                    
-                                    self.navigationController?.popToRootViewControllerAnimated(true)
-                                })
-                            }
-                            
-                            
-                        }, failure:
-                        {
-                            operation, response -> Void in
-                            // println_debug(response)
-                            button.userInteractionEnabled=true
-                            stopActivityIndicator(self.view)
-                            
-                        }
-                    )
-                }else
-                {
-                    dict["imgUrl"] = ""
-                    if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
-                    {
-                        ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
-                        dispatch_after(3, dispatch_get_main_queue(), {
-                            stopActivityIndicator(self.view)
-                            self.navigationController?.popToRootViewControllerAnimated(true)
-                        })
-                    }
-                    else
-                    {
-                        ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                        dispatch_after(3, dispatch_get_main_queue(), {
-                            stopActivityIndicator(self.view)
-                            self.navigationController?.popToRootViewControllerAnimated(true)
-                        })
-                    }
-                    
-                    
-                }
-                
-                
-            }
-            
-        }else
-        {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-        }*/
     }
    
+    func serviceCallWithData() {
+        Services.postRequest(ServiceCreatePAC, parameters: self.parameters, completionHandler:{
+            (status,responseDict) in
+            
+            AppDelegate.dismissProgressHUD()
+            
+            if (status == "Success") {
+                
+                if ((responseDict["error"] as! Int) == 0) {
+                    
+                    print(responseDict["result"])
+                    
+                    let msg = "PAC created."
+                    
+                    
+                    AppHelper.showAlertWithTitle(AppName, message:msg, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                }
+                else if ((responseDict["error"] as! Int) == 1) {
+                    
+                    AppHelper.showAlertWithTitle(AppName, message:responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+                
+                /*
+                 { error: 1, errorMsg: 'Please enter valid zipcode.' }
+                 
+                 */
+            } else if (status == "Error"){
+                
+                AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                
+            }
+        })
+
+    }
 
 }
 

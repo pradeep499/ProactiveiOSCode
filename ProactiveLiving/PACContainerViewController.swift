@@ -87,7 +87,7 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
        // let nav = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = pacStoryboard.instantiateViewControllerWithIdentifier("MyPACVC") as! MyPACVC
-        secondVC.title = "   MY PAC    "
+        secondVC.title = "       MY PAC       "
         
         arrViewControllers = [firstVC,secondVC]
         

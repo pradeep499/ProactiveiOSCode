@@ -25,6 +25,9 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var memberStatus = Bool()
     var adminStatus = Bool()
     var creatorStatus = Bool()
+    var allowToCreateMeetup = Bool()
+    var allowToCreateWebinvite = Bool()
+    var allowToUpload = Bool()
 
     // Right button DXPopOver
     var popOverTableView:UITableView?
@@ -36,9 +39,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        let alert = UIAlertView()
-        alert.show()
         
         self.lbl_title.text = self.title
         self.btnRight.hidden = true
@@ -78,6 +80,12 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
                         self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
     
+                        let settingsDict = responseDict["result"]!["settings"] as! [String : AnyObject]
+                        
+                        self.allowToCreateMeetup = settingsDict["allowToCreateMeetup"] as! Bool
+                        self.allowToCreateWebinvite = settingsDict["allowToCreateWebinvite"] as! Bool
+                        self.allowToUpload = settingsDict["allowToUpload"] as! Bool
+
                         if(self.memberStatus == false) {
                             self.btnRight.hidden = true
                         }
@@ -85,16 +93,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                             self.btnRight.hidden = false
                             
                             if(currentIndex == 0) {
-                                self.popOverCellData = [ "Edit",  "Create New"]
-                                self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
-                            }
-                            else if(currentIndex == 1) {
-                                
-                                self.popOverCellData = [ "Edit",  "Create New"]
-                                self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
-                            
-                            }
-                            else if(currentIndex == 2) {
                                 
                                 if(self.adminStatus == true) {
                                     // five options
@@ -102,12 +100,41 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                                     self.popOverTableView?.frame = CGRectMake(0, 0, 220, 45*5)
                                     
                                 }
-                                else {
+                                else if(self.creatorStatus == true) {
                                     //three options
-                                    self.popOverCellData = ["Don't list on my Profile", "Exit PAC", "Report PAC"]
+                                    self.popOverCellData = ["Don't list on my Profile", "Report PAC", "Delete PAC", "Edit PAC"]
+                                    self.popOverTableView?.frame = CGRectMake(0, 0, 220, 45*4)
+                                }
+                                else {
+                                    
+                                    self.popOverCellData = ["Don't list on my Profile", "Report PAC", "Exit PAC"]
                                     self.popOverTableView?.frame = CGRectMake(0, 0, 220, 45*3)
                                 }
+                                
+                            }
+                            else if(currentIndex == 1) {
+                                if(self.memberStatus == true) {
+                                    self.btnRight.hidden = false
+                                    if(self.allowToUpload == true) {
+                                    self.popOverCellData = ["Create New"]
+                                    self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*1)
+                                    }
+                                    else {
+                                        self.btnRight.hidden = true
+                                    }
 
+                                }
+                                else {
+                                    self.popOverCellData = [ "Edit",  "Create New"]
+                                    self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
+
+                                }
+                            
+                            }
+                            else if(currentIndex == 2) {
+                                
+                                self.popOverCellData = [ "No Action",  "No Action"]
+                                self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
                             }
 
 
@@ -157,7 +184,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         thirdVC.title = "ABOUT"
         thirdVC.pacID = self.pacID
         
-        arrViewControllers = [firstVC,secondVC,thirdVC]
+        arrViewControllers = [thirdVC,secondVC,firstVC]
         
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
         containerVC.delegate = self
@@ -194,9 +221,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
         if index == 0 {
             
-            popOverTableView?.frame = CGRectMake(0, 0, 220, 45*0)
-            popOverCellData = ["", ""]
-            popOverTableView?.reloadData()
+            self.fetchDataForPACRole()
             //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
             
         }
@@ -224,6 +249,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
         let objCalendarVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("CalendarVC") as! RSDFDatePickerViewController
         objCalendarVC.fromScreen = "AboutPacVC"
+        objCalendarVC.allowToCreateMeetup = self.allowToCreateMeetup
+        objCalendarVC.allowToCreateWebinvite = self.allowToCreateWebinvite
         objCalendarVC.pacID = self.pacID
         self.navigationController?.pushViewController(objCalendarVC, animated: true)
     }
@@ -292,7 +319,7 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
         let currentCell = tableView.cellForRowAtIndexPath(indexPath)! as UITableViewCell
         print(currentCell.textLabel?.text)
         
-        if(currentCell.textLabel?.text == "Edit") {
+        if(currentCell.textLabel?.text == "Edit" || currentCell.textLabel?.text == "Done") {
             
             if self.secondVC.isHidden  {
                 
@@ -323,6 +350,11 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
         }
         else if(currentCell.textLabel?.text == "Don't list on my Profile") {
             
+            self.thirdVC.ServiceCallPacActionProfile(false)
+        }
+        else if(currentCell.textLabel?.text == "List on my Profile") {
+            
+            //self.thirdVC.ServiceCallPacActionProfile(false)
         }
         else if(currentCell.textLabel?.text == "Exit PAC") {
             
@@ -334,6 +366,8 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
             
         }
         else if(currentCell.textLabel?.text == "Edit PAC") {
+            
+            self.thirdVC.editPACSelected()
             
         }
         else {

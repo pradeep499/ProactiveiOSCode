@@ -303,7 +303,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
 
             if (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type"))! as! String == "link" ||  self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type") as? String == "attachment"
             {
-                return 45
+                return 54
             }
             else {
                 return 90
@@ -583,50 +583,29 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
         if(indexPath.row != 0)
         {
-        print("Did Select Row At index path \(indexPath.row)")
-        
-       // redirection to next VC for WebView
-        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
-        
-            var processedIndexPath = indexPath.row
-        
+        var processedIndexPath = indexPath.row
         processedIndexPath = processedIndexPath-1
         attachmentArr = (resourceDetailArr[indexPath.section].valueForKey("attachments") as? NSArray)!
             
-            
-        print("ATTACHMENT ARRY1 \((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type"))! as! String == "video")")
-            
-        print("ATTACHMENT ARRAY:-\(attachmentArr!.objectAtIndex(processedIndexPath))")
-       //  print("ATTACHMENT ARRAY:-\(attachmentArr![processedIndexPath])")
-        
-            
-            
-            
-      if self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type") as? String == "video" {
-        
-        
+        if self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type") as? String == "video" {
         
         playVideoOnCellTap((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!)
-        
-        
-        
-            }
-            
-        
+        }
         else  {
             
-            
-            
+        // redirection to next VC for WebView
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        
         let dict = self.attachmentArr?.objectAtIndex(processedIndexPath) as! [String:String]     //self.attachmentArr![indexPath.row] as! [String:String]
         
         WebVC.title = "Resource"
        
         if dict["url"] != nil {
          
-        print("Dict \(dict)")
-        print("URL TEST: \(dict["url"]!)")
-        WebVC.urlStr = dict["url"]!
-        self.navigationController?.pushViewController(WebVC, animated: true)
+            print("Dict \(dict)")
+            print("URL TEST: \(dict["url"]!)")
+            WebVC.urlStr = dict["url"]!
+            self.navigationController?.pushViewController(WebVC, animated: true)
             
             if dict["type"] == "video" {
                 print("VIDEO DICT")

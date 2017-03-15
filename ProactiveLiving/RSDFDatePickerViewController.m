@@ -465,18 +465,27 @@ type = 3 for yeary basis
     
     
     if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
-        [alertActionSheet addAction:meetup];
-        [alertActionSheet addAction:webinvite];
+        if(self.allowToCreateWebinvite == TRUE || self.allowToCreateMeetup == TRUE) {
+            
+            if(self.allowToCreateMeetup == TRUE)
+                [alertActionSheet addAction:meetup];
+            if(self.allowToCreateWebinvite == TRUE)
+                [alertActionSheet addAction:webinvite];
+            
+            [alertActionSheet addAction:cancel];
+            [self presentViewController:alertActionSheet animated:YES completion:nil];
+        }
     }
     else {
         [alertActionSheet addAction:appointment];
         [alertActionSheet addAction:meetup];
         [alertActionSheet addAction:webinvite];
         [alertActionSheet addAction:other];
+        [alertActionSheet addAction:cancel];
+        [self presentViewController:alertActionSheet animated:YES completion:nil];
+
     }
     
-    [alertActionSheet addAction:cancel];
-    [self presentViewController:alertActionSheet animated:YES completion:nil];
     
 }
 
@@ -492,6 +501,8 @@ type = 3 for yeary basis
         if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
             vc.fromScreenFlag = @"pac";
             vc.pacID = self.pacID;
+            vc.allowToCreateMeetup = self.allowToCreateMeetup;
+            vc.allowToCreateWebinvite = self.allowToCreateWebinvite;
         }
         else {
             vc.fromScreenFlag = @"private";
@@ -707,6 +718,8 @@ type = 3 for yeary basis
             if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
                 vc.fromScreenFlag = @"pac";
                 vc.pacID = self.pacID;
+                vc.allowToCreateMeetup = self.allowToCreateMeetup;
+                vc.allowToCreateWebinvite = self.allowToCreateWebinvite;
             }
             else
                 vc.fromScreenFlag = @"private";

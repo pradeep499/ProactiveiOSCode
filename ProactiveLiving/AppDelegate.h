@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
+#import "LocationManagerSingleton.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -27,7 +28,8 @@
 +(void)connectedCompletionBlock:(void(^)(BOOL connected))block;
 
 -(void)getStaticData;
-@property (nonatomic,strong) CLLocation *currentLocation;
+@property (nonatomic, strong) CLLocationManager * locationManager;
+@property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, copy) NSString *PASInst;
 @property (nonatomic, copy) NSString *PASInstVideo;
 @property (nonatomic, copy) NSString *aboutPAS;

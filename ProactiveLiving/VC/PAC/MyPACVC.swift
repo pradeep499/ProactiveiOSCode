@@ -188,24 +188,26 @@ extension MyPACVC: UITableViewDataSource{
        //            self.setUpFindCell(tableView, indexPath: indexPath)
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FindCell", forIndexPath: indexPath)
+        
         cell.selectionStyle = .None
+        
         let iv_item = cell.viewWithTag(1) as! UIImageView
-   
         //    let iv_itemDec = cell.viewWithTag(2) as! UIImageView
         let lbl_title = cell.viewWithTag(3) as! UILabel
         let lbl_by = cell.viewWithTag(4) as! UILabel
         let lbl_members = cell.viewWithTag(5) as! UILabel
         let lbl_activateTime = cell.viewWithTag(6) as! UILabel
-        //  let lbl_privacy = cell.viewWithTag(7) as! UILabel
+        let lbl_privacy = cell.viewWithTag(7) as! UILabel
         let lbl_desc = cell.viewWithTag(8) as! UILabel
         let lbl_createdAt = cell.viewWithTag(9) as! UILabel
-        //  let lbl_distance = cell.viewWithTag(10) as! UILabel
+        let lbl_distance = cell.viewWithTag(10) as! UILabel
         
         
         
         iv_item.sd_setImageWithURL(NSURL.init(string: (self.myPACDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "ic_certifications_sustainable"))
         
-       // Accessing the Name (First n Last)
+        
+        // Accessing the Name (First n Last)
         
         let createdByArr = self.myPACDetailArr[indexPath.row].valueForKey("createdBy")
         let firstNameArr = createdByArr!["firstName"] as? [String]
@@ -213,27 +215,37 @@ extension MyPACVC: UITableViewDataSource{
         
         let lastNameArr = createdByArr!["lastName"] as? [String]
         let lastName = lastNameArr![0]
-
-        let fullName = "By " + firstName + " " + lastName
-        let memberCount = self.myPACDetailArr[indexPath.row]["membercount"] as? Int
+        let fullName = "by " + firstName + " " + lastName
+        
         
         let dateStr = self.myPACDetailArr[indexPath.row]["createdDate"] as? String
         let dateCreated = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "dd/MM/yyyy", dateStr: dateStr!)
         let dateModifiedStr = self.myPACDetailArr[indexPath.row]["modifiedDate"] as? String
         let dateModified = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MMM d, yyyy", dateStr: dateModifiedStr!)
         
-    
         
-        lbl_members.text = "\(memberCount!) Members"
+        let dataDict = self.myPACDetailArr[indexPath.row]["settings"] as? [String : AnyObject]
+        
+        if(dataDict!["private"] as! Bool) {
+            lbl_privacy.text = "Private"
+        }
+        else {
+            lbl_privacy.text = "Public"
+        }
+        
+        let memberCount = self.myPACDetailArr[indexPath.row]["membercount"] as? Int
+        
+        lbl_members.text = "\(memberCount!) Members"   //self.pacDetailArr[indexPath.row]["membercount"] as? String
         lbl_title.text = self.myPACDetailArr[indexPath.row]["name"] as? String
         lbl_desc.text = self.myPACDetailArr[indexPath.row]["description"] as? String
-        lbl_createdAt.text = dateCreated //self.myPACDetailArr[indexPath.row]["createdDate"] as? String
-        lbl_activateTime.text = dateModified //self.myPACDetailArr[indexPath.row]["modifiedDate"] as? String
+        lbl_createdAt.text = "Created \(dateCreated)"
         lbl_by.text = fullName
+        lbl_activateTime.text = "Last Active \(dateModified)"
         
+        let distance = self.myPACDetailArr[indexPath.row]["dist"] as! Int
+        lbl_distance.text = "\(distance) Miles"
         print(self.myPACDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String)
-        
-        
+
         return cell
     }
     

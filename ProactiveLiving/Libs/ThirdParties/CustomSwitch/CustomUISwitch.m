@@ -11,6 +11,7 @@
 @implementation CustomUISwitch
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.transform = CGAffineTransformMakeScale(0.75, 0.75);
 }
 

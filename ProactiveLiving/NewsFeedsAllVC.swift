@@ -81,11 +81,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         //containerView = UIView(frame: CGRectMake(0, self.collectionView.frame.size.height - 40, 320, 40))
         //containerView.backgroundColor = UIColor.redColor()
-        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(postContainerView.frame.width-10), height: CGFloat(24)))
+        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(screenWidth-100), height: CGFloat(24)))
         textView.isScrollable = false
         textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
         textView.minNumberOfLines = 1
-        textView.maxNumberOfLines = 5
+        textView.maxNumberOfLines = 4
         // you can also set the maximum height in points with maxHeight
         // textView.maxHeight = 200.0f;
         //textView.returnKeyType = .Go
@@ -97,6 +97,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         textView.placeholder = "Share an update"
         textView.autoresizingMask = .FlexibleHeight
         postContainerView.addSubview(textView)
+        self.view.layoutIfNeeded()
+
         //self.view.addSubview(containerView)
         //textView.animateHeightChange = NO; //turns off animation
         

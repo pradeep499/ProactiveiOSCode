@@ -32,5 +32,7 @@
 @property (strong, nonatomic) NSCalendar *calendar;
 @property (copy, nonatomic) NSString *fromScreen;
 @property (copy, nonatomic) NSString *pacID;
+@property (nonatomic, assign) BOOL allowToCreateMeetup;
+@property (nonatomic, assign) BOOL allowToCreateWebinvite;
 
 @end

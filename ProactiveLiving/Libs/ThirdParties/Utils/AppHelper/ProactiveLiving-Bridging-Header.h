@@ -47,11 +47,11 @@
 
 #import "RSDFDatePickerViewController.h"
 #import "MyPAStodoVC.h"
-#import  "InboxVC.h"
-#import   "CustonTabBarController.h"
-#import   "DXPopover.h"
-#import   "ActivitiesVC.h"
-
-
+#import "InboxVC.h"
+#import "CustonTabBarController.h"
+#import "DXPopover.h"
+#import "ActivitiesVC.h"
+#import "FilterVC3.h"
+#import "CustomUISwitch.h"
 
 #endif /* ProactiveLiving_Bridging_Header_h */

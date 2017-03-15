@@ -14,5 +14,6 @@
 @property (nonatomic,copy)NSDate *selectedRecurrenceDate;
 @property (copy, nonatomic)  NSString *fromScreenFlag;
 @property (copy, nonatomic)  NSString *pacID;
-
+@property (nonatomic, assign) BOOL allowToCreateMeetup;
+@property (nonatomic, assign) BOOL allowToCreateWebinvite;
 @end
