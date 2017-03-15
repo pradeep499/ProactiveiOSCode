@@ -24,6 +24,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var arrViewControllers = [AnyObject]()
     var memberStatus = Bool()
     var adminStatus = Bool()
+    var listPacStatus = Bool()
     var creatorStatus = Bool()
     var allowToCreateMeetup = Bool()
     var allowToCreateWebinvite = Bool()
@@ -53,6 +54,9 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         self.view.addSubview(self.btnOpenCalender)
         self.view.bringSubviewToFront(self.btnOpenCalender)
         
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_REFRESH_PAC_CONTAINER, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PACGroupsContainerVC.fetchDataForPACRole), name: NOTIFICATION_REFRESH_PAC_CONTAINER, object: nil)
+        
     }
     
     func fetchDataForPACRole() {
@@ -79,7 +83,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                         self.creatorStatus = responseDict["result"]!["creatorStatus"] as! Bool
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
                         self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
-    
+                        self.listPacStatus = responseDict["result"]!["listPacStatus"] as! Bool
+
                         let settingsDict = responseDict["result"]!["settings"] as! [String : AnyObject]
                         
                         self.allowToCreateMeetup = settingsDict["allowToCreateMeetup"] as! Bool
@@ -96,18 +101,35 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                                 
                                 if(self.adminStatus == true) {
                                     // five options
+                                    if(self.listPacStatus == true) {
                                     self.popOverCellData = ["Don't list on my Profile", "Exit PAC", "Report PAC", "Delete PAC", "Edit PAC"]
+                                    }
+                                    else {
+                                        self.popOverCellData = ["List on my Profile", "Exit PAC", "Report PAC", "Delete PAC", "Edit PAC"]
+                                    }
                                     self.popOverTableView?.frame = CGRectMake(0, 0, 220, 45*5)
                                     
                                 }
                                 else if(self.creatorStatus == true) {
                                     //three options
-                                    self.popOverCellData = ["Don't list on my Profile", "Report PAC", "Delete PAC", "Edit PAC"]
+                                    if(self.listPacStatus == true) {
+                                        self.popOverCellData = ["Don't list on my Profile", "Report PAC", "Delete PAC", "Edit PAC"]
+                                    }
+                                    else {
+                                        self.popOverCellData = ["List on my Profile", "Report PAC", "Delete PAC", "Edit PAC"]
+
+                                    }
                                     self.popOverTableView?.frame = CGRectMake(0, 0, 220, 45*4)
                                 }
                                 else {
                                     
-                                    self.popOverCellData = ["Don't list on my Profile", "Report PAC", "Exit PAC"]
+                                    if(self.listPacStatus == true) {
+                                        self.popOverCellData = ["Don't list on my Profile", "Report PAC", "Exit PAC"]
+                                    }
+                                    else {
+                                        self.popOverCellData = ["List on my Profile", "Report PAC", "Exit PAC"]
+
+                                    }
                                     self.popOverTableView?.frame = CGRectMake(0, 0, 220, 45*3)
                                 }
                                 
@@ -278,6 +300,46 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
      
     }
     
+    //MARK:- Service Call For Popover actions
+    func serviceCallForActions(service : String, parameters : [String : AnyObject]) {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+ 
+            //call global web service class latest
+            Services.postRequest(service, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    //dissmiss indicator
+                    if ((responseDict["error"] as! Int) == 0) {
+                        print(responseDict)
+                        self.fetchDataForPACRole()
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
     
 }
 
@@ -354,10 +416,20 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
         }
         else if(currentCell.textLabel?.text == "List on my Profile") {
             
-            //self.thirdVC.ServiceCallPacActionProfile(false)
+            self.thirdVC.ServiceCallPacActionProfile(true)
         }
         else if(currentCell.textLabel?.text == "Exit PAC") {
-            
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["pacId"] = self.pacID
+            if(self.adminStatus == true) {
+                parameters["role"] = "admin"
+            }
+            else {
+                parameters["role"] = "member"
+            }
+            self.serviceCallForActions(ServiceExitPAC, parameters: parameters)
         }
         else if(currentCell.textLabel?.text == "Report PAC") {
             
@@ -373,7 +445,6 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
         else {
             
         }
-        
     
     }
     

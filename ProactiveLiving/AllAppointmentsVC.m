@@ -28,6 +28,7 @@
 
 }
 @property (weak, nonatomic) IBOutlet UIButton *btnCalendar;
+@property (weak, nonatomic) IBOutlet UIButton *btnBack;
 
 @end
 
@@ -36,6 +37,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    if([self.fromScreenFlag isEqualToString:@"pac"])
+        self.btnBack.hidden = NO;
+    else
+        self.btnBack.hidden = YES;
     
     [self setUpViewControllers];
 }
@@ -113,8 +119,20 @@
 
 - (IBAction)btnBackClick:(id)sender {
     
-    [self.navigationController popViewControllerAnimated:NO];
-    
+    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+    if([self.fromScreenFlag isEqualToString:@"pac"]) {
+        
+        UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 3];
+        [self.navigationController popToViewController:vc animated:YES];
+    }
+    else {
+        UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
+        [self.navigationController popToViewController:vc animated:YES];
+    }
+
+}
+- (IBAction)btnFlipClick:(id)sender {
+            [self.navigationController popViewControllerAnimated:NO];
 }
 - (IBAction)btnCreateEventClick:(id)sender {
     
