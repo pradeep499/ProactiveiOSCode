@@ -17,11 +17,15 @@
     if(self) {
         self.locationManager = [CLLocationManager new];
         [self.locationManager setDelegate:self];
+        [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
+        [self.locationManager setHeadingFilter:kCLHeadingFilterNone];
+        [self.locationManager startUpdatingLocation];
         //do any more customization to your location manager
     }
     
     return self;
-}    
+}
+
 + (LocationManagerSingleton*)sharedSingleton {
     static LocationManagerSingleton* sharedSingleton;
     if(!sharedSingleton) {
@@ -41,15 +45,15 @@
                    ^{
                        if(self.delegate && [self.delegate respondsToSelector:@selector(locationDidUpdateToLocation:)])
                            [self.delegate locationDidUpdateToLocation:newLocation];
-                    });
-    
+                   });
+
 }
 
 - (void)locationManager:(CLLocationManager*)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     switch (status) {
         case kCLAuthorizationStatusNotDetermined: {
             NSLog(@"User still thinking granting location access!");
-            [self.locationManager startUpdatingLocation]; // this will access location automatically if user granted access manually. and will not show apple's request alert twice. (Tested)
+            [self.locationManager requestWhenInUseAuthorization]; // this will access location automatically if user granted access manually. and will not show apple's request alert twice. (Tested)
             //[self.tableView reloadData];
             
         } break;
@@ -57,7 +61,10 @@
             NSLog(@"User denied location access request!!");
             // show text on label
             NSLog(@"To re-enable, please go to Settings and turn on Location Service for this app.");
-            [self.locationManager stopUpdatingLocation];
+        } break;
+        case kCLAuthorizationStatusRestricted: {
+            NSLog(@"Restricted by e.g. parental controls. User can't enable Location Services");
+            // show text on label
         } break;
         case kCLAuthorizationStatusAuthorizedWhenInUse: {
             [self.locationManager startUpdatingLocation]; //Will update location immediately
@@ -75,6 +82,24 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
     //handle your heading updates here- I would suggest only handling the nth update, because they
     //come in fast and furious and it takes a lot of processing power to handle all of them
+}
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    
+    NSLog(@"%@",error.userInfo);
+    if([CLLocationManager locationServicesEnabled]){
+        
+        NSLog(@"Location Services Enabled");
+        
+        if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
+            UIAlertView    *alert = [[UIAlertView alloc] initWithTitle:@"App Permission Denied"
+                                                               message:@"To re-enable, please go to Settings and turn on Location Service for this app."
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil];
+            [alert show];
+        }
+    }
 }
 
 /*
