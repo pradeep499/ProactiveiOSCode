@@ -603,7 +603,6 @@
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         [self performSegueWithIdentifier:@"ValidationFiltersVC" sender:sender];
-        [AppDelegate getAppDelegate].currentLocation=self.locationManagerSingleton.locationManager.location;
     }
 
 }
@@ -693,7 +692,8 @@
 }
 
 - (NSString *)deviceLocation {
-    return [NSString stringWithFormat:@"latitude: %f longitude: %f", self.locationManagerSingleton.locationManager.location.coordinate.latitude, self.locationManagerSingleton.locationManager.location.coordinate.longitude];
+    
+    return [NSString stringWithFormat:@"latitude: %f longitude: %f", [AppDelegate getAppDelegate].currentLocation.coordinate.latitude, [AppDelegate getAppDelegate].currentLocation.coordinate.longitude];
 }
 
 -(MKAnnotationView *)mapView:(MKMapView *)mV viewForAnnotation:(id <MKAnnotation>)annotation

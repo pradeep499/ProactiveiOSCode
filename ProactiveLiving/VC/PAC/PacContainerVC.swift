@@ -1,3 +1,5 @@
+
+
 //
 //  PacContainerVC.swift
 //  ProactiveLiving
@@ -12,10 +14,12 @@ var tokensAdmin = [AnyObject]()
 var tokensMember = [AnyObject]()
 var inviteStr = String()
 
-class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
+class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISearchBarDelegate {
 
     
-    @IBOutlet weak var btnRight: UIButton!
+    @IBOutlet weak var btnFilter: UIButton!
+    @IBOutlet weak var btnSearch: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var lbl_title: UILabel!
     
@@ -26,15 +30,19 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        searchBar.showsCancelButton = true;
+        searchBar.delegate = self;
+        searchBar.alpha = 0.0;
+        
         self.lbl_title.text = "Tennis"   //self.title
         
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
        // btnRight.hidden = true
         
-        
         self.setUpViewControllers()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,11 +78,46 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
         self.navigationController?.popViewControllerAnimated(true)
         
     }
-    
-    @IBAction func onClickRightBtn(sender: AnyObject) {
+    @IBAction func onClickButtonFilter(sender: AnyObject) {
+        
+        let filterVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("PACFilterContainer") as! PACFilterContainer
+        self.navigationController?.pushViewController(filterVC, animated:true)
         
     }
+    @IBAction func onClickSearchButton(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.1, animations: { 
+            
+            }) { (finished) in
+                // remove the search button
+                self.searchBar.alpha = 0.0;
 
+                UIView.animateWithDuration(0.1, animations: {
+                    // remove the search button
+                    self.searchBar.alpha = 1.0;
+
+                }) { (finished) in
+                    
+                    self.searchBar.becomeFirstResponder()
+                }
+        }
+        
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchBar.alpha = 0.0;
+        self.searchBar.resignFirstResponder()
+        self.firstVC.fetchPACsDataFromServer(["data" : "empty"], searchStr: "")
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        
+        self.searchBar.resignFirstResponder()
+        print(searchBar.text)
+        self.firstVC.fetchPACsDataFromServer(["data" : "empty"], searchStr: searchBar.text!)
+
+    }
+    
     func setUpViewControllers() {
         
         // SetUp ViewControllers
@@ -84,8 +127,6 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
         firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("GenericPacTableVC") as! GenericPacTableVC
         firstVC.title = "        FIND        "
         firstVC.genericType = .Find
-        
-        let nav = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
         secondVC.title = "    CREATE A PAC    "
@@ -113,8 +154,17 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate {
         //   self.view.endEditing(true)
         print("current Index : \(Int(index))")
         print("current controller : \(controller)")
-        //currentIndex = index
-        //   controller.viewWillAppear(true)
+        currentIndex = index
+        controller.viewWillAppear(true)
+        
+        if(currentIndex == 0) {
+            btnFilter.hidden = false
+            btnSearch.hidden = false
+        }
+        else {
+            btnFilter.hidden = true
+            btnSearch.hidden = true
+        }
         
     }
 

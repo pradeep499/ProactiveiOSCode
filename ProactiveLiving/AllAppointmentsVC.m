@@ -189,8 +189,17 @@
     
     if([self.fromScreenFlag isEqualToString:@"pac"])
     {
-        [alertActionSheet addAction:meetup];
-        [alertActionSheet addAction:webinvite];
+        
+        if(self.allowToCreateWebinvite == TRUE || self.allowToCreateMeetup == TRUE) {
+            
+            if(self.allowToCreateMeetup == TRUE)
+                [alertActionSheet addAction:meetup];
+            if(self.allowToCreateWebinvite == TRUE)
+                [alertActionSheet addAction:webinvite];
+
+            [alertActionSheet addAction:cancel];
+            [self presentViewController:alertActionSheet animated:YES completion:nil];
+        }
     }
     else
     {
@@ -198,10 +207,11 @@
         [alertActionSheet addAction:meetup];
         [alertActionSheet addAction:webinvite];
         [alertActionSheet addAction:other];
+        [alertActionSheet addAction:cancel];
+        [self presentViewController:alertActionSheet animated:YES completion:nil];
     }
 
-    [alertActionSheet addAction:cancel];
-    [self presentViewController:alertActionSheet animated:YES completion:nil];
+   
     
 }
 

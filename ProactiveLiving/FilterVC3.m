@@ -14,18 +14,14 @@
 #import "Services.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <CoreLocation/CoreLocation.h>
-#import "CustomUISwitch.h"
 
 @interface FilterVC3 ()<UISearchBarDelegate>
 {
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic,copy) NSArray *dataArray;
 - (IBAction)switchChanged:(id)sender;
-@property (weak, nonatomic) IBOutlet CustomUISwitch *switch1;
-@property (weak, nonatomic) IBOutlet CustomUISwitch *switch2;
-@property (weak, nonatomic) IBOutlet CustomUISwitch *switch3;
+
 @end
 
 @implementation FilterVC3
@@ -39,10 +35,11 @@
     [self.searchBar setReturnKeyType:UIReturnKeyDone];
     self.searchBar.delegate=self;
     self.searchBar.placeholder = @"Zip Code";
-    [self.switch1 setOn:![[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
-    [self.switch2 setOn:NO];
+    //[self.switch1 setOn:![[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
+    //[self.switch2 setOn:NO];
+    //[self.switch3 setOn:[[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
+    [self.switch1 setOn:YES];
     [self.searchBar setUserInteractionEnabled:NO];
-    [self.switch3 setOn:[[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
     
     [AppHelper setBorderOnView:self.tableView];
 }
@@ -203,7 +200,13 @@
         [self.switch2 setOn:NO animated:YES];
     }
     
+    if(self.switch2.isOn)
+        [self.searchBar becomeFirstResponder];
+    else
+        [self.searchBar resignFirstResponder];
+
     [self.searchBar setUserInteractionEnabled:self.switch2.isOn];
+
     //Capture state of main GPS related switch
     [AppHelper saveToUserDefaults:[NSString stringWithFormat:@"%i",!self.switch1.isOn] withKey:GPSStatus];
 

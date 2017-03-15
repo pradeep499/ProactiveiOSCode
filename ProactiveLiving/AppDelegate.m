@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "AppHelper.h"
 #import "Defines.h"
-#import "LocationManagerSingleton.h"
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <SVProgressHUD/SVProgressHUD.h>
@@ -31,7 +30,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
      
-    
+    //Location
+    [self startUpdatingLocation];
     
     // Reset badge count
     [UIApplication sharedApplication].applicationIconBadgeNumber =0;
@@ -57,10 +57,6 @@
             NSLog(@"NOT REACHABLE");
     }];
 
-    // Check current location (Use ZipCode by default)
-    CLLocation *location= [LocationManagerSingleton sharedSingleton].locationManager.location;
-    NSLog(@"location-> %@",location);
-    
     //UISearchBar Global look n feel alteration
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:
                                                 [NSDictionary dictionaryWithObjectsAndKeys:                                                                                                  [UIColor whiteColor],                                                                                                  NSForegroundColorAttributeName,                                                                                                 [UIColor whiteColor],                                                                                              NSForegroundColorAttributeName,                                                                                                  [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],                                                                                                  NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
@@ -122,6 +118,28 @@
     //[NSTimer scheduledTimerWithTimeInterval: 15.0 target:self selector: @selector(timerFired:) userInfo: nil repeats: YES];
     
     return YES;
+}
+
+-(void)startUpdatingLocation
+{
+    //Check current location (Use ZipCode by default)
+    if([CLLocationManager locationServicesEnabled]){
+        self.currentLocation = [[CLLocation alloc] init];
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.distanceFilter = kCLDistanceFilterNone; // whenever we move
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+        self.locationManager.delegate = self;
+        if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+        [self.locationManager startUpdatingLocation];
+    }
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
+    self.currentLocation = newLocation;
+    NSLog(@"location:::::--> %@",newLocation);
+
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken

@@ -311,6 +311,9 @@
 		BA5901B31D365F57006142AC /* ServiceClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5901B21D365F57006142AC /* ServiceClass.swift */; };
 		BA5901B51D365FCD006142AC /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5901B41D365FCD006142AC /* Reachability.swift */; };
 		BA642DC41D8040C30079422F /* MeetUpListingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA642DC31D8040C30079422F /* MeetUpListingCell.swift */; };
+		BA6D1F4D1E713C8E000E25EC /* FilterVC5.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6D1F4C1E713C8E000E25EC /* FilterVC5.swift */; };
+		BA6D1F4F1E71456D000E25EC /* FilterVC6.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6D1F4E1E71456D000E25EC /* FilterVC6.swift */; };
+		BA6D1F511E71477E000E25EC /* PACFilterContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6D1F501E71477E000E25EC /* PACFilterContainer.swift */; };
 		BA6E72651D7DAD95008081FC /* MeetUpDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6E72641D7DAD95008081FC /* MeetUpDetailsVC.swift */; };
 		BA6F33601C7C9674008288F2 /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6F335F1C7C9674008288F2 /* TreeNode.m */; };
 		BA7414131C75A4900041B8D4 /* ProfileVCTableCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7414121C75A4900041B8D4 /* ProfileVCTableCell2.m */; };
@@ -898,6 +901,9 @@
 		BA59FFFE1D364EFD006142AC /* ic_chat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_chat_add@2x.png"; sourceTree = "<group>"; };
 		BA59FFFF1D364EFD006142AC /* ic_chat_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_chat_camera@2x.png"; sourceTree = "<group>"; };
 		BA642DC31D8040C30079422F /* MeetUpListingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetUpListingCell.swift; sourceTree = "<group>"; };
+		BA6D1F4C1E713C8E000E25EC /* FilterVC5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterVC5.swift; sourceTree = "<group>"; };
+		BA6D1F4E1E71456D000E25EC /* FilterVC6.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterVC6.swift; sourceTree = "<group>"; };
+		BA6D1F501E71477E000E25EC /* PACFilterContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACFilterContainer.swift; sourceTree = "<group>"; };
 		BA6E72641D7DAD95008081FC /* MeetUpDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetUpDetailsVC.swift; sourceTree = "<group>"; };
 		BA6F335E1C7C9674008288F2 /* TreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
 		BA6F335F1C7C9674008288F2 /* TreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
@@ -922,8 +928,8 @@
 		BA88882B1C6493BA0083C857 /* FilterFourCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterFourCell.m; sourceTree = "<group>"; };
 		BA8983A11C6DEA1E00495E9B /* FilterThreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterThreeCell.h; sourceTree = "<group>"; };
 		BA8983A21C6DEA1E00495E9B /* FilterThreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterThreeCell.m; sourceTree = "<group>"; };
-		BA8CF55E1E5C34B200D67A99 /* PACGroupsContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACGroupsContainerVC.swift; sourceTree = "<group>"; };
-		BA8CF5601E5C42CA00D67A99 /* AboutPacVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutPacVC.swift; sourceTree = "<group>"; };
+		BA8CF55E1E5C34B200D67A99 /* PACGroupsContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PACGroupsContainerVC.swift; path = ../../PACircle/PACGroupsContainerVC.swift; sourceTree = "<group>"; };
+		BA8CF5601E5C42CA00D67A99 /* AboutPacVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutPacVC.swift; path = ../../PACircle/AboutPacVC.swift; sourceTree = "<group>"; };
 		BA8CF5631E5C6CEB00D67A99 /* PacCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PacCollectionCell.swift; path = ../VC/PAC/PacCollectionCell.swift; sourceTree = "<group>"; };
 		BA8CF5661E5C850E00D67A99 /* PACMenbersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACMenbersCell.swift; sourceTree = "<group>"; };
 		BA8CF5671E5C850E00D67A99 /* PACMenbersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PACMenbersCell.xib; sourceTree = "<group>"; };
@@ -1007,8 +1013,8 @@
 		BAC9B4AF1CBF7A8600373F73 /* ExpertsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertsVC.m; sourceTree = "<group>"; };
 		BAC9B4B11CBF8CA600373F73 /* LocationManagerSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManagerSingleton.h; sourceTree = "<group>"; };
 		BAC9B4B21CBF8CA600373F73 /* LocationManagerSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManagerSingleton.m; sourceTree = "<group>"; };
-		BAD03B3E1CE312BD00CDEEA6 /* PACircleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PACircleVC.h; sourceTree = "<group>"; };
-		BAD03B3F1CE312BD00CDEEA6 /* PACircleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PACircleVC.m; sourceTree = "<group>"; };
+		BAD03B3E1CE312BD00CDEEA6 /* PACircleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PACircleVC.h; path = ../../PACircleVC.h; sourceTree = "<group>"; };
+		BAD03B3F1CE312BD00CDEEA6 /* PACircleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PACircleVC.m; path = ../../PACircleVC.m; sourceTree = "<group>"; };
 		BAD03B421CE3474B00CDEEA6 /* EducationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EducationVC.h; sourceTree = "<group>"; };
 		BAD03B431CE3474B00CDEEA6 /* EducationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EducationVC.m; sourceTree = "<group>"; };
 		BAD195E41C63589E0085DD9B /* FilterVC1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterVC1.h; sourceTree = "<group>"; };
@@ -1048,8 +1054,8 @@
 		BAD98DC21CAA75C900EF2723 /* AppointmentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppointmentVC.m; path = ../AppointmentVC.m; sourceTree = "<group>"; };
 		BADFD6F21D1D31C7008B1FA9 /* MyPAStodoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPAStodoVC.h; sourceTree = "<group>"; };
 		BADFD6F31D1D31C7008B1FA9 /* MyPAStodoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPAStodoVC.m; sourceTree = "<group>"; };
-		BAE565CD1CE4B1BE007D6959 /* AllPACirclesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllPACirclesVC.h; sourceTree = "<group>"; };
-		BAE565CE1CE4B1BE007D6959 /* AllPACirclesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllPACirclesVC.m; sourceTree = "<group>"; };
+		BAE565CD1CE4B1BE007D6959 /* AllPACirclesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllPACirclesVC.h; path = ../../AllPACirclesVC.h; sourceTree = "<group>"; };
+		BAE565CE1CE4B1BE007D6959 /* AllPACirclesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AllPACirclesVC.m; path = ../../AllPACirclesVC.m; sourceTree = "<group>"; };
 		BAE64FC21D0E9AEE0058F3BD /* PASShareInstSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASShareInstSection.h; sourceTree = "<group>"; };
 		BAE64FC31D0E9AEE0058F3BD /* PASShareInstSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PASShareInstSection.m; sourceTree = "<group>"; };
 		BAE64FC51D0E9B0A0058F3BD /* PASShareScoreSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PASShareScoreSection.h; sourceTree = "<group>"; };
@@ -1190,6 +1196,14 @@
 		60527C4D1E5429EF00D65332 /* PAC */ = {
 			isa = PBXGroup;
 			children = (
+				BA8CF5651E5C6DAF00D67A99 /* CustomCells */,
+				BA1D70821CD8B21400978F2F /* Activities */,
+				BAD03B3E1CE312BD00CDEEA6 /* PACircleVC.h */,
+				BAD03B3F1CE312BD00CDEEA6 /* PACircleVC.m */,
+				BAE565CD1CE4B1BE007D6959 /* AllPACirclesVC.h */,
+				BAE565CE1CE4B1BE007D6959 /* AllPACirclesVC.m */,
+				BA8CF55E1E5C34B200D67A99 /* PACGroupsContainerVC.swift */,
+				BA8CF5601E5C42CA00D67A99 /* AboutPacVC.swift */,
 				60E1096F1E54585200D3B731 /* CreatePACVC.swift */,
 				60E109731E54789700D3B731 /* PacContainerVC.swift */,
 				601C56A71E557C5C00BFF6F3 /* GenericPacTableVC.swift */,
@@ -1197,6 +1211,7 @@
 				CE4999121E6442F400C48845 /* WallPACVC.swift */,
 				CE4999141E64657D00C48845 /* CreateEditResourcePACVC.swift */,
 				CE4999181E6D609600C48845 /* MyPACVC.swift */,
+				BA6D1F501E71477E000E25EC /* PACFilterContainer.swift */,
 			);
 			path = PAC;
 			sourceTree = "<group>";
@@ -1720,6 +1735,7 @@
 				671C3D961C44FEE6006A5423 /* Views */,
 				671C3D981C44FEF6006A5423 /* ControllerClasses */,
 				671C3D5F1C44FB72006A5423 /* Supporting Files */,
+				671C3D9A1C44FF26006A5423 /* Resources */,
 			);
 			path = ProactiveLiving;
 			sourceTree = "<group>";
@@ -1744,7 +1760,6 @@
 		671C3D861C44FB72006A5423 /* ProactiveLivingUITests */ = {
 			isa = PBXGroup;
 			children = (
-				671C3D9A1C44FF26006A5423 /* Resources */,
 				671C3D871C44FB72006A5423 /* ProactiveLivingUITests.m */,
 				671C3D891C44FB72006A5423 /* Info.plist */,
 			);
@@ -1778,8 +1793,6 @@
 				BA1BF0DC1CEB4B05000CC4EA /* Inbox */,
 				BAA411F51CE9A7B300CDE467 /* AllContactsVC */,
 				BAD03B411CE3472D00CDEEA6 /* Education */,
-				BA8CF55D1E5C2F2200D67A99 /* PACircle */,
-				BAD03B3D1CE3127E00CDEEA6 /* PACircles */,
 				BAF4AE711CCA3BAA00C76F99 /* Certifications */,
 				BA53301A1CC6093A00887DBF /* PASLevel */,
 				BA5330191CC6091700887DBF /* PASRating */,
@@ -1833,7 +1846,6 @@
 				671C3D6B1C44FB72006A5423 /* ProactiveLiving.xcdatamodeld */,
 			);
 			name = Resources;
-			path = ../ProactiveLiving;
 			sourceTree = "<group>";
 		};
 		671C3D9C1C4500CC006A5423 /* Services */ = {
@@ -1997,6 +2009,7 @@
 				CE47DF081E6EDC5200500141 /* PACContainerViewController.swift */,
 			);
 			name = Activities;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		BA288ADA1DA4F56900B7D88A /* Videos */ = {
@@ -2474,6 +2487,8 @@
 				BA88882B1C6493BA0083C857 /* FilterFourCell.m */,
 				BA8983A11C6DEA1E00495E9B /* FilterThreeCell.h */,
 				BA8983A21C6DEA1E00495E9B /* FilterThreeCell.m */,
+				BA6D1F4C1E713C8E000E25EC /* FilterVC5.swift */,
+				BA6D1F4E1E71456D000E25EC /* FilterVC6.swift */,
 			);
 			name = ValidationFiltersVC;
 			sourceTree = "<group>";
@@ -2487,16 +2502,6 @@
 			name = "Get PAS";
 			sourceTree = "<group>";
 		};
-		BA8CF55D1E5C2F2200D67A99 /* PACircle */ = {
-			isa = PBXGroup;
-			children = (
-				BA8CF5651E5C6DAF00D67A99 /* CustomCells */,
-				BA8CF55E1E5C34B200D67A99 /* PACGroupsContainerVC.swift */,
-				BA8CF5601E5C42CA00D67A99 /* AboutPacVC.swift */,
-			);
-			path = PACircle;
-			sourceTree = "<group>";
-		};
 		BA8CF5651E5C6DAF00D67A99 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2507,6 +2512,7 @@
 				BA8CF56F1E5C87D700D67A99 /* AdminsCollectionCell.xib */,
 			);
 			name = CustomCells;
+			path = ../../PACircle;
 			sourceTree = "<group>";
 		};
 		BAA411F51CE9A7B300CDE467 /* AllContactsVC */ = {
@@ -2602,18 +2608,6 @@
 				BAA471B31CCFA4FC00CF90D7 /* ExpertsDetailVC.m */,
 			);
 			name = Experts;
-			sourceTree = "<group>";
-		};
-		BAD03B3D1CE3127E00CDEEA6 /* PACircles */ = {
-			isa = PBXGroup;
-			children = (
-				BA1D70821CD8B21400978F2F /* Activities */,
-				BAD03B3E1CE312BD00CDEEA6 /* PACircleVC.h */,
-				BAD03B3F1CE312BD00CDEEA6 /* PACircleVC.m */,
-				BAE565CD1CE4B1BE007D6959 /* AllPACirclesVC.h */,
-				BAE565CE1CE4B1BE007D6959 /* AllPACirclesVC.m */,
-			);
-			name = PACircles;
 			sourceTree = "<group>";
 		};
 		BAD03B411CE3472D00CDEEA6 /* Education */ = {
@@ -2823,6 +2817,7 @@
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 5HKCR2945H;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -3119,6 +3114,7 @@
 				BAD195E91C635B0A0085DD9B /* FilterVC2.m in Sources */,
 				BA5900DC1D364EFD006142AC /* ContactList.swift in Sources */,
 				605EAC301E1E63C60048EA8F /* NSDateComponents+AllComponents.m in Sources */,
+				BA6D1F4F1E71456D000E25EC /* FilterVC6.swift in Sources */,
 				BA59012F1D364F55006142AC /* HSDatePickerViewController.m in Sources */,
 				BA5900E51D364EFD006142AC /* RecentChat+CoreDataProperties.swift in Sources */,
 				BAA471AD1CCF7ED600CF90D7 /* CollectionHeaderView.m in Sources */,
@@ -3180,6 +3176,7 @@
 				605EAC921E1E640B0048EA8F /* SettingsContactsVC.m in Sources */,
 				BA59010E1D364EFD006142AC /* ChatListner.swift in Sources */,
 				BA8CF5641E5C6CEB00D67A99 /* PacCollectionCell.swift in Sources */,
+				BA6D1F4D1E713C8E000E25EC /* FilterVC5.swift in Sources */,
 				605EAC551E1E63C70048EA8F /* RSDFDatePickerView.m in Sources */,
 				671C3DA21C45017C006A5423 /* CoreDataFunction.m in Sources */,
 				BAB0E4CE1D5DE39900906C10 /* ContactFriendsVC.m in Sources */,
@@ -3314,6 +3311,7 @@
 				BAD5F0B11D069AE7002186B4 /* PASInviteInstrVC.m in Sources */,
 				BA9AE87D1D9D05E000830B40 /* HeaderCollectionCell.swift in Sources */,
 				BAC9B4B31CBF8CA600373F73 /* LocationManagerSingleton.m in Sources */,
+				BA6D1F511E71477E000E25EC /* PACFilterContainer.swift in Sources */,
 				BA7BBE5E1C735F7700EBC5BF /* MoreVCTableCell.m in Sources */,
 				BA5900D91D364EFD006142AC /* Chat+CoreDataProperties.swift in Sources */,
 				BA5900DA1D364EFD006142AC /* Chat.swift in Sources */,
@@ -3563,8 +3561,9 @@
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5HKCR2945H;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3579,8 +3578,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "335fce61-f7b7-4545-aabb-fcea3ddfe650";
-				PROVISIONING_PROFILE_SPECIFIER = ProactiveDevProvisioning;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
@@ -3597,8 +3596,9 @@
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5HKCR2945H;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3613,8 +3613,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "335fce61-f7b7-4545-aabb-fcea3ddfe650";
-				PROVISIONING_PROFILE_SPECIFIER = ProactiveDevProvisioning;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 2.3;

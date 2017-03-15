@@ -23,8 +23,11 @@ class GenericPacTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchPostDataFromServer()  // service call
+        fetchPACsDataFromServer(["data":"empty"], searchStr: "")  // service call
        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name:NOTIFICATION_PAC_FILTER, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(fetchFilteredPACsData(_:)),name:NOTIFICATION_PAC_FILTER, object:nil)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -37,8 +40,14 @@ class GenericPacTableVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func fetchFilteredPACsData(notifData : NSNotification) {
+        if(notifData.userInfo != nil) {
+        fetchPACsDataFromServer(notifData.userInfo!, searchStr: "")  // service call
+        }
+    }
+    
     //MARK:- Service Hit
-    func fetchPostDataFromServer() {
+    func fetchPACsDataFromServer(filterDict : [NSObject : AnyObject], searchStr : String) {
         
         if AppDelegate.checkInternetConnection() {
             isPostServiceCalled = true
@@ -48,7 +57,14 @@ class GenericPacTableVC: UIViewController {
             var parameters = [String: AnyObject]()
             
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-        
+            if(searchStr.characters.count > 0) {
+                parameters["search"] = searchStr
+            }
+            if(filterDict["data"] as! String != "empty")
+            {
+                parameters["filter"] = filterDict
+            }
+
             //call global web service class latest
             Services.postRequest(ServiceGetMyPAC, parameters: parameters, completionHandler:{  //  ServiceGetFindPAC (Changed)
                 (status,responseDict) in
@@ -134,14 +150,14 @@ extension GenericPacTableVC: UITableViewDataSource{
         let lbl_by = cell.viewWithTag(4) as! UILabel
         let lbl_members = cell.viewWithTag(5) as! UILabel
         let lbl_activateTime = cell.viewWithTag(6) as! UILabel
-      //  let lbl_privacy = cell.viewWithTag(7) as! UILabel
+        let lbl_privacy = cell.viewWithTag(7) as! UILabel
         let lbl_desc = cell.viewWithTag(8) as! UILabel
         let lbl_createdAt = cell.viewWithTag(9) as! UILabel
-      //  let lbl_distance = cell.viewWithTag(10) as! UILabel
+        let lbl_distance = cell.viewWithTag(10) as! UILabel
         
         
         
-        iv_item.sd_setImageWithURL(NSURL.init(string: (self.pacDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "ic_certifications_sustainable"))
+        iv_item.sd_setImageWithURL(NSURL.init(string: (self.pacDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "pac_listing_no_preview"))
 
         
         // Accessing the Name (First n Last)
@@ -152,7 +168,7 @@ extension GenericPacTableVC: UITableViewDataSource{
         
         let lastNameArr = createdByArr!["lastName"] as? [String]
         let lastName = lastNameArr![0]
-        let fullName = "By " + firstName + " " + lastName
+        let fullName = "by " + firstName + " " + lastName
         
         
         let dateStr = self.pacDetailArr[indexPath.row]["createdDate"] as? String
@@ -161,15 +177,26 @@ extension GenericPacTableVC: UITableViewDataSource{
         let dateModified = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MMM d, yyyy", dateStr: dateModifiedStr!)
 
         
+        let dataDict = self.pacDetailArr[indexPath.row]["settings"] as? [String : AnyObject]
+        
+        if(dataDict!["private"] as! Bool) {
+            lbl_privacy.text = "Private"
+        }
+        else {
+            lbl_privacy.text = "Public"
+        }
         
         let memberCount = self.pacDetailArr[indexPath.row]["membercount"] as? Int
         
         lbl_members.text = "\(memberCount!) Members"   //self.pacDetailArr[indexPath.row]["membercount"] as? String
         lbl_title.text = self.pacDetailArr[indexPath.row]["name"] as? String
         lbl_desc.text = self.pacDetailArr[indexPath.row]["description"] as? String
-        lbl_createdAt.text = dateCreated //self.pacDetailArr[indexPath.row]["createdDate"] as? String
+        lbl_createdAt.text = "Created \(dateCreated)"
         lbl_by.text = fullName
-        lbl_activateTime.text = dateModified //self.pacDetailArr[indexPath.row]["modifiedDate"] as? String
+        lbl_activateTime.text = "Last Active \(dateModified)"
+
+        let distance = self.pacDetailArr[indexPath.row]["dist"] as! Int
+        lbl_distance.text = "\(distance) Miles"
         print(self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String)
 
       

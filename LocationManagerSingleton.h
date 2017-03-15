@@ -15,9 +15,9 @@
 
 @required
 //required methods
+-(void)locationDidUpdateToLocation:(CLLocation *)location;
 @optional
 //optional methods
--(void)locationDidUpdateToLocation:(CLLocation *)location;
 
 @end
 //----

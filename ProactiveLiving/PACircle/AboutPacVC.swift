@@ -27,7 +27,6 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.registerNib(UINib(nibName:"PACMenbersCell", bundle: nil), forCellReuseIdentifier: "PACMenbersCell")
-        tableView.allowsSelection = false;
         tableView.separatorStyle = .None
         // Do any additional setup after loading the view.
         btnLike.addTarget(self, action: #selector(btnLikeClick(_:)), forControlEvents: .TouchUpInside)
@@ -79,7 +78,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                             self.privateStatus = settingsDict["private"] as! Bool
                         }
 
-                        self.imageHeader.sd_setImageWithURL(NSURL.init(string:self.dataDict["imgUrl"] as! String))
+                        self.imageHeader.sd_setImageWithURL(NSURL.init(string:self.dataDict["imgUrl"] as! String), placeholderImage: UIImage(named: "pac_listing_no_preview"))
                         
                         if((self.dataDict["likes"] as! [String]).count == 1) {
                             self.lblLikes.text = "\((self.dataDict["likes"] as! [String]).count) Like"
@@ -332,6 +331,46 @@ extension AboutPacVC: UITableViewDataSource{
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat    {
         
+        if(indexPath.section == 0) {
+            if(collapsed) {
+                return 123
+            }
+            else {
+                return 350
+            }
+        }
+        else if(indexPath.section == 1) {
+            return 55
+        }
+        else if(indexPath.section == 2) {
+            //return 55
+            return 0
+        }
+        else if(indexPath.section == 3) {
+            switch indexPath.row {
+            
+            case 0:
+                return 110
+            case 1:
+                let arrAdmins = self.dataDict["admins"] as! [[String : AnyObject]]
+                if(arrAdmins.count>0) {
+                    return 110
+                }
+                else {
+                    return 0
+                }
+            case 2:
+                    return 110
+            case 3:
+                return 91
+            default:
+                return 0
+            }
+        }
+        else {
+            return 0
+        }
+        /*
         switch indexPath.row {
         case 0:
             if(collapsed) {
@@ -348,11 +387,15 @@ extension AboutPacVC: UITableViewDataSource{
             return 91
         default:
             return 0
-        }
+        } */
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        
+        if(self.dataDict.count > 0) {
+            return 4
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -360,35 +403,80 @@ extension AboutPacVC: UITableViewDataSource{
         
         var numOfRows: Int = 0
         
-       
-        if self.memberStatus == false {
+        if(section == 0) {
             
-            if let settingsDict = self.dataDict["settings"] {
+            numOfRows = 1
+
+        }
+        else if(section == 1) {
+            
+            if self.memberStatus == false {
                 
-                let isPrivate = settingsDict["private"] as! Bool
-                
-                if(!isPrivate) {
+                if let settingsDict = self.dataDict["settings"] {
                     
-                    numOfRows = 7
-                    //tableView.backgroundView = nil
-                }
-                else
-                {
-                    numOfRows = 1
-                    let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-320, width: 320, height: 153))
-                    noDataLabel.image = UIImage(named: "private_user_texticon")
-                    self.tableView.backgroundColor = UIColor.clearColor()
-                    self.view.insertSubview(noDataLabel, belowSubview: self.tableView)
-                    //noDataLabel.center = tableView.center
-                    //let parentVC = self.parentViewController?.parentViewController as! PACGroupsContainerVC
-                    //parentVC.btnOpenCalender.hidden = true;
+                    let isPrivate = settingsDict["private"] as! Bool
+                    
+                    if(!isPrivate) {
+                        
+                        let attachmentDict = self.dataDict["attachements"]
+                        let dictLinks = attachmentDict!["links"] as! [[String : AnyObject]]
+                        numOfRows = dictLinks.count
+                    }
+                    else
+                    {
+                        numOfRows = 0
+                        
+                    }
                 }
             }
+            else {
+                let attachmentDict = self.dataDict["attachements"]
+                let dictLinks = attachmentDict!["links"] as! [[String : AnyObject]]
+                numOfRows = dictLinks.count
+            }
+
+
         }
-        else {
-            numOfRows = 7
-            //tableView.backgroundView = nil
+        else if(section == 2) {
+            
+            //let attachmentDict = self.dataDict["attachements"]
+            //let dictLinks = attachmentDict!["files"] as! [String : AnyObject]
+            numOfRows = 0
+            
         }
+        else if(section == 3) {
+            
+            if self.memberStatus == false {
+                
+                if let settingsDict = self.dataDict["settings"] {
+                    
+                    let isPrivate = settingsDict["private"] as! Bool
+                    
+                    if(!isPrivate) {
+                        
+                        numOfRows = 4
+                        //tableView.backgroundView = nil
+                    }
+                    else
+                    {
+                        numOfRows = 1
+                        let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-320, width: 320, height: 153))
+                        noDataLabel.image = UIImage(named: "private_user_texticon")
+                        self.tableView.backgroundColor = UIColor.clearColor()
+                        self.view.insertSubview(noDataLabel, belowSubview: self.tableView)
+                        //noDataLabel.center = tableView.center
+                        //let parentVC = self.parentViewController?.parentViewController as! PACGroupsContainerVC
+                        //parentVC.btnOpenCalender.hidden = true;
+                    }
+                }
+            }
+            else {
+                numOfRows = 4
+                //tableView.backgroundView = nil
+            }
+
+        }
+        
         return numOfRows
         
     }
@@ -403,6 +491,101 @@ extension AboutPacVC: UITableViewDataSource{
     func setUpTableCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
         
+        if(indexPath.section == 0) {
+            
+            let cell =  tv.dequeueReusableCellWithIdentifier("PACDescCell", forIndexPath: indexPath)
+            let txtViewDesc = cell.viewWithTag(333) as! UITextView
+            txtViewDesc.text = self.dataDict["description"] as! String
+            let lblMembership = cell.viewWithTag(222) as! UILabel
+            
+            let settingsDict = self.dataDict["settings"]
+            let isPrivate = settingsDict!["private"] as! Bool
+            
+            if(isPrivate) {
+                lblMembership.text = "Membership : Private"
+            }
+            else {
+                lblMembership.text = "Membership : Public"
+            }
+            let btnSeeMore = cell.viewWithTag(444) as! UIButton
+            btnSeeMore.addTarget(self, action: #selector(seeMoreButtonClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
+            if(collapsed) {
+                btnSeeMore.setImage(UIImage(named: "ic_profile_seemore"), forState: .Normal)
+            }
+            else {
+                btnSeeMore.setImage(UIImage(named: "ic_profile_seeless"), forState: .Normal)
+            }
+            
+            return cell
+        }
+        else if(indexPath.section == 1) {
+            
+            let cell =  tv.dequeueReusableCellWithIdentifier("PACLinkCell", forIndexPath: indexPath)
+            let iv_image = cell.viewWithTag(111) as! UIImageView
+            let lbl_title = cell.viewWithTag(222) as! UILabel
+            let attachmentDict = self.dataDict["attachements"]
+            let arrLinks = attachmentDict!["links"] as! [[String : AnyObject]]
+            iv_image.image = UIImage(named: "file_attachment")
+            lbl_title.text = arrLinks[indexPath.row]["title"] as? String
+            return cell
+        }
+        else if(indexPath.section == 2) {
+            //later
+            let cell =  tv.dequeueReusableCellWithIdentifier("PACLinkCell", forIndexPath: indexPath)
+            let iv_image = cell.viewWithTag(111) as! UIImageView
+            let lbl_title = cell.viewWithTag(222) as! UILabel
+            let attachmentDict = self.dataDict["attachements"]
+            let arrLinks = attachmentDict!["links"] as! [[String : AnyObject]]
+            iv_image.image = UIImage(named: "file_attachment")
+            lbl_title.text = arrLinks[0]["title"] as? String
+            return cell
+        }
+        else if(indexPath.section == 3) {
+            
+            switch indexPath.row {
+            case 0:
+                let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
+                let lbl_title = cell.viewWithTag(444) as! UILabel
+                lbl_title.text = "Created By"
+                cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
+                return cell
+            case 1:
+                let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
+                let lbl_title = cell.viewWithTag(444) as! UILabel
+                let arrAdmins = self.dataDict["admins"] as! [[String : AnyObject]]
+                if(arrAdmins.count>0) {
+                    lbl_title.text = "Admins"
+                }
+                else {
+                    lbl_title.text = ""
+                }
+                cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
+                return cell
+            case 2:
+                let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
+                let lbl_title = cell.viewWithTag(444) as! UILabel
+                //let arrMembers = self.dataDict["members"] as! [[String : AnyObject]]
+
+                lbl_title.text = "Members"
+                cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
+                return cell
+            case 3:
+                let cell =  tv.dequeueReusableCellWithIdentifier("PACAddresCell", forIndexPath: indexPath)
+                let lbl_title = cell.viewWithTag(222) as! UILabel
+                let addressDict = self.dataDict["location"]
+                lbl_title.text = "\(addressDict!["address"] as! String), \(addressDict!["zipcode"] as! String)"
+                return cell
+            default:
+                return UITableViewCell()
+            }
+
+        }
+        else {
+            return UITableViewCell()
+        }
+
+        /*
         switch indexPath.row {
         case 0:
             let cell =  tv.dequeueReusableCellWithIdentifier("PACDescCell", forIndexPath: indexPath)
@@ -434,8 +617,10 @@ extension AboutPacVC: UITableViewDataSource{
             let cell =  tv.dequeueReusableCellWithIdentifier("PACLinkCell", forIndexPath: indexPath)
             let iv_image = cell.viewWithTag(111) as! UIImageView
             let lbl_title = cell.viewWithTag(222) as! UILabel
+            let attachmentDict = self.dataDict["attachements"]
+            let arrLinks = attachmentDict!["links"] as! [[String : AnyObject]]
             iv_image.image = UIImage(named: "file_attachment")
-            lbl_title.text = "sfsfdsf"
+            lbl_title.text = arrLinks[0]["title"] as? String
             return cell
         case 2:
             let cell =  tv.dequeueReusableCellWithIdentifier("PACLinkCell", forIndexPath: indexPath)
@@ -470,7 +655,7 @@ extension AboutPacVC: UITableViewDataSource{
             return cell
         default:
             return UITableViewCell()
-        }
+        } */
         
     }
     
@@ -482,6 +667,12 @@ extension AboutPacVC: UITableViewDataSource{
         self.tableView.endUpdates()
     }
     
+    func editPACSelected() {
+        
+        let editPACVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("PACGroupsContainerVC") as! PACGroupsContainerVC
+        self.navigationController?.pushViewController(editPACVC, animated: true)
+    }
+    
     
     
 }
@@ -490,12 +681,26 @@ extension AboutPacVC:  UITableViewDelegate{
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        if(indexPath.section == 1) {
+            let attachmentDict = self.dataDict["attachements"]
+            let arrLinks = attachmentDict!["links"] as! [[String : AnyObject]]
+            let url = arrLinks[indexPath.row]["url"] as? String
+            
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.title = arrLinks[indexPath.row]["title"] as? String
+            
+            if url != nil {
+                WebVC.urlStr = url!
+                self.navigationController?.pushViewController(WebVC, animated: true)
+            }
+        }
+        else {
         //let containerObj = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("PACGroupsContainerVC") as! PACGroupsContainerVC
         //containerObj.title = "TTDSD"
         //self.navigationController?.pushViewController(containerObj, animated: true)
     
+        }
     }
-    
 }
 
 
@@ -510,12 +715,12 @@ extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         switch collectionView.tag {
-        case 3:
+        case 0:
             return 1
-        case 4:
+        case 1:
             let arrAdmins = self.dataDict["admins"] as! [[String : AnyObject]]
             return arrAdmins.count
-        case 5:
+        case 2:
             let arrMembers = self.dataDict["members"] as! [[String : AnyObject]]
             return arrMembers.count
         default:
@@ -538,16 +743,17 @@ extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let namePerson = cell.viewWithTag(222) as! UILabel
         
         switch collectionView.tag {
-        case 3:
-            namePerson.text = dataDict["createdBy"] as? String
-            imagePerson.sd_setImageWithURL(NSURL.init(string: (dataDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
-        case 4:
+        case 0:
+            let createdByDict =  dataDict["createdBy"] as? [String : AnyObject]
+            namePerson.text = createdByDict!["firstName"] as? String
+            imagePerson.sd_setImageWithURL(NSURL.init(string: (createdByDict!["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
+        case 1:
             let dataArr = self.dataDict["admins"] as! [[String : AnyObject]]
             let adminDict = dataArr[indexPath.row]
             namePerson.text  = adminDict["firstName"] as? String
             imagePerson.sd_setImageWithURL(NSURL.init(string: (adminDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
 
-        case 5:
+        case 2:
             let dataArr = self.dataDict["members"] as! [[String : AnyObject]]
             let memberDict = dataArr[indexPath.row]
             namePerson.text  = memberDict["firstName"] as? String
