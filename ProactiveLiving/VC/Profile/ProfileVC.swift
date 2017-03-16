@@ -240,6 +240,11 @@ extension ProfileVC: UICollectionViewDelegate{
             self.navigationController?.pushViewController(vc, animated: true)
             break
         case 1:
+            let profileStoryBoard = AppHelper.getPacStoryBoard()
+            let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("PacContainerVC") as! PacContainerVC
+            vc.isFromMemberProfile = true
+            // vc.viewerUserID = viewerUserID
+            self.navigationController?.pushViewController(vc, animated: true)
             break
             
         case 2:

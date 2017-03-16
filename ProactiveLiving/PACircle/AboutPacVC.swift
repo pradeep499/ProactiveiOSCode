@@ -17,15 +17,19 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     var adminStatus = Bool()
     var creatorStatus = Bool()
     var privateStatus = Bool()
-    
+    var responseDict = [NSObject : AnyObject]()
     @IBOutlet weak var btnLike: UIButton!
     @IBOutlet weak var lblLikes: UILabel!
     @IBOutlet weak var btnInvite: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageHeader: UIImageView!
     
+    
+    
+    //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.tableView.registerNib(UINib(nibName:"PACMenbersCell", bundle: nil), forCellReuseIdentifier: "PACMenbersCell")
         tableView.separatorStyle = .None
         // Do any additional setup after loading the view.
@@ -42,10 +46,18 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
         
     }
 
+    override func viewWillAppear(animated: Bool) {
+         self.fetchDataForAboutSection()
+    }
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //MARK:- fetchDataForAboutSection
     
     func fetchDataForAboutSection() {
         
@@ -67,7 +79,11 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                     
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
-                        print(responseDict)
+                        
+                        print("ABOUT### \(responseDict)")
+                        
+                        self.responseDict = responseDict
+                        
                         self.dataDict = (responseDict["result"]!["pac"] as! [String : AnyObject])
                         self.btnLike.selected = responseDict["result"]!["likeStatus"] as! Bool
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
@@ -668,10 +684,18 @@ extension AboutPacVC: UITableViewDataSource{
         self.tableView.endUpdates()
     }
     
+    
+    //MARK:- EditPAC
+    
     func editPACSelected() {
         
-        //let editPACVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("PACGroupsContainerVC") as! PACGroupsContainerVC
-        //self.navigationController?.pushViewController(editPACVC, animated: true)
+        let profileStoryboard = AppHelper.getPacStoryBoard()
+        let createEditResourcePACVC = profileStoryboard.instantiateViewControllerWithIdentifier("PacContainerVC") as! PacContainerVC
+        //createEditResourcePACVC.pageTitle = "Edit Resource"
+        createEditResourcePACVC.isFromMemberProfileForEditPAC = true
+        createEditResourcePACVC.responseDictFromMemberProfile = self.responseDict
+        self.navigationController?.pushViewController(createEditResourcePACVC, animated: true)
+        
     }
     
     
