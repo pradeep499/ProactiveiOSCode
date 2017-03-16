@@ -45,6 +45,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var pushedFrom : String!
     var isForwardAllowed : Bool!
     var dataDict = [String : AnyObject]()
+    var arrPACMembers = [[String : AnyObject]]()
     var strLatLong : String!
     var fromScreenFlag : String!
     var pacID : String!
@@ -194,7 +195,28 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             
         }
+        
+        if(self.fromScreenFlag != nil && self.fromScreenFlag == "PAC") {
+            
+            for item in self.arrPACMembers {
+                var tempDict = Dictionary <String,String>()
+                tempDict["firstName"] = item["firstName"] as? String
+                tempDict["_id"] = item["_id"] as? String
+                tempDict["mobilePhone"] = item["mobilePhone"] as? String
+                tempDict["imgUrl"] = item["imgUrl"] as? String
+                
+                self.tokens.append(tempDict)
+                
+            }
+            
+            for contact in self.tokens {
+                self.tokenField.tags.addObject(contact["firstName"]!!)
+            }
+            
+            self.tokenField.reloadTagSubviews()
 
+        }
+        
         txtFieldTitle.delegate=self
         self.tokenField.tagPlaceholder = "Add here";
         isForwardAllowed = switchAllowInvite.on
@@ -576,7 +598,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
                 
                 
-                if(self.fromScreenFlag == "PAC") {
+                if(self.fromScreenFlag != nil && self.fromScreenFlag == "PAC") {
                     dict["calendarType"]="pac"
                     dict["pacId"] = self.pacID
                 }

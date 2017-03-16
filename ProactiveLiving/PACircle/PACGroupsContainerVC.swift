@@ -20,6 +20,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var firstVC:NewsFeedsAllVC!
     var secondVC:ResourcesPACVC!
     var pacID = String()
+    var arrPACMembers = [[String : AnyObject]]()
     var thirdVC : AboutPacVC!
     var arrViewControllers = [AnyObject]()
     var memberStatus = Bool()
@@ -84,7 +85,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
                         self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
                         self.listPacStatus = responseDict["result"]!["listPacStatus"] as! Bool
-
+                        self.arrPACMembers = responseDict["result"]!["members"] as! [[String : AnyObject]]
+                        
                         let settingsDict = responseDict["result"]!["settings"] as! [String : AnyObject]
                         
                         self.allowToCreateMeetup = settingsDict["allowToCreateMeetup"] as! Bool
@@ -137,19 +139,24 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                             else if(currentIndex == 1) {
                                 if(self.memberStatus == true) {
                                     self.btnRight.hidden = false
-                                    if(self.allowToUpload == true) {
-                                    self.popOverCellData = ["Create New"]
-                                    self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*1)
+                                    if(self.adminStatus == true || self.creatorStatus == true) {
+                                        self.popOverCellData = [ "Edit",  "Create New"]
+                                        self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
                                     }
                                     else {
-                                        self.btnRight.hidden = true
+                                        if(self.allowToUpload == true) {
+                                            self.popOverCellData = ["Create New"]
+                                            self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*1)
+                                        }
+                                        else {
+                                            self.btnRight.hidden = true
+                                        }
                                     }
+                                    
 
                                 }
                                 else {
-                                    self.popOverCellData = [ "Edit",  "Create New"]
-                                    self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
-
+                                    self.btnRight.hidden = true
                                 }
                             
                             }
@@ -274,6 +281,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         objCalendarVC.allowToCreateMeetup = self.allowToCreateMeetup
         objCalendarVC.allowToCreateWebinvite = self.allowToCreateWebinvite
         objCalendarVC.pacID = self.pacID
+        objCalendarVC.arrPACMembers = self.arrPACMembers
         self.navigationController?.pushViewController(objCalendarVC, animated: true)
     }
     
@@ -432,7 +440,7 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
             self.serviceCallForActions(ServiceExitPAC, parameters: parameters)
         }
         else if(currentCell.textLabel?.text == "Report PAC") {
-            
+            self.sendMail()
         }
         else if(currentCell.textLabel?.text == "Delete PAC") {
             
@@ -450,6 +458,41 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
     
     
 }
+
+extension PACGroupsContainerVC:MFMailComposeViewControllerDelegate{
+    
+    
+    func sendMail() -> Void {
+        
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available")
+            return
+        }
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        composeVC.setToRecipients(["support@proactively.com"])
+        composeVC.setSubject("Report PAC")
+        
+        let body = "PAC Name: " + self.title!
+        
+        composeVC.setMessageBody(body , isHTML: true)
+        
+        // Present the view controller modally.
+        self.presentViewController(composeVC, animated: true, completion: nil)
+    }
+    
+    
+    func mailComposeController(controller: MFMailComposeViewController,
+                               didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        
+        // Dismiss the mail compose view controller.
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
 
 
 

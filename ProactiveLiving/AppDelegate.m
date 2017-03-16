@@ -64,7 +64,6 @@
     //[[UITabBar appearance] setTintColor:[UIColor blueColor]];
     [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
     
-    
     //Statusbar appearance
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
@@ -75,7 +74,7 @@
 
     
     //IQKeyboard Manager
-    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    //[IQKeyboardManager sharedManager].enableAutoToolbar = NO;
 
     /*
     BOOL isLoggedIn;

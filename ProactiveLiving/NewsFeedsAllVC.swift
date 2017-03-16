@@ -66,13 +66,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
         }
         
-        
-        self.setupGrowingTextView()
-
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         self.collectionView.keyboardDismissMode = .OnDrag
+        
+        self.fetchPostDataFromServer()
+        self.setupGrowingTextView()
         
     }
     
@@ -152,11 +152,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         //if !isPostServiceCalled  {
-            self.fetchPostDataFromServer()
+            //self.fetchPostDataFromServer()
         //}
-        
-        
-        self.collectionView.reloadData()
         
         //self.layoutAttachmetBottom.constant = 200;
 
@@ -170,6 +167,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         // When user comes back from gallery Does not post come on time line
         self.getPostEvent()
         self.getLikeUpdate()
+
 
     }
     
@@ -638,7 +636,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 
                 var postViewFrame = self.postContainerView.frame
-                postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + (keyboardSize.height - offset.height) + 60)
+                //postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + (keyboardSize.height - offset.height) + 60)
+                postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + keyboardSize.height + 100)
+
                 self.postContainerView.frame = postViewFrame
                 
                 //self.view.frame.origin.y += keyboardSize.height - offset.height
@@ -1590,6 +1590,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         }
                         
                         self.collectionView.reloadData()
+
                     }
                   } else {
                         

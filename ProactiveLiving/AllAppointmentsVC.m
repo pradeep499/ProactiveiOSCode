@@ -160,8 +160,11 @@
                                            UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
                                            CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
                                            vc.pushedFrom=@"MEETUPS";
-                                           if([self.fromScreenFlag isEqualToString:@"pac"])
+                                           if([self.fromScreenFlag isEqualToString:@"pac"]) {
                                                vc.fromScreenFlag = @"PAC";
+                                               vc.arrPACMembers = self.arrPACMembers;
+                                           }
+                                           
                                            [self.navigationController pushViewController:vc animated:YES];
                                        }
                                        [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
@@ -177,8 +180,10 @@
                                            UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
                                            CreateMeetUpVC *vc = [chatStoryBoard instantiateViewControllerWithIdentifier:@"CreateMeetUpVC"];
                                            vc.pushedFrom=@"WEBINVITES";
-                                           if([self.fromScreenFlag isEqualToString:@"pac"])
+                                           if([self.fromScreenFlag isEqualToString:@"pac"]) {
                                                vc.fromScreenFlag = @"PAC";
+                                               vc.arrPACMembers = self.arrPACMembers;
+                                           }
                                            [self.navigationController pushViewController:vc animated:YES];
                                        }
 

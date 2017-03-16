@@ -411,6 +411,7 @@ type = 3 for yeary basis
                                       if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
                                           vc.fromScreenFlag = @"PAC";
                                           vc.pacID = self.pacID;
+                                          vc.arrPACMembers = self.arrPACMembers;
                                       }
                                       else {
                                           vc.fromScreenFlag = @"private";
@@ -434,6 +435,7 @@ type = 3 for yeary basis
                                          {
                                              vc.fromScreenFlag = @"PAC";
                                              vc.pacID = self.pacID;
+                                             vc.arrPACMembers = self.arrPACMembers;
                                          }
                                          else {
                                              vc.fromScreenFlag = @"private";
@@ -503,6 +505,7 @@ type = 3 for yeary basis
             vc.pacID = self.pacID;
             vc.allowToCreateMeetup = self.allowToCreateMeetup;
             vc.allowToCreateWebinvite = self.allowToCreateWebinvite;
+            vc.arrPACMembers = self.arrPACMembers;
         }
         else {
             vc.fromScreenFlag = @"private";
@@ -557,6 +560,8 @@ type = 3 for yeary basis
                  if ([[responseDict objectForKey:@"error"] intValue] == 0) {
                      
                      self.dataArray=[responseDict objectForKey:@"result"];
+                     printf("Events : %d",self.dataArray.count);
+                     
                      self.eventData = [[NSMutableDictionary alloc] init];
                      
                      NSDictionary *groups = [self groupArrayIntoDictionaryWithArray:self.dataArray withBlock:^id<NSCopying>(NSDictionary *person) {
@@ -720,6 +725,7 @@ type = 3 for yeary basis
                 vc.pacID = self.pacID;
                 vc.allowToCreateMeetup = self.allowToCreateMeetup;
                 vc.allowToCreateWebinvite = self.allowToCreateWebinvite;
+                vc.arrPACMembers = self.arrPACMembers;
             }
             else
                 vc.fromScreenFlag = @"private";

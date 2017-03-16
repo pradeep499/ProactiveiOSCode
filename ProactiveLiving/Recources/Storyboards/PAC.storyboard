@@ -199,7 +199,7 @@
                                             <rect key="frame" x="15" y="217" width="290" height="85"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Cover Picture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-N7-Tlw">
-                                                    <rect key="frame" x="67" y="40" width="208" height="17.5"/>
+                                                    <rect key="frame" x="67" y="40" width="208" height="20"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                     <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1023,7 +1023,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="196" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FnD-Bq-yjK">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="484"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="456"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FindCell" rowHeight="150" id="4Hg-Tk-tSa">
@@ -1164,7 +1164,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="FnD-Bq-yjK" secondAttribute="trailing" id="1fi-hy-WlQ"/>
                             <constraint firstItem="FnD-Bq-yjK" firstAttribute="leading" secondItem="tqR-9N-17H" secondAttribute="leading" id="Bly-An-RbJ"/>
-                            <constraint firstItem="boi-CR-k7m" firstAttribute="top" secondItem="FnD-Bq-yjK" secondAttribute="bottom" constant="84" id="cqc-oU-OsN"/>
+                            <constraint firstItem="boi-CR-k7m" firstAttribute="top" secondItem="FnD-Bq-yjK" secondAttribute="bottom" constant="112" id="cqc-oU-OsN"/>
                             <constraint firstItem="FnD-Bq-yjK" firstAttribute="top" secondItem="tqR-9N-17H" secondAttribute="top" id="tne-pj-139"/>
                         </constraints>
                     </view>
