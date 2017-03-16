@@ -16,7 +16,7 @@ var inviteStr = String()
 
 class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISearchBarDelegate {
 
-    
+      // MARK:- Outlets
     @IBOutlet weak var btnFilter: UIButton!
     @IBOutlet weak var btnSearch: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -24,9 +24,14 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
     @IBOutlet weak var lbl_title: UILabel!
     
     
+     // MARK:- Properties
     var firstVC:GenericPacTableVC!
     var secondVC:CreatePACVC!
     var arrViewControllers = [AnyObject]()
+    var isFromMemberProfile = false
+    var isFromMemberProfileForEditPAC = false
+    var responseDictFromMemberProfile = [NSObject : AnyObject]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,19 +123,79 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
 
     }
     
+    
+   // MARK:- setUpViewControllers
+    
     func setUpViewControllers() {
         
         // SetUp ViewControllers
         
         let profileStoryboard = AppHelper.getPacStoryBoard()
         
+       if isFromMemberProfileForEditPAC == true {
+           
+            secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
+            secondVC.title = "    EDIT PAC    "
+            secondVC.isFromEditPAC = true
+            secondVC.responseDictPACEdit = self.responseDictFromMemberProfile
+    
+            arrViewControllers = [secondVC]
+            
+            let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
+            
+            
+            containerVC.delegate = self
+            containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
+            containerVC.menuItemSelectedFont = UIFont(name: "Roboto-Bold", size: 11.5)
+            containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
+            containerVC.menuItemTitleColor = UIColor.whiteColor()
+            containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
+            //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
+            
+            containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
+            
+            self.view.addSubview(containerVC.view)
+            
+        }
+            
+        else if isFromMemberProfile == true {
+            
+            
+            firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("GenericPacTableVC") as! GenericPacTableVC
+            firstVC.title = "        FIND        "
+            firstVC.genericType = .Find
+            firstVC.isForMemberProfile = true
+            arrViewControllers = [firstVC]
+            
+            let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
+            
+            
+            containerVC.delegate = self
+            containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
+            containerVC.menuItemSelectedFont = UIFont(name: "Roboto-Bold", size: 11.5)
+            containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
+            containerVC.menuItemTitleColor = UIColor.whiteColor()
+            containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
+            //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
+            
+            containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
+            
+            self.view.addSubview(containerVC.view)
+            
+            
+            
+        }
+       else {
+        
         firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("GenericPacTableVC") as! GenericPacTableVC
         firstVC.title = "        FIND        "
         firstVC.genericType = .Find
         
+        let nav = UINavigationController.init(rootViewController: firstVC)
+        
         secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
         secondVC.title = "    CREATE A PAC    "
-       
+        
         arrViewControllers = [firstVC,secondVC]
         
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
@@ -147,6 +212,10 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
         
         self.view.addSubview(containerVC.view)
+        
+        
+        }
+        
     }
     
     // MARK: -- YSLContainerViewControllerDelegate

@@ -13,11 +13,15 @@ enum PacGenericType{
 }
 
 class GenericPacTableVC: UIViewController {
-    var genericType:PacGenericType!
+    
 
+// MARK :- Outlets
     @IBOutlet weak var tv_generic: UITableView!
     
+// MARK :- Properties
     var pacDetailArr = [AnyObject]()
+    var genericType:PacGenericType!
+    var isForMemberProfile = false
    
 // MARK :- view life cycle
     override func viewDidLoad() {
@@ -52,10 +56,11 @@ class GenericPacTableVC: UIViewController {
         if AppDelegate.checkInternetConnection() {
             isPostServiceCalled = true
             
+            
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
-            
+            var serviceURL = ""
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
             if(searchStr.characters.count > 0) {
                 parameters["search"] = searchStr
@@ -65,8 +70,27 @@ class GenericPacTableVC: UIViewController {
                 parameters["filter"] = filterDict
             }
 
+            if isForMemberProfile == true {
+                parameters = [
+                    "userId" : AppHelper.userDefaultsForKey(_ID),
+                    "filter" : "pac"
+                ]
+                serviceURL = ServiceGetProfileDataByFilter
+                
+            }
+            else {
+                parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+                
+                serviceURL = ServiceGetMyPAC
+                
+            }
+
+            
+            
+            
+            
             //call global web service class latest
-            Services.postRequest(ServiceGetMyPAC, parameters: parameters, completionHandler:{  //  ServiceGetFindPAC (Changed)
+            Services.postRequest(serviceURL, parameters: parameters, completionHandler:{  //  ServiceGetFindPAC (Changed)
                 (status,responseDict) in
                 
                 isPostServiceCalled = false
