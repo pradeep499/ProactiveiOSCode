@@ -4897,13 +4897,29 @@
                                             <action selector="btnCreateEventClick:" destination="e7L-Is-PUA" eventType="touchUpInside" id="9hc-nm-Y3m"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sfa-hU-pkX">
+                                        <rect key="frame" x="0.0" y="14" width="60" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Lg3-gZ-7bj"/>
+                                            <constraint firstAttribute="width" constant="60" id="ldh-sv-BRt"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" image="signupBack">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnBackClick:" destination="e7L-Is-PUA" eventType="touchUpInside" id="8rW-uf-OU0"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Jxe-lu-yhz" secondAttribute="bottom" constant="14" id="L2O-VR-ebg"/>
+                                    <constraint firstItem="Sfa-hU-pkX" firstAttribute="leading" secondItem="rrt-B9-5K9" secondAttribute="leading" id="VCl-cV-taP"/>
                                     <constraint firstAttribute="bottom" secondItem="jDP-g3-jb0" secondAttribute="bottom" id="aul-E3-Elc"/>
                                     <constraint firstItem="Jxe-lu-yhz" firstAttribute="centerX" secondItem="rrt-B9-5K9" secondAttribute="centerX" id="gBz-Tb-p7i"/>
                                     <constraint firstAttribute="height" constant="64" id="ioY-Ne-INO"/>
+                                    <constraint firstAttribute="bottom" secondItem="Sfa-hU-pkX" secondAttribute="bottom" id="vN6-5W-M5F"/>
                                     <constraint firstAttribute="trailing" secondItem="jDP-g3-jb0" secondAttribute="trailing" id="wuV-5g-Hlz"/>
                                 </constraints>
                             </view>
@@ -4916,7 +4932,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" image="calendar_switch"/>
                                 <connections>
-                                    <action selector="btnBackClick:" destination="e7L-Is-PUA" eventType="touchUpInside" id="jJX-7K-Ltg"/>
+                                    <action selector="btnFlipClick:" destination="e7L-Is-PUA" eventType="touchUpInside" id="adb-DE-dtr"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -4930,6 +4946,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnBack" destination="Sfa-hU-pkX" id="Hvk-wo-d4m"/>
                         <outlet property="btnCalendar" destination="DSn-oI-GuE" id="l9z-tl-Vy9"/>
                     </connections>
                 </viewController>
@@ -6355,7 +6372,7 @@
                                                 <constraint firstAttribute="height" constant="21" id="Cao-b2-P44"/>
                                                 <constraint firstAttribute="width" constant="79" id="cZ3-0A-pZQ"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -6365,7 +6382,7 @@
                                                 <constraint firstAttribute="width" constant="50" id="Rw2-BV-egN"/>
                                                 <constraint firstAttribute="height" constant="26" id="S3j-2c-WuX"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                             <state key="normal" title="Invite"/>
                                         </button>
                                     </subviews>

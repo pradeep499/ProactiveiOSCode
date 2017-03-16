@@ -276,6 +276,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         print(responseDict)
+                        NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_REFRESH_PAC_CONTAINER, object: self)
                     } else {
                         AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                     }
