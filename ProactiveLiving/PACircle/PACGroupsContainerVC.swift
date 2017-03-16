@@ -162,7 +162,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                             }
                             else if(currentIndex == 2) {
                                 
-                                self.popOverCellData = [ "No Action",  "No Action"]
+                                self.popOverCellData = [ "",  ""]
                                 self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
                             }
 
