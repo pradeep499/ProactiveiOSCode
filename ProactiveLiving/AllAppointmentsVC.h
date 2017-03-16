@@ -16,4 +16,5 @@
 @property (copy, nonatomic)  NSString *pacID;
 @property (nonatomic, assign) BOOL allowToCreateMeetup;
 @property (nonatomic, assign) BOOL allowToCreateWebinvite;
+@property (nonatomic, copy) NSArray *arrPACMembers;
 @end

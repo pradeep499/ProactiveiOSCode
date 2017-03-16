@@ -114,7 +114,7 @@
 #define ServiceAddMemberToPac           @"users/addMemberToPac"
 #define ServicePACActionProfile         @"users/pacActionProfile"
 #define ServiceGetMyPAC                 @"users/getMyPacListing"
-
+#define ServiceExitPAC                  @"users/exitPAC"
 
 #define maxLength                       25
 #define maxPhoneLength                  15
@@ -183,6 +183,7 @@
 #define NOTIFICATION_SHOW_GROUP_VIEW_CLICKED @"NOTIFICATION_SHOW_GROUP_VIEW_CLICKED"
 #define NOTIFICATION_GET_CONTACT_CLICKED @"NOTIFICATION_GET_CONTACT_CLICKED"
 #define NOTIFICATION_INVITE_CONTACT_PAC @"NOTIFICATION_INVITE_CONTACT_PAC"
+#define NOTIFICATION_REFRESH_PAC_CONTAINER @"NOTIFICATION_REFRESH_PAC_CONTAINER"
 
 #define BOOK_POPUP_HEIGHT 392
 

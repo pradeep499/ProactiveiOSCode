@@ -31,10 +31,11 @@
     
     //self.selectedRowsArray=[NSMutableArray arrayWithArray:[AppHelper userDefaultsForKey:@"arrLocations"]];
     self.selectedRowsArray=[[NSMutableArray alloc]init];
-    self.searchBar.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     [self.searchBar setReturnKeyType:UIReturnKeyDone];
     self.searchBar.delegate=self;
     self.searchBar.placeholder = @"Zip Code";
+    self.searchBar.keyboardType = UIKeyboardTypeNumberPad;
+
     //[self.switch1 setOn:![[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
     //[self.switch2 setOn:NO];
     //[self.switch3 setOn:[[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
@@ -200,8 +201,9 @@
         [self.switch2 setOn:NO animated:YES];
     }
     
-    if(self.switch2.isOn)
+    if(self.switch2.isOn) {
         [self.searchBar becomeFirstResponder];
+    }
     else
         [self.searchBar resignFirstResponder];
 
