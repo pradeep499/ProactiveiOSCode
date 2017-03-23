@@ -213,6 +213,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
             parameters["pacId"] = self.pacID
             parameters["users"] = arrIDs
+            parameters["status"] = self.privateStatus
             
             //call global web service
             Services.postRequest(ServiceAddMemberToPac, parameters: parameters, completionHandler:{
@@ -526,7 +527,7 @@ extension AboutPacVC: UITableViewDataSource{
                     }
                     else
                     {
-                        numOfRows = 1
+                        numOfRows = 0
                         let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-320, width: 320, height: 153))
                         noDataLabel.image = UIImage(named: "private_user_texticon")
                         self.tableView.backgroundColor = UIColor.clearColor()

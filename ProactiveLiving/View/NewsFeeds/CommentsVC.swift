@@ -269,6 +269,9 @@ class CommentsVC: UIViewController, UITextViewDelegate {
                 self.commentsArr = resultDict["comments"] as! [AnyObject]
                 
                 self.table_view.reloadData()
+                //self.table_view.setOffsetToBottom(true)
+                self.table_view.scrollToLastRow(true)
+
                 
             }
                 else

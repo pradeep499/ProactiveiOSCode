@@ -331,6 +331,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                     if ((responseDict["error"] as! Int) == 0) {
                         print(responseDict)
                         self.fetchDataForPACRole()
+                        self.navigationController?.popViewControllerAnimated(true)
                     } else {
                         
                         AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
@@ -447,6 +448,12 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
             self.sendMail()
         }
         else if(currentCell.textLabel?.text == "Delete PAC") {
+            
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["pacId"] = self.pacID
+            self.serviceCallForActions(ServiceDeletePAC, parameters: parameters)
             
         }
         else if(currentCell.textLabel?.text == "Edit PAC") {

@@ -116,6 +116,7 @@
 #define ServiceGetMyPAC                 @"users/getMyPacListing"
 #define ServiceExitPAC                  @"users/exitPAC"
 #define ServiceGetAllCategoriesListing  @"users/getAllCategoriesListing/1b24e5f9-5318-4838-b81a-85d2ee7dc403"
+#define ServiceDeletePAC                @"users/deletePac"
 
 #define maxLength                       25
 #define maxPhoneLength                  15

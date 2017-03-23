@@ -204,6 +204,7 @@ class ExploreVC: UIViewController, UIGestureRecognizerDelegate {
     func handleSingleTapAtIndex(indexPath : NSIndexPath)  {
         
         var url : String!
+    
         
         //let dataDict = self.dataSource[indexPath.row] as! [String : AnyObject]
         //cell.title.text = dataDict["name"] as? String
@@ -217,7 +218,13 @@ class ExploreVC: UIViewController, UIGestureRecognizerDelegate {
             url = "http://" + (dataArr[indexPath.row]["latestArticleLink"] as! String)
         }
         
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title = dataArr[indexPath.row]["name"] as! String
+        
+        if url != nil {
+            WebVC.urlStr = url!
+            self.navigationController?.pushViewController(WebVC, animated: true)
+        }
         
     }
     

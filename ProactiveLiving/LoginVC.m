@@ -189,11 +189,16 @@
         [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = nil;
     }
     
+    if ([AppDelegate checkInternetConnection]) {
+        
+        [self.navigationController pushViewController:self.tabBarController animated:YES];
+        
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:netError message:netErrorMessage delegate:nil cancelButtonTitle:ok otherButtonTitles:nil, nil];
+        [alert show];
+    }
     
-    
-    
-    
-    [self.navigationController pushViewController:self.tabBarController animated:YES];
     //OR
     //[[AppDelegate getAppDelegate].window addSubview:self.tabBarController.view];
     //OR
