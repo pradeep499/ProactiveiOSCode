@@ -84,6 +84,7 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         
         arrViewControllers = [firstVC, secondVC, thirdVC, fourthVC, fifthVC]
         
+        
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
         
         containerVC.delegate = self
@@ -92,6 +93,7 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
         containerVC.menuItemTitleColor = UIColor.whiteColor()
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
+        containerVC.scrollMenuViewWidth = screenWidth/CGFloat(arrViewControllers.count)
         containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width, containerVC.view.frame.size.height - 64)
         self.view.addSubview(containerVC.view)
     }

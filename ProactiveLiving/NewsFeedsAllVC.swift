@@ -848,7 +848,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     //  self.title =  "HEALTH CLUBS"
                 }
                 
-                if(self.postAllArr.count > 0 || self.postFriendsArr.count > 0 || self.postColleagueArr.count > 0 || self.postHealthClubsArr.count > 0 || self.pacWallArr.count > 0) {
+                if(self.postAllArr.count > 0 && self.postFriendsArr.count > 0 && self.postColleagueArr.count > 0 && self.postHealthClubsArr.count > 0 && self.pacWallArr.count > 0) {
                     
                     print("Total Posts:\(self.postColleagueArr.count)")
                     let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))

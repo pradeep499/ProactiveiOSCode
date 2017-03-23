@@ -12,6 +12,7 @@
 #import "AllContactsVC.h"
 #import "YSLContainerViewController.h"
 #import "FriendRequestVC.h"
+#import "PACNotificationVC.h"
 #import "ProactiveLiving-Swift.h"
 
 @interface InboxVC () <YSLContainerViewControllerDelegate>
@@ -77,21 +78,15 @@
     
     webInviteVC = [storyboard instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
     webInviteVC.title = @"WEB INVITES";
-    
-  //  FrRequestVC *requestVC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"FrRequestVC"];
-  //  requestVC.title = @"REQUESTS";
    
     FriendRequestVC *requestVC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"FriendRequestVC"];
       requestVC.title = @"REQUESTS";
     
-    
-
-    // ContainerView
-    //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    //float navigationHeight = self.navigationController.navigationBar.frame.size.height;
+    PACNotificationVC *notificationVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"PACNotificationVC"];
+    notificationVC.title = @"NOTIFICATIONS";
     
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]
-                                               initWithControllers:@[mesagesVC,meetUpVC,webInviteVC, requestVC]
+                                               initWithControllers:@[mesagesVC,meetUpVC,webInviteVC, requestVC, notificationVC]
                                                topBarHeight:0
                                                parentViewController:self];
     
@@ -102,7 +97,6 @@
     containerVC.menuItemTitleColor=[UIColor whiteColor];
     containerVC.menuItemSelectedTitleColor=[UIColor whiteColor];
     containerVC.view.frame=CGRectMake(0, 64, containerVC.view.frame.size.width, containerVC.view.frame.size.height-64);
-  //  containerVC.view.backgroundColor = [UIColor greenColor];
     
     [self.view addSubview:containerVC.view];
 }
@@ -119,12 +113,22 @@
         self.btnEdit.hidden=NO;
         self.layout_widthOfBtnCreateNew.constant = 0;
         self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    }else if(currentIndex == 3){
+    }
+    else if(currentIndex == 3){
+        self.btnEdit.hidden = YES;
+        self.btnContacts.hidden = NO;
+        self.btnCreateNew.hidden = YES;
+        self.layout_widthOfBtnCreateNew.constant = 0;
+        self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+
+    }
+    else if(currentIndex == 4){
         self.btnEdit.hidden = true;
         self.btnContacts.hidden = NO;
         self.btnCreateNew.hidden = true;
         self.layout_widthOfBtnCreateNew.constant = 0;
-        
+        self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+
     }
     else{
         self.btnEdit.hidden=YES;

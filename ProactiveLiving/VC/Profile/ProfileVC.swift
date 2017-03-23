@@ -277,12 +277,6 @@ extension ProfileVC: UICollectionViewDelegate{
             self.navigationController?.pushViewController(vc, animated: true)
             break
             
-            break
-            
-        
-            
-         
-            
         default:
             break
         }

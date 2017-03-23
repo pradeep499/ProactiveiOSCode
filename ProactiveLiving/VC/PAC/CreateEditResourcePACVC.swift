@@ -171,7 +171,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     
     @IBAction func onClickAddVideo(sender: AnyObject) {
         
-        let alertController = UIAlertController(title: "Add Link", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Add Video", message: "", preferredStyle: UIAlertControllerStyle.Alert)
         
         alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in
             textField.placeholder = "Add title here"
