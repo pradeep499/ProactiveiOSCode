@@ -6427,7 +6427,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="222" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdX-4B-CoA">
-                                                    <rect key="frame" x="180" y="7" width="132" height="21"/>
+                                                    <rect key="frame" x="172" y="7" width="132" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="cI5-C7-TYE"/>
                                                         <constraint firstAttribute="width" constant="132" id="kUF-Fh-C41"/>
@@ -6458,7 +6458,7 @@
                                                 <constraint firstItem="1O7-y2-u41" firstAttribute="top" secondItem="g7a-dY-lmc" secondAttribute="top" constant="7" id="ots-pn-ccQ"/>
                                                 <constraint firstItem="1O7-y2-u41" firstAttribute="leading" secondItem="g7a-dY-lmc" secondAttribute="leading" constant="21" id="pCt-uz-c6d"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ple-Ea-G7C" secondAttribute="bottom" id="vfl-uT-bII"/>
-                                                <constraint firstAttribute="trailing" secondItem="zdX-4B-CoA" secondAttribute="trailing" constant="8" id="yY0-br-Rvw"/>
+                                                <constraint firstAttribute="trailing" secondItem="zdX-4B-CoA" secondAttribute="trailing" constant="16" id="yY0-br-Rvw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -14044,7 +14044,7 @@
                                                             </connections>
                                                         </button>
                                                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7NV-QS-wGW" userLabel="false">
-                                                            <rect key="frame" x="220" y="33" width="70" height="30"/>
+                                                            <rect key="frame" x="220" y="35" width="70" height="28"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                                             <state key="normal" title="THUR"/>

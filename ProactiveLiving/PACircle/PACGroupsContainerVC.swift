@@ -90,7 +90,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                         self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
                         self.listPacStatus = responseDict["result"]!["listPacStatus"] as! Bool
                         self.arrPACMembers1 = responseDict["result"]!["members"] as! [[String : AnyObject]]
-                        
                         let settingsDict = responseDict["result"]!["settings"] as! [String : AnyObject]
                         
                         self.allowToCreateMeetup = settingsDict["allowToCreateMeetup"] as! Bool

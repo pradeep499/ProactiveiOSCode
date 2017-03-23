@@ -17,6 +17,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     var adminStatus = Bool()
     var creatorStatus = Bool()
     var privateStatus = Bool()
+    var requestStatus = Bool()
     var responseDict = [NSObject : AnyObject]()
     var arrPACMembers = [[String : AnyObject]]()
     var isFromMoreDetail = false
@@ -110,7 +111,8 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
                         self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
                         self.creatorStatus = responseDict["result"]!["creatorStatus"] as! Bool
-                        
+                        self.requestStatus = responseDict["result"]!["requestStatus"] as! Bool
+
                         if let settingsDict = self.dataDict["settings"] {
                             self.privateStatus = settingsDict["private"] as! Bool
                         }
@@ -125,8 +127,24 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                         }
                         
                         if(responseDict["result"]!["memberStatus"] as! Bool == false) {
-                            self.btnInvite.hidden = false
-                            self.btnInvite.setTitle("Join", forState: .Normal)
+                            
+                            if(self.privateStatus == true) {
+                                if(self.requestStatus == true) {
+                                    self.btnInvite.hidden = false
+                                    self.btnInvite.enabled = false
+                                    self.btnInvite.setTitle("Pending", forState: .Normal)
+                                }
+                                else {
+                                    self.btnInvite.hidden = false
+                                    self.btnInvite.enabled = true
+                                    self.btnInvite.setTitle("Join", forState: .Normal)
+                                }
+                            }
+                            else {
+                                self.btnInvite.hidden = false
+                                self.btnInvite.enabled = true
+                                self.btnInvite.setTitle("Join", forState: .Normal)
+                            }
                         }
                         else {
                             
@@ -562,6 +580,8 @@ extension AboutPacVC: UITableViewDataSource{
         if(indexPath.section == 0) {
             
             let cell =  tv.dequeueReusableCellWithIdentifier("PACDescCell", forIndexPath: indexPath)
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+
             let txtViewDesc = cell.viewWithTag(333) as! UITextView
             txtViewDesc.text = self.dataDict["description"] as! String
             let lblMembership = cell.viewWithTag(222) as! UILabel
@@ -590,6 +610,8 @@ extension AboutPacVC: UITableViewDataSource{
         else if(indexPath.section == 1) {
             
             let cell =  tv.dequeueReusableCellWithIdentifier("PACLinkCell", forIndexPath: indexPath)
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+
             let iv_image = cell.viewWithTag(111) as! UIImageView
             let lbl_title = cell.viewWithTag(222) as! UILabel
             let attachmentDict = self.dataDict["attachements"]
@@ -601,6 +623,8 @@ extension AboutPacVC: UITableViewDataSource{
         else if(indexPath.section == 2) {
             //later
             let cell =  tv.dequeueReusableCellWithIdentifier("PACLinkCell", forIndexPath: indexPath)
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+
             let iv_image = cell.viewWithTag(111) as! UIImageView
             let lbl_title = cell.viewWithTag(222) as! UILabel
             let attachmentDict = self.dataDict["attachements"]
@@ -614,6 +638,8 @@ extension AboutPacVC: UITableViewDataSource{
             switch indexPath.row {
             case 0:
                 let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+
                 let lbl_title = cell.viewWithTag(444) as! UILabel
                 let btnSeeAll = cell.viewWithTag(555) as! UIButton
                 btnSeeAll.hidden = true
@@ -623,6 +649,8 @@ extension AboutPacVC: UITableViewDataSource{
                 return cell
             case 1:
                 let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+
                 let lbl_title = cell.viewWithTag(444) as! UILabel
                 let btnSellAll = cell.viewWithTag(555) as! UIButton
                 
@@ -640,8 +668,9 @@ extension AboutPacVC: UITableViewDataSource{
                 cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
                 return cell
             case 2:
-                
                 let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+
                 let lbl_title = cell.viewWithTag(444) as! UILabel
                 let btnSellAll = cell.viewWithTag(555) as! UIButton
                 
@@ -655,6 +684,8 @@ extension AboutPacVC: UITableViewDataSource{
                 return cell
             case 3:
                 let cell =  tv.dequeueReusableCellWithIdentifier("PACAddresCell", forIndexPath: indexPath)
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+
                 let lbl_title = cell.viewWithTag(222) as! UILabel
                 let addressDict = self.dataDict["location"]
                 lbl_title.text = "\(addressDict!["address"] as! String), \(addressDict!["zipcode"] as! String)"
