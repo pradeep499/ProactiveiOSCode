@@ -6377,13 +6377,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G8U-1d-p8Q">
-                                            <rect key="frame" x="259" y="186" width="50" height="26"/>
+                                            <rect key="frame" x="216" y="186" width="93" height="26"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="Rw2-BV-egN"/>
+                                                <constraint firstAttribute="width" constant="93" id="Rw2-BV-egN"/>
                                                 <constraint firstAttribute="height" constant="26" id="S3j-2c-WuX"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                                            <state key="normal" title="Invite"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -6580,7 +6579,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQN-Pk-TNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4125" y="-2544"/>
+            <point key="canvasLocation" x="4125" y="-2544.7183098591549"/>
         </scene>
         <!--Member Contact ListVC-->
         <scene sceneID="8FY-VG-tbJ">
@@ -14044,7 +14043,7 @@
                                                             </connections>
                                                         </button>
                                                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7NV-QS-wGW" userLabel="false">
-                                                            <rect key="frame" x="220" y="35" width="70" height="28"/>
+                                                            <rect key="frame" x="220" y="33" width="70" height="30"/>
                                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                                             <state key="normal" title="THUR"/>
@@ -17309,7 +17308,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLG-T3-2Rx">
-                                            <rect key="frame" x="82" y="12" width="168" height="22"/>
+                                            <rect key="frame" x="82" y="12" width="168" height="21.5"/>
                                             <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
                                             <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
