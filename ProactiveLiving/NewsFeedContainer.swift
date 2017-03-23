@@ -64,38 +64,27 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         
         firstVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         firstVC.title = "ALL"
-     //   firstVC.feedsType = "ALL"
+        //firstVC.collectionView.tag = 1
         
         secondVC = storyboard.instantiateViewControllerWithIdentifier("ExploreVC") as! ExploreVC
         secondVC.title = "EXPLORE"
-        
+        //secondVC.collectionView.tag = 2
         
         thirdVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         thirdVC.title = "FRIENDS"
-        
-  //      thirdVC.feedsType = "FRIENDS"
+        //thirdVC.collectionView.tag = 3
         
         fourthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         fourthVC.title = "COLLEAGUES"
-        
-    //    fourthVC.feedsType = "COLLEAGUES"
+        //fourthVC.collectionView.tag = 4
         
         fifthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         fifthVC.title = "HEALTH CLUBS"
-        
-     //   fifthVC.feedsType = "HEALTH CLUBS"
+        //fifthVC.collectionView.tag = 5
         
         arrViewControllers = [firstVC, secondVC, thirdVC, fourthVC, fifthVC]
         
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
-       
-//        thirdVC.collectionView.tag=222
-//        fourthVC.collectionView.tag=333
-//        fifthVC.collectionView.tag=444
-        
-   //     let containerVC = YSLContainerViewController(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
-        
-        
         
         containerVC.delegate = self
         containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)

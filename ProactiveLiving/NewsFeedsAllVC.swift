@@ -71,7 +71,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         self.collectionView.keyboardDismissMode = .OnDrag
         
-        self.fetchPostDataFromServer()
+        
         self.setupGrowingTextView()
         
     }
@@ -140,34 +140,24 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             isBackFromChildVC = false
             return
         }
-        
+
+        self.fetchPostDataFromServer()
         if self.title == "ALL" || self.title == "EXPLORE" {
             
             self.fetchExploreDataFromServer()
         }
-        if self.title == "ALL" || self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL" {
-            
+        
+        if self.title != "EXPLORE" {
             self.getPostEvent()
             self.getLikeUpdate()
         }
         
-        //if !isPostServiceCalled  {
-            //self.fetchPostDataFromServer()
-        //}
         
-        //self.layoutAttachmetBottom.constant = 200;
-
-
     }
     
     override func viewDidAppear(animated: Bool) {
 
         super.viewDidAppear(animated)
-
-        // When user comes back from gallery Does not post come on time line
-        self.getPostEvent()
-        self.getLikeUpdate()
-
 
     }
     
@@ -858,18 +848,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     //  self.title =  "HEALTH CLUBS"
                 }
                 
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    self.collectionView.reloadData()
-//                }
-                
-                let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-                dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                    self.collectionView.reloadData()
-                })
-                
-                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                
-             //   self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .Top, animated: true);
+                if(self.postAllArr.count > 0 || self.postFriendsArr.count > 0 || self.postColleagueArr.count > 0 || self.postHealthClubsArr.count > 0 || self.pacWallArr.count > 0) {
+                    
+                    print("Total Posts:\(self.postColleagueArr.count)")
+                    let dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+                    dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                        self.collectionView.reloadData()
+                        
+                        self.collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    })
+                    
+                }
             }
             else
             {

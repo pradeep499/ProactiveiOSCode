@@ -29,7 +29,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-     
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+
     //Location
     [self startUpdatingLocation];
     
@@ -268,8 +269,18 @@
     return (AppDelegate*)[UIApplication sharedApplication].delegate;
 }
 
+//+(BOOL)checkInternetConnection {
+    //return [AFNetworkReachabilityManager sharedManager].reachable;
+//}
+
+#pragma mark Check Rechability
+
 +(BOOL)checkInternetConnection {
-    return [AFNetworkReachabilityManager sharedManager].reachable;
+    
+    if([ServiceClass checkNetworkReachabilityWithoutAlert])
+        return YES;
+    else
+        return NO;
 }
 
 + (void)showProgressHUDWithStatus:(NSString *)status {

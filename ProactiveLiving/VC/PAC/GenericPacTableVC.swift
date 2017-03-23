@@ -27,16 +27,13 @@ class GenericPacTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchPACsDataFromServer(["data":"empty"], searchStr: "")  // service call
-       
         NSNotificationCenter.defaultCenter().removeObserver(self, name:NOTIFICATION_PAC_FILTER, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(fetchFilteredPACsData(_:)),name:NOTIFICATION_PAC_FILTER, object:nil)
         
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        self.tv_generic.reloadData()
+        fetchPACsDataFromServer(["data":"empty"], searchStr: "")  // service call
     }
 
     override func didReceiveMemoryWarning() {

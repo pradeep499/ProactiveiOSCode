@@ -196,3 +196,15 @@ extension String {
         return (self as NSString).floatValue
     }
 }
+
+extension UITableView {
+    func setOffsetToBottom(animated: Bool) {
+        self.setContentOffset(CGPointMake(0, self.contentSize.height - self.frame.size.height), animated: true)
+    }
+    
+    func scrollToLastRow(animated: Bool) {
+        if self.numberOfRowsInSection(0) > 0 {
+            self.scrollToRowAtIndexPath(NSIndexPath(forRow: self.numberOfRowsInSection(0) - 1, inSection: 0), atScrollPosition: .Bottom, animated: animated)
+        }
+    }
+}
