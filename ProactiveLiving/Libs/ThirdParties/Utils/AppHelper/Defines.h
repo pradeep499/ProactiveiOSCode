@@ -115,6 +115,7 @@
 #define ServicePACActionProfile         @"users/pacActionProfile"
 #define ServiceGetMyPAC                 @"users/getMyPacListing"
 #define ServiceExitPAC                  @"users/exitPAC"
+#define ServiceDeletePAC                @"users/deletePac"
 
 #define maxLength                       25
 #define maxPhoneLength                  15
