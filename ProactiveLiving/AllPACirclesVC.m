@@ -23,11 +23,12 @@
     NSMutableArray *arrServices;
     NSMutableArray *arrTypes;
     PACircleVC *PACircleVC1;
+    MyPACVC *myPACVC;
   //  PACircleVC *PACircleVC2;
  //    PACircleVC *PACircleVC3;
  //    PACircleVC *PACircleVC4;
     
-    MyPACVC *myPACVC;
+   
 
 }
 @end

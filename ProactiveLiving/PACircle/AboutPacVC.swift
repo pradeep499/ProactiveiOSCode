@@ -18,6 +18,8 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     var creatorStatus = Bool()
     var privateStatus = Bool()
     var responseDict = [NSObject : AnyObject]()
+    var arrPACMembers = [[String : AnyObject]]()
+    var isFromMoreDetail = false
     @IBOutlet weak var btnLike: UIButton!
     @IBOutlet weak var lblLikes: UILabel!
     @IBOutlet weak var btnInvite: UIButton!
@@ -42,12 +44,23 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
         btnInvite.hidden = true
 
         self.fetchDataForAboutSection()
+        
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name:NOTIFICATION_FROM_MOREDETAILVC , object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AboutPacVC.isFromMoredetailVC), name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
+        
+        
 
         
     }
 
     override func viewWillAppear(animated: Bool) {
-         self.fetchDataForAboutSection()
+        if isFromMoreDetail == false {
+            self.fetchDataForAboutSection()
+            // NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
+        }
+
+        
     }
     
     
@@ -55,6 +68,14 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // Method to check if redirected from MoreDetailVC
+    func isFromMoredetailVC(){
+        
+        self.isFromMoreDetail = true
+        
+        
     }
     
     //MARK:- fetchDataForAboutSection
@@ -342,6 +363,35 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
         
     }
     
+    
+    //MARK:- See All Button Action
+    func  seeAllContacts(sender : AnyObject) {
+        
+    
+        let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableView)
+        let indexPath =  self.tableView.indexPathForRowAtPoint(buttonPosition)
+       
+        if indexPath?.row == 1 { // Admins
+          
+            
+            let dataArr = self.dataDict["admins"] as! [[String : AnyObject]]
+            let memberContactListVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("MemberContactListVC") as! MemberContactListVC
+            memberContactListVC.contactArr = dataArr
+            self.navigationController?.pushViewController(memberContactListVC, animated: true)
+            
+        }
+        else {  // Members
+            
+            let dataArr = self.dataDict["members"] as! [[String : AnyObject]]
+            let memberContactListVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("MemberContactListVC") as! MemberContactListVC
+            memberContactListVC.contactArr = dataArr
+            self.navigationController?.pushViewController(memberContactListVC, animated: true)
+ 
+            
+        }
+      
+    }
+    
 }
 
 extension AboutPacVC: UITableViewDataSource{
@@ -564,12 +614,21 @@ extension AboutPacVC: UITableViewDataSource{
             case 0:
                 let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
                 let lbl_title = cell.viewWithTag(444) as! UILabel
+                let btnSeeAll = cell.viewWithTag(555) as! UIButton
+                btnSeeAll.hidden = true
+                
                 lbl_title.text = "Created By"
                 cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
                 return cell
             case 1:
                 let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
                 let lbl_title = cell.viewWithTag(444) as! UILabel
+                let btnSellAll = cell.viewWithTag(555) as! UIButton
+                
+                btnSellAll.addTarget(self, action: #selector(AboutPacVC.seeAllContacts(_:)), forControlEvents: .TouchUpInside)
+                
+                //  seeMoreBtn.addTarget(self, action: #selector(ResourcesPACVC.seeMoreAction(_:)), forControlEvents: .TouchUpInside)
+                
                 let arrAdmins = self.dataDict["admins"] as! [[String : AnyObject]]
                 if(arrAdmins.count>0) {
                     lbl_title.text = "Admins"
@@ -580,8 +639,14 @@ extension AboutPacVC: UITableViewDataSource{
                 cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
                 return cell
             case 2:
+                
                 let cell =  tv.dequeueReusableCellWithIdentifier("PACMenbersCell", forIndexPath: indexPath) as! PACMenbersCell
                 let lbl_title = cell.viewWithTag(444) as! UILabel
+                let btnSellAll = cell.viewWithTag(555) as! UIButton
+                
+                btnSellAll.addTarget(self, action: #selector(AboutPacVC.seeAllContacts(_:)), forControlEvents: .TouchUpInside)
+                
+                
                 //let arrMembers = self.dataDict["members"] as! [[String : AnyObject]]
 
                 lbl_title.text = "Members"
@@ -678,10 +743,23 @@ extension AboutPacVC: UITableViewDataSource{
     
     func seeMoreButtonClick(sender:UIButton!) {
         
-        collapsed = !collapsed
+       
+        //let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableView)
+       // let indexPath =  self.tableView.indexPathForRowAtPoint(buttonPosition)
+        let seeMoreVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("MoreDetailVC") as! MoreDetailVC
+        
+        //let desc = resourceDetailArr[indexPath!.section].valueForKey("description") as? String // Description
+        seeMoreVC.detailStr = self.dataDict["description"] as! String!
+        self.navigationController?.pushViewController(seeMoreVC, animated: true)
+        
+        print("See More")
+        
+        
+        /* collapsed = !collapsed
         self.tableView.beginUpdates()
         self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
         self.tableView.endUpdates()
+        */
     }
     
     
@@ -694,6 +772,7 @@ extension AboutPacVC: UITableViewDataSource{
         //createEditResourcePACVC.pageTitle = "Edit Resource"
         createEditResourcePACVC.isFromMemberProfileForEditPAC = true
         createEditResourcePACVC.responseDictFromMemberProfile = self.responseDict
+        createEditResourcePACVC.arrPACMembers = self.arrPACMembers
         self.navigationController?.pushViewController(createEditResourcePACVC, animated: true)
         
     }
@@ -728,6 +807,8 @@ extension AboutPacVC:  UITableViewDelegate{
     }
 }
 
+
+//MARK:- Collection View Data Source and Delegate
 
 extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -794,8 +875,56 @@ extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        print("get selected collectionview itemindex \(indexPath.row)")
+        switch collectionView.tag {
+        case 0:  // Created by
+           
+            let createdByDict =  dataDict["createdBy"] as? [String : AnyObject]
+            // var dataArr = [[String : AnyObject]]()
+            //dataArr.append((dataDict["createdBy"] as? [String : AnyObject])!)
+            
+           
+             let userId = createdByDict!["_id"] as? String
+           
+             let profileContainerVC = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+             profileContainerVC.viewerUserID = userId
+             self.navigationController?.pushViewController(profileContainerVC, animated: true)
+             break
+          
+        case 1:   // Admin
+            
+         
+            
+            let dataArr = self.dataDict["admins"] as! [[String : AnyObject]]
+            let memberDict = dataArr[indexPath.row]
+            let userId = memberDict["_id"] as? String
+            
+            let profileContainerVC = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+            profileContainerVC.viewerUserID = userId
+            self.navigationController?.pushViewController(profileContainerVC, animated: true)
+         
+            break
+            
+            
+        case 2:  // Member
+            
         
+            let dataArr = self.dataDict["members"] as! [[String : AnyObject]]
+            let memberDict = dataArr[indexPath.row]
+            let userId = memberDict["_id"] as? String
+
+            
+            
+            let profileContainerVC = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+            profileContainerVC.viewerUserID = userId
+            self.navigationController?.pushViewController(profileContainerVC, animated: true)
+            
+            break
+     
+        default: break
+           
+        }
+            print("get selected collectionview itemindex \(indexPath.row)")
+     
     }
 }
 

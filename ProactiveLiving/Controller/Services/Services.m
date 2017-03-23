@@ -130,6 +130,37 @@
     }];
 }
 
++(void)getRequest:(NSString *)urlStr parameters:(NSDictionary *)params completionHandler:(void (^)(NSString*, NSDictionary*))completionBlock{
+    
+    // replce UserID with _ID
+    params = [self replaceUserIDWith_ID:params];
+    
+    
+    NSURL *URL = [NSURL URLWithString:[BASE_URL stringByAppendingString:urlStr]];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [manager.requestSerializer setValue:HeaderKey forHTTPHeaderField:@"customuserheaderkey"];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:URL.absoluteString parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSError* error;
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                             options:kNilOptions
+                                                               error:&error];
+        
+        completionBlock(@"Success",json);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Error: %@", error);
+        completionBlock(@"Error",nil);
+    }];
+}
+
+
 +(void)requestPostUrl:(NSString *)strURL parameters:(NSDictionary *)params success:(void (^)(NSDictionary *responce))success failure:(void (^)(NSError *error))failure {
     
      // replce UserID with _ID

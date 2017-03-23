@@ -118,7 +118,18 @@ class BroadcastVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         let dict = self.dataDictArr![indexPath.row] as? [String:String]
         
         if let aboutUrl = dict!["articleLink"]  {
-            UIApplication.sharedApplication().openURL(NSURL(string: aboutUrl )!)
+            
+           let titleStr = dict!["title"]! as String
+            
+            // redirection to next VC for WebView
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.title = titleStr//"About"
+            WebVC.urlStr = aboutUrl as! String
+            self.navigationController?.pushViewController(WebVC, animated: true)
+
+            
+            
+           // UIApplication.sharedApplication().openURL(NSURL(string: aboutUrl )!)
         }
     }
     

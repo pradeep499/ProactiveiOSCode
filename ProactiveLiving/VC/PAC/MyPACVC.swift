@@ -204,7 +204,7 @@ extension MyPACVC: UITableViewDataSource{
         
         
         
-        iv_item.sd_setImageWithURL(NSURL.init(string: (self.myPACDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "ic_certifications_sustainable"))
+        iv_item.sd_setImageWithURL(NSURL.init(string: (self.myPACDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "pac_listing_no_preview"))
         
         
         // Accessing the Name (First n Last)

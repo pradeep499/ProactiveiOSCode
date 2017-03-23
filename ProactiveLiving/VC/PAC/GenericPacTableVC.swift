@@ -22,7 +22,7 @@ class GenericPacTableVC: UIViewController {
     var pacDetailArr = [AnyObject]()
     var genericType:PacGenericType!
     var isForMemberProfile = false
-   
+    var strId = ""
 // MARK :- view life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +79,12 @@ class GenericPacTableVC: UIViewController {
                 
             }
             else {
-                parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+             //   parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+                
+                parameters = [
+                    "userId" : AppHelper.userDefaultsForKey(_ID),
+                    "categoryId" : strId
+                ]
                 
                 serviceURL = ServiceGetMyPAC
                 

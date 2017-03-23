@@ -155,10 +155,10 @@ extension WebViewVC:UIWebViewDelegate{
         self.indicator.hidden = true
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
         self.indicator.stopAnimating()
         self.indicator.hidden = true
         
-        AppHelper.showAlertWithTitle(AppName, message: "Invalid url.", tag: 0, delegate: nil, cancelButton: "Ok", otherButton:nil  )
+       // AppHelper.showAlertWithTitle(AppName, message: "Invalid url.", tag: 0, delegate: nil, cancelButton: "Ok", otherButton:nil  )
     }
 }

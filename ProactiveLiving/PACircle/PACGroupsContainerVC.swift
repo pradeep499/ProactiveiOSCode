@@ -20,7 +20,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var firstVC:NewsFeedsAllVC!
     var secondVC:ResourcesPACVC!
     var pacID = String()
-    var arrPACMembers = [[String : AnyObject]]()
+    var arrPACMembers1 = [[String : AnyObject]]()
     var thirdVC : AboutPacVC!
     var arrViewControllers = [AnyObject]()
     var memberStatus = Bool()
@@ -60,6 +60,10 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
     }
     
+//    override func viewWillAppear(animated: Bool) {
+//        fetchDataForPACRole()
+//    }
+    
     func fetchDataForPACRole() {
         
         if AppDelegate.checkInternetConnection() {
@@ -85,7 +89,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
                         self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
                         self.listPacStatus = responseDict["result"]!["listPacStatus"] as! Bool
-                        self.arrPACMembers = responseDict["result"]!["members"] as! [[String : AnyObject]]
+                        self.arrPACMembers1 = responseDict["result"]!["members"] as! [[String : AnyObject]]
                         
                         let settingsDict = responseDict["result"]!["settings"] as! [String : AnyObject]
                         
@@ -281,7 +285,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         objCalendarVC.allowToCreateMeetup = self.allowToCreateMeetup
         objCalendarVC.allowToCreateWebinvite = self.allowToCreateWebinvite
         objCalendarVC.pacID = self.pacID
-        objCalendarVC.arrPACMembers = self.arrPACMembers
+        objCalendarVC.arrPACMembers = self.arrPACMembers1
         self.navigationController?.pushViewController(objCalendarVC, animated: true)
     }
     
@@ -447,7 +451,9 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
         }
         else if(currentCell.textLabel?.text == "Edit PAC") {
             
+            self.thirdVC.arrPACMembers = self.arrPACMembers1
             self.thirdVC.editPACSelected()
+            
             
         }
         else {

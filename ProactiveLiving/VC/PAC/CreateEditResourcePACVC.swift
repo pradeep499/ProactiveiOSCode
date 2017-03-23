@@ -40,7 +40,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         
         
         // setting textView BorderOn
-         self.txtViewDescription.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
+        // self.txtViewDescription.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
         
         // from Edit
         
@@ -97,7 +97,8 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             
             var dict = Dictionary<String,AnyObject>()
             
-            
+             // Commented as per client request Validation of URL
+         /*
             // appending url
             var url = String()
             if((linkTextField.text! as String).hasPrefix("http://") || (linkTextField.text! ).hasPrefix("https://")){
@@ -113,16 +114,16 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             
             
             // validating url
-
-            if !(self.validateUrl(url)){
+                if !(self.validateUrl(url)){
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             }
             else {
+            */
             
             if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
             {
                 dict["title"]=titleTextField.text! as String
-                dict["url"] = url //linkTextField.text
+                dict["url"] = linkTextField.text  // url
                 dict["type"]="link"
                 
                 self.arrAttachments.append(dict)
@@ -133,7 +134,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input both title and url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             }
             
-            }
+           // }
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {

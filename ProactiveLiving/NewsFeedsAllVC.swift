@@ -1587,6 +1587,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         }
                         else if self.title == "WALL" {
                             self.pacWallArr = NSMutableArray.init(array: resultArr)
+                        
                         }
                         
                         self.collectionView.reloadData()

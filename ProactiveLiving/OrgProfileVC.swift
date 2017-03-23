@@ -8,8 +8,8 @@
 
 import UIKit
 
-class OrgProfileVC: UIViewController {
-
+class OrgProfileVC: UIViewController,UIScrollViewDelegate {
+    @IBOutlet weak var blurImage: UIImageView!
     @IBOutlet weak var imgBack: UIImageView!
     @IBOutlet weak var imgProfile: UIImageView!
     @IBOutlet weak var lblAboutOrg: UILabel!
@@ -17,6 +17,7 @@ class OrgProfileVC: UIViewController {
     @IBOutlet weak var btnEmail: UIButton!
     @IBOutlet weak var gridCollectionView: UICollectionView!
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var tableViewOutlet: UITableView!
     
     var arrButtonImages : Array<String> = Array()
     var dataDict = [String : AnyObject]()
@@ -36,6 +37,9 @@ class OrgProfileVC: UIViewController {
         imgProfile.layer.cornerRadius = 5
         imgProfile.clipsToBounds = true
 
+        tableViewOutlet.delegate = self
+        
+        
         if let imageBackUrlStr = dataDict["backgroundImageUrl"] as? String {
             let image_url = NSURL(string: imageBackUrlStr )
             if (image_url != nil) {
@@ -75,6 +79,23 @@ class OrgProfileVC: UIViewController {
         
     }
     
+    
+    //MARK: - UIScrollView delegate to Animate Table Header
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let y: CGFloat = -scrollView.contentOffset.y
+        if y > 0 {
+            self.imgBack.frame = CGRectMake(0, scrollView.contentOffset.y, screenWidth + y, 220 + y)
+            self.imgBack.center = CGPointMake(self.tableViewOutlet.center.x, self.imgBack.center.y)
+            self.blurImage.frame = CGRectMake(0, scrollView.contentOffset.y, screenWidth + y, 220 + y)
+            self.blurImage.center = CGPointMake(self.tableViewOutlet.center.x, self.blurImage.center.y)
+        }
+    }
+    
+    
+    
+    
+    
+    
     //*** Delegate and Data Source methods of UicollectionView ***//
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return arrButtonImages.count
@@ -96,7 +117,14 @@ class OrgProfileVC: UIViewController {
         if (indexPath.row==0) {
             
             if let aboutUrl = self.dataDict["aboutUs"] {
-                 UIApplication.sharedApplication().openURL(NSURL(string: aboutUrl as! String)!)
+                
+                // redirection to next VC for WebView
+                let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+                WebVC.title = "About"
+                WebVC.urlStr = aboutUrl as! String
+                self.navigationController?.pushViewController(WebVC, animated: true)
+                
+               //  UIApplication.sharedApplication().openURL(NSURL(string: aboutUrl as! String)!)
             }
             
            
@@ -118,7 +146,15 @@ class OrgProfileVC: UIViewController {
         }else if(indexPath.row==10)
         {
             let webUrl = self.dataDict["latestArticleLink"] as! String
-            self.btnWebLinkClick(webUrl)
+            //self.btnWebLinkClick(webUrl)
+            
+            // redirection to next VC for WebView
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.title = "Website"
+            WebVC.urlStr = webUrl as! String
+            self.navigationController?.pushViewController(WebVC, animated: true)
+
+            
             
         } else {
 
@@ -184,3 +220,11 @@ class OrgProfileVC: UIViewController {
     }
 
 }
+extension OrgProfileVC : UITableViewDelegate {
+    
+    
+    
+    
+}
+
+

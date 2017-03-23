@@ -63,6 +63,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     var switchStatus = [1,1,1,1,1,1,1,1,1,1] // by default on
     var parameters = [String: AnyObject]()
     
+    
     var adminArr = [AnyObject]()
     var memberArr = [AnyObject]()
     var tagIDMember = [AnyObject]()
@@ -70,6 +71,11 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     var isFromEditPAC = false
     var responseDictPACEdit = [NSObject : AnyObject]()
     var pacID = ""
+    var categoryId = ""
+    var arrPACmembersFromMemberProfile = [[String : AnyObject]]()
+    var ContainerVC : PACGroupsContainerVC!
+    
+    
     
     //MARK:- View Life Cycle
     
@@ -89,12 +95,32 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         self.tokenF_inviteAdmin.tagPlaceholder = "Add here"
         self.tokenF_inviteMember.tagPlaceholder = "Add here"
         
+        
+        tv_desc.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        
+        
         // Edit PAC check
         
         if isFromEditPAC == true {
             
             print("TEST###\(responseDictPACEdit)")
             
+            print("ArrayPACMembers \(arrPACmembersFromMemberProfile)")
+            
+            let test = arrPACmembersFromMemberProfile//resultDict?.valueForKey("members") as! [AnyObject]
+            print("members arr \(test)")
+            
+            for i in 0  ..< test.count  {
+                
+                
+                let dicTemp = test[i] //as! [String : AnyObject]
+                inviteStr = "member"
+                self.reSetInviteTag(dicTemp)
+                inviteStr = ""
+                
+            }
+   
             var result = responseDictPACEdit["result"]  as! [String: AnyObject]
             
             // Accessing UISwitch status
@@ -190,25 +216,25 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
             // Member array access
             
-            let members = resultDict?.valueForKey("members") as! [AnyObject]
-            print("members arr \(members)")
-            
-            for i in 0  ..< members.count  {
-                
-                
-                let dicTemp = members[i] as! [String : AnyObject]
-                inviteStr = "member"
-                self.reSetInviteTag(dicTemp)
-                inviteStr = ""
-                
-//                let str = members[i]["_id"] as! String
+//            let members = resultDict?.valueForKey("members") as! [AnyObject]
+//            print("members arr \(members)")
+//            
+//            for i in 0  ..< members.count  {
 //                
-//                // to make unique
-//                if(!self.tagIDMember.contains({ $0 as! String == str })){
-//                    self.tagIDMember.append(str)
-//                }
-                
-            }
+//                
+//                let dicTemp = members[i] as! [String : AnyObject]
+//                inviteStr = "member"
+//                self.reSetInviteTag(dicTemp)
+//                inviteStr = ""
+//                
+////                let str = members[i]["_id"] as! String
+////                
+////                // to make unique
+////                if(!self.tagIDMember.contains({ $0 as! String == str })){
+////                    self.tagIDMember.append(str)
+////                }
+//                
+//            }
            
             
             // Admins array access
@@ -240,17 +266,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             print("files \(files) links \(links)")
             
             arrAttachments = links!
-            
-            
-            /*
-             attachements =         {
-             files =             (
-             );
-             links =             (
-             );
-             };
-             
-             */
+         
             
             pacID = resultDict?.valueForKey("_id") as! String
             print("PRINT PACID-\(pacID)")
@@ -282,7 +298,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
         // self.tv_desc.placeholder = "Minimum 50 words"
         // by me
-        self.tv_desc.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
+      //  self.tv_desc.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
         
         
         self.tf_location.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
@@ -686,7 +702,6 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     func submitAPI() -> Void {
         
         // print("ADMIN TAG ### \(self.adminDict["_id"])")
-        
         // self.tokenField.tags.addObject(contact["firstName"]!)
         
         print("MEMBER TAG ### \(self.memberArr)")
@@ -747,7 +762,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                               "healthClub"             : self.switchStatus[7],
                               "males"                  : self.switchStatus[8],
                               "females"                : self.switchStatus[9],
-                              "categoryId"             :["123sdfsd"],
+                              "categoryId"             :categoryId,
                               "pacId"                  : self.pacID
                 ]
                 
@@ -774,7 +789,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                               "healthClub"             : self.switchStatus[7],
                               "males"                  : self.switchStatus[8],
                               "females"                : self.switchStatus[9],
-                              "categoryId"             :["123sdfsd"]
+                              "categoryId"             :categoryId
                     
                 ]
             }
@@ -834,6 +849,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     }
     
     func serviceCallWithData() {
+       
         Services.postRequest(ServiceCreatePAC, parameters: self.parameters, completionHandler:{
             (status,responseDict) in
             
@@ -848,7 +864,21 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                     
                     AppHelper.showAlertWithTitle(AppName, message:responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                     
-                    self.navigationController?.popViewControllerAnimated(true)
+                   
+                    if self.isFromEditPAC == true {
+                        
+//                        let vcS = (self.navigationController?.viewControllers)! as [UIViewController]
+//                        print(vcS)
+                        
+                        NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_REFRESH_PAC_CONTAINER, object: self)
+                        self.navigationController?.popViewControllerAnimated(true)
+                        
+                        
+                    }
+                    else {
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                    
                     
                 }
                 else if ((responseDict["error"] as! Int) == 1) {

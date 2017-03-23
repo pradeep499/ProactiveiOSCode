@@ -20,7 +20,7 @@ class ResourcesPACVC: UIViewController {
     
     var moviePlayer = MPMoviePlayerViewController()
     var isHidden = true
-    
+    var isFromMoreDetail = false
 
     
 // MARK:- View Life Cycle
@@ -32,27 +32,58 @@ class ResourcesPACVC: UIViewController {
         
         // api Hit
         fetchPostDataFromServer()
-        
-        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ResourcesPACVC.isFromMoredetailVC), name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
+
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
-        
-        // api Hit
-        fetchPostDataFromServer()
+       
+              // api Hit
+        if isFromMoreDetail == false {
+            fetchPostDataFromServer()
+            // NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
+        }
 
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
     }
     
     
     
     //MARK:- Button action 
+    
+    // Method to check if redirected from MoreDetailVC
+    
+      func isFromMoredetailVC(){
+
+        self.isFromMoreDetail = true
+        
+        
+      }
+
+    // See More Button Action
+    
+    func seeMoreAction(sender: AnyObject) {
+        
+        let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableViewResource)
+        let indexPath =  self.tableViewResource.indexPathForRowAtPoint(buttonPosition)
+        let seeMoreVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("MoreDetailVC") as! MoreDetailVC
+        
+        let desc = resourceDetailArr[indexPath!.section].valueForKey("description") as? String // Description
+        seeMoreVC.detailStr = desc!
+        self.navigationController?.pushViewController(seeMoreVC, animated: true)
+        
+        print("See More")
+        
+    }
+    
+    
     
     // Delete resource entry
     @IBAction func  btnActionDelete(sender: AnyObject) {
@@ -90,13 +121,7 @@ class ResourcesPACVC: UIViewController {
                 
             }
         }
-
-        
-        
-        
-        
-        
-        
+    
     }
     
     
@@ -274,12 +299,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
         attachmentArr = (resourceDetailArr[section].valueForKey("attachments") as? NSArray)!
         //attachmentArr = (attachmentArr?.objectAtIndex(0) as? NSArray)!
-
-         //print ("ROW COUNT \(attachmentArr.count)")
-        
         print("Section item lists:\((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!)")
-        
-        
         print("COUNT ROWS \((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)")
         
         return  ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)
@@ -333,7 +353,10 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             lblTitle.text = resourceDetailArr[indexPath.section].valueForKey("title") as? String
             let txtViewDetail = cell.viewWithTag(11) as! UITextView
             txtViewDetail.text = resourceDetailArr[indexPath.section].valueForKey("description") as? String
-
+            
+            let seeMoreBtn = cell.viewWithTag(444) as! UIButton
+            seeMoreBtn.addTarget(self, action: #selector(ResourcesPACVC.seeMoreAction(_:)), forControlEvents: .TouchUpInside)
+            
             let deleteBtn = cell.viewWithTag(99) as! UIButton
             let editBtn = cell.viewWithTag(98) as! UIButton
             
@@ -573,7 +596,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     
-  //MARK: Did select
+  //MARK:- Did select
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.layoutSubviews()

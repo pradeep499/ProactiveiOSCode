@@ -31,16 +31,20 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
     var isFromMemberProfile = false
     var isFromMemberProfileForEditPAC = false
     var responseDictFromMemberProfile = [NSObject : AnyObject]()
+    var arrPACMembers = [[String : AnyObject]]()
+    var strActivityName = ""
+    var strActivityID = ""
     
     
+    //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchBar.showsCancelButton = true;
-        searchBar.delegate = self;
-        searchBar.alpha = 0.0;
+        searchBar.showsCancelButton = true
+        searchBar.delegate = self
+        searchBar.alpha = 0.0
         
-        self.lbl_title.text = "Tennis"   //self.title
+        self.lbl_title.text =  strActivityName  //self.title
         
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
@@ -135,10 +139,10 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
        if isFromMemberProfileForEditPAC == true {
            
             secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
-            secondVC.title = "    EDIT PAC    "
+            secondVC.title = "EDIT PAC"
             secondVC.isFromEditPAC = true
             secondVC.responseDictPACEdit = self.responseDictFromMemberProfile
-    
+            secondVC.arrPACmembersFromMemberProfile = self.arrPACMembers
             arrViewControllers = [secondVC]
             
             let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
@@ -162,7 +166,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
             
             
             firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("GenericPacTableVC") as! GenericPacTableVC
-            firstVC.title = "        FIND        "
+            firstVC.title = "FIND"
             firstVC.genericType = .Find
             firstVC.isForMemberProfile = true
             arrViewControllers = [firstVC]
@@ -188,14 +192,16 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
        else {
         
         firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("GenericPacTableVC") as! GenericPacTableVC
-        firstVC.title = "        FIND        "
+        firstVC.title = "FIND"
         firstVC.genericType = .Find
+        firstVC.strId = strActivityID
+        
         
         let nav = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
-        secondVC.title = "    CREATE A PAC    "
-        
+        secondVC.title = "CREATE A PAC"
+        secondVC.categoryId = strActivityID
         arrViewControllers = [firstVC,secondVC]
         
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)

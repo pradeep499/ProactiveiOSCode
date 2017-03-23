@@ -38,6 +38,7 @@ class PacCollectionCell: UITableViewCell {
         //collectionView.dataSource = dataSourceDelegate
         //collectionView.tag = row
         //collectionView.reloadData()
+        
     }
 
 }

@@ -18,5 +18,7 @@
 
 +(void)requestPostUrlArr:(NSString *)strURL parameters:(NSDictionary *)params completionHandler:(void (^)(NSError*, NSArray*))completionBlock;
 
++(void)getRequest:(NSString *)urlStr parameters:(NSDictionary *)parametersDictionary completionHandler:(void (^)(NSString*, NSDictionary*))completionBlock;
+
 
 @end

@@ -16,6 +16,12 @@
 @interface ActivitiesVC ()
 
 - (IBAction)btnBackClick:(id)sender;
+/*
+ @property (copy, nonatomic) NSString *menuTitle;
+ @property (copy, nonatomic) NSArray *arrMenueImages
+ */
+
+
 
 @end
 
@@ -23,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     
     //UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.menuCollection.collectionViewLayout;
@@ -72,7 +79,17 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    recipeImageView.image = [UIImage imageNamed:[self.arrMenueImages objectAtIndex:indexPath.row]];
+    
+    NSDictionary *dicResult =  self.arrMenueImages[indexPath.row];
+    
+    NSString *strImage = dicResult[@"image"];
+    [recipeImageView sd_setImageWithURL:[NSURL URLWithString:strImage]];
+
+    
+    
+    
+    
+   // recipeImageView.image = [UIImage imageNamed:[self.arrMenueImages objectAtIndex:indexPath.row]];
     
     return cell;
 }
@@ -118,13 +135,17 @@
     PacContainerVC *vc = [[AppHelper getPacStoryBoard] instantiateViewControllerWithIdentifier:@"PacContainerVC"];
     vc.title = @"title";
     
+   
+    NSDictionary *dicResult =  self.arrMenueImages[indexPath.row];
+    NSString *strName = dicResult[@"name"];
+    NSString *strID = dicResult[@"_id"];
+  //  vc.arrMenuListData = self.arrMenueImages[indexPath.row];
+    vc.strActivityID = strID;
+    vc.strActivityName = strName;
+    
     [self.navigationController pushViewController:vc animated:YES];
     
-    
-    if (indexPath.row == 0) {
-        
-    }
-    
+ 
     
     /*
     switch ((int)indexPath.item) {

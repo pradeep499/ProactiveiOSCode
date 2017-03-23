@@ -45,7 +45,7 @@
 //#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
 
 //Testing ULR
- #define BASE_URL @"http://192.168.1.40:3000/api/v1/"
+#define BASE_URL @"http://192.168.1.40:3000/api/v1/"
 
 #define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 
@@ -115,6 +115,7 @@
 #define ServicePACActionProfile         @"users/pacActionProfile"
 #define ServiceGetMyPAC                 @"users/getMyPacListing"
 #define ServiceExitPAC                  @"users/exitPAC"
+#define ServiceGetAllCategoriesListing  @"users/getAllCategoriesListing/1b24e5f9-5318-4838-b81a-85d2ee7dc403"
 
 #define maxLength                       25
 #define maxPhoneLength                  15
@@ -184,6 +185,7 @@
 #define NOTIFICATION_GET_CONTACT_CLICKED @"NOTIFICATION_GET_CONTACT_CLICKED"
 #define NOTIFICATION_INVITE_CONTACT_PAC @"NOTIFICATION_INVITE_CONTACT_PAC"
 #define NOTIFICATION_REFRESH_PAC_CONTAINER @"NOTIFICATION_REFRESH_PAC_CONTAINER"
+#define NOTIFICATION_FROM_MOREDETAILVC @"NOTIFICATION_FROM_MOREDETAILVC"
 
 #define BOOK_POPUP_HEIGHT 392
 

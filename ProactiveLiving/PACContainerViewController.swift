@@ -16,6 +16,8 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
     var firstVC:ActivitiesVC!
     var secondVC:MyPACVC!
     var arrViewControllers = [AnyObject]()
+   // var dataDict = [String:AnyObject]()
+    var menuArr = [AnyObject]()
     
     
     
@@ -59,35 +61,35 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
         
         
         firstVC = mainStoryboard.instantiateViewControllerWithIdentifier("ActivitiesVC") as! ActivitiesVC
-        firstVC.title = "        ACTIVITIES        "
+        firstVC.title = "ACTIVITIES"
         
         
                      firstVC.menuTitle=""
-                     firstVC.arrMenueImages=[
-                     "ic_activities_badminton",
-                     "ic_activities_baseball",
-                     "ic_activities_basketball",
-                     "ic_activities_flagfootball",
-                     "ic_activities_football",
-                     "ic_activities_golf",
-                     "ic_activities_hockey",
-                     "ic_activities_kickball",
-                     "ic_activities_softball",
-                     "ic_activities_soccer",
-                     "ic_activities_skiing",
-                     "ic_activities_swimming",
-                     "ic_activities_tennis",
-                     "ic_activities_volleyball",
-                     "ic_activities_more"]
+                     firstVC.arrMenueImages = menuArr
         
         
-        
+//                     firstVC.arrMenueImages=[
+//                     "ic_activities_badminton",
+//                     "ic_activities_baseball",
+//                     "ic_activities_basketball",
+//                     "ic_activities_flagfootball",
+//                     "ic_activities_football",
+//                     "ic_activities_golf",
+//                     "ic_activities_hockey",
+//                     "ic_activities_kickball",
+//                     "ic_activities_softball",
+//                     "ic_activities_soccer",
+//                     "ic_activities_skiing",
+//                     "ic_activities_swimming",
+//                     "ic_activities_tennis",
+//                     "ic_activities_volleyball",
+//                     "ic_activities_more"]
         
         
        // let nav = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = pacStoryboard.instantiateViewControllerWithIdentifier("MyPACVC") as! MyPACVC
-        secondVC.title = "       MY PAC       "
+        secondVC.title = "MY PAC"
         
         arrViewControllers = [firstVC,secondVC]
         

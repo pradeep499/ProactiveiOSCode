@@ -200,8 +200,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             //Friend
             
             self.btnEditOrMore.setImage(UIImage(named: "pf_more"), forState: .Normal)
-            
-            
             self.btnSendRequest.hidden = false
             self.btnChat.hidden = false
             self.btnCall.hidden = false
@@ -251,11 +249,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
         }
         
-        
-        
-        
-        
-    
+   
     }
     
     func profileIvTaped(gesture:UIGestureRecognizer) -> Void {
