@@ -8,7 +8,7 @@
 
 #import "YSLScrollMenuView.h"
 
-static const CGFloat kYSLScrollMenuViewWidth  = 90;
+static const CGFloat _kYSLScrollMenuViewWidth  = 100;
 static const CGFloat kYSLScrollMenuViewMargin = 10;
 static const CGFloat kYSLIndicatorHeight = 3;
 
@@ -84,7 +84,7 @@ static const CGFloat kYSLIndicatorHeight = 3;
         NSMutableArray *views = [NSMutableArray array];
         
         for (int i = 0; i < itemTitleArray.count; i++) {
-            CGRect frame = CGRectMake(0, 0, kYSLScrollMenuViewWidth, CGRectGetHeight(self.frame));
+            CGRect frame = CGRectMake(0, 0, _kYSLScrollMenuViewWidth, CGRectGetHeight(self.frame));
             UILabel *itemView = [[UILabel alloc] initWithFrame:frame];
             [self.scrollView addSubview:itemView];
             
@@ -106,7 +106,7 @@ static const CGFloat kYSLIndicatorHeight = 3;
         
         // indicator
         _indicatorView = [[UIView alloc]init];
-        _indicatorView.frame = CGRectMake(10, _scrollView.frame.size.height - kYSLIndicatorHeight, kYSLScrollMenuViewWidth, kYSLIndicatorHeight);
+        _indicatorView.frame = CGRectMake(10, _scrollView.frame.size.height - kYSLIndicatorHeight, _kYSLScrollMenuViewWidth, kYSLIndicatorHeight);
         _indicatorView.backgroundColor = self.itemIndicatorColor;
         [_scrollView addSubview:_indicatorView];
     }
@@ -118,15 +118,15 @@ static const CGFloat kYSLIndicatorHeight = 3;
 {
     CGFloat indicatorX = 0.0;
     if (isNextItem) {
-        indicatorX = ((kYSLScrollMenuViewMargin + kYSLScrollMenuViewWidth) * ratio ) + (toIndex * kYSLScrollMenuViewWidth) + ((toIndex + 1) * kYSLScrollMenuViewMargin);
+        indicatorX = ((kYSLScrollMenuViewMargin + _kYSLScrollMenuViewWidth) * ratio ) + (toIndex * _kYSLScrollMenuViewWidth) + ((toIndex + 1) * kYSLScrollMenuViewMargin);
     } else {
-        indicatorX =  ((kYSLScrollMenuViewMargin + kYSLScrollMenuViewWidth) * (1 - ratio) ) + (toIndex * kYSLScrollMenuViewWidth) + ((toIndex + 1) * kYSLScrollMenuViewMargin);
+        indicatorX =  ((kYSLScrollMenuViewMargin + _kYSLScrollMenuViewWidth) * (1 - ratio) ) + (toIndex * _kYSLScrollMenuViewWidth) + ((toIndex + 1) * kYSLScrollMenuViewMargin);
     }
     
-    if (indicatorX < kYSLScrollMenuViewMargin || indicatorX > self.scrollView.contentSize.width - (kYSLScrollMenuViewMargin + kYSLScrollMenuViewWidth)) {
+    if (indicatorX < kYSLScrollMenuViewMargin || indicatorX > self.scrollView.contentSize.width - (kYSLScrollMenuViewMargin + _kYSLScrollMenuViewWidth)) {
         return;
     }
-    _indicatorView.frame = CGRectMake(indicatorX, _scrollView.frame.size.height - kYSLIndicatorHeight, kYSLScrollMenuViewWidth, kYSLIndicatorHeight);
+    _indicatorView.frame = CGRectMake(indicatorX, _scrollView.frame.size.height - kYSLIndicatorHeight, _kYSLScrollMenuViewWidth, kYSLIndicatorHeight);
     //  NSLog(@"retio : %f",_indicatorView.frame.origin.x);
 }
 
@@ -174,7 +174,7 @@ static const CGFloat kYSLIndicatorHeight = 3;
     
     CGFloat x = kYSLScrollMenuViewMargin;
     for (NSUInteger i = 0; i < self.itemViewArray.count; i++) {
-        CGFloat width = kYSLScrollMenuViewWidth;
+        CGFloat width = _kYSLScrollMenuViewWidth;
         UIView *itemView = self.itemViewArray[i];
         itemView.frame = CGRectMake(x, 0, width, self.scrollView.frame.size.height);
         x += width + kYSLScrollMenuViewMargin;

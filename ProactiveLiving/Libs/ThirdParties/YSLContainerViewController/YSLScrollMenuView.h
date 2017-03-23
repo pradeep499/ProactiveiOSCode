@@ -27,6 +27,7 @@
 @property (nonatomic, strong) UIColor *itemTitleColor;
 @property (nonatomic, strong) UIColor *itemSelectedTitleColor;
 @property (nonatomic, strong) UIColor *itemIndicatorColor;
+//@property (assign, nonatomic) CGFloat kYSLScrollMenuViewWidth;
 
 - (void)setShadowView;
 

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PACNotificationVC : UIViewController
+@interface PACNotificationVC : UITableViewController<UIGestureRecognizerDelegate>
 
 @end

@@ -155,6 +155,7 @@
 		BA04854D1CABFC4500196747 /* AboutPASInstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA04854C1CABFC4500196747 /* AboutPASInstVC.m */; };
 		BA0B653C1D93B48000CB6BB8 /* NewsFeedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0B653B1D93B48000CB6BB8 /* NewsFeedContainer.swift */; };
 		BA0B653E1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0B653D1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift */; };
+		BA1683A71E83D8D1005EF1C1 /* PACNotificationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1683A61E83D8D1005EF1C1 /* PACNotificationVC.m */; };
 		BA18B0451CF5EB5D00C1086A /* ChatVC_Old.m in Sources */ = {isa = PBXBuildFile; fileRef = BA18B0441CF5EB5D00C1086A /* ChatVC_Old.m */; };
 		BA1BF0DF1CEB4B2D000CC4EA /* InboxVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF0DE1CEB4B2D000CC4EA /* InboxVC.m */; };
 		BA1D70851CD8B29B00978F2F /* ActivityDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1D70841CD8B29B00978F2F /* ActivityDetailVC.m */; };
@@ -720,6 +721,8 @@
 		BA04854C1CABFC4500196747 /* AboutPASInstVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPASInstVC.m; sourceTree = "<group>"; };
 		BA0B653B1D93B48000CB6BB8 /* NewsFeedContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedContainer.swift; sourceTree = "<group>"; };
 		BA0B653D1D93B4A600CB6BB8 /* NewsFeedsAllVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedsAllVC.swift; sourceTree = "<group>"; };
+		BA1683A51E83D8D1005EF1C1 /* PACNotificationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PACNotificationVC.h; sourceTree = "<group>"; };
+		BA1683A61E83D8D1005EF1C1 /* PACNotificationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PACNotificationVC.m; sourceTree = "<group>"; };
 		BA18B0431CF5EB5D00C1086A /* ChatVC_Old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatVC_Old.h; sourceTree = "<group>"; };
 		BA18B0441CF5EB5D00C1086A /* ChatVC_Old.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatVC_Old.m; sourceTree = "<group>"; };
 		BA1BF0DD1CEB4B2D000CC4EA /* InboxVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxVC.h; sourceTree = "<group>"; };
@@ -2001,6 +2004,8 @@
 				BABB57DE1CEF161200F7C879 /* MessageCell.m */,
 				60E0F2C21E3F539E00DC4227 /* FriendRequestVC.h */,
 				60E0F2C31E3F539E00DC4227 /* FriendRequestVC.m */,
+				BA1683A51E83D8D1005EF1C1 /* PACNotificationVC.h */,
+				BA1683A61E83D8D1005EF1C1 /* PACNotificationVC.m */,
 			);
 			name = Inbox;
 			sourceTree = "<group>";
@@ -2823,7 +2828,7 @@
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 5HKCR2945H;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -3411,6 +3416,7 @@
 				BA27071F1CA96F4600C1E242 /* BookTableCell.m in Sources */,
 				BA5900EB1D364EFD006142AC /* Test+CoreDataProperties.swift in Sources */,
 				605EAC711E1E63C70048EA8F /* SOImageBrowserView.m in Sources */,
+				BA1683A71E83D8D1005EF1C1 /* PACNotificationVC.m in Sources */,
 				BA59019D1D36579D006142AC /* IQUIScrollView+Additions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3569,9 +3575,9 @@
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5HKCR2945H;
+				DEVELOPMENT_TEAM = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3586,8 +3592,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "335fce61-f7b7-4545-aabb-fcea3ddfe650";
-				PROVISIONING_PROFILE_SPECIFIER = ProactiveDevProvisioning;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
@@ -3604,9 +3610,9 @@
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5HKCR2945H;
+				DEVELOPMENT_TEAM = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3621,8 +3627,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "335fce61-f7b7-4545-aabb-fcea3ddfe650";
-				PROVISIONING_PROFILE_SPECIFIER = ProactiveDevProvisioning;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 2.3;

@@ -203,12 +203,10 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
     return requestArr.count;
 }
 
@@ -219,6 +217,8 @@
     UIImageView *iv_profile = (UIImageView *) [cell viewWithTag:1];
     UILabel *lbl_name = (UILabel *) [cell viewWithTag:2];
     UILabel *lbl_time = (UILabel *) [cell viewWithTag:3];
+    UILabel *lbl_desc = (UILabel *) [cell viewWithTag:4];
+
     
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureTapProfileIcon:)];
     gesture.delegate = self;
@@ -236,7 +236,6 @@
     NSURL *url = [NSURL URLWithString:[[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"imgUrl"]];
     
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     UIImage *placeholderImage = [UIImage imageNamed:@"ic_booking_profilepic"];
     [iv_profile sd_setImageWithURL:url placeholderImage:placeholderImage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
@@ -246,8 +245,10 @@
     }];
     
     
-    lbl_name.text = [NSString stringWithFormat:@"%@  %@",[[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"firstName"], [[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"lastName"]];
+    lbl_name.text = [NSString stringWithFormat:@"%@ %@",[[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"firstName"], [[requestArr objectAtIndex:indexPath.row][@"friendId"] valueForKey:@"lastName"]];
     
+    lbl_desc.text = [NSString stringWithFormat:@"Has sent you a friend request."];
+
     lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd HH:mm:ss" desireFormat:@"dd MMM hh:mm a" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
     
     return cell;
