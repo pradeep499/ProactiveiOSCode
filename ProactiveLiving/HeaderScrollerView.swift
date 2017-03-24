@@ -196,9 +196,6 @@ class CollectionHeaderCustomView: UIView ,UICollectionViewDelegate,UICollectionV
         
         var url : String!
         
-        //let dataDict = self.dataSource[indexPath.row] as! [String : AnyObject]
-        //cell.title.text = dataDict["name"] as? String
-        
         if((self.dataSource[indexPath.row]["latestArticleLink"] as! String).hasPrefix("http://") || (self.dataSource[indexPath.row]["latestArticleLink"] as! String).hasPrefix("https://")){
             
             url = self.dataSource[indexPath.row]["latestArticleLink"] as! String
@@ -208,7 +205,14 @@ class CollectionHeaderCustomView: UIView ,UICollectionViewDelegate,UICollectionV
             url = "http://" + (self.dataSource[indexPath.row]["latestArticleLink"] as! String)
         }
         
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title = self.dataSource[indexPath.row]["name"] as? String
+        
+        if url != nil {
+            WebVC.urlStr = url!
+            let objTopViewController = UIApplication.topViewController()!
+            objTopViewController.navigationController?.pushViewController(WebVC, animated: true)
+        }
         
     }
     

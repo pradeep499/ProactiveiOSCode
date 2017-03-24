@@ -219,7 +219,7 @@ class ExploreVC: UIViewController, UIGestureRecognizerDelegate {
         }
         
         let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
-        WebVC.title = dataArr[indexPath.row]["name"] as! String
+        WebVC.title = dataArr[indexPath.row]["name"] as? String
         
         if url != nil {
             WebVC.urlStr = url!
