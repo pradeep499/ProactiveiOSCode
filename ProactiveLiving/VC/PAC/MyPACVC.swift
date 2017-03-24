@@ -291,7 +291,7 @@ extension MyPACVC:  UITableViewDelegate{
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let containerObj = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("PACGroupsContainerVC") as! PACGroupsContainerVC
-        containerObj.title = "TTDSD"
+        containerObj.title = self.myPACDetailArr[indexPath.row]["name"] as? String
         AppHelper.saveToUserDefaults(myPACDetailArr[indexPath.row]["_id"], withKey:"pacId")
         containerObj.pacID = self.myPACDetailArr[indexPath.row]["_id"] as! String
         self.navigationController?.pushViewController(containerObj, animated: true)

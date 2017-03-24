@@ -30,7 +30,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var allowToCreateMeetup = Bool()
     var allowToCreateWebinvite = Bool()
     var allowToUpload = Bool()
-
+    var isPrivate = Bool()
     // Right button DXPopOver
     var popOverTableView:UITableView?
     var popover:DXPopover = DXPopover()
@@ -95,9 +95,16 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                         self.allowToCreateMeetup = settingsDict["allowToCreateMeetup"] as! Bool
                         self.allowToCreateWebinvite = settingsDict["allowToCreateWebinvite"] as! Bool
                         self.allowToUpload = settingsDict["allowToUpload"] as! Bool
-
+                        self.isPrivate = settingsDict["private"] as! Bool
+                        
                         if(self.memberStatus == false) {
                             self.btnRight.hidden = true
+                            if(self.isPrivate == true) {
+                                self.btnOpenCalender.hidden = true
+                            }
+                            else {
+                                self.btnOpenCalender.hidden = false
+                            }
                         }
                         else {
                             self.btnRight.hidden = false

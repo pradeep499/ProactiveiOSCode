@@ -61,20 +61,18 @@ class WebViewVC: UIViewController {
             self.lblTitle.text = "OrgDetailsLink"
             self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
             break
-            
-            
         default:
             self.lblTitle.text = self.title
             self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
             break
         }
         
-        if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!)) {
-            UIApplication.sharedApplication().openURL(NSURL(string:
-                "comgooglemaps://?center=40.765819,-73.975866&zoom=14&views=traffic")!)
-        } else {
-            print("Can't use comgooglemaps://");
-        }
+        //if (UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!)) {
+            //UIApplication.sharedApplication().openURL(NSURL(string:
+              //  "comgooglemaps://?center=40.765819,-73.975866&zoom=14&views=traffic")!)
+        //} else {
+            //print("Can't use comgooglemaps://");
+        //}
     }
     
     override func didReceiveMemoryWarning() {
@@ -134,7 +132,14 @@ class WebViewVC: UIViewController {
     func loadUrlOnWebView() -> Void    {
         
         self.web_view.delegate = self
-        self.web_view.loadRequest(NSURLRequest(URL: NSURL(string: urlStr)!))
+        let  webUrl:String
+        if(urlStr.hasPrefix("http://") || urlStr.hasPrefix("https://")){
+            webUrl = urlStr
+        }
+        else {
+            webUrl = "http://" + urlStr
+        }
+        self.web_view.loadRequest(NSURLRequest(URL: NSURL(string: webUrl)!))
         
     }
     
