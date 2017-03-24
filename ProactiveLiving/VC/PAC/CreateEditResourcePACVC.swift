@@ -204,10 +204,10 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
             
 
-            if !(self.validateUrl(url)){
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-            }
-            else {
+//            if !(self.validateUrl(url)){
+//                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+//            }
+//            else {
             if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
             {
                 dict["title"]=titleTextField.text! as String
@@ -222,7 +222,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             {
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input both title and url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             }
-            }
+           // }
             
         })
         
@@ -338,10 +338,10 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
                         
                         print(responseDict["result"])
                         
-                        let msg = "Resource created."
+                        //let msg = "Resource created."
                         
                         
-                        AppHelper.showAlertWithTitle(AppName, message:msg, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        AppHelper.showAlertWithTitle(AppName, message:responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                         
                         self.navigationController?.popViewControllerAnimated(true)
 
