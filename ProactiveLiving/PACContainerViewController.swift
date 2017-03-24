@@ -32,6 +32,11 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
         
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.secondVC.fetchMyPACDataFromServer("0")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

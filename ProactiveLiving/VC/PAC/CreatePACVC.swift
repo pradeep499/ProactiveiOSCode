@@ -890,6 +890,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                         
                     }
                     else {
+                        
                         self.navigationController?.popViewControllerAnimated(true)
                     }
                     
