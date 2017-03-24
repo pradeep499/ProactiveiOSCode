@@ -109,7 +109,7 @@
     thirdViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_home"];
     UIViewController *thirdNavigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:thirdViewController];
-    /* Changed by client
+   // /* Changed by client
      
     MyPAStodoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPAStodoVC"];
     fourthViewController.title=@"Activate";
@@ -119,7 +119,7 @@
     
     
     
-    */
+    /* /* Changed by client
     ImproveVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImproveVC"];
     fourthViewController.menuTitle=@"";
     fourthViewController.arrMenueImages=[NSArray arrayWithObjects:
@@ -152,7 +152,7 @@
     
     UIViewController *fourthNavigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:fourthViewController];
-    
+    */
     
     
     

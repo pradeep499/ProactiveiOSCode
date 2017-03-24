@@ -143,6 +143,11 @@
     vc.strActivityID = strID;
     vc.strActivityName = strName;
     
+    NSString *valueToSave = strID;
+    [[NSUserDefaults standardUserDefaults] setObject:valueToSave forKey:@"categoryID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
     [self.navigationController pushViewController:vc animated:YES];
     
  

@@ -199,7 +199,7 @@
                                             <rect key="frame" x="15" y="217" width="290" height="85"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Cover Picture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-N7-Tlw">
-                                                    <rect key="frame" x="67" y="40" width="208" height="17.5"/>
+                                                    <rect key="frame" x="67" y="40" width="208" height="20"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                     <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -802,7 +802,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oMW-1C-CR1">
-                                                    <rect key="frame" x="101" y="27" width="105" height="20"/>
+                                                    <rect key="frame" x="101" y="27" width="106" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="rFS-f1-8nT"/>
                                                     </constraints>
@@ -997,10 +997,13 @@
                             <constraint firstAttribute="trailing" secondItem="rN4-CD-0le" secondAttribute="trailing" id="pZF-2N-xVA"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lblTitle" destination="LTC-bB-DD3" id="4ZE-Uc-Fj3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yFt-Dq-cSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1113" y="-570"/>
+            <point key="canvasLocation" x="599" y="-585"/>
         </scene>
         <!--Generic Pac TableVC-->
         <scene sceneID="wwr-HJ-vB4">

@@ -99,6 +99,7 @@
                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PAC" bundle:nil];
                             pACContainerViewController  = [storyboard instantiateViewControllerWithIdentifier:@"PACContainerViewController"];
                             pACContainerViewController.menuArr = self.dataArray;
+                            pACContainerViewController.strActivityName = self.menuItemName;
 
                             [self.navigationController pushViewController:pACContainerViewController animated:YES];
                         }

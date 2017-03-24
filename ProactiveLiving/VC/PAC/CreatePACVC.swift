@@ -740,6 +740,8 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             //  var parameters = [String: AnyObject]()
             // parameters["AppKey"] = AppKey
             // parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            let savedValue = NSUserDefaults.standardUserDefaults().stringForKey("categoryID")!
+            
             
             if isFromEditPAC == true {
                 
@@ -762,11 +764,11 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                               "healthClub"             : self.switchStatus[7],
                               "males"                  : self.switchStatus[8],
                               "females"                : self.switchStatus[9],
-                              "categoryId"             :categoryId,
+                              "categoryId"             :savedValue,
                               "pacId"                  : self.pacID
                 ]
                 
-                
+                    //AppHelper.userDefaultsForKey(categoryID)
             }
             else {
                 
