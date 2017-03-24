@@ -431,10 +431,22 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             
             var dict = Dictionary<String,AnyObject>()
             
-            if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
+            //
+            var url = String()
+            if((linkTextField.text! as String).hasPrefix("http://") || (linkTextField.text! ).hasPrefix("https://")){
+                
+                url = linkTextField.text!
+            }
+            else
+            {
+                url = "http://" + linkTextField.text!
+            }
+            
+            url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+           if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
             {
                 dict["title"]=titleTextField.text! as String
-                dict["url"]=linkTextField.text
+                dict["url"] = url//  linkTextField.text
                 
                 self.arrAttachments.append(dict)
                 self.tv_CreatePac.reloadData()
@@ -530,7 +542,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             
         else if descriptionStr.characters.count <= 50 {
             
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Description Field should have minimum 50 words!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Description Field should have minimum 50 characters!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             
             return false
             
@@ -914,7 +926,7 @@ extension CreatePACVC : UITextViewDelegate{
         tv_desc.textColor = UIColor.blackColor()
         
         
-        if tv_desc.text == "Minimum 50 words" {
+        if tv_desc.text == "Minimum 50 characters" {
             
             tv_desc.text = "" // clear the place holder text
             
@@ -928,7 +940,7 @@ extension CreatePACVC : UITextViewDelegate{
         
         if tv_desc.text == "" {
             tv_desc.textColor = UIColor.grayColor()
-            tv_desc.text = "Minimum 50 words"
+            tv_desc.text = "Minimum 50 characters"
         }
         
     }

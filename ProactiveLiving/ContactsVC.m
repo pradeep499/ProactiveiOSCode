@@ -460,11 +460,12 @@
         //In case One on One Chat
     if(self.constrHeightGroupView.constant == 0) //if not creating a group
     {
-        if([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[MyPAStodoVC class]])
-        {
-            [self.delegate getSelectedPhone:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"mobilePhone"]];
-        }
-        else if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
+        //if([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[MyPAStodoVC class]])
+        //{
+            //[self.delegate getSelectedPhone:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"mobilePhone"]];
+        //}
+        //else
+        if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
         {
             NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
             NSLog(@"%@",frndDict);

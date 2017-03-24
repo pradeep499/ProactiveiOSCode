@@ -182,7 +182,7 @@
                                             <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" text="Minimum 50 words" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CtC-XA-KEs">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" text="Minimum 50 characters" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CtC-XA-KEs">
                                             <rect key="frame" x="15" y="109" width="290" height="100"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -1972,7 +1972,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qcG-XG-E1b">
-                                <rect key="frame" x="40" y="170" width="300" height="230"/>
+                                <rect key="frame" x="40" y="170" width="300" height="257"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1989,7 +1989,7 @@
                             <constraint firstItem="r9R-W8-nkV" firstAttribute="top" secondItem="IXq-f5-4Hb" secondAttribute="bottom" id="bbd-l2-DoP"/>
                             <constraint firstItem="qcG-XG-E1b" firstAttribute="leading" secondItem="JYx-RG-RnJ" secondAttribute="leading" constant="40" id="cMB-9F-Gdw"/>
                             <constraint firstAttribute="trailing" secondItem="r9R-W8-nkV" secondAttribute="trailing" id="jLt-5e-haX"/>
-                            <constraint firstItem="2dW-in-tnA" firstAttribute="top" secondItem="qcG-XG-E1b" secondAttribute="bottom" constant="267" id="jlZ-1w-svp"/>
+                            <constraint firstItem="2dW-in-tnA" firstAttribute="top" secondItem="qcG-XG-E1b" secondAttribute="bottom" constant="240" id="jlZ-1w-svp"/>
                             <constraint firstItem="r9R-W8-nkV" firstAttribute="leading" secondItem="JYx-RG-RnJ" secondAttribute="leading" id="rKl-Bv-93z"/>
                         </constraints>
                     </view>
