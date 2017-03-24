@@ -106,7 +106,6 @@
 #define ServiceBlockUserAction        @"users/blockUserAction"
 #define ServiceGetPACDetails            @"users/getPacDetail"
 #define ServiceCreatePAC               @"users/createPac"
-#define ServiceGetFindPAC               @"users/findPac"
 #define ServiceCreateResource           @"users/addResource"
 #define ServiceGetAllResource           @"users/getAllResource"
 #define ServiceDeleteResource           @"users/deleteResource"

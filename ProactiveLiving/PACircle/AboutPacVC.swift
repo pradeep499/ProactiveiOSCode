@@ -43,6 +43,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
         btnInvite.addTarget(self, action: #selector(btnInviteClick(_:)), forControlEvents: .TouchUpInside)
         btnInvite.setCornerRadiusWithBorderWidthAndColor(3.0, borderWidth: 2.0, borderColor: UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0))
         btnInvite.hidden = true
+        btnInvite.sizeToFit()
 
         self.fetchDataForAboutSection()
         

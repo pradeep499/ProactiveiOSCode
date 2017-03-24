@@ -59,45 +59,34 @@ class GenericPacTableVC: UIViewController {
             var parameters = [String: AnyObject]()
             var serviceURL = ""
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            if(searchStr.characters.count > 0) {
-                parameters["search"] = searchStr
-            }
-            if(filterDict["data"] as! String != "empty")
-            {
-                parameters["filter"] = filterDict
-            }
-
+            
+            // Filter applied when coming from User's Profile
             if isForMemberProfile == true {
-                parameters = [
-                    "userId" : AppHelper.userDefaultsForKey(_ID),
-                    "filter" : "pac"
-                ]
+                parameters["filter"] = "pac"
                 serviceURL = ServiceGetProfileDataByFilter
                 
             }
             else {
-             //   parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-                
-                parameters = [
-                    "userId" : AppHelper.userDefaultsForKey(_ID),
-                    "categoryId" : strId
-                ]
                 
                 serviceURL = ServiceGetMyPAC
-                
-            }
 
-            
-            
-            
-            
+                if(searchStr.characters.count > 0) { // For main search
+                    parameters["search"] = searchStr
+                }
+                else if(filterDict["data"] as! String != "empty") { // For main filter
+                    parameters["filter"] = filterDict
+                }
+                else { // Main Data API
+                    parameters["categoryId"] = strId
+                }
+
+            }
+        
             //call global web service class latest
-            Services.postRequest(serviceURL, parameters: parameters, completionHandler:{  //  ServiceGetFindPAC (Changed)
+            Services.postRequest(serviceURL, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 isPostServiceCalled = false
-                
-                //      print("Response = \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
