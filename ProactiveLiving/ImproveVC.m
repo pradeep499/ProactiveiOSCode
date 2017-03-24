@@ -37,7 +37,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    self.btnBack.hidden = YES;
+    self.btnBack.hidden =  NO;// YES; // chenged as per client request
 }
 
 #pragma mark - preferredStatusBarStyle

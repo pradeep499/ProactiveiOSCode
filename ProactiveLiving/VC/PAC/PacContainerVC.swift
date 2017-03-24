@@ -143,6 +143,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
             secondVC.isFromEditPAC = true
             secondVC.responseDictPACEdit = self.responseDictFromMemberProfile
             secondVC.arrPACmembersFromMemberProfile = self.arrPACMembers
+            secondVC.categoryId = strActivityID
             arrViewControllers = [secondVC]
             
             let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)

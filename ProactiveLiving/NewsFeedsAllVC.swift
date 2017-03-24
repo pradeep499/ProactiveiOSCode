@@ -1851,6 +1851,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
        // self.handleMultipleImages(self.globalAssets!, captionText: "")
         
+        if ServiceClass.checkNetworkReachabilityWithoutAlert(){
+            
+            self.globalAssets = assets
+            self.addCaptionOnPost(assets, cameraImage: nil, videoUrl: nil)
+            self.handleMultipleImages(self.globalAssets!, captionText: "")
+            
+            
+        }
+ 
         //handle muliple image
         
        var count = 0

@@ -18,7 +18,8 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
     var arrViewControllers = [AnyObject]()
    // var dataDict = [String:AnyObject]()
     var menuArr = [AnyObject]()
-    
+    var strActivityName = ""
+    @IBOutlet weak var lblTitle: UILabel!
     
     
     // MARK :- View Life Cycle
@@ -26,7 +27,7 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        lblTitle.text = strActivityName
         self.setUpViewControllers()
         
     }
@@ -61,7 +62,7 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
         
         
         firstVC = mainStoryboard.instantiateViewControllerWithIdentifier("ActivitiesVC") as! ActivitiesVC
-        firstVC.title = "ACTIVITIES"
+        firstVC.title = "FIND"
         
         
                      firstVC.menuTitle=""
