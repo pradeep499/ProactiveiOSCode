@@ -345,7 +345,6 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
        
         attachmentArr = (resourceDetailArr[indexPath.section].valueForKey("attachments") as? NSArray)!
         print("MIKE attachmentArr\(attachmentArr)")
@@ -559,8 +558,6 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
         var urlStr = String?()
         
-       
-            
            // let dataDict = self.dataArra![indexPath.row] as? [String:String]
         urlStr = link
         

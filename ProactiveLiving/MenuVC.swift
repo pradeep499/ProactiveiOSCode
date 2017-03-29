@@ -156,7 +156,7 @@ extension MenuVC: UITableViewDataSource{
         cell.accessoryType = .DisclosureIndicator
         tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         
-        
+        // self.table_view.separatorColor = UIColor.lightGrayColor()
         
         
         switch indexPath.row {
@@ -168,6 +168,9 @@ extension MenuVC: UITableViewDataSource{
             
             iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
             lbl_title.text = AppHelper.userDefaultsForKey("user_firstName") as? String
+            cell.separatorInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, cell.bounds.size.width)
+
+            
             
             //make circle profile image
             iv_profile.layer.borderWidth = 1.0
@@ -180,16 +183,22 @@ extension MenuVC: UITableViewDataSource{
             
             break
             
-        case 1:
+        case 1:  // Status Sharing
             let lbl_title = cell.contentView.viewWithTag(2) as! UILabel
+            lbl_title.layer.borderColor = UIColor(red:192.0/255.0, green:192.0/255.0, blue:192.0/255.0, alpha: 1.0).CGColor            
+            lbl_title.textColor = UIColor.blackColor()
+            lbl_title.layer.borderWidth = 1.0
+            tableView.separatorStyle = .None
+            cell.accessoryType = .None
+        
+           // self.table_view.separatorColor = UIColor.clearColor()
             
             if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
                 lbl_title.text = status as? String
             }else{
-                lbl_title.text = "Share your status here."
+                 lbl_title.textColor = UIColor.grayColor()
+                 lbl_title.text = "Share your status here."
             }
-            
-            
             
             break
             
@@ -311,9 +320,11 @@ extension MenuVC:UITableViewDelegate{
             
         //Help
         case 8:
-            break
             
-         
+            
+            let helpVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("HelpViewController") as! HelpViewController
+            self.navigationController?.pushViewController(helpVC, animated: true)
+            break
             
             
             //TERMS N POLICIES
@@ -324,9 +335,16 @@ extension MenuVC:UITableViewDelegate{
             break
             //About Us
         case 10:
-            let aboutVC: AboutPASInstVC = self.storyboard!.instantiateViewControllerWithIdentifier("AboutPASInstVC") as! AboutPASInstVC
             
-            self.navigationController?.pushViewController(aboutVC, animated: true)
+            //let aboutVC: AboutPASInstVC = self.storyboard!.instantiateViewControllerWithIdentifier("AboutPASInstVC") as! AboutPASInstVC
+            //self.navigationController?.pushViewController(aboutVC, animated: true)
+            
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.title = "About Us"
+            WebVC.urlStr = "http://www.proactively.com/"
+            self.navigationController?.pushViewController(WebVC, animated: true)
+          
+ 
             break
             
             //LogOut

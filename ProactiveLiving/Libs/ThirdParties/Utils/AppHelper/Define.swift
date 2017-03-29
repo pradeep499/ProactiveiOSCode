@@ -108,7 +108,7 @@ let chatCDNbaseUrl = "http://52.89.149.60:3000/proactiveliving"
 //for chat profile images
 
 // Live Server URL
-  let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
+//  let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
 
 
 //Production URL
@@ -116,7 +116,7 @@ let chatCDNbaseUrl = "http://52.89.149.60:3000/proactiveliving"
 
 
 //Testing URL
-//let ChatBaseMediaUrl = "http://192.168.1.40:3000/"
+let ChatBaseMediaUrl = "http://192.168.1.40:3000/"
 
 let ChatMediaPath = "api/v1/sendMedia"
 
@@ -124,10 +124,10 @@ let ChatMediaPath = "api/v1/sendMedia"
 
 //----------------************Socket IO URL **************-------------
 // Test Server
- //let socketIO_BaseURL =  "http://192.168.1.40:3000/"
+ let socketIO_BaseURL =  "http://192.168.1.40:3000/"
 
 //Live Server
-let socketIO_BaseURL = "http://52.23.211.77:3000/"
+//let socketIO_BaseURL = "http://52.23.211.77:3000/"
 
 //Production Serever
  //let socketIO_BaseURL = "http://52.89.149.60:3000"

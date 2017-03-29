@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface AboutPASInstVC : UIViewController
+@property (strong,nonatomic) NSString * strType;
+@property (strong,nonatomic) NSString * strTitle;
+
 
 @end

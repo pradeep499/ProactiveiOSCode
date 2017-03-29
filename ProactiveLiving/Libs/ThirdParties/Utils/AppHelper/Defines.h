@@ -39,13 +39,13 @@
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 
 //LiveServer URL
-#define BASE_URL @"http://52.23.211.77/api/v1/"
+//#define BASE_URL @"http://52.23.211.77/api/v1/"
 
 //Production URL
 //#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
 
 //Testing ULR
-//#define BASE_URL @"http://192.168.1.40:3000/api/v1/"
+#define BASE_URL @"http://192.168.1.40:3000/api/v1/"
 
 #define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 
@@ -118,6 +118,9 @@
 #define ServiceExitPAC                  @"users/exitPAC"
 #define ServiceGetAllCategoriesListing  @"users/getAllCategoriesListing/1b24e5f9-5318-4838-b81a-85d2ee7dc403"
 #define ServiceDeletePAC                @"users/deletePac"
+#define ServiceGetPasInstruction        @"users/getPasInstruction"
+
+
 
 #define maxLength                       25
 #define maxPhoneLength                  15
@@ -177,6 +180,8 @@
 #define pleaseLogin                     @"We have sent a mail to your registered email, please login with new password"
 #define invalidPassword                 @"Incorrect Cell number and Password"
 #define userNotExist                    @"Cell number is not registered with us"
+#define cameraSetting                   @"You need to enable Camera option from Privacy Settings"
+#define gallerySetting                  @"You need to enable Photos option from Privacy Settings"
 
 //Notifications
 #define NOTIFICATION_VALIDATION_CENTER_FLTER @"VALIDATION_CENTER_FLTER_NOTIFICATION"

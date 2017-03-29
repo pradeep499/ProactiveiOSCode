@@ -48,7 +48,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
-       // btnRight.hidden = true
+       // btnRight.hidden = false
         
         self.setUpViewControllers()
         
