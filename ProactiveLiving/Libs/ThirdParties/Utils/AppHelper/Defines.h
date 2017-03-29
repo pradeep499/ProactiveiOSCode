@@ -38,14 +38,14 @@
 #define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 
-//LiveServer URL
-#define BASE_URL @"http://52.23.211.77/api/v1/"
-
 //Production URL
 //#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
 
+//LiveServer URL
+//#define BASE_URL @"http://52.23.211.77/api/v1/"
+
 //Testing ULR
-//#define BASE_URL @"http://192.168.1.40:3000/api/v1/"
+#define BASE_URL @"http://192.168.1.40:3000/api/v1/"
 
 #define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 

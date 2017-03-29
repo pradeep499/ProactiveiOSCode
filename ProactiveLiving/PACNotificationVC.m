@@ -106,12 +106,7 @@
         [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"userId"];
         
         [parameters setValue:[requestArr objectAtIndex:indexPath.row][@"_id"] forKey:@"requestId"];
-        
-        
-        if (isAccept) {
-            [parameters setValue:[NSNumber numberWithInt:1] forKey:@"status"];
-        }else
-            [parameters setValue:[NSNumber numberWithInt:2] forKey:@"status"];
+        [parameters setValue:[NSNumber numberWithBool:isAccept] forKey:@"status"];
         
         [AppDelegate showProgressHUDWithStatus:@"Please wait.."];
         

@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-//  MARK:-  UIView extension
-
 extension UIView {
     
     /**
@@ -59,8 +57,17 @@ extension UIView {
     }
 }
 
-
-//  MARK:-   UITextField extension
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
 
 extension UITextField {
     func bottomBorder(borderColor color:UIColor, borderWidth width:CGFloat) {

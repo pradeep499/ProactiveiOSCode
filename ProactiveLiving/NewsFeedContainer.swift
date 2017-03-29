@@ -23,6 +23,8 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
     var thirdVC: NewsFeedsAllVC!
     var fourthVC: NewsFeedsAllVC!
     var fifthVC: NewsFeedsAllVC!
+    
+    var containerVC : YSLContainerViewController!
 
     
     
@@ -64,28 +66,26 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         
         firstVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         firstVC.title = "ALL"
-        //firstVC.collectionView.tag = 1
-        
+        firstVC.view.tag = 0
         secondVC = storyboard.instantiateViewControllerWithIdentifier("ExploreVC") as! ExploreVC
         secondVC.title = "EXPLORE"
-        //secondVC.collectionView.tag = 2
-        
+        secondVC.view.tag = 1
         thirdVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         thirdVC.title = "FRIENDS"
-        //thirdVC.collectionView.tag = 3
-        
+        thirdVC.view.tag = 2
+
         fourthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         fourthVC.title = "COLLEAGUES"
-        //fourthVC.collectionView.tag = 4
-        
+        fourthVC.view.tag = 3
+
         fifthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         fifthVC.title = "HEALTH CLUBS"
-        //fifthVC.collectionView.tag = 5
-        
+        fifthVC.view.tag = 4
+
         arrViewControllers = [firstVC, secondVC, thirdVC, fourthVC, fifthVC]
         
         
-        let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
+        containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
         
         containerVC.delegate = self
         containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
@@ -104,7 +104,45 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         print("current Index : \(Int(index))")
         print("current controller : \(controller)")
         currentIndex = index
-        controller.viewWillAppear(true)
+        intValue = index
+        //controller.s
+
+        if index == 0{
+            if let conVC = controller as? NewsFeedsAllVC {
+                conVC.setColectionViewTitle()
+                conVC.fetchPostDataFromServer()
+                conVC.fetchExploreDataFromServer()
+                
+            }
+        }
+        else if index == 1{
+            
+        }
+        else if index == 2{
+            if let conVC = controller as? NewsFeedsAllVC {
+                conVC.setColectionViewTitle()
+                conVC.fetchPostDataFromServer()
+            }        }
+        else if index == 3{
+            if let conVC = controller as? NewsFeedsAllVC {
+                conVC.setColectionViewTitle()
+                conVC.fetchPostDataFromServer()
+            }
+        }
+        else {
+            if let conVC = controller as? NewsFeedsAllVC {
+                conVC.setColectionViewTitle()
+                conVC.fetchPostDataFromServer()
+            }
+            
+        }
+
+        if let conVC = controller as? NewsFeedsAllVC {
+            //conVC.collectionView.tag = 1111 * (index + 1)
+            //conVC.refrashControllerData()
+
+        }
+
         
     }
     
