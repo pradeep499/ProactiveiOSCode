@@ -424,7 +424,32 @@ class CreateChatGroupVC: UIViewController,UIImagePickerControllerDelegate,UIActi
                         imagePicker.mediaTypes = [String(kUTTypeImage)]
                         imagePicker.allowsEditing = true
                         imagePicker.delegate = self
-                        self.presentViewController(imagePicker, animated: true, completion: nil)
+                        
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            let authStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+                            switch authStatus {
+                            case .Authorized:
+                               self.presentViewController(imagePicker, animated: true, completion: nil)
+                                break
+                            case .Denied:
+                                AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                            case .NotDetermined:
+                                AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo,
+                                    completionHandler: { (granted:Bool) -> Void in
+                                        if granted {
+                                           self.presentViewController(imagePicker, animated: true, completion: nil)
+                                        }
+                                        else {
+                                            AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                        }
+                                })
+                            default:
+                                AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                
+                            }
+                        });
+                        
+                       // self.presentViewController(imagePicker, animated: true, completion: nil)
                     }
                     
                     
@@ -438,7 +463,33 @@ class CreateChatGroupVC: UIViewController,UIImagePickerControllerDelegate,UIActi
                     imagePicker.allowsEditing = true
                     imagePicker.delegate = self
                     
-                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let authStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+                        switch authStatus {
+                        case .Authorized:
+                            self.presentViewController(imagePicker, animated: true, completion: nil)
+                        break // Do your stuff here i.e. allowScanning()
+                        case .Denied:
+                            AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        case .NotDetermined:
+                            AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { granted in
+                                if granted {
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                         self.presentViewController(imagePicker, animated: true, completion: nil)
+                                    }
+                                }
+                                else{
+                                    AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                    
+                                }
+                            })
+                        default:
+                            AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        }
+                    })
+                    
+//                    self.presentViewController(imagePicker, animated: true, completion: nil)
             }))
           
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
@@ -462,7 +513,32 @@ class CreateChatGroupVC: UIViewController,UIImagePickerControllerDelegate,UIActi
                 imagePicker.allowsEditing = true
                 imagePicker.delegate = self
            
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let authStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+                    switch authStatus {
+                    case .Authorized:
+                        self.presentViewController(imagePicker, animated: true, completion: nil)
+
+                        break
+                    case .Denied:
+                        AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    case .NotDetermined:
+                        AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo,
+                            completionHandler: { (granted:Bool) -> Void in
+                                if granted {
+                                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                                }
+                                else {
+                                    AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                }
+                        })
+                    default:
+                        AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                    }
+                })
+                
+//                self.presentViewController(imagePicker, animated: true, completion: nil)
             }
             
             break;
@@ -474,7 +550,32 @@ class CreateChatGroupVC: UIViewController,UIImagePickerControllerDelegate,UIActi
             imagePicker.mediaTypes = [String(kUTTypeImage)]
             imagePicker.allowsEditing = true
             
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let authStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+                switch authStatus {
+                case .Authorized:
+                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                break // Do your stuff here i.e. allowScanning()
+                case .Denied:
+                    AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                case .NotDetermined:
+                    AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { granted in
+                        if granted {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.presentViewController(imagePicker, animated: true, completion: nil)
+                            }
+                        }
+                        else{
+                            AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                            
+                        }
+                    })
+                default:
+                    AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                }
+            })
+
+          //  self.presentViewController(imagePicker, animated: true, completion: nil)
             break;
         default:
             self.dismissViewControllerAnimated(false, completion: nil)

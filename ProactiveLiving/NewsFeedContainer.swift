@@ -58,7 +58,17 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         // to set the light color of status bar
         return .LightContent
     }
-    
+    //MARK:- Button action
+    @IBAction func infoButtonAction(sender: AnyObject) {
+        
+      
+        let aboutVC: AboutPASInstVC = self.storyboard!.instantiateViewControllerWithIdentifier("AboutPASInstVC") as! AboutPASInstVC
+        aboutVC.strType = "home"
+        aboutVC.strTitle = "HOME"
+        self.navigationController?.pushViewController(aboutVC, animated: true)
+
+        
+    }
     func setUpViewControllers() {
         
         // SetUp ViewControllers

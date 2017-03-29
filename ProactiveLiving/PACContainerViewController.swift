@@ -22,7 +22,7 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
     @IBOutlet weak var lblTitle: UILabel!
     
     
-    // MARK :- View Life Cycle
+    // MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,13 +32,18 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
         
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.secondVC.fetchMyPACDataFromServer("0")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     
-    // MARK :- Button Actions
+    // MARK:- Button Actions
     
     @IBAction func backButtonAction(sender: AnyObject) {
         
@@ -47,7 +52,7 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
     
     @IBAction func rightButtonAction(sender: AnyObject) {
         
-        
+        print("rightButtonAction PACContainerViewController")
     }
     
     // Set up the Child View Controller

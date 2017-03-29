@@ -27,8 +27,7 @@
   //  PACircleVC *PACircleVC2;
  //    PACircleVC *PACircleVC3;
  //    PACircleVC *PACircleVC4;
-    
-   
+    AboutPASInstVC * aboutPASInstVC;
 
 }
 @end
@@ -139,9 +138,23 @@
     [controller viewWillAppear:YES];
 }
 
+#pragma mark:- Button Action
 - (IBAction)btnBackClick:(id)sender {
     
     [self.navigationController popViewControllerAnimated:YES];
+    
+}
+- (IBAction)btnInfoAction:(id)sender {
+    
+     NSLog(@"ALLPACircleVC Info Button");
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    aboutPASInstVC = [storyboard instantiateViewControllerWithIdentifier:@"AboutPASInstVC"];
+    aboutPASInstVC.strType = @"pac";
+    aboutPASInstVC.strTitle = @"PAC";
+    
+    [self.navigationController pushViewController:aboutPASInstVC animated:YES];
+    
+    
     
 }
 

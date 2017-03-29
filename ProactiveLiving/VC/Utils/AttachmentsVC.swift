@@ -63,7 +63,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
         self.cancelAttchView()
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
-            UIApplication.sharedApplication().statusBarHidden=true;
+            UIApplication.sharedApplication().statusBarHidden=true
             let imagePicker = UIImagePickerController()
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
             {
@@ -71,7 +71,32 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                 imagePicker.mediaTypes = [String(kUTTypeImage)]
                 //imagePicker.allowsEditing = true
                 imagePicker.delegate = self
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let authStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+                    switch authStatus {
+                    case .Authorized:
+                        self.presentViewController(imagePicker, animated: true, completion: nil)
+                        break
+                    case .Denied:
+                        AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    case .NotDetermined:
+                        AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo,
+                            completionHandler: { (granted:Bool) -> Void in
+                                if granted {
+                                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                                }
+                                else {
+                                    AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                }
+                        })
+                    default:
+                        AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                    }
+                });
+                
+               // self.presentViewController(imagePicker, animated: true, completion: nil)
             }else
             {
                 if(IS_IOS_7)
@@ -118,7 +143,32 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                 imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
                 imagePicker.mediaTypes = [String(kUTTypeMovie)]
                 imagePicker.delegate = self
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let authStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+                    switch authStatus {
+                    case .Authorized:
+                        self.presentViewController(imagePicker, animated: true, completion: nil)
+                        break
+                    case .Denied:
+                        AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    case .NotDetermined:
+                        AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo,
+                            completionHandler: { (granted:Bool) -> Void in
+                                if granted {
+                                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                                }
+                                else {
+                                    AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                                }
+                        })
+                    default:
+                        AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                    }
+                });
+                
+               // self.presentViewController(imagePicker, animated: true, completion: nil)
             }else
             {
                 if(IS_IOS_7)
@@ -236,7 +286,27 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
             actionSheet.addAction(UIAlertAction(title: "Select images", style: UIAlertActionStyle.Default, handler:
                 { (ACTION :UIAlertAction!)in
                     
-                    self.showCustomController()
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let authStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)//PHPhotoLibrary.authorizationStatus()
+                        switch authStatus {
+                        case .Authorized:
+                            self.showCustomController()
+                        break // Do your stuff here i.e. allowScanning()
+                        case .Denied:
+                            AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        case .NotDetermined:
+                            AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { granted in
+                                if granted {
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        self.showCustomController()                                    }
+                                }
+                            })
+                        default:
+                            AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        }
+                    })
+
+                  //  self.showCustomController()
                     
             }))
             
@@ -246,7 +316,29 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                 imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
                 imagePicker.mediaTypes = [String(kUTTypeMovie)]
                 imagePicker.delegate = self
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let authStatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)//PHPhotoLibrary.authorizationStatus()
+                    switch authStatus {
+                    case .Authorized:
+                        self.presentViewController(imagePicker, animated: true, completion: nil)
+                    break // Do your stuff here i.e. allowScanning()
+                    case .Denied:
+                        AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    case .NotDetermined:
+                        AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: { granted in
+                            if granted {
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    self.presentViewController(imagePicker, animated: true, completion: nil)
+                                }
+                            }
+                        })
+                    default:
+                        AppHelper.showAlertWithTitle(AppName, message:gallerySetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                })
+                
+              //  self.presentViewController(imagePicker, animated: true, completion: nil)
             }))
             
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (ACTION :UIAlertAction!)in

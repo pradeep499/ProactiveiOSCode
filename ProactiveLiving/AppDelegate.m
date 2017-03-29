@@ -51,12 +51,12 @@
 
     
      // fetch and hold static data
-    [AppDelegate connectedCompletionBlock:^(BOOL connected) {
-        if (connected)
-            [self getStaticData];
-        else
-            NSLog(@"NOT REACHABLE");
-    }];
+//    [AppDelegate connectedCompletionBlock:^(BOOL connected) {
+//        if (connected)
+//          //  [self getStaticData];
+//        else
+//            NSLog(@"NOT REACHABLE");
+//    }];
 
     //UISearchBar Global look n feel alteration
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:
@@ -319,6 +319,8 @@
     }];
 }
 
+
+/*
 -(void)getStaticData
 {
     //check internet before hitting web service
@@ -357,6 +359,9 @@
         //show internet not available
         [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
 }
+*/
+
+
 
 - (void)timerFired:(NSTimer*)theTimer{
     if(/* DISABLES CODE */ (YES)){

@@ -21,7 +21,7 @@ class ResourcesPACVC: UIViewController {
     var moviePlayer = MPMoviePlayerViewController()
     var isHidden = true
     var isFromMoreDetail = false
-
+    var indexToDelete = Int()
     
 // MARK:- View Life Cycle
     
@@ -116,8 +116,11 @@ class ResourcesPACVC: UIViewController {
                 
                 print("PARAM DELETE \(parameters)")
                 
+                self.indexToDelete = indexPath!.section
                 self.deleteResourceAPI(parameters)
-
+                
+                
+                
                 
             }
         }
@@ -188,9 +191,14 @@ class ResourcesPACVC: UIViewController {
                             
                             
                            // self.resourceDetailArr = resultArr as! [AnyObject]
-                          //  self.tableViewResource.reloadData()
                             
-                            self.fetchPostDataFromServer()
+                          //  self.resourceDetailArr.removeAtIndex(self.indexToDelete)
+                            
+                      
+                            
+                        //    self.tableViewResource.reloadData()
+                            
+                        self.fetchPostDataFromServer()
                             
                             
                         }
@@ -336,7 +344,6 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     //  cellForRowAtIndexPath
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         
        
         attachmentArr = (resourceDetailArr[indexPath.section].valueForKey("attachments") as? NSArray)!
@@ -551,8 +558,6 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
         var urlStr = String?()
         
-       
-            
            // let dataDict = self.dataArra![indexPath.row] as? [String:String]
         urlStr = link
         
