@@ -276,19 +276,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             var resultData = [String:AnyObject]()
             
-            if self.title == "ALL" {
+            if self.collectionView.tag ==  1111 {
                 resultData = self.postAllArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "FRIENDS" {
+            else if self.collectionView.tag ==  3333 {
                 resultData = self.postFriendsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "COLLEAGUES" {
+            else if self.collectionView.tag ==  4444 {
                 resultData = self.postColleagueArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "HEALTH CLUBS" {
+            else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "WALL" {
+            else {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
             
@@ -310,19 +310,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
         if indexPath != nil {
                         
-            if self.title == "ALL" {
+            if self.collectionView.tag ==  1111 {
                 resultData = self.postAllArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "FRIENDS" {
+            else if self.collectionView.tag ==  3333 {
                 resultData = self.postFriendsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "COLLEAGUES" {
+            else if self.collectionView.tag ==  4444 {
                 resultData = self.postColleagueArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "HEALTH CLUBS" {
+            else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "WALL" {
+            else {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
             
@@ -352,19 +352,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
                 if indexPath != nil {
                     
-                    if self.title == "ALL" {
+                    if self.collectionView.tag ==  1111 {
                         resultData = self.postAllArr[indexPath!.row ] as! [String:AnyObject]
                     }
-                    else if self.title == "FRIENDS" {
+                    else if self.collectionView.tag ==  3333 {
                         resultData = self.postFriendsArr[indexPath!.row ] as! [String:AnyObject]
                     }
-                    else if self.title == "COLLEAGUES" {
+                    else if self.collectionView.tag ==  4444 {
                         resultData = self.postColleagueArr[indexPath!.row ] as! [String:AnyObject]
                     }
-                    else if self.title == "HEALTH CLUBS" {
+                    else if self.collectionView.tag ==  5555 {
                         resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
                     }
-                    else if self.title == "WALL" {
+                    else  {
                         resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
                     }
                 }
@@ -386,19 +386,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
         if indexPath != nil {
             
-            if self.title == "ALL" {
+            if self.collectionView.tag ==  1111 {
                 resultData = self.postAllArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "FRIENDS" {
+            else if self.collectionView.tag ==  3333 {
                 resultData = self.postFriendsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "COLLEAGUES" {
+            else if self.collectionView.tag ==  4444 {
                 resultData = self.postColleagueArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "HEALTH CLUBS" {
+            else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else if self.title == "WALL" {
+            else {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
         }
@@ -446,8 +446,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         
     }
-    
-    
     
     
     @IBAction func onClickFBBtn(sender: AnyObject) {
@@ -533,26 +531,18 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
    
     @IBAction func onClickPlusBtn(sender: AnyObject) {
         
-        //self.collectionView.removeGestureRecognizer(tapGesture)
-        //self.collectionView.addGestureRecognizer(tapGesture)
-        
         self.view_share.alpha = 0
-        
-
-    //    UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(self.view_share)
-    //    self.view_share.layer.zPosition = 1;
-    //    self.view_share.superview!.bringSubviewToFront(self.view_share)
         
         UIView.animateWithDuration(0.3, animations: {
             self.view_share.alpha = 1.0
             if(self.view_share.hidden) {
                 self.view_share.hidden = false
-                self.plusButton.transform = CGAffineTransformRotate(self.plusButton.transform, CGFloat(M_PI_4))
+                //self.plusButton.transform = CGAffineTransformRotate(self.plusButton.transform, CGFloat(M_PI_4))
 
             }
             else {
                 self.view_share.hidden = true
-                self.plusButton.transform = CGAffineTransformRotate(self.plusButton.transform, CGFloat(-M_PI_4))
+                //self.plusButton.transform = CGAffineTransformRotate(self.plusButton.transform, CGFloat(-M_PI_4))
             }
         })
         
@@ -578,6 +568,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
     }
     
+    func onClickProfileImage(recognizer: UITapGestureRecognizer) {
+        
+        let location = recognizer.locationInView(self.collectionView)
+        let indexPath = self.collectionView.indexPathForItemAtPoint(location)
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! CellNewsFeed
+        let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+        vc.viewerUserID = cell.userID
+        self.navigationController?.pushViewController(vc , animated: true)
+    }
     
     func clickUserImage(recognizer: UITapGestureRecognizer )
     {
@@ -587,19 +586,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         var dict = NSDictionary()
         
-        if self.title == "ALL" {
+        if self.collectionView.tag ==  1111 {
             dict = self.postAllArr[indexPath.row ] as! [String:AnyObject]
         }
-        else if self.title == "FRIENDS" {
+        else if self.collectionView.tag ==  3333 {
             dict = self.postFriendsArr[indexPath.row ] as! [String:AnyObject]
         }
-        else if self.title == "COLLEAGUES" {
+        else if self.collectionView.tag ==  4444 {
             dict = self.postColleagueArr[indexPath.row ] as! [String:AnyObject]
         }
-        else if self.title == "HEALTH CLUBS" {
+        else if self.collectionView.tag ==  5555 {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
         }
-        else if self.title == "WALL" {
+        else {
             dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
         }
         
@@ -1311,6 +1310,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
         iv_profile.clipsToBounds = true
         
+        let tapProfileImage = UITapGestureRecognizer.init(target: self, action: #selector(NewsFeedsAllVC.onClickProfileImage(_:)))
+        iv_profile.addGestureRecognizer(tapProfileImage)
+        
         btn_like.setImage(UIImage(named: "like_filled"), forState: .Normal)
         btn_like.setImage(UIImage(named: "like_nav_color"), forState: .Selected)
         
@@ -1334,10 +1336,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             if (sharedByID != ownerID) {
                 
-                lbl_name.text = sharedByFname + " " + sharedByLName! + " shared " + ownerFName! + " "+ownerLName! + "'s post"
+                lbl_name.text = sharedByFname + " shared " + ownerFName! + "'s post"
                 
             }else{
-                lbl_name.text = sharedByFname + " " + sharedByLName! +  " shared post"
+                lbl_name.text = sharedByFname +  " shared post"
             }
             
             
@@ -1349,7 +1351,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
                 let lName = (dict as NSDictionary).valueForKeyPath("createdBy.lastName") as? String
                 
-                lbl_name.text = fName + " " + lName! + " shared post"
+                lbl_name.text = fName + " shared post"
             }
         }
         
@@ -1365,7 +1367,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         cell.layOut_lbl_Name_height.constant = size.height + 15
         
         
-        
+        if let userID = (dict as NSDictionary).valueForKeyPath("sharedBy._id") as? String {
+            cell.userID = userID
+        }
+        else if let userID = (dict as NSDictionary).valueForKeyPath("createdBy._id") as? String {
+            cell.userID = userID
+        }
         
         //shared by profile image
         if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("sharedBy.imgUrl") as? String    {
@@ -2575,5 +2582,6 @@ class FooterAllReUsableView: UICollectionReusableView{
 class CellNewsFeed:UICollectionViewCell{
     
     @IBOutlet weak var layOut_lbl_Name_height: NSLayoutConstraint!
-    
+    var userID:String!
+
 }

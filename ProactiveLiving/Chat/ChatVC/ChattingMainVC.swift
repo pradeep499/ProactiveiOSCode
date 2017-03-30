@@ -759,7 +759,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             vc.viewerUserID = recentChatObj.friendId! as String
         } 
         
-        self.navigationController?.pushViewController(vc , animated: false)
+        self.navigationController?.pushViewController(vc , animated: true)
         self.navigationController?.navigationBarHidden = true
     }
     

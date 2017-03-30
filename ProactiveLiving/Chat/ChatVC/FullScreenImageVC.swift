@@ -55,11 +55,20 @@ class FullScreenImageVC: UIViewController, UIScrollViewDelegate {
         navigationItem.leftBarButtonItem = backBtn
         
     }
+    
     override func viewWillAppear(animated: Bool) {
         bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
             // print(finish)
         }
         super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.hidesBarsOnTap = false
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+            // print(finish)
+        }
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
