@@ -311,6 +311,7 @@
 		BA5901AB1D36579D006142AC /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA59018D1D36579D006142AC /* IQKeyboardManager.bundle */; };
 		BA5901B31D365F57006142AC /* ServiceClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5901B21D365F57006142AC /* ServiceClass.swift */; };
 		BA5901B51D365FCD006142AC /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5901B41D365FCD006142AC /* Reachability.swift */; };
+		BA61B61B1E8BC44E001A4A3D /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA61B61A1E8BC44E001A4A3D /* HelpViewController.swift */; };
 		BA642DC41D8040C30079422F /* MeetUpListingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA642DC31D8040C30079422F /* MeetUpListingCell.swift */; };
 		BA6D1F4D1E713C8E000E25EC /* FilterVC5.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6D1F4C1E713C8E000E25EC /* FilterVC5.swift */; };
 		BA6D1F4F1E71456D000E25EC /* FilterVC6.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6D1F4E1E71456D000E25EC /* FilterVC6.swift */; };
@@ -905,6 +906,7 @@
 		BA59FFFD1D364EFD006142AC /* ic_blue_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_blue_arrow@2x.png"; sourceTree = "<group>"; };
 		BA59FFFE1D364EFD006142AC /* ic_chat_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_chat_add@2x.png"; sourceTree = "<group>"; };
 		BA59FFFF1D364EFD006142AC /* ic_chat_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_chat_camera@2x.png"; sourceTree = "<group>"; };
+		BA61B61A1E8BC44E001A4A3D /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpViewController.swift; path = View/HelpViewController.swift; sourceTree = "<group>"; };
 		BA642DC31D8040C30079422F /* MeetUpListingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetUpListingCell.swift; sourceTree = "<group>"; };
 		BA6D1F4C1E713C8E000E25EC /* FilterVC5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterVC5.swift; sourceTree = "<group>"; };
 		BA6D1F4E1E71456D000E25EC /* FilterVC6.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterVC6.swift; sourceTree = "<group>"; };
@@ -1741,7 +1743,7 @@
 				603863751E2347C000FE1598 /* Recources */,
 				602414EB1E10F64200718633 /* Libs */,
 				605EAC791E1E640B0048EA8F /* VC */,
-				671C3D961C44FEE6006A5423 /* Views */,
+				671C3D961C44FEE6006A5423 /* View */,
 				671C3D981C44FEF6006A5423 /* ControllerClasses */,
 				671C3D5F1C44FB72006A5423 /* Supporting Files */,
 				671C3D9A1C44FF26006A5423 /* Resources */,
@@ -1785,9 +1787,10 @@
 			path = ProactiveLiving;
 			sourceTree = "<group>";
 		};
-		671C3D961C44FEE6006A5423 /* Views */ = {
+		671C3D961C44FEE6006A5423 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BA61B61C1E8BC45D001A4A3D /* HelpVew */,
 				601AF81B1DDAE6B3006ABB5F /* WebView */,
 				600DA7A91DD332CE00A95595 /* Recurrence */,
 				BA4859071DC9DE3300DED552 /* Calender */,
@@ -1823,7 +1826,7 @@
 				679AA7191C461F2C002D96AE /* SignUpVC */,
 				671C3D991C44FF04006A5423 /* LoginVC */,
 			);
-			name = Views;
+			name = View;
 			sourceTree = "<group>";
 		};
 		671C3D981C44FEF6006A5423 /* ControllerClasses */ = {
@@ -2462,6 +2465,14 @@
 				BA59000E1D364EFD006142AC /* patch_chat_white.png */,
 			);
 			path = "@2xChat";
+			sourceTree = "<group>";
+		};
+		BA61B61C1E8BC45D001A4A3D /* HelpVew */ = {
+			isa = PBXGroup;
+			children = (
+				BA61B61A1E8BC44E001A4A3D /* HelpViewController.swift */,
+			);
+			name = HelpVew;
 			sourceTree = "<group>";
 		};
 		BA7414101C75A4310041B8D4 /* ValidationCenterProfile */ = {
@@ -3383,6 +3394,7 @@
 				BA59011E1D364EFD006142AC /* RecordAndPlayAudio.m in Sources */,
 				BAB0E4D11D5DE46500906C10 /* SwiftyJSON.swift in Sources */,
 				605EAC4D1E1E63C70048EA8F /* ZSPinAnnotation.m in Sources */,
+				BA61B61B1E8BC44E001A4A3D /* HelpViewController.swift in Sources */,
 				BAB0E4F71D5DE59B00906C10 /* SocketEventHandler.swift in Sources */,
 				605EAC741E1E63C70048EA8F /* SOMessagingViewController.m in Sources */,
 				605EAC9F1E1E651B0048EA8F /* Define.swift in Sources */,

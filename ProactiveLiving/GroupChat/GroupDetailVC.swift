@@ -456,7 +456,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         
          
         
-        self.navigationController?.pushViewController(vc , animated: false)
+        self.navigationController?.pushViewController(vc , animated: true)
         self.navigationController?.navigationBarHidden = true
     }
     

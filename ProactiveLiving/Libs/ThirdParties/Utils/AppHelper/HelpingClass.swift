@@ -9,6 +9,8 @@
 import UIKit
 
 
+var intValue = 0
+
 class HelpingClass: NSObject,UIAlertViewDelegate {
     var loadingView: UIView!
     var activityIndicator:UIActivityIndicatorView?

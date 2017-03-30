@@ -84,16 +84,12 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let y: CGFloat = -scrollView.contentOffset.y
         if y > 0 {
-            self.imgBack.frame = CGRectMake(0, scrollView.contentOffset.y, screenWidth + y, 220 + y)
+            self.imgBack.frame = CGRectMake(0, scrollView.contentOffset.y, screenWidth + y, 202 + y)
             self.imgBack.center = CGPointMake(self.tableViewOutlet.center.x, self.imgBack.center.y)
-            self.blurImage.frame = CGRectMake(0, scrollView.contentOffset.y, screenWidth + y, 220 + y)
+            self.blurImage.frame = CGRectMake(0, scrollView.contentOffset.y, screenWidth + y, 202 + y)
             self.blurImage.center = CGPointMake(self.tableViewOutlet.center.x, self.blurImage.center.y)
         }
     }
-    
-    
-    
-    
     
     
     //*** Delegate and Data Source methods of UicollectionView ***//

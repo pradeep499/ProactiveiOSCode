@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class CommentsVC: UIViewController, UITextViewDelegate {
 
@@ -18,17 +19,22 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var lbl_commentsText: UILabel!
     @IBOutlet weak var lbl_organizationName: UILabel!
     @IBOutlet weak var tv_writeComment: UITextView!
-    
+    @IBOutlet weak var imgAttachment: UIImageView!
+    @IBOutlet weak var btnPlayVideo: UIButton!
+    @IBOutlet weak var playActivityIndicator: UIActivityIndicatorView!
+
     @IBOutlet weak var table_view: UITableView!
     
     
     @IBOutlet weak var layOutConstrain_view_writeComments_bottom: NSLayoutConstraint!
-    
+    @IBOutlet weak var layoutConstraint_lblCPost: NSLayoutConstraint!
+
     
     var commentsArr = [AnyObject]()
     var selectedCommentDict = [String:AnyObject]()
     var tapGesture = UITapGestureRecognizer()
-    
+    var moviePlayerController = MPMoviePlayerController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,14 +60,22 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
         //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
         let w = self.table_view.bounds.size.width - 30
-        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
+        let size : CGSize = CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
         
-        let height = size.height + 140
+        let height:CGFloat
         
-        var fm = self.view_tableHeader.frame
-        fm.size.height = height
-        
-        self.view_tableHeader.frame = fm
+        if self.selectedCommentDict["postType"] as! String == "text" {
+            height = size.height + 150
+            layoutConstraint_lblCPost.constant = 8
+        }
+        else {
+            height = size.height + 320
+            layoutConstraint_lblCPost.constant = 200
+        }
+            var fm = self.view_tableHeader.frame
+            fm.size.height = height
+            self.view_tableHeader.frame = fm
+            self.table_view.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -124,12 +138,37 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         iv_CommentsProfile.layer.cornerRadius = iv_CommentsProfile.frame.size.height/2
         iv_CommentsProfile.clipsToBounds = true
         
+        let tapProfileImage = UITapGestureRecognizer.init(target: self, action: #selector(CommentsVC.onClickUserProfileImage))
+        iv_CommentsProfile.addGestureRecognizer(tapProfileImage)
         
-        if let name = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String {
+        //shared by name
+        if let sharedByFname = (self.selectedCommentDict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
             
-            lbl_CommentsTitle.text = name + " Shared a Post"
+            let sharedByID = (self.selectedCommentDict as NSDictionary).valueForKeyPath("sharedBy._id") as? String
+            
+            let ownerID = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy._id") as? String
+            
+            let ownerFName = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String
+            
+            if (sharedByID != ownerID) {
+                
+                lbl_CommentsTitle.text = sharedByFname + " shared " + ownerFName! + "'s post"
+                
+            }else{
+                lbl_CommentsTitle.text = sharedByFname + " shared post"
+            }
+            
         }
-        
+        else {
+            //Posted by name
+            
+            if let name = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String {
+                
+                lbl_CommentsTitle.text = name + " Shared a Post"
+            }
+
+        }
+
         if let logoUrlStr = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
             
             let image_url = NSURL(string: logoUrlStr )
@@ -154,7 +193,106 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         }
         print("Dict = ", self.selectedCommentDict)
         
-        
+        //--
+        if self.selectedCommentDict["postType"] as! String != "text" {
+            
+            self.imgAttachment.contentMode = .ScaleAspectFill
+            self.imgAttachment.clipsToBounds = true
+            
+            let imgUrls = self.selectedCommentDict["attachments"] as! [String]
+            
+            
+            let thumbNailName = self.selectedCommentDict["thumNailName"] as! String
+            
+            //check the thumbNail name is exist ? or generate from video url and save to db
+            HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
+                
+                if self.selectedCommentDict["postType"] as! String == "image"{
+                    
+                    //let recognizer = UITapGestureRecognizer(target: self, action:#selector(NewsFeedsAllVC.clickUserImage(_:)))
+                    //recognizer.delegate = self
+                    //self.imgAttachment.addGestureRecognizer(recognizer)
+                    self.imgAttachment.userInteractionEnabled = true
+                    
+                    self.btnPlayVideo.setImage(UIImage(named: ""), forState: .Normal)
+                    self.playActivityIndicator.startAnimating()
+                    
+                    self.playActivityIndicator.hidden = false
+                    
+                    if isExistPath {
+                        let img = UIImage(contentsOfFile: fileUrl!)
+                        self.imgAttachment.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                        self.playActivityIndicator.hidden = true
+                        self.playActivityIndicator.stopAnimating()
+                    }else{
+                        self.imgAttachment.sd_setImageWithURL(NSURL(string: imgUrls.first!), placeholderImage: UIImage(named:  "cell_blured_heigh")) {
+                            (img,  err,  cacheType,  imgUrl) -> Void in
+                            
+                            self.imgAttachment.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                            self.playActivityIndicator.hidden = true
+                            self.playActivityIndicator.stopAnimating()
+                            
+                        }
+                    }
+                    
+                }else{
+                    //for video
+                    
+                    self.btnPlayVideo.hidden = true
+                    self.playActivityIndicator.hidden = false
+                    self.playActivityIndicator.startAnimating()
+                    self.btnPlayVideo.setImage(UIImage(named: "button_chat_play"), forState: .Normal)
+
+                    
+                    if isExistPath {
+                        let img = UIImage(contentsOfFile: fileUrl!)
+                        self.imgAttachment.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                        self.playActivityIndicator.hidden = true
+                        self.playActivityIndicator.stopAnimating()
+                        self.btnPlayVideo.hidden = false
+                    } else {
+                        
+                        //generate thumb from video url    and display on cell
+                        let img =  CommonMethodFunctions.generateThumbImage(NSURL(string: imgUrls.first!)!) //self.generateThumnail(sourceURL: NSURL(string: imgUrls.first!)!)
+                        self.imgAttachment.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                        
+                        //write to db
+                        let imgData = UIImagePNGRepresentation(img) as NSData?
+                        
+                        HelpingClass.writeToPath(directory: "/ChatFile", fileName: thumbNailName, dataToWrite: imgData!, completion: {(isWritten:Bool, err:NSError?) -> Void in
+                            
+                            if isWritten{
+                                
+                                self.playActivityIndicator.hidden = true
+                                self.playActivityIndicator.stopAnimating()
+                                self.btnPlayVideo.hidden = false
+                                
+                            }
+                        })
+                    }
+                    
+                }
+                
+            })
+            
+        }
+        else {
+            
+            self.btnPlayVideo.hidden = true
+            self.playActivityIndicator.hidden = true
+
+        }
+        //--
+        if let thumbName = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.thumNailName") as? String    {
+            
+            let image_url = NSURL(string: thumbName )
+            if (image_url != nil) {
+                
+                let placeholder = UIImage(named: "ic_booking_profilepic")
+                iv_CommentsProfile.sd_setImageWithURL((URL: image_url!), placeholderImage: placeholder)
+            }
+            
+        }
         
         
         
@@ -167,6 +305,62 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     }
     
     
+    @IBAction func btnPlayClick(sender: AnyObject) {
+        
+        let postType = self.selectedCommentDict["postType"] as! String
+        
+        if postType == "image" {
+            
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let fullImageVC: FullScreenImageVC = storyBoard.instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
+            
+            let imgUrls = (self.selectedCommentDict["attachments"] as! [String]).first!
+            let thumbNailName = self.selectedCommentDict["thumNailName"] as! String
+
+            //check the thumbNail name is exist ? or generate from video url and save to db
+            HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
+                
+                if isExistPath {
+                    fullImageVC.imagePath = fileUrl
+                    fullImageVC.downLoadPath = "4"
+                }else{
+                    fullImageVC.imagePath = imgUrls
+                    fullImageVC.downLoadPath = "3"
+                }
+                self.navigationController?.pushViewController(fullImageVC, animated: true)
+                
+            })
+            
+
+            fullImageVC.imagePath = (self.selectedCommentDict["attachments"] as! [String]).first!
+            fullImageVC.downLoadPath="1"
+            
+        }else if(postType == "video"){
+            
+            let thumbNailName = self.selectedCommentDict["thumNailName"] as! String
+            var videoName = thumbNailName.stringByReplacingOccurrencesOfString("Thumb", withString: "Video")
+            videoName = videoName.stringByReplacingOccurrencesOfString(".jpg", withString: ".mp4")
+            let imgUrls = self.selectedCommentDict["attachments"] as! [String]
+            
+            HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: videoName, completion: {(isExistPath, fileUrl) -> Void in
+                
+                if isExistPath{
+                    
+                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL.fileURLWithPath(fileUrl!))
+                    
+                }else{
+                    
+                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL(string: imgUrls.first!))
+                }
+                
+                //moviePlayerController.movieSourceType = MPMovieSourceType.Streaming
+                self.view.addSubview(self.moviePlayerController.view)
+                self.moviePlayerController.fullscreen = true
+                self.moviePlayerController.play()
+            })
+        }
+        
+    }
     
     @IBAction func onClickBackBtn(sender: UIButton) {
         self.navigationController!.popViewControllerAnimated(true)
@@ -180,6 +374,37 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         self.tv_writeComment.text = "Leave Your Comments..."
     }
     
+    // Comment user profile
+    func onClickCellProfileImage(recognizer: UITapGestureRecognizer) {
+        
+        let location = recognizer.locationInView(self.table_view)
+        let indexPath = self.table_view.indexPathForRowAtPoint(location)
+        let dict = commentsArr[indexPath!.row] as! NSDictionary
+        if let profileUrlStr = (dict as NSDictionary).valueForKeyPath("commentedBy._id") as? String    {
+            let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+            vc.viewerUserID = profileUrlStr
+            self.navigationController?.pushViewController(vc , animated: true)
+        }
+        
+    }
+    
+    //Main user profile
+    func onClickUserProfileImage() {
+    
+        if let userID = (self.selectedCommentDict as NSDictionary).valueForKeyPath("sharedBy._id") as? String {
+            let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+            vc.viewerUserID = userID
+            self.navigationController?.pushViewController(vc , animated: true)
+        }
+        else {
+            
+            let userID = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy._id") as? String
+            let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+            vc.viewerUserID = userID
+            self.navigationController?.pushViewController(vc , animated: true)
+        }
+        
+    }
     
     //MARK: TextView Delegate 
     
@@ -343,7 +568,8 @@ extension CommentsVC:UITableViewDataSource{
         iv_profile.layer.borderColor = UIColor.lightGrayColor().CGColor
         iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
         iv_profile.clipsToBounds = true
-        
+        let tapProfileImage = UITapGestureRecognizer.init(target: self, action: #selector(CommentsVC.onClickCellProfileImage(_:)))
+        iv_profile.addGestureRecognizer(tapProfileImage)
         
         
         let dict = commentsArr[indexPath.row] as! NSDictionary
@@ -362,6 +588,7 @@ extension CommentsVC:UITableViewDataSource{
                 
                 let placeholder = UIImage(named: "ic_booking_profilepic")
                 iv_profile.sd_setImageWithURL((URL: image_url!), placeholderImage: placeholder)
+                
             }
             
         }

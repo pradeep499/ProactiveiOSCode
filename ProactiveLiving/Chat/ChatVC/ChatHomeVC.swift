@@ -444,7 +444,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         
         
         
-        self.navigationController?.pushViewController(vc , animated: false)
+        self.navigationController?.pushViewController(vc , animated: true)
         self.navigationController?.navigationBarHidden = true
     }
     

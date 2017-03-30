@@ -74,16 +74,17 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
    // _contentScrollView.backgroundColor = [UIColor yellowColor];
     
     // ContentViewController setup
-    for (int i = 0; i < self.childControllers.count; i++) {
-        id obj = [self.childControllers objectAtIndex:i];
-        if ([obj isKindOfClass:[UIViewController class]]) {
-            UIViewController *controller = (UIViewController*)obj;
-            CGFloat scrollWidth = _contentScrollView.frame.size.width;
-            CGFloat scrollHeght = _contentScrollView.frame.size.height;
-            controller.view.frame = CGRectMake(i * scrollWidth, 0, scrollWidth, scrollHeght);
-            [_contentScrollView addSubview:controller.view];
-        }
-    }
+//    for (int i = 0; i < self.childControllers.count; i++) {
+//        id obj = [self.childControllers objectAtIndex:i];
+//        if ([obj isKindOfClass:[UIViewController class]]) {
+//            UIViewController *controller = (UIViewController*)obj;
+//            CGFloat scrollWidth = _contentScrollView.frame.size.width;
+//            CGFloat scrollHeght = _contentScrollView.frame.size.height;
+//            controller.view.frame = CGRectMake(i * scrollWidth, 0, scrollWidth, scrollHeght);
+//            [_contentScrollView addSubview:controller.view];
+//        }
+//    }
+    
     // meunView
     _menuView = [[YSLScrollMenuView alloc]initWithFrame:CGRectMake(0, _topBarHeight, self.view.frame.size.width, kYSLScrollMenuViewHeight)];
     _menuView.backgroundColor = [UIColor clearColor];
@@ -108,18 +109,28 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
 - (void)setChildViewControllerWithCurrentIndex:(NSInteger)currentIndex
 {
     for (int i = 0; i < self.childControllers.count; i++) {
+        
         id obj = self.childControllers[i];
         if ([obj isKindOfClass:[UIViewController class]]) {
+            
             UIViewController *controller = (UIViewController*)obj;
             if (i == currentIndex) {
                 [controller willMoveToParentViewController:self];
                 [self addChildViewController:controller];
                 [controller didMoveToParentViewController:self];
+                CGFloat scrollWidth = _contentScrollView.frame.size.width;
+                CGFloat scrollHeght = _contentScrollView.frame.size.height;
+                controller.view.frame = CGRectMake(i * scrollWidth, 0, scrollWidth, scrollHeght);
+                 [_contentScrollView addSubview:controller.view];
+
+                
             } else {
                 [controller willMoveToParentViewController:self];
                 [controller removeFromParentViewController];
                 [controller didMoveToParentViewController:self];
+                [controller.view removeFromSuperview];
             }
+            
         }
     }
 }

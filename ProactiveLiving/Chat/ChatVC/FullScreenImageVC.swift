@@ -8,10 +8,12 @@
 
 import UIKit
 
-class FullScreenImageVC: UIViewController {
+class FullScreenImageVC: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var activitIndc: UIActivityIndicatorView!
     @IBOutlet weak var fullImageView: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
+
     var bottomTabBar : CustonTabBarController!
 
     var imagePath : String!
@@ -22,18 +24,21 @@ class FullScreenImageVC: UIViewController {
         super.viewDidLoad()
         activitIndc.hidden = true
         bottomTabBar = self.tabBarController as? CustonTabBarController
-        fullImageView.contentMode = .ScaleAspectFit
-        fullImageView.image = nil
-        
+        self.fullImageView.contentMode = .ScaleAspectFit
+        self.fullImageView.image = nil
+        self.scrollView.minimumZoomScale = 1.0
+        self.scrollView.maximumZoomScale = 10.0
+        self.navigationController?.hidesBarsOnTap = true
+
         if downLoadPath == "0" {
-             fullImageView.image = UIImage(contentsOfFile: imagePath)
-            if fullImageView.image == nil {
+             self.fullImageView.image = UIImage(contentsOfFile: imagePath)
+            if self.fullImageView.image == nil {
                 activitIndc.hidden = false
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FullScreenImageVC.showDownloadedImage(_:)),name:"showImageFOrFullScreen", object:nil)
             }
         } else if downLoadPath == "3" {
             //load from url path
-            fullImageView.sd_setImageWithURL(NSURL(string: imagePath), placeholderImage: UIImage(named:  "cell_blured_heigh"))
+            self.fullImageView.sd_setImageWithURL(NSURL(string: imagePath), placeholderImage: UIImage(named:  "cell_blured_heigh"))
             self.navigationController?.navigationBarHidden = false
         }else if downLoadPath == "4" {
             //load from local path
@@ -50,6 +55,7 @@ class FullScreenImageVC: UIViewController {
         navigationItem.leftBarButtonItem = backBtn
         
     }
+    
     override func viewWillAppear(animated: Bool) {
         bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
             // print(finish)
@@ -57,6 +63,18 @@ class FullScreenImageVC: UIViewController {
         super.viewWillAppear(animated)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.hidesBarsOnTap = false
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+            // print(finish)
+        }
+    }
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return self.fullImageView
+
+    }
     
     func showDownloadedImage(note:NSNotification) {
             let imgStr : String = note.valueForKey("userInfo")?.valueForKey("imagePath") as! String
