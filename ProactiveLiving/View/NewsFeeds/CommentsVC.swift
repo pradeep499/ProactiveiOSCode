@@ -391,7 +391,14 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     //Main user profile
     func onClickUserProfileImage() {
     
-        if let userID = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy._id") as? String {
+        if let userID = (self.selectedCommentDict as NSDictionary).valueForKeyPath("sharedBy._id") as? String {
+            let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
+            vc.viewerUserID = userID
+            self.navigationController?.pushViewController(vc , animated: true)
+        }
+        else {
+            
+            let userID = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy._id") as? String
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
             vc.viewerUserID = userID
             self.navigationController?.pushViewController(vc , animated: true)
