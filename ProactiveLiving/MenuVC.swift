@@ -22,6 +22,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var table_view: UITableView!
     
     var bottomTabBar : CustonTabBarController!
+    var statusLbl : UILabel!
     
     @IBOutlet var viewAddFriend: UIView!
     
@@ -173,7 +174,7 @@ extension MenuVC: UITableViewDataSource{
             
             
             //make circle profile image
-            iv_profile.layer.borderWidth = 1.0
+            iv_profile.layer.borderWidth = 2.0
             iv_profile.contentMode = .ScaleAspectFill
             iv_profile.backgroundColor = UIColor.whiteColor()
             iv_profile.layer.masksToBounds = false
@@ -185,7 +186,7 @@ extension MenuVC: UITableViewDataSource{
             
         case 1:  // Status Sharing
             let lbl_title = cell.contentView.viewWithTag(2) as! UILabel
-            lbl_title.layer.borderColor = UIColor(red:192.0/255.0, green:192.0/255.0, blue:192.0/255.0, alpha: 1.0).CGColor            
+            lbl_title.layer.borderColor = UIColor(red:172.0/255.0, green:172.0/255.0, blue:172.0/255.0, alpha: 1.0).CGColor
             lbl_title.textColor = UIColor.blackColor()
             lbl_title.layer.borderWidth = 1.0
             tableView.separatorStyle = .None
@@ -193,11 +194,14 @@ extension MenuVC: UITableViewDataSource{
         
            // self.table_view.separatorColor = UIColor.clearColor()
             
+            self.statusLbl = lbl_title
+            
+            
             if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
-                lbl_title.text = status as? String
+                statusLbl.text = status as? String
             }else{
-                 lbl_title.textColor = UIColor.grayColor()
-                 lbl_title.text = "Share your status here."
+                 statusLbl.textColor = UIColor.grayColor()
+                 statusLbl.text = "Share your status here."
             }
             
             break
@@ -235,6 +239,8 @@ extension MenuVC:UITableViewDelegate{
         
         //2. Add the text field. You can configure it however you need.
         alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+            
+            textField.delegate = self
             // textField.text = "Some default text."
         })
         
@@ -247,7 +253,7 @@ extension MenuVC:UITableViewDelegate{
             print("Text field: \(textField.text)")
             
             // hit API
-            self.sendStatusAPI(textField.text!)
+           // self.sendStatusAPI(textField.text!)
             
             }))
         
@@ -376,12 +382,6 @@ extension MenuVC:UITableViewDelegate{
                     
                 }
                 
-                
-                
-                
-                
-                
-                
                 self.navigationController?.navigationBarHidden = true
                 //
                 
@@ -425,4 +425,51 @@ extension MenuVC:UITableViewDelegate{
 
 
 
+}
+
+//MARK:- TextView Delegate
+
+extension MenuVC : UITextFieldDelegate {
+    
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+       
+        
+        if (range.location > 34){  // 35 characters limit
+            return false
+        }
+        else{
+            return true
+        }
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        
+        if textField.text == "" || textField.text == " " {
+            
+            self.statusLbl.text = "   Available"
+            // hit API
+            self.sendStatusAPI("   Available")
+            
+         
+        }
+        else{
+            
+            let finalStr = "   " + textField.text!
+            
+            self.sendStatusAPI(finalStr)
+        }
+        
+        
+    }
+    
+
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        textField.textColor = UIColor.blackColor()
+
+        
+    }
+    
+    
 }

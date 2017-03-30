@@ -22,6 +22,8 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
     @IBOutlet weak var btn_countryCode: UIButton!
     @IBOutlet weak var layout_viewCountryListTop: NSLayoutConstraint!
     
+    @IBOutlet weak var tableViewOutlet: UITableView!
+   
    
     @IBOutlet weak var lbl_text: UILabel!
     
@@ -49,10 +51,11 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
             
         }
         
+      //  let tap = UITapGestureRecognizer(target: self, action: #selector(DeleteACVC.handleTap(_:)))
+      //  viewOutlet.addGestureRecognizer(tap)
         
         
-        
-        self.layout_viewCountryListTop.constant = 1000
+        self.layout_viewCountryListTop.constant = -1000
         
         IQKeyboardManager.sharedManager().enable=true
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
@@ -70,6 +73,12 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         }
     }
 
+//    func handleTap(sender: UITapGestureRecognizer? = nil) {
+//        // handling code
+//        self.layout_viewCountryListTop.constant = -1000
+//    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -83,8 +92,9 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
 
     
     @IBAction func onClickCountryBtn(sender: AnyObject) {
-        self.layout_viewCountryListTop.constant = 1
-        
+
+        self.layout_viewCountryListTop.constant = 10
+
     }
     
     
@@ -125,6 +135,8 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         self.resignTextField()
+        self.layout_viewCountryListTop.constant = -1000
+        
     }
     
     func resignTextField() -> Void {
@@ -310,11 +322,10 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         
     }
     
-    
 }
 
 
-
+//MARK:- UITableView DataSource
 extension DeleteACVC: UITableViewDataSource{
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -338,14 +349,19 @@ extension DeleteACVC: UITableViewDataSource{
         return cell
     }
 }
-
+//MARK:- UITableView Delegate
 extension DeleteACVC: UITableViewDelegate{
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//
+//        if tableView==tableViewOutlet {
+//            self.layout_viewCountryListTop.constant = -1000
+//        }
         
         self.btn_countryCode.setTitle(self.countries[indexPath.row], forState: .Normal)
         self.tf_countryCode.text = (self.countriesPHNOCode[indexPath.row] as NSString) .substringFromIndex(1)
         
-        self.layout_viewCountryListTop.constant = 1000
+        self.layout_viewCountryListTop.constant = -1000
     }
+    
 }
