@@ -260,7 +260,9 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
         let tabBarController = CustonTabBarController.init()
         
          tabBarController.setViewControllers([firstNVC, secondNVC, thirdNVC, fourthNVC, fifthNVC], animated: true)
-
+         tabBarController.selectedIndex = 2
+        
+        
         //set up badge Icon
         AppDelegate.getAppDelegate().tabbarController = tabBarController
         
@@ -278,12 +280,7 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
 
         self.navigationController?.pushViewController(tabBarController, animated: true)
         
-        
-        
-        
-        
-        
-        
+       
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
