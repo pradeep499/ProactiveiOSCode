@@ -1306,7 +1306,9 @@ func connectToSocket() -> Void{
                 
                 var dateStr : String
                 
-                tempDateStr = receiveMsgDic["createdDate"] as! String
+                //tempDateStr = receiveMsgDic["createdDate"] as! String
+                tempDateStr = (receiveMsgDic["createdDate"] as? String)!   // changed on 5/04/17
+ 
                 let dateFormatter = NSDateFormatter()
                 dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

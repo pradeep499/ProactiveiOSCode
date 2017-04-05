@@ -361,7 +361,10 @@
             #endif
             
             
-            [Services serviceCallWithPath:ServiceLogin withParam:parameters success:^(NSDictionary *responseDict) {
+            [Services postRequest:ServiceLogin parameters:parameters completionHandler:^(NSString *err, NSDictionary *responseDict) {
+            
+            
+          //  [Services serviceCallWithPath:ServiceLogin withParam:parameters success:^(NSDictionary *responseDict) {
                 [SVProgressHUD dismiss];
                 NSLog(@"%@",responseDict);
                 
@@ -471,11 +474,15 @@
                     [self showAlert];
                 }
                 
-            } failure:^(NSError *error) {
+            }
+             
+             /*
+                          failure:^(NSError *error) {
                 [SVProgressHUD dismiss];
                 NSLog(@"%@",error);
                 [self showAlert];
-            }];
+            }*/
+              ];
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:netError message:netErrorMessage delegate:nil cancelButtonTitle:ok otherButtonTitles:nil, nil];
@@ -487,6 +494,7 @@
 -(void)showAlert {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:serviceError delegate:nil cancelButtonTitle:ok otherButtonTitles:nil, nil];
     [alert show];
+    
 }
 #pragma mark - forgotPassword
 - (IBAction)forgotPassword:(id)sender {
