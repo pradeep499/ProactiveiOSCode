@@ -492,9 +492,8 @@ class VideosVC: UIViewController {
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = viewerUserID // AppHelper.userDefaultsForKey(_ID)
-            
-            
             parameters["filter"] = "videos"
+            
             
             
             //call global web service class latest
@@ -559,15 +558,16 @@ class VideosVC: UIViewController {
         if AppDelegate.checkInternetConnection() {
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
+            
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)            
-            
-            parameters["videoId"] = videoID
+            parameters["type"] = "video"
+            parameters["contentId"] = videoID
             
             
             //call global web service class latest
-            Services.postRequest(ServiceDeleteVideo, parameters: parameters, completionHandler:{
+            Services.postRequest(ServiceDeleteImages, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 AppDelegate.dismissProgressHUD()

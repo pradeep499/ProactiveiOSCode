@@ -283,6 +283,10 @@
         NSString *code = [countryCodeArr objectAtIndex:indexPath.row];
         self.tf_countryCode.text = [code substringFromIndex:1] ;
     }
+    else{
+         self.layout_viewCountryTop.constant = 1000;
+    }
+    
 }
 #pragma mark - cancelPhonePad
 -(void)cancelPhonePad {

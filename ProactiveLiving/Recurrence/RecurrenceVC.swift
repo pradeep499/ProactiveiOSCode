@@ -217,11 +217,11 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
         self.calculateEndDateOfRecurrence()
        
         if  self.tf_recureEvery.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence every cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence every can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         if  self.tf_endDateRangeofRecurrence.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence end date cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence end date can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         var dict = [String:String]()
@@ -386,7 +386,7 @@ class RecurrenceVC: UIViewController,UITextFieldDelegate {
         }
         
         if  self.tf_recureEvery.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence every cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence every can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
         }
         
         return true

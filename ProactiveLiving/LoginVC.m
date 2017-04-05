@@ -215,12 +215,14 @@
     
     NSLog(@"%@",[AppHelper userDefaultsForKey:isRememberUser]);
     if (![[AppHelper userDefaultsForKey:isRememberUser] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:isRememberUser]) {
+        
         if (![[AppHelper userDefaultsForKey:cellNum] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:cellNum]) {
             self.emailTextField.text = [AppHelper userDefaultsForKey:cellNum];
         }
         if (![[AppHelper userDefaultsForKey:pwd] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:pwd]) {
             self.passwordTextField.text = [AppHelper userDefaultsForKey:pwd];
         }
+        
     }
     else {
         self.emailTextField.text = @"";
@@ -364,8 +366,6 @@
                 NSLog(@"%@",responseDict);
                 
                 self.detailDictionary = responseDict;
-                
-                
                 
                 NSLog(@"%@",self.detailDictionary);
                 
@@ -547,7 +547,7 @@
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
     
     if (textField == self.emailTextField) {
-        return (newLength > maxPhoneLength ? NO : YES);
+        return (newLength > 60 ? NO : YES);
     }
     else {
         return (newLength > maxLength) ? NO : YES;
