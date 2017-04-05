@@ -33,7 +33,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     var commentsArr = [AnyObject]()
     var selectedCommentDict = [String:AnyObject]()
     var tapGesture = UITapGestureRecognizer()
-    var moviePlayerController = MPMoviePlayerController()
+    var moviePlayerController = MPMoviePlayerViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -196,7 +196,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         //--
         if self.selectedCommentDict["postType"] as! String != "text" {
             
-            self.imgAttachment.contentMode = .ScaleAspectFill
+            self.imgAttachment.contentMode = .ScaleAspectFit
             self.imgAttachment.clipsToBounds = true
             
             let imgUrls = self.selectedCommentDict["attachments"] as! [String]
@@ -346,17 +346,18 @@ class CommentsVC: UIViewController, UITextViewDelegate {
                 
                 if isExistPath{
                     
-                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL.fileURLWithPath(fileUrl!))
+                    self.moviePlayerController = MPMoviePlayerViewController(contentURL:NSURL.fileURLWithPath(fileUrl!))
                     
                 }else{
                     
-                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL(string: imgUrls.first!))
+                    self.moviePlayerController = MPMoviePlayerViewController(contentURL:NSURL(string: imgUrls.first!))
                 }
                 
                 //moviePlayerController.movieSourceType = MPMovieSourceType.Streaming
-                self.view.addSubview(self.moviePlayerController.view)
-                self.moviePlayerController.fullscreen = true
-                self.moviePlayerController.play()
+                //self.view.addSubview(self.moviePlayerController.view)
+                self.presentMoviePlayerViewControllerAnimated(self.moviePlayerController)
+                //self.moviePlayerController.fullscreen = true
+                self.moviePlayerController.moviePlayer.play()
             })
         }
         
