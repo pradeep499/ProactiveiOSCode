@@ -17,7 +17,7 @@ enum userType {
 class MenuVC: UIViewController, UISearchBarDelegate {
 
     
-    @IBOutlet weak var search_bar: UISearchBar!
+   // @IBOutlet weak var search_bar: UISearchBar!
     
     @IBOutlet weak var table_view: UITableView!
     
@@ -65,12 +65,12 @@ class MenuVC: UIViewController, UISearchBarDelegate {
     
     // MARK: - Search bar resign
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
-        self.search_bar.resignFirstResponder()
+       // self.search_bar.resignFirstResponder()
         
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.search_bar.resignFirstResponder()
+      //  self.search_bar.resignFirstResponder()
     }
     
     
@@ -141,7 +141,15 @@ extension MenuVC: UITableViewDataSource{
     
     func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat
     {
+        
+        if indexPath.row == 5 || indexPath.row == 6{    // as per client request 3/04/2017
+            return 0
+        }
+        else{
         return 55
+        
+        }
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -400,7 +408,7 @@ extension MenuVC:UITableViewDelegate{
         }
         
         self.table_view.reloadData()
-        self.search_bar.resignFirstResponder()
+        //self.search_bar.resignFirstResponder()
         
     }
     

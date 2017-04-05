@@ -65,24 +65,24 @@ class ChangeNumberVC: UIViewController, UITextFieldDelegate {
     @IBAction func onClickSendOTPBtn(sender: AnyObject) {
         
         if  self.tf_OldMbCountryCode.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Country code cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Country code can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         
         if  self.tf_newMbCountryCode.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Country code cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Country code can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         if  self.tf_OldMb.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Old mb no cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Old mobile no can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         if  self.tf_newMb.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "New mb no cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "New mobile no can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         if  self.tf_pwd.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Password cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Password can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         

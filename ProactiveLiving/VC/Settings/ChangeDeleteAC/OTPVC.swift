@@ -60,7 +60,7 @@ class OTPVC: UIViewController {
         
         
         if  self.tf_otp.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "OTP cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "OTP can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         

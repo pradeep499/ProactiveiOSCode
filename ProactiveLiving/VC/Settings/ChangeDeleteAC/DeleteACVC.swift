@@ -104,12 +104,12 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         
         
         if  self.tf_countryCode.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Country Code cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Country Code can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         
         if  self.tf_phoneNo.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Phone no  cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Phone number can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         
@@ -121,7 +121,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         
         
         if  self.tf_pwd.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Password Code cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Password Code can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         
@@ -241,7 +241,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                         if responseDict["errorMsg"] as! String == "Friend Not Found"{
                             
                             
-                            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: "Do You want " + String(self.tf_phoneNo.text!) + " to invite ? " , cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+                            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: "Do you want to invite" + String(self.tf_phoneNo.text!)+" ?"  , cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
                                 
                                 if str == "Yes"{
                                     self.openDefaultSharing("")

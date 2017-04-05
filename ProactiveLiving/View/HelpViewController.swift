@@ -147,20 +147,7 @@ extension HelpViewController : UITableViewDataSource {
         return 4
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-       
-        
-        // Height for Address field (Map)
-        if indexPath.row == 3 {
-            
-            return 200
-            
-        }
-        else{
-            return 60
-        }
-    }
-    
+ 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -233,11 +220,76 @@ extension HelpViewController :UITableViewDelegate{
 
             
         }
+        else if indexPath.row == 1 {
+            
+            let mobilePhone = self.strPhone
+            if let phoneCallURL:NSURL = NSURL(string: "tel://\(mobilePhone)") {
+                let application:UIApplication = UIApplication.sharedApplication()
+                if (application.canOpenURL(phoneCallURL)) {
+                    application.openURL(phoneCallURL)
+                }
+            }
+            
+            
+        }
+        else if indexPath.row == 2 {
+           self.sendMail()
+        }
+        
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        
+        // Height for Address field (Map)
+        if indexPath.row == 3 {
+            
+            return 200
+            
+        }
+        else{
+            return 60
+        }
     }
     
     
 }
 
+//MARK:- MFMailComposeViewControllerDelegate
+extension HelpViewController: MFMailComposeViewControllerDelegate {
+   
+    func sendMail() -> Void {
+        
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available")
+            return
+        }
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        composeVC.setToRecipients([self.strMail])
+        composeVC.setSubject("Help")
+        
+        let body = ""
+            
+        composeVC.setMessageBody(body , isHTML: true)
+        
+        // Present the view controller modally.
+        self.presentViewController(composeVC, animated: true, completion: nil)
+    }
+    
+    
+    func mailComposeController(controller: MFMailComposeViewController,
+                               didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        // Check the result or perform other tasks.
+        
+        // Dismiss the mail compose view controller.
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+}
 
 
 

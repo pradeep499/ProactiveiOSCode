@@ -360,7 +360,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     @IBAction func onClickProfileImg(sender: AnyObject) {
         
         
-        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile  image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
             if str == "Yes"{
                 self.gotTOPhotosPage()
                 self.imgUploadType = "profile"
@@ -1078,7 +1078,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 if frStatus == 0{
                     //Pending
                     
-                    HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want cancel sent request ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                    HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to cancel sent request ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
                         
                         if str == "Yes"{
                           //
@@ -1087,7 +1087,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 }else if frStatus == 1{
                     //unfriend
                     
-                    HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want unfriend ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+                    HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to unfriend ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
                         
                         if str == "Yes"{
                             self.unFriendAPI()

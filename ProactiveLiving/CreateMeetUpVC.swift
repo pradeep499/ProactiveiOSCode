@@ -1126,11 +1126,11 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func onClickRecurrenceBtn(sender: AnyObject) {
         if  self.txtFieldOn.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence start date cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence start date can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         if  self.txtFieldAt.text?.characters.count < 1 {
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence start time cann't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Recurrence start time can't be blank.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             return
         }
         
