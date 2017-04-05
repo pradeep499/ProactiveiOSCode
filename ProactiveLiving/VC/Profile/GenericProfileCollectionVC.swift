@@ -745,14 +745,18 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                 
                 if isExistPath {
                     let img = UIImage(contentsOfFile: fileUrl!)
-                    cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                   // cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                    cell.thumbIV.sd_setImageWithURL(NSURL(string:fileUrl!), placeholderImage : UIImage(named: "pac_listing_no_preview") )
+                    
                     cell.indicator.hidden = true
                     cell.indicator.stopAnimating()
                 }else{
-                    cell.thumbIV.sd_setImageWithURL(NSURL(string: imgUrl!), placeholderImage: UIImage(named:  "cell_blured_heigh")) {
+                    cell.thumbIV.sd_setImageWithURL(NSURL(string: imgUrl!), placeholderImage: UIImage(named:  "pac_listing_no_preview")) {
                         (img,  err,  cacheType,  imgUrl) -> Void in
                         
-                        cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                       // cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                        cell.thumbIV.sd_setImageWithURL(imgUrl!, placeholderImage : UIImage(named: "pac_listing_no_preview") )
+
                         cell.indicator.hidden = true
                         cell.indicator.stopAnimating()
                         
@@ -771,13 +775,19 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                 
                 if isExistPath {
                     let img = UIImage(contentsOfFile: fileUrl!)
-                    cell.thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                   // cell.thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30)
+                    cell.thumbIV.sd_setImageWithURL(NSURL(string:fileUrl!), placeholderImage:UIImage(named:"pac_listing_no_preview"))
+                    
                     cell.indicator.hidden = true
                 } else {
                     
                     //generate thumb from video url and display on cell
                     let img =  CommonMethodFunctions.generateThumbImage(NSURL(string: imgUrl!)!) //self.generateThumnail(sourceURL: NSURL(string: imgUrls.first!)!)
-                    cell.thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                    cell.thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30)
+                   // cell.thumbIV.sd_setImageWithURL(NSURL(string:imgUrl!), placeholderImage:UIImage(named:"pac_listing_no_preview"))
+                    
+                    
+                    
                     
                     //write to db
                     if img != nil{
