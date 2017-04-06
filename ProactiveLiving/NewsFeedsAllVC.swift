@@ -1131,7 +1131,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             //     headerView.frame.size.height = 0
             headerView.backgroundColor = UIColor.redColor()
             headerView.setDataSource(dataArrForHeader)
-            headerView.setViewTitle(top: "EXPLORE", bottomTitle: "UPDATES")
+            headerView.setViewTitle(top: "FOLLOWING", bottomTitle: "UPDATES")
             return headerView
             
         case UICollectionElementKindSectionFooter:
@@ -1413,7 +1413,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             
             
-            df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             df.timeZone = NSTimeZone(forSecondsFromGMT: 0)
             let tempDate = df.dateFromString(createdDate) as NSDate!
             

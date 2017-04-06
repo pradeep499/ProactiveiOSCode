@@ -126,98 +126,104 @@ class AddOrEditVideoVC: UIViewController,UIGestureRecognizerDelegate {
     
     func submitVideoAPI() {
         
-        self.resignTF()
         
-        if (self.tf_videoType.text?.characters.count < 1 && self.tf_videoTitle.text?.characters.count < 1 && self.tf_by.text?.characters.count < 1 && self.tf_videoUrl.text?.characters.count < 1 && self.tv_desc.text?.characters.count < 1 ) {
+        if (self.tf_videoType.text?.characters.count < 1 || self.tf_videoTitle.text?.characters.count < 1 || self.tf_by.text?.characters.count < 1 || self.tf_videoUrl.text?.characters.count < 1 || self.tv_desc.text?.characters.count < 1 ) {
         
             AppHelper.showAlertWithTitle(AppName, message: "All fields are mendatory.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
             return
         }
-        
-        
-        if AppDelegate.checkInternetConnection() {
-            //show indicator on screen
-            AppDelegate.showProgressHUDWithStatus("Please wait..")
-            var parameters = [String: AnyObject]()
-            parameters["AppKey"] = AppKey
-            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["category"] = self.tf_videoType.text
-            parameters["title"] = self.tf_videoTitle.text
-            parameters["author"] = self.tf_by.text
+        else if(self.tf_videoUrl.text?.isValidURL() == false) {
             
-            var url = String()
-            
-            if((self.tf_videoUrl.text! as String).hasPrefix("http://") || (self.tf_videoUrl.text! as! String).hasPrefix("https://")){
-                
-                url = self.tf_videoUrl.text!
-            }
-            else
-            {
-                url = "http://" + self.tf_videoUrl.text!
-            }
-            url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
-            parameters["url"] = url
-            
-            parameters["description"] = self.tv_desc.text
-            parameters["type"] = "video"
-            
-            var method:String?
-            
-            if self.videoType == "Edit" {
-                parameters["videoId"] = self.videoDict!["_id"]
-                
-                method = ServiceEditVideos
-                
-            }else{
-                method  = ServiceUploadVideos
-            }
-            
-            
-            
-            //call global web service class latest
-            Services.postRequest(method, parameters: parameters, completionHandler:{
-                (status,responseDict) in
-                
-                AppDelegate.dismissProgressHUD()
-                
-                if (status == "Success") {
-                    
-                    if ((responseDict["error"] as! Int) == 0) {
-                        
-                        print(responseDict["result"])
-                        
-                        let result = responseDict["result"]
-                        
-                        if self.videoType == "Edit" {
-                        
-                        AppHelper.showAlertWithTitle(AppName, message: "Video is Updated", tag: 11, delegate: self, cancelButton: ok, otherButton: nil)
-                        }else{
-                            AppHelper.showAlertWithTitle(AppName, message: "Video is added", tag: 11, delegate: self, cancelButton: ok, otherButton: nil)
-                        }
-                        
-                        
-                    } else {
-                        
-                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-                    }
-                    
-                } else if (status == "Error"){
-                    
-                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-                    
-                }
-            })
-            
+            AppHelper.showAlertWithTitle(AppName, message: "Please input a valid url.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+            return
         }
         else {
-            AppDelegate.dismissProgressHUD()
-            //show internet not available
-            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
-        }
         
+            self.resignTF()
+
+            if AppDelegate.checkInternetConnection() {
+                //show indicator on screen
+                AppDelegate.showProgressHUDWithStatus("Please wait..")
+                var parameters = [String: AnyObject]()
+                parameters["AppKey"] = AppKey
+                parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+                parameters["category"] = self.tf_videoType.text
+                parameters["title"] = self.tf_videoTitle.text
+                parameters["author"] = self.tf_by.text
+                
+                var url = String()
+                
+                if((self.tf_videoUrl.text! as String).hasPrefix("http://") || (self.tf_videoUrl.text! as! String).hasPrefix("https://")){
+                    
+                    url = self.tf_videoUrl.text!
+                }
+                else
+                {
+                    url = "http://" + self.tf_videoUrl.text!
+                }
+                url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+                parameters["url"] = url
+                
+                parameters["description"] = self.tv_desc.text
+                parameters["type"] = "video"
+                
+                var method:String?
+                
+                if self.videoType == "Edit" {
+                    parameters["videoId"] = self.videoDict!["_id"]
+                    
+                    method = ServiceEditVideos
+                    
+                }else{
+                    method  = ServiceUploadVideos
+                }
+                
+                
+                
+                //call global web service class latest
+                Services.postRequest(method, parameters: parameters, completionHandler:{
+                    (status,responseDict) in
+                    
+                    AppDelegate.dismissProgressHUD()
+                    
+                    if (status == "Success") {
+                        
+                        if ((responseDict["error"] as! Int) == 0) {
+                            
+                            print(responseDict["result"])
+                            
+                            let result = responseDict["result"]
+                            
+                            if self.videoType == "Edit" {
+                                
+                                AppHelper.showAlertWithTitle(AppName, message: "Video is Updated", tag: 11, delegate: self, cancelButton: ok, otherButton: nil)
+                            }else{
+                                AppHelper.showAlertWithTitle(AppName, message: "Video is added", tag: 11, delegate: self, cancelButton: ok, otherButton: nil)
+                            }
+                            
+                            
+                        } else {
+                            
+                            AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        }
+                        
+                    } else if (status == "Error"){
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        
+                    }
+                })
+                
+            }
+            else {
+                AppDelegate.dismissProgressHUD()
+                //show internet not available
+                AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+            }
+
+        }
+    
     }
-    
-    
 }
 
 extension AddOrEditVideoVC:UIAlertViewDelegate{
