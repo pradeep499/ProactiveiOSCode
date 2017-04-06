@@ -481,6 +481,14 @@ func UIColorFromRGB(rgbValue: UInt) -> UIColor
 }
 
 
+func validateUrl(stringURL: String) -> Bool {
+    var urlRegEx = "(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+"
+    var urlTest = NSPredicate(format: "SELF MATCHES %@", urlRegEx)
+    return urlTest.evaluateWithObject(stringURL)
+}
+
+
+
 //MARK:- Validation Extension -
 
 extension String {

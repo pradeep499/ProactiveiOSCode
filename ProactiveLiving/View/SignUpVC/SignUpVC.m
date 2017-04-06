@@ -262,7 +262,7 @@
             cell.textField.placeholder = @"ZipCode";
             cell.textField.text = zipCode;
             cell.imageView.image = [UIImage imageNamed:@"signupLocation"];
-            [cell.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+            [cell.textField setKeyboardType:UIKeyboardTypePhonePad];
             [cell.textField setReturnKeyType:UIReturnKeyDone];
         }
         
