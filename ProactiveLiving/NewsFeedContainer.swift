@@ -116,10 +116,10 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         currentIndex = index
         intValue = index
         //controller.s
-
+/*
         if index == 0{
             if let conVC = controller as? NewsFeedsAllVC {
-                conVC.setColectionViewTitle()
+                conVC.setColectionViewTags()
                 conVC.fetchPostDataFromServer()
                 conVC.fetchExploreDataFromServer()
                 
@@ -130,23 +130,23 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         }
         else if index == 2{
             if let conVC = controller as? NewsFeedsAllVC {
-                conVC.setColectionViewTitle()
+                conVC.setColectionViewTags()
                 conVC.fetchPostDataFromServer()
             }        }
         else if index == 3{
             if let conVC = controller as? NewsFeedsAllVC {
-                conVC.setColectionViewTitle()
+                conVC.setColectionViewTags()
                 conVC.fetchPostDataFromServer()
             }
         }
         else {
             if let conVC = controller as? NewsFeedsAllVC {
-                conVC.setColectionViewTitle()
+                conVC.setColectionViewTags()
                 conVC.fetchPostDataFromServer()
             }
             
         }
-
+*/
         if let conVC = controller as? NewsFeedsAllVC {
             //conVC.collectionView.tag = 1111 * (index + 1)
             //conVC.refrashControllerData()

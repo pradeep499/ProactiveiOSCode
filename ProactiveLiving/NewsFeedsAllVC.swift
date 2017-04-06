@@ -31,7 +31,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     //var containerView: UIView = UIView()
     var pacID:String = String()
     var tapGesture = UITapGestureRecognizer()
-    var moviePlayerController = MPMoviePlayerController()
+    var moviePlayerController = MPMoviePlayerViewController()
     var globalAssets: [DKAsset]?
  //   var isFromGallery:Bool!
     
@@ -73,11 +73,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //self.hideKeyboardWhenTappedAround()
 
         self.setupGrowingTextView()
-        if self.title != "EXPLORE" {
-            self.getAllPostEvent()
-            self.getLikeUpdate()
-
-        }
         
         
         //self.fetchPostDataFromServer()
@@ -93,7 +88,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         //containerView = UIView(frame: CGRectMake(0, self.collectionView.frame.size.height - 40, 320, 40))
         //containerView.backgroundColor = UIColor.redColor()
-        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(screenWidth-100), height: CGFloat(24)))
+        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(screenWidth-100), height: CGFloat(35)))
+        //textView.internalTextView.autocorrectionType = .No
+        textView.internalTextView.inputAccessoryView = UIView(frame: CGRectZero)
+        textView.internalTextView.reloadInputViews()
         textView.isScrollable = false
         textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
         textView.minNumberOfLines = 1
@@ -101,7 +99,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         // you can also set the maximum height in points with maxHeight
         // textView.maxHeight = 200.0f;
         //textView.returnKeyType = .Go
-        textView.font = UIFont.systemFontOfSize(13.0)
+        textView.font = UIFont(name: "Roboto-Regular", size: 16)
         textView.delegate = self
         textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0)
         textView.backgroundColor = UIColor.whiteColor()
@@ -130,12 +128,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     override func viewWillAppear(animated: Bool) {
         
         //super.viewWillAppear(animated)
-        print(intValue)
-        
-        print_debug(self.collectionView.tag)
-        
-        setColectionViewTitle()
-        self.collectionView.reloadData()
+        if self.title != "EXPLORE" {
+            self.getAllPostEvent()
+            self.getLikeUpdate()
+            
+        }
 
         
         
@@ -166,48 +163,55 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         
     }
+
     
-    
-    func setColectionViewTitle()  {
+    func setColectionViewTags()  {
+        
         if intValue == 0 {
             self.collectionView.tag=1111
         }
-            
         else  if intValue == 2 {
             self.collectionView.tag=3333
-            
         }
         else  if intValue == 3 {
             self.collectionView.tag=4444
-            
         }
         else{
-            
             self.collectionView.tag=5555
-            
-        }
-        if intValue == 0 {
-            self.collectionView.tag=1111
-        }
-            
-        else  if intValue == 2 {
-            self.collectionView.tag=3333
-            
-        }
-        else  if intValue == 3 {
-            self.collectionView.tag=4444
-            
-        }
-        else{
-            
-            self.collectionView.tag=5555
-            
         }
 
     }
+    
+    func fetchScreenData() {
+        
+        if intValue == 0{
+                self.fetchPostDataFromServer()
+                self.fetchExploreDataFromServer()
+        }
+        else if intValue == 1{
+            
+        }
+        else if intValue == 2{
+                self.fetchPostDataFromServer()
+        }
+        else if intValue == 3{
+                self.fetchPostDataFromServer()
+        }
+        else {
+                self.fetchPostDataFromServer()
+        }
+
+    }
+    
     override func viewDidAppear(animated: Bool) {
 
         super.viewDidAppear(animated)
+        print("SCREEN TAG ==> \(intValue)")
+        self.setColectionViewTags()
+        self.fetchScreenData()
+        print_debug(self.collectionView.tag)
+        self.collectionView.reloadData()
+
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -424,17 +428,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
                 if isExistPath{
                     
-                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL.fileURLWithPath(fileUrl!))
+                    self.moviePlayerController = MPMoviePlayerViewController(contentURL:NSURL.fileURLWithPath(fileUrl!))
                     
                 }else{
                     
-                    self.moviePlayerController = MPMoviePlayerController(contentURL:NSURL(string: imgUrls.first!))
+                    self.moviePlayerController = MPMoviePlayerViewController(contentURL:NSURL(string: imgUrls.first!))
                 }
                 
                 //moviePlayerController.movieSourceType = MPMovieSourceType.Streaming
-                self.view.addSubview(self.moviePlayerController.view)
-                self.moviePlayerController.fullscreen = true
-                self.moviePlayerController.play()
+                self.presentMoviePlayerViewControllerAnimated(self.moviePlayerController)
+                //self.moviePlayerController.fullscreen = true
+                self.moviePlayerController.moviePlayer.play()
             })
             
             
@@ -843,10 +847,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func getAllPostEvent() -> Void {
         
-        //ChatListner .getChatListnerObj().socket.off("getPost")
+        ChatListner .getChatListnerObj().socket.off("getPost")
         ChatListner .getChatListnerObj().socket.on("getPost") {data, ack in
             
-            self.setColectionViewTitle()
+            self.setColectionViewTags()
+            self.fetchScreenData()
+
             print_debug(self.collectionView.tag)
 
             let errorCode = (data[0]["status"] as? String) ?? "1"
@@ -1017,7 +1023,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     func getLikeUpdate() -> Void {
         
         //unowned let weakself = self
-        ChatListner .getChatListnerObj().socket.off("getPostUpdate")
+        //ChatListner .getChatListnerObj().socket.off("getPostUpdate")
         ChatListner .getChatListnerObj().socket.on("getPostUpdate") {data, ack in
             
             
@@ -1452,7 +1458,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             let indicator = cell.viewWithTag(22) as! UIActivityIndicatorView
             
             
-            thumbIV.contentMode = .ScaleAspectFill
+            thumbIV.contentMode = .ScaleAspectFit
             thumbIV.clipsToBounds = true
             
             let imgUrls = dict["attachments"] as! [String]
@@ -1484,7 +1490,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         thumbIV.sd_setImageWithURL(NSURL(string: imgUrls.first!), placeholderImage: UIImage(named:  "cell_blured_heigh")) {
                             (img,  err,  cacheType,  imgUrl) -> Void in
                             
-                            thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                            //thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
                             indicator.hidden = true
                             indicator.stopAnimating()
                             
@@ -1512,7 +1518,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     } else {
                         
                         //generate thumb from video url    and display on cell
-                        let img =  CommonMethodFunctions.generateThumbImage(NSURL(string: imgUrls.first!)!) //self.generateThumnail(sourceURL: NSURL(string: imgUrls.first!)!)
+                        if let img =  CommonMethodFunctions.generateThumbImage(NSURL(string: imgUrls.first!)!) { //self.generateThumnail(sourceURL: NSURL(string: imgUrls.first!)!)
                         thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
                         
                         //write to db
@@ -1528,6 +1534,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                                 
                             }
                         })
+                        }
                     }
                     
                 }

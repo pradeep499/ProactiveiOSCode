@@ -329,6 +329,7 @@
 		BA8888291C64939B0083C857 /* FilterOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8888281C64939B0083C857 /* FilterOneCell.m */; };
 		BA88882C1C6493BA0083C857 /* FilterFourCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA88882B1C6493BA0083C857 /* FilterFourCell.m */; };
 		BA8983A31C6DEA1E00495E9B /* FilterThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8983A21C6DEA1E00495E9B /* FilterThreeCell.m */; };
+		BA8A10201E94F3700095903B /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8A101F1E94F3700095903B /* ProfileCollectionViewCell.swift */; };
 		BA8CF55F1E5C34B200D67A99 /* PACGroupsContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CF55E1E5C34B200D67A99 /* PACGroupsContainerVC.swift */; };
 		BA8CF5611E5C42CA00D67A99 /* AboutPacVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CF5601E5C42CA00D67A99 /* AboutPacVC.swift */; };
 		BA8CF5641E5C6CEB00D67A99 /* PacCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CF5631E5C6CEB00D67A99 /* PacCollectionCell.swift */; };
@@ -935,6 +936,7 @@
 		BA88882B1C6493BA0083C857 /* FilterFourCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterFourCell.m; sourceTree = "<group>"; };
 		BA8983A11C6DEA1E00495E9B /* FilterThreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterThreeCell.h; sourceTree = "<group>"; };
 		BA8983A21C6DEA1E00495E9B /* FilterThreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterThreeCell.m; sourceTree = "<group>"; };
+		BA8A101F1E94F3700095903B /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		BA8CF55E1E5C34B200D67A99 /* PACGroupsContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PACGroupsContainerVC.swift; path = ../../PACircle/PACGroupsContainerVC.swift; sourceTree = "<group>"; };
 		BA8CF5601E5C42CA00D67A99 /* AboutPacVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutPacVC.swift; path = ../../PACircle/AboutPacVC.swift; sourceTree = "<group>"; };
 		BA8CF5631E5C6CEB00D67A99 /* PacCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PacCollectionCell.swift; path = ../VC/PAC/PacCollectionCell.swift; sourceTree = "<group>"; };
@@ -1192,6 +1194,7 @@
 		603863831E234BBF00FE1598 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				BA8A101F1E94F3700095903B /* ProfileCollectionViewCell.swift */,
 				603863841E234BBF00FE1598 /* ProfileContainerVC.swift */,
 				603863861E2363AC00FE1598 /* ProfileVC.swift */,
 				603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */,
@@ -3225,6 +3228,7 @@
 				605EAC521E1E63C70048EA8F /* RSDFDatePickerDayCell.m in Sources */,
 				605EAC2A1E1E63C60048EA8F /* NSCalendar+DateComparison.m in Sources */,
 				605EAC2F1E1E63C60048EA8F /* NSDate+Description.m in Sources */,
+				BA8A10201E94F3700095903B /* ProfileCollectionViewCell.swift in Sources */,
 				605EAC401E1E63C60048EA8F /* CTCarrier+CountryCallingCode.m in Sources */,
 				BAB0E4F81D5DE59B00906C10 /* SocketExtensions.swift in Sources */,
 				BA53301D1CC6096100887DBF /* PASLevelVC.m in Sources */,

@@ -141,8 +141,10 @@ extension MenuVC: UITableViewDataSource{
     
     func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat
     {
-        
-        if indexPath.row == 5 || indexPath.row == 6{    // as per client request 3/04/2017
+        if indexPath.row == 0 {
+            return 52
+        }
+        else if indexPath.row == 5 || indexPath.row == 6{    // as per client request 3/04/2017
             return 0
         }
         else{
@@ -197,7 +199,7 @@ extension MenuVC: UITableViewDataSource{
             lbl_title.layer.borderColor = UIColor(red:172.0/255.0, green:172.0/255.0, blue:172.0/255.0, alpha: 1.0).CGColor
             lbl_title.textColor = UIColor.blackColor()
             lbl_title.layer.borderWidth = 1.0
-            tableView.separatorStyle = .None
+            cell.separatorInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, cell.bounds.size.width)
             cell.accessoryType = .None
         
            // self.table_view.separatorColor = UIColor.clearColor()
