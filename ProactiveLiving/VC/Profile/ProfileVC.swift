@@ -27,7 +27,7 @@ class ProfileVC: UIViewController {
         super.viewDidLoad()
         
 
-        self.lbl_profileStatus.text = "Status: "
+        self.lbl_profileStatus.text = "Status:"
         
         bottomTabBar = self.tabBarController as? CustonTabBarController
         
@@ -35,13 +35,12 @@ class ProfileVC: UIViewController {
         if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
             //Owner
             if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
-                self.lbl_profileStatus.text = "Status: " + (status as! String)
+                self.lbl_profileStatus.text = "Status:" + (status as! String)
             }
         }else{
             
             NSNotificationCenter.defaultCenter().removeObserver(self, name: "NotifyFrDetails", object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "NotifyFrDetails:", name:"NotifyFrDetails", object: nil)
-            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileVC.NotifyFrDetails(_:)), name:"NotifyFrDetails", object: nil)
             
         }
         
@@ -86,7 +85,7 @@ class ProfileVC: UIViewController {
     func NotifyFrDetails(notification: NSNotification){
        
         if let status = friendDetailsDict!["result"]!["userStatus"] ?? ""{
-            self.lbl_profileStatus.text = "Status: " + (status as! String)
+            self.lbl_profileStatus.text = "Status:" + (status as! String)
         }
         
     }

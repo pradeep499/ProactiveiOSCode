@@ -202,6 +202,29 @@ extension String {
     var floatValue: Float {
         return (self as NSString).floatValue
     }
+    
+    func isValidURL() -> Bool{
+        let length:Int = self.characters.count
+        var err:NSError?
+        var dataDetector:NSDataDetector? = NSDataDetector()
+        do{
+            dataDetector = try NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+        }catch{
+            err = error as NSError
+        }
+        if dataDetector != nil{
+            let range = NSMakeRange(0, length)
+            let notFoundRange = NSRange(location: NSNotFound, length: 0)
+            let linkRange = dataDetector?.rangeOfFirstMatchInString(self, options: NSMatchingOptions.init(rawValue: 0), range: range)
+            if !NSEqualRanges(notFoundRange, linkRange!) && NSEqualRanges(range, linkRange!){
+                return true
+            }
+        }else{
+            print("Could not create link data detector: \(err?.localizedDescription): \(err?.userInfo)")
+        }
+        
+        return false
+    }
 }
 
 extension UITableView {

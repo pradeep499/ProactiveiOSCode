@@ -186,9 +186,15 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             
             let df = NSDateFormatter.init()
             df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             //   df.timeZone = NSTimeZone(name: "UTC")
+            df.timeZone = NSTimeZone(forSecondsFromGMT: 0)
             
-            lbl_timeAgo.text = HelpingClass.timeAgoSinceDate(df.dateFromString(createdDate)!, numericDates: false)
+            let tempDate = df.dateFromString(createdDate) as NSDate!
+            df.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
+            let dateStr = df.stringFromDate(tempDate)
+            
+            lbl_timeAgo.text = HelpingClass.timeAgoSinceDate(df.dateFromString(dateStr)!, numericDates: false)
             
             lbl_commentsText.text =  self.selectedCommentDict["text"] as? String
             // will display Organisation name

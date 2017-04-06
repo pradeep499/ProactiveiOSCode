@@ -41,7 +41,9 @@ let IS_IPHONE_6 = UIScreen.mainScreen().bounds.size.height == 667.0
 let IS_IPHONE_5 = UIScreen.mainScreen().bounds.size.height == 568.0
 let IS_IPHONE_4 = UIScreen.mainScreen().bounds.size.height == 480.0
 
+//#define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 
+let DISMISS_KEYBOARD = UIApplication.sharedApplication().keyWindow?.endEditing(true)
 
 let screenWidth = UIScreen.mainScreen().bounds.width
 let screenHeight = UIScreen.mainScreen().bounds.height

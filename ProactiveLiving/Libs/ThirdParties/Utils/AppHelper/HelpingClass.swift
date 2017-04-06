@@ -519,6 +519,12 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         
     }
     
+    class func validateURL(url: String ) -> Bool {
+        let urlRegEx = "^http(?:s)?://(?:w{3}\\.)?(?!w{3}\\.)(?:[\\p{L}a-zA-Z0-9\\-]+\\.){1,}(?:[\\p{L}a-zA-Z]{2,})/(?:\\S*)?$"
+        let urlTest = NSPredicate(format: "SELF MATCHES %@", urlRegEx)
+        return urlTest.evaluateWithObject(url)
+    }
+    
     //MARK: - Local DB path
     
      
