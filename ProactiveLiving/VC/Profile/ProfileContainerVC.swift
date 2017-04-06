@@ -68,7 +68,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         self.lbl_name.text = ""
         self.lbl_address.text = ""
         self.setUpViewControllers()
-        self.setUpProfilePage()
         
         //popover table
         popOverTableView = UITableView()
@@ -87,7 +86,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(false)
-        
+        self.setUpProfilePage()
+
         self.navigationController?.navigationBarHidden = true
         
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in

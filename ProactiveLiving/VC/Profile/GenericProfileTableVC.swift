@@ -46,14 +46,15 @@ class GenericProfileTableVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.setUpPage()
-        
-        IQKeyboardManager.sharedManager().enable=true
-        IQKeyboardManager.sharedManager().enableAutoToolbar=true
-        
-       
-         
+    }
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        DISMISS_KEYBOARD
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,8 +70,8 @@ class GenericProfileTableVC: UIViewController {
             
             self.lbl_title.text = "About Me"
             
-            self.headerView_socialNetwork.hidden = true
-            self.headerView_socialNetwork = nil
+            //self.headerView_socialNetwork.hidden = true
+            //self.headerView_socialNetwork = nil
             self.tv.tableFooterView = UIView(frame: CGRectMake(0, 0, 0, 0))
             self.tv.tableHeaderView = self.headerView_AboutMe
             
@@ -86,7 +87,7 @@ class GenericProfileTableVC: UIViewController {
                 self.btnRight.hidden = true
                 self.tv_summary.text = self.getFriendsValue("summary")
             }
-            
+            self.tv.reloadData()
             
         }else if genericType == .SocialNetworks {
             
@@ -121,6 +122,8 @@ class GenericProfileTableVC: UIViewController {
     
     @IBAction func onClickRightBtn(sender: AnyObject) {
         
+        DISMISS_KEYBOARD
+        
         if genericType == .AboutMe{
             
             //go to Edit About Me
@@ -129,28 +132,12 @@ class GenericProfileTableVC: UIViewController {
             
         }else if genericType == .SocialNetworks {
             
-            
-            self.tf_fb?.resignFirstResponder()
-            self.tf_google?.resignFirstResponder()
-            self.tf_linkedIn?.resignFirstResponder()
-            self.tf_twitter?.resignFirstResponder()
-            self.tf_inst?.resignFirstResponder()
-            
-            
-            //save social Network link 
-            
-            
+            //save social Network link
             if isValidURLCheck() == true {
-                
                   self.saveSocialLinkAPI()
-                
             }
             
-          
-            
-            
         }
-        
         
     }
 
@@ -158,73 +145,35 @@ class GenericProfileTableVC: UIViewController {
     
     func isValidURLCheck() -> Bool{
         
-        let isValidFB =  validateUrl(self.tf_fb!.text!)
-        let isValidGoogle =  validateUrl(self.tf_google!.text!)
-        let isValidLinked =  validateUrl(self.tf_linkedIn!.text!)
-        let isValidTwitter =  validateUrl(self.tf_twitter!.text!)
-        let isValidInsta =  validateUrl(self.tf_inst!.text!)
-
-        
-        if isValidFB == false {
-            
-            // if TextField is empty then ignore since none of the field is mandatory
-            
-            if isEmptyUrl(self.tf_fb!.text!) == false {
-                
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Facebook.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                return false
-                
-            }
-            
+        if (isEmptyUrl(self.tf_fb!.text!) == false  && self.tf_fb!.text!.isValidURL() == false) {
+          
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Facebook.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return false
         }
         
-        if isValidGoogle == false {
-            
-            // if TextField is empty then ignore since none of the field is mandatory
-            
-            if isEmptyUrl(self.tf_google!.text!) == false {
-                
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Google Plus.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                return false
-                
-            }
+        if (isEmptyUrl(self.tf_google!.text!) == false  && self.tf_google!.text!.isValidURL() == false) {
+    
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Google Plus.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return false
          
         }
-         if isValidLinked == false {
+        if (isEmptyUrl(self.tf_linkedIn!.text!) == false  && self.tf_linkedIn!.text!.isValidURL() == false) {
             
-            // if TextField is empty then ignore since none of the field is mandatory
-            
-            if isEmptyUrl(self.tf_linkedIn!.text!) == false {
-                
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Linkedin.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                return false
-                
-            }
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Linkedin.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return false
            
         }
-         if isValidTwitter == false {
+        if (isEmptyUrl(self.tf_twitter!.text!) == false  && self.tf_twitter!.text!.isValidURL() == false) {
             
-            // if TextField is empty then ignore since none of the field is mandatory
-            
-            if isEmptyUrl(self.tf_twitter!.text!) == false {
-                
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Twitter.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                return false
-                
-            }
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Twitter.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return false
          
         }
         
-        if isValidInsta == false {
+        if (isEmptyUrl(self.tf_inst!.text!) == false  && self.tf_inst!.text!.isValidURL() == false) {
             
-            // if TextField is empty then ignore since none of the field is mandatory
-            
-            if isEmptyUrl(self.tf_inst!.text!) == false {
-                
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Instagram.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-                return false
-                
-            }
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Instagram.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return false
            
         }
         return true
@@ -248,12 +197,6 @@ class GenericProfileTableVC: UIViewController {
     
     @IBAction func onClickBackBatn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
-        self.tf_fb?.resignFirstResponder()
-        self.tf_google?.resignFirstResponder()
-        self.tf_linkedIn?.resignFirstResponder()
-        self.tf_twitter?.resignFirstResponder()
-        self.tf_inst?.resignFirstResponder()
-    
     }
     
     
@@ -342,8 +285,9 @@ class GenericProfileTableVC: UIViewController {
                         
                         print(responseDict["result"])
                         
-                      //  let result = responseDict["result"]
-                        
+                        //let result = responseDict["result"]["socialNetwork"] as! [AnyObject]
+                        //self.socialNetworkArr = result
+                        //self.tv.reloadData()
                         
                         
                         AppHelper.showAlertWithTitle(AppName, message: "Your Profile is updated.", tag: 11, delegate: self, cancelButton: ok, otherButton: nil)
@@ -371,38 +315,7 @@ class GenericProfileTableVC: UIViewController {
     }
 
 }
-
-//MARK:- UITextFieldDelegate
-
-extension GenericProfileTableVC:UITextFieldDelegate{
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-       
-        if genericType == .SocialNetworks {
-            
-            textField.resignFirstResponder()
-        }
-        
-        return true
-    }
-    
-    
-//    func textFieldDidEndEditing(textField: UITextField) {
-//        
-//
-////        let isValid =  validateUrl(textField.text!)
-////        print("TEST \(isValid)")
-////        if isValid == false {
-////            
-////            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
-////            
-////        }
-////        print("Did End")
-//        
-//    }
-    
-    
-}
 extension GenericProfileTableVC:UIAlertViewDelegate{
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
@@ -535,13 +448,8 @@ extension GenericProfileTableVC: UITableViewDataSource{
     func setUpSocialNetworkCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell =  tv.dequeueReusableCellWithIdentifier("SocialNetworkCell", forIndexPath: indexPath)
-        
-        
-        
         let iv_social = cell.viewWithTag(1) as! UIImageView
         let tf = cell.viewWithTag(2) as! UITextField
-        
-        tf.delegate = self
         
         switch indexPath.row {
         case 0:
