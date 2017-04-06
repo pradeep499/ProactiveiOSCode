@@ -199,7 +199,6 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
           
        //     self.tempPhotoListArr = self.photoListArr
       //      self.photoListArr.removeAll()
-                self.cv.reloadData()
           //  self.photoListArr = self.tempPhotoListArr
           
             
@@ -207,18 +206,14 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         else {
             isDelete = !isDelete
             //self.deleteButton!.hidden = true
-            // self.cv.reloadData()
             self.isHiddenDeleteBtn = false
             self.imgDeleteBtn.setImage(UIImage(named: "profile_remove"), forState: .Normal)
            
             //self.tempPhotoListArr = self.photoListArr
             //self.photoListArr.removeAll()
-            self.cv.reloadData()
-                
-           
-          
          //     self.photoListArr = self.tempPhotoListArr
         }
+        self.cv.reloadData()
         
     }
     
@@ -745,8 +740,8 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                 
                 if isExistPath {
                     let img = UIImage(contentsOfFile: fileUrl!)
-                   // cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
-                    cell.thumbIV.sd_setImageWithURL(NSURL(string:fileUrl!), placeholderImage : UIImage(named: "pac_listing_no_preview") )
+                    cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                    //cell.thumbIV.sd_setImageWithURL(NSURL(string:fileUrl!), placeholderImage : UIImage(named: "pac_listing_no_preview") )
                     
                     cell.indicator.hidden = true
                     cell.indicator.stopAnimating()
@@ -754,8 +749,8 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                     cell.thumbIV.sd_setImageWithURL(NSURL(string: imgUrl!), placeholderImage: UIImage(named:  "pac_listing_no_preview")) {
                         (img,  err,  cacheType,  imgUrl) -> Void in
                         
-                       // cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
-                        cell.thumbIV.sd_setImageWithURL(imgUrl!, placeholderImage : UIImage(named: "pac_listing_no_preview") )
+                        cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                        //cell.thumbIV.sd_setImageWithURL(imgUrl!, placeholderImage : UIImage(named: "pac_listing_no_preview") )
 
                         cell.indicator.hidden = true
                         cell.indicator.stopAnimating()

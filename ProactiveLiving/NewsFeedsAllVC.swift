@@ -88,7 +88,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         //containerView = UIView(frame: CGRectMake(0, self.collectionView.frame.size.height - 40, 320, 40))
         //containerView.backgroundColor = UIColor.redColor()
-        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(screenWidth-100), height: CGFloat(24)))
+        textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(screenWidth-100), height: CGFloat(35)))
+        //textView.internalTextView.autocorrectionType = .No
+        textView.internalTextView.inputAccessoryView = UIView(frame: CGRectZero)
+        textView.internalTextView.reloadInputViews()
         textView.isScrollable = false
         textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
         textView.minNumberOfLines = 1
@@ -96,7 +99,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         // you can also set the maximum height in points with maxHeight
         // textView.maxHeight = 200.0f;
         //textView.returnKeyType = .Go
-        textView.font = UIFont.systemFontOfSize(13.0)
+        textView.font = UIFont(name: "Roboto-Regular", size: 16)
         textView.delegate = self
         textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0)
         textView.backgroundColor = UIColor.whiteColor()

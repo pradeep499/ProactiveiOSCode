@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "AppHelper.h"
 #import "Defines.h"
+#import <MediaPlayer/MediaPlayer.h>
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <SVProgressHUD/SVProgressHUD.h>
@@ -319,6 +320,14 @@
     }];
 }
 
+-(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    if ([[window.rootViewController presentedViewController] isKindOfClass:[MPMoviePlayerViewController class]] && ![[self.window.rootViewController presentedViewController] isBeingDismissed]) {
+        return UIInterfaceOrientationMaskLandscape;
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
 
 /*
 -(void)getStaticData
