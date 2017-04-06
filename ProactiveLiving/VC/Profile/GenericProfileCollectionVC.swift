@@ -48,6 +48,9 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     var indexToDelete = NSIndexPath()
     var tempPhotoListArr = [AnyObject]()
     
+    // to hide the delete button if coming from Edit Profile Pic
+    var isFromProfileEdit = false
+    
     var moviePlayerController = MPMoviePlayerController()
     var pageFrom:String?
     var delegate:GenericProfileCollectionVCDelegate?
@@ -66,6 +69,11 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         self.setUpCollectionView()
         willCallGetPhotosOrSocialNetworkList = true
         
+        if (genericType == .Gallery && isFromProfileEdit == false) {
+        
+        self.imgDeleteBtn.hidden = false
+        
+        }
         
         self.setUpPage()
         
@@ -879,8 +887,6 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
 extension GenericProfileCollectionVC:UICollectionViewDelegate{
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        
         
         if genericType == .SocialNetworks {
             

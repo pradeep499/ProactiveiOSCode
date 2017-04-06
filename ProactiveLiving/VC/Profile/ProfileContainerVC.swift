@@ -531,6 +531,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         vc.genericType = .Gallery
         vc.pageFrom = "ProfileContainer"
         vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
+        vc.isFromProfileEdit = true
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
