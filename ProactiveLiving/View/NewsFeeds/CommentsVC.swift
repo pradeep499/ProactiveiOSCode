@@ -45,6 +45,9 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         self.getPostUpdate()
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(CommentsVC.returnKeyBoard))
         
+        //tv_writeComment.autocorrectionType = .No
+        tv_writeComment.inputAccessoryView = UIView(frame: CGRectZero)
+        tv_writeComment.reloadInputViews()
         //hide separotor while cell empty
         self.table_view.tableFooterView = UIView.init()
         
@@ -96,7 +99,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
                 
                 self.table_view.addGestureRecognizer(tapGesture)
-                layOutConstrain_view_writeComments_bottom.constant = keyboardHeight - 40
+                layOutConstrain_view_writeComments_bottom.constant = keyboardHeight - 50
                 UIView.animateWithDuration(0.25, animations: { () -> Void in
                     self.view.layoutIfNeeded()
                 })
