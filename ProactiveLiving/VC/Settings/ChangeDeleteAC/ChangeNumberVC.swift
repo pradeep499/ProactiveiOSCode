@@ -49,13 +49,40 @@ class ChangeNumberVC: UIViewController, UITextFieldDelegate {
         self.resignTextField()
     }
     
-    //MARK: textfield Delegate
+    //MARK:- Textfield Delegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
        
         return true
     }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        if (textField == tf_newMbCountryCode || textField == tf_OldMbCountryCode) {
+            
+            if range.location > 2 {  // 3 characters
+                return false
+            }
+            else {
+                return true
+            }
+        }
+        
+        if textField == tf_OldMb || textField == tf_newMb {
+            
+            if range.location > 17 {  // 18 characters
+                return false
+            }
+            else {
+                return true
+            }
+            
+        }
+        return true
+    }
+    
+    
     
     @IBAction func onClickBackBtn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)

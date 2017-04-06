@@ -231,7 +231,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                         print(responseDict["result"])
                         self.tf_phoneNo.text = ""
                         
-                        AppHelper.showAlertWithTitle(AppName, message: "Friend request has sent.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        AppHelper.showAlertWithTitle(AppName, message: "Friend request sent.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                         
                         
                     } else {

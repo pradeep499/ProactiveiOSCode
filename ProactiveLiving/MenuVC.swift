@@ -240,7 +240,7 @@ extension MenuVC: UITableViewDataSource{
 extension MenuVC:UITableViewDelegate{
     
     
-    //MARK:-
+    //MARK:- UIAlertController
     
     func showAlert() -> Void {
         
@@ -251,16 +251,40 @@ extension MenuVC:UITableViewDelegate{
         alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
             
             textField.delegate = self
-            // textField.text = "Some default text."
+            
+            if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
+                textField.text = status as? String
+            }else{
+                textField.text = "Available."
+            }
+            
         })
         
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler:{ [weak alert] (action) -> Void in
+            
+            
+            
+            
+            }))
         
         //3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { [weak alert] (action) -> Void in
+           
             let textField = alert!.textFields![0] as UITextField
             print("Text field: \(textField.text)")
+            
+            if ((textField.text?.isBlank) == true) {
+                self.statusLbl.text = "  Available"
+                // hit API
+                self.sendStatusAPI("  Available")
+            }
+            else{
+                
+                
+                let finalStr = "  " + textField.text!
+                self.sendStatusAPI(finalStr)
+            }
             
             // hit API
            // self.sendStatusAPI(textField.text!)
@@ -453,31 +477,19 @@ extension MenuVC : UITextFieldDelegate {
         }
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        
-        if textField.text == "" || textField.text == " " {
-            
-            self.statusLbl.text = "   Available"
-            // hit API
-            self.sendStatusAPI("   Available")
-            
-         
-        }
-        else{
-            
-            let finalStr = "   " + textField.text!
-            
-            self.sendStatusAPI(finalStr)
-        }
-        
-        
-    }
     
-
     func textFieldDidBeginEditing(textField: UITextField) {
         
         textField.textColor = UIColor.blackColor()
-
+        
+        if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
+            // white space removal from begining of string
+            let range = status.rangeOfString("^\\s*", options: .RegularExpressionSearch)
+            let result = status.stringByReplacingCharactersInRange(range, withString: "")
+            textField.text = result
+        }else{
+            textField.text = "Available."
+        }
         
     }
     

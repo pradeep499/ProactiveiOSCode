@@ -135,8 +135,18 @@ class GenericProfileTableVC: UIViewController {
             self.tf_linkedIn?.resignFirstResponder()
             self.tf_twitter?.resignFirstResponder()
             self.tf_inst?.resignFirstResponder()
+            
+            
             //save social Network link 
-            self.saveSocialLinkAPI()
+            
+            
+            if isValidURLCheck() == true {
+                
+                  self.saveSocialLinkAPI()
+                
+            }
+            
+          
             
             
         }
@@ -144,9 +154,105 @@ class GenericProfileTableVC: UIViewController {
         
     }
 
+    //MARK:- Validation check
+    
+    func isValidURLCheck() -> Bool{
+        
+        let isValidFB =  validateUrl(self.tf_fb!.text!)
+        let isValidGoogle =  validateUrl(self.tf_google!.text!)
+        let isValidLinked =  validateUrl(self.tf_linkedIn!.text!)
+        let isValidTwitter =  validateUrl(self.tf_twitter!.text!)
+        let isValidInsta =  validateUrl(self.tf_inst!.text!)
+
+        
+        if isValidFB == false {
+            
+            // if TextField is empty then ignore since none of the field is mandatory
+            
+            if isEmptyUrl(self.tf_fb!.text!) == false {
+                
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Facebook.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                return false
+                
+            }
+            
+        }
+        
+        if isValidGoogle == false {
+            
+            // if TextField is empty then ignore since none of the field is mandatory
+            
+            if isEmptyUrl(self.tf_google!.text!) == false {
+                
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Google Plus.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                return false
+                
+            }
+         
+        }
+         if isValidLinked == false {
+            
+            // if TextField is empty then ignore since none of the field is mandatory
+            
+            if isEmptyUrl(self.tf_linkedIn!.text!) == false {
+                
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Linkedin.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                return false
+                
+            }
+           
+        }
+         if isValidTwitter == false {
+            
+            // if TextField is empty then ignore since none of the field is mandatory
+            
+            if isEmptyUrl(self.tf_twitter!.text!) == false {
+                
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Twitter.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                return false
+                
+            }
+         
+        }
+        
+        if isValidInsta == false {
+            
+            // if TextField is empty then ignore since none of the field is mandatory
+            
+            if isEmptyUrl(self.tf_inst!.text!) == false {
+                
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url for Instagram.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                return false
+                
+            }
+           
+        }
+        return true
+    }
+    
+    
+    func isEmptyUrl(str : String) -> Bool {
+        
+        
+        if str.characters.count > 0 {
+            
+            return false
+            
+        }
+        else {
+            return true
+        }
+    }
+    
+    
     
     @IBAction func onClickBackBatn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
+        self.tf_fb?.resignFirstResponder()
+        self.tf_google?.resignFirstResponder()
+        self.tf_linkedIn?.resignFirstResponder()
+        self.tf_twitter?.resignFirstResponder()
+        self.tf_inst?.resignFirstResponder()
     
     }
     
@@ -243,9 +349,6 @@ class GenericProfileTableVC: UIViewController {
                         AppHelper.showAlertWithTitle(AppName, message: "Your Profile is updated.", tag: 11, delegate: self, cancelButton: ok, otherButton: nil)
                         
                         
-                        
-                        
-                        
                     } else {
                         
                         AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
@@ -269,6 +372,8 @@ class GenericProfileTableVC: UIViewController {
 
 }
 
+//MARK:- UITextFieldDelegate
+
 extension GenericProfileTableVC:UITextFieldDelegate{
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -281,6 +386,22 @@ extension GenericProfileTableVC:UITextFieldDelegate{
         return true
     }
     
+    
+//    func textFieldDidEndEditing(textField: UITextField) {
+//        
+//
+////        let isValid =  validateUrl(textField.text!)
+////        print("TEST \(isValid)")
+////        if isValid == false {
+////            
+////            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+////            
+////        }
+////        print("Did End")
+//        
+//    }
+    
+    
 }
 extension GenericProfileTableVC:UIAlertViewDelegate{
     
@@ -292,6 +413,9 @@ extension GenericProfileTableVC:UIAlertViewDelegate{
         }
     }
 }
+
+
+
 
 extension GenericProfileTableVC: UITableViewDataSource{
     
@@ -334,8 +458,6 @@ extension GenericProfileTableVC: UITableViewDataSource{
     
     
     func setAboutMeCellHeight(tv: UITableView, indexPath: NSIndexPath) -> CGFloat {
-        
-       
         
         let obj:Beans.UserDetails = HelpingClass.getUserDetails()
         var newString = String()
@@ -458,16 +580,20 @@ extension GenericProfileTableVC: UITableViewDataSource{
                 if ( type == "fb") {
                     
                     self.tf_fb?.text = url
-                }else if (type == "google" ){
+                }
+                else if (type == "google" ){
                     
                     self.tf_google?.text = url
-                }else if (type ) == "linkedIn" {
+                }
+                else if (type ) == "linkedIn" {
                     
-                    self.tf_inst?.text = url
-                }else if (type ) == "twitter" {
+                    self.tf_linkedIn?.text = url
+                }
+                else if (type ) == "twitter" {
                     
                     self.tf_twitter?.text = url
-                }else if (type ) == "inst" {
+                }
+                else if (type ) == "inst" {
                     
                     self.tf_inst?.text   = url
                 }
@@ -476,12 +602,6 @@ extension GenericProfileTableVC: UITableViewDataSource{
             }
         }
 
-        
-        
-        
-        
-        
-        
         return cell
     }
 

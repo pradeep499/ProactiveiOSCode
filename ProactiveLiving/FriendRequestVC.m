@@ -134,10 +134,10 @@
                     [self.tableView reloadData];
                     
                     if (isAccept) {
-                        [AppHelper showAlertWithTitle:AppName message:@"Friend request is accepted." tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                        [AppHelper showAlertWithTitle:AppName message:@"Friend request accepted." tag:0 delegate:nil cancelButton:ok otherButton:nil];
                     }else{
                         
-                        [AppHelper showAlertWithTitle:AppName message:@"Friend request is declined." tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                        [AppHelper showAlertWithTitle:AppName message:@"Friend request declined." tag:0 delegate:nil cancelButton:ok otherButton:nil];
                         
                     }
                     

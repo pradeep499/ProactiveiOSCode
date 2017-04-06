@@ -48,6 +48,9 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     var indexToDelete = NSIndexPath()
     var tempPhotoListArr = [AnyObject]()
     
+    // to hide the delete button if coming from Edit Profile Pic
+    var isFromProfileEdit = false
+    
     var moviePlayerController = MPMoviePlayerController()
     var pageFrom:String?
     var delegate:GenericProfileCollectionVCDelegate?
@@ -66,6 +69,11 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         self.setUpCollectionView()
         willCallGetPhotosOrSocialNetworkList = true
         
+        if (genericType == .Gallery && isFromProfileEdit == false) {
+        
+        self.imgDeleteBtn.hidden = false
+        
+        }
         
         self.setUpPage()
         
@@ -621,24 +629,24 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             return
             
         }else if (postType != "image" && pageFrom == "ProfileContainer"){
+
             
-            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "You can't select video.", cancelButtonTitle:nil, otherButtonTitle: ["OK"], completion: { (str) in
-                
-            })
+//            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: "You can't select video.", cancelButtonTitle:nil, otherButtonTitle: ["OK"], completion: { (str) in
+//                   return
+//            })
+//            return
+
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "You can't select video.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            
             return
+            
         }
-        
-        
         
         if postType == "image"{
             
             let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
             
             fullImageVC.hidesBottomBarWhenPushed = true
-            
-            
-            
-            
             
             //check the thumbNail name is exist ? or generate from video url and save to db
             HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
@@ -871,11 +879,11 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
     
 }
 
+//MARK:-UICollectionViewDelegate
+
 extension GenericProfileCollectionVC:UICollectionViewDelegate{
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        
         
         if genericType == .SocialNetworks {
             
