@@ -1,5 +1,5 @@
 //
-//  SignUpVC.m
+//  c.m
 //  ProactiveLiving
 //
 //  Created by Hitesh on 1/13/16.
@@ -589,7 +589,7 @@
         alert.tag = 100;
         [alert show];
     }
-    else if ([[self.tf_cellNo.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] < minimumPhoneLength){
+    else if ([[self.tf_cellNo.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] > 18){
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:requiredTitle message:validCellNumber delegate:self cancelButtonTitle:ok otherButtonTitles:nil, nil];
         alert.tag = 104;
         [alert show];
