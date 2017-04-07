@@ -520,7 +520,10 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
     }
     
     class func validateURL(url: String ) -> Bool {
-        let urlRegEx = "^http(?:s)?://(?:w{3}\\.)?(?!w{3}\\.)(?:[\\p{L}a-zA-Z0-9\\-]+\\.){1,}(?:[\\p{L}a-zA-Z]{2,})/(?:\\S*)?$"
+        let urlRegEx = "(?i)(http|https)?(:\\/\\/)?([^ .]+)(\\.)([^ \n]+)"
+        //"^(http|https|ftp)?(://)?(www|ftp)?.?[a-z0-9-]+(.|:)([a-z0-9-]+)+([/?].*)?$"
+        //"(?i)(http|https)(:\\/\\/)([^ .]+)(\\.)([^ \n]+)"
+        //"^http(?:s)?://(?:w{3}\\.)?(?!w{3}\\.)(?:[\\p{L}a-zA-Z0-9\\-]+\\.){1,}(?:[\\p{L}a-zA-Z]{2,})/(?:\\S*)?$"
         let urlTest = NSPredicate(format: "SELF MATCHES %@", urlRegEx)
         return urlTest.evaluateWithObject(url)
     }

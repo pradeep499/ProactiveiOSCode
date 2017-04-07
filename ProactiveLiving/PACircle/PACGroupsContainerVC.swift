@@ -214,8 +214,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
         firstVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         firstVC.pacID = self.pacID
-        _ = firstVC.view
-        firstVC.collectionView.tag = 333
         firstVC.title = "WALL"
 
         secondVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("ResourcesPACVC") as! ResourcesPACVC

@@ -58,7 +58,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.view_share.hidden = true
         
        
-        if self.title == "ALL" || self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL"{
+        if self.title == "ALL" || self.title == "EXPLORE"{
             
             self.collectionView.registerClass(HeaderScrollerView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderScrollerView")
             
@@ -176,8 +176,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else  if intValue == 3 {
             self.collectionView.tag=4444
         }
-        else{
+        else if intValue == 4{
             self.collectionView.tag=5555
+        }
+        else {
+            self.collectionView.tag=1000
         }
 
     }
@@ -582,6 +585,31 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.navigationController?.pushViewController(vc , animated: true)
     }
     
+    func onClickMessage(recognizer: UITapGestureRecognizer) {
+        
+        print("tapped")
+        let thisMessage = recognizer.view as! UILabel
+        print(thisMessage.text)
+        
+        let urlString = thisMessage.text! as String
+        
+        if( HelpingClass.validateURL(urlString) ) {
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title = "Web Browser"
+        WebVC.urlStr = urlString
+        self.navigationController?.pushViewController(WebVC, animated: true)
+        }
+    }
+    
+    func verifyUrl (urlString: String?) -> Bool {
+        if let urlString = urlString {
+            if let url = NSURL(string: urlString) {
+                return UIApplication.sharedApplication().canOpenURL(url)
+            }
+        }
+        return false
+    }
+    
     func clickUserImage(recognizer: UITapGestureRecognizer )
     {
         
@@ -745,24 +773,26 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             dict["type"]="post"
             
-            
-            if self.title == "ALL" {
+            if self.collectionView.tag ==  1111 {
                 dict["section"] = "ALL"
+                
             }
-            else if self.title == "FRIENDS" {
+            else if self.collectionView.tag ==  3333 {
                 dict["section"] = "FRIENDS"
+                
             }
-            else if self.title == "COLLEAGUES" {
+            else if self.collectionView.tag ==  4444 {
                 dict["section"] = "COLLEAGUES"
+                
             }
-            else if self.title == "HEALTH CLUBS" {
+            else if self.collectionView.tag ==  5555 {
                 dict["section"] = "HEALTH CLUBS"
             }
-            else if self.title == "WALL" {
+            else {
                 dict["section"] = "PAC"
                 dict["pacId"] = self.pacID
             }
-            //=======
+            
             if isShared{
                 
                 if postType == "text" {
@@ -1302,6 +1332,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let lbl_name = cell.viewWithTag(2) as! UILabel
         let lbl_timeAgo = cell.viewWithTag(3) as! UILabel
         let lbl_details = cell.viewWithTag(4) as! UILabel
+        lbl_details.userInteractionEnabled = true
         let lbl_subDetails = cell.viewWithTag(5) as! UILabel
         
         let btn_like = cell.viewWithTag(6) as! UIButton
@@ -1318,6 +1349,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         let tapProfileImage = UITapGestureRecognizer.init(target: self, action: #selector(NewsFeedsAllVC.onClickProfileImage(_:)))
         iv_profile.addGestureRecognizer(tapProfileImage)
+        
+        let tapMessageText = UITapGestureRecognizer.init(target: self, action: #selector(NewsFeedsAllVC.onClickMessage(_:)))
+        lbl_details.addGestureRecognizer(tapMessageText)
+
         
         btn_like.setImage(UIImage(named: "like_filled"), forState: .Normal)
         btn_like.setImage(UIImage(named: "like_nav_color"), forState: .Selected)
@@ -1715,7 +1750,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 parameters["section"] = "HEALTH CLUBS"
             }
-            else {
+            else if self.collectionView.tag ==  1000{
                 parameters["section"] = "PAC"
                 parameters["pacId"] = self.pacID
             }
