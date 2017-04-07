@@ -199,7 +199,7 @@
                                             <rect key="frame" x="15" y="217" width="290" height="85"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Cover Picture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-N7-Tlw">
-                                                    <rect key="frame" x="67" y="40" width="208" height="17.5"/>
+                                                    <rect key="frame" x="67" y="40" width="208" height="20"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                     <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -802,7 +802,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oMW-1C-CR1">
-                                                    <rect key="frame" x="101" y="27" width="105" height="20"/>
+                                                    <rect key="frame" x="101" y="27" width="106" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="rFS-f1-8nT"/>
                                                     </constraints>
@@ -1451,6 +1451,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xf9-Zz-xbb" firstAttribute="leading" secondItem="123-zP-SaR" secondAttribute="leading" id="9iJ-JB-Icl"/>
                             <constraint firstItem="rmw-L4-z0P" firstAttribute="leading" secondItem="123-zP-SaR" secondAttribute="leading" id="JDe-Ce-vqj"/>
@@ -2010,7 +2011,7 @@
         <image name="add_Video" width="25" height="25"/>
         <image name="create_meetup_select_contact" width="31" height="31"/>
         <image name="delete" width="27" height="27"/>
-        <image name="edit_temp" width="11" height="11"/>
+        <image name="edit_temp" width="27" height="27"/>
         <image name="file_attachment" width="26" height="26"/>
         <image name="ic_bookingpopup_radio" width="15" height="15"/>
         <image name="ic_instruction_info" width="17" height="17"/>

@@ -214,8 +214,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
         firstVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         firstVC.pacID = self.pacID
-        _ = firstVC.view
-        firstVC.collectionView.tag = 333
         firstVC.title = "WALL"
 
         secondVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("ResourcesPACVC") as! ResourcesPACVC
@@ -450,7 +448,18 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
             else {
                 parameters["role"] = "member"
             }
-            self.serviceCallForActions(ServiceExitPAC, parameters: parameters)
+            
+            let alertController = UIAlertController(title:APP_NAME, message: "Do you want to Exit PAC?" , preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
+            }))
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
+                
+                
+                self.serviceCallForActions(ServiceExitPAC, parameters: parameters)
+     
+            }))
+             self.presentViewController(alertController, animated: true, completion: nil)
+           // self.serviceCallForActions(ServiceExitPAC, parameters: parameters)
         }
         else if(currentCell.textLabel?.text == "Report PAC") {
             self.sendMail()
@@ -461,7 +470,17 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
             parameters["pacId"] = self.pacID
+            
+            let alertController = UIAlertController(title: APP_NAME, message: "Do you want to Delete PAC?", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Cancel" ,style: UIAlertActionStyle.Default, handler: {(ACTION : UIAlertAction!)in}))
+            alertController.addAction(UIAlertAction(title: "OK" ,style: UIAlertActionStyle.Default, handler: {(ACTION:UIAlertAction!)in
+            
+            
             self.serviceCallForActions(ServiceDeletePAC, parameters: parameters)
+            
+            }))
+             self.presentViewController(alertController, animated: true, completion: nil)
+           // self.serviceCallForActions(ServiceDeletePAC, parameters: parameters)
             
         }
         else if(currentCell.textLabel?.text == "Edit PAC") {

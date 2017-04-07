@@ -323,7 +323,9 @@
 -(UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     if ([[window.rootViewController presentedViewController] isKindOfClass:[MPMoviePlayerViewController class]] && ![[self.window.rootViewController presentedViewController] isBeingDismissed]) {
+        //return UIInterfaceOrientationMaskLandscape;
         return UIInterfaceOrientationMaskAllButUpsideDown;
+
     } else {
         return UIInterfaceOrientationMaskPortrait;
     }

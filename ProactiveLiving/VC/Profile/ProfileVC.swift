@@ -231,14 +231,14 @@ extension ProfileVC: UICollectionViewDelegate{
         self.navigationController?.navigationBarHidden = true
         
         switch indexPath.row {
-        case 0:
+        case 0: // About
             
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileTableVC") as! GenericProfileTableVC
             vc.genericType = .AboutMe
             vc.viewerUserID = viewerUserID
             self.navigationController?.pushViewController(vc, animated: true)
             break
-        case 1:
+        case 1: // PAC
             let profileStoryBoard = AppHelper.getPacStoryBoard()
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("PacContainerVC") as! PacContainerVC
             vc.isFromMemberProfile = true
@@ -246,7 +246,7 @@ extension ProfileVC: UICollectionViewDelegate{
             self.navigationController?.pushViewController(vc, animated: true)
             break
             
-        case 2:
+        case 2: // Friends
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
             vc.genericType = .Friends
             vc.viewerUserID = viewerUserID
@@ -254,7 +254,7 @@ extension ProfileVC: UICollectionViewDelegate{
             
             break
             
-        case 3:
+        case 3:  // Gallery
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
             vc.genericType = .Gallery
             vc.viewerUserID = viewerUserID
