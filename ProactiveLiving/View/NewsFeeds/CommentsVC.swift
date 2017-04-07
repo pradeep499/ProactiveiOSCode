@@ -16,7 +16,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var iv_CommentsProfile: UIImageView!
     @IBOutlet weak var lbl_CommentsTitle: UILabel!
     @IBOutlet weak var lbl_timeAgo: UILabel!
-    @IBOutlet weak var lbl_commentsText: UILabel!
+    @IBOutlet weak var lbl_commentsText: UITextView!
     @IBOutlet weak var lbl_organizationName: UILabel!
     @IBOutlet weak var tv_writeComment: UITextView!
     @IBOutlet weak var imgAttachment: UIImageView!
@@ -48,6 +48,9 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         //tv_writeComment.autocorrectionType = .No
         tv_writeComment.inputAccessoryView = UIView(frame: CGRectZero)
         tv_writeComment.reloadInputViews()
+        lbl_commentsText.selectable = true
+        lbl_commentsText.dataDetectorTypes = UIDataDetectorTypes.Link
+        lbl_commentsText.delegate = self
         //hide separotor while cell empty
         self.table_view.tableFooterView = UIView.init()
         
@@ -63,16 +66,16 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
         //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
         let w = self.table_view.bounds.size.width - 30
-        let size : CGSize = CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
+        let size : CGSize = CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Light")
         
         let height:CGFloat
         
         if self.selectedCommentDict["postType"] as! String == "text" {
-            height = size.height + 150
+            height = size.height + 190
             layoutConstraint_lblCPost.constant = 8
         }
         else {
-            height = size.height + 320
+            height = size.height + 380
             layoutConstraint_lblCPost.constant = 200
         }
             var fm = self.view_tableHeader.frame
@@ -436,6 +439,15 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         return true
     }
 
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+        
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title = "Web Browser"
+        WebVC.urlStr = URL.absoluteString!
+        self.navigationController?.pushViewController(WebVC, animated: true)
+        
+        return false
+    }
     
     //MARK: - Socket
     
@@ -537,7 +549,7 @@ extension CommentsVC:UITableViewDataSource{
         //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
         //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
         let w = tableView.bounds.size.width - 30
-        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Light")
         
         let height = size.height + 120
         
@@ -566,10 +578,12 @@ extension CommentsVC:UITableViewDataSource{
         let iv_profile = cell.viewWithTag(1) as! UIImageView
         let lbl_name = cell.viewWithTag(2) as! UILabel
         let lbl_timeAgo = cell.viewWithTag(3) as! UILabel
-        let lbl_details = cell.viewWithTag(4) as! UILabel
+        let lbl_details = cell.viewWithTag(4) as! UITextView
+        lbl_details.selectable = true
+        lbl_details.dataDetectorTypes = UIDataDetectorTypes.Link
+        lbl_details.delegate = self
+        
    //     let lbl_orgName = cell.viewWithTag(5) as! UILabel
-        
-        
         
         iv_profile.layer.borderWidth = 1.0
         iv_profile.contentMode = .ScaleAspectFill
@@ -636,3 +650,4 @@ extension CommentsVC:UITableViewDataSource{
        return cell
     }
 }
+

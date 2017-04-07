@@ -150,6 +150,24 @@ extension UILabel {
         let size:CGSize  = self.sizeThatFits(CGSizeMake(self.frame.size.width, CGFloat.max))
         return max(Int(size.height / self.font.lineHeight), 0)
     }
+    
+    func isTextTruncated() -> Bool {
+        
+        if let string = self.text {
+            
+            let size: CGSize = (string as NSString).boundingRectWithSize(
+                CGSize(width: self.frame.size.width, height: CGFloat(FLT_MAX)),
+                options: NSStringDrawingOptions.UsesLineFragmentOrigin,
+                attributes: [NSFontAttributeName: self.font],
+                context: nil).size
+            
+            if (size.height > self.bounds.size.height) {
+                return true
+            }
+        }
+        
+        return false
+    }
 }
 
 extension NSDate {

@@ -99,7 +99,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         // you can also set the maximum height in points with maxHeight
         // textView.maxHeight = 200.0f;
         //textView.returnKeyType = .Go
-        textView.font = UIFont(name: "Roboto-Regular", size: 16)
+        textView.font = UIFont(name: "Roboto-Light", size: 16)
         textView.delegate = self
         textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0)
         textView.backgroundColor = UIColor.whiteColor()
@@ -584,6 +584,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         vc.viewerUserID = cell.userID
         self.navigationController?.pushViewController(vc , animated: true)
     }
+    
     
     func onClickMessage(recognizer: UITapGestureRecognizer) {
         
@@ -1232,21 +1233,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
         //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
         let w = collectionView.bounds.size.width - 30
-        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
+        let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Light")
         
         var height = size.height + (150)
         
-        
-        
-        
         if dict["postType"] as! String != "text" {
-         
-            
+
             height = height + (400 - 210)
-            
             //if the post is shared by then increase height of cell
-            if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
-             height = height + 10
+            if ((dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String) != nil {
+                height = height + 10
             }
             
         }
@@ -1331,8 +1327,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let iv_profile = cell.viewWithTag(1) as! UIImageView
         let lbl_name = cell.viewWithTag(2) as! UILabel
         let lbl_timeAgo = cell.viewWithTag(3) as! UILabel
-        let lbl_details = cell.viewWithTag(4) as! UILabel
-        lbl_details.userInteractionEnabled = true
+        let lbl_details = cell.viewWithTag(4) as! UITextView
+        lbl_details.selectable = true
+        lbl_details.dataDetectorTypes = UIDataDetectorTypes.Link
+        lbl_details.delegate = self
+        //lbl_details.userInteractionEnabled = true
         let lbl_subDetails = cell.viewWithTag(5) as! UILabel
         
         let btn_like = cell.viewWithTag(6) as! UIButton
@@ -1351,7 +1350,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         iv_profile.addGestureRecognizer(tapProfileImage)
         
         let tapMessageText = UITapGestureRecognizer.init(target: self, action: #selector(NewsFeedsAllVC.onClickMessage(_:)))
-        lbl_details.addGestureRecognizer(tapMessageText)
+        //lbl_details.addGestureRecognizer(tapMessageText)
 
         
         btn_like.setImage(UIImage(named: "like_filled"), forState: .Normal)
@@ -2585,14 +2584,18 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
       //  self.dismissViewControllerAnimated(true, completion: nil)
     }
 
+}
 
-    
-
-
-
-
-
-
+extension NewsFeedsAllVC: UITextViewDelegate {
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+      
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title = "Web Browser"
+        WebVC.urlStr = URL.absoluteString!
+        self.navigationController?.pushViewController(WebVC, animated: true)
+        
+        return false
+    }
 }
 
 // MARK: - FooterAllReUsableView
@@ -2626,3 +2629,4 @@ class CellNewsFeed:UICollectionViewCell{
     var userID:String!
 
 }
+
