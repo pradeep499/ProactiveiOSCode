@@ -12,6 +12,8 @@ import MediaPlayer
 
 class VideosVC: UIViewController {
 
+    
+    //MARK:- Properties
     var dataArra = [AnyObject]?()
     var yourArray = [String]()
     var moviePlayer = MPMoviePlayerViewController()
@@ -22,14 +24,17 @@ class VideosVC: UIViewController {
     var videoId = String()
     var removeVideoIndex = -1
     
+
     
     var videoContainerType:VideoContainerType?
     //to check owner or friend not nill all time
     var viewerUserID:String!
     
+    //MARK:- Outlets
+    
     @IBOutlet weak var tableView: UITableView!
     
-    
+    //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
@@ -58,6 +63,9 @@ class VideosVC: UIViewController {
             self.profilePersionalArr = [AnyObject]()
             self.profileEducationalArr  = [AnyObject]()
             self.profileInspirationalArr  = [AnyObject]()
+            
+            
+            
         }
     }
     
@@ -155,8 +163,26 @@ class VideosVC: UIViewController {
             let thumbVideo = cell.contentView.viewWithTag(1) as! UIImageView
             
             let lbl_duration = cell.contentView.viewWithTag(2) as! UILabel
-            let lbl_title = cell.contentView.viewWithTag(3) as! UILabel
+            //let lbl_title = cell.contentView.viewWithTag(3) as! UILabel
+            let lblDescription = cell.contentView.viewWithTag(3) as! UILabel
+
             let lbl_author = cell.contentView.viewWithTag(4) as! UILabel
+            let lblTitle = cell.contentView.viewWithTag(33) as! UILabel  // be me
+            let btnDelete = cell.contentView.viewWithTag(12) as! UIButton
+            let btnEdit   = cell.contentView.viewWithTag(11) as! UIButton
+            
+           
+            // to show or hide the Delete and Edit button
+            
+            if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
+                //Owner
+                 btnDelete.hidden = false
+                 btnEdit.hidden = false
+            }
+            else {
+                 btnDelete.hidden = true
+                 btnEdit.hidden = true
+            }
             
             var datDict = [String:String]()
             
@@ -164,11 +190,9 @@ class VideosVC: UIViewController {
                 datDict =  (profilePersionalArr[indexPath.row] as? [String:String])!
             }else if self.title == "EDUCATIONAL" {
                 let data = profileEducationalArr[indexPath.row]
-                
                 print("Educational Data = ", data)
-                
-                
                 datDict =  (profileEducationalArr[indexPath.row] as? [String : String])!
+                
             }else if self.title == "INSPIRATIONAL" {
                 datDict =  (profileInspirationalArr[indexPath.row] as? [String:String])!
             }
@@ -176,11 +200,17 @@ class VideosVC: UIViewController {
             
             
             if let val = datDict["title"] {
-                lbl_title.text = val
+                lblTitle.text = val
             }
             if let val = datDict["author"] {
                 lbl_author.text = "By: " + val
             }
+            if let val = datDict["description"]{
+                
+                lblDescription.text = val
+            }
+            
+            
             
             if let imageUrlStr = datDict["url"]  {
                 let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
@@ -208,8 +238,6 @@ class VideosVC: UIViewController {
                 }
             
             }
-            
-            
             return cell
             
         }
@@ -232,6 +260,44 @@ class VideosVC: UIViewController {
     }
     
     
+    //MARK:- Button Actions
+    
+    
+    @IBAction func seeMoreBtnAction(sender: AnyObject) {
+        
+        let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableView)
+        let indexPath =  self.tableView.indexPathForRowAtPoint(buttonPosition)
+        
+        
+//        let data = profileEducationalArr[indexPath!.row]
+//        print(data)
+        
+        
+        let seeMoreVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("MoreDetailVC") as! MoreDetailVC
+        
+        var datDict = [String:String]()
+        
+        if self.title == "PERSONAL" {
+            datDict =  (profilePersionalArr[indexPath!.row] as? [String:String])!
+        }else if self.title == "EDUCATIONAL" {
+            let data = profileEducationalArr[indexPath!.row]
+            print("Educational Data = ", data)
+            datDict =  (profileEducationalArr[indexPath!.row] as? [String : String])!
+            
+        }else if self.title == "INSPIRATIONAL" {
+            datDict =  (profileInspirationalArr[indexPath!.row] as? [String:String])!
+        }
+        
+        
+       // let desc = profileEducationalArr[indexPath!.row].valueForKey("description") as? String // Description
+        seeMoreVC.detailStr = datDict["description"] as! String!
+        self.navigationController?.pushViewController(seeMoreVC, animated: true)
+        
+        print("See More")
+
+        
+        
+    }
     @IBAction func onClickEditCellBtn(sender: AnyObject) {
         
         let button: UIButton = sender as! UIButton
@@ -382,9 +448,6 @@ class VideosVC: UIViewController {
             print(error.localizedDescription)
             return UIImage(named: "ic_instruction_video")!
         }
-    
-        
-        
     }
 
     //MARK: - play Video On Cell Tap
