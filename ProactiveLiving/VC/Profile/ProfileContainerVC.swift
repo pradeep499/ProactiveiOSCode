@@ -122,7 +122,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         let profileStoryboard = AppHelper.getProfileStoryBoard()
         
         firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
-        firstVC.title = "PROFILE"
+        firstVC.title = ""//"PROFILE"
         firstVC.viewerUserID = viewerUserID
         firstVC.cvHeight = 230 // as profile y position is y = 230
          
@@ -157,8 +157,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
         containerVC.menuItemSelectedFont = UIFont(name: "Roboto-Bold", size: 11.5)
         containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
-        containerVC.menuItemTitleColor = UIColor.whiteColor()
-        containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
+        containerVC.menuItemTitleColor = UIColor.clearColor() //UIColor.whiteColor()
+        containerVC.menuItemSelectedTitleColor = UIColor.clearColor()  //UIColor.whiteColor()
      //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
         containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width,   screenHeight - 300 )
