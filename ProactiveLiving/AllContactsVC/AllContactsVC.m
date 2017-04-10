@@ -123,6 +123,10 @@
                                                topBarHeight:0
                                                parentViewController:self];
     
+    
+
+    
+    
     containerVC.delegate = self;
     containerVC.menuItemFont = [UIFont fontWithName:@"Roboto-Regular" size:11];
     containerVC.menuItemSelectedFont = [UIFont fontWithName:@"Roboto-Bold" size:11.5];
@@ -156,7 +160,8 @@
     NSLog(@"current Index : %ld",(long)index);
     NSLog(@"current controller : %@",controller);
     currentController=controller;
-    [currentController viewWillAppear:YES];
+    //[currentController viewWillAppear:YES];  commented to fix the double api hit issue on 6th April 2017
+    
 }
 
 - (IBAction)btnBackClick:(id)sender {

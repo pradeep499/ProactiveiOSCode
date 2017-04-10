@@ -77,7 +77,6 @@ class GenericProfileTableVC: UIViewController {
             
             self.tv_summary.text = HelpingClass.getUserDetails().summary
             
-            
             //check logged in user or friend
             if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
                 //Owner
@@ -439,8 +438,11 @@ extension GenericProfileTableVC: UITableViewDataSource{
         let w = tv.bounds.size.width - 30
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 15 , width: Float(w) , fontName: "Roboto-Regular")
         
-        var height = size.height + (75)
+        let height = size.height + (75)
 
+        print("HEIGHT\(height)")
+        
+        
         return height
         
     }
@@ -514,10 +516,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
     }
 
 
-
-
-    
-    
+ 
      func setUpAboutMeCell(tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
         

@@ -69,7 +69,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         self.setUpCollectionView()
         willCallGetPhotosOrSocialNetworkList = true
         
-        if (genericType == .Gallery && isFromProfileEdit == false) {
+        if (genericType == .Gallery && isFromProfileEdit == false && String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID) {  // Delete Button hide and Show
         
         self.imgDeleteBtn.hidden = false
         

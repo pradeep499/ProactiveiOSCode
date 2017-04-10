@@ -551,7 +551,7 @@ extension CommentsVC:UITableViewDataSource{
         let w = tableView.bounds.size.width - 30
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Light")
         
-        let height = size.height + 120
+        let height = size.height + 140
         
         
         return height

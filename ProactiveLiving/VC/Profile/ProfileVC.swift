@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileVC: UIViewController {
+class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var lbl_profileStatus: UILabel!
@@ -107,14 +107,26 @@ extension ProfileVC : UICollectionViewDataSource{
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+       //  layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+       //  layout.itemSize = CGSize(width: screenWidth/3, height: screenWidth/3)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+      //collectionView.collectionViewLayout = layout
+        
+        // UICollectionViewDelegateFlowLayout
         
         let w = collectionView.bounds.size.width - 30
-        
+       //  let w = collectionView.bounds.size.width
         return CGSize(width: w/3 - 5 , height: w/3 + 30)
+        //  return CGSize(width: w/3 , height: w/3)
         
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom:5, right: 10)
+       
+        return UIEdgeInsets(top: 5, left: 10, bottom:5, right: 10)
+       // return UIEdgeInsets(top: 0, left: 0, bottom:0, right: 0)
+        
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -231,14 +243,14 @@ extension ProfileVC: UICollectionViewDelegate{
         self.navigationController?.navigationBarHidden = true
         
         switch indexPath.row {
-        case 0:
+        case 0: // About
             
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileTableVC") as! GenericProfileTableVC
             vc.genericType = .AboutMe
             vc.viewerUserID = viewerUserID
             self.navigationController?.pushViewController(vc, animated: true)
             break
-        case 1:
+        case 1: // PAC
             let profileStoryBoard = AppHelper.getPacStoryBoard()
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("PacContainerVC") as! PacContainerVC
             vc.isFromMemberProfile = true
@@ -246,7 +258,7 @@ extension ProfileVC: UICollectionViewDelegate{
             self.navigationController?.pushViewController(vc, animated: true)
             break
             
-        case 2:
+        case 2: // Friends
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
             vc.genericType = .Friends
             vc.viewerUserID = viewerUserID
@@ -254,7 +266,7 @@ extension ProfileVC: UICollectionViewDelegate{
             
             break
             
-        case 3:
+        case 3:  // Gallery
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
             vc.genericType = .Gallery
             vc.viewerUserID = viewerUserID

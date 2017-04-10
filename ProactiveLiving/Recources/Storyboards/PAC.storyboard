@@ -1229,7 +1229,7 @@
                                                         <constraint firstAttribute="width" constant="30" id="jzr-0g-vRW"/>
                                                         <constraint firstAttribute="height" constant="30" id="kyg-2o-zeQ"/>
                                                     </constraints>
-                                                    <state key="normal" title="Button" backgroundImage="delete"/>
+                                                    <state key="normal" title="Button" backgroundImage="delete_temp"/>
                                                 </button>
                                                 <button hidden="YES" opaque="NO" tag="98" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Gj-pU-5fq">
                                                     <rect key="frame" x="287" y="9" width="30" height="30"/>
@@ -1392,7 +1392,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btc-2T-Nql" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1356" y="-1276"/>
+            <point key="canvasLocation" x="1494" y="-1277"/>
         </scene>
         <!--More DetailVC-->
         <scene sceneID="BuP-aq-F1M">
@@ -1451,6 +1451,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xf9-Zz-xbb" firstAttribute="leading" secondItem="123-zP-SaR" secondAttribute="leading" id="9iJ-JB-Icl"/>
                             <constraint firstItem="rmw-L4-z0P" firstAttribute="leading" secondItem="123-zP-SaR" secondAttribute="leading" id="JDe-Ce-vqj"/>
@@ -2009,8 +2010,8 @@
         <image name="about" width="80" height="73"/>
         <image name="add_Video" width="25" height="25"/>
         <image name="create_meetup_select_contact" width="31" height="31"/>
-        <image name="delete" width="27" height="27"/>
-        <image name="edit_temp" width="11" height="11"/>
+        <image name="delete_temp" width="27" height="27"/>
+        <image name="edit_temp" width="27" height="27"/>
         <image name="file_attachment" width="26" height="26"/>
         <image name="ic_bookingpopup_radio" width="15" height="15"/>
         <image name="ic_instruction_info" width="17" height="17"/>
