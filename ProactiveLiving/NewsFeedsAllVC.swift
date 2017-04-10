@@ -601,6 +601,131 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.navigationController?.pushViewController(WebVC, animated: true)
         }
     }
+    func onClickOptions(sender : AnyObject) {
+        
+        var resultData = [String:AnyObject]()
+        
+        let buttonPosition = sender.convertPoint(CGPointZero, toView: self.collectionView)
+        let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
+        if indexPath != nil {
+            
+            if self.collectionView.tag ==  1111 {
+                resultData = self.postAllArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.collectionView.tag ==  3333 {
+                resultData = self.postFriendsArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.collectionView.tag ==  4444 {
+                resultData = self.postColleagueArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.collectionView.tag ==  5555 {
+                resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else {
+                resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
+            }
+        }
+        
+        if(IS_IOS_7)
+        {
+            let actionSheet = UIActionSheet(title:"", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle:nil, otherButtonTitles: "Delete Post","Cancel")
+            actionSheet.tag=10001
+            //   actionSheet.showFromTabBar((bottomTabBar?.tabBar)!)
+        }
+        else
+        {
+            let actionSheet =  UIAlertController(title:nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            actionSheet.addAction(UIAlertAction(title: "Delete Post", style: UIAlertActionStyle.Default, handler:
+                { (ACTION :UIAlertAction!)in
+                    self.deletePostWithData(resultData)
+                }))
+            
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:
+                { (ACTION :UIAlertAction!)in
+                        
+                }))
+                    
+            self.presentViewController(actionSheet, animated: true, completion: nil)
+        }
+        
+    }
+    
+    //MARK :- Delete post service call
+    func deletePostWithData(dataDict : [String : AnyObject]) {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["newsfeedId"] = dataDict["_id"] as! String
+            
+            if self.collectionView.tag ==  1111 {
+                parameters["section"] = "ALL"
+            }
+            else if self.collectionView.tag ==  3333 {
+                parameters["section"] = "FRIENDS"
+            }
+            else if self.collectionView.tag ==  4444 {
+                parameters["section"] = "COLLEAGUES"
+            }
+            else if self.collectionView.tag ==  5555 {
+                parameters["section"] = "HEALTH CLUBS"
+            }
+            else if self.collectionView.tag ==  1000{
+                parameters["section"] = "PAC"
+                parameters["pacId"] = self.pacID
+            }
+
+            //call global web service class latest
+            Services.postRequest(ServiceDeleteNewsFeed, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+
+                        if let resultArr = responseDict["result"]  as? NSArray{
+                            
+                            if self.collectionView.tag ==  1111 {
+                                self.postAllArr = NSMutableArray.init(array: resultArr)
+                            }
+                            else if self.collectionView.tag ==  3333 {
+                                self.postFriendsArr = NSMutableArray.init(array: resultArr)
+                            }
+                            else if self.collectionView.tag ==  4444 {
+                                self.postColleagueArr = NSMutableArray.init(array: resultArr)
+                            }
+                            else if self.collectionView.tag ==  5555 {
+                                self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
+                            }
+                            else {
+                                self.pacWallArr = NSMutableArray.init(array: resultArr)
+                            }
+                            self.collectionView.reloadData()
+                        }
+                    }
+                    else {
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                }
+                else if (status == "Error"){
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+
+    }
     
     func verifyUrl (urlString: String?) -> Bool {
         if let urlString = urlString {
@@ -1334,6 +1459,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //lbl_details.userInteractionEnabled = true
         let lbl_subDetails = cell.viewWithTag(5) as! UILabel
         
+        let btn_options = cell.viewWithTag(777) as! UIButton
         let btn_like = cell.viewWithTag(6) as! UIButton
         let btn_comments = cell.viewWithTag(7) as! UIButton
         let btn_share = cell.viewWithTag(8) as! UIButton
@@ -1356,23 +1482,38 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         btn_like.setImage(UIImage(named: "like_filled"), forState: .Normal)
         btn_like.setImage(UIImage(named: "like_nav_color"), forState: .Selected)
         
+        btn_options.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2));
+        btn_options.addTarget(self, action: #selector(NewsFeedsAllVC.onClickOptions(_:)), forControlEvents: .TouchUpInside)
+
+        if let createdBy = (dict as NSDictionary).valueForKeyPath("createdBy._id") as? String {
+           
+            if let sharedBy = (dict as NSDictionary).valueForKeyPath("sharedBy._id") as? String {
+                if(sharedBy == AppHelper.userDefaultsForKey(_ID) as? String) {
+                    btn_options.hidden = false
+                }
+                else {
+                    btn_options.hidden = true
+                }
+            }
+            else {
+                if(createdBy == AppHelper.userDefaultsForKey(_ID) as? String) {
+                    btn_options.hidden = false
+                }
+                else {
+                    btn_options.hidden = true
+                }
+            }
+        }
         
-        
-        
+
         //shared by name
         if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
             
-            
             let sharedByLName = (dict as NSDictionary).valueForKeyPath("sharedBy.lastName") as? String
-            
-            
             let sharedByID = (dict as NSDictionary).valueForKeyPath("sharedBy._id") as? String
-            
             let ownerID = (dict as NSDictionary).valueForKeyPath("createdBy._id") as? String
-            
             let ownerFName = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String
             let ownerLName = (dict as NSDictionary).valueForKeyPath("createdBy.lastName") as? String
-            
             
             if (sharedByID != ownerID) {
                 
@@ -1382,22 +1523,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 lbl_name.text = sharedByFname +  " shared post"
             }
             
-            
-            
         }else{
             //Posted by name
-            
             if let fName = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String {
-                
                 let lName = (dict as NSDictionary).valueForKeyPath("createdBy.lastName") as? String
-                
                 lbl_name.text = fName + " shared post"
             }
         }
         
         //height of lbl
-        
-        
         let text = lbl_name.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         let str = text.stringByReplacingEmojiCheatCodesWithUnicode()
         
@@ -1405,7 +1539,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Regular")
         
         cell.layOut_lbl_Name_height.constant = size.height + 15
-        
         
         if let userID = (dict as NSDictionary).valueForKeyPath("sharedBy._id") as? String {
             cell.userID = userID
