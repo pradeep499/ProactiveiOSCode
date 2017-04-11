@@ -261,16 +261,20 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         if index == 0 {
             
             self.fetchDataForPACRole()
+            self.btnRight.hidden = false
             //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
             
         }
         else if index == 1 {
             self.fetchDataForPACRole()
+            self.btnRight.hidden = false
             //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
             
         }
-        else {
-            self.fetchDataForPACRole()
+        else if index == 2 {
+            intValue = 5
+            //self.fetchDataForPACRole()
+            self.btnRight.hidden = true
             //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
 
         }
