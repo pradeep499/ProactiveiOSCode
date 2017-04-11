@@ -167,6 +167,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func setColectionViewTags()  {
         
+        if(self.title != "WALL") {
         if intValue == 0 {
             self.collectionView.tag=1111
         }
@@ -176,8 +177,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else  if intValue == 3 {
             self.collectionView.tag=4444
         }
-        else if intValue == 4{
+        else if intValue == 4 {
             self.collectionView.tag=5555
+        }
         }
         else {
             self.collectionView.tag=1000
@@ -295,7 +297,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else {
+            else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
             
@@ -329,7 +331,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else {
+            else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
             
@@ -371,7 +373,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     else if self.collectionView.tag ==  5555 {
                         resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
                     }
-                    else  {
+                    else if self.collectionView.tag ==  1000  {
                         resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
                     }
                 }
@@ -405,7 +407,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else {
+            else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
         }
@@ -605,8 +607,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         var resultData = [String:AnyObject]()
         
-        let buttonPosition = sender.convertPoint(CGPointZero, toView: self.collectionView)
-        let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
+        let buttonPosition = sender.superview??.convertPoint(CGPointZero, toView: self.collectionView)
+        let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition!)
         if indexPath != nil {
             
             if self.collectionView.tag ==  1111 {
@@ -621,7 +623,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
-            else {
+            else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
         }
@@ -702,7 +704,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             else if self.collectionView.tag ==  5555 {
                                 self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
                             }
-                            else {
+                            else if self.collectionView.tag ==  1000 {
                                 self.pacWallArr = NSMutableArray.init(array: resultArr)
                             }
                             self.collectionView.reloadData()
@@ -756,7 +758,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else if self.collectionView.tag ==  5555 {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
         }
-        else {
+        else if self.collectionView.tag ==  1000 {
             dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
         }
         
@@ -914,7 +916,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 dict["section"] = "HEALTH CLUBS"
             }
-            else {
+            else if self.collectionView.tag ==  1000 {
                 dict["section"] = "PAC"
                 dict["pacId"] = self.pacID
             }
@@ -1346,7 +1348,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else if self.collectionView.tag ==  5555 {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
         }
-        else  {
+        else if self.collectionView.tag ==  1000  {
             dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
         }
         
@@ -1403,7 +1405,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else if self.collectionView.tag ==  5555  {
             return self.postHealthClubsArr.count
         }
-        else  {
+        else if self.collectionView.tag ==  1000  {
             return self.pacWallArr.count
         }
         return 0
@@ -1426,7 +1428,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else if self.collectionView.tag ==  5555 {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
         }
-        else  {
+        else if self.collectionView.tag ==  1000  {
             dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
         }
         
@@ -1918,7 +1920,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         else if self.collectionView.tag ==  5555 {
                             self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
                         }
-                        else {
+                        else if self.collectionView.tag ==  1000 {
                             self.pacWallArr = NSMutableArray.init(array: resultArr)
                         
                         }
