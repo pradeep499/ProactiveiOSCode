@@ -523,7 +523,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                         //"\(memberArr.count) Going"
                         self.lblLike.text="\((self.dataDict["likes"] as! [AnyObject]).count) Likes"
                         self.imgLike.image = UIImage(named: "like")
-                        self.btnForward.setTitle("Forward Web Invite", forState: .Normal)
+                        self.btnForward.setTitle("Forward", forState: .Normal)
                        
                         self.btnSure.setTitle("Accept", forState: UIControlState.Normal)
                         self.btnSorry.setTitle("Decline", forState: UIControlState.Normal)

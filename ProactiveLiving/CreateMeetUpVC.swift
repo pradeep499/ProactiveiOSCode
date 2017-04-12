@@ -219,7 +219,6 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         txtFieldTitle.delegate=self
         self.tokenField.tagPlaceholder = "Add here";
-        isForwardAllowed = switchAllowInvite.on
         //self.tokenField.mode = TLTagsControlMode.Edit ;
         self.tokenField.tagsDeleteButtonColor = UIColor.lightGrayColor()
         self.tokenField.tapDelegate=self

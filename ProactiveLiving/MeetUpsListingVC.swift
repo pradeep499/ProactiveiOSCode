@@ -19,7 +19,6 @@ class MeetUpsListingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.arrData = Array()
-
     }
     
     override func viewWillAppear(animated: Bool)
@@ -27,6 +26,8 @@ class MeetUpsListingVC: UIViewController {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
         self.fetchMeetUpOrWebInviteData()
+        self.updayeMeetupOrWebInviteListener()
+
     }
     
     //mark- Fetch Meetups/Invites listing data
@@ -86,12 +87,60 @@ class MeetUpsListingVC: UIViewController {
         }
     }
     
+    func updayeMeetupOrWebInviteListener() {
+        
+        if ServiceClass.checkNetworkReachabilityWithoutAlert()
+        {
+
+            //ChatListner .getChatListnerObj().socket.off("getAccept_Meetup_Invite")
+            ChatListner .getChatListnerObj().socket.on("getAccept_Meetup_Invite") {data, ack in
+                
+                
+                print("value error_code\(data[0]["status"] as! String))")
+                
+                let errorCode = (data[0]["status"] as? String) ?? "1"
+                
+                if errorCode == "0"
+                {
+                    guard let dictData = data[0] as? Dictionary<String, AnyObject> else
+                    {
+                        return
+                    }
+                    
+                    guard let resultDict = dictData["result"] as? Dictionary<String, AnyObject>  else
+                    {
+                        return
+                    }
+                    
+                    print("arrayList \(resultDict)")
+                    
+                    let predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
+                    var filteredarray:[AnyObject] = (self.arrData as NSArray).filteredArrayUsingPredicate(predicate)
+                    print("ID = \(resultDict["_id"])")
+                    
+                    if filteredarray.count > 0 {
+                        let index = (self.arrData as NSArray).indexOfObject(filteredarray[0])
+                        self.arrData[index] = resultDict
+                    }
+
+                    self.tableView.reloadData()
+                }
+                else
+                {
+                    //SharedClass.sharedInstance.showOkAlertViewController(result!["response_string"] as! String, viewController: self)
+                    
+                }
+            }
+        }
+    }
+    
+    
     //mark- UITableview Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.arrData.count
     }
     
-     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         
         let w = self.tableView.bounds.size.width - 30
@@ -261,6 +310,17 @@ class MeetUpsListingVC: UIViewController {
                     cell.imgAccept.hidden=true
                     cell.btnAccept.layer.borderColor=UIColor.clearColor().CGColor
                 }
+                else if(status == "0")
+                {
+                    cell.btnDecline.selected=false
+                    cell.btnAccept.selected=false
+
+                    cell.imgDecline.hidden=true
+                    cell.imgAccept.hidden=true
+
+                    cell.btnDecline.layer.borderColor=UIColor.clearColor().CGColor
+                    cell.btnAccept.layer.borderColor=UIColor.clearColor().CGColor
+                }
                 
             }
             
@@ -270,6 +330,11 @@ class MeetUpsListingVC: UIViewController {
         {
             cell.btnAccept.enabled=false
             cell.btnDecline.enabled=false
+        }
+        else {
+            
+            cell.btnAccept.enabled=true
+            cell.btnDecline.enabled=true
         }
         
         
@@ -303,7 +368,8 @@ class MeetUpsListingVC: UIViewController {
             
             var someDict:[String:AnyObject] = self.arrData[indexPath.row] as! [String : AnyObject]
             let memberArr = someDict["members"] as! [AnyObject]
-            lblMembers.text = "\(memberArr.count)  Invited"
+            let totalInvited = memberArr.count-1 
+            lblMembers.text = "\(totalInvited)  Invited"
         }
         else {
             
@@ -398,7 +464,7 @@ class MeetUpsListingVC: UIViewController {
 
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
 
-        self.fetchMeetUpOrWebInviteData()
+        //self.fetchMeetUpOrWebInviteData()
     }
     
     
@@ -437,7 +503,7 @@ class MeetUpsListingVC: UIViewController {
         
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
 
-        self.fetchMeetUpOrWebInviteData()
+        //self.fetchMeetUpOrWebInviteData()
 
     }
 
