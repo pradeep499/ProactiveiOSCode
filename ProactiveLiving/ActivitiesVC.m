@@ -83,11 +83,9 @@
     NSDictionary *dicResult =  self.arrMenueImages[indexPath.row];
     
     NSString *strImage = dicResult[@"image"];
-    [recipeImageView sd_setImageWithURL:[NSURL URLWithString:strImage]];
+   // [recipeImageView sd_setImageWithURL:[NSURL URLWithString:strImage]];
 
-    
-    
-    
+    [recipeImageView sd_setImageWithURL:[NSURL URLWithString:strImage] placeholderImage:[UIImage imageNamed:@"pac_listing_no_preview"]];
     
    // recipeImageView.image = [UIImage imageNamed:[self.arrMenueImages objectAtIndex:indexPath.row]];
     

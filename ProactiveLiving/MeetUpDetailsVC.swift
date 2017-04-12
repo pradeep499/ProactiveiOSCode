@@ -343,19 +343,31 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
         let dataArr = self.dataDict["links"] as! [AnyObject]
         
+//        var url : String!
+//        
+//        if((dataArr[indexPath.row]["url"] as! String).hasPrefix("http://") || (dataArr[indexPath.row]["url"] as! String).hasPrefix("https://")){
+//            
+//            url = dataArr[indexPath.row]["url"] as! String
+//        }
+//        else
+//        {
+//            url = "http://" + (dataArr[indexPath.row]["url"] as! String)
+//        }
+//        
+//        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+
+        
         var url : String!
         
-        if((dataArr[indexPath.row]["url"] as! String).hasPrefix("http://") || (dataArr[indexPath.row]["url"] as! String).hasPrefix("https://")){
-            
-            url = dataArr[indexPath.row]["url"] as! String
-        }
-        else
-        {
-            url = "http://" + (dataArr[indexPath.row]["url"] as! String)
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title =  self.dataDict["title"] as? String
+        url = dataArr[indexPath.row]["url"] as! String
+        if url != nil {
+            WebVC.urlStr = url!
+            self.navigationController?.pushViewController(WebVC, animated: true)
         }
         
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
-
+        
     }
     
     func canOpenURL(string: String?) -> Bool {
@@ -422,28 +434,55 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     func btnLinkClick(sender: UIButton)  {
         print(sender)
         
+//        var url : String!
+//        
+//        if((self.dataDict["webLink"] as! String).hasPrefix("http://") || (self.dataDict["webLink"] as! String).hasPrefix("https://")){
+//            
+//            url = self.dataDict["webLink"] as! String
+//        }
+//        else
+//        {
+//            url = "http://" + (self.dataDict["webLink"] as! String)
+//        }
+//        
+//        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        
+        
         var url : String!
-        
-        if((self.dataDict["webLink"] as! String).hasPrefix("http://") || (self.dataDict["webLink"] as! String).hasPrefix("https://")){
-            
-            url = self.dataDict["webLink"] as! String
+
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title =  self.dataDict["title"] as? String
+        url = self.dataDict["webLink"] as! String
+        if url != nil {
+            WebVC.urlStr = url!
+            self.navigationController?.pushViewController(WebVC, animated: true)
         }
-        else
-        {
-            url = "http://" + (self.dataDict["webLink"] as! String)
-        }
+
         
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        
+        
         
     }
     
     func btnDialUpClick(sender: UIButton)  {
         print(sender)
         
-        let phoneNumber: String = self.dataDict["dialInNumber"] as! String
-        if let url = NSURL(string: "tel://\(phoneNumber)") {
-            UIApplication.sharedApplication().openURL(url)
+        
+        
+        
+        let mobilePhone = self.dataDict["dialInNumber"] as! String
+        if let phoneCallURL:NSURL = NSURL(string: "tel://\(mobilePhone)") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL)
+            }
         }
+        
+        
+//        let phoneNumber: String = self.dataDict["dialInNumber"] as! String
+//        if let url = NSURL(string: "tel://\(phoneNumber)") {
+//            UIApplication.sharedApplication().openURL(url)
+//        }
     }
     
     //mark- Forward Meetups/Invites
@@ -483,7 +522,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     
                     //let controller = (self.parentViewController as! YSLContainerViewController).parentViewController as! MeetUpContainerVC
                     //controller.screenTitle.text = self.dataDict["title"] as? String
-                    self.screenTitle.text = self.dataDict["for"] as? String
+                   // self.screenTitle.text = self.dataDict["for"] as? String  
+                    self.screenTitle.text = self.dataDict["title"] as? String 
                     self.btnLink.setTitle((self.dataDict["webLink"] as! String), forState: .Normal)
                     self.btnDialUp.setTitle((self.dataDict["dialInNumber"] as! String), forState: .Normal)
 

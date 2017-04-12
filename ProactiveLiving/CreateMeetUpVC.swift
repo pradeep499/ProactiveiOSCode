@@ -1045,6 +1045,14 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             var dict = Dictionary<String,AnyObject>()
 
+            
+            if (linkTextField.text!.isValidURL() == false) {
+                
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                
+            }
+            else {
+            
             if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
             {
                 dict["title"]=titleTextField.text! as String
@@ -1058,7 +1066,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input both title and url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             }
          
-            
+            }
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {

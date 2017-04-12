@@ -304,7 +304,17 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
             parameters["summary"] = self.tv_summary.text
-            parameters["gender"] = gendarStr
+            
+            if firstTimeLogin == "1" {
+                parameters["gender"] = gendarStr
+            }
+            else {
+                
+                let obj:Beans.UserDetails = HelpingClass.getUserDetails()
+                 parameters["gender"] = obj.gender as! String
+            }
+           
+            
             parameters["liveIn"] = self.tf_liveIn.text
             parameters["workAt"] = self.tf_workAt.text
             parameters["grewup"] = self.tf_grewUp.text

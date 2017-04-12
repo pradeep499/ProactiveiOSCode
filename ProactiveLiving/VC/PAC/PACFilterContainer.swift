@@ -64,7 +64,7 @@ class PACFilterContainer: UIViewController ,YSLContainerViewControllerDelegate,U
         print("current Index : \(Int(index))")
         print("current controller : \(controller)")
         currentIndex = index
-        controller.viewWillAppear(true)
+      //  controller.viewWillAppear(true)
         
     }
 

@@ -108,7 +108,8 @@ class MeetUpContainerVC: UIViewController, YSLContainerViewControllerDelegate {
         else {
             self.btnEdit.hidden = true
         }
-        controller.viewWillAppear(true)
+        
+        //controller.viewWillAppear(true)
         
     }
     

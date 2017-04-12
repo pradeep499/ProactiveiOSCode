@@ -231,7 +231,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         print("current Index : \(Int(index))")
         print("current controller : \(controller)")
         currentIndex = index
-        controller.viewWillAppear(true)
+      //  controller.viewWillAppear(true)
         
         if(currentIndex == 0) {
             btnFilter.hidden = false
