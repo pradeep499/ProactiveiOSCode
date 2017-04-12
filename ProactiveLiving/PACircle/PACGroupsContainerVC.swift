@@ -248,7 +248,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         print("current Index : \(Int(index))")
         print("current controller : \(controller)")
         currentIndex = index
-        controller.viewWillAppear(true)
+       // controller.viewWillAppear(true)
         
         //popover table
         if(popOverTableView == nil) {

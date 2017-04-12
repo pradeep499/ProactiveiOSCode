@@ -343,19 +343,31 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
         let dataArr = self.dataDict["links"] as! [AnyObject]
         
+//        var url : String!
+//        
+//        if((dataArr[indexPath.row]["url"] as! String).hasPrefix("http://") || (dataArr[indexPath.row]["url"] as! String).hasPrefix("https://")){
+//            
+//            url = dataArr[indexPath.row]["url"] as! String
+//        }
+//        else
+//        {
+//            url = "http://" + (dataArr[indexPath.row]["url"] as! String)
+//        }
+//        
+//        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+
+        
         var url : String!
         
-        if((dataArr[indexPath.row]["url"] as! String).hasPrefix("http://") || (dataArr[indexPath.row]["url"] as! String).hasPrefix("https://")){
-            
-            url = dataArr[indexPath.row]["url"] as! String
-        }
-        else
-        {
-            url = "http://" + (dataArr[indexPath.row]["url"] as! String)
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title =  self.dataDict["title"] as? String
+        url = dataArr[indexPath.row]["url"] as! String
+        if url != nil {
+            WebVC.urlStr = url!
+            self.navigationController?.pushViewController(WebVC, animated: true)
         }
         
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
-
+        
     }
     
     func canOpenURL(string: String?) -> Bool {

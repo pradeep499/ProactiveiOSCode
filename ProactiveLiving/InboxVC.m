@@ -138,7 +138,7 @@
         self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 19, 0, 0);
     }
     
-    [controller viewWillAppear:YES];
+   // [controller viewWillAppear:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -114,7 +114,7 @@
 {
     NSLog(@"current Index : %ld",(long)index);
     NSLog(@"current controller : %@",controller);
-    [controller viewWillAppear:YES];
+  //  [controller viewWillAppear:YES];
 }
 
 - (IBAction)btnBackClick:(id)sender {
