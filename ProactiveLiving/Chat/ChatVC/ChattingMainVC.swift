@@ -495,10 +495,12 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
       //  groupUserName = groupUserName.substringToIndex(advance(groupUserName.startIndex, substringIndex))
         dispatch_after(0, dispatch_get_main_queue(), {
             let myInt:Int = fetchResult.count
-            let myString:String = String(myInt)
-            let string2 = " Members"
-            let appendString2 = myString+string2
-            self.onOffLabel.text = appendString2
+            if(myInt==1) {
+                self.onOffLabel.text = "\(myInt) Member"
+            }
+            else {
+                self.onOffLabel.text = "\(myInt) Members"
+            }
         })
     }
     
@@ -541,6 +543,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("fontName") != nil) {
+            ChatHelper .saveToUserDefault("Roboto-Regular", key: "fontName")
 
         } else {
             ChatHelper .saveToUserDefault("Roboto-Regular", key: "fontName")
@@ -1201,10 +1204,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let newString = chatObj.message!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
                     str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
                     
-//                    let fontName = AppHelper .userDefaultForAny("fontName") as String
-//                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
+                    let fontName = ChatHelper .userDefaultForAny("fontName") as! String
+                    let fontSize = ChatHelper .userDefaultForAny("fontSize") as! CGFloat
                     
-                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 18 , width: 221.0, fontName: "Roboto-Regular")
+                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: fontSize , width: 221.0, fontName: fontName)
                     
                     let height = size.height
                     let width = size.width
@@ -1247,10 +1250,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     
                     str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
                     
-                 //   let fontName = AppHelper .userDefaultForAny("fontName") as String
-                 //   let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
+                    let fontName = ChatHelper .userDefaultForAny("fontName") as! String
+                    let fontSize = ChatHelper .userDefaultForAny("fontSize") as! CGFloat
                     
-                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 18 , width: 221.0, fontName: "Roboto-Regular")
+                    let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: fontSize , width: 221.0, fontName: fontName)
                     
                     let height = size.height
                     let width = size.width
@@ -2684,9 +2687,12 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             
             // downloading
             //HIDE++++++++
-            localStr = chatCDNbaseUrl + "/" + chatObj.chatFile!.mediaUrl!
+            //localStr = chatCDNbaseUrl + "/" + chatObj.chatFile!.mediaUrl!
+            localStr = chatObj.chatFile!.mediaUrl!
+
             //print(localStr)
-            imageNameStr = chatObj.chatFile!.mediaUrl
+            //imageNameStr = chatObj.chatFile!.mediaUrl!
+            imageNameStr = ChatHelper.sharedInstance.uniqueName("")
             
             
         }else
@@ -2698,9 +2704,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             
             // localStr = ChatBaseMediaUrl + "?" + grpChatObj.groupChatFile.mediaUrl
             //HIDE++++++++
-            localStr = chatCDNbaseUrl + "/" + grpChatObj.groupChatFile!.mediaUrl!
-            
-            imageNameStr = grpChatObj.groupChatFile!.mediaUrl
+            //localStr = chatCDNbaseUrl + "/" + grpChatObj.groupChatFile!.mediaUrl!
+            localStr = grpChatObj.groupChatFile!.mediaUrl!
+
+            //imageNameStr = grpChatObj.groupChatFile!.mediaUrl
+            imageNameStr = ChatHelper.sharedInstance.uniqueName("")
             
         }
         
@@ -2734,6 +2742,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             {
                 checkfile = ".wav"
             }
+            else if chatObj.messageType == "image"
+            {
+                checkfile = ".jpg"
+            }
         }else
         {
             if grpChatObj.messageType == "video"
@@ -2744,6 +2756,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             else if grpChatObj.messageType == "audio"
             {
                 checkfile = ".wav"
+            }
+            else if chatObj.messageType == "image"
+            {
+                checkfile = ".jpg"
             }
         }
         let saveFullImagePath = "full" + imageNameStr + checkfile
@@ -3546,7 +3562,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 timerForTyping.invalidate()
                 timerForTyping=nil;
             }
-           // timerForTyping = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ChattingMainVC.isTypingStop), userInfo: nil, repeats: false)
+            timerForTyping = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(ChattingMainVC.isTypingStop), userInfo: nil, repeats: false)
         }else
         {
             if timerForTyping != nil
@@ -3647,14 +3663,14 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             if(IS_IOS_7)
             {
                 
-                let actionSheet = UIActionSheet(title: friendName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Email Conversation","Delete Conversation","Cancel")
+                let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Email Conversation","Delete Conversation","Cancel")
                 
                 actionSheet.tag=200
                 actionSheet.showFromTabBar((bottomTabBar?.tabBar)!)
             }
             else
             {
-                let actionSheet =  UIAlertController(title: friendName, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                let actionSheet =  UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 actionSheet.addAction(UIAlertAction(title: "Email Conversation", style: UIAlertActionStyle.Default, handler:
                     {(ACTION :UIAlertAction!)in
                         self.emailAlertMethod()
@@ -3673,13 +3689,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             
             if(IS_IOS_7)
             {
-                let actionSheet = UIActionSheet(title: recentChatObj.friendName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Email Conversation","Delete Conversation","Cancel")
+                let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Email Conversation","Delete Conversation","Cancel")
                 actionSheet.tag=300
                 actionSheet.showFromTabBar((bottomTabBar?.tabBar)!)
             }
             else
             {
-                let actionSheet =  UIAlertController(title: recentChatObj.friendName, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                let actionSheet =  UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 actionSheet.addAction(UIAlertAction(title: "Email Conversation", style: UIAlertActionStyle.Default, handler:
                     {(ACTION :UIAlertAction!)in
                         self.emailAlertMethod()
@@ -3738,13 +3754,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         }
         if(IS_IOS_7)
         {
-            let actionSheet = UIActionSheet(title: friendName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Copy","Delete","Cancel")
+            let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Copy","Delete","Cancel")
             actionSheet.tag=220
             actionSheet.showFromTabBar((bottomTabBar?.tabBar)!)
         }
         else
         {
-            let actionSheet =  UIAlertController(title: friendName, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let actionSheet =  UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             actionSheet.addAction(UIAlertAction(title: "Copy", style: UIAlertActionStyle.Default, handler:
                 {(ACTION :UIAlertAction!)in
                     
@@ -3777,13 +3793,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         }
         if(IS_IOS_7)
         {
-            let actionSheet = UIActionSheet(title: friendName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Delete","Cancel")
+            let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Delete","Cancel")
             actionSheet.tag=230
             actionSheet.showFromTabBar((bottomTabBar?.tabBar)!)
         }
         else
         {
-            let actionSheet =  UIAlertController(title: friendName, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let actionSheet =  UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
             actionSheet.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Default, handler:
                 { (ACTION :UIAlertAction!)in
@@ -3924,7 +3940,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                             let fileName =  UploadInS3.sharedGlobal().strFilesName
                             //  progressV.hidden = true
                             if fileName != nil{
-                                self.sendVideoFilePathToChatServer(self.dictData["dict"] as! NSDictionary, filePath: fileName, index: self.dictData["index"] as! Int)
+                                self.sendVideoFilePathToChatServer(self.dictData["dict"] as! NSDictionary, filePath: pathUrl, index: self.dictData["index"] as! Int)
                             }
                         }
                         else
@@ -4432,7 +4448,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                 let fileName =  UploadInS3.sharedGlobal().strFilesName
                                 
                                 if fileName != nil{
-                                    self.sendImageFilePathToChatServer(dict, filePath: fileName, index:-1)
+                                    self.sendImageFilePathToChatServer(dict, filePath: pathUrl, index:-1)
                                 }
                             }
                                 
@@ -4645,7 +4661,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                             let fileName =  UploadInS3.sharedGlobal().strFilesName
                                             //  progressV.hidden = true
                                             if fileName != nil{
-                                                self.sendVideoFilePathToChatServer(dict, filePath: fileName, index:-1)
+                                                self.sendVideoFilePathToChatServer(dict, filePath: pathUrl, index:-1)
                                             }
                                         }
                                         else
@@ -5087,7 +5103,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 else
                 {
                     // User Rejected
-                    let alert = UIAlertController(title: AppName, message: "Please check your camera settings", preferredStyle: UIAlertControllerStyle.Alert)
+                    let alert = UIAlertController(title: APP_NAME, message: "Please check your camera settings", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
@@ -5366,7 +5382,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         let fileName =  UploadInS3.sharedGlobal().strFilesName
                         //progressV.hidden = true
                         if fileName != nil{
-                            self.sendAudioFilePathToChatServer(dict, filePath: fileName, index: dict["index"] as! Int)
+                            self.sendAudioFilePathToChatServer(dict, filePath: pathUrl, index: dict["index"] as! Int)
                         }
                     }
                         
@@ -6885,13 +6901,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         if(IS_IOS_7)
         {
-            let actionSheet = UIActionSheet(title:"", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle:nil, otherButtonTitles: "Send images","Send Video")
+            let actionSheet = UIActionSheet(title:nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle:nil, otherButtonTitles: "Send images","Send Video")
             actionSheet.tag=10001
             actionSheet.showFromTabBar((bottomTabBar?.tabBar)!)
         }
         else
         {
-            let actionSheet =  UIAlertController(title:"", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let actionSheet =  UIAlertController(title:nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
             actionSheet.addAction(UIAlertAction(title: "Send images", style: UIAlertActionStyle.Default, handler:
                 { (ACTION :UIAlertAction!)in
@@ -6945,13 +6961,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         if(IS_IOS_7)
         {
-            let actionSheet = UIActionSheet(title:"", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle:nil, otherButtonTitles: "Resend Video")
+            let actionSheet = UIActionSheet(title:nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle:nil, otherButtonTitles: "Resend Video")
             actionSheet.tag=10002
             actionSheet.showFromTabBar((bottomTabBar?.tabBar)!)
         }
         else
         {
-            let actionSheet =  UIAlertController(title:"", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let actionSheet =  UIAlertController(title:nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
             actionSheet.addAction(UIAlertAction(title: "Resend Video", style: UIAlertActionStyle.Default, handler:
                 { (ACTION :UIAlertAction!)in
@@ -6972,7 +6988,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                 let fileName =  UploadInS3.sharedGlobal().strFilesName
                                 //  progressV.hidden = true
                                 if fileName != nil{
-                                    self.sendVideoFilePathToChatServer(dic, filePath: fileName, index: index)
+                                    self.sendVideoFilePathToChatServer(dic, filePath: pathUrl, index: index)
                                 }
                             }
                             
@@ -7522,7 +7538,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                 //  progressV.hidden = true
           
                                 if fileName != nil{
-                                    self.sendVideoFilePathToChatServer(dict, filePath: fileName, index:-1)
+                                    self.sendVideoFilePathToChatServer(dict, filePath: pathUrl, index:-1)
                                 }
                             }
                             else
@@ -7610,7 +7626,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                             //progressV.hidden = true
                             if fileName != nil{
                                 
-                                self.sendAudioFilePathToChatServer(dict, filePath: fileName, index: self.chatArray.count-1)
+                                self.sendAudioFilePathToChatServer(dict, filePath: pathUrl, index: self.chatArray.count-1)
                             }
                         }
                             
@@ -7685,7 +7701,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                             let fileName =  UploadInS3.sharedGlobal().strFilesName
                             
                             if fileName != nil{
-                                self.sendImageFilePathToChatServer(dict, filePath: fileName, index:-1)
+                                self.sendImageFilePathToChatServer(dict, filePath: pathUrl, index:-1)
                             }
                             
                             

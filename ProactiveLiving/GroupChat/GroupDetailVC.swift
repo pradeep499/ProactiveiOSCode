@@ -921,15 +921,15 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
     
         if(IS_IOS_7)
         {
-            let actionSheet = UIActionSheet(title: groupObj.groupName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Delete","Cancel")
+            let actionSheet = UIActionSheet(title: groupObj.groupName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Exit","Cancel")
             actionSheet.tag=200
             actionSheet.showFromTabBar((self.tabBarController?.tabBar)!)
         }
         else
         {
-            let actionSheet =  UIAlertController(title: groupObj.groupName, message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let actionSheet =  UIAlertController(title: groupObj.groupName, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
-            actionSheet.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Default, handler:
+            actionSheet.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Default, handler:
                 { (ACTION :UIAlertAction!)in
                     
                     var dict = Dictionary<String,AnyObject>()

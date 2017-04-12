@@ -33,6 +33,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
         // Do any additional setup after loading the view.
         
         bottomTabBar = self.tabBarController as? CustonTabBarController
+        table_view.tableFooterView = UIView(frame : CGRectZero)
         
         
     }

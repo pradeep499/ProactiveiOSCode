@@ -27,7 +27,7 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
         super.viewDidLoad()
         
 
-        self.lbl_profileStatus.text = "Status:"
+        self.lbl_profileStatus.text = "  Status:"
         HelpingClass.setViewWithRoundedCorners(self.lbl_profileStatus, color: UIColor.clearColor(), cornerRadius: 0.0, borderColor: UIColor(0.0,176.0,336.0,1.0), borderWidth: 1.0)
         bottomTabBar = self.tabBarController as? CustonTabBarController
         
@@ -83,7 +83,7 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
     func NotifyFrDetails(notification: NSNotification){
        
         if let status = friendDetailsDict!["result"]!["userStatus"] ?? ""{
-            self.lbl_profileStatus.text = "Status:" + (status as! String)
+            self.lbl_profileStatus.text = "  Status:" + (status as! String)
         }
         
     }
