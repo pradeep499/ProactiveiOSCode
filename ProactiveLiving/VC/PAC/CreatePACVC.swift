@@ -134,7 +134,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             let resultDict =  result["pac"]   // PAC
             
             let description = resultDict?.valueForKey("description") as! String
-            
+            tv_desc.textColor = UIColor.blackColor()
             tv_desc.text = description
             
             if let title = resultDict?.valueForKey("name") as? String {
@@ -431,22 +431,29 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             
             var dict = Dictionary<String,AnyObject>()
             
-            //
-            var url = String()
-            if((linkTextField.text! as String).hasPrefix("http://") || (linkTextField.text! ).hasPrefix("https://")){
-                
-                url = linkTextField.text!
-            }
-            else
-            {
-                url = "http://" + linkTextField.text!
-            }
+            // commented since we are checking "http" on WebViewVC
+//            var url = String()
+//            if((linkTextField.text! as String).hasPrefix("http://") || (linkTextField.text! ).hasPrefix("https://")){
+//                
+//                url = linkTextField.text!
+//            }
+//            else
+//            {
+//                url = "http://" + linkTextField.text!
+//            }
+//            
+//            url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
             
-            url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+            // validating url
+            
+            if (linkTextField.text!.isValidURL() == false){
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+            else {
            if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
             {
                 dict["title"]=titleTextField.text! as String
-                dict["url"] = url//  linkTextField.text
+                dict["url"] =   linkTextField.text  // url
                 
                 self.arrAttachments.append(dict)
                 self.tv_CreatePac.reloadData()
@@ -455,7 +462,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             {
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input both title and url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             }
-            
+            }
             
         })
         

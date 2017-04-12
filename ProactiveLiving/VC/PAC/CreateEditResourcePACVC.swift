@@ -46,6 +46,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         
         if isEdit == true {
         txtFieldTitle.text = resourceDict["title"] as? String
+        txtViewDescription.textColor = UIColor.blackColor()
         txtViewDescription.text = resourceDict["description"] as! String
         arrAttachments = (resourceDict["attachments"] as? [AnyObject])!
         resourceID = resourceDict["_id"] as! String
@@ -120,19 +121,34 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             else {
             */
             
-            if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
-            {
-                dict["title"]=titleTextField.text! as String
-                dict["url"] = linkTextField.text  // url
-                dict["type"]="link"
+            
+            
+            if (linkTextField.text!.isValidURL() == false) {
                 
-                self.arrAttachments.append(dict)
-                self.tableViewResource.reloadData()
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                
             }
-            else
-            {
-                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input both title and url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            else {
+                
+                
+                if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
+                {
+                    dict["title"]=titleTextField.text! as String
+                    dict["url"] = linkTextField.text  // url
+                    dict["type"]="link"
+                    
+                    self.arrAttachments.append(dict)
+                    self.tableViewResource.reloadData()
+                }
+                else
+                {
+                    ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input both title and url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+                }
+                
             }
+            
+            
+         
             
            // }
         })
@@ -190,28 +206,29 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             
             var dict = Dictionary<String,AnyObject>()
             
-            // validating url
-            var url = String()
-            if((linkTextField.text! as String).hasPrefix("http://") || (linkTextField.text! ).hasPrefix("https://")){
-                
-                url = linkTextField.text!
-            }
-            else
-            {
-                url = "http://" + linkTextField.text!
-            }
-            
-            url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
-            
-
-//            if !(self.validateUrl(url)){
-//                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            // validating url  *Commented as per client req*
+//            var url = String()
+//            if((linkTextField.text! as String).hasPrefix("http://") || (linkTextField.text! ).hasPrefix("https://")){
+//                
+//                url = linkTextField.text!
 //            }
-//            else {
+//            else
+//            {
+//                url = "http://" + linkTextField.text!
+//            }
+//            
+//            url = url.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+            
+            // validating url
+            
+            if (linkTextField.text!.isValidURL() == false){
+                ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input valid url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+            else {
             if (titleTextField.text?.characters.count > 0 && linkTextField.text?.characters.count > 0)
             {
                 dict["title"]=titleTextField.text! as String
-                dict["url"] = url  //linkTextField.text
+                dict["url"] = linkTextField.text // url
                 dict["type"]="video"
                 
                 
@@ -222,7 +239,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             {
                 ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please input both title and url.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             }
-           // }
+            }
             
         })
         
@@ -261,6 +278,13 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         
       let descriptionStr = txtViewDescription.text
         
+        if self.txtFieldTitle.text?.characters.count < 1 {
+            
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please enter title.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            return false
+            
+        }
+        
        if descriptionStr.characters.count <= 50 {
             
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Description Field should have minimum 50 words!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
@@ -268,6 +292,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             return false
             
         }
+      
         
         return true
         
@@ -297,6 +322,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
               var parameters = [String: AnyObject]()
             // parameters["AppKey"] = AppKey
            
+         
             
             if isEdit == true {
                 
