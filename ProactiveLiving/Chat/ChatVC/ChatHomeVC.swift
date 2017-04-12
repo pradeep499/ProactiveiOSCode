@@ -216,7 +216,6 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         }
         
         
-        
     }
     
     func callNotification()->Void {
@@ -296,6 +295,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         let userImage = cell.contentView.viewWithTag(1) as! UIImageView
         let userName = cell.contentView.viewWithTag(2) as! UILabel
         let lastMessage = cell.contentView.viewWithTag(3) as! UILabel
+        let totalMembers = cell.contentView.viewWithTag(6) as! UILabel
         let lastMessageDate = cell.contentView.viewWithTag(44) as! UILabel
         let lastMessageTime = cell.contentView.viewWithTag(4) as! UILabel
         let messageCount = cell.contentView.viewWithTag(5) as! UILabel
@@ -321,7 +321,8 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             lastMessage.text=anObject.isTyping
             lastMessage.textColor=UIColor(red:48.0/255.0, green:58.0/255.0,blue:166.0/255.0,alpha:1.0)
         } else {
-            lastMessage.text=anObject.lastMessage
+
+            lastMessage.text=anObject.lastMessage!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).stringByReplacingEmojiCheatCodesWithUnicode()
             lastMessage.textColor=UIColor.grayColor()
         }
  
@@ -367,9 +368,28 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             imgRecognizer.delegate = self
             userImage.addGestureRecognizer(imgRecognizer)
             userImage.userInteractionEnabled = true
+            totalMembers.text = ""
             
+        }
+        else {
             
-        } else {
+            //--
+            let str:String = ChatHelper.userDefaultForKey("userId") as String!
+            let gpId : String = anObject.groupId! as String
+            let strPred:String = "loginUserId contains[cd] \"\(str)\" AND groupId LIKE \"\(gpId)\""
+            let instance = DataBaseController.sharedInstance
+            let fetchResult=instance.fetchData("GroupUserList", predicate: strPred, sort: ("groupId",false))! as NSArray
+            
+            dispatch_after(0, dispatch_get_main_queue(), {
+                let myInt:Int = fetchResult.count
+                if(myInt==1) {
+                    totalMembers.text = "\(myInt) Member"
+                }
+                else {
+                    totalMembers.text = "\(myInt) Members"
+                }
+            })
+
             //Group Msg
            /* let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

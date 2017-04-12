@@ -197,7 +197,11 @@ class ChatHelper: NSObject {
         return label.frame.width
     }
     
-    
+    func uniqueName(fileName: String) -> String {
+        
+        let uniqueImageName = fileName  + String(UInt64(floor(NSDate().timeIntervalSince1970 * 1000)))
+        return uniqueImageName as String
+    }
     
 }
 
@@ -312,7 +316,6 @@ class UIBorderedLabel: UILabel
     }
     
 }
-
 
 //NSDate Extension
 extension NSDate

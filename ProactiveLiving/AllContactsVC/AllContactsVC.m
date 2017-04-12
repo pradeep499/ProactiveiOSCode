@@ -175,9 +175,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SHOW_GROUP_VIEW_CLICKED object:self];
 
 }
-- (IBAction)btnDoneClick:(id)sender {
+- (IBAction)btnDoneClick:(UIButton *)sender {
     
-    //[self.btnDone setHidden:YES];
+    sender.userInteractionEnabled = NO;
+    [self enableButtonWithDelay:sender];
+    
     if([self.fromVC isEqualToString:@"Inbox"]){
         
         if([currentController isKindOfClass:[ContactsVC class]])
@@ -197,8 +199,15 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"POP_CONTCT_VC" object:self];
     }
     
-    
-    
+}
+
+- (void)enableButtonWithDelay:(UIButton*)sender {
+
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        sender.userInteractionEnabled = YES;
+    });
 }
 
 - (void)didReceiveMemoryWarning {
