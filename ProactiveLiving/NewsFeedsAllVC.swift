@@ -1485,6 +1485,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         btn_like.setImage(UIImage(named: "like_nav_color"), forState: .Selected)
         
         btn_options.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2));
+        //let theImageView = UIImageView(image: UIImage(named:"more_menu")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+        //theImageView.tintColor = UIColor.grayColor()
+        //btn_options.setImage(theImageView.image, forState: .Normal)
         btn_options.addTarget(self, action: #selector(NewsFeedsAllVC.onClickOptions(_:)), forControlEvents: .TouchUpInside)
 
         if let createdBy = (dict as NSDictionary).valueForKeyPath("createdBy._id") as? String {

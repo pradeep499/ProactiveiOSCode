@@ -101,6 +101,16 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
+        if(self.screenName ==  "MEET UPS")
+        {
+            self.HConstDialUpView.constant=0;
+        }
+        else
+        {
+            self.HConstDialUpView.constant=40;
+            
+        }
+
     }
    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -546,9 +556,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                         self.lblLike.text = self.dataDict["address"] as? String
                         self.imgLike.image = UIImage(named: "location_pin_white")
                         self.btnForward.setTitle("Forward", forState: .Normal)
-                        self.headerView.frame.size.height = self.headerView.frame.size.height-40
+                        self.headerView.frame.size.height = 260-40
                         self.dialUpView.hidden = true
-                        //self.HConstDialUpView.constant=0;
                         
                         self.btnSure.setTitle("Sure!", forState: UIControlState.Normal)
                         self.btnSorry.setTitle("Sorry!", forState: UIControlState.Normal)
@@ -564,11 +573,12 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                         self.lblLike.text="\((self.dataDict["likes"] as! [AnyObject]).count) Likes"
                         self.imgLike.image = UIImage(named: "like")
                         self.btnForward.setTitle("Forward", forState: .Normal)
-                       
+                        self.headerView.frame.size.height = 260
+
                         self.btnSure.setTitle("Accept", forState: UIControlState.Normal)
                         self.btnSorry.setTitle("Decline", forState: UIControlState.Normal)
                         self.btnLike.hidden=false
-                        
+
                         
                         
                     }
