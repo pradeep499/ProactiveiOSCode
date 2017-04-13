@@ -413,8 +413,16 @@
     cell.imgPerson.layer.cornerRadius = cell.imgPerson.frame.size.height/2;
     cell.imgPerson.clipsToBounds = true;
     
+    NSLog(@"%@",[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]]);
     
-    cell.lblName.text=[NSString stringWithFormat:@"%@",[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"firstName"]];
+    NSString *lastname = [NSString stringWithFormat:@"%@",[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"lastName"]];
+    NSString *firstName = [[NSString stringWithFormat:@"%@",[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"firstName"]] stringByAppendingString:@" "];
+    
+    NSString *fullName = [firstName stringByAppendingString:lastname];
+    
+    cell.lblName.text=fullName;//[NSString stringWithFormat:@"%@",[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"firstName"]];
+    
+    
     cell.lblDesc.text=[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"userStatus"];
     
     //badru
