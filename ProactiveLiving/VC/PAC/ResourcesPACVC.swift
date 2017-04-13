@@ -21,6 +21,8 @@ class ResourcesPACVC: UIViewController {
     var moviePlayer = MPMoviePlayerViewController()
     var isHidden = true
     var isFromMoreDetail = false
+    var pacID = ""
+    
     var indexToDelete = Int()
     
 // MARK:- View Life Cycle
@@ -34,6 +36,9 @@ class ResourcesPACVC: UIViewController {
         fetchPostDataFromServer()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ResourcesPACVC.isFromMoredetailVC), name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
+        
+        
+
 
     }
     
@@ -44,7 +49,11 @@ class ResourcesPACVC: UIViewController {
         if isFromMoreDetail == false {
             fetchPostDataFromServer()
             // NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
+            self.fetchDataForPACRole()
         }
+        
+      
+        
 
     }
     
@@ -161,6 +170,75 @@ class ResourcesPACVC: UIViewController {
     
  
     //MARK:- Service Hit
+    
+    
+    
+    func fetchDataForPACRole() {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["AppKey"] = AppKey
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["pacId"] = self.pacID
+            
+            //call global web service class latest
+            Services.postRequest(ServiceGetPACRole, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    //dissmiss indicator
+                    if ((responseDict["error"] as! Int) == 0) {
+                        print(responseDict)
+                        
+                        let  memberStatus = responseDict["result"]!["memberStatus"] as! Bool
+                       
+                       
+                        let settingsDict = responseDict["result"]!["settings"] as! [String : AnyObject]
+                        
+                        
+                        let isPrivate = settingsDict["private"] as! Bool
+                        
+                        if(memberStatus == false) {
+                           
+                        if(isPrivate == true) {
+                            
+                            var noDataImage : UIImageView
+                            noDataImage  = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-500, width: 320, height: 153))
+                            noDataImage.image = UIImage(named:"private_user_texticon")
+                            self.view.addSubview(noDataImage)
+
+                            }
+                         
+                        }
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
+    
+    
     
     func deleteResourceAPI(param: [String: AnyObject] ){
         

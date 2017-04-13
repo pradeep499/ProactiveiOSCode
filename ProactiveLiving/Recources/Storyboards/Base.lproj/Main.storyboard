@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pzl-i3-Gc5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pzl-i3-Gc5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -663,14 +663,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="46FD0629-A0BC-4470-A0D6-2002EBD999D5" translatesAutoresizingMaskIntoConstraints="NO" id="VA7-FM-Dz9">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="03D0B3E3-3012-495F-9398-AB27116CF490" translatesAutoresizingMaskIntoConstraints="NO" id="VA7-FM-Dz9">
                                                     <rect key="frame" x="20" y="10" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="WAy-a7-hBX"/>
                                                         <constraint firstAttribute="width" constant="25" id="Y9o-V3-Mc0"/>
                                                     </constraints>
                                                     <variation key="widthClass=compact" image="help_mail"/>
-                                                    <variation key="widthClass=regular" image="46FD0629-A0BC-4470-A0D6-2002EBD999D5"/>
+                                                    <variation key="widthClass=regular" image="03D0B3E3-3012-495F-9398-AB27116CF490"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Email Us" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOJ-Kk-KWA">
                                                     <rect key="frame" x="60" y="8" width="71" height="23"/>
@@ -718,7 +718,7 @@
                                                         <constraint firstAttribute="width" constant="25" id="1Dk-ad-0xd"/>
                                                         <constraint firstAttribute="height" constant="25" id="w8q-RO-gLP"/>
                                                     </constraints>
-                                                    <variation key="heightClass=compact" image="87A11DFA-B33E-49D3-852F-E26CE1D2693B"/>
+                                                    <variation key="heightClass=compact" image="66F98968-7A11-471B-93ED-673B01EC01D3"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nLP-Vn-oOA">
                                                     <rect key="frame" x="60" y="10" width="235" height="23"/>
@@ -2949,7 +2949,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOS-F5-bLa">
-                                        <rect key="frame" x="46" y="58" width="265" height="131"/>
+                                        <rect key="frame" x="45" y="58" width="265" height="131"/>
                                         <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="131" id="fVd-u7-TcL"/>
@@ -3959,7 +3959,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="biT-kw-wk3">
-                                            <rect key="frame" x="20" y="329" width="148" height="37"/>
+                                            <rect key="frame" x="20" y="329" width="147.5" height="37"/>
                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="37" id="Pcb-Cw-aah"/>
@@ -3972,7 +3972,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGd-q8-eh6">
-                                            <rect key="frame" x="188" y="329" width="147" height="37"/>
+                                            <rect key="frame" x="187.5" y="329" width="147.5" height="37"/>
                                             <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                             <state key="normal" title="Rating"/>
@@ -7089,7 +7089,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wv3-ZN-quA">
-                                        <rect key="frame" x="46" y="58" width="265" height="131"/>
+                                        <rect key="frame" x="45" y="58" width="265" height="131"/>
                                         <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="265" id="eN9-8N-bB8"/>
@@ -7101,7 +7101,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3kW-zA-yTc">
-                                        <rect key="frame" x="46" y="243" width="265" height="37"/>
+                                        <rect key="frame" x="45" y="243" width="265" height="37"/>
                                         <color key="backgroundColor" red="0.0039215686269999999" green="0.68235294120000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="265" id="976-4Q-fjG"/>
@@ -10090,7 +10090,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Pzl-i3-Gc5" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="BIH-ck-Oo3">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="BIH-ck-Oo3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -11655,7 +11655,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gt9-Ub-vBJ">
-                                                    <rect key="frame" x="8" y="5" width="304" height="104"/>
+                                                    <rect key="frame" x="8" y="25" width="304" height="90.5"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lIV-dx-xsl">
                                                         <size key="itemSize" width="52" height="68"/>
@@ -11706,12 +11706,23 @@
                                                         </collectionViewCell>
                                                     </cells>
                                                 </collectionView>
+                                                <button opaque="NO" tag="555" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V8s-k1-fhc">
+                                                    <rect key="frame" x="265" y="0.0" width="46" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="46" id="L7y-fU-yJS"/>
+                                                        <constraint firstAttribute="height" constant="20" id="MYj-87-ruS"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <state key="normal" title="Seel all"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="gt9-Ub-vBJ" secondAttribute="bottom" constant="6" id="IAY-Bb-GHp"/>
-                                                <constraint firstItem="gt9-Ub-vBJ" firstAttribute="top" secondItem="shT-Ti-eEG" secondAttribute="top" constant="5" id="Xnm-pc-NhH"/>
+                                                <constraint firstAttribute="bottom" secondItem="gt9-Ub-vBJ" secondAttribute="bottom" id="IAY-Bb-GHp"/>
+                                                <constraint firstItem="gt9-Ub-vBJ" firstAttribute="top" secondItem="shT-Ti-eEG" secondAttribute="top" constant="25" id="Xnm-pc-NhH"/>
                                                 <constraint firstAttribute="trailing" secondItem="gt9-Ub-vBJ" secondAttribute="trailing" constant="8" id="aux-ym-fYV"/>
+                                                <constraint firstItem="V8s-k1-fhc" firstAttribute="top" secondItem="shT-Ti-eEG" secondAttribute="top" id="lru-Ys-XwI"/>
                                                 <constraint firstItem="gt9-Ub-vBJ" firstAttribute="leading" secondItem="shT-Ti-eEG" secondAttribute="leading" constant="8" id="paP-LI-UtF"/>
+                                                <constraint firstAttribute="trailing" secondItem="V8s-k1-fhc" secondAttribute="trailing" constant="9" id="yWX-jm-MC5"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -11774,7 +11785,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bBN-i5-hkl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-480" y="-414.69265367316348"/>
+            <point key="canvasLocation" x="-2200" y="-397"/>
         </scene>
         <!--Meet Ups ListingVC-->
         <scene sceneID="COv-cv-Wux">
@@ -17036,7 +17047,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asim shared a post." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHW-zV-22s" userLabel="nameLable">
-                                                    <rect key="frame" x="72" y="14" width="143" height="22"/>
+                                                    <rect key="frame" x="72" y="14.5" width="143" height="21.5"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -17742,7 +17753,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="46FD0629-A0BC-4470-A0D6-2002EBD999D5" width="24" height="18">
+        <image name="03D0B3E3-3012-495F-9398-AB27116CF490" width="24" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -17822,7 +17833,7 @@ EE8QWBBrEG8QehCDEIgQkBCTEJgQpxCrELIQuhDHEMwQzhDQENUQ3RDgEOUQ7RDwEQIRBREKAAAAAAAA
 AgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAEQw
 </mutableData>
         </image>
-        <image name="87A11DFA-B33E-49D3-852F-E26CE1D2693B" width="18" height="26">
+        <image name="66F98968-7A11-471B-93ED-673B01EC01D3" width="18" height="26">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
