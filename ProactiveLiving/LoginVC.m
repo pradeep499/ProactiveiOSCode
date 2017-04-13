@@ -334,7 +334,7 @@
     }
     else {
         if ([AppDelegate checkInternetConnection]) {
-            [SVProgressHUD showWithStatus:@"Signing In" maskType:SVProgressHUDMaskTypeBlack];
+            [AppDelegate showProgressHUDWithStatus:@""];
             NSMutableDictionary *parameters=[NSMutableDictionary dictionary];;
             
             [parameters setObject:AppKey forKey:@"AppKey"];
@@ -365,7 +365,7 @@
             
             
           //  [Services serviceCallWithPath:ServiceLogin withParam:parameters success:^(NSDictionary *responseDict) {
-                [SVProgressHUD dismiss];
+                [AppDelegate dismissProgressHUD];
                 NSLog(@"%@",responseDict);
                 
                 self.detailDictionary = responseDict;
@@ -432,7 +432,7 @@
                             
                             obj.userID = [dict valueForKey:@"_id"];
                             obj.userName = [NSString stringWithFormat:@"%@ %@", [dict valueForKey:@"firstName"], [dict valueForKey:@"lastName"]];
-                            obj.gender = [dict valueForKey:@"gender"];
+                            obj.gender = [NSString stringWithFormat: @"%@", ([dict valueForKey:@"gender"] ? [dict valueForKey:@"gender"] : @"Undefined")];
                             obj.summary = [dict valueForKey:@"summary"];
                             obj.liveIn = [dict valueForKey:@"liveIn"];
                             obj.workAt = [dict valueForKey:@"workAt"];
@@ -478,7 +478,7 @@
              
              /*
                           failure:^(NSError *error) {
-                [SVProgressHUD dismiss];
+              [AppDelegate dismissProgressHUD];
                 NSLog(@"%@",error);
                 [self showAlert];
             }*/

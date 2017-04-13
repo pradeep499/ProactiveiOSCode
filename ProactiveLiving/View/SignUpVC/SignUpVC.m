@@ -615,7 +615,7 @@
     }
     else {
         if ([AppDelegate checkInternetConnection]) {
-            [SVProgressHUD showWithStatus:@"Signing Up" maskType:SVProgressHUDMaskTypeBlack];
+            [AppDelegate showProgressHUDWithStatus:@""];
             NSDictionary *parameters;
             
             parameters = @{@"AppKey" : AppKey,
@@ -630,7 +630,7 @@
                            };
             
             [Services serviceCallWithPath:ServiceRegister withParam:parameters success:^(NSDictionary *responseDict) {
-                [SVProgressHUD dismiss];
+                [AppDelegate dismissProgressHUD];
                 NSLog(@"%@",responseDict);
                 self.detailDictionary = responseDict;
                 
@@ -655,7 +655,7 @@
                     [self showAlert];
                 }
             } failure:^(NSError *error) {
-                [SVProgressHUD dismiss];
+                [AppDelegate dismissProgressHUD];
                 NSLog(@"%@",error);
                 [self showAlert];
             }];

@@ -45,7 +45,7 @@
     if ([AppDelegate checkInternetConnection]) {
         
         //show indicator on screen
-        [SVProgressHUD showWithStatus:@"Please wait" maskType:SVProgressHUDMaskTypeBlack];
+        [AppDelegate showProgressHUDWithStatus:@""];
         
         NSMutableDictionary *parameters=[[NSMutableDictionary alloc]init];
         [parameters setValue:AppKey forKey:@"AppKey"];
@@ -54,7 +54,7 @@
         //web service call
         [Services serviceCallWithPath:ServiceGetCertifications withParam:parameters success:^(NSDictionary *responseDict)
          {
-             [SVProgressHUD dismiss];//dissmiss indicator
+             [AppDelegate dismissProgressHUD];//dissmiss indicator
              
              if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
              {
@@ -74,7 +74,6 @@
              
          } failure:^(NSError *error)
          {
-             //[SVProgressHUD dismiss];
              [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
          }];
         

@@ -90,7 +90,6 @@
              
          } failure:^(NSError *error)
          {
-             //[SVProgressHUD dismiss];
              [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
          }];
         

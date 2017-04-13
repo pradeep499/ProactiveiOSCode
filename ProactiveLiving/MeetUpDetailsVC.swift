@@ -424,75 +424,47 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     func forwardMeetUpOrInvite(notification: NSNotification) {
         
         if let memberID = notification.userInfo?["_id"] as? String {
-            
-            var dict = Dictionary<String,AnyObject>()
-            if(self.screenName == "MEET UPS") {
-                dict["type"]="meetup"
+            if let groupID = self.dataDict["_id"] as? String {
+                var dict = Dictionary<String,AnyObject>()
+                if(self.screenName == "MEET UPS") {
+                    dict["type"]="meetup"
+                }
+                else {
+                    dict["type"]="webinvite"
+                }
+                dict["typeId"] = groupID
+                dict["forwadedBy"] = ChatHelper.userDefaultForKey("userId")
+                dict["userId"] = memberID
+                ChatListner .getChatListnerObj().socket.emit("forwardMeetup_Invite", dict)
+                
+                self.fetchDataForMeetUpOrWebInvite()
             }
-            else {
-                dict["type"]="webinvite"
-            }
-            dict["typeId"] = self.dataDict["_id"] as! String
-            dict["forwadedBy"] = ChatHelper.userDefaultForKey("userId")
-            dict["userId"] = memberID
-            ChatListner .getChatListnerObj().socket.emit("forwardMeetup_Invite", dict)
-            
-            self.fetchDataForMeetUpOrWebInvite()
         }
     }
     
     func btnLinkClick(sender: UIButton)  {
         print(sender)
         
-//        var url : String!
-//        
-//        if((self.dataDict["webLink"] as! String).hasPrefix("http://") || (self.dataDict["webLink"] as! String).hasPrefix("https://")){
-//            
-//            url = self.dataDict["webLink"] as! String
-//        }
-//        else
-//        {
-//            url = "http://" + (self.dataDict["webLink"] as! String)
-//        }
-//        
-//        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
-        
-        
-        var url : String!
-
-        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
-        WebVC.title =  self.dataDict["title"] as? String
-        url = self.dataDict["webLink"] as! String
-        if url != nil {
-            WebVC.urlStr = url!
+        if let webLink = self.dataDict["webLink"] as? String {
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.title =  self.dataDict["title"] as? String
+            WebVC.urlStr = webLink
             self.navigationController?.pushViewController(WebVC, animated: true)
         }
-
-        
-        
-        
-        
     }
     
     func btnDialUpClick(sender: UIButton)  {
         print(sender)
-        
-        
-        
-        
-        let mobilePhone = self.dataDict["dialInNumber"] as! String
-        if let phoneCallURL:NSURL = NSURL(string: "tel://\(mobilePhone)") {
-            let application:UIApplication = UIApplication.sharedApplication()
-            if (application.canOpenURL(phoneCallURL)) {
-                application.openURL(phoneCallURL)
+
+        if let mobilePhone = self.dataDict["dialInNumber"] as? String {
+            if let phoneCallURL:NSURL = NSURL(string: "tel://\(mobilePhone)") {
+                let application:UIApplication = UIApplication.sharedApplication()
+                if (application.canOpenURL(phoneCallURL)) {
+                    application.openURL(phoneCallURL)
+                }
             }
         }
         
-        
-//        let phoneNumber: String = self.dataDict["dialInNumber"] as! String
-//        if let url = NSURL(string: "tel://\(phoneNumber)") {
-//            UIApplication.sharedApplication().openURL(url)
-//        }
     }
     
     //mark- Forward Meetups/Invites
@@ -716,59 +688,60 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     func btnAcceptClick(sender: UIButton)  {
         
-        self.btnChat.hidden = false
-        
-        var dict = Dictionary<String,AnyObject>()
-        
-        if(self.screenName == "MEET UPS") {
-            dict["type"]="meetup"
-        }
-        else {
-            dict["type"]="webinvite"
-        }
-        dict["typeId"] = self.dataDict["_id"] as! String
-        dict["status"] = "1"
-        dict["userId"] = ChatHelper.userDefaultForKey("userId")
-        
-        //group info
-        var groupDict = Dictionary<String,AnyObject>()
-        groupDict["userid"] = self.dataDict["createdBy"]!["_id"] as! String
-        groupDict["groupid"] = self.dataDict["groupId"] as! String
-        groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
-        groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
-        
-        dict["groupInfo"] = groupDict
+        if let groupID = self.dataDict["_id"] as? String {
 
-        
-        ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
-        
+            self.btnChat.hidden = false
+            var dict = Dictionary<String,AnyObject>()
+            
+            if(self.screenName == "MEET UPS") {
+                dict["type"]="meetup"
+            }
+            else {
+                dict["type"]="webinvite"
+            }
+            dict["typeId"] = groupID
+            dict["status"] = "1"
+            dict["userId"] = ChatHelper.userDefaultForKey("userId")
+            
+            //group info
+            var groupDict = Dictionary<String,AnyObject>()
+            groupDict["userid"] = self.dataDict["createdBy"]!["_id"] as! String
+            groupDict["groupid"] = self.dataDict["groupId"] as! String
+            groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
+            groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
+            
+            dict["groupInfo"] = groupDict
+            ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
+        }
     }
     
     func btnDeclineClick(sender: UIButton)  {
         
-        self.btnChat.hidden = true
-        
-        var dict = Dictionary<String,AnyObject>()
-        if(self.screenName == "MEET UPS") {
-            dict["type"]="meetup"
+        if let groupID = self.dataDict["_id"] as? String {
+            
+            self.btnChat.hidden = true
+            var dict = Dictionary<String,AnyObject>()
+            
+            if(self.screenName == "MEET UPS") {
+                dict["type"]="meetup"
+            }
+            else {
+                dict["type"]="webinvite"
+            }
+            dict["typeId"] = groupID
+            dict["status"] = "2"
+            dict["userId"] = ChatHelper.userDefaultForKey("userId")
+            
+            //group info
+            var groupDict = Dictionary<String,AnyObject>()
+            groupDict["userid"] = self.dataDict["createdBy"]!["_id"] as! String
+            groupDict["groupid"] = self.dataDict["groupId"] as! String
+            groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
+            groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
+            
+            dict["groupInfo"] = groupDict
+            ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
         }
-        else {
-            dict["type"]="webinvite"
-        }
-        dict["typeId"] = self.dataDict["_id"] as! String
-        dict["status"] = "2"
-        dict["userId"] = ChatHelper.userDefaultForKey("userId")
-        
-        //group info
-        var groupDict = Dictionary<String,AnyObject>()
-        groupDict["userid"] = self.dataDict["createdBy"]!["_id"] as! String
-        groupDict["groupid"] = self.dataDict["groupId"] as! String
-        groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
-        groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
-        
-        dict["groupInfo"] = groupDict
-        
-        ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
         
     }
     

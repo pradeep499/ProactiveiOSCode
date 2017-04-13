@@ -127,7 +127,7 @@
         //check internet before hitting web service
         if ([AppDelegate checkInternetConnection]) {
             //show indicator on screen
-            [SVProgressHUD showWithStatus:@"Please wait" maskType:SVProgressHUDMaskTypeBlack];
+            [AppDelegate showProgressHUDWithStatus:@""];
 
             //create dictionary for parameters of web service
             NSDictionary *parameters;
@@ -138,7 +138,7 @@
             //call global web service class
             [Services serviceCallWithPath:ServiceForgotPassword withParam:parameters success:^(NSDictionary *responseDict) {
                 
-                [SVProgressHUD dismiss];//dissmiss indicator
+                [AppDelegate dismissProgressHUD];//dissmiss indicator
                 
                 self.detailDictionary = responseDict;//set dictionary
                 
@@ -163,7 +163,7 @@
                 }
                 
             } failure:^(NSError *error) {
-                [SVProgressHUD dismiss];
+                [AppDelegate dismissProgressHUD];
                 NSLog(@"%@",error);
                 [self showAlert];
             }];

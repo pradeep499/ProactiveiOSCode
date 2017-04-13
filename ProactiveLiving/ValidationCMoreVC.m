@@ -368,12 +368,12 @@
     if ([AppDelegate checkInternetConnection]) {
         
         //show indicator on screen
-        [SVProgressHUD showWithStatus:@"Please wait" maskType:SVProgressHUDMaskTypeBlack];
+        [AppDelegate showProgressHUDWithStatus:@""];
         
         //call global web service class
         [Services serviceCallWithPath:ServiceBookOrganization withParam:params success:^(NSDictionary *responseDict)
          {
-             [SVProgressHUD dismiss];//dissmiss indicator
+             [AppDelegate dismissProgressHUD];
              
              if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
              {
@@ -430,7 +430,7 @@
              
          } failure:^(NSError *error)
          {
-             [SVProgressHUD dismiss];
+             [AppDelegate dismissProgressHUD];
              NSLog(@"%@",error);
              [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
          }];

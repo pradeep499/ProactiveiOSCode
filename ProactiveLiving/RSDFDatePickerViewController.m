@@ -534,7 +534,8 @@ type = 3 for yeary basis
     if ([AppDelegate checkInternetConnection]) {
         
         //show indicator on screen
-        //[SVProgressHUD showWithStatus:@"Please wait" maskType:SVProgressHUDMaskTypeBlack];
+        //[AppDelegate showProgressHUDWithStatus:@""];
+
         
         NSMutableDictionary *parameters=[[NSMutableDictionary alloc]init];
         [parameters setValue:AppKey forKey:@"AppKey"];
@@ -553,7 +554,7 @@ type = 3 for yeary basis
         //call global web service class
         [Services serviceCallWithPath:ServiceGetAppointmentList withParam:parameters success:^(NSDictionary *responseDict)
          {
-             [SVProgressHUD dismiss];//dissmiss indicator
+             [AppDelegate dismissProgressHUD];
              
              if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
              {
@@ -674,7 +675,6 @@ type = 3 for yeary basis
              
          } failure:^(NSError *error)
          {
-             //[SVProgressHUD dismiss];
              [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
          }];
         

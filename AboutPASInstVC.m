@@ -66,7 +66,7 @@
     if ([AppDelegate checkInternetConnection]) {
         
         //show indicator on screen
-        [SVProgressHUD showWithStatus:@"Please wait" maskType:SVProgressHUDMaskTypeBlack];
+        [AppDelegate showProgressHUDWithStatus:@""];
         
         NSMutableDictionary *parameters=[[NSMutableDictionary alloc]init];
        
