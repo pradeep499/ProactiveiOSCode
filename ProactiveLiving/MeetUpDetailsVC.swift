@@ -335,13 +335,28 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         default: //case (2)
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID3, forIndexPath: indexPath) as! MembersCollectionCell
             cell.selectionStyle = .None
-
+            let seeAll = cell.contentView.viewWithTag(555) as! UIButton
+            seeAll.addTarget(self, action: #selector(seeAllContacts(_:)), forControlEvents: .TouchUpInside)
             cell.backgroundColor = UIColor.clearColor()
             cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
             /* ... */
             return cell
         }
     }
+    
+//MARK:- Button action
+    func seeAllContacts(sender : UIButton){
+        
+        let dataArr = self.arrangeMembers()
+        let memberContactListVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("MemberContactListVC") as! MemberContactListVC
+        
+        memberContactListVC.isFromMeetUp = true
+        memberContactListVC.membersArr = dataArr
+        self.navigationController?.pushViewController(memberContactListVC, animated: true)
+        
+        
+    }
+    
     
     func btnAttachmentClick(sender: UIButton)  {
         print(sender)

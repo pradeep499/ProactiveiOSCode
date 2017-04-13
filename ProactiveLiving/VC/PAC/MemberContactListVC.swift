@@ -10,8 +10,13 @@ import UIKit
 
 class MemberContactListVC: UIViewController {
 
-    var contactArr = [[String : AnyObject]]() //[AnyObject]()
     
+    //MARK:- Properties
+    var contactArr = [[String : AnyObject]]() //[AnyObject]()
+    var membersArr = [AnyObject]()  // imgUrl , name
+    var isFromMeetUp = false
+    
+    //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,8 +41,13 @@ extension MemberContactListVC : UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if isFromMeetUp == true {
+            return membersArr.count
+        }
+        else {
         return contactArr.count
-        
+            
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -45,18 +55,31 @@ extension MemberContactListVC : UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("ContactItemList")! as UITableViewCell
         let nameLbl = cell.viewWithTag(20) as! UILabel
         let profileImg = cell.viewWithTag(10) as! UIImageView
-        let memberDict = contactArr[indexPath.row]
-        
         profileImg.layer.borderWidth = 1.0
         profileImg.layer.masksToBounds = false
         profileImg.layer.borderColor = UIColor.whiteColor().CGColor
         profileImg.layer.cornerRadius =  profileImg.frame.size.width/2
         profileImg.clipsToBounds = true
         
-        let completeName = (memberDict["firstName"] as? String)! + " " + (memberDict["lastName"] as? String)!
+        if isFromMeetUp == true {
+            
+          let contactDict = membersArr[indexPath.row]
+          nameLbl.text = contactDict["name"] as? String
+           
+        profileImg.sd_setImageWithURL(NSURL.init(string: (contactDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
+            
+            
+        }else {
+            
+            let memberDict = contactArr[indexPath.row]
+            let completeName = (memberDict["firstName"] as? String)! + " " + (memberDict["lastName"] as? String)!
+            
+            nameLbl.text = completeName
+            profileImg.sd_setImageWithURL(NSURL.init(string: (memberDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
+            
+        }
+     
         
-        nameLbl.text = completeName
-        profileImg.sd_setImageWithURL(NSURL.init(string: (memberDict["imgUrl"] as! String)), placeholderImage: UIImage.init(named: "ic_booking_profilepic"))
         return cell
         
         
