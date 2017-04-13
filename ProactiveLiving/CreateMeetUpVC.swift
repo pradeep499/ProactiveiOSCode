@@ -254,7 +254,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //Date Picker
         datePicker = UIDatePicker()
         datePicker.datePickerMode = UIDatePickerMode.Date
-        
+        datePicker.minimumDate = NSDate()
+
         let toolBar1 = UIToolbar()
         toolBar1.barStyle = UIBarStyle.Default
         toolBar1.translucent = true
@@ -271,7 +272,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //Time Picker
         timePicker = UIDatePicker()
         timePicker.datePickerMode = UIDatePickerMode.Time
-        
+        timePicker.minimumDate = NSDate()
+
         let toolBar2 = UIToolbar()
         toolBar2.barStyle = UIBarStyle.Default
         toolBar2.translucent = true
@@ -468,6 +470,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         self.txtFieldAt.text = selectedDate
         self.txtFieldAt.resignFirstResponder()
+        
+        self.timePicker.minimumDate = timePicker.date
         print("done!")
     }
     
@@ -479,6 +483,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         self.txtField_eventEndTime.text = selectedDate
         self.txtField_eventEndTime.resignFirstResponder()
+        
+        self.timePicker.minimumDate = NSDate()
         print("done!")
     }
     

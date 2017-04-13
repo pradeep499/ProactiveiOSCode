@@ -63,7 +63,7 @@
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:
                                                 [NSDictionary dictionaryWithObjectsAndKeys:                                                                                                  [UIColor whiteColor],                                                                                                  NSForegroundColorAttributeName,                                                                                                 [UIColor whiteColor],                                                                                              NSForegroundColorAttributeName,                                                                                                  [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],                                                                                                  NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
     //UITabBar appearance
-    //[[UITabBar appearance] setTintColor:[UIColor blueColor]];
+    [[UITabBar appearance] setTintColor:UIColorFromRGB(0, 176, 235)];
     [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
     
     //Statusbar appearance
@@ -293,8 +293,8 @@
     
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     //[SVProgressHUD setRingRadius:30.0];
-    [SVProgressHUD setRingNoTextRadius: 40.0];
-    [SVProgressHUD setRingThickness:7.0];
+    [SVProgressHUD setRingNoTextRadius: 36.0];
+    [SVProgressHUD setRingThickness:6.0];
     [SVProgressHUD setForegroundColor:UIColorFromRGB(0, 176, 235)];
 
     //[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
