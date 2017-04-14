@@ -52,7 +52,7 @@ class MeetUpsListingVC: UIViewController {
             ChatListner .getChatListnerObj().socket.emit("getAllMeetup_Invite", dict)
             
             //unowned let weakself = self
-            //ChatListner .getChatListnerObj().socket.off("getMeetup_Invite_listing")
+            ChatListner .getChatListnerObj().socket.off("getMeetup_Invite_listing")
             ChatListner .getChatListnerObj().socket.on("getMeetup_Invite_listing") {data, ack in
                
                 
@@ -99,9 +99,8 @@ class MeetUpsListingVC: UIViewController {
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
 
-            //ChatListner .getChatListnerObj().socket.off("getAccept_Meetup_Invite")
+            ChatListner .getChatListnerObj().socket.off("getAccept_Meetup_Invite")
             ChatListner .getChatListnerObj().socket.on("getAccept_Meetup_Invite") {data, ack in
-                
                 
                 print("value error_code\(data[0]["status"] as! String))")
                 
@@ -408,6 +407,7 @@ class MeetUpsListingVC: UIViewController {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let meetUpDetailVC: MeetUpDetailsVC = storyBoard.instantiateViewControllerWithIdentifier("MeetUpDetailsVC") as! MeetUpDetailsVC
         meetUpDetailVC.meetUpID=self.arrData[indexPath.row]["_id"] as! String
+        //meetUpDetailVC.dataDict = self.arrData[indexPath.row] as! [String : AnyObject]
         if(self.title == "MEET UPS")
         {
             meetUpDetailVC.screenName = "MEET UPS"

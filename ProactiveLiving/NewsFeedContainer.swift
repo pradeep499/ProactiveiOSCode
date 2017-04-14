@@ -23,7 +23,8 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
     var thirdVC: NewsFeedsAllVC!
     var fourthVC: NewsFeedsAllVC!
     var fifthVC: NewsFeedsAllVC!
-    
+    var sixthVC: NewsFeedsAllVC!
+
     var containerVC : YSLContainerViewController!
 
     
@@ -91,6 +92,10 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         fifthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
         fifthVC.title = "HEALTH CLUBS"
         fifthVC.view.tag = 4
+        
+        sixthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
+        sixthVC.title = "HEALTH CLUBS"
+        sixthVC.view.tag = 5
 
         arrViewControllers = [firstVC, secondVC, thirdVC, fourthVC, fifthVC]
         
@@ -115,45 +120,6 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         print("current controller : \(controller)")
         currentIndex = index
         intValue = index
-        //controller.s
-/*
-        if index == 0{
-            if let conVC = controller as? NewsFeedsAllVC {
-                conVC.setColectionViewTags()
-                conVC.fetchPostDataFromServer()
-                conVC.fetchExploreDataFromServer()
-                
-            }
-        }
-        else if index == 1{
-            
-        }
-        else if index == 2{
-            if let conVC = controller as? NewsFeedsAllVC {
-                conVC.setColectionViewTags()
-                conVC.fetchPostDataFromServer()
-            }        }
-        else if index == 3{
-            if let conVC = controller as? NewsFeedsAllVC {
-                conVC.setColectionViewTags()
-                conVC.fetchPostDataFromServer()
-            }
-        }
-        else {
-            if let conVC = controller as? NewsFeedsAllVC {
-                conVC.setColectionViewTags()
-                conVC.fetchPostDataFromServer()
-            }
-            
-        }
-*/
-        if let conVC = controller as? NewsFeedsAllVC {
-            //conVC.collectionView.tag = 1111 * (index + 1)
-            //conVC.refrashControllerData()
-
-        }
-
-        
     }
     
     override func didReceiveMemoryWarning() {
