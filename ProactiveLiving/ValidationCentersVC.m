@@ -363,7 +363,6 @@
         
         //show indicator on screen
         [AppDelegate showProgressHUDWithStatus:@""];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         
         //call global web service class
         [Services serviceCallWithPath:self.servicePath withParam:parameters success:^(NSDictionary *responseDict)

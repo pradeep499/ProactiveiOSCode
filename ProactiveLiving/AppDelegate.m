@@ -286,18 +286,18 @@
 
 + (void)showProgressHUDWithStatus:(NSString *)status {
     
-    //if(status && [status length]>0)
+       //if(status && [status length]>0)
         //[SVProgressHUD showWithStatus:status];
     //else
     [SVProgressHUD show];
     
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     //[SVProgressHUD setRingRadius:30.0];
-    [SVProgressHUD setRingNoTextRadius: 36.0];
-    [SVProgressHUD setRingThickness:6.0];
+    [SVProgressHUD setRingNoTextRadius: 35.0];
+    [SVProgressHUD setRingThickness:5.0];
     [SVProgressHUD setForegroundColor:UIColorFromRGB(0, 176, 235)];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
 
-    //[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 }
 
 + (void)dismissProgressHUD {
