@@ -45,8 +45,6 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     override func viewDidLoad() {
         
-        self.fetchDataForMeetUpOrWebInvite()
-
         for _ in 0..<4 {
             arrayForBool.append(Int(false))
         }
@@ -101,6 +99,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
+        
+        self.fetchDataForMeetUpOrWebInvite()
+
         if(self.screenName ==  "MEET UPS")
         {
             self.HConstDialUpView.constant=0;
@@ -408,21 +409,23 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     func btnLikeClick(sender: UIButton)  {
         print(sender)
-        sender.selected = !sender.selected
         
-        var dict = Dictionary<String,AnyObject>()
-        if(self.screenName == "MEET UPS") {
-            dict["type"]="meetup"
+        if let groupID = self.dataDict["_id"] as? String {
+            
+            sender.selected = !sender.selected
+            var dict = Dictionary<String,AnyObject>()
+            if(self.screenName == "MEET UPS") {
+                dict["type"]="meetup"
+            }
+            else {
+                dict["type"]="webinvite"
+            }
+            dict["typeId"] = groupID
+            dict["likeStatus"] = sender.selected
+            dict["userId"] = ChatHelper.userDefaultForKey("userId")
+            ChatListner .getChatListnerObj().socket.emit("likeMeetup_Invite", dict)
+            self.fetchDataForMeetUpOrWebInvite()
         }
-        else {
-            dict["type"]="webinvite"
-        }
-        dict["typeId"] = self.dataDict["_id"] as! String
-        dict["likeStatus"] = sender.selected
-        dict["userId"] = ChatHelper.userDefaultForKey("userId")
-        ChatListner .getChatListnerObj().socket.emit("likeMeetup_Invite", dict)
-        
-        self.fetchDataForMeetUpOrWebInvite()
     }
     
     func btnForwardClick(sender: UIButton)  {
@@ -941,68 +944,69 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     @IBAction func btnMoreClick(sender: AnyObject) {
         
-        let buttonOneTitle : String!
-        let buttonTwoTitle : String!
-        let buttonThreeTitle : String!
-        
-        
-        if(self.screenName == "MEET UPS") {
-            buttonOneTitle = "Get Directions"
-            buttonTwoTitle = "Edit Meet Up"
-            buttonThreeTitle = "Cancel Meet Up"
-        } else {
-            buttonOneTitle = "Go To Link"
-            buttonTwoTitle = "Edit Web Invite"
-            buttonThreeTitle = "Cancel Web Invite"
-        }
-        
-        if(IS_IOS_7)
-        {
+        if let createdBy = self.dataDict["createdBy"] as? [String : String] {
             
-            let actionSheet : UIActionSheet!
+            let buttonOneTitle : String!
+            let buttonTwoTitle : String!
+            let buttonThreeTitle : String!
             
-            if((self.dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
+            if(self.screenName == "MEET UPS") {
+                buttonOneTitle = "Get Directions"
+                buttonTwoTitle = "Edit Meet Up"
+                buttonThreeTitle = "Cancel Meet Up"
+            } else {
+                buttonOneTitle = "Go To Link"
+                buttonTwoTitle = "Edit Web Invite"
+                buttonThreeTitle = "Cancel Web Invite"
+            }
+            
+            if(IS_IOS_7)
             {
-                actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle,buttonTwoTitle,buttonThreeTitle)
+                
+                let actionSheet : UIActionSheet!
+                
+                if(createdBy["_id"] == ChatHelper.userDefaultForKey("userId"))
+                {
+                    actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle,buttonTwoTitle,buttonThreeTitle)
+                }
+                else
+                {
+                    actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle)
+                }
+                
+                actionSheet.tag=300
+                actionSheet.showFromTabBar((self.navigationController?.tabBarController?.tabBar)!)
             }
             else
             {
-                actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle)
-            }
-            
-            actionSheet.tag=300
-            actionSheet.showFromTabBar((self.navigationController?.tabBarController?.tabBar)!)
-        }
-        else
-        {
-            let actionSheet =  UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-            actionSheet.addAction(UIAlertAction(title: buttonOneTitle, style: UIAlertActionStyle.Default, handler:
-                {(ACTION :UIAlertAction!)in
-                    self.goToLinkOrDirectionClick()
-            }))
-            
-            
-            if((self.dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
-            {
-                actionSheet.addAction(UIAlertAction(title: buttonTwoTitle, style: UIAlertActionStyle.Default, handler:
-                    { (ACTION :UIAlertAction!)in
-                        
-                        self.editMeetUpOrInviteClick()
+                let actionSheet =  UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                actionSheet.addAction(UIAlertAction(title: buttonOneTitle, style: UIAlertActionStyle.Default, handler:
+                    {(ACTION :UIAlertAction!)in
+                        self.goToLinkOrDirectionClick()
                 }))
                 
-                actionSheet.addAction(UIAlertAction(title: buttonThreeTitle, style: UIAlertActionStyle.Default, handler:
-                    { (ACTION :UIAlertAction!)in
-                        
-                        self.deleteMeetUpOrInvite()
-                }))
                 
+                if(createdBy["_id"] == ChatHelper.userDefaultForKey("userId"))
+                {
+                    actionSheet.addAction(UIAlertAction(title: buttonTwoTitle, style: UIAlertActionStyle.Default, handler:
+                        { (ACTION :UIAlertAction!)in
+                            
+                            self.editMeetUpOrInviteClick()
+                    }))
+                    
+                    actionSheet.addAction(UIAlertAction(title: buttonThreeTitle, style: UIAlertActionStyle.Default, handler:
+                        { (ACTION :UIAlertAction!)in
+                            
+                            self.deleteMeetUpOrInvite()
+                    }))
+                    
+                }
+                
+                actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(actionSheet, animated: true, completion: nil)
             }
-            
-            actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            self.presentViewController(actionSheet, animated: true, completion: nil)
         }
     }
-
 
 }
 

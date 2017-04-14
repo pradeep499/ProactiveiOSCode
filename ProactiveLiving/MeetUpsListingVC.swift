@@ -26,8 +26,12 @@ class MeetUpsListingVC: UIViewController {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
         
+        // to clear up old data
+        self.arrData.removeAll()
+        self.tableView.reloadData()
+
         self.fetchMeetUpOrWebInviteData()
-        self.updayeMeetupOrWebInviteListener()
+        self.listenerUpdateMeetupOrWebInvite()
 
     }
     
@@ -48,7 +52,7 @@ class MeetUpsListingVC: UIViewController {
             ChatListner .getChatListnerObj().socket.emit("getAllMeetup_Invite", dict)
             
             //unowned let weakself = self
-            ChatListner .getChatListnerObj().socket.off("getMeetup_Invite_listing")
+            //ChatListner .getChatListnerObj().socket.off("getMeetup_Invite_listing")
             ChatListner .getChatListnerObj().socket.on("getMeetup_Invite_listing") {data, ack in
                
                 
@@ -90,7 +94,7 @@ class MeetUpsListingVC: UIViewController {
         }
     }
     
-    func updayeMeetupOrWebInviteListener() {
+    func listenerUpdateMeetupOrWebInvite() {
         
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
@@ -166,8 +170,6 @@ class MeetUpsListingVC: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let w = self.tableView.bounds.size.width - 30
-        
         let cell = self.tableView.dequeueReusableCellWithIdentifier("CellMeetUps", forIndexPath: indexPath) as! MeetUpListingCell
         cell.selectionStyle = .None
         let eventImage = cell.contentView.viewWithTag(11) as! UIImageView
@@ -180,21 +182,8 @@ class MeetUpsListingVC: UIViewController {
         let lblMembers = cell.contentView.viewWithTag(18) as! UILabel
         let lbl_createdDate = cell.contentView.viewWithTag(27) as! UILabel
         let lbl_eventDate = cell.contentView.viewWithTag(80) as! UILabel
-        
         let lblAddress = cell.contentView.viewWithTag(20) as! UILabel
-         let imgAddress = cell.contentView.viewWithTag(33) as! UIImageView
-        
-        //
-        
-      /*  let imglink = cell.contentView.viewWithTag(19) as! UIImageView
-        let txtLink = cell.contentView.viewWithTag(20) as! UILabel
-        let txtPIN = cell.contentView.viewWithTag(21) as! UILabel
-        let imgCall = cell.contentView.viewWithTag(23) as! UIImageView
-        let lblCall = cell.contentView.viewWithTag(24) as! UILabel
-        */
-        
-     //   lblAddress.textContainer.lineFragmentPadding = 0;
-     //   lblAddress.textContainerInset = UIEdgeInsetsZero;
+        let imgAddress = cell.contentView.viewWithTag(33) as! UIImageView
         
         eventName.text = self.arrData[indexPath.row]["title"] as? String
         

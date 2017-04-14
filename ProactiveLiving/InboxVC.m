@@ -22,6 +22,8 @@
     ChatHomeVC *mesagesVC;
     MeetUpsListingVC *meetUpVC;
     MeetUpsListingVC *webInviteVC;
+    FriendRequestVC *requestVC;
+    PACNotificationVC *notificationVC;
     NSInteger currentIndex;
 }
 @property (weak, nonatomic) IBOutlet UIButton *btnEdit;
@@ -67,22 +69,19 @@
 {
     // SetUp ViewControllers
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    //UIStoryboard *chatStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    
-    mesagesVC = [storyboard instantiateViewControllerWithIdentifier:@"ChatHomeVC"];
+    mesagesVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"ChatHomeVC"];
     mesagesVC.title = @"MESSAGES   ";
     
-    meetUpVC = [storyboard instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
+    meetUpVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
     meetUpVC.title = @"MEET UPS";
     
-    webInviteVC = [storyboard instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
+    webInviteVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
     webInviteVC.title = @"WEB INVITES";
    
-    FriendRequestVC *requestVC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"FriendRequestVC"];
-      requestVC.title = @"REQUESTS";
+    requestVC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"FriendRequestVC"];
+    requestVC.title = @"REQUESTS";
     
-    PACNotificationVC *notificationVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"PACNotificationVC"];
+    notificationVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"PACNotificationVC"];
     notificationVC.title = @"NOTIFICATIONS";
     
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]
@@ -138,7 +137,7 @@
         self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 19, 0, 0);
     }
     
-   // [controller viewWillAppear:YES];
+    [controller viewWillAppear:YES];
 }
 
 - (void)didReceiveMemoryWarning {
