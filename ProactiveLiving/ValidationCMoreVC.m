@@ -106,8 +106,8 @@
     
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
     CGPoint pnt = [self.tableView convertPoint:textField.bounds.origin fromView:textField];
     NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:pnt];
     
@@ -117,26 +117,23 @@
     [[NSUserDefaults standardUserDefaults] setValue:@"YES" forKey:@"popupShown"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
- 
-    if(textField.tag==100)
-    [self addInputViewToTextField:textField];
-    if(textField.tag==200)
-    [self addInputViewToTextField:textField];
     
-    return YES;
-}
-
-- (void)addInputViewToTextField:(UITextField *)textField{
-    
-    
-    if(textField.tag==100)
+    if(textField.tag==100){
         [datePicker setDatePickerMode:UIDatePickerModeDate];
-    if(textField.tag==200)
+    }
+    
+    if(textField.tag==200){
         [datePicker setDatePickerMode:UIDatePickerModeTime];
-
+    }
+    
+    
     textField.inputView = datePicker;
     textField.inputAccessoryView=doneBarDatePicker;
+    
 }
+
+
+
 
 
 // Date-Time picker Done button pressed
@@ -241,8 +238,8 @@
     // For Date and Time fields
     cell.txtCalender.delegate=self;
     cell.txtTime.delegate=self;
-    cell.txtCalender.tag=100;
-    cell.txtTime.tag=200;
+   // cell.txtCalender.tag=100;
+  //  cell.txtTime.tag=200;
     
     cell.txtCalender.text = [NSDateFormatter localizedStringFromDate:[datePicker date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
     
