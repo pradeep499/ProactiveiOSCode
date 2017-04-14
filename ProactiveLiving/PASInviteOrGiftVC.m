@@ -37,6 +37,7 @@
     [AppHelper setBorderOnView:self.txtViewInfo];
     self.txtViewInfo.placeholder=@"Custom Message";
     self.txtViewInfo.placeholderImage=[UIImage imageNamed:@"ic_pasinvite_message"];
+    self.txtViewInfo.placeholderColor = [UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:170.0/255.0];
     
     //Button title
     if([self.vcType isEqualToString:@"Gift"])
