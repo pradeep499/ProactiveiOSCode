@@ -485,6 +485,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     //mark- Forward Meetups/Invites
     func fetchDataForMeetUpOrWebInvite() {
         
+        AppDelegate.showProgressHUDWithStatus("Please wait...")
+        
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
             
@@ -633,9 +635,11 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     self.tableMeetUpDetails.reloadData()
                     
                     self.showHideChatBtn()
+                    AppDelegate.dismissProgressHUD()
                 }
                 else
                 {
+                    AppDelegate.dismissProgressHUD()
                     AppHelper.showAlertWithTitle(data[0]["error"] as! String, message: "", tag: 0, delegate: nil, cancelButton: "Ok", otherButton: nil)
                     
                 }
@@ -643,6 +647,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             
         }else
         {
+            AppDelegate.dismissProgressHUD()
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
         }
     }

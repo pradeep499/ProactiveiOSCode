@@ -25,6 +25,7 @@ class MeetUpsListingVC: UIViewController {
     {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
+        
         self.fetchMeetUpOrWebInviteData()
         self.updayeMeetupOrWebInviteListener()
 
@@ -32,7 +33,7 @@ class MeetUpsListingVC: UIViewController {
     
     //mark- Fetch Meetups/Invites listing data
     func fetchMeetUpOrWebInviteData() {
-        
+        AppDelegate.showProgressHUDWithStatus("Please wait...")
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
             
@@ -72,14 +73,16 @@ class MeetUpsListingVC: UIViewController {
                         print("arrayList \(self.arrData)")
                         
                         self.tableView.reloadData()
+                        AppDelegate.dismissProgressHUD()
                     }
                     else
                     {
+                        AppDelegate.dismissProgressHUD()
                         //SharedClass.sharedInstance.showOkAlertViewController(result!["response_string"] as! String, viewController: self)
                         
                     }
             }
-            
+           
         }else
         {
             AppDelegate.dismissProgressHUD()

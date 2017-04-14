@@ -218,7 +218,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
 
         secondVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("ResourcesPACVC") as! ResourcesPACVC
         secondVC.title = "RESOURCES"
-        
+        secondVC.pacID = self.pacID
+
         thirdVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AboutPacVC") as! AboutPacVC
         thirdVC.title = "ABOUT"
         thirdVC.pacID = self.pacID
