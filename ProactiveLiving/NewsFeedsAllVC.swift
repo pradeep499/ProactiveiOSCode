@@ -18,6 +18,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     @IBOutlet weak var attachmentViewS: UIView!
     @IBOutlet weak var postContainerView: UIView!
     @IBOutlet weak var plusButton: UIButton!
+    @IBOutlet weak var btnPost: UIButton!
     
     //  var dataArr = [AnyObject]()
     var profileArr = [String]()
@@ -26,6 +27,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var postFriendsArr:NSMutableArray = NSMutableArray()
     var postColleagueArr:NSMutableArray = NSMutableArray()
     var postHealthClubsArr:NSMutableArray = NSMutableArray()
+    var postCircleArr:NSMutableArray = NSMutableArray()
     var pacWallArr:NSMutableArray = NSMutableArray()
     var textView:HPGrowingTextView = HPGrowingTextView()
     //var containerView: UIView = UIView()
@@ -37,6 +39,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     var isBackFromChildVC:Bool!
     
+    @IBOutlet weak var layoutConstHeightShareView: NSLayoutConstraint!
     
     
     override func viewDidLoad() {
@@ -61,9 +64,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         if self.title == "ALL" || self.title == "EXPLORE"{
             
             self.collectionView.registerClass(HeaderScrollerView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderScrollerView")
-            
-            
-            
+        }
+        
+        if(self.title != "PAC CIRCLES") {
+            self.layoutConstHeightShareView.constant = 87
+            self.plusButton.hidden = false
+            self.btnPost.hidden = false
+
+        }
+        else {
+            self.layoutConstHeightShareView.constant = 0
+            self.plusButton.hidden = true
+            self.btnPost.hidden = true
+
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
@@ -131,36 +144,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         if self.title != "EXPLORE" {
             self.getAllPostEvent()
             self.getLikeUpdate()
-            
         }
-
-        
-        
-        
         self.attachmentViewS.hidden = true
-        
         IQKeyboardManager.sharedManager().enable = false
-        
-         //to avoid blocking the UI
-        if (viewWillAppaerCount > 0) {
-            
-            viewWillAppaerCount = viewWillAppaerCount + 1
-            
-            if viewWillAppaerCount == 5{
-                
-                viewWillAppaerCount = 0
-            }
-            
-            
-            return
-        }
-        
-        //if isBackFromChildVC == true{
-            //isBackFromChildVC = false
-            //return
-        //}
-
-        
         
     }
 
@@ -168,18 +154,24 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     func setColectionViewTags()  {
         
         if(self.title != "WALL") {
-        if intValue == 0 {
-            self.collectionView.tag=1111
-        }
-        else  if intValue == 2 {
-            self.collectionView.tag=3333
-        }
-        else  if intValue == 3 {
-            self.collectionView.tag=4444
-        }
-        else if intValue == 4 {
-            self.collectionView.tag=5555
-        }
+            if intValue == 0 {
+                self.collectionView.tag=1111
+            }
+            else if intValue == 1 {
+                // Explore condition
+            }
+            else if intValue == 2 {
+                self.collectionView.tag=3333
+            }
+            else if intValue == 3 {
+                self.collectionView.tag=4444
+            }
+            else if intValue == 4 {
+                self.collectionView.tag=5555
+            }
+            else if intValue == 5 {
+                self.collectionView.tag=6666
+            }
         }
         else {
             self.collectionView.tag=1000
@@ -189,21 +181,30 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func fetchScreenData() {
         
-        if intValue == 0{
+        if(self.title != "WALL") {
+            
+            if intValue == 0{
                 self.fetchPostDataFromServer()
                 self.fetchExploreDataFromServer()
-        }
-        else if intValue == 1{
-            
-        }
-        else if intValue == 2{
+            }
+            else if intValue == 1{
+                // Explore condition
+            }
+            else if intValue == 2{
                 self.fetchPostDataFromServer()
-        }
-        else if intValue == 3{
+            }
+            else if intValue == 3{
                 self.fetchPostDataFromServer()
-        }
-        else {
+            }
+            else if intValue == 4{
                 self.fetchPostDataFromServer()
+            }
+            else if intValue == 5{
+                self.fetchPostDataFromServer()
+            }
+        }
+        else{
+            self.fetchPostDataFromServer() // Wall condition
         }
 
     }
@@ -297,6 +298,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
+            else if self.collectionView.tag ==  6666 {
+                resultData = self.postCircleArr[indexPath!.row ] as! [String:AnyObject]
+            }
             else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
@@ -330,6 +334,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.collectionView.tag ==  6666 {
+                resultData = self.postCircleArr[indexPath!.row ] as! [String:AnyObject]
             }
             else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
@@ -373,6 +380,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     else if self.collectionView.tag ==  5555 {
                         resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
                     }
+                    else if self.collectionView.tag ==  6666 {
+                        resultData = self.postCircleArr[indexPath!.row ] as! [String:AnyObject]
+                    }
                     else if self.collectionView.tag ==  1000  {
                         resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
                     }
@@ -406,6 +416,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
+            }
+            else if self.collectionView.tag ==  6666 {
+                resultData = self.postCircleArr[indexPath!.row ] as! [String:AnyObject]
             }
             else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
@@ -623,6 +636,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
             }
+            else if self.collectionView.tag ==  6666 {
+                resultData = self.postCircleArr[indexPath!.row ] as! [String:AnyObject]
+            }
             else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
             }
@@ -676,6 +692,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 parameters["section"] = "HEALTH CLUBS"
             }
+            else if self.collectionView.tag ==  6666 {
+                parameters["section"] = "PAC"
+            }
             else if self.collectionView.tag ==  1000{
                 parameters["section"] = "PAC"
                 parameters["pacId"] = self.pacID
@@ -703,6 +722,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             }
                             else if self.collectionView.tag ==  5555 {
                                 self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
+                            }
+                            else if self.collectionView.tag ==  6666 {
+                                self.postCircleArr = NSMutableArray.init(array: resultArr)
                             }
                             else if self.collectionView.tag ==  1000 {
                                 self.pacWallArr = NSMutableArray.init(array: resultArr)
@@ -757,6 +779,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         else if self.collectionView.tag ==  5555 {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.collectionView.tag ==  6666 {
+            dict = self.postCircleArr[indexPath.row ] as! [String:AnyObject]
         }
         else if self.collectionView.tag ==  1000 {
             dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
@@ -916,6 +941,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 dict["section"] = "HEALTH CLUBS"
             }
+            else if self.collectionView.tag ==  6666 {
+                dict["section"] = "PAC"
+            }
             else if self.collectionView.tag ==  1000 {
                 dict["section"] = "PAC"
                 dict["pacId"] = self.pacID
@@ -1031,7 +1059,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     if(self.postAllArr.count > 0) {
                         self.collectionView.reloadData()
                         self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                        }
+                    }
                 }
                 else if resultDict["section"] as! String  == "friends" {
                     self.postFriendsArr.insertObject(resultDict, atIndex: 0)
@@ -1041,147 +1069,45 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     }
                 }
                 else if resultDict["section"] as! String  == "colleagues" {
-                        
-                        self.postColleagueArr.insertObject(resultDict, atIndex: 0)
-                        if(self.postColleagueArr.count > 0) {
-                            self.collectionView.reloadData()
-                            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                        }
+                    
+                    self.postColleagueArr.insertObject(resultDict, atIndex: 0)
+                    if(self.postColleagueArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
                     }
-                    else if resultDict["section"] as! String  == "health clubs" {
-                        
-                        self.postHealthClubsArr.insertObject(resultDict, atIndex: 0)
-                        if(self.postHealthClubsArr.count > 0) {
-                            self.collectionView.reloadData()
-                            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                        }
+                }
+                else if resultDict["section"] as! String  == "health clubs" {
+                    
+                    self.postHealthClubsArr.insertObject(resultDict, atIndex: 0)
+                    if(self.postHealthClubsArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
                     }
-                    if resultDict["section"] as! String  == "pac" {
-                        
-                        self.pacWallArr.insertObject(resultDict, atIndex: 0)
-                        if(self.pacWallArr.count > 0) {
-                            self.collectionView.reloadData()
-                            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                        }
+                }
+                else if resultDict["section"] as! String  == "pac circles" {
+                    
+                    self.postCircleArr.insertObject(resultDict, atIndex: 0)
+                    if(self.postCircleArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
                     }
+                }
+                if resultDict["section"] as! String  == "pac" {
+                    
+                    self.pacWallArr.insertObject(resultDict, atIndex: 0)
+                    if(self.pacWallArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    }
+                }
             }
         }
     }
 
-    func getFriendPostEvent() -> Void {
-        
-        ChatListner .getChatListnerObj().socket.off("getPost")
-        ChatListner .getChatListnerObj().socket.on("getPost") {data, ack in
-            
-            let errorCode = (data[0]["status"] as? String) ?? "1"
-            if errorCode == "0"
-            {
-                guard let dictData = data[0] as? Dictionary<String, AnyObject> else {
-                    return
-                }
-                guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else {
-                    return
-                }
-                
-            if resultDict["section"] as! String  == "friends" {
-                    self.postFriendsArr.insertObject(resultDict, atIndex: 0)
-                    if(self.postFriendsArr.count > 0) {
-                        let currentCollectionView = self.view.viewWithTag(3333) as! UICollectionView
-                        currentCollectionView.reloadData()
-                        currentCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-            }
-        }
-    }
-        
-    func getColleaguesPostEvent() -> Void {
-        
-        ChatListner .getChatListnerObj().socket.off("getPost")
-        ChatListner .getChatListnerObj().socket.on("getPost") {data, ack in
-            
-            let errorCode = (data[0]["status"] as? String) ?? "1"
-            if errorCode == "0"
-            {
-                guard let dictData = data[0] as? Dictionary<String, AnyObject> else {
-                    return
-                }
-                guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else {
-                    return
-                }
-                
-            if resultDict["section"] as! String  == "colleagues" {
-                    
-                    self.postColleagueArr.insertObject(resultDict, atIndex: 0)
-                    if(self.postColleagueArr.count > 0) {
-                        let currentCollectionView = self.view.viewWithTag(4444) as! UICollectionView
-                        currentCollectionView.reloadData()
-                        currentCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-            }
-        }
-    }
-    func getHealthClubsPostEvent() -> Void {
-        
-        ChatListner .getChatListnerObj().socket.off("getPost")
-        ChatListner .getChatListnerObj().socket.on("getPost") {data, ack in
-            
-            let errorCode = (data[0]["status"] as? String) ?? "1"
-            if errorCode == "0"
-            {
-                guard let dictData = data[0] as? Dictionary<String, AnyObject> else {
-                    return
-                }
-                guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else {
-                    return
-                }
-                
-            if resultDict["section"] as! String  == "health clubs" {
-                    
-                    self.postHealthClubsArr.insertObject(resultDict, atIndex: 0)
-                    if(self.postHealthClubsArr.count > 0) {
-                        let currentCollectionView = self.view.viewWithTag(5555) as! UICollectionView
-                        currentCollectionView.reloadData()
-                        currentCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-            }
-        }
-    }
-    
-    func getPACPostEvent() -> Void {
-        
-        ChatListner .getChatListnerObj().socket.off("getPost")
-        ChatListner .getChatListnerObj().socket.on("getPost") {data, ack in
-            
-            let errorCode = (data[0]["status"] as? String) ?? "1"
-            if errorCode == "0"
-            {
-                guard let dictData = data[0] as? Dictionary<String, AnyObject> else {
-                    return
-                }
-                guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else {
-                    return
-                }
-                
-            if resultDict["section"] as! String  == "pac" {
-                    
-                    self.pacWallArr.insertObject(resultDict, atIndex: 0)
-                    if(self.pacWallArr.count > 0) {
-                        let currentCollectionView = self.view.viewWithTag(333) as! UICollectionView
-                        currentCollectionView.reloadData()
-                        currentCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-            }
-        }
-    }
-    
     func getLikeUpdate() -> Void {
         
         //unowned let weakself = self
-        //ChatListner .getChatListnerObj().socket.off("getPostUpdate")
+        ChatListner .getChatListnerObj().socket.off("getPostUpdate")
         ChatListner .getChatListnerObj().socket.on("getPostUpdate") {data, ack in
             
             
@@ -1253,6 +1179,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     }
 
                 }
+                else if resultDict["section"] as! String  == "pac circles" {
+                    
+                    var filteredarray:[AnyObject] = self.postCircleArr.filteredArrayUsingPredicate(predicate)
+                    print("ID =  \(resultDict["_id"])")
+                    
+                    if filteredarray.count > 0 {
+                        let index = self.postCircleArr.indexOfObject( filteredarray[0])
+                        self.postCircleArr.replaceObjectAtIndex(index, withObject: resultDict)
+                    }
+                    
+                }
                 else if resultDict["section"] as! String  == "pac" {
                     var filteredarray:[AnyObject] = self.pacWallArr.filteredArrayUsingPredicate(predicate)
                     print("ID =  \(resultDict["_id"])")
@@ -1306,7 +1243,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        if self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL"{
+        // Require no header section in such cases
+        if self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL" || self.title == "PAC CIRCLES" {
         
             return CGSizeZero
         }
@@ -1347,6 +1285,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         else if self.collectionView.tag ==  5555 {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
+        }
+        else if self.collectionView.tag ==  6666 {
+            dict = self.postCircleArr[indexPath.row ] as! [String:AnyObject]
         }
         else if self.collectionView.tag ==  1000  {
             dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
@@ -1405,6 +1346,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else if self.collectionView.tag ==  5555  {
             return self.postHealthClubsArr.count
         }
+        else if self.collectionView.tag ==  6666  {
+            return self.postCircleArr.count
+        }
         else if self.collectionView.tag ==  1000  {
             return self.pacWallArr.count
         }
@@ -1428,6 +1372,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         else if self.collectionView.tag ==  5555 {
             dict = self.postHealthClubsArr[indexPath.row ] as! [String:AnyObject]
         }
+        else if self.collectionView.tag ==  6666 {
+            dict = self.postCircleArr[indexPath.row ] as! [String:AnyObject]
+        }
         else if self.collectionView.tag ==  1000  {
             dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
         }
@@ -1441,7 +1388,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellAttachment", forIndexPath: indexPath) as! CellNewsFeed
         }
-        
         
         
         let lpgrMain : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ExploreVC.handleLongPress(_:)))
@@ -1465,6 +1411,21 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let btn_like = cell.viewWithTag(6) as! UIButton
         let btn_comments = cell.viewWithTag(7) as! UIButton
         let btn_share = cell.viewWithTag(8) as! UIButton
+        
+        if(self.title != "PAC CIRCLES") {
+            cell.layoutConstBtnShare.constant = 74
+            btn_share.alpha = 1.0
+            btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+            btn_options.alpha = 1.0
+
+        }
+        else {
+            cell.layoutConstBtnShare.constant = 0
+            btn_share.alpha = 0.0
+            btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
+            btn_options.alpha = 0.0
+        }
+
 
         iv_profile.layer.borderWidth = 1.0
         iv_profile.contentMode = .ScaleAspectFill
@@ -1887,6 +1848,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             else if self.collectionView.tag ==  5555 {
                 parameters["section"] = "HEALTH CLUBS"
             }
+            else if self.collectionView.tag ==  6666 {
+                parameters["section"] = "paccircle"
+            }
             else if self.collectionView.tag ==  1000{
                 parameters["section"] = "PAC"
                 parameters["pacId"] = self.pacID
@@ -1922,6 +1886,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         }
                         else if self.collectionView.tag ==  5555 {
                             self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
+                        }
+                        else if self.collectionView.tag ==  6666 {
+                            self.postCircleArr = NSMutableArray.init(array: resultArr)
                         }
                         else if self.collectionView.tag ==  1000 {
                             self.pacWallArr = NSMutableArray.init(array: resultArr)
@@ -2764,6 +2731,8 @@ class FooterAllReUsableView: UICollectionReusableView{
 class CellNewsFeed:UICollectionViewCell{
     
     @IBOutlet weak var layOut_lbl_Name_height: NSLayoutConstraint!
+    @IBOutlet weak var layoutConstBtnShare: NSLayoutConstraint!
+
     var userID:String!
 
 }

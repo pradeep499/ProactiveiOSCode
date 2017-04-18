@@ -137,7 +137,7 @@
         self.btnContacts.imageEdgeInsets = UIEdgeInsetsMake(0, 19, 0, 0);
     }
     
-    [controller viewWillAppear:YES];
+    //[controller viewWillAppear:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -151,13 +151,13 @@
     BOOL status= (sender.selected)? YES : NO;
     if(status)
     {
-        [self.btnDeleteAll setHidden:NO];
+        //[self.btnDeleteAll setHidden:NO];
         [self.btnContacts setHidden:YES];
         [self.btnCreateNew setHidden:YES];
     }
     else
     {
-        [self.btnDeleteAll setHidden:YES];
+        //[self.btnDeleteAll setHidden:YES];
         [self.btnContacts setHidden:NO];
         [self.btnCreateNew setHidden:NO];
     }

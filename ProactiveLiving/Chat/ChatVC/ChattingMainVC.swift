@@ -2001,8 +2001,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     return cell
                 }
             }
-        }else
-        {
+        }
+        else {
             let chatObj = chatArray[indexPath.row] as! GroupChat
             if chatObj.senderId != ChatHelper .userDefaultForAny("userId") as? String
             {

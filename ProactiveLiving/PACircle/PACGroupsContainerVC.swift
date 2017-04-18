@@ -273,7 +273,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
             
         }
         else if index == 2 {
-            intValue = 5
             //self.fetchDataForPACRole()
             self.btnRight.hidden = true
             //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)

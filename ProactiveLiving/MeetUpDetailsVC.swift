@@ -91,7 +91,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         if(self.screenName == "WEB INVITES") {
             self.layout_forwartBtnWidth.constant = 125
         }
-        
+
+        self.listenerUpdateMeetUpOrWebInvite()
 
     }
     
@@ -100,14 +101,13 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
         
-        self.fetchDataForMeetUpOrWebInvite()
+        //self.fetchDataMeetUpOrWebInviye()
+        self.updateCurrentView()
 
-        if(self.screenName ==  "MEET UPS")
-        {
+        if(self.screenName ==  "MEET UPS") {
             self.HConstDialUpView.constant=0;
         }
-        else
-        {
+        else {
             self.HConstDialUpView.constant=40;
             
         }
@@ -424,7 +424,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             dict["likeStatus"] = sender.selected
             dict["userId"] = ChatHelper.userDefaultForKey("userId")
             ChatListner .getChatListnerObj().socket.emit("likeMeetup_Invite", dict)
-            self.fetchDataForMeetUpOrWebInvite()
+            //self.listenerUpdateMeetUpOrWebInvite()
         }
     }
     
@@ -455,7 +455,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                 dict["userId"] = memberID
                 ChatListner .getChatListnerObj().socket.emit("forwardMeetup_Invite", dict)
                 
-                self.fetchDataForMeetUpOrWebInvite()
+                //self.listenerUpdateMeetUpOrWebInvite()
             }
         }
     }
@@ -485,14 +485,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
     }
     
-    //mark- Forward Meetups/Invites
-    func fetchDataForMeetUpOrWebInvite() {
-        
-        AppDelegate.showProgressHUDWithStatus("Please wait...")
-        
+    func fetchDataMeetUpOrWebInviye() {
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
-            
             var dict = Dictionary<String,AnyObject>()
             if(self.screenName == "MEET UPS") {
                 dict["type"]="meetup"
@@ -503,10 +498,21 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             dict["typeId"] = meetUpID
             dict["userId"] = ChatHelper.userDefaultForKey("userId")
             ChatListner .getChatListnerObj().socket.emit("detailMeetup_Invite", dict)
+        }
+        else
+        {
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+        }
+    }
+    
+    //Mark- update Meetups/Invites
+    func listenerUpdateMeetUpOrWebInvite() {
+        
+        if ServiceClass.checkNetworkReachabilityWithoutAlert()
+        {
             
             ChatListner .getChatListnerObj().socket.off("getDetail_Meetup_Invite")
             ChatListner .getChatListnerObj().socket.on("getDetail_Meetup_Invite") {data, ack in
-                
                 
                 print("value error_code\(data[0]["status"] as! String))")
                 
@@ -521,128 +527,10 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     
                     self.dataDict=dictData["result"] as! Dictionary<String, AnyObject>
                     print("arrayList \(self.dataDict)")
-                    
-                    //let controller = (self.parentViewController as! YSLContainerViewController).parentViewController as! MeetUpContainerVC
-                    //controller.screenTitle.text = self.dataDict["title"] as? String
-                   // self.screenTitle.text = self.dataDict["for"] as? String  
-                    self.screenTitle.text = self.dataDict["title"] as? String 
-                    self.btnLink.setTitle((self.dataDict["webLink"] as! String), forState: .Normal)
-                    self.btnDialUp.setTitle((self.dataDict["dialInNumber"] as! String), forState: .Normal)
-
-                    if let imageUrlStr = self.dataDict["imgUrl"] as? String {
-                        let image_url = NSURL(string: imageUrlStr)
-                        if (image_url != nil) {
-                            let placeholder = UIImage(named: "no_photo")
-                            self.imgMeetUp.setImageWithURL(image_url, placeholderImage: placeholder)
-                        }
-                    }
-                    
-                    if let groupIdStr = self.dataDict["groupId"] as? String {
-                        if (!(groupIdStr == "")) {
-                            self.meetUpGroupID = groupIdStr
-                        }
-                    }
-                    
-                    if(self.screenName ==  "MEET UPS")
-                    {
-                        self.lblLike.text = self.dataDict["address"] as? String
-                        self.imgLike.image = UIImage(named: "location_pin_white")
-                        self.btnForward.setTitle("Forward", forState: .Normal)
-                        self.headerView.frame.size.height = 260-40
-                        self.dialUpView.hidden = true
-                        
-                        self.btnSure.setTitle("Sure!", forState: UIControlState.Normal)
-                        self.btnSorry.setTitle("Sorry!", forState: UIControlState.Normal)
-                        self.btnLike.hidden=true
-                        let addressGesture =  UITapGestureRecognizer(target: self, action: #selector(MeetUpDetailsVC.addressGesture(_:)))
-                        self.lblLike.addGestureRecognizer(addressGesture)
-                        self.lblLike.userInteractionEnabled = true
-                        
-                    }
-                    else
-                    {
-                        //"\(memberArr.count) Going"
-                        self.lblLike.text="\((self.dataDict["likes"] as! [AnyObject]).count) Likes"
-                        self.imgLike.image = UIImage(named: "like")
-                        self.btnForward.setTitle("Forward", forState: .Normal)
-                        self.headerView.frame.size.height = 260
-
-                        self.btnSure.setTitle("Accept", forState: UIControlState.Normal)
-                        self.btnSorry.setTitle("Decline", forState: UIControlState.Normal)
-                        self.btnLike.hidden=false
-
-                        
-                        
-                    }
-                    
-                    
-                    let arrMembers = self.dataDict["members"] as! [AnyObject]
-                    
-                    //Check status if member accepted or rejacted--
-                    for item in arrMembers {
-                        
-                        var membDict = item as! [String : AnyObject]
-                        let status = membDict["status"] as! String
-                        
-                        
-                        if(membDict["memberId"] as! String == ChatHelper.userDefaultForKey("userId"))
-                        {
-                            
-                            if(status == "1")
-                            {
-                                self.btnSure.selected=true
-                                self.imgSure.hidden=false
-                                self.btnSure.layer.borderColor=UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0).CGColor
-                                
-                                //cell.btnDecline.hidden=true
-                            }
-                            else if(status == "2")
-                            {
-                                self.btnSorry.selected=true
-                                self.imgSorry.hidden=false
-                                self.btnSorry.layer.borderColor=UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0).CGColor
-                                
-                                //cell.btnAccept.hidden=true
-                            }
-                            
-                            if(!(membDict["forwardedBy"] as! String == ""))
-                            {
-                                self.fwBy = membDict["forwardedBy"] as! String
-                            }
-                            else
-                            {
-                                self.fwBy=""
-                            }
-                            
-                            
-                        }
-                        
-                    }
-                    
-                    if((self.dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
-                    {
-                        self.btnSure.enabled=false
-                        //self.imgSure.hidden=true
-                        self.btnSorry.enabled=false
-                        //self.imgSorry.hidden=true
-                        
-                        self.btnForward.hidden=true
-                    }
-                    
-                    if(!(self.dataDict["isAllow"] as! Bool))
-                    {
-                        self.btnForward.hidden=true
-                        self.layout_forwartBtnWidth.constant = 0
-                    }
-                    
-                    self.tableMeetUpDetails.reloadData()
-                    
-                    self.showHideChatBtn()
-                    AppDelegate.dismissProgressHUD()
+                    self.updateCurrentView()
                 }
                 else
                 {
-                    AppDelegate.dismissProgressHUD()
                     AppHelper.showAlertWithTitle(data[0]["error"] as! String, message: "", tag: 0, delegate: nil, cancelButton: "Ok", otherButton: nil)
                     
                 }
@@ -650,9 +538,129 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             
         }else
         {
-            AppDelegate.dismissProgressHUD()
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
         }
+    }
+    
+    func updateCurrentView() {
+        
+        self.screenTitle.text = self.dataDict["title"] as? String
+        self.btnLink.setTitle((self.dataDict["webLink"] as! String), forState: .Normal)
+        self.btnDialUp.setTitle((self.dataDict["dialInNumber"] as! String), forState: .Normal)
+        
+        if let imageUrlStr = self.dataDict["imgUrl"] as? String {
+            let image_url = NSURL(string: imageUrlStr)
+            if (image_url != nil) {
+                let placeholder = UIImage(named: "no_photo")
+                self.imgMeetUp.sd_setImageWithURL(image_url, placeholderImage: placeholder)
+            }
+        }
+        
+        if let groupIdStr = self.dataDict["groupId"] as? String {
+            if (!(groupIdStr == "")) {
+                self.meetUpGroupID = groupIdStr
+            }
+        }
+        
+        if(self.screenName ==  "MEET UPS")
+        {
+            self.lblLike.text = self.dataDict["address"] as? String
+            self.imgLike.image = UIImage(named: "location_pin_white")
+            self.btnForward.setTitle("Forward", forState: .Normal)
+            self.headerView.frame.size.height = 260-40
+            self.dialUpView.hidden = true
+            
+            self.btnSure.setTitle("Sure!", forState: UIControlState.Normal)
+            self.btnSorry.setTitle("Sorry!", forState: UIControlState.Normal)
+            self.btnLike.hidden=true
+            let addressGesture =  UITapGestureRecognizer(target: self, action: #selector(MeetUpDetailsVC.addressGesture(_:)))
+            self.lblLike.addGestureRecognizer(addressGesture)
+            self.lblLike.userInteractionEnabled = true
+            
+        }
+        else
+        {
+            //"\(memberArr.count) Going"
+            self.lblLike.text="\((self.dataDict["likes"] as! [AnyObject]).count) Likes"
+            self.imgLike.image = UIImage(named: "like")
+            self.btnForward.setTitle("Forward", forState: .Normal)
+            self.headerView.frame.size.height = 260
+            
+            self.btnSure.setTitle("Accept", forState: UIControlState.Normal)
+            self.btnSorry.setTitle("Decline", forState: UIControlState.Normal)
+            self.btnLike.hidden=false
+            
+            if let arrLikes = self.dataDict["likes"] as? [String] {
+                if(arrLikes.contains(ChatHelper.userDefaultForKey(_ID))) {
+                    self.btnLike.selected = true
+                }
+            }
+            
+        }
+        
+        
+        let arrMembers = self.dataDict["members"] as! [AnyObject]
+        
+        //Check status if member accepted or rejacted--
+        for item in arrMembers {
+            
+            var membDict = item as! [String : AnyObject]
+            let status = membDict["status"] as! String
+            
+            
+            if(membDict["memberId"] as! String == ChatHelper.userDefaultForKey("userId"))
+            {
+                
+                if(status == "1")
+                {
+                    self.btnSure.selected=true
+                    self.imgSure.hidden=false
+                    self.btnSure.layer.borderColor=UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+                    
+                    //cell.btnDecline.hidden=true
+                }
+                else if(status == "2")
+                {
+                    self.btnSorry.selected=true
+                    self.imgSorry.hidden=false
+                    self.btnSorry.layer.borderColor=UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+                    
+                    //cell.btnAccept.hidden=true
+                }
+                
+                if(!(membDict["forwardedBy"] as! String == ""))
+                {
+                    self.fwBy = membDict["forwardedBy"] as! String
+                }
+                else
+                {
+                    self.fwBy=""
+                }
+                
+                
+            }
+            
+        }
+        
+        if((self.dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
+        {
+            self.btnSure.enabled=false
+            //self.imgSure.hidden=true
+            self.btnSorry.enabled=false
+            //self.imgSorry.hidden=true
+            
+            self.btnForward.hidden=true
+        }
+        
+        if(!(self.dataDict["isAllow"] as! Bool))
+        {
+            self.btnForward.hidden=true
+            self.layout_forwartBtnWidth.constant = 0
+        }
+        self.showHideChatBtn()
+
+        self.tableMeetUpDetails.reloadData()
+        
     }
 
     // MARK: - gesture tapped
@@ -800,24 +808,27 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
 
     @IBAction func btnChatClick(sender: UIButton) {
         
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let mesagesVC = storyboard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
-        
-        let strPred:String = "groupId contains[cd] \"\(self.meetUpGroupID)\""
-        let instance = DataBaseController.sharedInstance
-        let recentObj=instance.fetchDataRecentChatObject("RecentChatList", predicate: strPred) as RecentChatList?
-        
-        if (recentObj != nil) {
-            mesagesVC.isFromClass="df"
-            mesagesVC.isFromDeatilScreen = "0"
-            mesagesVC.recentChatObj=recentObj
-            mesagesVC.isGroup="0"
-            mesagesVC.manageChatTableH="0"
-            mesagesVC.isGroup = "1"
+        if(self.meetUpGroupID != nil) {
+            
+            let strPred:String = "groupId contains[cd] \"\(self.meetUpGroupID)\""
+            let instance = DataBaseController.sharedInstance
+            let recentObj=instance.fetchDataRecentChatObject("RecentChatList", predicate: strPred) as RecentChatList?
+            
+            if (recentObj != nil) {
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let mesagesVC = storyboard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
+                
+                mesagesVC.isFromClass="df"
+                mesagesVC.isFromDeatilScreen = "0"
+                mesagesVC.recentChatObj=recentObj
+                mesagesVC.manageChatTableH="0"
+                mesagesVC.isGroup = "1"
+                
+                self.navigationController?.pushViewController(mesagesVC, animated: true)
+            }
+            
         }
-        
-        self.navigationController?.pushViewController(mesagesVC, animated: true)
-
     }
     
     func editMeetUpOrInviteClick()
@@ -854,7 +865,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             dict["userId"] = memberID
             ChatListner .getChatListnerObj().socket.emit("forwardMeetup_Invite", dict)
             
-            self.fetchDataForMeetUpOrWebInvite()
+            //self.listenerUpdateMeetUpOrWebInvite()
         }
     }
     
@@ -1107,9 +1118,7 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
                 
             }
             
-            
         }
-        
         
     }
     
