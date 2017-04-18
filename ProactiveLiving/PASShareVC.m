@@ -18,6 +18,7 @@
 @interface PASShareVC ()
 {
     BOOL shouldHide;
+    NSArray* notAllZeros;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *orgDataArray;
@@ -35,8 +36,17 @@
     // Do any additional setup after loading the view.
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-    [self fetchScoreData];
+   // [self fetchScoreData];
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+   
+    
+    [self fetchScoreData];
+
+    
+}
+
 
 -(void)fetchScoreData
 {
@@ -276,6 +286,7 @@
     [self performSelector:@selector(delayEnable:) withObject:sender afterDelay:0.5];
 
     NSMutableArray *dataArray=[NSMutableArray array];
+    
     for (int count=0; count<self.orgDataArray.count; count++) {
         NSMutableDictionary *dataDict=[NSMutableDictionary dictionary];
         
@@ -294,7 +305,10 @@
         [dataArray addObject:dataDict];
     }
     
-    NSArray* notAllZeros = [dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%@ IN self.@allValues",[NSNumber numberWithBool:YES] ]];
+//    NSArray* notAllZeros = [dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%@ IN self.@allValues",[NSNumber numberWithBool:YES] ]];
+    
+     notAllZeros = [dataArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%@ IN self.@allValues",[NSNumber numberWithBool:YES] ]];
+
     
     
     if([notAllZeros count]==0 )
@@ -303,12 +317,40 @@
         return;
     }
     
+    
+    //By me 17 march
+    NSMutableArray *finalOrgListArr = [NSMutableArray array];
+    
+    for(int i =0; i<notAllZeros.count; i++){
+        
+        NSString * strID = [[notAllZeros objectAtIndex:i] objectForKey:@"orgId"];
+        
+        for (int j=0; j<self.orgDataArray.count ; j++){
+            
+            NSString * strOrgId = [[[self.orgDataArray objectAtIndex:j] objectForKey:@"organizationId"] objectForKey:@"_id"];
+            
+            if (strID == strOrgId) {
+                
+                
+                NSString * orgName =  [[[self.orgDataArray objectAtIndex:j] objectForKey:@"organizationId"] objectForKey:@"name"];
+                [finalOrgListArr addObject:orgName];
+                
+            }
+            
+            
+        }
+        
+    }
+    
+       
     self.modal = (PASSharePopUp*)[self.storyboard instantiateViewControllerWithIdentifier:@"PASSharePopUp"];
     
     self.modal.pas=[NSString stringWithFormat:@"PAS %@",[[self.pasDataArray objectAtIndex:0] valueForKey:@"pasScore"]];
     self.modal.level=[NSString stringWithFormat:@"Level %@",[[[self.pasDataArray objectAtIndex:0] objectForKey:@"pasId"] valueForKey:@"level"]];
     self.modal.rating=[[[self.pasDataArray objectAtIndex:0] objectForKey:@"pasId"]valueForKey:@"rating"];
-    self.modal.employers=[[self.orgDataArray valueForKey:@"organizationId"] valueForKey:@"name"];
+    self.modal.employers= finalOrgListArr; //[[finalOrgListArr valueForKey:@"organizationId"] valueForKey:@"name"];
+  
+    
     
     if([[AppDelegate getAppDelegate].window.subviews containsObject:self.modal.view])
         [self.modal hidePopUp];
@@ -326,26 +368,27 @@
 
 -(void)btnShareClick
 {
-
-    NSMutableArray *dataArray=[NSMutableArray array];
-    for (int count=0; count<self.orgDataArray.count; count++) {
-        NSMutableDictionary *dataDict=[NSMutableDictionary dictionary];
-
-        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:count inSection:1];
-        PASShareCell *cell =[self.tableView cellForRowAtIndexPath:indexPath];
-        BOOL pas= cell.checkBoxScore.checked;
-        BOOL level= cell.checkBoxLevel.checked;
-        BOOL rating= cell.checkBoxRating.checked;
-        
-        [dataDict setObject:[[self.orgDataArray objectAtIndex:count] objectForKey:@"organizationId"][@"_id"] forKey:@"orgId"];
-
-        [dataDict setObject:[NSNumber numberWithBool:pas] forKey:@"pas"];
-        [dataDict setObject:[NSNumber numberWithBool:level] forKey:@"level"];
-        [dataDict setObject:[NSNumber numberWithBool:rating] forKey:@"rating"];
-
-        [dataArray addObject:dataDict];
-    }
-    NSLog(@"\n PAS Details:%@",dataArray);
+// commentd on 18/04/2017 since not required
+    
+//    NSMutableArray *dataArray=[NSMutableArray array];
+//    for (int count=0; count<self.orgDataArray.count; count++) {
+//        NSMutableDictionary *dataDict=[NSMutableDictionary dictionary];
+//
+//        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:count inSection:1];
+//        PASShareCell *cell =[self.tableView cellForRowAtIndexPath:indexPath];
+//        BOOL pas= cell.checkBoxScore.checked;
+//        BOOL level= cell.checkBoxLevel.checked;
+//        BOOL rating= cell.checkBoxRating.checked;
+//        
+//        [dataDict setObject:[[self.orgDataArray objectAtIndex:count] objectForKey:@"organizationId"][@"_id"] forKey:@"orgId"];
+//
+//        [dataDict setObject:[NSNumber numberWithBool:pas] forKey:@"pas"];
+//        [dataDict setObject:[NSNumber numberWithBool:level] forKey:@"level"];
+//        [dataDict setObject:[NSNumber numberWithBool:rating] forKey:@"rating"];
+//
+//        [dataArray addObject:dataDict];
+//    }
+//    NSLog(@"\n PAS Details:%@",dataArray);
     
     //check internet before hitting web service
     if ([AppDelegate checkInternetConnection])
@@ -356,7 +399,7 @@
         NSMutableDictionary *parameters=[[NSMutableDictionary alloc]init];
         [parameters setValue:AppKey forKey:@"appkey"];
         [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
-        [parameters setObject:dataArray forKey:@"organizations"];
+        [parameters setObject:notAllZeros forKey:@"organizations"];
         
         [Services postRequest:ServiceSendPAS parameters:parameters completionHandler:^(NSString *status, NSDictionary *responseDict) {
         

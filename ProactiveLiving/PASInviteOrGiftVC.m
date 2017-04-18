@@ -69,10 +69,12 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.txtPhone.text=phoneArray[indexPath.row];
+    cell.txtPhone.userInteractionEnabled = false;
     cell.btnOpenContacts.tag=indexPath.row;
     [cell.btnOpenContacts addTarget:self action:@selector(openContactsClick:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
+    
 }
 
 -(void)openContactsClick:(UIButton *)sender
@@ -104,8 +106,8 @@
 - (IBAction)btnInviteOrGiftClick:(id)sender
 {
     
-    NSArray *arrWithNumbersOnly = [phoneArray filteredArrayUsingPredicate:
-                               [NSPredicate predicateWithFormat:@"length > 0"]];
+    NSArray *arrWithNumbersOnly = [phoneArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+    
     if([arrWithNumbersOnly count]>0)
     {
     

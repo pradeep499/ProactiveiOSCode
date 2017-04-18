@@ -565,6 +565,13 @@
                 [self insertRemoveToSelecetedRowArray:frndDict];
                 
             }
+            // Added by me 17 April
+            else if([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[MyPAStodoVC class]])
+            {
+            [self.delegate getSelectedPhone:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"mobilePhone"]];
+            }
+
+            
         }
     }
     else //In case Group Chat
