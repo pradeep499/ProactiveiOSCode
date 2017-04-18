@@ -18,6 +18,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     @IBOutlet weak var attachmentViewS: UIView!
     @IBOutlet weak var postContainerView: UIView!
     @IBOutlet weak var plusButton: UIButton!
+    @IBOutlet weak var btnPost: UIButton!
     
     //  var dataArr = [AnyObject]()
     var profileArr = [String]()
@@ -38,6 +39,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     var isBackFromChildVC:Bool!
     
+    @IBOutlet weak var layoutConstHeightShareView: NSLayoutConstraint!
     
     
     override func viewDidLoad() {
@@ -62,9 +64,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         if self.title == "ALL" || self.title == "EXPLORE"{
             
             self.collectionView.registerClass(HeaderScrollerView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderScrollerView")
-            
-            
-            
+        }
+        
+        if(self.title != "PAC CIRCLES") {
+            self.layoutConstHeightShareView.constant = 87
+            self.plusButton.hidden = false
+            self.btnPost.hidden = false
+
+        }
+        else {
+            self.layoutConstHeightShareView.constant = 0
+            self.plusButton.hidden = true
+            self.btnPost.hidden = true
+
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
@@ -681,7 +693,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 parameters["section"] = "HEALTH CLUBS"
             }
             else if self.collectionView.tag ==  6666 {
-                parameters["section"] = "CIRCLE"
+                parameters["section"] = "PAC"
             }
             else if self.collectionView.tag ==  1000{
                 parameters["section"] = "PAC"
@@ -930,7 +942,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 dict["section"] = "HEALTH CLUBS"
             }
             else if self.collectionView.tag ==  6666 {
-                dict["section"] = "CIRCLE"
+                dict["section"] = "PAC"
             }
             else if self.collectionView.tag ==  1000 {
                 dict["section"] = "PAC"
@@ -1072,7 +1084,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
                     }
                 }
-                else if resultDict["section"] as! String  == "circle" {
+                else if resultDict["section"] as! String  == "pac circles" {
                     
                     self.postCircleArr.insertObject(resultDict, atIndex: 0)
                     if(self.postCircleArr.count > 0) {
@@ -1167,7 +1179,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     }
 
                 }
-                else if resultDict["section"] as! String  == "circle" {
+                else if resultDict["section"] as! String  == "pac circles" {
                     
                     var filteredarray:[AnyObject] = self.postCircleArr.filteredArrayUsingPredicate(predicate)
                     print("ID =  \(resultDict["_id"])")
@@ -1232,7 +1244,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
         // Require no header section in such cases
-        if self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL" || self.title == "CIRCLE" {
+        if self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL" || self.title == "PAC CIRCLES" {
         
             return CGSizeZero
         }
@@ -1378,7 +1390,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         
-        
         let lpgrMain : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ExploreVC.handleLongPress(_:)))
         lpgrMain.minimumPressDuration = 0.5
         
@@ -1400,6 +1411,21 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let btn_like = cell.viewWithTag(6) as! UIButton
         let btn_comments = cell.viewWithTag(7) as! UIButton
         let btn_share = cell.viewWithTag(8) as! UIButton
+        
+        if(self.title != "PAC CIRCLES") {
+            cell.layoutConstBtnShare.constant = 74
+            btn_share.alpha = 1.0
+            btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+            btn_options.alpha = 1.0
+
+        }
+        else {
+            cell.layoutConstBtnShare.constant = 0
+            btn_share.alpha = 0.0
+            btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
+            btn_options.alpha = 0.0
+        }
+
 
         iv_profile.layer.borderWidth = 1.0
         iv_profile.contentMode = .ScaleAspectFill
@@ -1823,7 +1849,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 parameters["section"] = "HEALTH CLUBS"
             }
             else if self.collectionView.tag ==  6666 {
-                parameters["section"] = "CIRCLE"
+                parameters["section"] = "paccircle"
             }
             else if self.collectionView.tag ==  1000{
                 parameters["section"] = "PAC"
@@ -2705,6 +2731,8 @@ class FooterAllReUsableView: UICollectionReusableView{
 class CellNewsFeed:UICollectionViewCell{
     
     @IBOutlet weak var layOut_lbl_Name_height: NSLayoutConstraint!
+    @IBOutlet weak var layoutConstBtnShare: NSLayoutConstraint!
+
     var userID:String!
 
 }

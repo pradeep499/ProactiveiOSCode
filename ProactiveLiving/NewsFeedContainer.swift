@@ -94,10 +94,10 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         fifthVC.view.tag = 4
         
         sixthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
-        sixthVC.title = "HEALTH CLUBS"
+        sixthVC.title = "PAC CIRCLES"
         sixthVC.view.tag = 5
 
-        arrViewControllers = [firstVC, secondVC, thirdVC, fourthVC, fifthVC]
+        arrViewControllers = [firstVC, secondVC, thirdVC, fourthVC, fifthVC, sixthVC]
         
         
         containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)

@@ -101,8 +101,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
         
-        self.fetchDataMeetUpOrWebInviye()
-        //self.updateCurrentView()
+        //self.fetchDataMeetUpOrWebInviye()
+        self.updateCurrentView()
 
         if(self.screenName ==  "MEET UPS") {
             self.HConstDialUpView.constant=0;
@@ -510,12 +510,10 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
-            AppDelegate.showProgressHUDWithStatus("")
             
             ChatListner .getChatListnerObj().socket.off("getDetail_Meetup_Invite")
             ChatListner .getChatListnerObj().socket.on("getDetail_Meetup_Invite") {data, ack in
                 
-                AppDelegate.dismissProgressHUD()
                 print("value error_code\(data[0]["status"] as! String))")
                 
                 let errorCode = (data[0]["status"] as? String) ?? "1"
@@ -540,7 +538,6 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             
         }else
         {
-            AppDelegate.dismissProgressHUD()
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Internet Connection not available.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
         }
     }
@@ -564,7 +561,6 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                 self.meetUpGroupID = groupIdStr
             }
         }
-        
         
         if(self.screenName ==  "MEET UPS")
         {
@@ -1122,9 +1118,7 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
                 
             }
             
-            
         }
-        
         
     }
     

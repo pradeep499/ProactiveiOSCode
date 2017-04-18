@@ -217,6 +217,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         }
         
+        isForwardAllowed = switchAllowInvite.on
+
+        
         txtFieldTitle.delegate=self
         self.tokenField.tagPlaceholder = "Add here";
         //self.tokenField.mode = TLTagsControlMode.Edit ;

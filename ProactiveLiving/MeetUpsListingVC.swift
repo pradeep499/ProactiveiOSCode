@@ -30,9 +30,65 @@ class MeetUpsListingVC: UIViewController {
         self.arrData.removeAll()
         self.tableView.reloadData()
 
-        self.fetchMeetUpOrWebInviteData()
+        //self.fetchMeetUpOrWebInviteData()
+        self.fetchAllMeetupsOrWebInvites()
         self.listenerUpdateMeetupOrWebInvite()
 
+    }
+    
+    func fetchAllMeetupsOrWebInvites() {
+        
+        if AppDelegate.checkInternetConnection() {
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("")
+            var parameters = Dictionary<String,AnyObject>()
+            if(self.title == "MEET UPS") {
+                parameters["type"]="meetup"
+            }
+            else {
+                parameters["type"]="webinvite"
+            }
+            parameters["userId"]=ChatHelper.userDefaultForKey("userId") as String
+            
+            //call global web service class latest
+            Services.postRequest(ServiceGetAllMeetupInvite, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                AppDelegate.dismissProgressHUD()
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        guard let dataArr = responseDict["result"] as? [AnyObject] else
+                        {
+                            return
+                        }
+
+                        self.arrData = dataArr
+                        
+                        print("arrayList \(self.arrData)")
+                        
+                        self.tableView.reloadData()
+                        
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
     }
     
     //mark- Fetch Meetups/Invites listing data
@@ -407,7 +463,7 @@ class MeetUpsListingVC: UIViewController {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let meetUpDetailVC: MeetUpDetailsVC = storyBoard.instantiateViewControllerWithIdentifier("MeetUpDetailsVC") as! MeetUpDetailsVC
         meetUpDetailVC.meetUpID=self.arrData[indexPath.row]["_id"] as! String
-        //meetUpDetailVC.dataDict = self.arrData[indexPath.row] as! [String : AnyObject]
+        meetUpDetailVC.dataDict = self.arrData[indexPath.row] as! [String : AnyObject]
         if(self.title == "MEET UPS")
         {
             meetUpDetailVC.screenName = "MEET UPS"
