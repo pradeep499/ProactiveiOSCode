@@ -19,8 +19,7 @@
 +(void)saveToUserDefaults:(id)value withKey:(NSString*)key;
 +(id)userDefaultsForKey:(NSString*)key;
 +(void)removeFromUserDefaultsWithKey:(NSString*)key;
-+(void)showAlertWithTitle:(NSString*)title message:(NSString*)message tag:(NSInteger)tag delegate:(id)delegate
-             cancelButton:(NSString*)cancelButton otherButton:(NSString*)otherButton;
++(void)showAlertWithTitle:(NSString*)title message:(NSString*)message tag:(NSInteger)tag delegate:(id)delegate cancelButton:(NSString*)cancelButton otherButton:(NSString*)otherButton;
 + (UIColor *)colorFromHexString:(NSString *)hexString alpha:(CGFloat)alpha;
 +(void)addShadowOnView:(UIView *)view;
 +(void)addShadowOnView:(UIView *)view withOffset:(CGSize)shadowOffset withColor:(UIColor *)color;
@@ -29,6 +28,7 @@
 +(NSString *)timeFormattedFromSeconds:(int)totalSeconds;
 +(NSString *)dayFromDateString:(NSString *)dateString;
 +(NSString *)convertUTCFormattedDate:(NSString *)strDate;
++ (void)addEventToPhoneCalendarWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate withTitle:(NSString *)title withNotes:(NSString *)notes;
 
 +(UIStoryboard*)getStoryBoard;
 +(UIStoryboard*)getSecondStoryBoard;

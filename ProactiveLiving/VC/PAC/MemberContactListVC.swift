@@ -45,7 +45,7 @@ extension MemberContactListVC : UITableViewDataSource {
             return membersArr.count
         }
         else {
-        return contactArr.count
+            return contactArr.count
             
         }
     }
@@ -100,9 +100,14 @@ extension MemberContactListVC : UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let memberDict = contactArr[indexPath.row]
-        let userId = memberDict["_id"] as? String
-       
+        let userId : String
+        if isFromMeetUp == true {
+            userId = membersArr[indexPath.row]["memberId"] as! String
+        }
+        else {
+            userId = contactArr[indexPath.row]["_id"] as! String
+
+        }
         
         let profileContainerVC = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
         profileContainerVC.viewerUserID = userId

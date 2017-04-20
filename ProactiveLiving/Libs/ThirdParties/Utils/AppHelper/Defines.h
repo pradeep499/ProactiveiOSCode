@@ -90,6 +90,7 @@
 #define ServiceGetNewsFeed              @"getNewsFeed"
 #define ServiceDeleteNewsFeed           @"deleteNewsFeed"
 #define ServiceGetAllMeetupInvite       @"getAllMeetupInvite"
+#define ServiceGetDetailMeetupInvite    @"getDetailMeetupInvite"
 
 #define ServiceRequestOTP               @"users/requestOTP"
 #define ServiceChangeMobile             @"users/changeMobile"

@@ -132,16 +132,16 @@
     */
     
     // to display Calendar Selected date on cell
-    if ((self.positionOfSelectedDate > -1) && (indexPath.row == self.positionOfSelectedDate) && [self.title isEqualToString:@"ALL"]) {
-        cell.lblDD.text= [[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:1];
-        cell.lblEEE.text=[[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:0];
-        
-        NSDateFormatter *df = [[NSDateFormatter alloc]init];
-        [df setDateFormat:@"MM/dd/yyyy"];
-        
-        cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[df stringFromDate:_selectedRecurrenceDate],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
-        
-    }else{
+//    if ((self.positionOfSelectedDate > -1) && (indexPath.row == self.positionOfSelectedDate) && [self.title isEqualToString:@"ALL"]) {
+//        cell.lblDD.text= [[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:1];
+//        cell.lblEEE.text=[[[self getDateStringFromDate:self.selectedRecurrenceDate] componentsSeparatedByString:@" "]objectAtIndex:0];
+//        
+//        NSDateFormatter *df = [[NSDateFormatter alloc]init];
+//        [df setDateFormat:@"MM/dd/yyyy"];
+//        
+//        cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[df stringFromDate:_selectedRecurrenceDate],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
+//        
+//    }else{
         cell.lblDD.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:1];
         cell.lblEEE.text=[[[self componentsFromDate:[self.dataArray objectAtIndex:indexPath.row][@"bookingDate"]] componentsSeparatedByString:@" "]objectAtIndex:0];
         
@@ -151,7 +151,7 @@
         
         cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[HelpingClass convertDateFormat:@"yyyy/MM/dd" desireFormat:@"MM/dd/yyyyy" dateStr:date],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
         
-    }
+   // }
     
     
     cell.sideBarView.backgroundColor=[AppHelper colorFromHexString:[[self.dataArray objectAtIndex:indexPath.row] valueForKey:@"bookingColor"] alpha:1.0];
@@ -187,19 +187,11 @@
         
         if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"meetup"])
         {
-            MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
-            vc.screenName = @"MEET UPS";
-            
-            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"];
-            [self.navigationController pushViewController:vc animated:YES];
+            [self fetchDataForType:[self.dataArray objectAtIndex:indexPath.row][@"type"] andWithID:[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"]];
         }
         else if([[self.dataArray objectAtIndex:indexPath.row][@"type"] isEqualToString:@"webinvite"])
         {
-            
-            MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
-            vc.screenName = @"WEB INVITES";
-            vc.meetUpID=[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"];
-            [self.navigationController pushViewController:vc animated:YES];
+            [self fetchDataForType:[self.dataArray objectAtIndex:indexPath.row][@"type"] andWithID:[self.dataArray objectAtIndex:indexPath.row][@"meetupInviteId"][@"_id"]];
         }
         else
         {
@@ -209,6 +201,53 @@
         }
     }
 }
+
+-(void) fetchDataForType :(NSString *) groupType andWithID :(NSString *) groupID {
+    //check internet before hitting web service
+    if ([AppDelegate checkInternetConnection]) {
+        NSMutableDictionary *paramDict=[[NSMutableDictionary alloc]init];
+        [paramDict setValue:AppKey forKey:@"AppKey"];
+        [paramDict setValue:[AppHelper userDefaultsForKey:uId] forKey:@"userId"];
+        [paramDict setValue:groupType forKey:@"type"];
+        [paramDict setValue:groupID forKey:@"typeId"];
+        
+        [AppDelegate showProgressHUDWithStatus:@"Please wait.."];
+        [Services postRequest:ServiceGetDetailMeetupInvite parameters:paramDict completionHandler:^(NSString *error, NSDictionary *responseDict) {
+            
+            [AppDelegate dismissProgressHUD];//dissmiss indicator
+            
+            if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
+            {
+                if ([[responseDict objectForKey:@"error"] intValue] == 0) {
+
+                    MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
+                    vc.dataDict = [responseDict objectForKey:@"result"];
+                    if([[responseDict objectForKey:@"type"] isEqualToString:@"meetup"])
+                        vc.screenName = @"MEET UPS";
+                    else
+                        vc.screenName = @"WEB INVITES";
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                }
+                else
+                {
+                    [AppHelper showAlertWithTitle:[responseDict objectForKey:@"errorMsg"] message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                }
+                
+            }
+            else
+                [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
+            
+            
+        }];
+        
+        
+    }
+    else
+        //show internet not available
+        [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
+}
+
 
 #pragma mark-
 // filter on array to move events to top

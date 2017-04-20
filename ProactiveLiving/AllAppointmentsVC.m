@@ -38,7 +38,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    if([self.fromScreenFlag isEqualToString:@"pac"])
+    if([self.fromScreenFlag isEqualToString:@"pac"] || [self.fromScreenFlag isEqualToString:@"private"])
         self.btnBack.hidden = NO;
     else
         self.btnBack.hidden = YES;

@@ -19,18 +19,14 @@ class MeetUpsListingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.arrData = Array()
+
     }
     
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
-        
-        // to clear up old data
-        self.arrData.removeAll()
-        self.tableView.reloadData()
 
-        //self.fetchMeetUpOrWebInviteData()
         self.fetchAllMeetupsOrWebInvites()
         self.listenerUpdateMeetupOrWebInvite()
 
@@ -184,8 +180,19 @@ class MeetUpsListingVC: UIViewController {
                         let index = (self.arrData as NSArray).indexOfObject(filteredarray[0])
                         self.arrData[index] = resultDict
                     }
-
                     self.tableView.reloadData()
+                    
+                    //Add newly created meeup/invite to phone calender
+                    if let newEvent = resultDict["isNewMeetupInvite"] as? String {
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm a"
+                        let startDate = dateFormatter.dateFromString((resultDict["eventDate"] as! String) + " " + (resultDict["eventStartTime"] as! String))
+                        let endDate = dateFormatter.dateFromString((resultDict["eventDate"] as! String) + " " + (resultDict["eventEndTime"] as! String))
+                        let title = resultDict["title"] as! String
+                        let notes = resultDict["desc"] as! String
+                        
+                        AppHelper.addEventToPhoneCalendarWithStartDate(startDate, endDate: endDate, withTitle: title, withNotes: notes)
+                    }
                 }
                 else
                 {
@@ -377,11 +384,17 @@ class MeetUpsListingVC: UIViewController {
         {
             cell.btnAccept.enabled=false
             cell.btnDecline.enabled=false
+            cell.btnAccept.setTitleColor(.lightGrayColor(), forState: .Normal)
+            cell.btnDecline.setTitleColor(.lightGrayColor(), forState: .Normal)
+            
         }
         else {
             
             cell.btnAccept.enabled=true
             cell.btnDecline.enabled=true
+            cell.btnAccept.setTitleColor(.blackColor(), forState: .Normal)
+            cell.btnDecline.setTitleColor(.blackColor(), forState: .Normal)
+
         }
         
         
@@ -509,10 +522,20 @@ class MeetUpsListingVC: UIViewController {
         groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
         
         dict["groupInfo"] = groupDict
-
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
 
-        //self.fetchMeetUpOrWebInviteData()
+        //let startDateStr = HelpingClass.convertDateFormat("dd/MM/yyyy HH:mm a", desireFormat: "EEE MMM d HH:mm",  dateStr: (someDict["eventDate"] as! String) + " " + (someDict["eventStartTime"] as! String))
+        //let endDateStr = HelpingClass.convertDateFormat("dd/MM/yyyy HH:mm a", desireFormat: "EEE MMM d HH:mm",  dateStr: (someDict["eventDate"] as! String) + " " + (someDict["eventEndTime"] as! String))
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm a"
+        let startDate = dateFormatter.dateFromString((someDict["eventDate"] as! String) + " " + (someDict["eventStartTime"] as! String))
+        let endDate = dateFormatter.dateFromString((someDict["eventDate"] as! String) + " " + (someDict["eventEndTime"] as! String))
+        let title = someDict["title"] as! String
+        let notes = someDict["desc"] as! String
+        
+        AppHelper.addEventToPhoneCalendarWithStartDate(startDate, endDate: endDate, withTitle: title, withNotes: notes)
+        
     }
     
     
@@ -550,8 +573,6 @@ class MeetUpsListingVC: UIViewController {
         dict["groupInfo"] = groupDict
         
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
-
-        //self.fetchMeetUpOrWebInviteData()
 
     }
 

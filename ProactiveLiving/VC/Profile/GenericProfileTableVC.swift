@@ -118,7 +118,6 @@ class GenericProfileTableVC: UIViewController {
     
     //MARK: Btn Click
     
-    
     @IBAction func onClickRightBtn(sender: AnyObject) {
         
         DISMISS_KEYBOARD
