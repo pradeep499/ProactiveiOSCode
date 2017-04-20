@@ -646,7 +646,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
             
-            fullImageVC.hidesBottomBarWhenPushed = true
+            //fullImageVC.hidesBottomBarWhenPushed = true
             
             //check the thumbNail name is exist ? or generate from video url and save to db
             HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in

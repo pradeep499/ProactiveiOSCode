@@ -795,7 +795,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
         
-        fullImageVC.hidesBottomBarWhenPushed = true
+        //fullImageVC.hidesBottomBarWhenPushed = true
         fullImageVC.parentNewsFeed = self
         
         
