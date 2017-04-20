@@ -164,6 +164,16 @@ extension WebViewVC:UIWebViewDelegate{
         self.indicator.stopAnimating()
         self.indicator.hidden = true
         
-       // AppHelper.showAlertWithTitle(AppName, message: "Invalid url.", tag: 0, delegate: nil, cancelButton: "Ok", otherButton:nil  )
+        //AppHelper.showAlertWithTitle(AppName, message: "Invalid url.", tag: 0, delegate: nil, cancelButton: "Ok", otherButton:nil  )
+        //"<html><head></head><body><h5 align=\"center\" style=\"color:gray; font-family:roboto-light;\"><br><br><br><br><br><br><br><br><br><br>Server Error!<br><br>The page you are looking for cannot be found.</h5></body></html>"
+        
+        let errorHTML = "<html><head></head><body><h4 align=\"center\"><br><br><br><br><br><br><br><br><br><br>Server Error!<br><br>The page you are looking for can not be found.</h4></body></html>"
+        
+        if (error.localizedDescription != "Plug-in handled load") {
+            webView.loadHTMLString(errorHTML, baseURL: nil)
+        }
     }
+    
+    
+    
 }

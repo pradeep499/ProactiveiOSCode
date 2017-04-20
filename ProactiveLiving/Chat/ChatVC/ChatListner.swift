@@ -89,10 +89,7 @@ func connectToSocket() -> Void{
                 weakself.socket.off("isUserTyping")
                 weakself.socket.off("getGroupInfo")
                 weakself.socket.off("delUserInGroup")
-                
-                weakself.socket.off("getMeetup_Invite_listing")
-                weakself.socket.off("getForward_Meetup_Invite")
-                
+                                
                 socket.on("connect") { data, ack in
                     print(weakself.isConnectionStable)
                     weakself.createOnline()

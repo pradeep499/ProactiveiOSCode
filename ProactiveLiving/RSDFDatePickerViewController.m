@@ -355,7 +355,7 @@ type = 3 for yeary basis
         _datePickerView.delegate = self;
         _datePickerView.dataSource = self;
 		_datePickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        //_datePickerView.pagingEnabled=YES;
+        _datePickerView.pagingEnabled=YES;
 	}
 	return _datePickerView;
 }
@@ -638,8 +638,6 @@ type = 3 for yeary basis
                                  }
                                  
                              }
-                             
-                             
                              
                          }
                          self.eventData[date]=eventsArray;

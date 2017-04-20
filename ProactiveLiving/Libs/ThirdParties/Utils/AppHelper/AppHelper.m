@@ -8,6 +8,7 @@
 
 #import "AppHelper.h"
 #import "AVFoundation/AVFoundation.h"
+#import <EventKitUI/EventKitUI.h>
 
 
 @implementation AppHelper
@@ -183,7 +184,27 @@
     
 }
 
-
+#pragma Mark- Add event to phone Calander
++ (void)addEventToPhoneCalendarWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate withTitle:(NSString *)title withNotes:(NSString *)notes {
+    
+    EKEventStore *eventStore = [[EKEventStore alloc] init];
+    
+    [eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        EKEvent *event = [EKEvent eventWithEventStore:eventStore];
+        EKAlarm *alarm = [EKAlarm alarmWithRelativeOffset:-30];
+        event.alarms = [NSArray arrayWithObject:alarm];
+        
+        event.title = title;
+        event.startDate = startDate;
+        event.endDate = endDate;
+        event.notes = notes;
+        
+        [event setCalendar:[eventStore defaultCalendarForNewEvents]];
+        
+        NSError *err;
+        [eventStore saveEvent:event span:EKSpanThisEvent error:&err];
+    }];
+}
 
 #pragma mark - dayFromDateString
 

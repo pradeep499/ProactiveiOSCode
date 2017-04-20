@@ -15,6 +15,7 @@
 
 @interface PACNotificationVC ()
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
 @implementation PACNotificationVC {
@@ -25,7 +26,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero ]];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -199,10 +200,15 @@
     return requestArr.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 150;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FrRequestCell" forIndexPath:indexPath];
-    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
     UIImageView *iv_profile = (UIImageView *) [cell viewWithTag:1];
     UILabel *lbl_name = (UILabel *) [cell viewWithTag:2];
     UILabel *lbl_time = (UILabel *) [cell viewWithTag:3];

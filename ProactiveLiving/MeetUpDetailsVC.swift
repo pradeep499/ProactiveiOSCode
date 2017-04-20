@@ -70,6 +70,8 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
         btnSure.setTitleColor(UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0), forState: UIControlState.Selected)
         btnSorry.setTitleColor(UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0), forState: UIControlState.Selected)
+        
+        
     
         imgSure.hidden=true
         imgSorry.hidden=true
@@ -642,14 +644,17 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             
         }
         
+        
         if((self.dataDict["createdBy"]!["_id"] as! String) == ChatHelper.userDefaultForKey("userId"))
         {
             self.btnSure.enabled=false
             //self.imgSure.hidden=true
             self.btnSorry.enabled=false
             //self.imgSorry.hidden=true
-            
             self.btnForward.hidden=true
+            
+            self.btnSure.setTitleColor(.lightGrayColor(), forState: .Normal)
+            self.btnSorry.setTitleColor(.lightGrayColor(), forState: .Normal)
         }
         
         if(!(self.dataDict["isAllow"] as! Bool))

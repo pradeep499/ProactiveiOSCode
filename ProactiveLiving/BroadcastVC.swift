@@ -124,10 +124,8 @@ class BroadcastVC: UIViewController, UICollectionViewDataSource, UICollectionVie
             // redirection to next VC for WebView
             let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
             WebVC.title = titleStr//"About"
-            WebVC.urlStr = aboutUrl as! String
+            WebVC.urlStr = aboutUrl 
             self.navigationController?.pushViewController(WebVC, animated: true)
-
-            
             
            // UIApplication.sharedApplication().openURL(NSURL(string: aboutUrl )!)
         }

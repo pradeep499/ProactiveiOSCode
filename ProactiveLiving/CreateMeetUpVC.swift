@@ -191,7 +191,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             switchAllowInvite.on = self.dataDict["isAllow"] as! Bool
             let imgUrl = self.dataDict["imgUrl"] as? String
             if !(imgUrl == "") {
-                imgCoverPic.setImageWithURL(NSURL(string: imgUrl!))
+                imgCoverPic.sd_setImageWithURL(NSURL(string: imgUrl!))
             }
             
         }
@@ -354,7 +354,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         IQKeyboardManager.sharedManager().enable=true
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
 
-        self.getStaticDataFromServer()
+        self.getPickerDataFromServer()
+        self.listenerCreateMeetUpOrWebInvite()
     }
     
     override func viewWillAppear(animated: Bool)
@@ -736,18 +737,17 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                             if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
                             {
                                 ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
-                                dispatch_after(3, dispatch_get_main_queue(), {
+                                let delay = 2.0
+                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                                     stopActivityIndicator(self.view)
-                                    
                                     self.navigationController?.popViewControllerAnimated(true)
                                 })
                             }
                             else
                             {
                                 ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                                dispatch_after(3, dispatch_get_main_queue(), {
-                                    stopActivityIndicator(self.view)
-                                    
+                                let delay = 2.0
+                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {                                    stopActivityIndicator(self.view)
                                     self.navigationController?.popViewControllerAnimated(true)
                                 })
                             }
@@ -768,7 +768,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
                     {
                         ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
-                        dispatch_after(3, dispatch_get_main_queue(), {
+                        let delay = 2.0
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                             stopActivityIndicator(self.view)
                             self.navigationController?.popViewControllerAnimated(true)
                         })
@@ -776,7 +777,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     else
                     {
                         ChatListner .getChatListnerObj().socket.emit("createMeetup_Invite", dict)
-                        dispatch_after(3, dispatch_get_main_queue(), {
+                        
+                        let delay = 2.0
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                             stopActivityIndicator(self.view)
                             self.navigationController?.popViewControllerAnimated(true)
                         })
@@ -794,6 +797,52 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    func listenerCreateMeetUpOrWebInvite() {
+        
+        if ServiceClass.checkNetworkReachabilityWithoutAlert()
+        {
+            
+            ChatListner .getChatListnerObj().socket.off("getMeetup_Invite")
+            ChatListner .getChatListnerObj().socket.on("getMeetup_Invite") {data, ack in
+                
+                print("value error_code\(data[0]["status"] as! String))")
+                
+                let errorCode = (data[0]["status"] as? String) ?? "1"
+                
+                if errorCode == "0"
+                {
+                    guard let dictData = data[0] as? Dictionary<String, AnyObject> else
+                    {
+                        return
+                    }
+                    
+                    guard let resultDict = dictData["result"] as? Dictionary<String, AnyObject>  else
+                    {
+                        return
+                    }
+                    print("arrayList \(resultDict)")
+                    
+                    //Add newly created meeup/invite to phone calender
+                    if let newEvent = resultDict["isNewMeetupInvite"] as? String {
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm a"
+                        let startDate = dateFormatter.dateFromString((resultDict["eventDate"] as! String) + " " + (resultDict["eventStartTime"] as! String))
+                        let endDate = dateFormatter.dateFromString((resultDict["eventDate"] as! String) + " " + (resultDict["eventEndTime"] as! String))
+                        let title = resultDict["title"] as! String
+                        let notes = resultDict["desc"] as! String
+                        
+                        AppHelper.addEventToPhoneCalendarWithStartDate(startDate, endDate: endDate, withTitle: title, withNotes: notes)
+                    }
+                }
+                else
+                {
+                    //SharedClass.sharedInstance.showOkAlertViewController(result!["response_string"] as! String, viewController: self)
+                    
+                }
+            }
+        }
+    }
+    
     @IBAction func btnAddContactClick(sender: AnyObject) {
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
@@ -803,7 +852,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
     }
     
-    func getStaticDataFromServer(){
+    func getPickerDataFromServer(){
         
         if AppDelegate.checkInternetConnection() {
             //show indicator on screen

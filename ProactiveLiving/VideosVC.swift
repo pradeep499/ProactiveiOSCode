@@ -480,16 +480,21 @@ class VideosVC: UIViewController {
         
         if  urlStr != nil {
             
-            self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlStr!)!)
-            self.moviePlayer.moviePlayer.movieSourceType = .Unknown
-            self.moviePlayer.moviePlayer.prepareToPlay()
-            self.moviePlayer.moviePlayer.shouldAutoplay = true
-            //[[self.moviePlayer moviePlayer] setControlStyle:MPMovieControlStyleNone];
-            //[[self.moviePlayer moviePlayer] setFullscreen:YES animated:YES];
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.mpMoviePlayerLoadStateDidChange(_:)), name: MPMoviePlayerLoadStateDidChangeNotification, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.moviePlaybackDidFinish), name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
-            self.presentMoviePlayerViewControllerAnimated(self.moviePlayer)
-            self.moviePlayer.moviePlayer.play()
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.title = "Video"
+            WebVC.urlStr = urlStr!
+            self.navigationController?.pushViewController(WebVC, animated: true)
+            
+//            self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlStr!)!)
+//            self.moviePlayer.moviePlayer.movieSourceType = .Unknown
+//            self.moviePlayer.moviePlayer.prepareToPlay()
+//            self.moviePlayer.moviePlayer.shouldAutoplay = true
+//            //[[self.moviePlayer moviePlayer] setControlStyle:MPMovieControlStyleNone];
+//            //[[self.moviePlayer moviePlayer] setFullscreen:YES animated:YES];
+//            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.mpMoviePlayerLoadStateDidChange(_:)), name: MPMoviePlayerLoadStateDidChangeNotification, object: nil)
+//            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.moviePlaybackDidFinish), name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
+//            self.presentMoviePlayerViewControllerAnimated(self.moviePlayer)
+//            self.moviePlayer.moviePlayer.play()
         
         
         }
@@ -505,17 +510,24 @@ class VideosVC: UIViewController {
             fatalError("can't find point in tableView")
         }
         
-        let urlString = self.dataArra![indexPath.row] as! String
-        self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlString)!)
-        self.moviePlayer.moviePlayer.movieSourceType = .Unknown
-        self.moviePlayer.moviePlayer.prepareToPlay()
-        self.moviePlayer.moviePlayer.shouldAutoplay = true
-        //[[self.moviePlayer moviePlayer] setControlStyle:MPMovieControlStyleNone];
-        //[[self.moviePlayer moviePlayer] setFullscreen:YES animated:YES];
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.mpMoviePlayerLoadStateDidChange(_:)), name: MPMoviePlayerLoadStateDidChangeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.moviePlaybackDidFinish), name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
-        self.presentMoviePlayerViewControllerAnimated(self.moviePlayer)
-        self.moviePlayer.moviePlayer.play()
+        if let urlString = self.dataArra![indexPath.row] as? String {
+        
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title = "Video"
+        WebVC.urlStr = urlString
+        self.navigationController?.pushViewController(WebVC, animated: true)
+        }
+        
+//        self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlString)!)
+//        self.moviePlayer.moviePlayer.movieSourceType = .Unknown
+//        self.moviePlayer.moviePlayer.prepareToPlay()
+//        self.moviePlayer.moviePlayer.shouldAutoplay = true
+//        //[[self.moviePlayer moviePlayer] setControlStyle:MPMovieControlStyleNone];
+//        //[[self.moviePlayer moviePlayer] setFullscreen:YES animated:YES];
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.mpMoviePlayerLoadStateDidChange(_:)), name: MPMoviePlayerLoadStateDidChangeNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.moviePlaybackDidFinish), name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
+//        self.presentMoviePlayerViewControllerAnimated(self.moviePlayer)
+//        self.moviePlayer.moviePlayer.play()
         
     }
     

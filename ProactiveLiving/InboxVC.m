@@ -25,6 +25,7 @@
     FriendRequestVC *requestVC;
     PACNotificationVC *notificationVC;
     NSInteger currentIndex;
+    YSLContainerViewController *containerVC;
 }
 @property (weak, nonatomic) IBOutlet UIButton *btnEdit;
 @property (weak, nonatomic) IBOutlet UIButton *btnDeleteAll;
@@ -53,6 +54,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    //[containerVC scrollMenuViewSelectedIndex:0];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -78,13 +81,13 @@
     webInviteVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"MeetUpsListingVC"];
     webInviteVC.title = @"WEB INVITES";
    
-    requestVC = [[AppHelper getSecondStoryBoard] instantiateViewControllerWithIdentifier:@"FriendRequestVC"];
+    requestVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"FriendRequestVC"];
     requestVC.title = @"REQUESTS";
     
     notificationVC = [[AppHelper getStoryBoard] instantiateViewControllerWithIdentifier:@"PACNotificationVC"];
     notificationVC.title = @"NOTIFICATIONS";
     
-    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]
+    containerVC = [[YSLContainerViewController alloc]
                                                initWithControllers:@[mesagesVC,meetUpVC,webInviteVC, requestVC, notificationVC]
                                                topBarHeight:0
                                                parentViewController:self];

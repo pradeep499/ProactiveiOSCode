@@ -1300,14 +1300,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         //                    let fontName = AppHelper .userDefaultForAny("fontName") as String
         //                    let fontSize = AppHelper .userDefaultForAny("fontSize") as CGFloat
-        let w = collectionView.bounds.size.width - 30
+        let w = collectionView.bounds.size.width - 40
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Light")
         
-        var height = size.height + (150)
+        var height = size.height + (160)
         
         if dict["postType"] as! String != "text" {
 
-            height = height + (400 - 210)
+            height = height + (400 - 200)
             //if the post is shared by then increase height of cell
             if ((dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String) != nil {
                 height = height + 10
