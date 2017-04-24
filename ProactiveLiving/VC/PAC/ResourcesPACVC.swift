@@ -272,7 +272,7 @@ class ResourcesPACVC: UIViewController {
                             
                           //  self.resourceDetailArr.removeAtIndex(self.indexToDelete)
                             
-                      
+                         
                             
                         //    self.tableViewResource.reloadData()
                             

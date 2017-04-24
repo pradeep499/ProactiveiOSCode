@@ -40,7 +40,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         
         
         // setting textView BorderOn
-        // self.txtViewDescription.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
+         self.txtViewDescription.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
         
         // from Edit
         

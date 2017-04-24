@@ -23,6 +23,10 @@ class GenericPacTableVC: UIViewController {
     var genericType:PacGenericType!
     var isForMemberProfile = false
     var strId = ""
+    var spinner = UIActivityIndicatorView()
+    var fromIndex = 0
+
+    
 // MARK :- view life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +34,13 @@ class GenericPacTableVC: UIViewController {
 
         NSNotificationCenter.defaultCenter().removeObserver(self, name:NOTIFICATION_PAC_FILTER, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(fetchFilteredPACsData(_:)),name:NOTIFICATION_PAC_FILTER, object:nil)
+        
+        spinner.stopAnimating()
+        spinner.hidesWhenStopped = true
+        spinner.frame = CGRectMake(0, 0, 320, 44)
+        self.tv_generic.tableFooterView = spinner
+        
+        
         
     }
     
@@ -59,6 +70,7 @@ class GenericPacTableVC: UIViewController {
             var parameters = [String: AnyObject]()
             var serviceURL = ""
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["index"] = self.fromIndex
             
             // Filter applied when coming from User's Profile
             if isForMemberProfile == true {
@@ -99,9 +111,23 @@ class GenericPacTableVC: UIViewController {
                             
                             print("TESTING FIND PAC \(resultArr)")
                             
-                         
-                            self.pacDetailArr = resultArr as [AnyObject]
-                            self.tv_generic.reloadData()
+                            
+                            
+                             
+                             
+                             if resultArr.count > 0 {
+                             
+                             //   self.myPACDetailArr.insert(resultArr, atIndex: self.myPACDetailArr.count)
+                             self.pacDetailArr.appendContentsOf(resultArr)
+                             self.fromIndex = self.pacDetailArr.count
+                             self.spinner.stopAnimating()
+                             self.tv_generic.reloadData()
+                             }else{
+                             self.spinner.stopAnimating()
+                             }
+
+                          //  self.pacDetailArr = resultArr as [AnyObject]
+                          //  self.tv_generic.reloadData()
                             
 }
                     } else {
@@ -266,5 +292,42 @@ extension GenericPacTableVC:  UITableViewDelegate{
         self.navigationController?.pushViewController(containerObj, animated: true)
     
     }
+    
+    
+    
+    func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        let offset = aScrollView.contentOffset
+        let bounds = aScrollView.bounds
+        let size = aScrollView.contentSize
+        let inset = aScrollView.contentInset
+        let y: Float = Float(offset.y) + Float(bounds.size.height) - Float(inset.bottom)
+        let h: Float = Float(size.height)
+        let reload_distance: Float = 50
+        
+        if y > h + reload_distance {
+            print("load more data")
+            tv_generic.tableFooterView!.hidden = false
+           // fetchMyPACDataFromServer(self.createJoinStatus)
+            
+            fetchPACsDataFromServer(["data":"empty"], searchStr: "")
+            spinner.startAnimating()
+        }
+        else{
+            spinner.stopAnimating()
+            tv_generic.tableFooterView!.hidden = true
+            
+        }
+    }
+    
+    
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let v = UIView()
+        
+        return v
+    }
+    
+    
+    
     
 }
