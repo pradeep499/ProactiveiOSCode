@@ -14,9 +14,11 @@ class MyPACVC: UIViewController {
     // MARK:- Properties
     
     var lblTitle = ""
-    var myPACDetailArr = [AnyObject]()
-    var createJoinStatus = "0"
-
+    var myPACDetailArr = [[String : AnyObject]]()
+    var createJoinStatus = "1"
+    var fromIndex = 0
+    var spinner = UIActivityIndicatorView()
+    
     // MARK: - Outlets
     @IBOutlet weak var tableViewMyPAC: UITableView!
     @IBOutlet weak var segmentedCtrl: UISegmentedControl!
@@ -29,9 +31,17 @@ class MyPACVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-         fetchMyPACDataFromServer(createJoinStatus)  // service call
+//         fetchMyPACDataFromServer(createJoinStatus)  // service call
      
          lblNoRecordFound.hidden = true  // hide the no rocord found label
+        
+        
+                spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+                spinner.stopAnimating()
+                spinner.hidesWhenStopped = true
+                spinner.frame = CGRectMake(0, 0, 320, 44)
+                self.tableViewMyPAC.tableFooterView = spinner
+        
         
       
     }
@@ -39,6 +49,9 @@ class MyPACVC: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
+        
+       // self.myPACDetailArr.removeAll()
+        fetchMyPACDataFromServer(createJoinStatus)  // service call
         self.tableViewMyPAC.reloadData()
     }
     
@@ -58,12 +71,16 @@ class MyPACVC: UIViewController {
     print("Segmented Ctrl")
     
         if segmentedCtrl.selectedSegmentIndex == 0 {
-            createJoinStatus = "0"
+            createJoinStatus = "1"  // for Created
+            self.myPACDetailArr.removeAll()
+            self.fromIndex = 0
             fetchMyPACDataFromServer(createJoinStatus)  // service hit
             
         }
         else if segmentedCtrl.selectedSegmentIndex == 1{
-             createJoinStatus = "1"
+             createJoinStatus = "0"  // for Joined
+            self.myPACDetailArr.removeAll()
+            self.fromIndex = 0
             fetchMyPACDataFromServer(createJoinStatus)   // service hit
              lblNoRecordFound.text = "Experts agree that we are influenced by the company we keep.Go to one of the sections to select an area of interest and join a Proactive Circle that helps you live life proactively."
         }
@@ -77,6 +94,9 @@ class MyPACVC: UIViewController {
     // MARK:- Service Hit
     func fetchMyPACDataFromServer( JoinStatus:String) {
         
+        
+       
+        
         if AppDelegate.checkInternetConnection() {
             isPostServiceCalled = true
             
@@ -87,9 +107,12 @@ class MyPACVC: UIViewController {
            
             
             parameters = ["userId" : AppHelper.userDefaultsForKey(_ID) ,
-                          "createJoinStatus" : createJoinStatus
+                          "createJoinStatus" : createJoinStatus,
+                          "index" : self.fromIndex
             ]
             
+            
+            print("PRINT PARAMETERS\(parameters)")
             
             //call global web service class latest
             Services.postRequest(ServiceGetMyPAC, parameters: parameters, completionHandler:{
@@ -97,7 +120,7 @@ class MyPACVC: UIViewController {
                 
                 isPostServiceCalled = false
                 
-                //      print("Response = \(responseDict)")
+                print("Response :  \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
@@ -106,18 +129,28 @@ class MyPACVC: UIViewController {
                     if ((responseDict["error"] as! Int) == 0) {
                         
                         
-                        if let resultArr = responseDict["result"]  as? NSArray{
+                        if let resultArr = responseDict["result"]  as? [[String: AnyObject]] {
                             
                             print("TESTING FIND PAC \(resultArr)")
+                            //Pagination
+                            if resultArr.count > 0 {
                             
+                           //   self.myPACDetailArr.insert(resultArr, atIndex: self.myPACDetailArr.count)
+                            self.myPACDetailArr.appendContentsOf(resultArr)
+                            self.fromIndex = self.myPACDetailArr.count
+                            self.spinner.stopAnimating()
+                            self.tableViewMyPAC.reloadData()
+                            }else{
+                                self.spinner.stopAnimating()
+                            }
                             
                             // hide and show the no record found label
-                            if resultArr.count == 0 {
+                            if self.myPACDetailArr.count == 0 {
                                 
                                 if self.createJoinStatus == "0" {
                                     
-                                     self.lblNoRecordFound.hidden = false
-                                     self.lblNoRecordFound.text = "Experts agree that we are influenced by the company we keep.Go to one of the sections to select an area of interest and create a Proactive Circle that helps you live life proactively."
+                                    self.lblNoRecordFound.hidden = false
+                                    self.lblNoRecordFound.text = "Experts agree that we are influenced by the company we keep.Go to one of the sections to select an area of interest and create a Proactive Circle that helps you live life proactively."
                                     
                                     self.tableViewMyPAC.hidden = true
                                     
@@ -127,15 +160,13 @@ class MyPACVC: UIViewController {
                                     self.lblNoRecordFound.hidden = false
                                     self.lblNoRecordFound.text = "Experts agree that we are influenced by the company we keep.Go to one of the sections to select an area of interest and join a Proactive Circle that helps you live life proactively."
                                     self.tableViewMyPAC.hidden = true
-
+                                    
                                 }
-                                
                                 
                             }
                             
-                            
-                            self.myPACDetailArr = resultArr as [AnyObject]  // storing data in array
-                            self.tableViewMyPAC.reloadData()  // reload table view after successful service hit
+//                            self.myPACDetailArr = resultArr as [AnyObject]  // storing data in array
+//                            self.tableViewMyPAC.reloadData()  // reload table view after successful service hit
                             
                         }
                     } else {
@@ -204,27 +235,69 @@ extension MyPACVC: UITableViewDataSource{
         
         
         iv_item.contentMode = .ScaleAspectFit
-        iv_item.sd_setImageWithURL(NSURL.init(string: (self.myPACDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "pac_listing_no_preview"))
+        
+        if self.myPACDetailArr[indexPath.row]["imgUrl"] != nil {
+            iv_item.sd_setImageWithURL(NSURL.init(string: (self.myPACDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "pac_listing_no_preview"))
+        }
+        
+        
         
         
         // Accessing the Name (First n Last)
-        
-        let createdByArr = self.myPACDetailArr[indexPath.row].valueForKey("createdBy")
+        let createdByArr = (self.myPACDetailArr[indexPath.row] as [String: AnyObject])["createdBy"]
+//        let createdByArr = self.myPACDetailArr[indexPath.row].valueForKey("createdBy")
         let firstNameArr = createdByArr!["firstName"] as? [String]
-        let firstName = firstNameArr![0]
+       
+        if firstNameArr != nil {
+           
+            
+            if firstNameArr![0].isEmpty == false  {
+                
+                let firstName = firstNameArr![0]
+                let lastNameArr = createdByArr!["lastName"] as? [String]
+                let lastName = lastNameArr![0]
+                let fullName = "by " + firstName + " " + lastName
+                lbl_by.text = fullName
+            }
+ 
+        }
         
-        let lastNameArr = createdByArr!["lastName"] as? [String]
-        let lastName = lastNameArr![0]
-        let fullName = "by " + firstName + " " + lastName
         
         
-        let dateStr = self.myPACDetailArr[indexPath.row]["createdDate"] as? String
-        let dateCreated = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "dd/MM/yyyy", dateStr: dateStr!)
-        let dateModifiedStr = self.myPACDetailArr[indexPath.row]["modifiedDate"] as? String
-        let dateModified = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MMM d, yyyy", dateStr: dateModifiedStr!)
+        var dateStr = ""
+        
+        if self.myPACDetailArr[indexPath.row]["createdDate"] != nil {
+            
+              dateStr = (self.myPACDetailArr[indexPath.row]["createdDate"] as? String)!
+            
+        }
+        
+        var dateModifiedStr = ""
+        
+        if self.myPACDetailArr[indexPath.row]["modifiedDate"] != nil {
+           dateModifiedStr = (self.myPACDetailArr[indexPath.row]["modifiedDate"] as? String)!
+        }
+       
+        let dateCreated = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "dd/MM/yyyy", dateStr: dateStr)
+        
+        let dateModified = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MMM d, yyyy", dateStr: dateModifiedStr)
         
         
-        let dataDict = self.myPACDetailArr[indexPath.row]["settings"] as? [String : AnyObject]
+        for (key, value) in self.myPACDetailArr[indexPath.row] as [String: AnyObject] {
+            print("Key : ", key)
+            print("value : ", value)
+        }
+        
+        
+        var dataDict : [String : AnyObject]?
+        if self.myPACDetailArr[indexPath.row]["settings"] != nil {
+            
+              dataDict = self.myPACDetailArr[indexPath.row]["settings"] as? [String : AnyObject]
+            
+        }
+        
+        
+       
         
         if(dataDict!["private"] as! Bool) {
             lbl_privacy.text = "Private"
@@ -239,13 +312,25 @@ extension MyPACVC: UITableViewDataSource{
         lbl_title.text = self.myPACDetailArr[indexPath.row]["name"] as? String
         lbl_desc.text = self.myPACDetailArr[indexPath.row]["description"] as? String
         lbl_createdAt.text = "Created \(dateCreated)"
-        lbl_by.text = fullName
+//        lbl_by.text = fullName
         lbl_activateTime.text = "Last Active \(dateModified)"
         
         let distance = self.myPACDetailArr[indexPath.row]["dist"] as! Int
         lbl_distance.text = "\(distance) Miles"
-        print(self.myPACDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String)
+        print(self.myPACDetailArr[indexPath.row]["createdBy"]!["firstName"] as? String)
 
+        
+        //Pagination api hit
+//        if (indexPath.row == self.myPACDetailArr.count - 1) {
+//            
+//            //  if self.resultSize > self.myPACDetailArr.count {
+//            
+//          //  fetchMyPACDataFromServer(self.createJoinStatus)
+//            
+//            //  }
+//            
+//        }
+        
         return cell
     }
     
@@ -297,6 +382,39 @@ extension MyPACVC:  UITableViewDelegate{
         self.navigationController?.pushViewController(containerObj, animated: true)
         
     }
+    
+    
+        func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    
+            let offset = aScrollView.contentOffset
+            let bounds = aScrollView.bounds
+            let size = aScrollView.contentSize
+            let inset = aScrollView.contentInset
+            let y: Float = Float(offset.y) + Float(bounds.size.height) - Float(inset.bottom)
+            let h: Float = Float(size.height)
+            let reload_distance: Float = 50
+            
+            if y > h + reload_distance {
+                print("load more data")
+                tableViewMyPAC.tableFooterView!.hidden = false
+                fetchMyPACDataFromServer(self.createJoinStatus)
+                spinner.startAnimating()
+            }
+            else{
+                 spinner.stopAnimating()
+                 tableViewMyPAC.tableFooterView!.hidden = true
+                
+            }
+        }
+    
+    
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let v = UIView()
+      
+        return v
+    }
+    
+    
     
 }
 
