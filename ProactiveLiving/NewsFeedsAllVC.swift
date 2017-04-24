@@ -78,14 +78,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             self.btnPost.hidden = true
 
         }
-        
+       
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
-        self.collectionView.keyboardDismissMode = .OnDrag
+        //self.collectionView.keyboardDismissMode = .OnDrag
         //self.hideKeyboardWhenTappedAround()
 
-        self.setupGrowingTextView()
+       // self.setupGrowingTextView()
         
         
         //self.fetchPostDataFromServer()
@@ -120,9 +120,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         textView.placeholder = "Share an update"
         textView.autoresizingMask = .FlexibleHeight
         postContainerView.addSubview(textView)
+        postContainerView.backgroundColor = UIColor.redColor()
+        print_debug(textView.frame)
+        
         self.view.layoutIfNeeded()
-
-        //self.view.addSubview(containerView)
+        self.view.bringSubviewToFront(textView)
         //textView.animateHeightChange = NO; //turns off animation
         
     }
@@ -148,6 +150,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.attachmentViewS.hidden = true
         IQKeyboardManager.sharedManager().enable = false
         
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.setupGrowingTextView()
+
     }
 
     
@@ -1471,7 +1479,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
         }
         
+        print_debug("valesssss")
 
+        print_debug(dict)
         //shared by name
         if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
             
@@ -1563,7 +1573,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         lbl_details.text =  dict["text"] as? String
         // will display Organisation name
-        lbl_subDetails.text = ""
+        if self.collectionView.tag ==  6666  {
+          lbl_subDetails.text = "hello"
+        }
+        else{
+          lbl_subDetails.text = ""
+        }
+        
+
         
         btn_like.selected = false
         
