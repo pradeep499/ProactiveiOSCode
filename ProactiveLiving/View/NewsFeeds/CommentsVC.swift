@@ -9,6 +9,16 @@
 import UIKit
 import MediaPlayer
 
+
+//protocol CommentsVCDelegate {
+//    
+//    
+//    func didFinishUpload(flag:Bool)
+//    
+//    
+//}
+
+
 class CommentsVC: UIViewController, UITextViewDelegate {
 
     
@@ -34,6 +44,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     var selectedCommentDict = [String:AnyObject]()
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerViewController()
+  //  var delegate:CommentsVCDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -514,6 +525,10 @@ class CommentsVC: UIViewController, UITextViewDelegate {
                 print(" response = ", resultDict)
                 
                 self.commentsArr = resultDict["comments"] as! [AnyObject]
+                
+                
+              //  self.delegate?.didFinishUpload(true)
+                
                 
                 self.table_view.reloadData()
                 //self.table_view.setOffsetToBottom(true)

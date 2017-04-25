@@ -247,6 +247,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         delay(1.0, closure: {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
+            chatMainObj.fromVC = self
             chatMainObj.isFromClass="Recent"
             chatMainObj.isFromDeatilScreen = "0"
             chatMainObj.recentChatObj=recentObj

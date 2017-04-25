@@ -107,7 +107,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     
 //    let bottomTabBar = self.tabBarController
     
-    
+    //added
+    var fromVC: ChatHomeVC?
    
     
     func receiveMessages(note:NSNotification) {
@@ -729,6 +730,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        
+        fromVC?.hidesBottomBarWhenPushed = false
+        
+        
         
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
             //print(finish)

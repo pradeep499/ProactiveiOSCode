@@ -91,6 +91,7 @@
 #define ServiceDeleteNewsFeed           @"deleteNewsFeed"
 #define ServiceGetAllMeetupInvite       @"getAllMeetupInvite"
 #define ServiceGetDetailMeetupInvite    @"getDetailMeetupInvite"
+#define ServiceCommentsData             @"getNewsFeedById"
 
 #define ServiceRequestOTP               @"users/requestOTP"
 #define ServiceChangeMobile             @"users/changeMobile"
