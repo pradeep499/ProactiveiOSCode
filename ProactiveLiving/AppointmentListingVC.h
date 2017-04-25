@@ -13,5 +13,8 @@
 @property (nonatomic,copy)NSMutableArray *arrEvents;
 @property (nonatomic,copy)NSDate *selectedRecurrenceDate;
 @property (copy, nonatomic)  NSString *fromScreenFlag;
+@property (copy, nonatomic)  NSString *pacID;
+
+@property BOOL updateData;
 
 @end

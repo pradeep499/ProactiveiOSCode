@@ -54,28 +54,43 @@
     appointVC1 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC1.title = @"ALL";
     appointVC1.appointmnetType=@"";
+    appointVC1.updateData = self.recordNotFound;
     appointVC1.arrEvents=self.arrEvents;
     appointVC1.selectedRecurrenceDate = self.selectedRecurrenceDate;
     appointVC1.fromScreenFlag = self.fromScreenFlag;
+    appointVC1.pacID = self.pacID;
     
     appointVC2 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC2.title = @"APPOINTMENTS";
     appointVC2.appointmnetType=@"appointment";
+    appointVC2.updateData = self.recordNotFound;
+
     appointVC2.fromScreenFlag = self.fromScreenFlag;
+    appointVC2.pacID = self.pacID;
+
 
     appointVC3 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC3.title = @"MEET UPS";
     appointVC3.appointmnetType=@"meetup";
+    appointVC3.updateData = self.recordNotFound;
+    appointVC3.pacID = self.pacID;
+
     appointVC3.fromScreenFlag = self.fromScreenFlag;
 
     appointVC4 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC4.title = @"WEB INVITES";
     appointVC4.appointmnetType=@"webinvite";
+    appointVC4.updateData = self.recordNotFound;
+    appointVC4.pacID = self.pacID;
+
     appointVC4.fromScreenFlag = self.fromScreenFlag;
 
     appointVC8 = [storyboard instantiateViewControllerWithIdentifier:@"AppointmentListingVC"];
     appointVC8.title = @"OTHERS";
     appointVC8.appointmnetType=@"other";
+    appointVC8 .updateData = self.recordNotFound;
+    appointVC8.pacID = self.pacID;
+
     appointVC8.fromScreenFlag = self.fromScreenFlag;
 
     
