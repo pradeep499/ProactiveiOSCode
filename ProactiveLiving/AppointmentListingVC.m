@@ -22,6 +22,7 @@
 @property (assign, atomic)int positionOfSelectedDate;
 
 
+
 @end
 
 @implementation AppointmentListingVC
@@ -54,6 +55,15 @@
         [parameters setValue:[AppHelper userDefaultsForKey:uId] forKey:@"UserID"];
         [parameters setObject:self.appointmnetType forKey:@"type"];
         [parameters setObject:self.fromScreenFlag forKey:@"calendarType"];
+        
+        if([self.fromScreenFlag isEqualToString:@"pac"]) {
+            [parameters setValue:@"pac" forKey:@"calendarType"];
+            [parameters setValue:self.pacID forKey:@"pacId"];
+        }
+        else {
+            [parameters setValue:@"private" forKey:@"calendarType"];
+        }
+
 
         //call global web service class
         [Services serviceCallWithPath:ServiceGetAppointmentList withParam:parameters success:^(NSDictionary *responseDict)

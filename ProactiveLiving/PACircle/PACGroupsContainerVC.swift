@@ -37,7 +37,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var popoverWidth:CGFloat = 150
     var popoverHeight:CGFloat = 200
     var popOverCellData = [String]()
-    
+    var packRole = [String:AnyObject]()
     
     
     override func viewDidLoad() {
@@ -85,6 +85,12 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
                         print(responseDict)
+                        self.packRole = responseDict as! [String:AnyObject]
+                        self.firstVC.dictValuePacRole = self.packRole;
+                        self.secondVC.dictValuePacRole = self.packRole;
+                        self.thirdVC.dictValuePacRole = self.packRole;
+
+
                         self.creatorStatus = responseDict["result"]!["creatorStatus"] as! Bool
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
                         self.adminStatus = responseDict["result"]!["adminStatus"] as! Bool
@@ -99,13 +105,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                         
                         if(self.memberStatus == false) {
                             self.btnRight.hidden = true
-                            if(self.isPrivate == true) {
                                 self.btnOpenCalender.hidden = true
                             }
-                            else {
-                                self.btnOpenCalender.hidden = false
-                            }
-                        }
                         else {
                             self.btnRight.hidden = false
                             
@@ -264,17 +265,20 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
             self.fetchDataForPACRole()
             self.btnRight.hidden = false
             //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
+            //self.thirdVC.dictValuePacRole = self.packRole;
             
         }
         else if index == 1 {
             self.fetchDataForPACRole()
             self.btnRight.hidden = false
             //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
+            //self.secondVC.dictValuePacRole = self.packRole;
             
         }
         else if index == 2 {
             //self.fetchDataForPACRole()
             self.btnRight.hidden = true
+            self.firstVC.dictValuePacRole = packRole;
             //self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
 
         }
@@ -296,6 +300,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         objCalendarVC.allowToCreateWebinvite = self.allowToCreateWebinvite
         objCalendarVC.pacID = self.pacID
         objCalendarVC.arrPACMembers = self.arrPACMembers1
+        print_debug(objCalendarVC.arrPACMembers)
         self.navigationController?.pushViewController(objCalendarVC, animated: true)
     }
     

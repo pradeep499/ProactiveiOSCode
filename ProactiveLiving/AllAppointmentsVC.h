@@ -17,4 +17,7 @@
 @property (nonatomic, assign) BOOL allowToCreateMeetup;
 @property (nonatomic, assign) BOOL allowToCreateWebinvite;
 @property (nonatomic, copy) NSArray *arrPACMembers;
+@property (nonatomic, assign) BOOL allowListingService;
+@property  BOOL recordNotFound;
+
 @end

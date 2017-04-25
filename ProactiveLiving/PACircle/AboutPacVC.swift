@@ -21,6 +21,9 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     var responseDict = [NSObject : AnyObject]()
     var arrPACMembers = [[String : AnyObject]]()
     var isFromMoreDetail = false
+    var dictValuePacRole = [String:AnyObject]()
+    
+
     @IBOutlet weak var btnLike: UIButton!
     @IBOutlet weak var lblLikes: UILabel!
     @IBOutlet weak var btnInvite: UIButton!

@@ -22,7 +22,8 @@ class ResourcesPACVC: UIViewController {
     var isHidden = true
     var isFromMoreDetail = false
     var pacID = ""
-    
+    var dictValuePacRole = [String:AnyObject]()
+
     var indexToDelete = Int()
     
 // MARK:- View Life Cycle
@@ -211,6 +212,7 @@ class ResourcesPACVC: UIViewController {
                             noDataImage  = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-500, width: 320, height: 153))
                             noDataImage.image = UIImage(named:"private_user_texticon")
                             self.view.addSubview(noDataImage)
+                            self.tableViewResource.hidden = true
 
                             }
                          

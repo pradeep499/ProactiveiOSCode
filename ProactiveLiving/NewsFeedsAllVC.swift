@@ -39,6 +39,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     var isBackFromChildVC:Bool!
     
+
 //    var newsFeedIndex = 0  // index for All Section
 //    var postFriendsIndex = 0 // index for Friends Section
 //    var postColleagueIndex = 0 // index for Collegues Section
@@ -49,6 +50,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
       var indexForCommentcount = -1  // 25 April
       var newsFeedID = ""
     
+
+    
+    var dictValuePacRole = [String:AnyObject]()
+    
+    
+
     
     
     @IBOutlet weak var layoutConstHeightShareView: NSLayoutConstraint!
@@ -90,14 +97,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             self.btnPost.hidden = true
 
         }
-        
+       
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
-        self.collectionView.keyboardDismissMode = .OnDrag
+        //self.collectionView.keyboardDismissMode = .OnDrag
         //self.hideKeyboardWhenTappedAround()
 
-        self.setupGrowingTextView()
         
         
         //self.fetchPostDataFromServer()
@@ -132,9 +138,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         textView.placeholder = "Share an update"
         textView.autoresizingMask = .FlexibleHeight
         postContainerView.addSubview(textView)
+        postContainerView.backgroundColor = UIColor.redColor()
+        print_debug(textView.frame)
+        
         self.view.layoutIfNeeded()
-
-        //self.view.addSubview(containerView)
+        self.view.bringSubviewToFront(textView)
         //textView.animateHeightChange = NO; //turns off animation
         
     }
@@ -160,7 +168,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.attachmentViewS.hidden = true
         IQKeyboardManager.sharedManager().enable = false
         
+        print_debug("hellooo")
+        print_debug(dictValuePacRole)
+        
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.setupGrowingTextView()
+
+    }
+
 
     
     func setColectionViewTags()  {
@@ -1392,7 +1410,28 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             return self.postCircleArr.count
         }
         else if self.collectionView.tag ==  1000  {
+            if (dictValuePacRole.count > 0 ){
+            let settingsDict = dictValuePacRole["result"]!["settings"] as! [String : AnyObject]
+            
+            let isPrivate = settingsDict["private"] as! Bool
+            let  memberStatus = dictValuePacRole["result"]!["memberStatus"] as! Bool
+            
+            if(memberStatus == false) {
+                if(isPrivate == true) {
+                    var noDataImage : UIImageView
+                    noDataImage  = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-500, width: 320, height: 153))
+                    noDataImage.image = UIImage(named:"private_user_texticon")
+                    self.view.addSubview(noDataImage)
+                }
+                postContainerView.hidden = true
+            }
+            else{
+                postContainerView.hidden = false
+            }
+            }
+
             return self.pacWallArr.count
+
         }
         return 0
         
@@ -1401,7 +1440,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         var dict = NSDictionary()
-        
+        //textView.hidden = false
+
         if self.collectionView.tag ==  1111 {
             dict = self.postAllArr[indexPath.row ] as! [String:AnyObject]
         }
@@ -1419,6 +1459,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         else if self.collectionView.tag ==  1000  {
             dict = self.pacWallArr[indexPath.row ] as! [String:AnyObject]
+           
         }
         
         //cell type Text or image Or video
@@ -1513,7 +1554,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
         }
         
+        print_debug("valesssss")
 
+        print_debug(dict)
         //shared by name
         if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
             
@@ -1605,7 +1648,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         lbl_details.text =  dict["text"] as? String
         // will display Organisation name
-        lbl_subDetails.text = ""
+        if self.collectionView.tag ==  6666  {
+            let dictPAC = dict["pacId"] as! [String:AnyObject]
+          lbl_subDetails.text = dictPAC["name"] as? String
+        }
+        else{
+          lbl_subDetails.text = ""
+        }
+        
+
         
         btn_like.selected = false
         

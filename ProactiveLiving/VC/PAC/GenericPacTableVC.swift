@@ -25,12 +25,16 @@ class GenericPacTableVC: UIViewController {
     var strId = ""
     var spinner = UIActivityIndicatorView()
     var fromIndex = 0
-
+    var isSerrching = false
+    var searchText = ""
+    var isFromFilter = false
+    var filterDic : [NSObject : AnyObject]?
+    
     
 // MARK :- view life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchPACsDataFromServer(["data":"empty"], searchStr: "")  // service call
+        fetchPACsDataFromServer(["data":"empty"], searchStr: "",index:0)  // service call
 
         NSNotificationCenter.defaultCenter().removeObserver(self, name:NOTIFICATION_PAC_FILTER, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(fetchFilteredPACsData(_:)),name:NOTIFICATION_PAC_FILTER, object:nil)
@@ -54,12 +58,17 @@ class GenericPacTableVC: UIViewController {
     
     func fetchFilteredPACsData(notifData : NSNotification) {
         if(notifData.userInfo != nil) {
-        fetchPACsDataFromServer(notifData.userInfo!, searchStr: "")  // service call
+            fetchPACsDataFromServer(notifData.userInfo!, searchStr: "",index:0)// service call
+            self.filterDic = notifData.userInfo!
+            isFromFilter = true
+            
         }
     }
     
     //MARK:- Service Hit
-    func fetchPACsDataFromServer(filterDict : [NSObject : AnyObject], searchStr : String) {
+    func fetchPACsDataFromServer(filterDict : [NSObject : AnyObject], searchStr : String, index:Int) {
+        
+        
         
         if AppDelegate.checkInternetConnection() {
             isPostServiceCalled = true
@@ -70,7 +79,11 @@ class GenericPacTableVC: UIViewController {
             var parameters = [String: AnyObject]()
             var serviceURL = ""
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
-            parameters["index"] = self.fromIndex
+            parameters["index"] = index
+            
+            if (index == 0){
+                pacDetailArr.removeAll()
+            }
             
             // Filter applied when coming from User's Profile
             if isForMemberProfile == true {
@@ -82,18 +95,41 @@ class GenericPacTableVC: UIViewController {
                 
                 serviceURL = ServiceGetMyPAC
 
-                if(searchStr.characters.count > 0) { // For main search
+                if(searchStr.characters.count > 0 && !(searchStr == "cancel")) { // For main search
                     parameters["search"] = searchStr
+                  //  parameters["index"] = 0
+                    
+
                 }
                 else if(filterDict["data"] as! String != "empty") { // For main filter
-                    parameters["filter"] = filterDict
+                     parameters["filter"] = filterDict
+                    // parameters["index"] = 0
+                    
+                }
+                else if (searchStr == "cancel") {
+                     pacDetailArr.removeAll()
+                    parameters["categoryId"] = strId
+                   // parameters["index"] = 0
+                    }
+                else if (self.isSerrching == true) {
+                   // parameters["index"] = 0
+                    parameters["search"] = searchStr
+                    
                 }
                 else { // Main Data API
+                    
+                    if (self.isSerrching == false){
+                    
                     parameters["categoryId"] = strId
+                        
+                 }
+                    
                 }
 
             }
         
+         
+            
             //call global web service class latest
             Services.postRequest(serviceURL, parameters: parameters, completionHandler:{
                 (status,responseDict) in
@@ -309,8 +345,17 @@ extension GenericPacTableVC:  UITableViewDelegate{
             print("load more data")
             tv_generic.tableFooterView!.hidden = false
            // fetchMyPACDataFromServer(self.createJoinStatus)
+            if isSerrching{
+                fetchPACsDataFromServer(["data":"empty"], searchStr:self.searchText,index:pacDetailArr.count)
+ 
+            }
+            else if isFromFilter {
+                fetchPACsDataFromServer(self.filterDic!, searchStr: "",index:pacDetailArr.count)// filter service call
+            }
+            else {
+            fetchPACsDataFromServer(["data":"empty"], searchStr: "",index:pacDetailArr.count)  // search service call
             
-            fetchPACsDataFromServer(["data":"empty"], searchStr: "")
+            }
             spinner.startAnimating()
         }
         else{

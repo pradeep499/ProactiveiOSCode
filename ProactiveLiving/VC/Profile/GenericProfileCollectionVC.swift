@@ -221,7 +221,17 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             //self.photoListArr.removeAll()
          //     self.photoListArr = self.tempPhotoListArr
         }
-        self.cv.reloadData()
+        
+        
+        var  index = 0
+        for _ in photoListArr{
+            UIView.animateWithDuration(0.5, delay: 0.0, options: .TransitionNone, animations: {
+                let indexpath = NSIndexPath(forItem: index, inSection: 0)
+                self.cv.reloadItemsAtIndexPaths([indexpath])
+                index += 1
+
+                }, completion: nil)
+            }
         
     }
     
@@ -308,6 +318,15 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         self.photoListArr.append(dict)
         self.cv.reloadData()
     }
+    
+    
+    
+    
+    func removeElementFromArr(item:Int){
+        
+    self.photoListArr.removeAtIndex(item)
+
+    }
     //MARK:- API
     
     
@@ -318,8 +337,6 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
-           // parameters["AppKey"] = AppKey
-            
             
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
@@ -337,8 +354,16 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        self.photoListArr.removeAtIndex((self.indexToDelete.item))
-                        self.cv.reloadData()
+                      //  self.photoListArr.removeAtIndex((self.indexToDelete.item))
+                        //self.cv.reloadData()
+                       self.cv.performBatchUpdates({
+                        
+                        self.removeElementFromArr(self.indexToDelete.item)
+                        self.cv.deleteItemsAtIndexPaths([self.indexToDelete])
+                        
+                        }, completion: nil)
+                        
+            
                         
                     } else {
                         
@@ -720,7 +745,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         
         
         //check the thumbNail name is exist ? or generate from video url and save to db
-        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        /*let qualityOfServiceClass = QOS_CLASS_BACKGROUND
         let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
         dispatch_async(backgroundQueue, {
             print("This is run on the background queue")
@@ -728,7 +753,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 print("This is run on the main queue, after the previous code in outer block")
             })
-        })
+        })*/
         
         HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
             
@@ -757,7 +782,9 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                     cell.thumbIV.sd_setImageWithURL(NSURL(string: imgUrl!), placeholderImage: UIImage(named:  "pac_listing_no_preview")) {
                         (img,  err,  cacheType,  imgUrl) -> Void in
                         
-                        cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                        cell.thumbIV.image = img
+                            
+                            ///CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
                         //cell.thumbIV.sd_setImageWithURL(imgUrl!, placeholderImage : UIImage(named: "pac_listing_no_preview") )
 
                         cell.indicator.hidden = true

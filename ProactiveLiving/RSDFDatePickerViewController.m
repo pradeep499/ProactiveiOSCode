@@ -52,6 +52,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSwitchView;
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 
+@property BOOL recordNotFound;
+
 @end
 
 @implementation RSDFDatePickerViewController{
@@ -178,6 +180,8 @@ type = 3 for yeary basis
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _recordNotFound = false;
+
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getAppointmentListingData];
   
@@ -412,6 +416,7 @@ type = 3 for yeary basis
                                           vc.fromScreenFlag = @"PAC";
                                           vc.pacID = self.pacID;
                                           vc.arrPACMembers = self.arrPACMembers;
+                                          NSLog(@"arrPACMembers %@",self.arrPACMembers);
                                       }
                                       else {
                                           vc.fromScreenFlag = @"private";
@@ -503,6 +508,7 @@ type = 3 for yeary basis
         if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
             vc.fromScreenFlag = @"pac";
             vc.pacID = self.pacID;
+            vc.recordNotFound = self.recordNotFound;
             vc.allowToCreateMeetup = self.allowToCreateMeetup;
             vc.allowToCreateWebinvite = self.allowToCreateWebinvite;
             vc.arrPACMembers = self.arrPACMembers;
@@ -555,6 +561,9 @@ type = 3 for yeary basis
         [Services serviceCallWithPath:ServiceGetAppointmentList withParam:parameters success:^(NSDictionary *responseDict)
          {
              [AppDelegate dismissProgressHUD];
+             
+             
+             NSLog(@" valusfro appoint mnt6 %@" , responseDict);
              
              if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
              {
@@ -665,6 +674,8 @@ type = 3 for yeary basis
                  else
                  {
                      //[AppHelper showAlertWithTitle:[responseDict objectForKey:@"errorMsg"] message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
+                     _recordNotFound = true;
+                     
                  }
                  
              }
