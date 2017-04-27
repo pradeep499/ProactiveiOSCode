@@ -95,6 +95,11 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         }
 
         self.listenerUpdateMeetUpOrWebInvite()
+        
+        
+       
+        print("LATLONG App\(AppHelper.userDefaultsForKey("location"))")
+        
 
     }
     
@@ -925,16 +930,36 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             //https://www.google.com/maps/preview/@-15.623037,18.388672,8z
             
             
+           // let userDefaultLoc = AppHelper.userDefaultsForKey("location") as! [Double]
+            let userDefaultLoc = AppHelper.userDefaultsForKey("location") as! [Double]
+            let lat = userDefaultLoc[1]
+            let long = userDefaultLoc[0]
+            
+            
+            
             let latlong = self.dataDict["latlong"] as! String
             
             let arrLatLong = latlong.componentsSeparatedByString(",") 
-            let start = CLLocationCoordinate2D(latitude: 34.621654, longitude: -118.41397)
+            //let start = CLLocationCoordinate2D(latitude: 34.621654, longitude: -118.41397)
+            let start = CLLocationCoordinate2D(latitude: lat, longitude: long)
             let end = CLLocationCoordinate2D(latitude: Double(arrLatLong[0])!, longitude: Double(arrLatLong[1])!)
             
             let googleMapsURLString = "http://maps.google.com/?saddr=\(start.latitude),\(start.longitude)&daddr=\(end.latitude),\(end.longitude)"
-            UIApplication.sharedApplication().openURL(NSURL(string: googleMapsURLString)!)
+            
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.title =  self.dataDict["title"] as? String
+            
+            if googleMapsURLString != "" {
+                WebVC.urlStr = googleMapsURLString
+                self.navigationController?.pushViewController(WebVC, animated: true)
+            }
+            
+           // UIApplication.sharedApplication().openURL(NSURL(string: googleMapsURLString)!)
             
         }
+            
+            
+            
         else {
             
             var url : String!
@@ -948,7 +973,18 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                 url = "http://" + (self.dataDict["webLink"] as! String)
             }
             
-            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+            
+            
+            let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+            WebVC.title =  self.dataDict["title"] as? String
+           
+            if url != nil {
+                WebVC.urlStr = url!
+                self.navigationController?.pushViewController(WebVC, animated: true)
+            }
+            
+            
+           // UIApplication.sharedApplication().openURL(NSURL(string: url)!)
 
         }
         

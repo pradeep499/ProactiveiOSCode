@@ -230,6 +230,19 @@ class MeetUpsListingVC: UIViewController {
         return height
     }
     
+    // By me 
+    func daySuffix(from date: NSDate) -> String {
+        let calendar = NSCalendar.currentCalendar()
+        let dayOfMonth = calendar.component(.Day, fromDate: date)
+        switch dayOfMonth {
+        case 1, 21, 31: return "st"
+        case 2, 22: return "nd"
+        case 3, 23: return "rd"
+        default: return "th"
+        }
+    }
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = self.tableView.dequeueReusableCellWithIdentifier("CellMeetUps", forIndexPath: indexPath) as! MeetUpListingCell
@@ -287,32 +300,43 @@ class MeetUpsListingVC: UIViewController {
         
         if let dateStr =  self.arrData[indexPath.row]["eventDate"] as? String {
             
-            let eventDate = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE MMM d ",  dateStr: dateStr)
-            if let eventTime =   self.arrData[indexPath.row]["eventStartTime"] as? String{
-                
-                //HH
-                let tempEvetDateStr =  HelpingClass.convertDateFormat("EEE MMM d HH:mm a", desireFormat: "EEE MMM d HH:mm",  dateStr: eventDate + eventTime)
-                
-                if tempEvetDateStr != "" {
-                    
-                    lbl_eventDate.text = String(tempEvetDateStr).capitalizedString
-                }else{
-                    //hh 
-                    lbl_eventDate.text = String(HelpingClass.convertDateFormat("EEE MMM d hh:mm a", desireFormat: "EEE MMM d HH:mm",  dateStr: eventDate + eventTime)).capitalizedString
-                }
-                            
-              
-            }else{
-                
-                lbl_eventDate.text = eventDate
-            }
+ //           let eventDate = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE MMM d ",  dateStr: dateStr)
+//            if let eventTime =   self.arrData[indexPath.row]["eventStartTime"] as? String{
+//                
+//                //HH
+//                let tempEvetDateStr =  HelpingClass.convertDateFormat("EEE MMM d HH:mm a", desireFormat: "EEE MMM d HH:mm",  dateStr: eventDate + eventTime)
+//                
+//                if tempEvetDateStr != "" {
+//                    
+//                    lbl_eventDate.text = String(tempEvetDateStr).capitalizedString
+//                }else{
+//                    //hh 
+//                    lbl_eventDate.text = String(HelpingClass.convertDateFormat("EEE MMM d hh:mm a", desireFormat: "EEE MMM d HH:mm",  dateStr: eventDate + eventTime)).capitalizedString
+//                }
+//                            
+//              
+//            }else{
+//                
+//                lbl_eventDate.text = eventDate
+//            }
             
+            
+            let df = NSDateFormatter.init()
+            df.dateFormat = "dd/MM/yyyy"
+            let dayTH = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE, d",  dateStr: dateStr)
+            
+            let date = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: " MMM",  dateStr: dateStr)
+            
+            let eventDate = dayTH + self.daySuffix(from:df.dateFromString(dateStr)! ) + date
+            
+            lbl_eventDate.text = eventDate
+            
+             if let eventTime =   self.arrData[indexPath.row]["eventStartTime"] as? String{
+                 lbl_eventDate.text = eventDate + "  " + eventTime
+            }
             
         }
         
-        
-        
-         
         
         //lblLink.text = (self.arrData[indexPath.row]["links"] as! Array).joinWithSeparator(",")
         //lblPhone.text = self.arrData[indexPath.row]["dialInNumber"] as? String

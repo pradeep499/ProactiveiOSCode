@@ -35,25 +35,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerViewController()
     var globalAssets: [DKAsset]?
+    
+    var imgaeProfile  = UIImage(named: "ic_booking_profilepic")
+    
  //   var isFromGallery:Bool!
     
-    var isBackFromChildVC:Bool!
-    
-
-//    var newsFeedIndex = 0  // index for All Section
-//    var postFriendsIndex = 0 // index for Friends Section
-//    var postColleagueIndex = 0 // index for Collegues Section
-//    var postHealthClubIndex = 0 // index for Health Section
-//    var pacCircleIndex = 0 // index for PAC Section
-//    var pacWallIndex = 0
-    
+      var isBackFromChildVC:Bool!
       var indexForCommentcount = -1  // 25 April
       var newsFeedID = ""
-    
-
-    
-    var dictValuePacRole = [String:AnyObject]()
-    
+      var dictValuePacRole = [String:AnyObject]()
+    //  var isFromCommentVC = false   // used for service hit on the basic of bool value. true if comments has some value
     
 
     
@@ -114,6 +105,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 
     }
     
+    //MARK:- CommentsVCDelegate
+//    
+//    
+//    func didFinishUpload(flag: Bool) {
+//        
+//        self.isFromCommentVC = flag
+//        
+//    }
+    
+    
     //MARK:- Growing TextView mthods
     func setupGrowingTextView() {
         
@@ -138,7 +139,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         textView.placeholder = "Share an update"
         textView.autoresizingMask = .FlexibleHeight
         postContainerView.addSubview(textView)
-        postContainerView.backgroundColor = UIColor.redColor()
         print_debug(textView.frame)
         
         self.view.layoutIfNeeded()
@@ -162,8 +162,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         //super.viewWillAppear(animated)
         if self.title != "EXPLORE" {
+            
+            self.postCircleArr.removeAllObjects()
+            self.collectionView.reloadData()
             self.getAllPostEvent()
             self.getLikeUpdate()
+            
         }
         self.attachmentViewS.hidden = true
         IQKeyboardManager.sharedManager().enable = false
@@ -252,10 +256,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 //        self.setColectionViewTags()
 //        self.fetchScreenData()
         
-        
-     // func CommentsVCDelegate
-        
-        if self.indexForCommentcount >= 0 {
+        if self.indexForCommentcount >= 0 { //  if self.indexForCommentcount >= 0 && self.isFromCommentVC {
             self.fetchCommentDataFromServer()
         }
         else {
@@ -370,7 +371,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let buttonPosition = sender.convertPoint(CGPointZero, toView: self.collectionView)
         let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
         if indexPath != nil {
-                        
+            
+            
+           // self.isFromCommentVC = false
             if self.collectionView.tag ==  1111 {
                 resultData = self.postAllArr[indexPath!.row ] as! [String:AnyObject]
                 self.indexForCommentcount = indexPath!.row
@@ -396,7 +399,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             else if self.collectionView.tag ==  6666 {
                 resultData = self.postCircleArr[indexPath!.row ] as! [String:AnyObject]
-                self.indexForCommentcount = indexPath!.row
+                //self.indexForCommentcount = indexPath!.row
+                self.indexForCommentcount = -1 // since we dont want to hit "fetchCommentDataFromServer" service
                 self.newsFeedID = resultData["_id"] as! String
             }
             else if self.collectionView.tag ==  1000 {
@@ -1554,9 +1558,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
         }
         
-        print_debug("valesssss")
-
-        print_debug(dict)
+        
         //shared by name
         if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
             
@@ -1599,6 +1601,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         //shared by profile image
+        iv_profile.image = UIImage(named: "ic_booking_profilepic")
         if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("sharedBy.imgUrl") as? String    {
             
             let image_url = NSURL(string: logoUrlStr )
@@ -1610,6 +1613,22 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
         }else{
              //Posted by profile image
+            let placeholder = UIImage(named: "ic_booking_profilepic")
+
+            if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
+                
+                let ulrRequet = NSURLRequest(URL: NSURL(string: logoUrlStr)!)
+            iv_profile.setImageWithURLRequest(ulrRequet, placeholderImage: placeholder, success: { [weak cell] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
+                
+                
+                }, failure: { [weak cell]
+                    (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
+                    
+                    
+                })
+             }
+        
+            
             if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
                 
                 let image_url = NSURL(string: logoUrlStr )
@@ -2059,8 +2078,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             else if self.collectionView.tag ==  1000 {
                                 //self.pacWallArr = NSMutableArray.init(array: resultArr)
                                 self.pacWallArr.replaceObjectAtIndex(self.indexForCommentcount, withObject: resultDict)
-
-                                
+      
                             }
                             
                             self.collectionView.reloadData()

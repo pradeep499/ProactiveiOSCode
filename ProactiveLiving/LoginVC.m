@@ -388,6 +388,10 @@
                             [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"firstName"] key:userFirstName];
                             [ChatHelper saveToUserDefault:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"lastName"] key:userLastName];
                             
+                           
+                            
+                            [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"location"] withKey:@"location"];
+
 
                             if ([[self.detailDictionary objectForKey:@"result"] valueForKey:@"imgUrl"]) {
                                 [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"imgUrl"] withKey:@"user_imageUrl"];
@@ -396,7 +400,8 @@
                             
                             
                             [AppHelper saveToUserDefaults:[[self.detailDictionary objectForKey:@"result"] valueForKey:@"firstName"] withKey:@"user_firstName"];
-                            
+                           
+                                                        
                             [AppHelper saveToUserDefaults:[self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] withKey:pwd];
                             [AppHelper saveToUserDefaults:[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] withKey:cellNum];
                             
