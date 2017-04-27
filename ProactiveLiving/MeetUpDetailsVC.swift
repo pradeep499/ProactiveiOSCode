@@ -278,6 +278,25 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             cell.selectionStyle = .None
             cell.lblName.text=self.dataDict["title"] as? String
             
+            cell.imgProfile.layer.borderWidth = 1.0
+            cell.imgProfile.contentMode = .ScaleAspectFill
+            cell.imgProfile.backgroundColor = UIColor.whiteColor()
+            cell.imgProfile.layer.masksToBounds = false
+            cell.imgProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
+            cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height/2
+            cell.imgProfile.clipsToBounds = true
+
+            
+            let dict = self.dataDict["createdBy"] as! [String:AnyObject]
+            if let imageUrlStr = dict["imgUrl"] as? String {
+                let image_url = NSURL(string: imageUrlStr)
+                if (image_url != nil) {
+                    let placeholder = UIImage(named: "no_photo")
+                    cell.imgProfile.sd_setImageWithURL(image_url, placeholderImage: placeholder)
+                }
+            }
+
+            
             cell.lblCreatedBy.text="by \(self.dataDict["createdBy"]!["firstName"] as! String)" + "  \(self.dataDict["createdBy"]!["lastName"] as! String)"
             
             if(!(self.fwBy == ""))
@@ -547,9 +566,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     func updateCurrentView() {
         
         self.screenTitle.text = self.dataDict["title"] as? String
-        self.btnLink.setTitle((self.dataDict["webLink"] as! String), forState: .Normal)
-        self.btnDialUp.setTitle((self.dataDict["dialInNumber"] as! String), forState: .Normal)
-        
+       // self.btnLink.setTitle((self.dataDict["webLink"] as! String), forState: .Normal)
+        //self.btnDialUp.setTitle((self.dataDict["dialInNumber"] as! String), forState: .Normal)
+        //let dict = self.dataDict["createdBy"] as! [String:]
         if let imageUrlStr = self.dataDict["imgUrl"] as? String {
             let image_url = NSURL(string: imageUrlStr)
             if (image_url != nil) {
@@ -1060,7 +1079,7 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
             let image_url = NSURL(string: imageUrlStr )
             if (image_url != nil) {
                 let placeholder = UIImage(named: "no_photo")
-                imgProfile.setImageWithURL(image_url, placeholderImage: placeholder)
+                imgProfile.sd_setImageWithURL(image_url, placeholderImage: placeholder)
                 lblName.text = dataDict["name"] as? String
 
             }

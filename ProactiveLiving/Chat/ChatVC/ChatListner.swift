@@ -94,6 +94,7 @@ func connectToSocket() -> Void{
                     print(weakself.isConnectionStable)
                     weakself.createOnline()
                     weakself.sendOffLineMessage()
+                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "getState", object: nil))
                 }
                 weakself.isTypingChatListener()
                 weakself.addReceiveMsgHandlers()
@@ -105,6 +106,7 @@ func connectToSocket() -> Void{
                 //weakself.doNotSleepListener()
                 
                 //to show connecting Status
+                
                 
             }
             

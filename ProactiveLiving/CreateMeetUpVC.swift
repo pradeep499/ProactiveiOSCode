@@ -7,6 +7,9 @@
 //
 
 import Foundation
+
+
+
 class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, TLTagsControlDelegate, GooglePlacesAutocompleteDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate  {
     
     @IBOutlet weak var txtFieldFor: CustomTextField!
@@ -59,6 +62,13 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             placeType: .Address
         )
         txtFieldWhereSecond.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
+
+        
+        //Date Picker
+        datePicker = UIDatePicker()
+        datePicker.datePickerMode = UIDatePickerMode.Date
+        datePicker.minimumDate = NSDate()
+        
 
         if(pushedFrom=="MEETUPS")
         {
@@ -125,7 +135,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             txtFieldFor.text = self.dataDict["for"] as? String
             let on = self.dataDict["eventDate"] as? String
         
-            txtFieldOn.text = HelpingClass.convertDateFormat("dd/MM/YYYY", desireFormat:"MM/dd/YYYY", dateStr: on!)
+            txtFieldOn.text = convert(time: on!, fromFormat: "dd/MM/yyyy", toFormat: "MM/dd/yyyy")
+            
+            
+            
             
             txtFieldAt.text = self.dataDict["eventStartTime"] as? String
             txtField_eventEndTime.text = self.dataDict["eventEndTime"] as? String
@@ -179,7 +192,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             txtFieldFor.text = self.dataDict["for"] as? String
             let on = self.dataDict["eventDate"] as? String
-            txtFieldOn.text = HelpingClass.convertDateFormat("dd/MM/YYYY", desireFormat:"MM/dd/YYYY", dateStr: on!)
+            
+            txtFieldOn.text = convert(time: on!, fromFormat: "dd/MM/yyyy", toFormat: "MM/dd/yyyy")
+
             
             txtFieldAt.text = self.dataDict["eventStartTime"] as? String
             txtField_eventEndTime.text = self.dataDict["eventEndTime"] as? String
@@ -218,8 +233,8 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         isForwardAllowed = switchAllowInvite.on
-
-        
+        txtField_eventEndTime.delegate = self
+        txtFieldAt.delegate = self
         txtFieldTitle.delegate=self
         self.tokenField.tagPlaceholder = "Add here";
         //self.tokenField.mode = TLTagsControlMode.Edit ;
@@ -254,10 +269,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         txtFieldFor.inputAccessoryView = toolBar
         
         
-        //Date Picker
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = UIDatePickerMode.Date
-        datePicker.minimumDate = NSDate()
+        
 
         let toolBar1 = UIToolbar()
         toolBar1.barStyle = UIBarStyle.Default
@@ -379,6 +391,22 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //MARK:- Btn Action
     
+    func convert(time time: String, fromFormat fromFormate:String, toFormat toFormate:String) -> String
+    {
+
+        let dateFormatter = NSDateFormatter()
+         dateFormatter.dateFormat = fromFormate
+        let date = dateFormatter.dateFromString(time)
+        
+        let dateFormatterNw = NSDateFormatter()
+        dateFormatterNw.dateFormat = toFormate
+        let result = dateFormatterNw.stringFromDate(date!)
+        
+        datePicker.minimumDate = dateFormatterNw.dateFromString(result)
+
+        return result
+    }
+    
     
     
     //MARK:- TLTagsControlDelegate
@@ -454,6 +482,33 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    
+    func toGetCurrentTime(selectedDate : NSDate){
+        
+        let date = NSDate()
+        let dateFormatter1 = NSDateFormatter()
+        dateFormatter1.dateFormat = "MM/dd/yyyy"
+        let currenStr = dateFormatter1.stringFromDate(date)
+        let selectedStr = dateFormatter1.stringFromDate(selectedDate)
+        let result = dateFormatter1.dateFromString(currenStr)?.compare(dateFormatter1.dateFromString(selectedStr)!)
+        
+        if result == NSComparisonResult.OrderedSame{
+            timePicker.minimumDate = NSDate()
+        }else{
+            let gregorian: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+            let currentDate: NSDate = NSDate()
+            let components: NSDateComponents = NSDateComponents()
+            components.year = -18
+            
+            let minDate: NSDate = gregorian.dateByAddingComponents(components, toDate: currentDate, options: NSCalendarOptions(rawValue: 0))!
+            timePicker.minimumDate = minDate
+
+            
+        }
+        
+    
+    }
+    
     func doneDatePicker() {
         
         
@@ -462,6 +517,16 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let selectedDate = dateFormatter1.stringFromDate(datePicker.date)
       
         self.txtFieldOn.text = selectedDate
+        toGetCurrentTime(datePicker.date)
+        
+        self.txtFieldAt.text = ""
+        
+        if !((pushedFrom=="MEETUPS") || (pushedFrom=="WEBINVITES")){
+            self.txtField_eventEndTime.text = ""
+
+        }
+
+        
         self.txtFieldOn.resignFirstResponder()
         print("done!")
     }
@@ -475,7 +540,13 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.txtFieldAt.text = selectedDate
         self.txtFieldAt.resignFirstResponder()
         
-        self.timePicker.minimumDate = timePicker.date
+       // self.timePicker.minimumDate = timePicker.date
+        
+        let calendar = NSCalendar.currentCalendar()
+        let date = calendar.dateByAddingUnit(.Minute, value: 59, toDate: timePicker.date, options: [])
+        self.txtField_eventEndTime.text = dateFormatter1.stringFromDate(date!)
+        
+        
         print("done!")
     }
     
@@ -483,18 +554,36 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         let dateFormatter1 = NSDateFormatter()
         dateFormatter1.dateFormat = "hh:mm a"
-        let selectedDate = dateFormatter1.stringFromDate(timePicker.date)
+        let selectedDateStr = dateFormatter1.stringFromDate(timePicker.date)
+        let selectedDate  = dateFormatter1.dateFromString(selectedDateStr)
+        let selectedDatePrevoius = dateFormatter1.dateFromString(self.txtFieldAt.text!)
         
-        self.txtField_eventEndTime.text = selectedDate
-        self.txtField_eventEndTime.resignFirstResponder()
+        let compareResult = selectedDatePrevoius!.compare(selectedDate!)
+        if compareResult == NSComparisonResult.OrderedAscending {
+            self.txtField_eventEndTime.text = selectedDateStr
+            self.txtField_eventEndTime.resignFirstResponder()
+            
+        }else{
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select time greater than Start At time.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+        }
         
-        self.timePicker.minimumDate = NSDate()
-        print("done!")
+        
+        
+        
+       
     }
     
     
     
     func textFieldDidBeginEditing(textField: UITextField) {
+        if textField == txtField_eventEndTime{
+            if (txtFieldAt.text?.characters.count == 0){
+            txtField_eventEndTime.resignFirstResponder()
+            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select first Start At time.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            }
+        }
+        print_debug(textField.description)
+
         activeTextField = textField
     }
     
