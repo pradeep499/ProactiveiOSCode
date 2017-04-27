@@ -390,6 +390,8 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         print("Section item lists:\((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!)")
         print("COUNT ROWS \((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)")
         
+        print("-----returning rows-  - ", ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1))
+        
         return  ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)
         
         
@@ -498,41 +500,41 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
         if (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type"))! as! String == "link" {
          
-         let cellLink = tv.dequeueReusableCellWithIdentifier("linkCell", forIndexPath: indexPath) as UITableViewCell
+            let cellLink = tv.dequeueReusableCellWithIdentifier("linkCell", forIndexPath: indexPath) as UITableViewCell
             
-         //cellLink.selectionStyle = .None
+            //cellLink.selectionStyle = .None
             
-         let txtViewLink = cellLink.viewWithTag(13) as! UITextView
-         
-         txtViewLink.text = self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("title") as? String
-         
-         return cellLink
+            let txtViewLink = cellLink.viewWithTag(13) as! UITextView
+            
+            txtViewLink.text = self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("title") as? String
+            
+            return cellLink
          
          
          }
         else if self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type") as? String == "attachment" {
          
-         let cellAttachment = tv.dequeueReusableCellWithIdentifier("attachmentCell", forIndexPath: indexPath) as UITableViewCell
-         
-         //cellAttachment.selectionStyle = .None
-  
-         let txtViewLink = cellAttachment.viewWithTag(15) as! UITextView
-         
-         txtViewLink.text = self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("title") as? String
-         
-         return cellAttachment
+            let cellAttachment = tv.dequeueReusableCellWithIdentifier("attachmentCell", forIndexPath: indexPath) as UITableViewCell
+            
+            //cellAttachment.selectionStyle = .None
+            
+            let txtViewLink = cellAttachment.viewWithTag(15) as! UITextView
+            
+            txtViewLink.text = self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("title") as? String
+            
+            return cellAttachment
          
          }
          
          else if self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type") as? String == "video" {
          
-         let cellVideo = tv.dequeueReusableCellWithIdentifier("videoCell", forIndexPath: indexPath) as UITableViewCell
-         
-        // cellVideo.selectionStyle = .None
-   
-         let videoLinkImage = cellVideo.viewWithTag(16) as! UIImageView
-          print("Image URL\((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!))")
-         videoLinkImage.sd_setImageWithURL(NSURL.init(string: (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!), placeholderImage: UIImage.init(named: "ic_instruction_video"))
+            let cellVideo = tv.dequeueReusableCellWithIdentifier("videoCell", forIndexPath: indexPath) as UITableViewCell
+            
+            // cellVideo.selectionStyle = .None
+            
+            let videoLinkImage = cellVideo.viewWithTag(16) as! UIImageView
+            print("Image URL\((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!))")
+            videoLinkImage.sd_setImageWithURL(NSURL.init(string: (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!), placeholderImage: UIImage.init(named: "ic_instruction_video"))
             
             
             // 8 th March
@@ -563,13 +565,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
                     
                 }
             }
-            
-            
-            
-            
-            
-         
-         return cellVideo
+            return cellVideo
          
          }
          

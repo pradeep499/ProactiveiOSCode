@@ -829,7 +829,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                                 let delay = 2.0
                                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                                     stopActivityIndicator(self.view)
-                                    self.navigationController?.popViewControllerAnimated(true)
+                               // self.navigationController?.popViewControllerAnimated(true)
+                                self.navigationController?.popToRootViewControllerAnimated(true)
+                                    
                                 })
                             }
                             else
@@ -860,7 +862,13 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         let delay = 2.0
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                             stopActivityIndicator(self.view)
-                            self.navigationController?.popViewControllerAnimated(true)
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+
+                            //self.navigationController?.popViewControllerAnimated(true)
+
+                            
+                          
+                            
                         })
                     }
                     else

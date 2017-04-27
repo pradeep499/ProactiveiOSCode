@@ -41,10 +41,10 @@
 //-------------************Service Call URLs **************-------------
 
 //Testing ULR
-#define BASE_URL @"http://192.168.1.40:3000/api/v1/"
+//#define BASE_URL @"http://192.168.1.40:3000/api/v1/"
 
 //LiveServer URL
-//#define BASE_URL @"http://52.23.211.77/api/v1/"
+#define BASE_URL @"http://52.23.211.77/api/v1/"
 
 //Production URL
 //#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
@@ -91,6 +91,7 @@
 #define ServiceDeleteNewsFeed           @"deleteNewsFeed"
 #define ServiceGetAllMeetupInvite       @"getAllMeetupInvite"
 #define ServiceGetDetailMeetupInvite    @"getDetailMeetupInvite"
+#define ServiceCommentsData             @"getNewsFeedById"
 
 #define ServiceRequestOTP               @"users/requestOTP"
 #define ServiceChangeMobile             @"users/changeMobile"
@@ -154,7 +155,8 @@
 #define userAddress                    @"address"
 #define uImage                         @"uImage"
 #define _ID                            @"userId"
-#define keyUserDetails                    @"userDetails"
+#define keyUserDetails                  @"userDetails"
+
 
 #define BookinTime                      @"BookinTime"
 #define SyncStatus                      @"SyncStatus"

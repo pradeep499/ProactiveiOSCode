@@ -114,11 +114,11 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.searchBar.alpha = 0.0;
+        self.searchBar.alpha = 0.0
         self.searchBar.resignFirstResponder()
         self.firstVC.fetchPACsDataFromServer(["data" : "empty"], searchStr: "cancel",index: 0)
         self.firstVC.isSerrching = false
-        
+        searchBar.text = ""
         
     }
     

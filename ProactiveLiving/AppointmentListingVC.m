@@ -232,7 +232,7 @@
 
                     MeetUpDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MeetUpDetailsVC"];
                     vc.dataDict = [responseDict objectForKey:@"result"];
-                    if([[responseDict objectForKey:@"type"] isEqualToString:@"meetup"])
+                    if([[responseDict[@"result"] objectForKey:@"type"] isEqualToString:@"meetup"])
                         vc.screenName = @"MEET UPS";
                     else
                         vc.screenName = @"WEB INVITES";

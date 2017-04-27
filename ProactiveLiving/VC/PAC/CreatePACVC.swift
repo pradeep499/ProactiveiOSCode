@@ -15,7 +15,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     //MARK:- Outlets
     @IBOutlet weak var tf_ProActiveName: CustomTextField!
     
-    @IBOutlet weak var tv_desc: UITextView!//UIPlaceHolderTextView!
+    @IBOutlet weak var tv_desc:UIPlaceHolderTextView!
     
     @IBOutlet weak var iv_coverPic: UIImageView!
     
@@ -299,6 +299,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         // self.tv_desc.placeholder = "Minimum 50 words"
         // by me
       //  self.tv_desc.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
+        AppHelper.setBorderOnView(self.tv_desc)
         
         
         self.tf_location.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)

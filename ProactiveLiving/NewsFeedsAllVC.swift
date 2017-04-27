@@ -35,19 +35,18 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerViewController()
     var globalAssets: [DKAsset]?
+    
+    var imgaeProfile  = UIImage(named: "ic_booking_profilepic")
+    
  //   var isFromGallery:Bool!
     
-    var isBackFromChildVC:Bool!
+      var isBackFromChildVC:Bool!
+      var indexForCommentcount = -1  // 25 April
+      var newsFeedID = ""
+      var dictValuePacRole = [String:AnyObject]()
+    //  var isFromCommentVC = false   // used for service hit on the basic of bool value. true if comments has some value
     
-    
-    var dictValuePacRole = [String:AnyObject]()
-    
-    var newsFeedIndex = 0  // index for All Section
-    var postFriendsIndex = 0 // index for Friends Section
-    var postColleagueIndex = 0 // index for Collegues Section
-    var postHealthClubIndex = 0 // index for Health Section
-    var pacCircleIndex = 0 // index for PAC Section
-    var pacWallIndex = 0
+
     
     
     @IBOutlet weak var layoutConstHeightShareView: NSLayoutConstraint!
@@ -106,6 +105,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 
     }
     
+    //MARK:- CommentsVCDelegate
+//    
+//    
+//    func didFinishUpload(flag: Bool) {
+//        
+//        self.isFromCommentVC = flag
+//        
+//    }
+    
+    
     //MARK:- Growing TextView mthods
     func setupGrowingTextView() {
         
@@ -130,7 +139,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         textView.placeholder = "Share an update"
         textView.autoresizingMask = .FlexibleHeight
         postContainerView.addSubview(textView)
-        postContainerView.backgroundColor = UIColor.redColor()
         print_debug(textView.frame)
         
         self.view.layoutIfNeeded()
@@ -154,8 +162,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         //super.viewWillAppear(animated)
         if self.title != "EXPLORE" {
+            
+            self.postCircleArr.removeAllObjects()
+            self.collectionView.reloadData()
             self.getAllPostEvent()
             self.getLikeUpdate()
+            
         }
         self.attachmentViewS.hidden = true
         IQKeyboardManager.sharedManager().enable = false
@@ -207,7 +219,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             if intValue == 0{   // ALL
                 
-                self.newsFeedIndex = 0
+               
                 self.fetchPostDataFromServer()
                 self.fetchExploreDataFromServer()
             }
@@ -215,20 +227,18 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 // Explore condition
             }
             else if intValue == 2{   // Friends
-                
-                self.postFriendsIndex = 0
                 self.fetchPostDataFromServer()
             }
             else if intValue == 3{   // Colleagues
-                self.postColleagueIndex = 0
+            
                 self.fetchPostDataFromServer()
             }
             else if intValue == 4{    // Health Clubs
-                self.postHealthClubIndex = 0
+               
                 self.fetchPostDataFromServer()
             }
             else if intValue == 5{    // PAC Circles
-                self.pacCircleIndex = 0
+               
                 self.fetchPostDataFromServer()
             }
         }
@@ -242,8 +252,18 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 
         super.viewDidAppear(animated)
         print("SCREEN TAG ==> \(intValue)")
-        self.setColectionViewTags()
-        self.fetchScreenData()
+        
+//        self.setColectionViewTags()
+//        self.fetchScreenData()
+        
+        if self.indexForCommentcount >= 0 { //  if self.indexForCommentcount >= 0 && self.isFromCommentVC {
+            self.fetchCommentDataFromServer()
+        }
+        else {
+            self.setColectionViewTags()
+            self.fetchScreenData()
+        }
+        
         print_debug(self.collectionView.tag)
         self.collectionView.reloadData()
 
@@ -288,7 +308,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
     }
     
-    //MARK: - onClickBtn
+    //MARK:- onClickBtn
     @IBAction func onClickLikeBtn(sender: AnyObject) {
         
         //   let cell: UITableViewCell = sender.superview!!.superview as! UITableViewCell
@@ -351,24 +371,42 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let buttonPosition = sender.convertPoint(CGPointZero, toView: self.collectionView)
         let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
         if indexPath != nil {
-                        
+            
+            
+           // self.isFromCommentVC = false
             if self.collectionView.tag ==  1111 {
                 resultData = self.postAllArr[indexPath!.row ] as! [String:AnyObject]
+                self.indexForCommentcount = indexPath!.row
+                
+                self.newsFeedID = resultData["_id"] as! String
+                print_debug("ID \(newsFeedID)")
+                
             }
             else if self.collectionView.tag ==  3333 {
                 resultData = self.postFriendsArr[indexPath!.row ] as! [String:AnyObject]
+                self.indexForCommentcount = indexPath!.row
+                self.newsFeedID = resultData["_id"] as! String
             }
             else if self.collectionView.tag ==  4444 {
                 resultData = self.postColleagueArr[indexPath!.row ] as! [String:AnyObject]
+                self.indexForCommentcount = indexPath!.row
+                self.newsFeedID = resultData["_id"] as! String
             }
             else if self.collectionView.tag ==  5555 {
                 resultData = self.postHealthClubsArr[indexPath!.row ] as! [String:AnyObject]
+                self.indexForCommentcount = indexPath!.row
+                self.newsFeedID = resultData["_id"] as! String
             }
             else if self.collectionView.tag ==  6666 {
                 resultData = self.postCircleArr[indexPath!.row ] as! [String:AnyObject]
+                //self.indexForCommentcount = indexPath!.row
+                self.indexForCommentcount = -1 // since we dont want to hit "fetchCommentDataFromServer" service
+                self.newsFeedID = resultData["_id"] as! String
             }
             else if self.collectionView.tag ==  1000 {
                 resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
+                self.indexForCommentcount = indexPath!.row
+                self.newsFeedID = resultData["_id"] as! String
             }
             
         }
@@ -491,10 +529,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             
         }
-        
-        
-
-        
+     
         
     }
     
@@ -1066,7 +1101,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         ChatListner .getChatListnerObj().socket.on("getPost") {data, ack in
             
             self.setColectionViewTags()
-            self.fetchScreenData()
+            //self.fetchScreenData()  //  commented by me 23rd Apr
 
             print_debug(self.collectionView.tag)
 
@@ -1523,9 +1558,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
         }
         
-        print_debug("valesssss")
-
-        print_debug(dict)
+        
         //shared by name
         if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
             
@@ -1568,6 +1601,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         //shared by profile image
+        iv_profile.image = UIImage(named: "ic_booking_profilepic")
         if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("sharedBy.imgUrl") as? String    {
             
             let image_url = NSURL(string: logoUrlStr )
@@ -1579,6 +1613,22 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
         }else{
              //Posted by profile image
+            let placeholder = UIImage(named: "ic_booking_profilepic")
+
+            if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
+                
+                let ulrRequet = NSURLRequest(URL: NSURL(string: logoUrlStr)!)
+            iv_profile.setImageWithURLRequest(ulrRequet, placeholderImage: placeholder, success: { [weak cell] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
+                
+                
+                }, failure: { [weak cell]
+                    (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
+                    
+                    
+                })
+             }
+        
+            
             if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
                 
                 let image_url = NSURL(string: logoUrlStr )
@@ -1740,12 +1790,70 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         
         // Pagination
-        if indexPath.item == self.postAllArr.count - 1 {
-            
-            self.fetchPostDataFromServer()
-            
-        }
         
+      
+        if self.collectionView.tag ==  1111 {
+            // Pagination
+            
+            if self.postAllArr.count >= 5 {
+            
+            if indexPath.item == self.postAllArr.count - 1 {
+                self.fetchPostDataFromServer()
+            }
+          }
+        }
+        else if self.collectionView.tag ==  3333 {
+            
+            if self.postFriendsArr.count >= 5 {
+           
+            if indexPath.item == self.postFriendsArr.count - 1 {
+                self.fetchPostDataFromServer()
+            }
+          }
+        }
+        else if self.collectionView.tag ==  4444 {
+            
+            
+             if self.postColleagueArr.count >= 5 {
+            
+             if indexPath.item == self.postColleagueArr.count - 1 {
+                
+                self.fetchPostDataFromServer()
+                
+            }
+           }
+        }
+        else if self.collectionView.tag ==  5555 {
+            
+            if self.postHealthClubsArr.count >= 5 {
+
+            if indexPath.item == self.postHealthClubsArr.count - 1 {
+                
+                self.fetchPostDataFromServer()
+            }
+          }
+        }
+        else if self.collectionView.tag ==  6666 {
+            
+             if self.postCircleArr.count >= 5 {
+             if indexPath.item == self.postCircleArr.count - 1 {
+                
+                self.fetchPostDataFromServer()
+                
+            }
+           }
+        }
+        else if self.collectionView.tag ==  1000  {
+          
+            if self.pacWallArr.count >= 5 {
+                if indexPath.item == self.pacWallArr.count - 1 {
+                self.fetchPostDataFromServer()
+                
+            }
+          }
+                
+        }
+   
         return cell
     }
     
@@ -1881,6 +1989,126 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
     }
+    //MARK:- Service for comments count 
+    
+    func fetchCommentDataFromServer() {
+        
+        if AppDelegate.checkInternetConnection() {
+            isPostServiceCalled = true
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+      
+            
+            if self.collectionView.tag ==  1111 {
+                parameters["newsfeedId"] =  self.newsFeedID
+            }
+            else if self.collectionView.tag ==  3333 {
+                parameters["newsfeedId"] = self.newsFeedID
+                
+            }
+            else if self.collectionView.tag ==  4444 {
+                parameters["newsfeedId"] = self.newsFeedID
+                
+            }
+            else if self.collectionView.tag ==  5555 {
+                parameters["newsfeedId"] = self.newsFeedID
+                            }
+            else if self.collectionView.tag ==  6666 {
+                parameters["newsfeedId"] = self.newsFeedID
+            }
+            else if self.collectionView.tag ==  1000{
+                parameters["newsfeedId"] = self.newsFeedID
+               
+            }
+            
+            
+            print("Dict = \(parameters)")
+            //call global web service class latest
+            Services.postRequest(ServiceCommentsData, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                isPostServiceCalled = false
+                
+                print("Response = \(responseDict)")
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        if let resultDict = responseDict["result"]  as? Dictionary<String, AnyObject>{
+                            
+                            if self.collectionView.tag ==  1111 {
+                                print_debug("RESULTDATA:\(resultDict)")
+                                self.postAllArr.replaceObjectAtIndex(self.indexForCommentcount, withObject: resultDict)
+                                
+                            }
+                            else if self.collectionView.tag ==  3333 {
+                                
+                                // self.postFriendsArr = NSMutableArray.init(array: resultArr)
+                                
+                                self.postFriendsArr.replaceObjectAtIndex(self.indexForCommentcount, withObject: resultDict)
+                                
+                                
+                            }
+                            else if self.collectionView.tag ==  4444 {
+                                
+                                // self.postColleagueArr = NSMutableArray.init(array: resultArr)
+                                
+                                 self.postColleagueArr.replaceObjectAtIndex(self.indexForCommentcount, withObject: resultDict)
+                                
+                            }
+                            else if self.collectionView.tag ==  5555 {
+                                // self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
+                                
+                                 self.postHealthClubsArr.replaceObjectAtIndex(self.indexForCommentcount, withObject: resultDict)
+                                
+                            }
+                            else if self.collectionView.tag ==  6666 {
+                                // self.postCircleArr = NSMutableArray.init(array: resultArr)
+                                self.postCircleArr.replaceObjectAtIndex(self.indexForCommentcount, withObject: resultDict)
+
+                                
+                               
+                            }
+                            else if self.collectionView.tag ==  1000 {
+                                //self.pacWallArr = NSMutableArray.init(array: resultArr)
+                                self.pacWallArr.replaceObjectAtIndex(self.indexForCommentcount, withObject: resultDict)
+      
+                            }
+                            
+                            self.collectionView.reloadData()
+                            
+                        }
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+    
+    
+    
+    
+    
     
     func fetchPostDataFromServer() {
         
@@ -1903,28 +2131,30 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             if self.collectionView.tag ==  1111 {
                 parameters["section"] = "ALL"
                 // adding index for pagination on 20/04/2017
-                parameters["index"] = self.newsFeedIndex
-
+                parameters["index"] = self.postAllArr.count
             }
             else if self.collectionView.tag ==  3333 {
                 parameters["section"] = "FRIENDS"
-                parameters["index"] = self.postFriendsIndex
+                parameters["index"] = self.postFriendsArr.count
 
             }
             else if self.collectionView.tag ==  4444 {
                 parameters["section"] = "COLLEAGUES"
+                parameters["index"] = self.postColleagueArr.count
 
             }
             else if self.collectionView.tag ==  5555 {
                 parameters["section"] = "HEALTH CLUBS"
+                parameters["index"] = self.postHealthClubsArr.count
             }
             else if self.collectionView.tag ==  6666 {
                 parameters["section"] = "paccircle"
+                parameters["index"] = self.postCircleArr.count
             }
             else if self.collectionView.tag ==  1000{
                 parameters["section"] = "PAC"
                 parameters["pacId"] = self.pacID
-                parameters["index"] = self.pacWallIndex
+                parameters["index"] = self.pacWallArr.count
             }
             
             
@@ -1952,7 +2182,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             
                             if resultArr.count > 0 {
                                 self.postAllArr.addObjectsFromArray(resultArr as [AnyObject])
-                                self.newsFeedIndex = self.postAllArr.count
+                               // self.newsFeedIndex = self.postAllArr.count
                             
                             }
                             else {
@@ -1966,7 +2196,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             
                             if resultArr.count > 0 {
                                 self.postFriendsArr.addObjectsFromArray(resultArr as [AnyObject])
-                                self.postFriendsIndex = self.postFriendsArr.count
+                               // self.postFriendsIndex = self.postFriendsArr.count
                             }
                             else {
                                 return
@@ -1980,7 +2210,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             if resultArr.count > 0 {
                                 
                                 self.postColleagueArr.addObjectsFromArray(resultArr as [AnyObject])
-                                self.postColleagueIndex = self.postColleagueArr.count
+                              //  self.postColleagueIndex = self.postColleagueArr.count
                                 
                             }
                             else {
@@ -1995,7 +2225,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             if resultArr.count > 0 {
                                 
                                 self.postHealthClubsArr.addObjectsFromArray(resultArr as [AnyObject])
-                                self.postHealthClubIndex = self.postHealthClubsArr.count
+                               // self.postHealthClubIndex = self.postHealthClubsArr.count
                                 
                             }
                             else {
@@ -2010,7 +2240,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             if resultArr.count > 0 {
                                 
                                 self.postCircleArr.addObjectsFromArray(resultArr as [AnyObject])
-                                self.pacCircleIndex = self.postCircleArr.count
+                              //  self.pacCircleIndex = self.postCircleArr.count
                                 
                             }
                             else {
@@ -2024,7 +2254,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             if resultArr.count > 0 {
                                 
                                 self.pacWallArr.addObjectsFromArray(resultArr as [AnyObject])
-                                self.pacWallIndex = self.pacWallArr.count
+                               // self.pacWallIndex = self.pacWallArr.count
                                 
                             }
                             else {
