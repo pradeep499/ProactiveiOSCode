@@ -338,7 +338,6 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         if anObject.lastMessageTime!.characters.count > 0 {
             var dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
-            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT:0)
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             let date = dateFormatter.dateFromString(anObject.lastMessageTime!)
             dateFormatter = NSDateFormatter()
@@ -351,6 +350,9 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             dateFormatter.dateFormat = "hh:mm a"
             let timeStr = dateFormatter.stringFromDate(date!)
             lastMessageTime.text = timeStr
+            
+            
+           
             
         } else {
             lastMessageTime.text = ""
@@ -436,7 +438,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             userImage.setImageWithURL(NSURL(string:anObject.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
         }
         userImage.layer.masksToBounds = true
-        userImage.layer.cornerRadius = userImage.frame.size.height/2
+        userImage.layer.cornerRadius = 23
        
         
             

@@ -190,7 +190,7 @@ extension MenuVC: UITableViewDataSource{
             iv_profile.backgroundColor = UIColor.whiteColor()
             iv_profile.layer.masksToBounds = false
             iv_profile.layer.borderColor = UIColor.lightGrayColor().CGColor
-            iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
+            iv_profile.layer.cornerRadius = 17
             iv_profile.clipsToBounds = true
             
             break

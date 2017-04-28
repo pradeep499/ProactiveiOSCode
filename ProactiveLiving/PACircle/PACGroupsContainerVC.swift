@@ -299,6 +299,11 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         objCalendarVC.allowToCreateMeetup = self.allowToCreateMeetup
         objCalendarVC.allowToCreateWebinvite = self.allowToCreateWebinvite
         objCalendarVC.pacID = self.pacID
+        //if self.arrPACMembers1.count > 0{
+           // for ele in self.arrPACMembers1{
+               // objCalendarVC.arrPACMembers.append(ele)
+           // }
+       // }
         objCalendarVC.arrPACMembers = self.arrPACMembers1
         print_debug(objCalendarVC.arrPACMembers)
         self.navigationController?.pushViewController(objCalendarVC, animated: true)

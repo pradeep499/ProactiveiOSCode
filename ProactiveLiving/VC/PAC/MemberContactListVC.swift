@@ -58,7 +58,7 @@ extension MemberContactListVC : UITableViewDataSource {
         profileImg.layer.borderWidth = 1.0
         profileImg.layer.masksToBounds = false
         profileImg.layer.borderColor = UIColor.whiteColor().CGColor
-        profileImg.layer.cornerRadius =  profileImg.frame.size.width/2
+        profileImg.layer.cornerRadius =  23
         profileImg.clipsToBounds = true
         
         if isFromMeetUp == true {

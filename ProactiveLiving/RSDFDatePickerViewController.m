@@ -414,7 +414,7 @@ type = 3 for yeary basis
                                       vc.pushedFrom=@"MEETUPS";
                                       if([self.fromScreen isEqualToString:@"AboutPacVC"]) {
                                           vc.fromScreenFlag = @"PAC";
-                                          vc.pacID = self.pacID;
+                                          vc.pacID = self.pacID; 
                                           vc.arrPACMembers = self.arrPACMembers;
                                           NSLog(@"arrPACMembers %@",self.arrPACMembers);
                                       }

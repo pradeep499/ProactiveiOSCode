@@ -22,6 +22,15 @@ class MeetUpProfileCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        let placeholder = UIImage(named: "no_photo")
+        self.imageView?.image = placeholder
+        self.imgProfile.layer.borderWidth = 1.0
+        self.imgProfile.contentMode = .ScaleAspectFill
+        self.imgProfile.backgroundColor = UIColor.whiteColor()
+        self.imgProfile.layer.masksToBounds = false
+        self.imgProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.imgProfile.layer.cornerRadius = 23
+        self.imgProfile.clipsToBounds = true
     }
     
 }
