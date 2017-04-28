@@ -232,7 +232,7 @@
     iv_profile.layer.borderWidth = 1.0;
   //  iv_profile.contentMode = ScaleAspectFill;
     iv_profile.layer.masksToBounds = false;
-    iv_profile.layer.borderColor = [UIColor lightGrayColor].CGColor;    iv_profile.layer.cornerRadius = 23;
+    iv_profile.layer.borderColor = [UIColor lightGrayColor].CGColor;    iv_profile.layer.cornerRadius = 30;
     iv_profile.clipsToBounds = true;
     
     

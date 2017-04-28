@@ -15,7 +15,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface FilterVC3 ()<UISearchBarDelegate>
+@interface FilterVC3 ()<UISearchBarDelegate,UIAlertViewDelegate>
 {
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -35,7 +35,7 @@
     self.searchBar.delegate=self;
     self.searchBar.placeholder = @"Zip Code";
     self.searchBar.keyboardType = UIKeyboardTypeNumberPad;
-
+    
     //[self.switch1 setOn:![[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
     //[self.switch2 setOn:NO];
     //[self.switch3 setOn:[[AppHelper userDefaultsForKey:GPSStatus] boolValue]];
@@ -62,6 +62,7 @@
                                      @"longitude":[NSString stringWithFormat:@"%f",[AppDelegate getAppDelegate].currentLocation.coordinate.longitude]
                                      };
         
+        NSLog(@"current location chking %@",parameters);
         //call global web service class
         [Services serviceCallWithPath:ServiceLocationFilter withParam:parameters success:^(NSDictionary *responseDict)
          {
@@ -159,6 +160,18 @@
     [self.searchBar resignFirstResponder];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        // Send the user to the Settings for this app
+        //[[self navigationController]  popViewControllerAnimated:true];
+        NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:settingsURL];
+    }
+}
+
+
+
 - (void)checkButtonTapped:(id)sender event:(id)event
 {
     NSSet *touches = [event allTouches];
@@ -188,6 +201,8 @@
 
 - (IBAction)switchChanged:(UISwitch*)sender {
     
+    
+    
     if (sender.tag==111) {
         [self.switch2 setOn:NO animated:YES];
         [self.switch3 setOn:!sender.isOn animated:YES];
@@ -197,8 +212,15 @@
         [self.switch3 setOn:NO animated:YES];
     }
     if (sender.tag==333) {
-        [self.switch1 setOn:!sender.isOn animated:YES];
-        [self.switch2 setOn:NO animated:YES];
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (!((status == kCLAuthorizationStatusDenied) || (status == kCLAuthorizationStatusNotDetermined))){
+            [self.switch1 setOn:!sender.isOn animated:YES];
+            [self.switch2 setOn:NO animated:YES];
+        }
+    else{
+        [self.switch3 setOn:NO animated:YES];
+        [self CheckstatusForSwitch];
+     }
     }
     
     if(self.switch2.isOn) {
@@ -215,4 +237,34 @@
     NSLog(@"GPS-%@",[AppHelper userDefaultsForKey:GPSStatus]);
 
 }
+
+
+- (void)CheckstatusForSwitch{
+    
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    
+    // If the status is denied or only granted for when in use, display an alert
+    if ((status == kCLAuthorizationStatusDenied) || (status == kCLAuthorizationStatusNotDetermined)) {
+        NSString *title;
+        title =  @"Location services are off";
+        NSString *message = @"Need location access for updating nearby friends";
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:@"Settings", nil];
+        
+        alertView.delegate = self;
+        [alertView show];
+    }
+    
+    // The user has not enabled any location services. Request background authorization.
+    //else if (status == kCLAuthorizationStatusNotDetermined) {
+      //  [[AppDelegate getAppDelegate].locationManager requestWhenInUseAuthorization];
+    //}
+    
+}
+
+
 @end

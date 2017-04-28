@@ -233,7 +233,7 @@ extension GenericPacTableVC: UITableViewDataSource{
         let lbl_distance = cell.viewWithTag(10) as! UILabel
         
         
-        iv_item.contentMode = .ScaleAspectFit
+        iv_item.contentMode = .ScaleToFill
         iv_item.sd_setImageWithURL(NSURL.init(string: (self.pacDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "pac_listing_no_preview"))
 
         
