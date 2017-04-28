@@ -36,7 +36,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
+    
+    
+    
 }
 
 #pragma mark- Actions
@@ -182,8 +186,6 @@
             
         }
         
-        
-        
     }
 }
 
@@ -241,7 +243,9 @@
     
     lbl_name.text = [NSString stringWithFormat:@"%@ %@",[[requestArr objectAtIndex:indexPath.row][@"userId"] valueForKey:@"firstName"], [[requestArr objectAtIndex:indexPath.row][@"userId"] valueForKey:@"lastName"]];
     
-    lbl_desc.text = [NSString stringWithFormat:@"Has requested you to join PAC %@.", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
+   // lbl_desc.text = [NSString stringWithFormat:@"Has requested you to join PAC %@.", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
+        lbl_desc.text = [NSString stringWithFormat:@"Has requested to join the %@ PAC.", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
+    // changed as per client request 28th April
     
     lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd HH:mm:ss" desireFormat:@"dd MMM hh:mm a" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
     
