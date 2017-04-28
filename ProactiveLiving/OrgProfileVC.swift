@@ -63,19 +63,25 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
         
         // Do any additional setup after loading the view.
         
-        arrButtonImages=[
-        "about",
-        "education",
-        "videos",
-        "promotions",
-        "announcements",
-        "broadcasts",
-        "add_favorite",
-        "follow",
-        "share",
-        "social",
-        "website",
-        "message"]
+//        arrButtonImages=[
+//        "about",
+//        "education",
+//        "videos",
+//        "promotions",
+//        "announcements",
+//        "broadcasts",
+//        "add_favorite",
+//        "follow",
+//        "share",
+//        "social",
+//        "website",
+//        "message"]
+        
+        
+        // changed as per client request 28 Apr
+        
+        arrButtonImages=["about","broadcasts","follow","videos", "website"]
+        
         
     }
     
@@ -110,7 +116,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
         
-        if (indexPath.row==0) {
+        if (indexPath.row==0) {  // About
             
             if let aboutUrl = self.dataDict["aboutUs"] {
                 
@@ -125,21 +131,25 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
             
            
         }
-        if(indexPath.row==2) {
+        else if (indexPath.row==1){ // Broadcast
+            let broadCast: BroadcastVC = self.storyboard!.instantiateViewControllerWithIdentifier("BroadcastVC") as! BroadcastVC
+            broadCast.dataDictArr = dataDict["articles"] as? [AnyObject]
+            broadCast.subTitle = dataDict["name"] as? String
+            self.navigationController?.pushViewController(broadCast, animated: true)
+            
+        }
+        else if (indexPath.row==2){  // Follow
+            
+        }
+       else if(indexPath.row==3) { // Videos
+            
             let videosContainer: VideosContainer = self.storyboard!.instantiateViewControllerWithIdentifier("VideosContainer") as! VideosContainer
             videosContainer.dataDict=dataDict["videos"] as! [String:AnyObject]
             videosContainer.videoContainerType = .Explore
             self.navigationController?.pushViewController(videosContainer, animated: true)
             
         }
-        else if(indexPath.row==5) {
-            let broadCast: BroadcastVC = self.storyboard!.instantiateViewControllerWithIdentifier("BroadcastVC") as! BroadcastVC
-            broadCast.dataDictArr = dataDict["articles"] as? [AnyObject]
-            broadCast.subTitle = dataDict["name"] as? String
-
-            self.navigationController?.pushViewController(broadCast, animated: true)
-            
-        }else if(indexPath.row==10)
+      else if(indexPath.row==4)  // Website
         {
             let webUrl = self.dataDict["latestArticleLink"] as! String
             //self.btnWebLinkClick(webUrl)
