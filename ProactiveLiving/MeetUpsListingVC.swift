@@ -424,6 +424,8 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         eventName.text = self.arrData[indexPath.row]["title"] as? String
         var dataDict = self.arrData[indexPath.row] as! [String : AnyObject]
         let arrMembers = dataDict["members"] as! [AnyObject]
+        cell.btnAccept.layer.borderWidth = 1.0
+        cell.btnDecline.layer.borderWidth = 1.0
 
         //Check status if member accepted or rejacted--
         for item in arrMembers {
