@@ -75,6 +75,9 @@
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName, [UIFont fontWithName:FONT_REGULAR size:16], NSFontAttributeName,nil]];
 
     
+    ///Check For Reachability
+   /// [[ChatListner getChatListnerObj]checkForReachability];
+
     //IQKeyboard Manager
     //[IQKeyboardManager sharedManager].enableAutoToolbar = NO;
 
@@ -155,6 +158,7 @@
     [AppHelper saveToUserDefaults:CURRENT_DEVICE withKey:DEVICE_TYPE];
 
 }
+
 
 #ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:   (UIUserNotificationSettings *)notificationSettings

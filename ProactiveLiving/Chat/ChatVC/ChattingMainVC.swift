@@ -2764,7 +2764,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             {
                 checkfile = ".wav"
             }
-            else if chatObj.messageType == "image"
+            else if grpChatObj.messageType == "image"
             {
                 checkfile = ".jpg"
             }
@@ -3198,6 +3198,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         }
         
         ChatListner .getChatListnerObj().socket.off("getUserStatus")
+        
         var offDic = Dictionary<String, AnyObject>()
         offDic["userid"] = ChatHelper .userDefaultForAny("userId") as! String
         if contObj != nil

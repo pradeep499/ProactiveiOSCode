@@ -438,7 +438,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             userImage.setImageWithURL(NSURL(string:anObject.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
         }
         userImage.layer.masksToBounds = true
-        userImage.layer.cornerRadius = 23
+        userImage.layer.cornerRadius = 30
        
         
             

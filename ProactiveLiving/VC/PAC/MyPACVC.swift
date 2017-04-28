@@ -234,7 +234,7 @@ extension MyPACVC: UITableViewDataSource{
         let lbl_distance = cell.viewWithTag(10) as! UILabel
         
         
-        iv_item.contentMode = .ScaleAspectFit
+        iv_item.contentMode = .ScaleToFill
         
         if self.myPACDetailArr[indexPath.row]["imgUrl"] != nil {
             iv_item.sd_setImageWithURL(NSURL.init(string: (self.myPACDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: "pac_listing_no_preview"))

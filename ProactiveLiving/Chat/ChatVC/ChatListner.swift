@@ -7,6 +7,8 @@
 //
 
 import UIKit
+
+
 class ChatListner: NSObject {
     
     var  socket : SocketIOClient!
@@ -25,7 +27,8 @@ class ChatListner: NSObject {
     
     let homeCoreData = AppDelegate.getAppDelegate()
     
-   
+    /// This class is used to conect Socket
+    var reachability: Reachability?
     
     var pushDict : Dictionary<NSObject,AnyObject>!
     var socketIdStr : String!
@@ -139,6 +142,56 @@ func connectToSocket() -> Void{
     */
    class func getChatListnerObj() -> ChatListner {
      return ChatListner.sharedInstance as ChatListner
+    }
+    
+    
+    // MARK : check the network reachability status
+    func checkForReachability(){
+        
+        // Remove the next two lines of code. You cannot instantiate the object
+        // you want to receive notifications from inside of the notification
+        // handler that is meant for the notifications it emits.
+        
+        
+            reachability =  Reachability.reachabilityForInternetConnection()
+        
+            // print_debug("Unable to create Reachability")
+        
+        
+        // add the observer for the reachability tests
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatListner.reachabilityChanged(_:)),name:ReachabilityChangedNotification, object:reachability)
+        
+             reachability?.startNotifier()
+        
+            // print_debug("Unable to start notifier")
+        
+        
+    }
+    
+    // check the connection reachability
+    func reachabilityChanged(note: NSNotification){
+        
+        if let reachability = note.object as? Reachability{
+            
+            if reachability.isReachable(){
+                
+                
+               self.createConnection()
+
+                
+                if reachability.isReachableViaWiFi(){
+                    // print_debug("Reachable via WiFi")
+                } else{
+                    // print_debug("Reachable via Cellular")
+                }
+                
+            } else{
+                
+                self.closeConnection()
+
+                // print_debug("Network not reachable")
+            }
+        }
     }
 
     // MARK: - Node.js Methods for one to one chat

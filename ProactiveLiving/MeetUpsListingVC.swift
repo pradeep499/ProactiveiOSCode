@@ -408,7 +408,7 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         let cell = self.tableView.dequeueReusableCellWithIdentifier("CellMeetUps", forIndexPath: indexPath) as! MeetUpListingCell
         cell.selectionStyle = .None
         let eventImage = cell.contentView.viewWithTag(11) as! UIImageView
-        eventImage.layer.cornerRadius = 23
+        eventImage.layer.cornerRadius = 25
         eventImage.clipsToBounds = true
         print("data reload")
         let eventName = cell.contentView.viewWithTag(12) as! UILabel
