@@ -586,7 +586,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
 
         self.addInputView()
         
-        attachmentViewS.backgroundColor = UIColor.clearColor()
+       // attachmentViewS.backgroundColor = UIColor.clearColor()
         // Do any additional setup after loading the view.
         
     }
