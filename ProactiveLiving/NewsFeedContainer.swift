@@ -94,7 +94,7 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         fifthVC.view.tag = 4
         
         sixthVC = storyboard.instantiateViewControllerWithIdentifier("NewsFeedsAllVC") as! NewsFeedsAllVC
-        sixthVC.title = "PAC CIRCLES"
+        sixthVC.title = "PACs"   //"PAC CIRCLES" changed as per client req 27th apr
         sixthVC.view.tag = 5
 
         arrViewControllers = [firstVC, secondVC, thirdVC, fourthVC, fifthVC, sixthVC]

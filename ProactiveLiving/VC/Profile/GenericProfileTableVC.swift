@@ -37,12 +37,7 @@ class GenericProfileTableVC: UIViewController {
     
     
     
-    var tf_fb:UITextField?, tf_google:UITextField?, tf_linkedIn:UITextField?, tf_twitter:UITextField?, tf_inst:UITextField?
-    
-    
-    
-    
-    
+    var tf_fb:UITextField?, tf_google:UITextField?, tf_linkedIn:UITextField?, tf_twitter:UITextField?, tf_inst:UITextField?, tf_pintrest:UITextField?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -265,7 +260,11 @@ class GenericProfileTableVC: UIViewController {
                 socialArr.append(self.setSocialDict(self.tf_inst!, type: "inst"))
                 
             }
-            
+            if self.tf_pintrest?.text?.characters.count > 0 {
+                
+                socialArr.append(self.setSocialDict(self.tf_pintrest!, type: "pintrest"))
+                
+            }
             parameters["socialNetwork"] = socialArr
             
             
@@ -349,7 +348,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
          if genericType == .AboutMe{
             return 13
          }else if genericType == .SocialNetworks{
-            return 5
+            return 6
         }
         return 0
     }
@@ -609,7 +608,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
             
         case 10:
             iv.image = UIImage(named: "mp_quotes")
-            lbl_title.text = "Inspirational Quote"  //"Favorite Famous Quote" 10th April Changed as per client
+            lbl_title.text = "Quotable Quotes"//"Inspirational Quote" 27th April Changed as per client   //"Favorite Famous Quote" 10th April Changed as per client
             lbl_details.text = obj.favFamousQuote
             
             //friends value
@@ -620,7 +619,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
             
         case 11:
             iv.image = UIImage(named: "mp_quotes")
-            lbl_title.text = "I live proactively because..."//"My Not-So-Famous Quote"  10th April Changed as per client
+            lbl_title.text = "I live proactively because"//"I live proactively because..." 27th April Changed as per client//"My Not-So-Famous Quote"  10th April Changed as per client
             lbl_details.text = obj.notFamousQuote
             
             //friends value
@@ -676,8 +675,11 @@ extension GenericProfileTableVC: UITableViewDataSource{
             iv_social.image = UIImage(named: "insta")
             self.tf_inst = tf
             break
-            
-            
+        case 5:
+            iv_social.image = UIImage(named: "pintrest")
+            self.tf_pintrest = tf
+            break
+         
         default:
             break
         }
@@ -709,7 +711,10 @@ extension GenericProfileTableVC: UITableViewDataSource{
                     
                     self.tf_inst?.text   = url
                 }
-                
+                else if (type ) == "pintrest" {
+                    
+                    self.tf_pintrest?.text   = url
+                }
                 
             }
         }

@@ -10,8 +10,8 @@ import UIKit
 
 class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate {
 
+    //MARK:- Outlets
     
-    var pageTitle = ""
     @IBOutlet weak var lblTitle: UILabel!
    
     @IBOutlet weak var txtFieldTitle: CustomTextField!
@@ -20,12 +20,14 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     
     @IBOutlet weak var tableViewResource: UITableView!
     
+    //MARK:- Properties
     var arrAttachments = [AnyObject]()
     var isEdit : Bool?
     var resourceArr = [AnyObject]()
     var resourceDict = Dictionary<String, AnyObject>()
     var resourceID = ""
     var url = ""
+    var pageTitle = ""
     
     //MARK:- View Life Cycle
     override func viewDidLoad() {
@@ -55,10 +57,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         resourceID = resourceDict["_id"] as! String
             
         }
-        
-        
-        
-        
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -193,7 +192,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         let alertController = UIAlertController(title: "Add Video", message: "", preferredStyle: UIAlertControllerStyle.Alert)
         
         alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in
-            textField.placeholder = "Add title here"
+            textField.placeholder = "Video title"
         }
         
         alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in

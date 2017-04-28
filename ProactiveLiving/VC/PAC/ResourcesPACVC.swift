@@ -416,7 +416,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
                 return 54
             }
             else {
-                return 90
+                return 120
             }
             
         }

@@ -21,7 +21,7 @@ class FilterVC5: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        arrData = ["Experts", "Colleagues", "Health Club Members", "Friends", "All"];
+        arrData = [] //["Experts", "Colleagues", "Health Club Members", "Friends", "All"] commented as per client request
         AppHelper.setBorderOnView(tableView)
         // Do any additional setup after loading the view.
         
@@ -54,9 +54,12 @@ class FilterVC5: UIViewController {
 
 extension FilterVC5 : UITableViewDelegate,UITableViewDataSource {
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Created by"
-    }
+    
+    // Commented as per client request 28th April
+    
+//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "Created by"
+//    }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // return popOverCellData.count

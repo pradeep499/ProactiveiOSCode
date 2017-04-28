@@ -349,6 +349,16 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     //MARK:- Btn Action
     
+    @IBAction func onClickTermsAction(sender: AnyObject) {
+        
+        let mainStoryboard = AppHelper.getStoryBoard()
+        let termsAndCondition = mainStoryboard.instantiateViewControllerWithIdentifier("AboutPASInstVC") as! AboutPASInstVC
+        termsAndCondition.strTitle = "Terms & Conditions"
+        termsAndCondition.strType = "pac"
+        self.navigationController?.pushViewController(termsAndCondition, animated: true)
+        
+        
+    }
     // UISwitch  action to change status
     @IBAction func onSwitchValueChanged(sender: AnyObject) {
         

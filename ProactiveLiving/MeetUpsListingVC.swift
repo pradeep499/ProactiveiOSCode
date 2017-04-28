@@ -323,7 +323,7 @@ class MeetUpsListingVC: UIViewController {
             
             let df = NSDateFormatter.init()
             df.dateFormat = "dd/MM/yyyy"
-            let dayTH = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE, d",  dateStr: dateStr)
+            let dayTH = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE d",  dateStr: dateStr)
             
             let date = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: " MMM",  dateStr: dateStr)
             

@@ -172,7 +172,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
             
             
             firstVC = profileStoryboard.instantiateViewControllerWithIdentifier("GenericPacTableVC") as! GenericPacTableVC
-            firstVC.title = "FIND"
+            firstVC.title = "My PACs"//"FIND" 27th April changed as per client request
             firstVC.genericType = .Find
             firstVC.isForMemberProfile = true
             arrViewControllers = [firstVC]
@@ -239,8 +239,16 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
       //  controller.viewWillAppear(true)
         
         if(currentIndex == 0) {
-            btnFilter.hidden = false
-            btnSearch.hidden = false
+            if isFromMemberProfile {
+                btnFilter.hidden = true
+                btnSearch.hidden = true
+            }else {
+                btnFilter.hidden = false
+                btnSearch.hidden = false
+            }
+            // button hide as per client request 27th April
+            //            btnFilter.hidden = false
+            //            btnSearch.hidden = false
         }
         else {
             btnFilter.hidden = true

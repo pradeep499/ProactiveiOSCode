@@ -869,7 +869,10 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             iv_social.image = UIImage(named: "insta")
         }
-        
+        else if dict["type"] == "pintrest" {
+            
+            iv_social.image = UIImage(named: "pintrest")
+        }
         /*    switch indexPath.row {
          case 0:
          
@@ -891,11 +894,6 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
          default:
          break
          }*/
-        
-        
-        
-        
-        
         
         return cell
     }
