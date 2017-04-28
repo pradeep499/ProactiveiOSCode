@@ -151,12 +151,13 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
         
         
-        
+        containerVC.scrollMenuViewWidth = 0.0
+        containerVC.menuBackGroudColor = UIColor.clearColor()
         
         containerVC.delegate = self
         containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
         containerVC.menuItemSelectedFont = UIFont(name: "Roboto-Bold", size: 11.5)
-        containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
+        //containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
         containerVC.menuItemTitleColor = UIColor.clearColor() //UIColor.whiteColor()
         containerVC.menuItemSelectedTitleColor = UIColor.clearColor()  //UIColor.whiteColor()
      //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
@@ -218,7 +219,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         self.iv_profile.backgroundColor = UIColor.whiteColor()
         self.iv_profile.layer.masksToBounds = false
         self.iv_profile.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
+        self.iv_profile.layer.cornerRadius = 40
         self.iv_profile.clipsToBounds = true
         
         self.iv_profileBg.userInteractionEnabled = true

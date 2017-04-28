@@ -62,7 +62,10 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             placeType: .Address
         )
         txtFieldWhereSecond.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
-
+        self.tokenField.tagPlaceholder = "Add here";
+        self.tokenField.mode = TLTagsControlMode.Edit ;
+        self.tokenField.tagsDeleteButtonColor = UIColor.lightGrayColor()
+        self.tokenField.tapDelegate=self
         
         //Date Picker
         datePicker = UIDatePicker()
@@ -80,6 +83,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.lblWithWho.text="With"
             self.lblForTo.text="For"
             self.lblTitle.text="Meet Up Title"
+            if arrPACMembers.count > 0{
+                self.tokenField.mode = .Edit
+            }
         }
         else if(pushedFrom=="WEBINVITES")
         {
@@ -236,10 +242,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         txtField_eventEndTime.delegate = self
         txtFieldAt.delegate = self
         txtFieldTitle.delegate=self
-        self.tokenField.tagPlaceholder = "Add here";
-        //self.tokenField.mode = TLTagsControlMode.Edit ;
-        self.tokenField.tagsDeleteButtonColor = UIColor.lightGrayColor()
-        self.tokenField.tapDelegate=self
+        
         
         AppHelper.setBorderOnView(self.containerViewTF)
         AppHelper.setBorderOnView(self.txtViewDesc)
@@ -376,6 +379,11 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.navigationController?.navigationBarHidden = true
         
         HelpingClass.getUserDetails()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.tokenField.reloadTagSubviews()
     }
     
     func addCotact(contact : [String : AnyObject] ) -> Void {

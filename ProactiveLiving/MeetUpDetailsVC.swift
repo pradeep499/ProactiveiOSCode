@@ -281,15 +281,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         case (0):
             let cell = tableView.dequeueReusableCellWithIdentifier(kCustomCellID0, forIndexPath: indexPath) as! MeetUpProfileCell
             cell.selectionStyle = .None
-            cell.lblName.text=self.dataDict["title"] as? String
+            cell.lblName.text=self.dataDict["for"] as? String
             
-            cell.imgProfile.layer.borderWidth = 1.0
-            cell.imgProfile.contentMode = .ScaleAspectFill
-            cell.imgProfile.backgroundColor = UIColor.whiteColor()
-            cell.imgProfile.layer.masksToBounds = false
-            cell.imgProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
-            cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height/2
-            cell.imgProfile.clipsToBounds = true
+           
 
             
             let dict = self.dataDict["createdBy"] as! [String:AnyObject]
@@ -316,9 +310,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             
             if let dateStr =  self.dataDict["eventDate"] as? String {
                 
-                let dayTH = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE, d",  dateStr: dateStr)
+                let dayTH = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE d",  dateStr: dateStr)
                 
-                let date = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: " MMM, yy",  dateStr: dateStr)
+                let date = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: " MMM yy",  dateStr: dateStr)
                 
                 let eventDate = dayTH + self.daySuffix(from:df.dateFromString(dateStr)! ) + date
                 
@@ -1102,7 +1096,7 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
         imgProfile.backgroundColor = UIColor.whiteColor()
         imgProfile.layer.masksToBounds = false
         imgProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
-        imgProfile.layer.cornerRadius = imgProfile.frame.size.height/2
+        imgProfile.layer.cornerRadius = 23
         imgProfile.clipsToBounds = true
 
         

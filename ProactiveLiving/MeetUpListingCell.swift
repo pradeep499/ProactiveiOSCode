@@ -30,7 +30,6 @@ class MeetUpListingCell: UITableViewCell {
         btnAccept.setTitleColor(UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0), forState: UIControlState.Selected)
         btnDecline.setTitleColor(UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0), forState: UIControlState.Selected)
 
-    
         
         imgAccept.hidden=true
         imgDecline.hidden=true

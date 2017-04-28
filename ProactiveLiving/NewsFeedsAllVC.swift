@@ -1499,18 +1499,26 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         let btn_comments = cell.viewWithTag(7) as! UIButton
         let btn_share = cell.viewWithTag(8) as! UIButton
         
+        btn_like.titleLabel?.textAlignment = .Left
+        lbl_subDetails.text = ""
+
         if(self.title != "PAC CIRCLES") {
             cell.layoutConstBtnShare.constant = 74
             btn_share.alpha = 1.0
             btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             btn_options.alpha = 1.0
+            cell.layoutConstBtnLike.constant = 80
+            btn_like.userInteractionEnabled = true
 
         }
         else {
+            cell.layoutConstBtnLike.constant = screenWidth - 150
             cell.layoutConstBtnShare.constant = 0
             btn_share.alpha = 0.0
             btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
             btn_options.alpha = 0.0
+            btn_like.userInteractionEnabled = false
+
         }
 
 
@@ -1519,7 +1527,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         iv_profile.backgroundColor = UIColor.whiteColor()
         iv_profile.layer.masksToBounds = false
         iv_profile.layer.borderColor = UIColor.lightGrayColor().CGColor
-        iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
+        iv_profile.layer.cornerRadius = 26
         iv_profile.clipsToBounds = true
         
         let tapProfileImage = UITapGestureRecognizer.init(target: self, action: #selector(NewsFeedsAllVC.onClickProfileImage(_:)))
@@ -1666,20 +1674,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         lbl_details.text =  dict["text"] as? String
-        // will display Organisation name
-        if self.collectionView.tag ==  6666  {
-            let dictPAC = dict["pacId"] as! [String:AnyObject]
-          lbl_subDetails.text = dictPAC["name"] as? String
-        }
-        else{
-          lbl_subDetails.text = ""
-        }
+        
         
 
         
         btn_like.selected = false
         
         // if user id is available in likes arr set btn selected
+        if self.collectionView.tag !=  6666  {
+
         if let likes = dict["likes"] as? [String]{
             
             for id in likes {
@@ -1690,6 +1693,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             btn_like.setTitle(String((dict["likes"] as? [String])!.count), forState: .Normal)
             
+        }
         }
         
         btn_comments.setTitle(String((dict["comments"] as? [AnyObject])!.count), forState: .Normal)
@@ -1853,7 +1857,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
           }
                 
         }
-   
+        // will display Organisation name
+        if self.collectionView.tag ==  6666  {
+            let dictPAC = dict["pacId"] as! [String:AnyObject]
+            btn_like.setImage(UIImage(), forState: .Normal)
+            btn_like.setTitle(dictPAC["name"] as? String, forState: .Normal)
+
+        }
+        
+        
+        
         return cell
     }
     
@@ -3100,6 +3113,7 @@ class CellNewsFeed:UICollectionViewCell{
     
     @IBOutlet weak var layOut_lbl_Name_height: NSLayoutConstraint!
     @IBOutlet weak var layoutConstBtnShare: NSLayoutConstraint!
+    @IBOutlet weak var layoutConstBtnLike: NSLayoutConstraint!
 
     var userID:String!
 

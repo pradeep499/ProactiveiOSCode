@@ -605,6 +605,7 @@ func connectToSocket() -> Void{
     }
     
     func addOffLineReceiveMsgHandlers() {
+        
        ChatListner .getChatListnerObj().socket.on("recieveMessageAll") {[weak self] data, ack in
         
         self?.playSoundBool = false
@@ -1119,6 +1120,7 @@ func connectToSocket() -> Void{
     }
     
     func sendOffLineMessage() {
+        
         let strLogin:String = ChatHelper .userDefaultForAny("userId") as! String
         let strSender:String = ChatHelper .userDefaultForAny("userId") as! String
         let strStatus:String = "3"

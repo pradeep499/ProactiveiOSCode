@@ -408,7 +408,7 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         let cell = self.tableView.dequeueReusableCellWithIdentifier("CellMeetUps", forIndexPath: indexPath) as! MeetUpListingCell
         cell.selectionStyle = .None
         let eventImage = cell.contentView.viewWithTag(11) as! UIImageView
-        eventImage.layer.cornerRadius = eventImage.frame.height/2
+        eventImage.layer.cornerRadius = 23
         eventImage.clipsToBounds = true
         print("data reload")
         let eventName = cell.contentView.viewWithTag(12) as! UILabel
@@ -442,7 +442,6 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
                     cell.btnAccept.layer.borderColor=UIColor(red: 1/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0).CGColor
                     cell.btnDecline.selected=false
                     cell.imgDecline.hidden=true
-                    cell.btnDecline.layer.borderColor=UIColor.clearColor().CGColor
                     cell.btnAccept.userInteractionEnabled = false
                 }
                 else if(status == "2")
@@ -453,7 +452,6 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
                     
                     cell.btnAccept.selected=false
                     cell.imgAccept.hidden=true
-                    cell.btnAccept.layer.borderColor=UIColor.clearColor().CGColor
                 }
                 else if(status == "0")
                 {
@@ -464,7 +462,6 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
                     cell.imgAccept.hidden=true
                     
                     cell.btnDecline.layer.borderColor=UIColor.clearColor().CGColor
-                    cell.btnAccept.layer.borderColor=UIColor.clearColor().CGColor
                 }
                 
             }

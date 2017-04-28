@@ -604,7 +604,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         IQKeyboardManager.sharedManager().enableAutoToolbar=false
         
         delay(2.0, closure: {
-            self.attachmentViewS.backgroundColor=UIColor.whiteColor()
+            //self.attachmentViewS.backgroundColor=UIColor.whiteColor()
         })
         
         if ChatListner .getChatListnerObj().socket.status == SocketIOClientStatus.NotConnected {
@@ -1448,6 +1448,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell! {
         if isGroup == "0" {
             let chatObj = chatArray[indexPath.row] as! UserChat
+            
             if chatObj.senderId != ChatHelper .userDefaultForAny("userId") as? String {
                 
                 if chatObj.messageType == "text" {
@@ -4053,7 +4054,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             }
         }else
         {
-            self.attachmentViewS.backgroundColor=UIColor.whiteColor()
+            //self.attachmentViewS.backgroundColor=UIColor.whiteColor()
             growingTextView .resignFirstResponder()
             bottomPlusConstraint.constant=0;
             
@@ -7420,6 +7421,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             let resendBtn = cell.contentView.viewWithTag(58) as! UIButton
             resendBtn.hidden=true
             // ChatListner .getChatListnerObj().chatProgressV[chatObj.locMessageId] = progressV
+            //0 - one to one 
             
             if isGroup == "0"
             {
@@ -7457,14 +7459,15 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 
                 messageType =  chatObj.messageType!
                 
-                
-                let getImagePath = documentsDirectory.stringByAppendingPathComponent("\(chatObj.chatFile!.mediaLocalPath)")
+                let  str  = chatObj.chatFile!.mediaLocalPath
+                let getImagePath = documentsDirectory.stringByAppendingPathComponent("\(str!)")
                 
                 data = UIImageJPEGRepresentation(UIImage(contentsOfFile: getImagePath)!, 0.8)
                 
             }
             else
             {
+                //1 == for group
                 
                 grpChatObj = chatArray[indexPath.row] as! GroupChat
                 
@@ -7503,7 +7506,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     dict["receiver"] = recentChatObj.friendId
                 }
                 
-                let getImagePath = documentsDirectory.stringByAppendingPathComponent("\(grpChatObj.groupChatFile!.mediaLocalPath)")
+                let str = grpChatObj.groupChatFile!.mediaLocalPath
+                let getImagePath = documentsDirectory.stringByAppendingPathComponent("\(str!)")
                 
                 data = UIImageJPEGRepresentation(UIImage(contentsOfFile: getImagePath)!, 0.8)
             }

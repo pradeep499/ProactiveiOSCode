@@ -410,7 +410,7 @@
     cell.imgPerson.contentMode = UIViewContentModeScaleAspectFill;
     cell.imgPerson.layer.masksToBounds = false;
     cell.imgPerson.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    cell.imgPerson.layer.cornerRadius = cell.imgPerson.frame.size.height/2;
+    cell.imgPerson.layer.cornerRadius = 23;
     cell.imgPerson.clipsToBounds = true;
     
     NSLog(@"%@",[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]]);
