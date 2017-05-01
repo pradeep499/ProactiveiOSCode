@@ -21,7 +21,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     
     var arrButtonImages : Array<String> = Array()
     var dataDict = [String : AnyObject]()
-    
+    var followStatus = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
 
         tableViewOutlet.delegate = self
         
+        print("DATA DICT\(dataDict)")
         
         if let imageBackUrlStr = dataDict["backgroundImageUrl"] as? String {
             let image_url = NSURL(string: imageBackUrlStr )
@@ -98,6 +99,60 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     }
     
     
+    func serviceFollowOrganization(status : Int, organizationId:String) {
+        
+        
+        
+        if AppDelegate.checkInternetConnection() {
+            isPostServiceCalled = true
+            
+            
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["organizationId"] = organizationId
+            parameters["status"] = status
+         
+            //call global web service class latest
+            Services.postRequest(ServiceFollowOrganization, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                isPostServiceCalled = false
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                     
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+
+    
+    
+    //MARK:- Collection View
+    
     //*** Delegate and Data Source methods of UicollectionView ***//
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return arrButtonImages.count
@@ -138,7 +193,27 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
             self.navigationController?.pushViewController(broadCast, animated: true)
             
         }
-        else if (indexPath.row==2){  // Follow
+        else if (indexPath.row==2){  // Follow  // API hit for follow
+            
+           
+            let alertController = UIAlertController(title:APP_NAME, message: "Do you want to Follow ?" , preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
+                
+            }))
+            
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
+                
+               
+                let organizationId = self.dataDict["_id"] as! String
+                self.followStatus = 1
+                self.serviceFollowOrganization(self.followStatus, organizationId: organizationId)
+                
+            }))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            
             
         }
        else if(indexPath.row==3) { // Videos

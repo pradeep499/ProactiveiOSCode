@@ -495,8 +495,9 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         let fName =  self.arrData[indexPath.row]["createdBy"]!!["firstName"] as! String
         let lName = self.arrData[indexPath.row]["createdBy"]!!["lastName"] as! String
         
-        eventTypeBy.text = forr + ", by " +  fName + " " + lName
+        //eventTypeBy.text = forr + ", by " +  fName + " " + lName
         
+        eventTypeBy.text = forr + " by " +  fName + " " + lName  // changed as per client request 01/05/2017
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
         
         

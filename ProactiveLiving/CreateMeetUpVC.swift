@@ -790,7 +790,23 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
                 
                 dict["members"] = userIdArray
-                dict["latlong"] = self.strLatLong
+                
+                if(self.pushedFrom == "EDITMEETUPS") {
+                    
+                    if self.strLatLong != nil {
+                         dict["latlong"] = self.strLatLong
+                    }
+                    else {
+                        dict["latlong"] = self.dataDict["latlong"] as! String
+                    }
+                   
+
+                }
+                else {
+                    dict["latlong"] = self.strLatLong
+
+                }
+                
                 
                 
                 if (recurrenceDict != nil) {
