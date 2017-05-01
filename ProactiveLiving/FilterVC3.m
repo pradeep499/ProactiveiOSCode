@@ -193,6 +193,36 @@
     }
 }
 
+
+- (IBAction)btnOnSwitchClickedToChkPersmson:(UIButton*)sender {
+   
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    if (!((status == kCLAuthorizationStatusDenied) || (status == kCLAuthorizationStatusNotDetermined))){
+    if (sender.tag == 561){
+        NSLog(@"button 561 on switc1");
+        [self.switch1 setOn:![self.switch1 isOn] animated:YES];
+        [self.switch2 setOn:NO animated:YES];
+        [self.switch3 setOn:![self.switch1 isOn] animated:YES];
+
+        
+    }
+    if (sender.tag == 562){
+        NSLog(@"button 561 on switc2");
+        [self.switch3 setOn:![self.switch3 isOn] animated:YES];
+        [self.switch1 setOn:![self.switch3 isOn] animated:YES];
+        [self.switch2 setOn:NO animated:YES];
+    }
+    }
+    else{
+        [self CheckstatusForSwitch];
+
+    }
+
+
+}
+
+
+
 #pragma mark - tap- hide keyboard
 - (IBAction)tapRecognizerOnView:(id)sender {
     [self.view endEditing:YES];
@@ -212,15 +242,8 @@
         [self.switch3 setOn:NO animated:YES];
     }
     if (sender.tag==333) {
-    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    if (!((status == kCLAuthorizationStatusDenied) || (status == kCLAuthorizationStatusNotDetermined))){
-            [self.switch1 setOn:!sender.isOn animated:YES];
-            [self.switch2 setOn:NO animated:YES];
-        }
-    else{
-        [self.switch3 setOn:NO animated:YES];
-        [self CheckstatusForSwitch];
-     }
+       [self.switch1 setOn:!sender.isOn animated:YES];
+       [self.switch2 setOn:NO animated:YES];
     }
     
     if(self.switch2.isOn) {

@@ -208,18 +208,18 @@ class MeetUpsListingVC: UIViewController {
                     self.tableView.dataSource = self
                     if filteredarray.count > 0 {
                         let index = (self.arrData as NSArray).indexOfObject(filteredarray[0])
-                        //self.arrData.removeAtIndex(index)
+                       // self.arrData.removeAtIndex(index)
                        // self.arrData.insert(filteredarray[0], atIndex: index)
                         self.arrData[index] = resultDict
-                        let indexpath = NSIndexPath(forRow: index, inSection: 0)
-                        self.tableView.reloadRowsAtIndexPaths([indexpath], withRowAnimation: .Fade)
+                        //let indexpath = NSIndexPath(forRow: index, inSection: 0)
+                        //self.tableView.reloadRowsAtIndexPaths([indexpath], withRowAnimation: .Fade)
                         
                         
                     }
                     
                     
                     
-                    //self.tableView.reloadData()
+                    self.tableView.reloadData()
                    //
                     //Add newly created meeup/invite to phone calender
                     if (resultDict["isNewMeetupInvite"] as? String) != nil {
@@ -247,7 +247,7 @@ class MeetUpsListingVC: UIViewController {
     //Accept button tapped
     func btnAcceptClick(sender: UIButton)  {
         print(sender)
-        //sender.selected = !sender.selected
+       // sender.selected = !sender.selected
         let point = self.tableView.convertPoint(CGPoint.zero, fromView: sender)
         
         guard let indexPath = self.tableView.indexPathForRowAtPoint(point) else {
@@ -424,8 +424,11 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         eventName.text = self.arrData[indexPath.row]["title"] as? String
         var dataDict = self.arrData[indexPath.row] as! [String : AnyObject]
         let arrMembers = dataDict["members"] as! [AnyObject]
-        cell.btnAccept.layer.borderWidth = 1.0
-        cell.btnDecline.layer.borderWidth = 1.0
+       // cell.btnAccept.layer.borderWidth = 1.0
+       // cell.btnDecline.layer.borderWidth = 1.0
+
+        AppHelper.setBorderOnView(cell.btnAccept)
+        AppHelper.setBorderOnView(cell.btnDecline)
 
         //Check status if member accepted or rejacted--
         for item in arrMembers {
@@ -433,6 +436,7 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
             var membDict = item as! [String : AnyObject]
             let status = membDict["status"] as! String
             
+            print_debug(status)
             
             if(membDict["memberId"] as! String == ChatHelper.userDefaultForKey("userId"))
             {
@@ -572,6 +576,11 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
             acceptButton.setTitle("Sure!", forState: UIControlState.Normal)
             declineButton.setTitle("Sorry!", forState: UIControlState.Normal)
             
+            
+           // acceptButton.setImage(UIImage.init(named: "sure_deselected"), forState: .Selected)
+          //  declineButton.setImage(UIImage.init(named: "sure_selected"), forState: .Normal)
+
+            
            // acceptButton.titleLabel?.text="Sure!"
            // declineButton.titleLabel?.text="Sorry!"
             
@@ -592,6 +601,9 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
             //acceptButton.titleLabel?.text="Accept"
            // declineButton.titleLabel?.text="Decline"
         
+            //acceptButton.setImage(UIImage.init(named: "accept_selected"), forState: .Selected)
+           // declineButton.setImage(UIImage.init(named: "accept_deselected"), forState: .Normal)
+
             lblAddress.text = self.arrData[indexPath.row]["webLink"] as? String
             imgAddress.image=UIImage(named:"web_invite_link")
             
@@ -600,6 +612,7 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
             lblMembers.text = "\(memberArr.count) Attending"
         }
         
+
         acceptButton.addTarget(self, action: #selector(btnAcceptClick(_:)), forControlEvents: .TouchUpInside)
         declineButton.addTarget(self, action: #selector(btnDeclineClick(_:)), forControlEvents: .TouchUpInside)
         
