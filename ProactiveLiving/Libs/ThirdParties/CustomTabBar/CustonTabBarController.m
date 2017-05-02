@@ -10,7 +10,7 @@
 #import "AppHelper.h"
 
 @interface CustonTabBarController ()
-@property (nonatomic, strong) UIButton* middleButton;
+
 @end
 
 @implementation CustonTabBarController
@@ -22,6 +22,11 @@
     self.tabBar.backgroundColor = [UIColor clearColor];
     [AppHelper setBorderOnView:self.view];
     //[self setTabBarBackground];
+}
+
+- (void)setCenterImage {
+    
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"ic_more_tabar_home_outline"] highlightImage:[UIImage imageNamed:@"ic_more_tabar_home_outline"]];
 }
 
 // reset the background image in custom tabbar.
@@ -72,6 +77,7 @@
     
     [self.view addSubview:self.middleButton];
     }
+    [self.view bringSubviewToFront:self.middleButton];
 }
 -(void)clicked:(UIButton*)sender
 {
@@ -82,8 +88,14 @@
 // pass a param to describe the state change, an animated flag and a completion block matching UIView animations completion
 -(void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
     
+    NSLog(@"tab bar y - %f", self.tabBar.frame.origin.y);
+    if ([self tabBarIsVisible]) {
+        NSLog(@"visible");
+    } else {
+        NSLog(@"not visible");
+    }
     // bail if the current state matches the desired state
-     if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
+    if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
     
     // get a frame calculation ready
     CGFloat height = self.tabBar.frame.size.height+15;

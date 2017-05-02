@@ -177,11 +177,12 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         
         
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-               // print("Finish#")
-            }
-        })
+//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//            self.bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+//                    self.bottomTabBar!.setCenterImage()
+//            }
+//            
+//        })
         
     
         
@@ -250,7 +251,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
 //        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
 //            print("Finish#")
 //        }
-        
+//        bottomTabBar!.view.bringSubviewToFront(bottomTabBar!.middleButton)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -279,6 +280,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             }else {
                 chatMainObj.isGroup="1"
             }
+//            chatMainObj.bottomTabBar = self.bottomTabBar
             self.navigationController?.pushViewController(chatMainObj, animated: true)
         })
         ChatHelper .removeFromUserDefaultForKey("chatId")
@@ -506,7 +508,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
-        
+//        chatMainObj.bottomTabBar = self.bottomTabBar
         if anObject.groupId == "0" {
            
             chatMainObj.isFromClass="Recent"

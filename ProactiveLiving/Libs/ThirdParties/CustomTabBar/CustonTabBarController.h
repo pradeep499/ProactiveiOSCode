@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface CustonTabBarController : UITabBarController
+@property (nonatomic, strong) UIButton* middleButton;
+
 -(void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion;
+-(void)setCenterImage;
 @end

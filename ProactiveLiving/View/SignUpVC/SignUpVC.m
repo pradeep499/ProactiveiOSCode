@@ -385,7 +385,7 @@
 //    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:ACCEPTABLE_CHARACTERS] invertedSet];
 //    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
 //    
-//    long rowNo = [self getCurrentRow:textField];
+    long rowNo = [self getCurrentRow:textField];
 //    NSLog(@"%ld",rowNo);
 //    if (rowNo == 0) {
 //        //firstname
@@ -430,11 +430,20 @@
     }
     
     //restrict text to maxlength
+    
+    if (rowNo == 4) {
+                //email
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        return (newLength > 100) ? NO : YES;
+        
+    }
+    else {
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
     return (newLength > maxLength) ? NO : YES;
-
+    }
     return YES;
 }
+
 #pragma mark - alert
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 100) {

@@ -14,11 +14,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self addCenterButtonWithImage:[UIImage imageNamed:@"ic_more_tabar_home_outline"] highlightImage:[UIImage imageNamed:@"ic_more_tabar_home_outline"]];
+//    [self addCenterButtonWithImage:[UIImage imageNamed:@"ic_more_tabar_home_outline"] highlightImage:[UIImage imageNamed:@"ic_more_tabar_home_outline"]];
     self.tabBar.backgroundColor = [UIColor clearColor];
     [AppHelper setBorderOnView:self.view];
     //[self setTabBarBackground];
 }
+
 
 // reset the background image in custom tabbar.
 - (void) setTabBarBackground {
@@ -52,6 +53,7 @@
     }
     
     [self.view addSubview:button];
+    [self.view bringSubviewToFront:button];
 }
 -(void)clicked:(UIButton*)sender
 {

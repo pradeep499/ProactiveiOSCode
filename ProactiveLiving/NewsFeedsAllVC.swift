@@ -163,8 +163,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //super.viewWillAppear(animated)
         if self.title != "EXPLORE" {
             
-            //self.postCircleArr.removeAllObjects()
-            //self.collectionView.reloadData()
+            self.postCircleArr.removeAllObjects()
+            self.collectionView.reloadData()
             self.getAllPostEvent()
             self.getLikeUpdate()
             

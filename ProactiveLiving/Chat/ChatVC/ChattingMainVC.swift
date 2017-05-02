@@ -581,7 +581,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         let fontName = ChatHelper .userDefaultForAny("fontName") as! String
         let fontSize = ChatHelper .userDefaultForAny("fontSize") as! CGFloat
         
-          self.lblPastMeldMsg.hidden=true
+        self.lblPastMeldMsg.hidden=true
         self.font = UIFont(name: fontName, size: fontSize)
 
         self.addInputView()
@@ -594,7 +594,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     override func viewWillAppear(animated: Bool) {
         
         bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
-            // print(finish)
+            
+//            let height = self.bottomTabBar!.tabBar.frame.size.height+15;
+//            let offsetY =  height
+//            self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
+            
         }
         super.viewWillAppear(true)
     
@@ -733,9 +737,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         super.viewWillDisappear(animated)
         
         
-        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
-          //  print(finish)
-    }
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+            // print(finish)
+        }
         
         self.navigationController?.navigationBarHidden = false
         IQKeyboardManager.sharedManager().enable = true
@@ -912,6 +916,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 self.chatTableView.reloadRowsAtIndexPaths([self.deleteIndexP], withRowAnimation: .None)
             }
         }
+        
+        
     }
     
     func btnCopyCancle() {
@@ -3216,7 +3222,15 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "updateNameObserver", object: nil)
      
         self.saveRecentChat()
-
+        
+        let height = self.bottomTabBar!.tabBar.frame.size.height+15;
+        let offsetY =  height;
+        self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
+        self.bottomTabBar!.middleButton.frame = CGRectOffset(self.bottomTabBar!.middleButton.frame, 0, offsetY);
+        
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+            // print(finish)
+        }
             if self.isFromClass == "ChatF"
             {
                 self.navigationController?.popToRootViewControllerAnimated(true)
@@ -3227,6 +3241,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             {
                 self.navigationController?.popViewControllerAnimated(true)
             }
+        
+        
     }
     
     
