@@ -55,6 +55,9 @@ extension MemberContactListVC : UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("ContactItemList")! as UITableViewCell
         let nameLbl = cell.viewWithTag(20) as! UILabel
         let profileImg = cell.viewWithTag(10) as! UIImageView
+        
+        profileImg.contentMode = .ScaleAspectFill
+
         profileImg.layer.borderWidth = 1.0
         profileImg.layer.masksToBounds = false
         profileImg.layer.borderColor = UIColor.whiteColor().CGColor

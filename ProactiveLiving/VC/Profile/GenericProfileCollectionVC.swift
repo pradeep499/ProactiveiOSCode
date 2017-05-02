@@ -649,7 +649,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             let thumbIV = cell!.viewWithTag(1) as! UIImageView
             
-            let imgData = UIImageJPEGRepresentation(thumbIV.image!, 0.3);
+            let imgData = UIImageJPEGRepresentation(thumbIV.image!, 0.2);
             
             //let imge =  thumbIV.image?.resizeWithPercentage(60.0)
             

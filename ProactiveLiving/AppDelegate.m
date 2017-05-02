@@ -76,7 +76,7 @@
 
     
     ///Check For Reachability
-   /// [[ChatListner getChatListnerObj]checkForReachability];
+     [[ChatListner getChatListnerObj]checkForReachability];
 
     //IQKeyboard Manager
     //[IQKeyboardManager sharedManager].enableAutoToolbar = NO;

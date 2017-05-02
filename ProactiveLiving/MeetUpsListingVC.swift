@@ -547,8 +547,8 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         
         let acceptButton = cell.contentView.viewWithTag(25) as! UIButton
         let declineButton = cell.contentView.viewWithTag(26) as! UIButton
-        AppHelper.setBorderOnView(acceptButton)
-        AppHelper.setBorderOnView(declineButton)
+        //AppHelper.setBorderOnView(acceptButton)
+       // AppHelper.setBorderOnView(declineButton)
         
         cell.btnAccept.userInteractionEnabled = true
         

@@ -1200,6 +1200,39 @@ func connectToSocket() -> Void{
                ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
             }
         }
+        
+        self.sendOffLineGroupMsg()
+    }
+    
+    func sendOffLineGroupMsg()
+    {
+        let strLogin:String = ChatHelper .userDefaultForAny("userId") as! NSString as String
+        let strSender:String = ChatHelper .userDefaultForAny("userId") as! NSString as String
+        let strStatus:String = "3"
+        let strPred:String = "loginUserId contains[cd] \"\(strLogin)\" AND senderId contains[cd] \"\(strSender)\"  AND messageStatus contains[cd] \"\(strStatus)\""
+        let instance = DataBaseController.sharedInstance
+        var fetchResult = instance.fetchData("GroupChat", predicate: strPred, sort: ("localSortID",true))! as NSArray
+        for myobject : AnyObject in fetchResult
+        {
+            var anObject = myobject as! GroupChat
+            if anObject.messageType == "text"
+            {
+                var sendMsgD = Dictionary<String,String>()
+                // sendMsgD["recieverid"]=anObject.receiverId
+                sendMsgD["userid"]=ChatHelper.userDefaultForKey("userId")
+                sendMsgD["message"]=anObject.message
+                sendMsgD["localmsgid"] = anObject.locMessageId
+                sendMsgD["groupid"] = anObject.groupId
+                sendMsgD["chatType"] = "groupChat"
+                sendMsgD["type"] = "text"
+                
+                // print("send group msg\(sendMsgD)")
+                
+                ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
+            }
+            
+        }
+        
     }
     
     func showForgroundChatNotification(dict: NSDictionary) {
@@ -1388,14 +1421,14 @@ func connectToSocket() -> Void{
                    // localStr = strUrl
                 
                 var dict = Dictionary<String, AnyObject>()
-                
-                if let latestValue = receiveMsgDic["meldDate"] as? String {
-                   dict["meldDate"] = latestValue
-                }
-                
-                if let latestValue1 = receiveMsgDict["servertime"] as? String {
-                    dict["servertime"] = latestValue1
-                }
+                /*
+                 if let latestValue = receiveMsgDic["meldDate"] as? String {
+                 dict["meldDate"] = latestValue
+                 }
+                 
+                 if let latestValue1 = receiveMsgDict["servertime"] as? String {
+                 dict["servertime"] = latestValue1
+                 }*/
                 
                 let groupId = receiveMsgDic["groupid"] as! String
                 let userCount = receiveMsgDic["userCount"] as! Int
@@ -1435,13 +1468,15 @@ func connectToSocket() -> Void{
                     instance.insertRecentChatFromGroup("RecentChatList", params: dict)
                 }
                 
-                instance.insertGroupInfoData("GroupList", params: dict)
+               // instance.insertGroupInfoData("GroupList", params: dict)
+                instance.insertGroupInfoDataWithAdminRole("GroupList", params: dict, memberArr: arr)
                 self?.addUserFromGroupInGroupUserList(arr)
             }
             
             let arr1 = receiveMsgDict["deletedUserInGroup"] as! NSArray
             
             for receiveMsgDic in arr1 {
+                
                 let groupId = receiveMsgDic["groupid"] as! String
                 let instance = DataBaseController.sharedInstance
                 let str:String = ChatHelper.userDefaultForKey("userId") 
@@ -1714,21 +1749,7 @@ func connectToSocket() -> Void{
         if (AppHelper.userDefaultsForKey("userId")) != nil {
             
             if socket == nil {
-                
-                
-                socket = SocketIOClient(socketURL: NSURL(string: socketIO_BaseURL)!, options: [.Log(true), .ForcePolling(true)])
-                
-                /*
-                //socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.178:90")!, options: [.Log(true), .ForcePolling(true)])
-                //Server URL
-                socket = SocketIOClient(socketURL: NSURL(string: "http://52.23.211.77:3000")!)
-                
-                //Production URL
-                //socket = SocketIOClient(socketURL: NSURL(string: "http://52.89.149.60:3000")!, options: [.Log(true), .ForcePolling(true)])
-                
-                //Test Server
-                  socket = SocketIOClient(socketURL: NSURL(string: "http://192.168.3.185:90")!, options: [.Log(true), .ForcePolling(true)])
-              */
+              socket = SocketIOClient(socketURL: NSURL(string: socketIO_BaseURL)!, options: [.Log(true), .ForcePolling(true)])
                 
             }
             //self.closeConnection();
@@ -1756,7 +1777,7 @@ func connectToSocket() -> Void{
             }
             }
             
-            socket = nil
+           // socket = nil
             isConnectionStable = false
            
             //ChatListner.getChatListnerObj().socket.removeAllHandlers()

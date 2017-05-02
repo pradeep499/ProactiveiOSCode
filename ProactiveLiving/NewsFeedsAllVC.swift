@@ -1504,14 +1504,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         btn_like.titleLabel?.textAlignment = .Left
         lbl_subDetails.text = ""
 
-        if(self.title != "PAC CIRCLES") {
+        if(self.title != "PACs") {
             cell.layoutConstBtnShare.constant = 74
             btn_share.alpha = 1.0
             btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             btn_options.alpha = 1.0
             cell.layoutConstBtnLike.constant = 80
             btn_like.userInteractionEnabled = true
-
+            postContainerView.hidden = false
         }
         else {
             cell.layoutConstBtnLike.constant = screenWidth - 150
@@ -1520,6 +1520,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
             btn_options.alpha = 0.0
             btn_like.userInteractionEnabled = false
+            postContainerView.hidden = true
 
         }
 

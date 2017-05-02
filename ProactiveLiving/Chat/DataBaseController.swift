@@ -1476,6 +1476,55 @@ class DataBaseController : NSObject
             
         }
     }
+    
+    
+    func insertGroupInfoDataWithAdminRole(modelName:String, params: Dictionary<String, AnyObject>,memberArr:NSArray)
+    {
+        let cdhObj = appDelegate.managedObjectContext
+        
+        let exist:GroupList? = checkIfGroupAlreadyExist(modelName, params: params)
+        if (exist != nil)
+        {
+            exist!.groupName = params["groupname"] as? String
+            exist!.groupId = params["groupid"] as? String
+            exist!.loginUserId = ChatHelper .userDefaultForAny("userId") as? String
+            exist!.createdDate = params["createdDate"] as? String
+            exist!.groupImage = params["imgUrl"] as? String
+            for dict in memberArr{
+                if (dict["role"] as! String).lowercaseString == "admin"{
+                    exist!.adminUserId = dict["userId"] as? String
+                     break;
+                }
+            }
+            exist!.userCount = params["usercount"] as? String
+            appDelegate.saveContext()
+            
+        }
+        else
+        {
+            let newItem: GroupList = NSEntityDescription.insertNewObjectForEntityForName(modelName, inManagedObjectContext: cdhObj) as! GroupList
+            
+            newItem.groupName = params["groupname"] as? String
+            newItem.groupId = params["groupid"] as? String
+            newItem.loginUserId = ChatHelper .userDefaultForAny("userId") as? String
+            newItem.createdDate = params["createdDate"] as? String
+            newItem.groupImage = params["imgUrl"] as? String
+            //newItem.adminUserId = params["createdBy"] as? String
+            newItem.userCount = params["usercount"] as? String
+            for dict in memberArr{
+                if (dict["role"] as! String).lowercaseString == "admin"{
+                    newItem.adminUserId = dict["userId"] as? String
+                    break;
+                }
+            }
+
+            appDelegate.saveContext()
+            
+            
+            
+            
+        }
+    }
     func checkIfGroupAlreadyExist(modelName:String, params: Dictionary<String, AnyObject>) -> GroupList!
     {
         let instance = DataBaseController.sharedInstance
