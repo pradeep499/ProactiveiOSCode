@@ -13,6 +13,11 @@ class FullScreenImageVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var activitIndc: UIActivityIndicatorView!
     @IBOutlet weak var fullImageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var imageViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTrailingConstraint: NSLayoutConstraint!
 
     var bottomTabBar : CustonTabBarController!
 
@@ -76,6 +81,11 @@ class FullScreenImageVC: UIViewController, UIScrollViewDelegate {
 
     }
     
+    func scrollViewDidZoom(scrollView: UIScrollView) {
+        //updateConstraintsForSize(view.bounds.size)  // 4
+    }
+
+    
     func showDownloadedImage(note:NSNotification) {
             let imgStr : String = note.valueForKey("userInfo")?.valueForKey("imagePath") as! String
             self.fullImageView.image = UIImage(contentsOfFile: imgStr)
@@ -86,6 +96,47 @@ class FullScreenImageVC: UIViewController, UIScrollViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // 4
+       // updateMinZoomScaleForSize(view.bounds.size)
+    }
+
+    
+    
+    private func updateMinZoomScaleForSize(size: CGSize) {
+        let widthScale = size.width / fullImageView.bounds.width
+        let heightScale = size.height / fullImageView.bounds.height
+        let minScale = min(widthScale, heightScale)
+        // 2
+        if !(minScale > 1.0) {
+            scrollView.minimumZoomScale = minScale
+
+        }
+        // 3
+        if !(minScale > 1.0) {
+         scrollView.zoomScale = minScale
+        }
+    }
+    
+   
+    private func updateConstraintsForSize(size: CGSize) {
+        // 2
+        let yOffset = max(0, (size.height - fullImageView.frame.height) / 2)
+        imageViewTopConstraint.constant = yOffset
+        imageViewBottomConstraint.constant = yOffset
+        // 3
+        let xOffset = max(0, (size.width - fullImageView.frame.width) / 2)
+        imageViewLeadingConstraint.constant = xOffset
+        imageViewTrailingConstraint.constant = xOffset
+        
+        view.layoutIfNeeded()
+    }
+
+    
+    
     
     @IBAction func backBtnClick() {
          self.navigationController?.popViewControllerAnimated(true)

@@ -76,7 +76,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             self.collectionView.registerClass(HeaderScrollerView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderScrollerView")
         }
         
-        if(self.title != "PAC CIRCLES") {
+        if(self.title != "PACs") {
             self.layoutConstHeightShareView.constant = 87
             self.plusButton.hidden = false
             self.btnPost.hidden = false
@@ -159,6 +159,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.postContainerView.frame = r
     }
     override func viewWillAppear(animated: Bool) {
+        
+        //createConnection 
+        ChatListner.getChatListnerObj().createConnection()
         
         //super.viewWillAppear(animated)
         if self.title != "EXPLORE" {

@@ -478,12 +478,12 @@ class DataBaseController : NSObject
                 }
                 else
                 {
-                    unreadcount = unreadcount + Int(anObject.notificationCount!)!
+                    unreadcount += Int(anObject.notificationCount!)!
                     
                 }
             }
         }
-      //  print("UnreadCount=\(unreadcount)")
+        print("UnreadCount=\(unreadcount)")
        
         return unreadcount
     }
@@ -1642,49 +1642,7 @@ class DataBaseController : NSObject
             exist!.lastMessage = params["message"] as? String
             
         
-            if let latestValue = params["meldDate"] as? String {
-                exist!.meldDate = latestValue
-            }
-            
-            if let latestValue1 = params["servertime"] as? String {
-                exist!.meldServerTime = latestValue1
-            }
-
-        
-            /*
-        if let latestValue = params["meldDate"] as? String
-        {
-          if let latestValue1 = params["servertime"] as? String {
-                
-            var tempMeldDate = params["meldDate"] as? String
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            var tempDate = dateFormatter.dateFromString(tempMeldDate!) as NSDate!
-
-            
-            var serverMeldDate =  params["servertime"] as? String
-            let dateFormat2 = NSDateFormatter()
-            dateFormat2.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            var serverTimeDate = dateFormat2.dateFromString(serverMeldDate!) as NSDate!
-           // print(serverTimeDate)
-            if tempDate.compare(serverTimeDate) == NSComparisonResult.OrderedDescending
-            {
-                
-            }
-            else if tempDate.compare(serverTimeDate) == NSComparisonResult.OrderedAscending
-            {
-                //NSLog("date1 after date2");
-                 exist!.lastMessage = "CLOSED"
-                 exist!.lastMessageTime = ""
-            }
-            else
-            {
-               // NSLog("dates are equal");
-            }
-            }
-        }
-            */
-            if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil)
+         if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil)
             {
                 if ChatHelper .userDefaultForAny("friendId") as! String == params["groupid"] as! String
                 {
@@ -1727,47 +1685,7 @@ class DataBaseController : NSObject
             
             newItem.isTyping = "0"
             
-            if let latestValue = params["meldDate"] as? String {
-                  newItem.meldDate = latestValue
-            }
             
-            if let latestValue1 = params["servertime"] as? String {
-               newItem.meldServerTime = latestValue1
-            }
-            
-            /*
-            if let latestValue = params["meldDate"] as? String
-            {
-                if let latestValue1 = params["servertime"] as? String {
-                    
-            var tempMeldDate = params["meldDate"] as? String
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            var tempDate = dateFormatter.dateFromString(tempMeldDate!) as NSDate!
-            
-            
-            var serverMeldDate =  params["servertime"] as? String
-            let dateFormat2 = NSDateFormatter()
-            dateFormat2.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            var serverTimeDate = dateFormat2.dateFromString(serverMeldDate!) as NSDate!
-          //  print(serverTimeDate)
-            if tempDate.compare(serverTimeDate) == NSComparisonResult.OrderedDescending
-            {
-                
-            }
-            else if tempDate.compare(serverTimeDate) == NSComparisonResult.OrderedAscending
-            {
-               // NSLog("date1 after date2");
-                newItem.lastMessage = "CLOSED"
-                newItem.lastMessageTime = ""
-            }
-            else
-            {
-                NSLog("dates are equal");
-            }
-                }
-            }
-            */
             //Hidden by Gaurav
             //print(newItem)
             

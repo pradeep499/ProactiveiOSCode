@@ -22,6 +22,9 @@ class GenericPacTableVC: UIViewController {
     var pacDetailArr = [AnyObject]()
     var genericType:PacGenericType!
     var isForMemberProfile = false
+    var isFriend = false
+    var isviewForID = ""
+
     var strId = ""
     var spinner = UIActivityIndicatorView()
     var fromIndex = 0
@@ -78,7 +81,11 @@ class GenericPacTableVC: UIViewController {
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
             var serviceURL = ""
-            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            if isFriend{
+                parameters["userId"] = isviewForID
+            }else{
+                parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            }
             parameters["index"] = index
             
             if (index == 0){
