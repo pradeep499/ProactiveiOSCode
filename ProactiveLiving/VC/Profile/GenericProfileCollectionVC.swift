@@ -11,6 +11,9 @@ import Social
 import MediaPlayer
 import AVKit
 
+
+
+    
 protocol GenericProfileCollectionVCDelegate {
     func getSelectedImgData(imgData:NSData, imgName:String) ;
 }
@@ -646,8 +649,12 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             let thumbIV = cell!.viewWithTag(1) as! UIImageView
             
-            let imgData = UIImagePNGRepresentation(thumbIV.image!)
+            let imgData = UIImageJPEGRepresentation(thumbIV.image!, 0.3);
             
+            //let imge =  thumbIV.image?.resizeWithPercentage(60.0)
+            
+           // let imgData = UIImagePNGRepresentation(imge!)
+
             self.delegate!.getSelectedImgData(imgData!, imgName:thumbNailName)
             self.navigationController?.popViewControllerAnimated(true)
             

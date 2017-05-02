@@ -1284,7 +1284,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         switch kind {
             
         case UICollectionElementKindSectionHeader:
-            
+
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderScrollerView", forIndexPath: indexPath) as! HeaderScrollerView
             
             //     headerView.frame.size.height = 0
@@ -1297,9 +1297,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "FooterAllReUsableView", forIndexPath: indexPath) as! FooterAllReUsableView
             return footerView
             
-        default:
+        default: break
             
-            assert(false, "Unexpected element kind")
+            //assert(false, "Unexpected element kind")
         }
         return UICollectionReusableView.init(frame: CGRectMake(0, 0, 0, 0))
     }
@@ -1308,7 +1308,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
         // Require no header section in such cases
-        if self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL" || self.title == "PAC CIRCLES" {
+        print_debug("title for index values");
+        print_debug(self.title)
+        if self.title == "FRIENDS" || self.title == "COLLEAGUES" || self.title == "HEALTH CLUBS" || self.title == "WALL" || self.title == "PACs" {
         
             return CGSizeZero
         }

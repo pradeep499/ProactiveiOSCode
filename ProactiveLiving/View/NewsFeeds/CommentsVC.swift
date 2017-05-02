@@ -152,7 +152,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         iv_CommentsProfile.backgroundColor = UIColor.whiteColor()
         iv_CommentsProfile.layer.masksToBounds = false
         iv_CommentsProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
-        iv_CommentsProfile.layer.cornerRadius = iv_CommentsProfile.frame.size.height/2
+        iv_CommentsProfile.layer.cornerRadius = 26
         iv_CommentsProfile.clipsToBounds = true
         
         let tapProfileImage = UITapGestureRecognizer.init(target: self, action: #selector(CommentsVC.onClickUserProfileImage))
@@ -605,7 +605,7 @@ extension CommentsVC:UITableViewDataSource{
         iv_profile.backgroundColor = UIColor.whiteColor()
         iv_profile.layer.masksToBounds = false
         iv_profile.layer.borderColor = UIColor.lightGrayColor().CGColor
-        iv_profile.layer.cornerRadius = iv_profile.frame.size.height/2
+        iv_profile.layer.cornerRadius = 26
         iv_profile.clipsToBounds = true
         let tapProfileImage = UITapGestureRecognizer.init(target: self, action: #selector(CommentsVC.onClickCellProfileImage(_:)))
         iv_profile.addGestureRecognizer(tapProfileImage)

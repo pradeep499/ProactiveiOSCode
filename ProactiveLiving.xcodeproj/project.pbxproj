@@ -442,6 +442,7 @@
 		CE4999151E64657D00C48845 /* CreateEditResourcePACVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4999141E64657D00C48845 /* CreateEditResourcePACVC.swift */; };
 		CE4999171E69A83B00C48845 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4999161E69A83B00C48845 /* Extensions.swift */; };
 		CE4999191E6D609600C48845 /* MyPACVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4999181E6D609600C48845 /* MyPACVC.swift */; };
+		CEE3EC3D1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3EC3C1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1095,6 +1096,7 @@
 		CE4999141E64657D00C48845 /* CreateEditResourcePACVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEditResourcePACVC.swift; sourceTree = "<group>"; };
 		CE4999161E69A83B00C48845 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = AppHelper/Extensions.swift; sourceTree = "<group>"; };
 		CE4999181E6D609600C48845 /* MyPACVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPACVC.swift; sourceTree = "<group>"; };
+		CEE3EC3C1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateClassForSocketConnection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1750,6 +1752,7 @@
 				671C3D981C44FEF6006A5423 /* ControllerClasses */,
 				671C3D5F1C44FB72006A5423 /* Supporting Files */,
 				671C3D9A1C44FF26006A5423 /* Resources */,
+				CEE3EC3C1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift */,
 			);
 			path = ProactiveLiving;
 			sourceTree = "<group>";
@@ -3432,6 +3435,7 @@
 				BA27071F1CA96F4600C1E242 /* BookTableCell.m in Sources */,
 				BA5900EB1D364EFD006142AC /* Test+CoreDataProperties.swift in Sources */,
 				605EAC711E1E63C70048EA8F /* SOImageBrowserView.m in Sources */,
+				CEE3EC3D1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift in Sources */,
 				BA1683A71E83D8D1005EF1C1 /* PACNotificationVC.m in Sources */,
 				BA59019D1D36579D006142AC /* IQUIScrollView+Additions.swift in Sources */,
 			);
