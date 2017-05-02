@@ -78,48 +78,24 @@
     ///Check For Reachability
      [[ChatListner getChatListnerObj]checkForReachability];
 
-    //IQKeyboard Manager
-    //[IQKeyboardManager sharedManager].enableAutoToolbar = NO;
-
-    /*
-    BOOL isLoggedIn;
-    if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId])
-        isLoggedIn = YES;    // from your server response
-    else
-        isLoggedIn=NO;
-  
-    NSString *storyboardId = isLoggedIn ? @"ValidationCentersVC" : @"LoginVC";
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *initViewController = [storyboard instantiateViewControllerWithIdentifier:storyboardId];
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = initViewController;
-    [self.window makeKeyAndVisible];
-    */
-    //--OR--
-    /*
-    UINavigationController *navigation = (UINavigationController *) self.window.rootViewController;
-    [navigation.visibleViewController performSegueWithIdentifier:@"GetPasVC" sender:nil];
-     */
-    
-    
-    /*
-    // After this line: [window addSubview:tabBarController.view];
-    
-    splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-    splashView.image = [UIImage imageNamed:@"Default.png"];
-    [self.window addSubview:splashView];
-    [self.window bringSubviewToFront:splashView];
-    
-    // Do your time consuming setup
-    
-    [splashView removeFromSuperview];
-     */
-    
     //Create socket connection
-    [[ChatListner getChatListnerObj] createConnection];
+    //[[ChatListner getChatListnerObj] createConnection];
     
-    // Method execution in each 15 seconds.
-    //[NSTimer scheduledTimerWithTimeInterval: 15.0 target:self selector: @selector(timerFired:) userInfo: nil repeats: YES];
+    //launch application with notification
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (notification) {
+            NSLog(@"app recieved notification from remote%@",notification);
+            [self application:application didReceiveRemoteNotification:notification];
+        }else{
+            NSLog(@"app did not recieve notification");
+        }
+    });
+  
+    
+    
+    
     
     return YES;
 }
@@ -193,77 +169,42 @@
     NSLog(@"[userInfo didReceiveRemoteNotification == %@",[userInfo valueForKey:@"aps"]);
     
     if ([AppHelper userDefaultsForKey:@"userId"]) {
-        
-        //NSString*strMsg= [[userInfo valueForKey:@"aps"] objectForKey:@"alert"];
-        NSDictionary *info_dic = [userInfo valueForKey:@"aps"];
+            NSDictionary *info_dic = [userInfo valueForKey:@"aps"];
         self.notyDic=[NSMutableDictionary dictionaryWithDictionary:info_dic];
-        int pushType = [[info_dic objectForKey:@"push_type"] intValue]; // 20->one to one & 21->group chat
+        int pushType = [[info_dic objectForKey:@"push_type"] intValue]; // 10->one to one & 11->group chat
         
-        if (pushType == 20 || pushType==21) {
+        if (pushType == 10 || pushType==11) {
             
-            // Pk 30 Oct 2015
-            
-            if ([[AppHelper userDefaultsForKey:@"APP_STATUS"]isEqualToString:@"didBecomeInActive"])
-            {
-                NSLog(@"abc");
-                
-                //NSString *senderid  = info_dic[@"senderid"];
-                
                 UINavigationController *nav=(UINavigationController *)[AppDelegate getAppDelegate].self.window.rootViewController;
                 NSArray*vcArray=[nav viewControllers];
                 UITabBarController *tabBarController=nil;
                 BOOL isTab=NO;
                 NSInteger tabBarValue=0;
-                for (int i = 0; i<vcArray.count; i++)
-                {
+                for (int i = 0; i<vcArray.count; i++){
                     UIViewController* controller = [vcArray objectAtIndex:i];
-                    //  NSLog(@"$UIViewController===1%@",controller);
-                    if([controller isKindOfClass:NSClassFromString(@"TabBarViewController")])
-                    {
-                        isTab=YES;
+                    NSLog(@"$UIViewController===1%@",controller);
+                    if ([controller isKindOfClass:[UITabBarController class]]) {
+                        isTab = YES;
                         tabBarValue = i;
-                        tabBarController=(UITabBarController*)controller;
+                        tabBarController = (UITabBarController*)controller;
                         break;
                     }
+                    
                 }
                 if (isTab) {
-                    tabBarController.selectedIndex=3;
-                    
-                    
+                    tabBarController.selectedIndex = 1;
                 }
-                
-                
-            }
-            else{
-                
-                UINavigationController *nav=(UINavigationController *)[AppDelegate getAppDelegate].self.window.rootViewController;
-                NSArray*vcArray=[nav viewControllers];
-                UITabBarController *tabBarController=nil;
-                BOOL isTab=NO;
-                NSInteger tabBarValue= 0;
-                for (int i = 0; i<vcArray.count; i++)
-                {
-                    UIViewController* controller = [vcArray objectAtIndex:i];
-                    //  NSLog(@"$UIViewController===1%@",controller);
-                    if([controller isKindOfClass:NSClassFromString(@"TabBarViewController")])
-                    {
-                        isTab=YES;
-                        tabBarValue = i;
-                        tabBarController=(UITabBarController*)controller;
-                        break;
-                    }
-                }
-                
+            
                 //set up badge Icon
                 
                 if ([[DataBaseController sharedInstance] fetchUnreadCount] > 0) {
-                    
-                    [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = [NSString stringWithFormat:@"%zd",  [[DataBaseController sharedInstance] fetchUnreadCount]  ];
+                
+                [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = [NSString stringWithFormat:@"%zd",  [[DataBaseController sharedInstance] fetchUnreadCount]  ];
                 }else{
                     [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = nil;
                 }
                 
-            }
+            
         }
     }
 }
@@ -341,46 +282,7 @@
     }
 }
 
-/*
--(void)getStaticData
-{
-    //check internet before hitting web service
-    if ([AppDelegate checkInternetConnection]) {
-        
-        NSMutableDictionary *parameters=[NSMutableDictionary new];
-        //call global web service class
-        [Services serviceCallWithPath:ServiceGetPASInst withParam:parameters success:^(NSDictionary *responseDict)
-         {
-             //[SVProgressHUD dismiss];//dissmiss indicator
-             
-             if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
-             {
-                 if ([[responseDict objectForKey:@"error"] intValue] == 0) {
-                     
-                     [AppDelegate getAppDelegate].PASInst=[[responseDict objectForKey:@"result"] valueForKey:@"PasValidationInstruction"];
-                     [AppDelegate getAppDelegate].PASInstVideo=[[responseDict objectForKey:@"result"] valueForKey:@"PasValidationInstructionVideo"];
-                     [AppDelegate getAppDelegate].aboutPAS=[[responseDict objectForKey:@"result"] valueForKey:@"AboutPass"];
-                     
-                 }
-                 else
-                     [AppHelper showAlertWithTitle:[responseDict objectForKey:@"errorMsg"] message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
-                 
-             }
-             else
-                 [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
-             
-         } failure:^(NSError *error)
-         {
-             //[SVProgressHUD dismiss];
-             [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
-         }];
-        
-    }
-    else
-        //show internet not available
-        [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
-}
-*/
+
 
 
 
@@ -395,12 +297,13 @@
     }
 }
 
+
+
 #pragma mark - App life-cycle methods
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    [AppHelper saveToUserDefaults:@"didBecomeInActive" withKey:@"APP_STATUS"];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -428,8 +331,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [AppHelper saveToUserDefaults:@"didBecomeActive" withKey:@"APP_STATUS"];
-    [[ChatListner getChatListnerObj] createConnection];
+    //[AppHelper saveToUserDefaults:@"didBecomeActive" withKey:@"APP_STATUS"];
+   // [[ChatListner getChatListnerObj] createConnection];
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     

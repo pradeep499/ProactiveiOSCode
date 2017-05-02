@@ -18,9 +18,11 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
     var cvHeight:CGFloat = 0.0;
     //to check owner or friend not nill all time
     var viewerUserID:String!
+    var isFriend = false
     
     var bottomTabBar : CustonTabBarController!
     
+    var dictForFriends = [String:AnyObject]()
     
     
     override func viewDidLoad() {
@@ -38,7 +40,6 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
                 self.lbl_profileStatus.text = "  Status:" + (status as! String)
             }
         }else{
-            
             NSNotificationCenter.defaultCenter().removeObserver(self, name: "NotifyFrDetails", object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileVC.NotifyFrDetails(_:)), name:"NotifyFrDetails", object: nil)
             
@@ -54,6 +55,13 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
             // print(finish)
         }
+        
+        if !(String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID){
+            isFriend = true
+        }else{
+            isFriend = false
+        }
+        
         self.setUpCollectionView()
     }
 
@@ -84,20 +92,15 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
        
         if let status = friendDetailsDict!["result"]!["userStatus"] ?? ""{
             self.lbl_profileStatus.text = "  Status:" + (status as! String)
+            //dictForFriends = notification.userInfo as! [String:AnyObject]
+            //print_debug("dictForFriends")
+            //print_debug(dictForFriends)
+            
         }
         
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -252,7 +255,8 @@ extension ProfileVC: UICollectionViewDelegate{
             let profileStoryBoard = AppHelper.getPacStoryBoard()
             let vc = profileStoryBoard.instantiateViewControllerWithIdentifier("PacContainerVC") as! PacContainerVC
             vc.isFromMemberProfile = true
-            // vc.viewerUserID = viewerUserID
+            vc.viewerUserID = viewerUserID
+            vc.isFriend = isFriend
             self.navigationController?.pushViewController(vc, animated: true)
             break
             

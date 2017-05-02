@@ -34,6 +34,8 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
     var arrPACMembers = [[String : AnyObject]]()
     var strActivityName = ""
     var strActivityID = ""
+    var viewerUserID = ""
+    var isFriend = false
     
     
     //MARK:- View Life Cycle
@@ -176,7 +178,9 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
             firstVC.genericType = .Find
             firstVC.isForMemberProfile = true
             arrViewControllers = [firstVC]
-            
+            firstVC.isFriend = isFriend
+            firstVC.isviewForID = viewerUserID
+        
             let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
             
             

@@ -357,7 +357,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         } else {
             messageCount.hidden = false
             messageCount.text = anObject.notificationCount as String!
-           // print(messageCount.text)
+            print(messageCount.text)
         }
 
         if anObject.lastMessageTime!.characters.count > 0 {

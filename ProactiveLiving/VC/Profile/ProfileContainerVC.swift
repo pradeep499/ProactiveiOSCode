@@ -104,15 +104,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     
     func setUpViewControllers() {
@@ -872,7 +863,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                        
                         print("Friend Details....", responseDict)
                         
-                        self.friendDict = responseDict as! [String:AnyObject]// responseDict["result"] as! [String:AnyObject]
+                        self.friendDict = responseDict as? [String:AnyObject]// responseDict["result"] as! [String:AnyObject]
                         
                         
                         if self.friendDict!["friendCheck"]!["blockProfileStatus"] as! Int == 1{
@@ -894,7 +885,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         let lName = self.friendDict!["result"]!["lastName"] as! String
                         
                         self.lbl_name.text = fName + " " + lName
-                        self.lbl_address.text = self.friendDict!["result"]!["liveIn"] as! String
+                        self.lbl_address.text = self.friendDict!["result"]!["liveIn"] as? String
                         
                         friendDetailsDict = self.friendDict!
                         

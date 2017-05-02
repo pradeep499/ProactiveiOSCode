@@ -56,7 +56,11 @@ class ChatListner: NSObject {
     Make a connection to socket
     */
     func createOnline(){
+        
+        self.isConnectionStable = true
+
         unowned let weakself = self
+        
         var loginDic = Dictionary<String,String>()
         loginDic["userid"]=ChatHelper.userDefaultForKey("userId")
         loginDic["lastHitDate"]=ChatHelper.userDefaultForKey("lastHitDate")
@@ -64,10 +68,16 @@ class ChatListner: NSObject {
         weakself.socket.emit("createOnline", loginDic)
         
         NSNotificationCenter.defaultCenter().postNotificationName("ConnectingNotificationForChat", object: nil, userInfo: nil)
+        
+        let alrt = UIAlertView(title: "hello", message: "connected", delegate: self, cancelButtonTitle: "ok")
+        alrt.show()
+        
     }
   
     // status
 func connectToSocket() -> Void{
+    
+    print_debug("coonrct to scoket ")
     
     if let value:String = ChatHelper.userDefaultForKey(_ID)  {
         //Registered user
@@ -81,13 +91,15 @@ func connectToSocket() -> Void{
             currentOperationDict = NSMutableDictionary()
             
             if ChatListner.getChatListnerObj().socket.status != .Connected {
-                self.isConnectionStable = true
+                
                 self.socket.reconnects = false
+                print_debug("coonrct to scoket inside ")
 
                 self.socket.connect()
+                
                 unowned let weakself = self
                 weakself.socket.off("recieveMessage")
-                weakself.socket.off("recieveMessageAll")
+                weakself.socket.off("recieveMessageAll                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ")
                 weakself.socket.off("messageStatus")
                 weakself.socket.off("isUserTyping")
                 weakself.socket.off("getGroupInfo")
@@ -95,6 +107,10 @@ func connectToSocket() -> Void{
                                 
                 socket.on("connect") { data, ack in
                     print(weakself.isConnectionStable)
+                    print_debug("connect listner")
+                    if self.isConnectionStable{
+                        return
+                    }
                     weakself.createOnline()
                     weakself.sendOffLineMessage()
                     NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "getState", object: nil))
@@ -197,11 +213,14 @@ func connectToSocket() -> Void{
     // MARK: - Node.js Methods for one to one chat
     
     func addReceiveMsgHandlers() {
+        
        ChatListner .getChatListnerObj().socket.on("recieveMessage") {[weak self] data, ack in
             self?.playSoundBool = true
+        
             var receiveMsgDic = Dictionary<String,AnyObject>()
             receiveMsgDic = data[0] as! Dictionary
          print(receiveMsgDic);
+                print_debug("addReceiveMsgHandlers")
             let lastHitDate = receiveMsgDic["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate")
         
@@ -589,7 +608,8 @@ func connectToSocket() -> Void{
     
     func addUserInRecentChat(dic : NSDictionary) {
         print(dic);
-        
+        print("addUserInRecentChat");
+
         let str:String = dic["sender"] as! String
         let strPred:String = "userId contains[cd] \"\(str)\""
         let instance = DataBaseController.sharedInstance
@@ -665,7 +685,7 @@ func connectToSocket() -> Void{
         var receiveMsgDict = Dictionary<String,AnyObject>()
             receiveMsgDict = data[0] as! Dictionary
             print(receiveMsgDict)
-        
+           print_debug("addOffLineReceiveMsgHandlers")
             let lastHitDate = receiveMsgDict["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
             
@@ -1769,24 +1789,22 @@ func connectToSocket() -> Void{
         
         if (AppHelper.userDefaultsForKey("userId")) != nil {
             
-            ChatListner.getChatListnerObj().isConnectionStable = false
+          //  ChatListner.getChatListnerObj().isConnectionStable = false
+            
             ChatHelper.saveToUserDefault(AppHelper.userDefaultsForKey("userId"), key: "userId")
             if socket != nil{
-             if socket.status == .Connected  {
-            ChatListner.getChatListnerObj().socket.disconnect()
+                if socket.status == .Connected  {
+                    
+                    ChatListner.getChatListnerObj().socket.disconnect()
+                    
+                  //  socket = nil
+                    isConnectionStable = false
+                    
+                }
             }
-            }
-            
-           // socket = nil
-            isConnectionStable = false
+         
            
-            //ChatListner.getChatListnerObj().socket.removeAllHandlers()
 
-//
-//                ChatListner.getChatListnerObj().isConnectionStable = false
-//                ChatHelper.saveToUserDefault(AppHelper.userDefaultsForKey("userId"), key: "userId")
-//                ChatListner.getChatListnerObj().socket.disconnect()
-//            }
         }
     }
 }
