@@ -249,7 +249,7 @@ extension GenericPacTableVC: UITableViewDataSource{
         
         
         let dateStr = self.pacDetailArr[indexPath.row]["createdDate"] as? String
-        let dateCreated = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "dd/MM/yyyy", dateStr: dateStr!)
+        let dateCreated = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MM/dd/yyyy", dateStr: dateStr!)
         let dateModifiedStr = self.pacDetailArr[indexPath.row]["modifiedDate"] as? String
         let dateModified = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MMM d, yyyy", dateStr: dateModifiedStr!)
 

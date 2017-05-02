@@ -278,7 +278,7 @@ extension MyPACVC: UITableViewDataSource{
            dateModifiedStr = (self.myPACDetailArr[indexPath.row]["modifiedDate"] as? String)!
         }
        
-        let dateCreated = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "dd/MM/yyyy", dateStr: dateStr)
+        let dateCreated = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MM/dd/yyyy", dateStr: dateStr)
         
         let dateModified = HelpingClass.convertDateFormat("yyyy-MM-dd HH:mm:ss", desireFormat: "MMM d, yyyy", dateStr: dateModifiedStr)
         

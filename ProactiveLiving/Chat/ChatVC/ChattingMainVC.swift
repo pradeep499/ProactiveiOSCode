@@ -593,11 +593,12 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     
     override func viewWillAppear(animated: Bool) {
         
+        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
+            // print(finish)
+        }
         super.viewWillAppear(true)
     
-        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
-           // print(finish)
-        }
+       
         
         self.navigationController?.navigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
@@ -732,13 +733,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         super.viewWillDisappear(animated)
         
         
-        fromVC?.hidesBottomBarWhenPushed = false
-        
-        
-        
-        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            //print(finish)
-        }
+        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
+          //  print(finish)
+    }
         
         self.navigationController?.navigationBarHidden = false
         IQKeyboardManager.sharedManager().enable = true
@@ -749,9 +746,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     }
     
     override func viewDidDisappear(animated: Bool) {
-        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            // print(finish)
-        }
+//        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+//            // print(finish)
+//        }
     }
     
      //MARK: - To show user image in full view  Method

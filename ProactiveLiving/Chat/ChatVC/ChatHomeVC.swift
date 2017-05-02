@@ -23,6 +23,10 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
     @IBOutlet weak var seachRecentChatBtn: UIButton!
     var navigationTitleLable:UILabel!
     
+    var bottomTabBar : CustonTabBarController!
+    
+    
+    
 //    private lazy var navigationTitleLable:UILabel = {
 //        let label = UILabel()
 //        label.textColor = UIColor.whiteColor()
@@ -40,6 +44,9 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         }
 
         self.searchBar1.hidden=true
+        
+        bottomTabBar = self.tabBarController as? CustonTabBarController
+        
         
         let textFieldInsideSearchBar = self.searchBar1.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
@@ -167,6 +174,17 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
+        
+        
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+               // print("Finish#")
+            }
+        })
+        
+    
+        
         //Manage Connection it from server if not connected
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatHomeVC.callNotification),name:"PostNotificationToChatNotification", object:nil)
         
@@ -228,6 +246,11 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+        
+//        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+//            print("Finish#")
+//        }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {

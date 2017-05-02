@@ -499,8 +499,9 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         let fName =  self.arrData[indexPath.row]["createdBy"]!!["firstName"] as! String
         let lName = self.arrData[indexPath.row]["createdBy"]!!["lastName"] as! String
         
-        eventTypeBy.text = forr + ", by " +  fName + " " + lName
+        //eventTypeBy.text = forr + ", by " +  fName + " " + lName
         
+        eventTypeBy.text = forr + " by " +  fName + " " + lName  // changed as per client request 01/05/2017
         eventDesc.text = self.arrData[indexPath.row]["desc"] as? String
         
         
@@ -547,8 +548,8 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         
         let acceptButton = cell.contentView.viewWithTag(25) as! UIButton
         let declineButton = cell.contentView.viewWithTag(26) as! UIButton
-        //AppHelper.setBorderOnView(acceptButton)
-       // AppHelper.setBorderOnView(declineButton)
+       // AppHelper.setBorderOnView(acceptButton)
+        //AppHelper.setBorderOnView(declineButton)
         
         cell.btnAccept.userInteractionEnabled = true
         

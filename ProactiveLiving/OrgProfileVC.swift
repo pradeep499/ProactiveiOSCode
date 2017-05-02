@@ -21,7 +21,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     
     var arrButtonImages : Array<String> = Array()
     var dataDict = [String : AnyObject]()
-    
+    var followStatus = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
 
         tableViewOutlet.delegate = self
         
+        print("DATA DICT\(dataDict)")
         
         if let imageBackUrlStr = dataDict["backgroundImageUrl"] as? String {
             let image_url = NSURL(string: imageBackUrlStr )
@@ -63,19 +64,25 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
         
         // Do any additional setup after loading the view.
         
-        arrButtonImages=[
-        "about",
-        "education",
-        "videos",
-        "promotions",
-        "announcements",
-        "broadcasts",
-        "add_favorite",
-        "follow",
-        "share",
-        "social",
-        "website",
-        "message"]
+//        arrButtonImages=[
+//        "about",
+//        "education",
+//        "videos",
+//        "promotions",
+//        "announcements",
+//        "broadcasts",
+//        "add_favorite",
+//        "follow",
+//        "share",
+//        "social",
+//        "website",
+//        "message"]
+        
+        
+        // changed as per client request 28 Apr
+        
+        arrButtonImages=["about","broadcasts","follow","videos", "website"]
+        
         
     }
     
@@ -91,6 +98,60 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
         }
     }
     
+    
+    func serviceFollowOrganization(status : Int, organizationId:String) {
+        
+        
+        
+        if AppDelegate.checkInternetConnection() {
+            isPostServiceCalled = true
+            
+            
+            //show indicator on screen
+            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            var parameters = [String: AnyObject]()
+            parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+            parameters["organizationId"] = organizationId
+            parameters["status"] = status
+         
+            //call global web service class latest
+            Services.postRequest(ServiceFollowOrganization, parameters: parameters, completionHandler:{
+                (status,responseDict) in
+                
+                isPostServiceCalled = false
+                
+                AppDelegate.dismissProgressHUD()
+                
+                if (status == "Success") {
+                    
+                    if ((responseDict["error"] as! Int) == 0) {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                     
+                    } else {
+                        
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                    
+                } else if (status == "Error"){
+                    
+                    AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    
+                }
+            })
+            
+        }
+        else {
+            AppDelegate.dismissProgressHUD()
+            //show internet not available
+            AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+        }
+        
+    }
+
+    
+    
+    //MARK:- Collection View
     
     //*** Delegate and Data Source methods of UicollectionView ***//
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -110,7 +171,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
         
-        if (indexPath.row==0) {
+        if (indexPath.row==0) {  // About
             
             if let aboutUrl = self.dataDict["aboutUs"] {
                 
@@ -125,21 +186,45 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
             
            
         }
-        if(indexPath.row==2) {
+        else if (indexPath.row==1){ // Broadcast
+            let broadCast: BroadcastVC = self.storyboard!.instantiateViewControllerWithIdentifier("BroadcastVC") as! BroadcastVC
+            broadCast.dataDictArr = dataDict["articles"] as? [AnyObject]
+            broadCast.subTitle = dataDict["name"] as? String
+            self.navigationController?.pushViewController(broadCast, animated: true)
+            
+        }
+        else if (indexPath.row==2){  // Follow  // API hit for follow
+            
+           
+            let alertController = UIAlertController(title:APP_NAME, message: "Do you want to Follow ?" , preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
+                
+            }))
+            
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
+                
+               
+                let organizationId = self.dataDict["_id"] as! String
+                self.followStatus = 1
+                self.serviceFollowOrganization(self.followStatus, organizationId: organizationId)
+                
+            }))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            
+            
+        }
+       else if(indexPath.row==3) { // Videos
+            
             let videosContainer: VideosContainer = self.storyboard!.instantiateViewControllerWithIdentifier("VideosContainer") as! VideosContainer
             videosContainer.dataDict=dataDict["videos"] as! [String:AnyObject]
             videosContainer.videoContainerType = .Explore
             self.navigationController?.pushViewController(videosContainer, animated: true)
             
         }
-        else if(indexPath.row==5) {
-            let broadCast: BroadcastVC = self.storyboard!.instantiateViewControllerWithIdentifier("BroadcastVC") as! BroadcastVC
-            broadCast.dataDictArr = dataDict["articles"] as? [AnyObject]
-            broadCast.subTitle = dataDict["name"] as? String
-
-            self.navigationController?.pushViewController(broadCast, animated: true)
-            
-        }else if(indexPath.row==10)
+      else if(indexPath.row==4)  // Website
         {
             let webUrl = self.dataDict["latestArticleLink"] as! String
             //self.btnWebLinkClick(webUrl)

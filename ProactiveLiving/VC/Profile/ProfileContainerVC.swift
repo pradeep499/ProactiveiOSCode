@@ -157,9 +157,12 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         containerVC.delegate = self
         containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
         containerVC.menuItemSelectedFont = UIFont(name: "Roboto-Bold", size: 11.5)
-        //containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
-        containerVC.menuItemTitleColor = UIColor.clearColor() //UIColor.whiteColor()
-        containerVC.menuItemSelectedTitleColor = UIColor.clearColor()  //UIColor.whiteColor()
+        containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
+        
+        containerVC.menuIndicatorColor = UIColor.clearColor()
+      
+        //containerVC.menuItemTitleColor = UIColor.clearColor() //UIColor.whiteColor()
+        //containerVC.menuItemSelectedTitleColor = UIColor.clearColor()  //UIColor.whiteColor()
      //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
         containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width,   screenHeight - 300 )
@@ -211,8 +214,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
         }
         
-       
-        
         //make circle profile image
         self.iv_profile.layer.borderWidth = 1.0
         self.iv_profile.contentMode = .ScaleAspectFill
@@ -255,8 +256,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     func profileIvTaped(gesture:UIGestureRecognizer) -> Void {
         
-        
-        
         if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
             //Owner
             if String(HelpingClass.getUserDetails().imgUrl).characters.count > 1 {
@@ -272,7 +271,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
         }
         
-       
     }
     
     

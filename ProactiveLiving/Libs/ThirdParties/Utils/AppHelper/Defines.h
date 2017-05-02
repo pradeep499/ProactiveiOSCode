@@ -127,7 +127,7 @@
 #define ServiceDeletePAC                @"users/deletePac"
 #define ServiceGetPasInstruction        @"users/getPasInstruction"
 #define ServiceDeleteImages             @"users/deleteContent"
-
+#define ServiceFollowOrganization       @"followOrganization"
 #define maxLength                       25
 #define maxPhoneLength                  15
 #define minimumPhoneLength              8
