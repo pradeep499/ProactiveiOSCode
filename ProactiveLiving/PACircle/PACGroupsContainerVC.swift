@@ -485,7 +485,7 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
             parameters["pacId"] = self.pacID
             
-            let alertController = UIAlertController(title: APP_NAME, message: "Do you want to Delete PAC?", preferredStyle: UIAlertControllerStyle.Alert)
+            let alertController = UIAlertController(title: APP_NAME, message: "Delete this PAC?", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Cancel" ,style: UIAlertActionStyle.Default, handler: {(ACTION : UIAlertAction!)in}))
             alertController.addAction(UIAlertAction(title: "OK" ,style: UIAlertActionStyle.Default, handler: {(ACTION:UIAlertAction!)in
             
