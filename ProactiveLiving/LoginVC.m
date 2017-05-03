@@ -23,7 +23,7 @@
 #import "CustonTabBarController.h"
 #import <AFNetworking/AFNetworking.h>
 #import "ProactiveLiving-Swift.h"
-
+#import "AllPACirclesVC.h"
 
 @interface LoginVC ()<UITextFieldDelegate, UIAlertViewDelegate> {
     BOOL isRememberMe;
@@ -109,9 +109,10 @@
     thirdViewController.tabBarItem.image=[UIImage imageNamed:@"ic_more_tabar_home"];
     UIViewController *thirdNavigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:thirdViewController];
-  //  /* Changed by client
-     
-    MyPAStodoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPAStodoVC"];
+  //  /* Changed by client AllPACirclesVC
+    
+   // MyPAStodoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPAStodoVC"];
+    AllPACirclesVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AllPACirclesVC"];
     fourthViewController.title=@"Activate";
     fourthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_tabbar_activate"];
     UIViewController *fourthNavigationController = [[UINavigationController alloc]

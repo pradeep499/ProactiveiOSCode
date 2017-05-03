@@ -10,5 +10,6 @@
 
 @interface AllPACirclesVC : UIViewController
 @property (nonatomic,copy)NSArray *arrEvents;
+//@property (weak, nonatomic) IBOutlet UIButton *btnBack;
 
 @end

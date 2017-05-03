@@ -245,7 +245,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        return CGSizeMake(collectionView.frame.size.width/3-34, collectionView.frame.size.height/4-44)
+        return CGSizeMake(screenWidth/3 - 34 , 90)///CGSizeMake(collectionView.frame.size.width/3-34, collectionView.frame.size.height/4-44)
         
     }
     
