@@ -452,7 +452,7 @@
                                                         <constraint firstAttribute="height" constant="80" id="bKT-iV-EO7"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pf_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="x3Y-S0-3XP" userLabel="tranparent">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pf_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="x3Y-S0-3XP" userLabel="tranparent">
                                                     <rect key="frame" x="33" y="6" width="84" height="86"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="86" id="HD2-NH-oJ2"/>
@@ -1821,7 +1821,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eb5-LG-nn5">
-                                <rect key="frame" x="90.5" y="15" width="194" height="28"/>
+                                <rect key="frame" x="91" y="15" width="194" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="194" id="fad-UN-i54"/>
                                     <constraint firstAttribute="height" constant="28" id="pv1-9R-hS0"/>

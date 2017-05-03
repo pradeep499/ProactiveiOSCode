@@ -589,7 +589,10 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         else if( self.btnIAgree.tag == 11){
             
             
-            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select the Terms & condition!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+//            ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select the Terms & condition!", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
+            
+            
+             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please agree to the Terms and Conditions", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             
             return false
             

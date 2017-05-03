@@ -577,7 +577,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             iv_frImg.backgroundColor = UIColor.whiteColor()
             iv_frImg.layer.masksToBounds = false
             iv_frImg.layer.borderColor = UIColor.lightGrayColor().CGColor
-            iv_frImg.layer.cornerRadius = 37
+            iv_frImg.layer.cornerRadius = 40
             iv_frImg.clipsToBounds = true
             
             

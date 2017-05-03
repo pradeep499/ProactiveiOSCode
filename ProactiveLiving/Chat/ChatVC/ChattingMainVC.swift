@@ -525,7 +525,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bottomTabBar = self.tabBarController as? CustonTabBarController
+//        bottomTabBar = self.tabBarController as? CustonTabBarController
         self.exitedView.hidden = true
         ChatHelper .removeFromUserDefaultForKey("chatId")
         copyTextStr = ""
@@ -595,9 +595,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
             
-//            let height = self.bottomTabBar!.tabBar.frame.size.height+15;
-//            let offsetY =  height
-//            self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
+            let height = self.bottomTabBar!.tabBar.frame.size.height+15;
+            let offsetY =  height
+            self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
             
         }
         super.viewWillAppear(true)
@@ -731,17 +731,15 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
     }
     
-    
-    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        
-        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+        self.navigationController?.navigationBarHidden = false
+
+        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
             // print(finish)
         }
         
-        self.navigationController?.navigationBarHidden = false
         IQKeyboardManager.sharedManager().enable = true
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "groupCreateNotification", object: nil)
         //ChatHelper .saveToUserDefault("", key: "friendId")
@@ -749,11 +747,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
 //        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidDisappear(animated: Bool) {
-//        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-//            // print(finish)
-//        }
-    }
+//    override func viewDidDisappear(animated: Bool) {
+////        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+////            // print(finish)
+////        }
+//    }
     
      //MARK: - To show user image in full view  Method
     
@@ -3223,10 +3221,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
      
         self.saveRecentChat()
         
-        let height = self.bottomTabBar!.tabBar.frame.size.height+15;
-        let offsetY =  height;
-        self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
-        self.bottomTabBar!.middleButton.frame = CGRectOffset(self.bottomTabBar!.middleButton.frame, 0, offsetY);
+//        let height = self.bottomTabBar!.tabBar.frame.size.height+15;
+//        let offsetY =  height * 2;
+//        self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
+//        self.bottomTabBar!.middleButton.frame = CGRectOffset(self.bottomTabBar!.middleButton.frame, 0, offsetY);
         
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
             // print(finish)
@@ -3239,7 +3237,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 self.navigationController?.popViewControllerAnimated(true)
             }else
             {
-                self.navigationController?.popViewControllerAnimated(true)
+                
+                 self.navigationController?.popToRootViewControllerAnimated(true)
+                //self.navigationController?.popViewControllerAnimated(true)
             }
         
         

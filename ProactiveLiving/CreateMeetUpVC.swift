@@ -551,7 +551,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
        // self.timePicker.minimumDate = timePicker.date
         
         let calendar = NSCalendar.currentCalendar()
-        let date = calendar.dateByAddingUnit(.Minute, value: 59, toDate: timePicker.date, options: [])
+        let date = calendar.dateByAddingUnit(.Minute, value: 60, toDate: timePicker.date, options: [])
         self.txtField_eventEndTime.text = dateFormatter1.stringFromDate(date!)
         
         
