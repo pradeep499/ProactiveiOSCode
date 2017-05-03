@@ -26,6 +26,7 @@
     NSString *confirmPassword;
     NSString *zipCode;
     NSMutableArray *countryArr, *countryCodeArr;
+    AboutPASInstVC * aboutPASInstVC;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *termsAndConditionsButton;
@@ -84,9 +85,10 @@
     
     //set attributed text
     UIFont *font = [UIFont fontWithName:@"Roboto-Regular" size:12.0];
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"I agree with Terms and Conditions"];
+   // NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"I agree with Terms and Conditions"]; // Chenged as per client request 3 May
+     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"I agree with the"];
     [attrString addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 11)];
-    [attrString addAttribute:NSForegroundColorAttributeName value:iAgreeColor range:NSMakeRange(0, 13)];
+    [attrString addAttribute:NSForegroundColorAttributeName value:iAgreeColor range:NSMakeRange(0, 16)];
     [self.termsAndConditionsButton setAttributedTitle:attrString forState:UIControlStateNormal];
 }
 #pragma mark - keyboardwillshow
@@ -693,5 +695,20 @@
 - (IBAction)termsAndConditions:(id)sender {
     [self.termsAndConditionsButton setSelected:!self.termsAndConditionsButton.isSelected];
 }
+
+- (IBAction)termsAndConditionRedirection:(id)sender {
+    
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    aboutPASInstVC = [storyboard instantiateViewControllerWithIdentifier:@"AboutPASInstVC"];
+    aboutPASInstVC.strType = @"pac";
+    aboutPASInstVC.strTitle = @"Terms & Conditions";
+    
+    [self.navigationController pushViewController:aboutPASInstVC animated:YES];
+}
+
+
+
+
 
 @end

@@ -52,6 +52,10 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         tokensMember = [AnyObject]()
        // btnRight.hidden = false
         
+      
+        
+        
+        
         self.setUpViewControllers()
         
     }
@@ -250,6 +254,12 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
                 btnFilter.hidden = false
                 btnSearch.hidden = false
             }
+            
+            if isFromMemberProfileForEditPAC {
+                btnFilter.hidden = true
+                btnSearch.hidden = true
+            }
+            
             // button hide as per client request 27th April
             //            btnFilter.hidden = false
             //            btnSearch.hidden = false

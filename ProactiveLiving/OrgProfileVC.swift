@@ -81,7 +81,12 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
         
         // changed as per client request 28 Apr
         
-        arrButtonImages=["about","broadcasts","follow","videos", "website"]
+       // arrButtonImages=["about","broadcasts","follow","videos", "website"]
+        
+        // changed as per client request 3 May
+        
+        arrButtonImages=["about","broadcasts","follow","videos", "website", "message"]
+
         
         
     }
@@ -237,7 +242,16 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
 
             
             
-        } else {
+        }
+        else if (indexPath.row == 5){ // Message
+            
+            let email = self.dataDict["email"] as! String
+            UIApplication.sharedApplication().openURL(NSURL(string: "mailto:\(email)")!)
+            
+        }
+        
+        
+        else {
 
         }
         
