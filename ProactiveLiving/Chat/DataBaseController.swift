@@ -1492,7 +1492,7 @@ class DataBaseController : NSObject
             exist!.groupImage = params["imgUrl"] as? String
             for dict in memberArr{
                 if (dict["role"] as! String).lowercaseString == "admin"{
-                    exist!.adminUserId = dict["userId"] as? String
+                    exist!.adminUserId = dict["userid"] as? String
                      break;
                 }
             }
@@ -1513,7 +1513,7 @@ class DataBaseController : NSObject
             newItem.userCount = params["usercount"] as? String
             for dict in memberArr{
                 if (dict["role"] as! String).lowercaseString == "admin"{
-                    newItem.adminUserId = dict["userId"] as? String
+                    newItem.adminUserId = dict["userid"] as? String
                     break;
                 }
             }

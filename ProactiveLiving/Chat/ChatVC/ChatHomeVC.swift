@@ -687,14 +687,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             instance.deleteData("GroupList", predicate: strPred)
             instance.deleteData("GroupUserList", predicate: strPred)
         }
-        
-        let instance = DataBaseController.sharedInstance
-        let unreadCount=instance.fetchUnreadCount()   //Manage unread count.
-        let myString:String = String(unreadCount)
-        
-        
-        if myString == "0" {
-        }
+       
     }
     
     func deleteAllChatHistory()

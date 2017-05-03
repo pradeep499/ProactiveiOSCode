@@ -147,7 +147,7 @@
 {
     //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     //GroupDetailVC *groupObj = [storyboard instantiateViewControllerWithIdentifier:@"GroupDetailVC"];
-    groupObj.deletedGroup = YES;
+    //groupObj.deletedGroup = YES;
     [groupObj addNewFrndIngrp:frndObj];
     [self.navigationController popViewControllerAnimated:YES];
    

@@ -600,6 +600,8 @@
 
 -(void)insertRemoveToSelecetedRowArray:(NSDictionary *) dict{
     
+    NSLog(@"seelcted arraty %@",_selectedRowsArray);
+    
     if ([self.selectedRowsArray containsObject:dict])
     {
         [self.selectedRowsArray removeObject:dict];
