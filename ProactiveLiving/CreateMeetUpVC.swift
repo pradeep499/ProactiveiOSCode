@@ -53,7 +53,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var fromScreenFlag : String!
     var pacID : String!
     var recurrenceDict:[String:String]!
-
+    var currentDateVal = NSDate()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     //"AIzaSyCwX2QTq72LeMHwJ8ymH6TGGJP8iqMoFLU"
@@ -217,6 +219,17 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
         }
         
+        
+        if (self.fromScreenFlag != nil &&  self.fromScreenFlag == "private"){
+            print_debug(currentDateVal)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            let date = dateFormatter.stringFromDate(currentDateVal)
+            txtFieldOn.text = convert(time: date, fromFormat: "dd/MM/yyyy", toFormat: "MM/dd/yyyy")
+
+        }
+        
+       
         if(self.fromScreenFlag != nil && self.fromScreenFlag == "PAC") {
             
             for item in self.arrPACMembers {
@@ -263,9 +276,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateMeetUpVC.doneTypesPicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        //let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
-        
-        toolBar.setItems([spaceButton, doneButton], animated: false)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateMeetUpVC.cancelPickerView))
+
+        toolBar.setItems([cancelButton , spaceButton , doneButton], animated: false)
         toolBar.userInteractionEnabled = true
       //  pickerView.backgroundColor = UIColor.redColor()
         txtFieldFor.inputView = pickerView
@@ -314,7 +327,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let doneButtonEndTime = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CreateMeetUpVC.doneTimePickerEndTime))
         toolBarEndTime.setItems([spaceButton, doneButtonEndTime], animated: false)
         toolBarEndTime.userInteractionEnabled = true
-        
+
         
         txtField_eventEndTime.inputView=timePicker
         txtField_eventEndTime.inputAccessoryView = toolBarEndTime
@@ -386,6 +399,11 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.tokenField.reloadTagSubviews()
     }
     
+    
+    func toSetUpViewPickerController(){
+        
+    }
+    
     func addCotact(contact : [String : AnyObject] ) -> Void {
         
         if (self.tokens as NSArray).containsObject(contact) {
@@ -409,8 +427,15 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let dateFormatterNw = NSDateFormatter()
         dateFormatterNw.dateFormat = toFormate
         let result = dateFormatterNw.stringFromDate(date!)
+        if self.fromScreenFlag == "private"{
+            datePicker.minimumDate = NSDate()
+            datePicker.setDate(dateFormatterNw.dateFromString(result)!, animated: true)
+
+        }else{
+            datePicker.minimumDate = dateFormatterNw.dateFromString(result)
+
+        }
         
-        datePicker.minimumDate = dateFormatterNw.dateFromString(result)
 
         return result
     }
@@ -450,7 +475,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         {
             let type = self.arrTypes[pickerView.selectedRowInComponent(0)]
             
-            if(!(type == "Other"))
+            if(!(type == " Type my own category"))
             {
                 self.txtFieldFor.text = self.arrTypes[pickerView.selectedRowInComponent(0)]
             }
@@ -464,7 +489,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func showAlertForOtherType() {
         
-        let alertController = UIAlertController(title: "Other", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Type my own category", message: "", preferredStyle: UIAlertControllerStyle.Alert)
         
         alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in
             textField.placeholder = "Add your choice"
@@ -575,12 +600,12 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "Please select time greater than Start At time.", delegate: self, cancelButtonTitle: "Ok", otherButtonTitle: nil)
         }
         
-        
-        
-        
-       
     }
     
+    func cancelPickerView(){
+        self.txtFieldFor.resignFirstResponder()
+
+    }
     
     
     func textFieldDidBeginEditing(textField: UITextField) {
