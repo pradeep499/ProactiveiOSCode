@@ -253,7 +253,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         delay(1.0, closure: {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
-            chatMainObj.bottomTabBar = self.bottomTabBar
+//            chatMainObj.bottomTabBar = self.bottomTabBar
             
             chatMainObj.fromVC = self
             chatMainObj.isFromClass="Recent"
@@ -492,7 +492,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
-        chatMainObj.bottomTabBar = self.bottomTabBar
+      //  chatMainObj.bottomTabBar = self.bottomTabBar
         chatMainObj.hidesBottomBarWhenPushed = false
         if anObject.groupId == "0" {
            
