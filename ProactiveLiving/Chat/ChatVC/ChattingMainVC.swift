@@ -595,9 +595,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
             
-            let height = self.bottomTabBar!.tabBar.frame.size.height+15;
-            let offsetY =  height
-            self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
+//            let height = self.bottomTabBar!.tabBar.frame.size.height+15;
+//            let offsetY =  height
+//            self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
             
         }
         super.viewWillAppear(true)
@@ -736,7 +736,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         self.navigationController?.navigationBarHidden = false
 
-        bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
+        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
             // print(finish)
         }
         
@@ -3220,15 +3220,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "updateNameObserver", object: nil)
      
         self.saveRecentChat()
-        
-//        let height = self.bottomTabBar!.tabBar.frame.size.height+15;
-//        let offsetY =  height * 2;
-//        self.bottomTabBar!.tabBar.frame = CGRectOffset(self.bottomTabBar!.tabBar.frame, 0, offsetY);
-//        self.bottomTabBar!.middleButton.frame = CGRectOffset(self.bottomTabBar!.middleButton.frame, 0, offsetY);
-        
-        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            // print(finish)
-        }
+     
             if self.isFromClass == "ChatF"
             {
                 self.navigationController?.popToRootViewControllerAnimated(true)
@@ -6291,7 +6283,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let chatMainObj: GroupDetailVC = storyBoard.instantiateViewControllerWithIdentifier("GroupDetailVC") as! GroupDetailVC
             chatMainObj.groupObj=groupObj
-            
+            chatMainObj.hidesBottomBarWhenPushed = false
             if self.exitedView.hidden == false
             {
                 chatMainObj.deletedGroup=true
