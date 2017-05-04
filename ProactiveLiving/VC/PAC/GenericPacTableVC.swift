@@ -134,8 +134,10 @@ class GenericPacTableVC: UIViewController {
                 }
 
             }
-        
-         
+            print("parameters values ")
+
+            print(parameters)
+
             
             //call global web service class latest
             Services.postRequest(serviceURL, parameters: parameters, completionHandler:{
@@ -154,10 +156,6 @@ class GenericPacTableVC: UIViewController {
                             
                             print("TESTING FIND PAC \(resultArr)")
                             
-                            
-                            
-                             
-                             
                              if resultArr.count > 0 {
                              
                              //   self.myPACDetailArr.insert(resultArr, atIndex: self.myPACDetailArr.count)
