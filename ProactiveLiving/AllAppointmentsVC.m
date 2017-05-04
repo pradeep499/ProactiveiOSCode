@@ -102,7 +102,7 @@
     if([self.fromScreenFlag isEqualToString:@"pac"])
         arrVCs = @[appointVC1,appointVC3,appointVC4];
     else
-        arrVCs = @[appointVC1,appointVC2,appointVC3,appointVC4,appointVC8];
+        arrVCs = @[appointVC1,appointVC3,appointVC4];
     
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:arrVCs
                                                                                         topBarHeight:0
@@ -241,10 +241,10 @@
     }
     else
     {
-        [alertActionSheet addAction:appointment];
+       // [alertActionSheet addAction:appointment];
         [alertActionSheet addAction:meetup];
         [alertActionSheet addAction:webinvite];
-        [alertActionSheet addAction:other];
+       // [alertActionSheet addAction:other];
         [alertActionSheet addAction:cancel];
         [self presentViewController:alertActionSheet animated:YES completion:nil];
     }

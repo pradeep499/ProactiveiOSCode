@@ -1624,7 +1624,13 @@ func connectToSocket() -> Void{
             let grpObj=instance.fetchDataGroupObject("GroupList", predicate: strPred1) as GroupList?
             let userCount = receiveMsgDic["userCount"] as! Int
             grpObj?.userCount = "\(userCount)"
-            
+        
+               if receiveMsgDic["newadminid"] != nil {
+                let groupAdminId      = receiveMsgDic["newadminid"] as! String
+                grpObj?.adminUserId   = "\(groupAdminId)"
+               }
+        
+
             self.homeCoreData.saveContext()
             
             var dict = Dictionary<String, AnyObject>()

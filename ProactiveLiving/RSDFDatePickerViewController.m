@@ -52,6 +52,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSwitchView;
 @property (weak, nonatomic) IBOutlet UIButton *btnBack;
 
+@property NSDate *selectedDate;
+
 @property BOOL recordNotFound;
 
 @end
@@ -420,6 +422,7 @@ type = 3 for yeary basis
                                       }
                                       else {
                                           vc.fromScreenFlag = @"private";
+                                          vc.currentDateVal = _selectedDate;
                                       }
                                       [self.navigationController pushViewController:vc animated:YES];
                                   }
@@ -444,6 +447,8 @@ type = 3 for yeary basis
                                          }
                                          else {
                                              vc.fromScreenFlag = @"private";
+                                             vc.currentDateVal = _selectedDate;
+
                                          }
                                          [self.navigationController pushViewController:vc animated:YES];
                                      }
@@ -484,10 +489,10 @@ type = 3 for yeary basis
         }
     }
     else {
-        [alertActionSheet addAction:appointment];
+       // [alertActionSheet addAction:appointment];
         [alertActionSheet addAction:meetup];
         [alertActionSheet addAction:webinvite];
-        [alertActionSheet addAction:other];
+       // [alertActionSheet addAction:other];
         [alertActionSheet addAction:cancel];
         [self presentViewController:alertActionSheet animated:YES completion:nil];
 
@@ -745,6 +750,8 @@ type = 3 for yeary basis
     }
     else
     {
+        //let time  = convert(time: on!, fromFormat: "dd/MM/yyyy", toFormat: "MM/dd/yyyy")
+        _selectedDate = date;
         [self btnCreateEventClick:nil];
         NSLog(@"No event");
     }

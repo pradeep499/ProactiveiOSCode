@@ -17,7 +17,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
     var groupMediaArr : NSMutableArray!
     var meRemoved : String!
     var imageChanged : Bool!
-    var deletedGroup : Bool  = false
+    var deletedGroup : Bool!
     
     @IBOutlet weak var editBtnOutlet: UIButton!
     @IBOutlet weak var exitBtnHeightConst: NSLayoutConstraint!
@@ -65,13 +65,17 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
     {
         super.viewDidLoad()
         
-        if deletedGroup==true
-        {
-            exitBtnOutlet.enabled=false
-            addBtnOutlet.enabled=false
-            editBtnOutlet.enabled=false
+        if deletedGroup == true {
+           // exitBtnOutlet.enabled=false
+            //addBtnOutlet.enabled=false
+           // editBtnOutlet.enabled=false
+          exitBtnOutlet.setTitle("Delete group", forState: .Normal)
+          
+        }else{
+            exitBtnOutlet.setTitle("Exit group", forState: .Normal)
+
         }
-        
+
         editBtnOutlet.setTitle("Edit", forState: UIControlState.Normal)
         editBtnOutlet.setTitle("Done", forState: UIControlState.Selected)
 
@@ -95,7 +99,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         recognizer.delegate = self
         grpImgV.addGestureRecognizer(recognizer)
         grpImgV.userInteractionEnabled = true
-        grpImgV.layer.cornerRadius = grpImgV.frame.height/2
+        grpImgV.layer.cornerRadius = 22.5
         grpImgV.clipsToBounds = true
         self.imgGroup.contentMode = .ScaleAspectFill
         grpImgV.setImageWithURL(NSURL(string:groupObj.groupImage!), placeholderImage: UIImage(named:"profile.png"))
@@ -377,6 +381,7 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         {
             //deleteBtn.hidden = true
         }
+        
         
         if anObject.userId == groupObj.adminUserId
         {
@@ -918,10 +923,19 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
     
     func openDeleteActionSheet() -> Void
     {
-    
+      
+        var str = ""
+        
+        if  deletedGroup == true {
+             str = "Delete group"
+        }else{
+            str  = "Exit group"
+            
+        }
+        
         if(IS_IOS_7)
         {
-            let actionSheet = UIActionSheet(title: groupObj.groupName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: "Exit","Cancel")
+            let actionSheet = UIActionSheet(title: groupObj.groupName, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:nil, otherButtonTitles: str,"Cancel")
             actionSheet.tag=200
             actionSheet.showFromTabBar((self.tabBarController?.tabBar)!)
         }
@@ -929,15 +943,35 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         {
             let actionSheet =  UIAlertController(title: groupObj.groupName, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
-            actionSheet.addAction(UIAlertAction(title: "Exit", style: UIAlertActionStyle.Default, handler:
+            actionSheet.addAction(UIAlertAction(title: str, style: UIAlertActionStyle.Default, handler:
                 { (ACTION :UIAlertAction!)in
                     
-                    var dict = Dictionary<String,AnyObject>()
-                    dict["userid"]=ChatHelper.userDefaultForKey("userId") as String
-                    dict["groupdelid"]=ChatHelper.userDefaultForKey("userId") as String
-                    dict["groupid"]=self.groupObj.groupId
+                    if self.deletedGroup == true {  // delete action
+                        let strLogin:String = ChatHelper .userDefaultForAny("userId") as! String
+                        let strGroupId:String = self.groupObj.groupId! as String
+                        let strPred:String = "loginUserId contains[cd] \"\(strLogin)\" AND groupId LIKE \"\(strGroupId)\""
+                        
+                        let instance = DataBaseController.sharedInstance
+                        
+                        instance.deleteData("GroupChat", predicate: strPred)
+                        instance.deleteData("RecentChatList", predicate: strPred)
+                        instance.deleteData("GroupList", predicate: strPred)
+                        instance.deleteData("GroupUserList", predicate: strPred)
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+
+                        
+                    }else{ // exit group
+                        var dict = Dictionary<String,AnyObject>()
+                        dict["userid"]=ChatHelper.userDefaultForKey("userId") as String
+                        dict["groupdelid"]=ChatHelper.userDefaultForKey("userId") as String
+                        dict["groupid"]=self.groupObj.groupId
+                        
+                        ChatListner .getChatListnerObj().socket.emit("removeFromGroup", dict)
+                        self.navigationController?.popViewControllerAnimated(true)
+
+                    }
                     
-                    ChatListner .getChatListnerObj().socket.emit("removeFromGroup", dict)
+                   
             }))
             
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (ACTION :UIAlertAction!)in
