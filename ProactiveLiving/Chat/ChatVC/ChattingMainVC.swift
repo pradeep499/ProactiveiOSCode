@@ -6283,7 +6283,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let chatMainObj: GroupDetailVC = storyBoard.instantiateViewControllerWithIdentifier("GroupDetailVC") as! GroupDetailVC
             chatMainObj.groupObj=groupObj
-            
+            chatMainObj.hidesBottomBarWhenPushed = false
             if self.exitedView.hidden == false
             {
                 chatMainObj.deletedGroup=true
