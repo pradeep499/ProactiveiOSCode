@@ -663,14 +663,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CA110350-E5D1-47B8-9528-B3090E15A790" translatesAutoresizingMaskIntoConstraints="NO" id="VA7-FM-Dz9">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="55AB19B4-264A-403C-B8DA-9A6AB1A2BCDD" translatesAutoresizingMaskIntoConstraints="NO" id="VA7-FM-Dz9">
                                                     <rect key="frame" x="20" y="10" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="WAy-a7-hBX"/>
                                                         <constraint firstAttribute="width" constant="25" id="Y9o-V3-Mc0"/>
                                                     </constraints>
                                                     <variation key="widthClass=compact" image="help_mail"/>
-                                                    <variation key="widthClass=regular" image="CA110350-E5D1-47B8-9528-B3090E15A790"/>
+                                                    <variation key="widthClass=regular" image="55AB19B4-264A-403C-B8DA-9A6AB1A2BCDD"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Email Us" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOJ-Kk-KWA">
                                                     <rect key="frame" x="60" y="8" width="71" height="23"/>
@@ -718,7 +718,7 @@
                                                         <constraint firstAttribute="width" constant="25" id="1Dk-ad-0xd"/>
                                                         <constraint firstAttribute="height" constant="25" id="w8q-RO-gLP"/>
                                                     </constraints>
-                                                    <variation key="heightClass=compact" image="E87DD797-E91F-4EFB-AD5C-1E68736D61D4"/>
+                                                    <variation key="heightClass=compact" image="6D362E25-12AB-4D1D-B98D-9E1BC0D0DB83"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nLP-Vn-oOA">
                                                     <rect key="frame" x="60" y="10" width="235" height="23"/>
@@ -12251,14 +12251,14 @@
                                                             <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsY-EF-ev3">
+                                                        <button opaque="NO" tag="6" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsY-EF-ev3">
                                                             <rect key="frame" x="8" y="117" width="80" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="80" id="EWC-jG-C1r"/>
                                                                 <constraint firstAttribute="height" constant="20" id="uJW-Ai-osR"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="14"/>
-                                                            <inset key="titleEdgeInsets" minX="9" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                            <inset key="titleEdgeInsets" minX="1" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                             <inset key="imageEdgeInsets" minX="-3" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                             <state key="normal" title="2 Likes" image="like_filled">
                                                                 <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -17959,7 +17959,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CA110350-E5D1-47B8-9528-B3090E15A790" width="24" height="18">
+        <image name="55AB19B4-264A-403C-B8DA-9A6AB1A2BCDD" width="24" height="18">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -18039,7 +18039,7 @@ EE8QWBBrEG8QehCDEIgQkBCTEJgQpxCrELIQuhDHEMwQzhDQENUQ3RDgEOUQ7RDwEQIRBREKAAAAAAAA
 AgEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAEQw
 </mutableData>
         </image>
-        <image name="E87DD797-E91F-4EFB-AD5C-1E68736D61D4" width="18" height="26">
+        <image name="6D362E25-12AB-4D1D-B98D-9E1BC0D0DB83" width="18" height="26">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
