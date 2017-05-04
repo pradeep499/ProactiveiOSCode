@@ -54,7 +54,7 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         super.viewWillDisappear(animated)
     }
     
-    // MARK: - preferredStatusBarStyle
+    //MARK:- preferredStatusBarStyle
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         // to set the light color of status bar
         return .LightContent

@@ -81,8 +81,12 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
         
         // changed as per client request 28 Apr
         
-        arrButtonImages=["about","broadcasts","follow","videos", "website"]
+       // arrButtonImages=["about","broadcasts","follow","videos", "website"]
         
+        // changed as per client request 3 May
+        
+        arrButtonImages=["about","broadcasts","follow","message", "website", "videos"]
+
         
     }
     
@@ -216,12 +220,11 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
             
             
         }
-       else if(indexPath.row==3) { // Videos
+       else if(indexPath.row==3) { // Message
             
-            let videosContainer: VideosContainer = self.storyboard!.instantiateViewControllerWithIdentifier("VideosContainer") as! VideosContainer
-            videosContainer.dataDict=dataDict["videos"] as! [String:AnyObject]
-            videosContainer.videoContainerType = .Explore
-            self.navigationController?.pushViewController(videosContainer, animated: true)
+            let email = self.dataDict["email"] as! String
+            UIApplication.sharedApplication().openURL(NSURL(string: "mailto:\(email)")!)
+            
             
         }
       else if(indexPath.row==4)  // Website
@@ -237,7 +240,19 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
 
             
             
-        } else {
+        }
+        else if (indexPath.row == 5){ //Videos
+            
+            let videosContainer: VideosContainer = self.storyboard!.instantiateViewControllerWithIdentifier("VideosContainer") as! VideosContainer
+            videosContainer.dataDict=dataDict["videos"] as! [String:AnyObject]
+            videosContainer.videoContainerType = .Explore
+            self.navigationController?.pushViewController(videosContainer, animated: true)
+
+            
+        }
+        
+        
+        else {
 
         }
         

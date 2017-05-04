@@ -89,7 +89,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
     [bottomBar setTabBarVisible:NO animated:YES completion:^(BOOL finished) {
-        NSLog(@"finished");
+        NSLog(@"finished chat old vc ");
     }];
 
 }

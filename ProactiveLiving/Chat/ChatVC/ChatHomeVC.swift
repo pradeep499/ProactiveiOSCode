@@ -175,14 +175,12 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         super.viewWillAppear(true)
         
         
-        
-        
-//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//            self.bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-//                    self.bottomTabBar!.setCenterImage()
-//            }
-//            
-//        })
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
+                    self.bottomTabBar!.setCenterImage()
+            }
+            
+        })
         
     
         
@@ -271,6 +269,8 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         delay(1.0, closure: {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
+            chatMainObj.bottomTabBar = self.bottomTabBar
+            
             chatMainObj.fromVC = self
             chatMainObj.isFromClass="Recent"
             chatMainObj.isFromDeatilScreen = "0"
@@ -508,7 +508,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
-//        chatMainObj.bottomTabBar = self.bottomTabBar
+        chatMainObj.bottomTabBar = self.bottomTabBar
         if anObject.groupId == "0" {
            
             chatMainObj.isFromClass="Recent"

@@ -34,6 +34,25 @@
     //number of rows in tableview
     return 4;
 }
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    // Changed as per client request 3rd May
+    
+    if (indexPath.row == 0 || indexPath.row == 1)
+    {
+        return 0 ;
+    }
+    else {
+        return 50;
+    }
+   
+
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"SettingsMainCell";

@@ -455,6 +455,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
             if newString.characters.count == 0 {
                 return 0
             }
+            
             break
             
         case 12:
@@ -466,10 +467,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
         default:
             break
         }
-        
        
-        
-        
         let str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
         
         

@@ -64,7 +64,8 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
             self.layoutTf_PwdHeight.constant = 0
             self.lbl_title.text = "Add a Friend"
             self.ivHeader.image = UIImage(named: "add_friend")
-            self.lbl_text.text = "To add a friend, enter friend's country code and enter friend's phone number."
+          //  self.lbl_text.text = "To add a friend, enter friend's country code and enter friend's phone number."
+            self.lbl_text.text = "To add a friend, enter the friend's phone number with country code."  // Changed as per client request 3rd May 2017
             
         }else{
             self.lbl_title.text = "Delete Account"

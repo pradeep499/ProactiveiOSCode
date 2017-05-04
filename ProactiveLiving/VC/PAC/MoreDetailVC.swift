@@ -13,15 +13,18 @@ class MoreDetailVC: UIViewController {
     //MARK:- Outlets
     @IBOutlet weak var moreDetailTxtView: UITextView!
     
+    @IBOutlet weak var lblTitle: UILabel!
     
     //MARK:- Properties
     
     var detailStr : String?
+    var titleStr : String?
     
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        lblTitle.text = titleStr
         moreDetailTxtView.text = detailStr
         
     }
