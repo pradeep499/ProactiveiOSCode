@@ -525,7 +525,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        bottomTabBar = self.tabBarController as? CustonTabBarController
+        bottomTabBar = self.tabBarController as? CustonTabBarController
         self.exitedView.hidden = true
         ChatHelper .removeFromUserDefaultForKey("chatId")
         copyTextStr = ""
