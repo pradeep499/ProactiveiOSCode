@@ -178,6 +178,8 @@ type = 3 for yeary basis
         [self.btnBack setHidden:YES];
 
     }
+    
+    _selectedDate = [[NSDate alloc]init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -188,6 +190,8 @@ type = 3 for yeary basis
     [self getAppointmentListingData];
   
     recuringArr = [[NSMutableArray alloc]init];
+    
+    
     
   //  [self createRecurringEvent];
 

@@ -188,6 +188,10 @@ class DKImageGroupViewController: UICollectionViewController {
         let asset = imageAssets[indexPath.row] as! DKAsset
         cell.thumbnail = asset.thumbnailImage
         
+        if self.imagePickerController?.selectedAssets.count < 0{
+            return cell
+        }
+        
         if self.imagePickerController!.selectedAssets.indexOf(asset) != nil {
             cell.selected = true
             collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
@@ -195,7 +199,6 @@ class DKImageGroupViewController: UICollectionViewController {
             cell.selected = false
             collectionView.deselectItemAtIndexPath(indexPath, animated: false)
         }
-        
         return cell
     }
     
@@ -271,6 +274,10 @@ class DKAssetsLibraryController: UITableViewController {
     }
 
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(GroupCellIdentifier, forIndexPath: indexPath) as UITableViewCell
         
@@ -316,8 +323,8 @@ public class DKImagePickerController: UINavigationController {
     public var defaultSelectedAssets: [DKAsset]? {
         didSet {
             if let defaultSelectedAssets = self.defaultSelectedAssets {
-                self.selectedAssets = defaultSelectedAssets
-                self.imagesPreviewView.replaceAssets(defaultSelectedAssets)
+               self.selectedAssets = defaultSelectedAssets
+                //self.imagesPreviewView.replaceAssets(defaultSelectedAssets)
                 self.updateSelectionStatus()
             }
         }
@@ -502,6 +509,8 @@ public class DKImagePickerController: UINavigationController {
     }
     
     private func updateSelectionStatus() {
+        
+        print_debug("update selecttions status ")
         if self.selectedAssets.count > 0 {
             self.doneButton.setTitle(rightButtonTitle + "(\(selectedAssets.count))", forState: UIControlState.Normal)
         } else {
