@@ -421,7 +421,7 @@
                                                     <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9JZ-MN-hb7">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9JZ-MN-hb7">
                                                     <rect key="frame" x="100" y="7" width="26" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="26" id="7OK-Lb-IYa"/>
@@ -1440,12 +1440,12 @@
                                                         <constraint firstAttribute="width" constant="26" id="IB3-Y3-PiY"/>
                                                         <constraint firstAttribute="height" constant="26" id="vMZ-NK-gFl"/>
                                                     </constraints>
-                                                    <state key="normal" image="file_attachment"/>
+                                                    <state key="normal" image="add_Video"/>
                                                     <connections>
-                                                        <action selector="onClickAddAttachmentBtn:" destination="Mxs-Ll-ZUd" eventType="touchUpInside" id="Iwv-D1-kDk"/>
+                                                        <action selector="onClickAddVideo:" destination="Mxs-Ll-ZUd" eventType="touchUpInside" id="qBh-CN-nAp"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GFZ-Wt-a4z">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GFZ-Wt-a4z">
                                                     <rect key="frame" x="123" y="52" width="26" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="26" id="fan-NW-gSx"/>
@@ -1516,11 +1516,11 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAttachments" rowHeight="94" id="nec-1H-NME">
                                         <rect key="frame" x="0.0" y="418" width="375" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nec-1H-NME" id="BjE-a8-8wB">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="nec-1H-NME" id="BjE-a8-8wB">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmy-yu-ROQ" userLabel=" View 1">
+                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmy-yu-ROQ" userLabel=" View 1">
                                                     <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                                     <subviews>
                                                         <view tag="333" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HTp-FV-V9c">
@@ -1550,7 +1550,7 @@
                                                         <constraint firstAttribute="height" constant="45" id="hop-7t-Hct"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pOv-2b-33X" userLabel=" View 2">
+                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pOv-2b-33X" userLabel=" View 2">
                                                     <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                                     <subviews>
                                                         <view tag="666" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yp4-ml-cDN">
@@ -1616,7 +1616,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7t4-xi-roC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1568.8" y="-572.56371814092961"/>
+            <point key="canvasLocation" x="1249" y="-543"/>
         </scene>
         <!--MyPACVC-->
         <scene sceneID="U5m-jw-olP">

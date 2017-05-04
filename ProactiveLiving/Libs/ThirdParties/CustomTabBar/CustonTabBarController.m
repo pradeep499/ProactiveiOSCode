@@ -88,12 +88,7 @@
 // pass a param to describe the state change, an animated flag and a completion block matching UIView animations completion
 -(void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
     
-    NSLog(@"tab bar y - %f", self.tabBar.frame.origin.y);
-    if ([self tabBarIsVisible]) {
-        NSLog(@"visible");
-    } else {
-        NSLog(@"not visible");
-    }
+ 
     // bail if the current state matches the desired state
     if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
     

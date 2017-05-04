@@ -175,15 +175,6 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         super.viewWillAppear(true)
         
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-                    self.bottomTabBar!.setCenterImage()
-            }
-            
-        })
-        
-    
-        
         //Manage Connection it from server if not connected
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatHomeVC.callNotification),name:"PostNotificationToChatNotification", object:nil)
         
@@ -243,14 +234,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         //print("  Cancel Push setPushCount3")
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
-        
-//        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-//            print("Finish#")
-//        }
-//        bottomTabBar!.view.bringSubviewToFront(bottomTabBar!.middleButton)
-    }
+
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
@@ -509,6 +493,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let chatMainObj: ChattingMainVC = storyBoard.instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
         chatMainObj.bottomTabBar = self.bottomTabBar
+        chatMainObj.hidesBottomBarWhenPushed = false
         if anObject.groupId == "0" {
            
             chatMainObj.isFromClass="Recent"

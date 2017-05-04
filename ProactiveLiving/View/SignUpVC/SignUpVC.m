@@ -1,5 +1,5 @@
 //
-//  c.m
+//  SignUpVC.m
 //  ProactiveLiving
 //
 //  Created by Hitesh on 1/13/16.
