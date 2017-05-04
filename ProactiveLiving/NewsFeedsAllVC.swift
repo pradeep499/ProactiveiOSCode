@@ -1510,7 +1510,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         if(self.title != "PACs") {
             cell.layoutConstBtnShare.constant = 74
             btn_share.alpha = 1.0
-            btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+            //btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             btn_options.alpha = 1.0
             cell.layoutConstBtnLike.constant = 80
             btn_like.userInteractionEnabled = true
@@ -1520,7 +1520,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             cell.layoutConstBtnLike.constant = screenWidth - 150
             cell.layoutConstBtnShare.constant = 0
             btn_share.alpha = 0.0
-            btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
+            //btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
             btn_options.alpha = 0.0
             btn_like.userInteractionEnabled = false
             postContainerView.hidden = true

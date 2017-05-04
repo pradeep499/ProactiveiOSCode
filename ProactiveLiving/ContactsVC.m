@@ -647,16 +647,28 @@
             NSMutableDictionary *tempDict = [NSMutableDictionary new];
             tempDict[@"userid"]=[anObject valueForKey:@"_id"];
             tempDict[@"phoneNumber"]=[anObject valueForKey:@"mobilePhone"];
-            tempDict[@"user_firstName"]=[anObject valueForKey:@"firstName"];
+            
+            NSString *str = [anObject valueForKey:@"firstName"];
+            
+            NSString *str1 = [[NSString alloc] initWithFormat:@"%@ %@", @" ", [anObject valueForKey:@"lastName"]];
+            
+            NSString *str3 = [str stringByAppendingString:str1];
+            
+            tempDict[@"user_firstName"]=str3 ;
 
             [userIdArray addObject:tempDict];
+            
+            tempDict[@"user_image"]=[anObject valueForKey:@"imgUrl"];
+
         }
         
         NSMutableDictionary *tempDict = [NSMutableDictionary new];
         tempDict[@"userid"]=[ChatHelper userDefaultForKey:_ID];
         tempDict[@"phoneNumber"]=[AppHelper userDefaultsForKey:cellNum];
         tempDict[@"user_firstName"]=[AppHelper userDefaultsForKey:userFirstName];
-
+        tempDict[@"user_image"]= [[HelpingClass getUserDetails] imgUrl];
+        
+        NSLog(@"%@",[NSURL URLWithString:[[HelpingClass getUserDetails] imgUrl]]);
         
         [userIdArray addObject:tempDict];
         dict[@"users"] = userIdArray;

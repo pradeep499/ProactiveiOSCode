@@ -254,9 +254,9 @@ extension MenuVC:UITableViewDelegate{
             textField.delegate = self
             
             if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
-                textField.text = status as? String
+                textField.text = "  "  + (status as! String)
             }else{
-                textField.text = "Available."
+                textField.text = "  Available."
             }
             
         })

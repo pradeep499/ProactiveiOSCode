@@ -39,6 +39,7 @@ class ChatListner: NSObject {
     var isConnectionStable = false
     var currentOperationDict : NSMutableDictionary!
     var timerConnectingStatus:NSTimer!
+    var timerConnectingStatusToConnectAgain:NSTimer!
 
     override init(){
         
@@ -113,7 +114,7 @@ func connectToSocket() -> Void{
                     }
                     weakself.createOnline()
                     weakself.sendOffLineMessage()
-                    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "getState", object: nil))
+                    //NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "getState", object: nil))
                 }
                 weakself.isTypingChatListener()
                 weakself.addReceiveMsgHandlers()
@@ -326,6 +327,8 @@ func connectToSocket() -> Void{
                     self!.homeCoreData.saveContext()
                 }
                 
+                instance.insertGroupUsersInfoData("GroupUserList", params: dict)
+
                 self?.updateMessageInRecentChatFromGroup(dict)
                 
                 if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil)  {
@@ -1341,7 +1344,11 @@ func connectToSocket() -> Void{
             
             userInteractionDisableView.backgroundColor = UIColor.clearColor()
             
-            timerConnectingStatus = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector:  #selector(ChatListner.hideAlertConnectingToServer), userInfo: nil, repeats: true)
+            timerConnectingStatus = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:  #selector(ChatListner.hideAlertConnectingToServer), userInfo: nil, repeats: true)
+            
+            
+          timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(9, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
+
             
         }
         
@@ -1550,36 +1557,40 @@ func connectToSocket() -> Void{
             let appContObj=instance.fetchDataAppContObject("AppContactList", predicate: strPred) as AppContactList?
             
             if appContObj != nil {
+                
                 dict["username"] = appContObj?.name as String!
                 dict["imgUrl"] = appContObj?.userImgString as String!
                 dict["isNameAvail"] = "1"
                 dict["isDeleted"] = "0"
             } else {
-              //  dict["username"] = dic["phoneNumber"] as String!
                 var grpMembrName = "notvalue"
                 if ((dic["user_firstName"] as? String) != nil) {
                       grpMembrName  = dic["user_firstName"] as! String!
                 }
                // print(dic)
 
-                /* changed by Badru
-                 if  dic["userid"] as? String != ChatHelper.userDefaultForKey("userId") as String! && grpMembrName != "notvalue"{
-                    dict["username"]  = dic["user_firstName"] as! String
-                } else {
-                    dict["username"] = dic["phoneNumber"] as! String
-                }
- */
+
+
                 //added by Badru
                 if let name = dic["user_firstName"] as? String {
                     
                     dict["username"] = name
                 }else{
                     
-                    dict["username"] = "Dummy Name"
+                    dict["username"] = dic["phoneNumber"] as? String
                 }
                 
              
-                dict["imgUrl"] = "" as String!
+                
+                if let imag = dic["imgUrl"] as? String{
+                    dict["imgUrl"] = imag
+
+                }else{
+                    dict["imgUrl"] = ""
+                }
+                
+                
+                
                 dict["isNameAvail"] = "0"
                 dict["isDeleted"] = "0"
             }
@@ -1683,16 +1694,61 @@ func connectToSocket() -> Void{
                 timerConnectingStatus = nil
                 }
                 
+                if let reconnect = timerConnectingStatusToConnectAgain{
+                    reconnect.invalidate()
+                    timerConnectingStatusToConnectAgain = nil
+                }
+                
+
                 UIView.animateWithDuration(0.5, animations:
                     {
                         self.pushNotificationView.frame = CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70)
                         self.userInteractionDisableView.frame = CGRectMake(0, -UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
                 })
+                
+                
             }
         }
         
     }
     
+    
+    func againConnectionConnectingToServer() {
+      //  print_debug("againConnectionConnectingToServer")
+        
+
+        self.showSucessswithString("Connecting to server...", alertType: "ConnectionStatus", width: screenWidth)
+        
+        if socket != nil{
+            if socket.status != .Connected  {
+              //  print_debug("inside againConnectionConnectingToServer")
+
+                if let time = timerConnectingStatus{
+                    time.invalidate()
+                    timerConnectingStatus = nil
+                }
+                
+                if let reconnect = timerConnectingStatusToConnectAgain{
+                   reconnect.invalidate()
+                    timerConnectingStatusToConnectAgain = nil
+                }
+                
+                UIView.animateWithDuration(0.5, animations:
+                    {
+                        self.pushNotificationView.frame = CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70)
+                        self.userInteractionDisableView.frame = CGRectMake(0, -UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+                })
+                ChatListner.getChatListnerObj().socket.disconnect()
+                
+                //  socket = nil
+                isConnectionStable = false
+                
+                self.createConnection()
+            }
+        }
+        
+    }
+
     
     func performActionForNotification() {
        // print("navigation")
