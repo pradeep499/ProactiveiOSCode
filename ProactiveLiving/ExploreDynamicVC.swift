@@ -78,7 +78,7 @@ class ExploreDynamicVC: UIViewController {
             //call global web service class
             Services.serviceCallWithPath(ServiceGetAllStories, withParam: parameters, success: { (responseDict) in
                 
-                print(responseDict)
+                print_debug(responseDict)
                 
                 AppDelegate.dismissProgressHUD()
                 //dissmiss indicator

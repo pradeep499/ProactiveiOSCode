@@ -214,7 +214,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             // will display Organisation name
             lbl_organizationName.text = ""
         }
-        print("Dict = ", self.selectedCommentDict)
+        print_debug(self.selectedCommentDict)
         
         //--
         if self.selectedCommentDict["postType"] as! String != "text" {
@@ -507,7 +507,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         ChatListner .getChatListnerObj().socket.on("getPostUpdate") {data, ack in
             
             
-            print("value error_code\(data[0]["status"] as! String))")
+            print_debug("value error_code\(data[0]["status"] as! String))")
             
             let errorCode = (data[0]["status"] as? String) ?? "1"
             
@@ -522,7 +522,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
                 {
                     return
                 }
-                print(" response = ", resultDict)
+                print_debug(" response = ", resultDict)
                 
                 self.commentsArr = resultDict["comments"] as! [AnyObject]
                 
@@ -613,7 +613,7 @@ extension CommentsVC:UITableViewDataSource{
         
         let dict = commentsArr[indexPath.row] as! NSDictionary
         
-        print("dict = ", dict)
+        print_debug("dict = ", dict)
         
         if let name = (dict as NSDictionary).valueForKeyPath("commentedBy.firstName") as? String {
             

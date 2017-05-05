@@ -46,8 +46,8 @@ class MeetUpsListingVC: UIViewController {
     }
     
     func notificationCall(){
-        print("calling notifiaction")
-        print(arrData)
+        print_debug("calling notifiaction")
+        print_debug(arrData)
 
         self.fetchAllMeetupsOrWebInvites()
         self.listenerUpdateMeetupOrWebInvite()
@@ -68,8 +68,8 @@ class MeetUpsListingVC: UIViewController {
             }
             parameters["userId"]=ChatHelper.userDefaultForKey("userId") as String
             
-            print("parameters")
-            print(parameters)
+            print_debug("parameters")
+            print_debug(parameters)
             //call global web service class latest
             Services.postRequest(ServiceGetAllMeetupInvite, parameters: parameters, completionHandler:{
                 (status,responseDict) in
@@ -79,7 +79,7 @@ class MeetUpsListingVC: UIViewController {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print("arrayList \(self.arrData)")
+                        print_debug("arrayList \(self.arrData)")
 
                         guard let dataArr = responseDict["result"] as? [AnyObject] else
                         {
@@ -133,7 +133,7 @@ class MeetUpsListingVC: UIViewController {
             ChatListner .getChatListnerObj().socket.on("getMeetup_Invite_listing") {data, ack in
                
                 
-                print("value error_code\(data[0]["status"] as! String))")
+                print_debug("value error_code\(data[0]["status"] as! String))")
                     
                     let errorCode = (data[0]["status"] as? String) ?? "1"
                 
@@ -151,7 +151,7 @@ class MeetUpsListingVC: UIViewController {
                         
                         self.arrData = data
                         
-                        print("arrayList \(self.arrData)")
+                        print_debug("arrayList \(self.arrData)")
                         
                         self.tableView.reloadData()
                         AppDelegate.dismissProgressHUD()
@@ -179,7 +179,7 @@ class MeetUpsListingVC: UIViewController {
             ChatListner .getChatListnerObj().socket.off("getAccept_Meetup_Invite")
             ChatListner .getChatListnerObj().socket.on("getAccept_Meetup_Invite") {data, ack in
                 
-                print("value error_code\(data[0]["status"] as! String))")
+                print_debug("value error_code\(data[0]["status"] as! String))")
                 
                 let errorCode = (data[0]["status"] as? String) ?? "1"
                 
@@ -195,13 +195,13 @@ class MeetUpsListingVC: UIViewController {
                         return
                     }
                     
-                    print("arrayList \(resultDict)")
+                    print_debug("arrayList \(resultDict)")
                     
                     let predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
                     var filteredarray:[AnyObject] = (self.arrData as NSArray).filteredArrayUsingPredicate(predicate)
-                    print("ID = \(resultDict["_id"])")
+                    print_debug("ID = \(resultDict["_id"])")
                     
-                    print("arrayDATA = \(self.arrData)")
+                    print_debug("arrayDATA = \(self.arrData)")
 
                   
                     self.tableView.delegate = self
@@ -246,7 +246,7 @@ class MeetUpsListingVC: UIViewController {
     
     //Accept button tapped
     func btnAcceptClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
        // sender.selected = !sender.selected
         let point = self.tableView.convertPoint(CGPoint.zero, fromView: sender)
         
@@ -296,7 +296,7 @@ class MeetUpsListingVC: UIViewController {
     
     // Decline button tapped
     func btnDeclineClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
         //sender.selected = !sender.selected
         
         let point = self.tableView.convertPoint(CGPoint.zero, fromView: sender)
@@ -410,7 +410,7 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         let eventImage = cell.contentView.viewWithTag(11) as! UIImageView
         eventImage.layer.cornerRadius = 25
         eventImage.clipsToBounds = true
-        print("data reload")
+        print_debug("data reload")
         let eventName = cell.contentView.viewWithTag(12) as! UILabel
         let statusBG = cell.contentView.viewWithTag(13) as! UIImageView
         let eventTypeBy = cell.contentView.viewWithTag(15) as! UILabel

@@ -131,7 +131,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
         self.searchBar.resignFirstResponder()
-        print(searchBar.text)
+        print_debug(searchBar.text)
         self.firstVC.fetchPACsDataFromServer(["data" : "empty"], searchStr: searchBar.text!,index:0)
         self.firstVC.isSerrching = true
         self.firstVC.searchText = searchBar.text!
@@ -241,8 +241,8 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
         //   self.view.endEditing(true)
-        print("current Index : \(Int(index))")
-        print("current controller : \(controller)")
+        print_debug("current Index : \(Int(index))")
+        print_debug("current controller : \(controller)")
         currentIndex = index
       //  controller.viewWillAppear(true)
         

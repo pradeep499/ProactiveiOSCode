@@ -79,7 +79,7 @@ class JMCFlexibleCollectionViewDataSource: NSObject, UICollectionViewDataSource,
         didSet{
             if let c = collectionView
             {
-                print(c.frame)
+                print_debug(c.frame)
                 if spacing * 2 >= c.frame.width{
                     spacing = 14
                 }

@@ -67,7 +67,7 @@
      }
      
      */
-    //NSLog(@"--%@",[[self navigationController] viewControllers]);
+    ////NSLog(@"--%@",[[self navigationController] viewControllers]);
     //pop to root view controller
     [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
 

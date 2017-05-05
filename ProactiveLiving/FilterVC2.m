@@ -66,7 +66,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *strdate = [dateFormatter stringFromDate:self.datePicker.date];
-    NSLog(@"Date %@",strdate);
+    //NSLog(@"Date %@",strdate);
     self.selectedDate=[dateFormatter dateFromString:strdate];
 }
 - (void) timeChanged:(id)sender{
@@ -74,7 +74,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"hh:mm a"];
     NSString *strtime = [dateFormatter stringFromDate:self.timePicker.date];
-    NSLog(@"Time %@",strtime);
+    //NSLog(@"Time %@",strtime);
     self.selectedTime=[dateFormatter dateFromString:strtime];
 }
 

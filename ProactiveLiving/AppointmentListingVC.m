@@ -267,7 +267,7 @@
         NSString *eventID=[event.info valueForKey:@"_id"];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%K == %@)", @"_id",eventID];
         NSMutableArray *filteredarray = [[self.dataArray filteredArrayUsingPredicate:predicate] mutableCopy];
-        NSLog(@"array %@",eventID);
+        //NSLog(@"array %@",eventID);
         
         NSInteger index = [self.dataArray indexOfObject:filteredarray[0]];
         id obj = self.dataArray[index];
@@ -283,7 +283,7 @@
         NSString *eventID=[event valueForKey:@"_id"];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%K == %@)", @"_id",eventID];
         NSMutableArray *filteredarray = [[self.dataArray filteredArrayUsingPredicate:predicate] mutableCopy];
-        NSLog(@"array %@",eventID);
+        //NSLog(@"array %@",eventID);
         
         NSInteger index = [self.dataArray indexOfObject:filteredarray[0]];
         

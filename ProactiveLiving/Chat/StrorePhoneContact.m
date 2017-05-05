@@ -31,13 +31,13 @@
         
     }
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-     //NSLog(@"ontime value :::: %@",[userDefaults objectForKey:@"oneTime"]);
+     ////NSLog(@"ontime value :::: %@",[userDefaults objectForKey:@"oneTime"]);
 
     //Commented-31
     if (![userDefaults objectForKey:@"oneTime"])
     {
         //Ankur
-//        //NSLog(@"inside notification");
+//        ////NSLog(@"inside notification");
 //        CFErrorRef *error = NULL;
 //        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
 //        ABAddressBookUnregisterExternalChangeCallback(addressBook, externalChangeCallback, (__bridge void *)(self));
@@ -60,7 +60,7 @@ void externalChangeCallback(ABAddressBookRef reference, CFDictionaryRef info, vo
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"gotPhone" object:nil];
         [userDefaults setObject:@"1" forKey:@"oneTimePostNotification"];
-         //NSLog(@"post notification changed:::::::::::::::");
+         ////NSLog(@"post notification changed:::::::::::::::");
         
     }
     
@@ -86,7 +86,7 @@ void addressBookChanged(ABAddressBookRef abRef, CFDictionaryRef dicRef, void *co
 -(NSMutableDictionary *)createDictionaryForSectionIndex:(NSMutableArray *)array
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    //NSLog(@"Array Values: %@",array);
+    ////NSLog(@"Array Values: %@",array);
     
     for (char firstChar = 'a'; firstChar <= 'z'; firstChar++)
     {
@@ -121,7 +121,7 @@ void addressBookChanged(ABAddressBookRef abRef, CFDictionaryRef dicRef, void *co
     }
     NSArray *content = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name beginswith[cd] %@ OR name beginswith[cd] %@  OR name beginswith[cd] %@ OR name beginswith[cd] %@ OR name beginswith[cd] %@ OR name beginswith[cd] %@ OR name beginswith[cd] %@ OR name beginswith[cd] %@ OR name beginswith[cd] %@ OR name beginswith[cd] %@ OR name beginswith[cd] %@",@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"("]];
 //     NSArray *content = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name beginswith[cd] %@,@"9"]];
-    //NSLog(@"%@",content);
+    ////NSLog(@"%@",content);
     NSMutableArray *mutableContent = [NSMutableArray arrayWithArray:content];
     
     if ([mutableContent count] > 0)

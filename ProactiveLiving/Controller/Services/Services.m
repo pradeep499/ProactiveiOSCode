@@ -21,34 +21,34 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:HeaderKey forHTTPHeaderField:@"customuserheaderkey"];
     
-    NSLog(@"%@",manager.requestSerializer.HTTPRequestHeaders);
+    //NSLog(@"%@",manager.requestSerializer.HTTPRequestHeaders);
     
-    NSLog(@"Service: %@",path);
+    //NSLog(@"Service: %@",path);
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    NSLog(@"Parameter: %@",jsonString);
+    //NSLog(@"Parameter: %@",jsonString);
     
     //manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
     [manager POST:[BASE_URL stringByAppendingString:path] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         for(NSString *aKey in [params allKeys]){
-            NSLog(@"Key: %@ - Value: %@",aKey, [params objectForKey:aKey]);
+            //NSLog(@"Key: %@ - Value: %@",aKey, [params objectForKey:aKey]);
             [formData appendPartWithFormData:[[params objectForKey:aKey] dataUsingEncoding:NSUTF8StringEncoding] name:aKey];
         }
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         //TROUBLESHOOTING by printing logs
-        //NSLog(@"Response: %@", responseObject);
-        //NSLog(@"%@",operation.responseString);
+        ////NSLog(@"Response: %@", responseObject);
+        ////NSLog(@"%@",operation.responseString);
         success(responseObject);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSLog(@"failure    : %@",[error description]);
-        NSLog(@"%@",operation.responseString);
+        //NSLog(@"failure    : %@",[error description]);
+        //NSLog(@"%@",operation.responseString);
         failure(error);
         
     }];
@@ -66,7 +66,7 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:[BASE_URL stringByAppendingString:path] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         for(NSString *aKey in [params allKeys]){
-            NSLog(@"Key: %@ - Value: %@",aKey, [params objectForKey:aKey]);
+            //NSLog(@"Key: %@ - Value: %@",aKey, [params objectForKey:aKey]);
             [formData appendPartWithFormData:[[params objectForKey:aKey] dataUsingEncoding:NSUTF8StringEncoding] name:aKey];
         }
     }success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -80,9 +80,9 @@
         NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
         
         NSHTTPURLResponse* r = (NSHTTPURLResponse*)task.response;
-        NSLog( @"success: %d", (int)r.statusCode );
+        //NSLog( @"success: %d", (int)r.statusCode );
         
-        NSLog(@"Response: %@", responseObject);
+        //NSLog(@"Response: %@", responseObject);
         success(responseObject);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -91,10 +91,10 @@
         NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
         
         NSHTTPURLResponse* r = (NSHTTPURLResponse*)task.response;
-        NSLog( @"success: %d", (int)r.statusCode );
+        //NSLog( @"success: %d", (int)r.statusCode );
         
         
-        NSLog(@"failure    : %@",[error description]);
+        //NSLog(@"failure    : %@",[error description]);
         failure(error);
     }];
     
@@ -125,7 +125,7 @@
         completionBlock(@"Success",json);
          
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"Error: %@", error);
+        //NSLog(@"Error: %@", error);
         completionBlock(@"Error",nil);
     }];
 }
@@ -155,7 +155,7 @@
         completionBlock(@"Success",json);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"Error: %@", error);
+        //NSLog(@"Error: %@", error);
         completionBlock(@"Error",nil);
     }];
 }

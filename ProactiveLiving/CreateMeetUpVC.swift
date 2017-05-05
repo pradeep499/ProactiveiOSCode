@@ -444,11 +444,11 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //MARK:- TLTagsControlDelegate
     func tagsControl(tagsControl: TLTagsControl!, tappedAtIndex index: Int) {
-        print("Tag was tapped ", tagsControl.tags[index]);
+        print_debug(tagsControl.tags[index]);
     }
     
     func tagsControl(tagsControl: TLTagsControl!, deletedAtIndex index: Int) {
-        print("Tag was deleted ", tagsControl.tags[index]);
+       
        
         self.tokens.removeAtIndex(index)
         tagsControl.tags.removeObjectAtIndex(index)
@@ -483,7 +483,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             {
                 self.showAlertForOtherType()
             }
-            print("done!")
+            print_debug("done!")
         }
     }
     
@@ -561,7 +561,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         
         self.txtFieldOn.resignFirstResponder()
-        print("done!")
+        print_debug("done!")
     }
     
     func doneTimePicker() {
@@ -580,7 +580,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.txtField_eventEndTime.text = dateFormatter1.stringFromDate(date!)
         
         
-        print("done!")
+        print_debug("done!")
     }
     
     func doneTimePickerEndTime() {
@@ -661,7 +661,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func btnDeleteClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
         
         let point = self.tableAttachments.convertPoint(CGPoint.zero, fromView: sender)
         guard let indexPath = self.tableAttachments.indexPathForRowAtPoint(point) else {
@@ -842,7 +842,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
                 
            
-                print(dict)
+                print_debug(dict)
 
                 if self.imgCoverPic.image != nil
                 {
@@ -951,7 +951,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             ChatListner .getChatListnerObj().socket.off("getMeetup_Invite")
             ChatListner .getChatListnerObj().socket.on("getMeetup_Invite") {data, ack in
                 
-                print("value error_code\(data[0]["status"] as! String))")
+                print_debug("value error_code\(data[0]["status"] as! String))")
                 
                 let errorCode = (data[0]["status"] as? String) ?? "1"
                 
@@ -966,7 +966,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     {
                         return
                     }
-                    print("arrayList \(resultDict)")
+                    print_debug("arrayList \(resultDict)")
                     
                     //Add newly created meeup/invite to phone calender
                     if let newEvent = resultDict["isNewMeetupInvite"] as? String {
@@ -1010,7 +1010,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             //call global web service class
             Services.serviceCallWithPath(ServiceMeetUpInviteStaticData, withParam: parameters, success: { (responseDict) in
                 
-                print(responseDict)
+                print_debug(responseDict)
                 
                 AppDelegate.dismissProgressHUD()
                 //dissmiss indicator
@@ -1293,7 +1293,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         importMenu.title="Attach a Document"
        
         //importMenu.addOptionWithTitle("Attach from Gallery", image: nil, order: .First, handler: {
-        //print("New Doc Requested") } )
+        //print_debug("New Doc Requested") } )
         
         presentViewController(importMenu, animated: true, completion: nil)
 
@@ -1322,7 +1322,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func documentPickerWasCancelled(controller: UIDocumentPickerViewController) {
-        print(#function)
+        print_debug(#function)
     }
     
     @IBAction func switchAllowInviteClick(mySwitch: UISwitch) {
@@ -1360,12 +1360,12 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func placeSelected(place: Place) {
-        print(place.description)
+        print_debug(place.description)
         self.txtFieldWhereSecond.text=place.description
         dismissViewControllerAnimated(true, completion: nil)
         place.getDetails { details in
             self.strLatLong = "\(details.latitude),\(details.longitude)"
-            print(details.description)
+            print_debug(details.description)
         }
     }
     

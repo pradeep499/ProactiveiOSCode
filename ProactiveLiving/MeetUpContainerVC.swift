@@ -99,8 +99,8 @@ class MeetUpContainerVC: UIViewController, YSLContainerViewControllerDelegate {
     
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
         self.view.endEditing(true)
-        print("current Index : \(Int(index))")
-        print("current controller : \(controller)")
+        print_debug("current Index : \(Int(index))")
+        print_debug("current controller : \(controller)")
         currentIndex = index
         if currentIndex == 0 {
             self.btnEdit.hidden = false

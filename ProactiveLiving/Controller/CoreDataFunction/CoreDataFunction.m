@@ -37,7 +37,7 @@ static CoreDataFunction *singletonInstance = nil;
 }
 #pragma mark - getUserProfileModel
 -(UserInfo *)getUserProfileModel:(NSString*)userId{
-    NSLog(@"%@",userId);
+    //NSLog(@"%@",userId);
     NSFetchRequest *request = [self getBasicRequestForEntityName:@"UserInfo"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId=%@", userId];
     [request setPredicate:predicate];
@@ -45,14 +45,14 @@ static CoreDataFunction *singletonInstance = nil;
     NSError *error = nil;
     NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
     
-    NSLog(@"%@",results);
+    //NSLog(@"%@",results);
     
     UserInfo *userObj = nil;
     if (!error && [results count] > 0){
         userObj = [results objectAtIndex:0];
     }
     if (error){
-        NSLog(@"fetch request error = %@", [error localizedDescription]);
+        //NSLog(@"fetch request error = %@", [error localizedDescription]);
     }
     
     return userObj;
@@ -63,7 +63,7 @@ static CoreDataFunction *singletonInstance = nil;
     UserInfo *userObj = nil;
     userObj = [self getUserProfileModel:[dictionary objectForKey:@"userId"]];
     
-    NSLog(@"%@",userObj);
+    //NSLog(@"%@",userObj);
     
     if(!userObj){
         userObj =  [NSEntityDescription
@@ -100,9 +100,9 @@ static CoreDataFunction *singletonInstance = nil;
     
     NSError *error;
     if (![managedObjectContext save:&error]){
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        //NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }else{
-        NSLog(@"savedAllproduct");
+        //NSLog(@"savedAllproduct");
     }
 }
 */

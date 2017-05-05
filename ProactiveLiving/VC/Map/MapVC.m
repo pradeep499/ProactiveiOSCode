@@ -69,7 +69,7 @@
                      //    point.title = title;
                          point.subtitle = location;
                          
-                         NSLog(@"Lat: %f, Long: %f", coordinate.latitude, coordinate.longitude);
+                         //NSLog(@"Lat: %f, Long: %f", coordinate.latitude, coordinate.longitude);
                          MKCoordinateRegion region;
                          region.center = [(CLCircularRegion *)placemark.region center];
                          MKCoordinateSpan span;

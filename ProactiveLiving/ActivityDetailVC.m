@@ -108,7 +108,7 @@
 
 -(void)collectionView:(UICollectionView*)collectionview didSelectItemAtIndexPath:(NSIndexPath*) indexPath
 {
-    NSLog(@"%d",(int)indexPath.item);
+    //NSLog(@"%d",(int)indexPath.item);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -100,12 +100,12 @@
         [self.s3 putObject:por];
     }
     @catch ( AmazonServiceException *exception ) {
-        NSLog( @"Upload Failed, Reason: %@", exception );
+        //NSLog( @"Upload Failed, Reason: %@", exception );
     }	
 }
 - (void)uploadMultipleImagesOnChatTos3:(NSData *)imageToUpload type:(int)imageOrVideo dictInfo:(NSDictionary*)dic fromDist:(NSString*)classType meldID:(NSString*)meldFileName completion:(s3Handler)completionBlock completionProgress:(s3Progress)completionBlockProgress{
     
-   // NSLog(@"%@",dic);
+   // //NSLog(@"%@",dic);
     
     NSString *fileContentTypeStr = @"image/png";
     
@@ -165,7 +165,7 @@
         }
         
     }
-  //  NSLog(@"Final s3 server dict ===%@",chatImagesFiles);
+  //  //NSLog(@"Final s3 server dict ===%@",chatImagesFiles);
 
     por.data = imageToUpload;
     por.delegate = self;
@@ -185,7 +185,7 @@
      }*/
     
     
-    //NSLog(@"imageOrVideo type =========  %d", imageOrVideo);
+    ////NSLog(@"imageOrVideo type =========  %d", imageOrVideo);
     
     NSString *fileContentTypeStr = @"image/png";
     if ([classType isEqualToString:@"Create Meld"]) {
@@ -238,7 +238,7 @@
        }
     }
     
-  //  NSLog(@"%@",self.mediaName);
+  //  //NSLog(@"%@",self.mediaName);
     
     _completionHandler=[completionBlock copy];
     _completionHandlerProgress = [completionBlockProgress copy];
@@ -322,7 +322,7 @@
     
    
     
-   // NSLog(@"Final s3 server dict ===%@",dicS3);
+   // //NSLog(@"Final s3 server dict ===%@",dicS3);
     
     /* NSData *data = [[NSFileManager defaultManager] contentsAtPath:@"/Users/Sagar_Dabas/Desktop/output.mp4"];
      NSURL *uploadURL = [NSURL fileURLWithPath:@"/Users/Sagar_Dabas/Desktop/hey.mp4"];
@@ -331,7 +331,7 @@
     
     
     
-    //NSLog(@"url1 is in upload..........");
+    ////NSLog(@"url1 is in upload..........");
     por.data = imageToUpload;
     por.delegate = self;
     [self.s3 putObject:por];
@@ -343,20 +343,20 @@
     
     [self.dicS3 removeAllObjects];
     
-    //NSLog(@"After ==resetDictIntialPosistion %@",self.dicS3);
+    ////NSLog(@"After ==resetDictIntialPosistion %@",self.dicS3);
 }
 
 -(void)request:(AmazonServiceRequest *)request didSendData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten totalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite{
     
     
-   // NSLog(@"Request %@",request.url);
+   // //NSLog(@"Request %@",request.url);
     
-   // NSLog(@"taotl didSendData :totalBytesWritten %lld and sent: %lld",totalBytesWritten,bytesWritten);
+   // //NSLog(@"taotl didSendData :totalBytesWritten %lld and sent: %lld",totalBytesWritten,bytesWritten);
     
     float progress= (float)totalBytesWritten/(float)totalBytesExpectedToWrite;
     self.progress_ =(double)progress;
      _completionHandlerProgress(false, self.progress_);
-   // NSLog(@"Progress value:%.2f",progress);
+   // //NSLog(@"Progress value:%.2f",progress);
 //    NSDictionary *dic=[[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithFloat:progress],@"progress", nil];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"Upload_progress" object:nil userInfo:dic];
     
@@ -374,12 +374,12 @@
 }
 
 -(void)request:(AmazonServiceRequest *)request didReceiveResponse:(NSURLResponse *)response{
-   // NSLog(@"response is %@",response);
+   // //NSLog(@"response is %@",response);
 }
 
 -(void)request:(AmazonServiceRequest *)request didReceiveData:(NSData *)data{
     
-   // NSLog(@"data received is %@",data);
+   // //NSLog(@"data received is %@",data);
 }
 
 -(void)request:(AmazonServiceRequest *)request didCompleteWithResponse:(AmazonServiceResponse *)response
@@ -405,13 +405,13 @@
 //        [self.dicS3 setObject:self.mediaName forKey:@"meld_video"];
 //    }
     
-    //NSLog(@"AmazonServiceRequest = response = dicS3 ==== %@",self.dicS3);
+    ////NSLog(@"AmazonServiceRequest = response = dicS3 ==== %@",self.dicS3);
     [self MedaiUrl];
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error
 {
-//    NSLog(@"error========%@",error);
+//    //NSLog(@"error========%@",error);
 //    [[AppDelegate ] hideActivityViewer];
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:APP_NAME
 //                                                    message:ERROR_SomethingWentWrong
@@ -480,7 +480,7 @@
         NSError *error = nil;
         NSURL *url = [self.s3 getPreSignedURL:gpsur error:&error];
         NSString * imageURL = [url absoluteString];
-         NSLog(@"%@",imageURL);
+         //NSLog(@"%@",imageURL);
         if(url == nil)
         {
             if(error != nil)
@@ -517,13 +517,13 @@
 //               [self.dicS3 setObject:self.mediaName forKey:@"meld_video"];
 //           }
             
-           // NSLog(@"dicS3 ==== %@",self.dicS3);
+           // //NSLog(@"dicS3 ==== %@",self.dicS3);
             
            /* if(self.s3UploadRequest==ImageUploadRequest)
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                   NSLog(@"%@",imageURL);
+                   //NSLog(@"%@",imageURL);
                     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editProfileResponse:) name: Notification_editProfile object:nil];
                     
                     NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:SecurityKey_For_WholeApp,@"appkey", nil];
@@ -536,7 +536,7 @@
                     [dict setObject:settingsView.editProfilePage._emailTextField.text forKey:@"email"];
                     [dict setObject:imageURL forKey:@"imageurl"];
                     
-                    //NSLog(@"dict %@",dict);
+                    ////NSLog(@"dict %@",dict);
                     [[VerifyServiceClass sharedController]editProfile:dict];
                 });*/
             }

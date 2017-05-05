@@ -74,8 +74,8 @@
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
     [self.view endEditing:YES];
-    NSLog(@"current Index : %ld",(long)index);
-    NSLog(@"current controller : %@",controller);
+    //NSLog(@"current Index : %ld",(long)index);
+    //NSLog(@"current controller : %@",controller);
     //[controller viewWillAppear:YES];
 }
 

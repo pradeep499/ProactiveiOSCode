@@ -388,7 +388,7 @@
 //
 //        [dataArray addObject:dataDict];
 //    }
-//    NSLog(@"\n PAS Details:%@",dataArray);
+//    //NSLog(@"\n PAS Details:%@",dataArray);
     
     //check internet before hitting web service
     if ([AppDelegate checkInternetConnection])
@@ -403,7 +403,7 @@
         
         [Services postRequest:ServiceSendPAS parameters:parameters completionHandler:^(NSString *status, NSDictionary *responseDict) {
         
-            NSLog(@"Response:%@",responseDict);
+            //NSLog(@"Response:%@",responseDict);
             [AppDelegate dismissProgressHUD];//dissmiss indicator
             if([status isEqualToString:@"Success"])
             {

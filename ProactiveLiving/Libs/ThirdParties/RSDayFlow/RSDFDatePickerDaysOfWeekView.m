@@ -218,7 +218,7 @@
                 break;
             }
             default: {
-                NSLog(@"Invalid RSDFDaysOfWeekDisplayStyle. Defaulting to RSDFDaysOfWeekStyleShort");
+                //NSLog(@"Invalid RSDFDaysOfWeekDisplayStyle. Defaulting to RSDFDaysOfWeekStyleShort");
                 symbolsToUse = [self.veryShortStandaloneWeekdaySymbols copy];
                 break;
             }

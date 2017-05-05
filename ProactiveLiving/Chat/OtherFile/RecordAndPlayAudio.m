@@ -99,7 +99,7 @@
 {
 	toggle = YES;
 	//[actSpinner stopAnimating];
-    ////NSLog(@"Using File called: %@",recordedTmpFile);
+    //////NSLog(@"Using File called: %@",recordedTmpFile);
 	//Stop the recorder.
 	[recorder setDelegate:nil];
 	[recorder stop];
@@ -128,12 +128,12 @@
 
         
         
-		////NSLog(@"Using File called: %@",recordedTmpFile);
+		//////NSLog(@"Using File called: %@",recordedTmpFile);
 		//Setup the recorder to use this file and record to it.
         recorder = [[AVAudioRecorder alloc] initWithURL:self.recordedTmpFile settings:recordSetting error:&error];
         if (error)
         {
-            //NSLog(@"error: %@", [error localizedDescription]);
+            ////NSLog(@"error: %@", [error localizedDescription]);
             
         } else {
             //Use the recorder to start the recording.

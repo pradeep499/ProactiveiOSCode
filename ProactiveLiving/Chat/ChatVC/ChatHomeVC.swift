@@ -72,7 +72,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             try self.fetchedResultsController.performFetch()
         } catch {
             let fetchError = error as NSError
-            print("\(fetchError), \(fetchError.userInfo)")
+            print_debug("\(fetchError), \(fetchError.userInfo)")
         }
         
         //headerBackButton.setImage(UIImage(named:"signupBack"), forState: .Normal)
@@ -181,7 +181,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         if(!ChatHelper .userDefaultForKey("userId").isEmpty) {
             dispatch_after(1, dispatch_get_main_queue()) { () -> Void in
                 if ChatListner.getChatListnerObj().socket.status != .Connected {
-                    //print("connectToSocket ==connectToSocket")
+                    //print_debug("connectToSocket ==connectToSocket")
                     ChatListner.sharedInstance.connectToSocket()   // call your method.
                 }
             }
@@ -231,7 +231,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
     }
     
     func setPushCount3() -> Void {
-        //print("  Cancel Push setPushCount3")
+        //print_debug("  Cancel Push setPushCount3")
     }
     
 
@@ -323,7 +323,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             anObject = fetchedResultsController.objectAtIndexPath(indexPath) as! RecentChatList
         }
         
-        //NSLog(anObject.friendImageUrl!)
+        ////NSLog(anObject.friendImageUrl!)
         let imageString = NSString(format:"%@", anObject.friendImageUrl!) as String
         userName.text = anObject.friendName
         
@@ -341,7 +341,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         } else {
             messageCount.hidden = false
             messageCount.text = anObject.notificationCount as String!
-            print(messageCount.text)
+            print_debug(messageCount.text)
         }
 
         if anObject.lastMessageTime!.characters.count > 0 {
@@ -425,11 +425,11 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
 
             if tempDate.compare(dateServer) == NSComparisonResult.OrderedDescending {
             } else if tempDate.compare(dateServer) == NSComparisonResult.OrderedAscending {
-                NSLog("date1 after date2");
+                //NSLog("date1 after date2");
                 lastMessage.text="CLOSED"
                 lastMessage.textColor=UIColor.redColor()
             } else {
-                NSLog("dates are equal");
+                //NSLog("dates are equal");
             } */
             
               ///new code
@@ -602,9 +602,9 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             
             let grpObj = instance.fetchDataGrpUserObj("GroupUserList", predicate: strPred1) as GroupUserList?
             
-         //   print(grpObj?.isDeletedGroup)
-        //    print(grpObj?.groupId)
-        //    print(grpObj?.userName)
+         //   print_debug(grpObj?.isDeletedGroup)
+        //    print_debug(grpObj?.groupId)
+        //    print_debug(grpObj?.userName)
             
 //            if grpObj?.isDeletedGroup == "0" && grpObj != nil {
 //                deleteAction.backgroundColor = UIColor.redColor()
@@ -951,15 +951,15 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
     }
     
     func getClearConversationMeldRecords(note:NSNotification) {
-//       // print(note.userInfo)
+//       // print_debug(note.userInfo)
 //        AppDelegate.getAppDelegate().hideActivityViewer()
 //        NSNotificationCenter.defaultCenter().removeObserver(self, name:Notification_deleteMeldsFromServer, object:nil)
 //        var tempdict = note.userInfo as! Dictionary<String,AnyObject>
 //        if tempdict["error_code"]?.integerValue! == 1 {
-//          // print("getClearConversationMeldRecords")
+//          // print_debug("getClearConversationMeldRecords")
 //            self.clearConversation(locIndexPath)
 //        } else {
-//           // print("else")
+//           // print_debug("else")
 //        }
     }
     
@@ -974,7 +974,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
     }
     
     func gettingAllMeldRecords(note:NSNotification) {
-//       // print(note.userInfo)
+//       // print_debug(note.userInfo)
 //        AppDelegate.getAppDelegate().hideActivityViewer()
 //        NSNotificationCenter.defaultCenter().removeObserver(self, name:Notification_getMeldDetails, object:nil)
 //        var tempdict = note.userInfo as! Dictionary<String,AnyObject>
@@ -986,7 +986,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
 //            meldDetailsObj.strChat="ChatScreen"
 //            self.navigationController?.pushViewController(meldDetailsObj, animated: true)
 //        } else if tempdict["error_code"]?.integerValue! == 5 {
-//           // print("getClearConversationMeldRecords")
+//           // print_debug("getClearConversationMeldRecords")
 //            
 //            let strAlert = "This meld has been deleted so you can not continue chat. Do you want to keep this meld chat or want to delete" +  "?"
 //            if(IS_IOS_7) {
@@ -1004,7 +1004,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
 //                self.presentViewController(alertController, animated: true, completion: nil)
 //            }
 //        } else {
-//           // print("else")
+//           // print_debug("else")
 //        }
     }
     

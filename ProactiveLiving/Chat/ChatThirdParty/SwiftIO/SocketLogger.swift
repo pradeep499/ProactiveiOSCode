@@ -50,7 +50,7 @@ public extension SocketLogger {
         let newArgs = args.map({arg -> CVarArgType in String(arg)})
         let replaced = String(format: message, arguments: newArgs)
         
-        NSLog("%@ %@: %@", logType, type, replaced)
+        //NSLog("%@ %@: %@", logType, type, replaced)
     }
 }
 

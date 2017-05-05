@@ -308,7 +308,7 @@ class GooglePlaceDetailsRequest {
       }
       if let error = error {
         // TODO: We should probably pass back details of the error
-        print("Error fetching google place details: \(error)")
+        print_debug("Error fetching google place details: \(error)")
       }
     }
   }
@@ -361,20 +361,20 @@ class GooglePlacesRequestHelpers {
     }
     
     if let error = error {
-      print("GooglePlaces Error: \(error.localizedDescription)")
+      print_debug("GooglePlaces Error: \(error.localizedDescription)")
       done(nil,error)
       return
     }
 
     if response == nil {
-      print("GooglePlaces Error: No response from API")
+      print_debug("GooglePlaces Error: No response from API")
       let error = NSError(domain: myErrorDomain1, code: 1001, userInfo: [NSLocalizedDescriptionKey:"No response from API"])
       done(nil,error)
       return
     }
 
     if response.statusCode != 200 {
-      print("GooglePlaces Error: Invalid status code \(response.statusCode) from API")
+      print_debug("GooglePlaces Error: Invalid status code \(response.statusCode) from API")
       let error = NSError(domain: myErrorDomain1, code: response.statusCode, userInfo: [NSLocalizedDescriptionKey:"Invalid status code"])
       done(nil,error)
       return
@@ -386,7 +386,7 @@ class GooglePlacesRequestHelpers {
         data,
         options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
     } catch {
-      print("Serialisation error")
+      print_debug("Serialisation error")
       let serialisationError = NSError(domain: myErrorDomain1, code: 1002, userInfo: [NSLocalizedDescriptionKey:"Serialization error"])
       done(nil,serialisationError)
       return
@@ -394,7 +394,7 @@ class GooglePlacesRequestHelpers {
 
     if let status = json?["status"] as? String {
       if status != "OK" {
-        print("GooglePlaces API Error: \(status)")
+        print_debug("GooglePlaces API Error: \(status)")
         let error = NSError(domain: myErrorDomain1, code: 1002, userInfo: [NSLocalizedDescriptionKey:status])
         done(nil,error)
         return

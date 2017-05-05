@@ -231,7 +231,7 @@
 
 -(void)calendarView:(CKCalendarView *)CalendarView didSelectDate:(NSDate *)date withEvents:(NSArray *)events
 {
-    NSLog(@"Eeee:%@",events);
+    //NSLog(@"Eeee:%@",events);
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         AllAppointmentsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllAppointmentsVC"];
         vc.arrEvents=events;

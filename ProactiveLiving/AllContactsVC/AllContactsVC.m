@@ -58,7 +58,7 @@
 -(void)someAction
 {
     //do something
-    NSLog(@"...Done...");
+    //NSLog(@"...Done...");
     [self.btnCreateNewGroup setHidden:YES];
     [self.btnDone setHidden:NO];
 }
@@ -157,8 +157,8 @@
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
     [self.view endEditing:YES];
-    NSLog(@"current Index : %ld",(long)index);
-    NSLog(@"current controller : %@",controller);
+    //NSLog(@"current Index : %ld",(long)index);
+    //NSLog(@"current controller : %@",controller);
     currentController=controller;
     //[currentController viewWillAppear:YES];  commented to fix the double api hit issue on 6th April 2017
     

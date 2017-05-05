@@ -106,7 +106,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print("ABOUT### \(responseDict)")
+                        print_debug("ABOUT### \(responseDict)")
                         
                         self.responseDict = responseDict
                         
@@ -218,7 +218,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     
     func inviteFriendCall(notification: NSNotification) {
         
-        print(notification.userInfo)
+        print_debug(notification.userInfo)
 
         if let arrIDs = notification.userInfo?["userIDs"] as? [String] {
             self.inviteOrJoinServiceCall(arrIDs, callType: "Invite")
@@ -244,7 +244,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                 if (status == "Success") {
                     
                     if ((responseDict["error"] as! Int) == 0) {
-                        print(responseDict)
+                        print_debug(responseDict)
                         if(callType == "Invite") {
                             AppHelper.showAlertWithTitle(AppName, message: responseDict["result"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                         }
@@ -319,7 +319,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                 if (status == "Success") {
                     
                     if ((responseDict["error"] as! Int) == 0) {
-                        print(responseDict)
+                        print_debug(responseDict)
                         NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_REFRESH_PAC_CONTAINER, object: self)
                     } else {
                         AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
@@ -358,7 +358,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                 if (status == "Success") {
                     
                     if ((responseDict["error"] as! Int) == 0) {
-                        print(responseDict)
+                        print_debug(responseDict)
                         var resultDict = responseDict["result"] as! [String : AnyObject]
                         if((resultDict["likes"] as! [String]).count == 1) {
                             self.lblLikes.text = "\((resultDict["likes"] as! [String]).count) Like"
@@ -716,7 +716,7 @@ extension AboutPacVC: UITableViewDataSource{
         seeMoreVC.detailStr = self.dataDict["description"] as! String!
         self.navigationController?.pushViewController(seeMoreVC, animated: true)
         
-        print("See More")
+        print_debug("See More")
         
         
         /* collapsed = !collapsed
@@ -887,7 +887,7 @@ extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
         default: break
            
         }
-            print("get selected collectionview itemindex \(indexPath.row)")
+            print_debug("get selected collectionview itemindex \(indexPath.row)")
      
     }
 }

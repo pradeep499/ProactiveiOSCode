@@ -564,7 +564,7 @@
 }
 
 -(void)buttonHandlerCallOut:(UIButton*)sender{
-    NSLog(@"Annotation Clicked");
+    //NSLog(@"Annotation Clicked");
     NSDictionary *userInfo = self.dicInfo;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ANNOTATION_CLICKED object:self userInfo:userInfo];
 }

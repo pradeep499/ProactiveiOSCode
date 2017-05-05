@@ -71,7 +71,7 @@ class WebViewVC: UIViewController {
             //UIApplication.sharedApplication().openURL(NSURL(string:
               //  "comgooglemaps://?center=40.765819,-73.975866&zoom=14&views=traffic")!)
         //} else {
-            //print("Can't use comgooglemaps://");
+            //print_debug("Can't use comgooglemaps://");
         //}
     }
     
@@ -100,17 +100,17 @@ class WebViewVC: UIViewController {
          
         let myURLString =  "http://52.23.211.77:3000/users/termsPolicy"
         guard let myURL = NSURL(string: myURLString) else {
-            print("Error: \(myURLString) doesn't seem to be a valid URL")
+            print_debug("Error: \(myURLString) doesn't seem to be a valid URL")
             return
         }
         
         do {
             let myHTMLString = try String(contentsOfURL: myURL)
-            print("HTML : \(myHTMLString)")
+            print_debug("HTML : \(myHTMLString)")
             
             let data = myHTMLString.dataUsingEncoding(NSUTF8StringEncoding)
             if let json  = try?NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers){
-                print(json)
+                print_debug(json)
                 if let content = json["content"] as? String{
                     self.web_view.loadHTMLString(content, baseURL: nil)
                     
@@ -123,7 +123,7 @@ class WebViewVC: UIViewController {
             
             
         } catch let error as NSError {
-            print("Error: \(error)")
+            print_debug("Error: \(error)")
             self.indicator.stopAnimating()
             self.indicator.hidden = true
         }

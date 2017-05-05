@@ -103,24 +103,24 @@
     CGPoint distance = [sender translationInView:self.topView]; // get distance of pan/swipe in the view in which the gesture recognizer was added
     CGPoint velocity = [sender velocityInView:self.topView]; // get velocity of pan/swipe in the view in which the gesture recognizer was added
     //float usersSwipeSpeed = fabs(velocity.x); // use this if you need to move an object at a speed that matches the users swipe speed
-    //NSLog(@"swipe speed:%f", usersSwipeSpeed);
+    ////NSLog(@"swipe speed:%f", usersSwipeSpeed);
     
     if (sender.state == UIGestureRecognizerStateEnded) {
         [sender cancelsTouchesInView]; // you may or may not need this - check documentation if unsure
         if (distance.x > 0 && fabs(distance.x)>fabs(distance.y)) { // right
-            NSLog(@"user swiped right");
+            //NSLog(@"user swiped right");
         } else if (distance.x < 0 && fabs(distance.x)>fabs(distance.y)) { //left
-            NSLog(@"user swiped left");
+            //NSLog(@"user swiped left");
         }
         if (distance.y > 0 && fabs(distance.y)>fabs(distance.x)) { // down
-            NSLog(@"user swiped down");
+            //NSLog(@"user swiped down");
             [UIView animateWithDuration:.15 animations:^{
                 self.topView.frame =CGRectMake(0, (SCREEN_HEIGHT-148), SCREEN_WIDTH, self.topView.frame.size.height);
                 self.imgArrow.transform = CGAffineTransformIdentity;
             }];
             
         } else if (distance.y < 0 && fabs(distance.y)>fabs(distance.x)) { //up
-            NSLog(@"user swiped up");
+            //NSLog(@"user swiped up");
             [UIView animateWithDuration:.15 animations:^{
                 self.topView.frame =CGRectMake(0, (SCREEN_HEIGHT-106)-self.topView.frame.size.height, SCREEN_WIDTH, self.topView.frame.size.height);
                 self.imgArrow.transform = CGAffineTransformMakeRotation(-M_PI);
@@ -175,7 +175,7 @@
     if([CLLocationManager locationServicesEnabled]){
         
         if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
-            NSLog(@"Location Services Enabled but Denied");
+            //NSLog(@"Location Services Enabled but Denied");
         }
     }
     
@@ -213,7 +213,7 @@
             [alert show];
         }
        
-        NSLog(@"%@", [self deviceLocation]);
+        //NSLog(@"%@", [self deviceLocation]);
     }
     else if([[AppHelper userDefaultsForKey:GPSStatus] boolValue])
     {
@@ -291,7 +291,7 @@
     [self.tagView.collectionView reloadData];
     
     [self.tagView setCompletionBlockWithSeleted:^(NSInteger index) {
-        NSLog(@"______%ld______", (long)index);
+        //NSLog(@"______%ld______", (long)index);
     }];
 }
 
@@ -302,7 +302,7 @@
 
 -(void)prepareDataForValidationCenters:(NSDictionary *)dataDict
 {
-    NSLog(@"location::::::>  %@",[LocationManagerSingleton sharedSingleton].locationManager.location);
+    //NSLog(@"location::::::>  %@",[LocationManagerSingleton sharedSingleton].locationManager.location);
    
     //check internet before hitting web service
     if ([AppDelegate checkInternetConnection]) {
@@ -389,7 +389,7 @@
         } failure:^(NSError *error)
         {
             [AppDelegate dismissProgressHUD];
-            NSLog(@"%@",error);
+            //NSLog(@"%@",error);
             [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
         }];
         
@@ -457,7 +457,7 @@
     //cell.lblReviews.text=[NSString stringWithFormat:@"%@ Reviews",[self.dataArray objectAtIndex:indexPath.row][@"reviewcount"]];
     
     //CLLocation * LocationActual = [[CLLocation alloc]initWithLatitude:[[[[self.dataArray objectAtIndex:indexPath.row]objectForKey:@"location"]objectAtIndex:1]floatValue] longitude:[[[[self.dataArray objectAtIndex:indexPath.row]objectForKey:@"location"]objectAtIndex:0]floatValue]];
-    //NSLog(@"Dist----%@",[NSString stringWithFormat:@"%d miles",[self distanceFromCurrentLocationToLocation:LocationActual]]);
+    ////NSLog(@"Dist----%@",[NSString stringWithFormat:@"%d miles",[self distanceFromCurrentLocationToLocation:LocationActual]]);
 
     cell.lblDistance.text=[NSString stringWithFormat:@"%.02f miles",(([[[self.dataArray objectAtIndex:indexPath.row]valueForKey:@"dist"] floatValue])/1609.344)];
     
@@ -593,7 +593,7 @@
     NSMutableDictionary *dataDict=[[NSMutableDictionary alloc]init];
     [dataDict setObject:searchBar.text forKey:@"search"];
     [self prepareDataForValidationCenters:dataDict];
-    NSLog(@"%@",searchBar.text);
+    //NSLog(@"%@",searchBar.text);
     
 }
 
@@ -681,7 +681,7 @@
 {
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
     //[self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
-    NSLog(@"CurrentLocation: %f: %f",region.center.latitude,region.center.longitude);
+    //NSLog(@"CurrentLocation: %f: %f",region.center.latitude,region.center.longitude);
 }
 
 - (void) updateLocation:(NSNotification *) info {
@@ -749,7 +749,7 @@
 {
     NSDictionary *dicInfo = notification.userInfo;
     
-    NSLog(@"%@",dicInfo);
+    //NSLog(@"%@",dicInfo);
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         [self performSegueWithIdentifier:@"ValidationCMoreVC" sender:dicInfo];
@@ -760,7 +760,7 @@
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
-    NSLog(@"Map fully loaded");
+    //NSLog(@"Map fully loaded");
 }
 
 //if annotation pressed
@@ -770,7 +770,7 @@
     {
         ZSAnnotation *myAnn = (ZSAnnotation *)view.annotation;
         //detailButton.tag = myAnn.pinIndex;
-        NSLog (@"Pin color %@", myAnn.colorStr);
+        //NSLog (@"Pin color %@", myAnn.colorStr);
         
     }
 }
@@ -781,7 +781,7 @@
     {
         ZSAnnotation *myAnn = (ZSAnnotation *)view.annotation;
         //detailButton.tag = myAnn.pinIndex;
-        NSLog (@"Pin color %@", myAnn.colorStr);
+        //NSLog (@"Pin color %@", myAnn.colorStr);
     }
     
     

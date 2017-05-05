@@ -44,7 +44,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
         
         
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            // print(finish)
+            // print_debug(finish)
         }
     }
 
@@ -100,7 +100,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                          
                         
@@ -269,11 +269,11 @@ extension MenuVC:UITableViewDelegate{
             
             }))
         
-        //3. Grab the value from the text field, and print it when the user clicks OK.
+        //3. Grab the value from the text field, and print_debug it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { [weak alert] (action) -> Void in
            
             let textField = alert!.textFields![0] as UITextField
-            print("Text field: \(textField.text)")
+            print_debug("Text field: \(textField.text)")
             
             if ((textField.text?.isBlank) == true) {
                 self.statusLbl.text = "  Available"
@@ -399,7 +399,7 @@ extension MenuVC:UITableViewDelegate{
                 do{
                     //Disconect Chat
                     let x = try? ChatListner.getChatListnerObj().closeConnection()
-                    print("",x)
+                    print_debug("",x)
                 }catch {
                     
                 }
@@ -412,7 +412,7 @@ extension MenuVC:UITableViewDelegate{
                         NSUserDefaults.standardUserDefaults().removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
                     NSUserDefaults.standardUserDefaults().synchronize()
                     DataBaseController.sharedInstance.deleteEverything()
-                    print("",x)
+                    print_debug("",x)
                 }catch {
                     
                 }

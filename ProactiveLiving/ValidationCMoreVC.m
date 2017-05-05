@@ -145,12 +145,12 @@
     cell.txtCalender.text = [NSDateFormatter localizedStringFromDate:[datePicker date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
     cell.txtTime.text = [NSDateFormatter localizedStringFromDate:[datePicker date] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     
-    NSLog(@"Date%@ and Time %@",cell.txtCalender.text,cell.txtTime.text);
+    //NSLog(@"Date%@ and Time %@",cell.txtCalender.text,cell.txtTime.text);
     
      //NSString *date = [NSString stringWithFormat:@"%@",cell.txtCalender.text];
      //NSString *time = [NSString stringWithFormat:@"%@",cell.txtTime.text];
     
-     NSLog(@"Date+Time %@ ",[_dateFormatter stringFromDate:[datePicker date]]);
+     //NSLog(@"Date+Time %@ ",[_dateFormatter stringFromDate:[datePicker date]]);
     //[AppHelper saveToUserDefaults:[_dateFormatter stringFromDate:[datePicker date]] withKey:BookinTime];
     self.strBookingDate=[_dateFormatter stringFromDate:[datePicker date]];
     [cell.txtCalender resignFirstResponder];
@@ -276,14 +276,14 @@
         int weekDay = [[dataDict valueForKey:@"dayNum"]intValue];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         NSString *weekdayString = [[formatter weekdaySymbols] objectAtIndex:weekDay - 1];
-        NSLog(@"Day: %@", weekdayString);
+        //NSLog(@"Day: %@", weekdayString);
     
         NSArray *arrTimings=[dataDict valueForKey:@"timings"];
         NSMutableArray *timingStrArr=[[NSMutableArray alloc]init];
         for (int i=0; i<arrTimings.count; i++) {
             [timingStrArr addObject:[NSString stringWithFormat:@"%@ to %@",[self timeFormatted:[[[arrTimings objectAtIndex:i] valueForKey:@"starttime"] intValue]],[self timeFormatted:[[[arrTimings objectAtIndex:i] valueForKey:@"endtime"] intValue]]]];
         }
-        NSLog(@"Timings: %@",[timingStrArr componentsJoinedByString:@", "]);
+        //NSLog(@"Timings: %@",[timingStrArr componentsJoinedByString:@", "]);
 
 //    for (int i=0; i<timingStrArr.count; i++) {
 //        if ([[timingStrArr objectAtIndex:i] isEqualToString:[timingStrArr objectAtIndex:i+1]]) {
@@ -291,7 +291,7 @@
 //        }
 //        else
 //        {
-//            NSLog(@"Timings: %@",[timingStrArr componentsJoinedByString:@", "]);
+//            //NSLog(@"Timings: %@",[timingStrArr componentsJoinedByString:@", "]);
 //
 //        }
 //    }
@@ -428,7 +428,7 @@
          } failure:^(NSError *error)
          {
              [AppDelegate dismissProgressHUD];
-             NSLog(@"%@",error);
+             //NSLog(@"%@",error);
              [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
          }];
         
@@ -506,7 +506,7 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss a"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     
-    NSLog(@"%@", aStr);
+    //NSLog(@"%@", aStr);
     NSDate   *aDate = [dateFormatter dateFromString:aStr];
     return aDate;
 }

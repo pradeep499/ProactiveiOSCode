@@ -92,7 +92,7 @@ class ResourcesPACVC: UIViewController {
         seeMoreVC.detailStr = desc!
         self.navigationController?.pushViewController(seeMoreVC, animated: true)
         
-        print("See More : MoreDetailVC")
+        print_debug("See More : MoreDetailVC")
         
     }
     
@@ -113,11 +113,11 @@ class ResourcesPACVC: UIViewController {
                 let indexPath =  self.tableViewResource.indexPathForRowAtPoint(buttonPosition)
                 
                 
-                print("Button Pressed Delete: \(indexPath!.section)")
+                print_debug("Button Pressed Delete: \(indexPath!.section)")
                 
                 let resourceId = (self.resourceDetailArr[indexPath!.section].valueForKey("_id") as? String)!
                 
-                print("RESOURCE ID : \(resourceId)")
+                print_debug("RESOURCE ID : \(resourceId)")
                 
                 
                 var parameters = [String: AnyObject]()
@@ -127,7 +127,7 @@ class ResourcesPACVC: UIViewController {
                                 "resourceId" : resourceId    ]
                 
                 
-                print("PARAM DELETE \(parameters)")
+                print_debug("PARAM DELETE \(parameters)")
                 
                 self.indexToDelete = indexPath!.section
                 self.deleteResourceAPI(parameters)
@@ -153,9 +153,9 @@ class ResourcesPACVC: UIViewController {
         
         let indexPath =  self.tableViewResource.indexPathForRowAtPoint(buttonPosition)
         
-        print("Button Pressed Edit: \(indexPath!.section)")
+        print_debug("Button Pressed Edit: \(indexPath!.section)")
         
-        print("Resource Detail Array \((resourceDetailArr[indexPath!.section]))")
+        print_debug("Resource Detail Array \((resourceDetailArr[indexPath!.section]))")
         
         
         
@@ -197,7 +197,7 @@ class ResourcesPACVC: UIViewController {
                     
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
-                        print(responseDict)
+                        print_debug(responseDict)
                         
                         let  memberStatus = responseDict["result"]!["memberStatus"] as! Bool
                        
@@ -259,7 +259,7 @@ class ResourcesPACVC: UIViewController {
                 
                 isPostServiceCalled = false
                 
-                      print("Response = \(responseDict)")
+                      print_debug("Response = \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
@@ -267,10 +267,10 @@ class ResourcesPACVC: UIViewController {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print("TESTING  Dict \(responseDict)")
+                        print_debug("TESTING  Dict \(responseDict)")
                         if let resultArr = responseDict["result"]?.valueForKey("resources") {
                             
-                            print("TESTING Arr \(resultArr)")
+                            print_debug("TESTING Arr \(resultArr)")
                             
                             
                            // self.resourceDetailArr = resultArr as! [AnyObject]
@@ -328,7 +328,7 @@ class ResourcesPACVC: UIViewController {
                 
                 isPostServiceCalled = false
                 
-                //      print("Response = \(responseDict)")
+                //      print_debug("Response = \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
@@ -336,10 +336,10 @@ class ResourcesPACVC: UIViewController {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print("TESTING  Dict \(responseDict)")
+                        print_debug("TESTING  Dict \(responseDict)")
                         if let resultArr = responseDict["result"]?.valueForKey("resources") {
                             
-                            print("TESTING Arr \(resultArr)")
+                            print_debug("TESTING Arr \(resultArr)")
                             
                             
                             self.resourceDetailArr = resultArr as! [AnyObject]
@@ -389,11 +389,11 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
 
         
         attachmentArr = (resourceDetailArr[section].valueForKey("attachments") as? NSArray)!
-        //attachmentArr = (attachmentArr?.objectAtIndex(0) as? NSArray)!
-        print("Section item lists:\((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!)")
-        print("COUNT ROWS \((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)")
+      
+       // print("Section item lists:\((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!)")
+       // print("COUNT ROWS \((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)")
         
-        print("-----returning rows-  - ", ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1))
+      //  print("-----returning rows-  - ", ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1))
         
         return  ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)
         
@@ -432,7 +432,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
        
         attachmentArr = (resourceDetailArr[indexPath.section].valueForKey("attachments") as? NSArray)!
-        print("MIKE attachmentArr\(attachmentArr)")
+        print_debug("MIKE attachmentArr\(attachmentArr)")
        
         if indexPath.row == 0 {
             
@@ -498,7 +498,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         var processedIndexPath = indexPath.row
         processedIndexPath = processedIndexPath-1
         
-        print("Processed index path:\(processedIndexPath) Item type:\(self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type")) --- \(self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type"))")
+        print_debug("Processed index path:\(processedIndexPath) Item type:\(self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type")) --- \(self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type"))")
             
         
         if (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type"))! as! String == "link" {
@@ -536,7 +536,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             // cellVideo.selectionStyle = .None
             
             let videoLinkImage = cellVideo.viewWithTag(16) as! UIImageView
-            print("Image URL\((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!))")
+            print_debug("Image URL\((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!))")
             videoLinkImage.sd_setImageWithURL(NSURL.init(string: (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!), placeholderImage: UIImage.init(named: "ic_instruction_video"))
             
             
@@ -562,7 +562,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
                         }
                         else
                         {
-                            print("No image")
+                            print_debug("No image")
                         }
                     })
                     
@@ -623,7 +623,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             return UIImage(CGImage: thumbnail!)
         }
         catch let error as NSError {
-            print(error.localizedDescription)
+            print_debug(error.localizedDescription)
             return UIImage(named: "ic_instruction_video")!
         }
         
@@ -668,11 +668,11 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     func mpMoviePlayerLoadStateDidChange(notification: NSNotification) {
         
         
-        //    NSLog(@"loadstate change: %lu", (unsigned long)[self.moviePlayer moviePlayer].loadState);
+        //    //NSLog(@"loadstate change: %lu", (unsigned long)[self.moviePlayer moviePlayer].loadState);
         //
         //    if (([self.moviePlayer moviePlayer].loadState & MPMovieLoadStatePlayable) == MPMovieLoadStatePlayable)
         //    {
-        //        NSLog(@"yay, it became playable");
+        //        //NSLog(@"yay, it became playable");
         //    }
         
         
@@ -680,7 +680,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     
     func moviePlaybackDidFinish() {
         
-        print("Movie finished!!!")
+        print_debug("Movie finished!!!")
         
     }
     
@@ -691,7 +691,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         tableView.layoutSubviews()
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        print(indexPath.row)
+        print_debug(indexPath.row)
         
         if(indexPath.row != 0)
         {
@@ -714,13 +714,13 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
        
         if dict["url"] != nil {
          
-            print("Dict \(dict)")
-            print("URL TEST: \(dict["url"]!)")
+            print_debug("Dict \(dict)")
+            print_debug("URL TEST: \(dict["url"]!)")
             WebVC.urlStr = dict["url"]!
             self.navigationController?.pushViewController(WebVC, animated: true)
             
             if dict["type"] == "video" {
-                print("VIDEO DICT")
+                print_debug("VIDEO DICT")
             }
             
             

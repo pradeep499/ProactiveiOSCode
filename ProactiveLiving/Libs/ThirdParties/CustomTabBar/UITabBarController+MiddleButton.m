@@ -87,7 +87,7 @@
 // illustration of a call to toggle current state
 - (void)hideTabBar:(BOOL)visible withAnimation:(BOOL)animate {
     [self setTabBarVisible:!visible animated:animate completion:^(BOOL finished) {
-        NSLog(@"finished");
+        //NSLog(@"finished");
     }];
 }
 

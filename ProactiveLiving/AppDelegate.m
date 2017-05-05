@@ -56,7 +56,7 @@
 //        if (connected)
 //          //  [self getStaticData];
 //        else
-//            NSLog(@"NOT REACHABLE");
+//            //NSLog(@"NOT REACHABLE");
 //    }];
 
     //UISearchBar Global look n feel alteration
@@ -86,10 +86,10 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (notification) {
-            NSLog(@"app recieved notification from remote%@",notification);
+            //NSLog(@"app recieved notification from remote%@",notification);
             [self application:application didReceiveRemoteNotification:notification];
         }else{
-            NSLog(@"app did not recieve notification");
+            //NSLog(@"app did not recieve notification");
         }
     });
   
@@ -117,7 +117,7 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     self.currentLocation = newLocation;
-    NSLog(@"location:::::--> %@",newLocation);
+    //NSLog(@"location:::::--> %@",newLocation);
 
 }
 
@@ -128,7 +128,7 @@
     NSString *tokenString = [NSString stringWithFormat:@"%@",token];
     tokenString = [tokenString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     tokenString = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"Device Token:%@",tokenString);
+    //NSLog(@"Device Token:%@",tokenString);
     [AppHelper saveToUserDefaults:tokenString withKey:DEVICE_TOKEN];
     [AppHelper saveToUserDefaults:CURRENT_DEVICE withKey:DEVICE_TYPE];
 
@@ -146,7 +146,7 @@
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
 {
-    // NSLog(@"identifier ====%@ , userInfo===%@",userInfo,identifier);
+    // //NSLog(@"identifier ====%@ , userInfo===%@",userInfo,identifier);
     
     //   [AppHelper showAlertViewWithTag:0 title:APP_NAME message:@"push notification" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok"];
     
@@ -165,7 +165,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
     [UIApplication sharedApplication].applicationIconBadgeNumber =0;
-    NSLog(@"[userInfo didReceiveRemoteNotification == %@",[userInfo valueForKey:@"aps"]);
+    //NSLog(@"[userInfo didReceiveRemoteNotification == %@",[userInfo valueForKey:@"aps"]);
     
     if ([AppHelper userDefaultsForKey:@"userId"]) {
             NSDictionary *info_dic = [userInfo valueForKey:@"aps"];
@@ -181,7 +181,7 @@
                 NSInteger tabBarValue=0;
                 for (int i = 0; i<vcArray.count; i++){
                     UIViewController* controller = [vcArray objectAtIndex:i];
-                    NSLog(@"$UIViewController===1%@",controller);
+                    //NSLog(@"$UIViewController===1%@",controller);
                     if ([controller isKindOfClass:[UITabBarController class]]) {
                         isTab = YES;
                         tabBarValue = i;
@@ -255,7 +255,7 @@
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         
         BOOL con = NO;
-        NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
+        //NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
         
         if (status == AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi) {
             
@@ -290,7 +290,7 @@
         [theTimer isValid]; //recall the NSTimer
         //implement your methods
         [[ChatListner getChatListnerObj] doNotSleep];
-        NSLog(@"fired...");
+        //NSLog(@"fired...");
     }else{
         [theTimer invalidate]; //stop the NSTimer
     }
@@ -354,7 +354,7 @@
 - (NSURL *)applicationDocumentsDirectory {
     // The directory the application uses to store the Core Data store file. This code uses a directory named "MaverickHitesh.ProactiveLiving" in the application's documents directory.
     
-    NSLog(@"sqlite %@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory  inDomains:NSUserDomainMask] lastObject]);
+    //NSLog(@"sqlite %@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory  inDomains:NSUserDomainMask] lastObject]);
 
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
@@ -390,7 +390,7 @@
         error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
         // Replace this with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
@@ -422,7 +422,7 @@
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }

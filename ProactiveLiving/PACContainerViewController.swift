@@ -52,7 +52,7 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
     
     @IBAction func rightButtonAction(sender: AnyObject) {
         
-        print("rightButtonAction PACContainerViewController")
+        print_debug("rightButtonAction PACContainerViewController")
     }
     
     // Set up the Child View Controller
@@ -119,8 +119,8 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
         //   self.view.endEditing(true)
-        print("current Index : \(Int(index))")
-        print("current controller : \(controller)")
+        print_debug("current Index : \(Int(index))")
+        print_debug("current controller : \(controller)")
         //currentIndex = index
         //   controller.viewWillAppear(true)
         

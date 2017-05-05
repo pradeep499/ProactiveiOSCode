@@ -104,12 +104,12 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
         if isFromEditPAC == true {
             
-            print("TEST###\(responseDictPACEdit)")
+            print_debug("TEST###\(responseDictPACEdit)")
             
-            print("ArrayPACMembers \(arrPACmembersFromMemberProfile)")
+            print_debug("ArrayPACMembers \(arrPACmembersFromMemberProfile)")
             
             let test = arrPACmembersFromMemberProfile//resultDict?.valueForKey("members") as! [AnyObject]
-            print("members arr \(test)")
+            print_debug("members arr \(test)")
             
             for i in 0  ..< test.count  {
                 
@@ -129,7 +129,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             let creatorStatus = result["creatorStatus"] as? Int
             let likeStatus = result["likeStatus"] as? Int
             let memberStatus = result["memberStatus"] as? Int
-            print("AS \(adminStatus!) CS \(creatorStatus!)  LS \(likeStatus!)  MS \(memberStatus!)")
+            print_debug("AS \(adminStatus!) CS \(creatorStatus!)  LS \(likeStatus!)  MS \(memberStatus!)")
       
             let resultDict =  result["pac"]   // PAC
             
@@ -154,7 +154,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             let allowToUpload = setting?.valueForKey("allowToUpload")! as? Int
             let privateStatus = setting?.valueForKey("private")! as? Int
 
-            print("A \(allowToCreateMeetup!) B \(allowToCreateWebinvite!) C \(allowToUpload!) D \(privateStatus!)")
+            print_debug("A \(allowToCreateMeetup!) B \(allowToCreateWebinvite!) C \(allowToUpload!) D \(privateStatus!)")
           
             if allowToCreateMeetup == 0 {
                 switch_settting_createMeetUp.setOn(false, animated: false)
@@ -182,7 +182,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             let friends = visible?.valueForKey("friends")! as? Int
             let healthClub = visible?.valueForKey("healthClub")! as? Int
             let males = visible?.valueForKey("males")! as? Int
-            print("A \(colleagues!) B \(everyone!) C \(females!) D \(friends!) E  \(healthClub!) F \(males!)")
+            print_debug("A \(colleagues!) B \(everyone!) C \(females!) D \(friends!) E  \(healthClub!) F \(males!)")
             
             if colleagues == 0 {
                 switch_visible_colleagues.setOn(false, animated: false)
@@ -217,7 +217,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             // Member array access
             
 //            let members = resultDict?.valueForKey("members") as! [AnyObject]
-//            print("members arr \(members)")
+//            print_debug("members arr \(members)")
 //            
 //            for i in 0  ..< members.count  {
 //                
@@ -239,7 +239,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             
             // Admins array access
             let admins = resultDict?.valueForKey("admins") as! [AnyObject]
-            print("admins arr \(admins)")
+            print_debug("admins arr \(admins)")
             
             for i in 0  ..< admins.count  {
                 
@@ -259,17 +259,17 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             // Attachment
             
             let attach = resultDict?.valueForKey("attachements") as! [String : AnyObject]
-            print("Attachment\(attach)")
+            print_debug("Attachment\(attach)")
             
             let files = attach["files"]
             let links = attach["links"] as? [AnyObject]
-            print("files \(files) links \(links)")
+            print_debug("files \(files) links \(links)")
             
             arrAttachments = links!
          
             
             pacID = resultDict?.valueForKey("_id") as! String
-            print("PRINT PACID-\(pacID)")
+            print_debug("print_debug PACID-\(pacID)")
             
            let imageURL = resultDict?.valueForKey("imgUrl") as! String
             iv_coverPic.sd_setImageWithURL(NSURL.init(string: imageURL), placeholderImage: UIImage.init(named: "pac_listing_no_preview"))
@@ -339,7 +339,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     
     func NotifyCreatePacInvite(notification:NSNotification) {
-        //  print(notification)
+        //  print_debug(notification)
         let dicContact = notification.object as! [String : AnyObject]
         self.reSetInviteTag( dicContact )
     }
@@ -393,7 +393,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         default :
             break
         }
-        print(switchStatus)
+        print_debug(switchStatus)
     }
     
     func goToContact(type:String) -> Void {
@@ -497,7 +497,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         importMenu.title="Attach a Document"
         
         //importMenu.addOptionWithTitle("Attach from Gallery", image: nil, order: .First, handler: {
-        //print("New Doc Requested") } )
+        //print_debug("New Doc Requested") } )
         
         presentViewController(importMenu, animated: true, completion: nil)
         
@@ -531,7 +531,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
         
-        print("Submit btn pressed")
+        print_debug("Submit btn pressed")
         
         if(isEmpty()){
             
@@ -719,12 +719,12 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     }
     
     func placeSelected(place: Place) {
-        print(place.description)
+        print_debug(place.description)
         self.tf_location.text=place.description
         dismissViewControllerAnimated(true, completion: nil)
         place.getDetails { details in
             // self.strLatLong = "\(details.latitude),\(details.longitude)"
-            print(details.description)
+            print_debug(details.description)
         }
     }
     
@@ -742,7 +742,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     //MARK:- TLTagsControlDelegate
     func tagsControl(tagsControl: TLTagsControl!, tappedAtIndex index: Int) {
-        print("Tag was tapped ", tagsControl.tags[index])
+        print_debug(tagsControl.tags[index])
         
     }
     
@@ -750,7 +750,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     func tagsControl(tagsControl: TLTagsControl!, deletedAtIndex index: Int) {
         
-        print("Tag was deleted ", tagsControl.tags[index])
+        print_debug(tagsControl.tags[index])
         
         // self.tokens.removeAtIndex(index)
         tagsControl.tags.removeObjectAtIndex(index)
@@ -784,7 +784,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     }
     
     func documentPickerWasCancelled(controller: UIDocumentPickerViewController) {
-        print(#function)
+        print_debug(#function)
     }
     
     
@@ -792,10 +792,10 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     func submitAPI() -> Void {
         
-        // print("ADMIN TAG ### \(self.adminDict["_id"])")
+        // print_debug("ADMIN TAG ### \(self.adminDict["_id"])")
         // self.tokenField.tags.addObject(contact["firstName"]!)
         
-        print("MEMBER TAG ### \(self.memberArr)")
+        print_debug("MEMBER TAG ### \(self.memberArr)")
        
         for i in 0  ..< memberArr.count  {
             
@@ -821,8 +821,8 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
         
         
-        print("TEST tagIDAdmin \(self.tagIDAdmin)")
-        print("TEST tagIDMember \(self.tagIDMember)")
+        print_debug("TEST tagIDAdmin \(self.tagIDAdmin)")
+        print_debug("TEST tagIDMember \(self.tagIDMember)")
         
         if AppDelegate.checkInternetConnection() {
             //show indicator on screen
@@ -887,7 +887,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                 ]
             }
             
-            print("Parameters before : \(parameters)")
+            print_debug("Parameters before : \(parameters)")
             
             
             if self.iv_coverPic.image != nil
@@ -912,7 +912,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                         //Parsing JSON
                         var parsedData = JSON(response)
                         self.parameters["imgUrl"] = parsedData["filesUrl"].string
-                        print("URL \(parsedData["filesUrl"].string)")
+                        print_debug("URL \(parsedData["filesUrl"].string)")
                         
                         //call global web service class latest
                         self.serviceCallWithData()
@@ -920,7 +920,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                     }, failure:
                     {
                         operation, response -> Void in
-                        print(response)
+                        print_debug(response)
                         stopActivityIndicator(self.view)
                         
                     }
@@ -952,7 +952,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                 
                 if ((responseDict["error"] as! Int) == 0) {
                     
-                    print(responseDict["result"])
+                    print_debug(responseDict["result"])
                     
                     
                     AppHelper.showAlertWithTitle(AppName, message:responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
@@ -961,7 +961,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                     if self.isFromEditPAC == true {
                         
 //                        let vcS = (self.navigationController?.viewControllers)! as [UIViewController]
-//                        print(vcS)
+//                        print_debug(vcS)
                         
                         NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_REFRESH_PAC_CONTAINER, object: self)
                         self.navigationController?.popViewControllerAnimated(true)
@@ -1064,7 +1064,7 @@ extension CreatePACVC: UITableViewDataSource{
     
     
     func btnDeleteClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
         
         let point = self.tv_CreatePac.convertPoint(CGPoint.zero, fromView: sender)
         guard let indexPath = self.tv_CreatePac.indexPathForRowAtPoint(point) else {

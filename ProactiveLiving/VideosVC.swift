@@ -146,7 +146,7 @@ class VideosVC: UIViewController {
                         }
                         else
                         {
-                            print("No image")
+                            print_debug("No image")
                         }
                     })
                     
@@ -190,7 +190,7 @@ class VideosVC: UIViewController {
                 datDict =  (profilePersionalArr[indexPath.row] as? [String:String])!
             }else if self.title == "EDUCATIONAL" {
                 let data = profileEducationalArr[indexPath.row]
-                print("Educational Data = ", data)
+                print_debug("Educational Data = ", data)
                 datDict =  (profileEducationalArr[indexPath.row] as? [String : String])!
                 
             }else if self.title == "INSPIRATIONAL" {
@@ -231,7 +231,7 @@ class VideosVC: UIViewController {
                         }
                         else
                         {
-                            print("No image")
+                            print_debug("No image")
                         }
                     })
                     
@@ -270,7 +270,7 @@ class VideosVC: UIViewController {
         
         
 //        let data = profileEducationalArr[indexPath!.row]
-//        print(data)
+//        print_debug(data)
         
         
         let seeMoreVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("MoreDetailVC") as! MoreDetailVC
@@ -281,7 +281,7 @@ class VideosVC: UIViewController {
             datDict =  (profilePersionalArr[indexPath!.row] as? [String:String])!
         }else if self.title == "EDUCATIONAL" {
             let data = profileEducationalArr[indexPath!.row]
-            print("Educational Data = ", data)
+            print_debug("Educational Data = ", data)
             datDict =  (profileEducationalArr[indexPath!.row] as? [String : String])!
             
         }else if self.title == "INSPIRATIONAL" {
@@ -296,7 +296,7 @@ class VideosVC: UIViewController {
                 
         self.navigationController?.pushViewController(seeMoreVC, animated: true)
         
-        print("See More")
+        print_debug("See More")
     
     }
     @IBAction func onClickEditCellBtn(sender: AnyObject) {
@@ -418,7 +418,7 @@ class VideosVC: UIViewController {
     
     //MARK: - Get thumbnail from video url
 //    func getPreviewImageForVideoAtURL(videoURL: NSURL, atInterval: Int) -> UIImage? {
-//        print("Taking pic at \(atInterval) second")
+//        print_debug("Taking pic at \(atInterval) second")
 //        let asset = AVAsset(URL: videoURL)
 //        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
 //        assetImgGenerate.appliesPreferredTrackTransform = true
@@ -446,7 +446,7 @@ class VideosVC: UIViewController {
             return UIImage(CGImage: thumbnail!)
         }
         catch let error as NSError {
-            print(error.localizedDescription)
+            print_debug(error.localizedDescription)
             return UIImage(named: "ic_instruction_video")!
         }
     }
@@ -534,16 +534,16 @@ class VideosVC: UIViewController {
     
     //MARK: - Player event notifications
     func mpMoviePlayerLoadStateDidChange(notification: NSNotification) {
-        //    NSLog(@"loadstate change: %lu", (unsigned long)[self.moviePlayer moviePlayer].loadState);
+        //    //NSLog(@"loadstate change: %lu", (unsigned long)[self.moviePlayer moviePlayer].loadState);
         //
         //    if (([self.moviePlayer moviePlayer].loadState & MPMovieLoadStatePlayable) == MPMovieLoadStatePlayable)
         //    {
-        //        NSLog(@"yay, it became playable");
+        //        //NSLog(@"yay, it became playable");
         //    }
     }
     
     func moviePlaybackDidFinish() {
-        print("Movie finished!!!")
+        print_debug("Movie finished!!!")
     }
     
     
@@ -582,7 +582,8 @@ class VideosVC: UIViewController {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print("Photo Response = ", responseDict["result"])
+                        print_debug("Photo Response = ")
+                        print_debug( responseDict["result"])
                         
                         
                         if let arr = responseDict["result"]  as? [AnyObject]   {
@@ -652,7 +653,8 @@ class VideosVC: UIViewController {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print("VIDEO REMOVED = ", responseDict["result"])
+                        print_debug("VIDEO REMOVED = ")
+                        print_debug(responseDict["result"])
                         
                         if (self.title == "PERSONAL"){
                             

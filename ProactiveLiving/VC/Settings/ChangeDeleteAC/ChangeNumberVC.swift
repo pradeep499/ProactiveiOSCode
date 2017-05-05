@@ -151,7 +151,7 @@ class ChangeNumberVC: UIViewController, UITextFieldDelegate {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         let otpVC:OTPVC = AppHelper.getSecondStoryBoard().instantiateViewControllerWithIdentifier("OTPVC") as! OTPVC
                         

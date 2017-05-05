@@ -39,7 +39,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
 
         tableViewOutlet.delegate = self
         
-        print("DATA DICT\(dataDict)")
+        print_debug("DATA DICT\(dataDict)")
         
         if let imageBackUrlStr = dataDict["backgroundImageUrl"] as? String {
             let image_url = NSURL(string: imageBackUrlStr )
@@ -173,7 +173,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+        print_debug("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
         
         if (indexPath.row==0) {  // About
             
@@ -299,7 +299,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
     }
     
     func btnDialUpClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
         
         let phoneNumber: String = self.dataDict["mobile"] as! String
         if let url = NSURL(string: "tel://\(phoneNumber)") {

@@ -619,7 +619,7 @@ static NSString * const RSDFDatePickerViewDayCellIdentifier = @"RSDFDatePickerVi
         
     } completion:^(BOOL finished) {
         
-        NSLog(@"%s %x", __PRETTY_FUNCTION__, finished);
+        //NSLog(@"%s %x", __PRETTY_FUNCTION__, finished);
         
     }];
     

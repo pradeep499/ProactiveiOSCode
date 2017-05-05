@@ -161,7 +161,7 @@ class DataBaseController : NSObject
 //        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
 //        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
 //        date = dateFormatter.dateFromString(dateStr)!
-//        //print(date)
+//        //print_debug(date)
         
         let exist:AppContactList? = checkIfAppContAlreadyExist(modelName, params: params)
         if (exist != nil)
@@ -294,7 +294,7 @@ class DataBaseController : NSObject
     
     func checkIfReminderAlreadyExist(modelName:String, params: Dictionary<String, AnyObject>) -> Reminder!
     {
-        ////print(params)
+        ////print_debug(params)
         if(params["eventId"] != nil)
         {
             let instance = DataBaseController.sharedInstance
@@ -332,7 +332,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         return list
     }
@@ -365,7 +365,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         return list
         
@@ -410,7 +410,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         return list
         
@@ -442,7 +442,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         if !list.isEmpty
@@ -468,13 +468,13 @@ class DataBaseController : NSObject
         {
             for myobject : AnyObject in fetchResult
             {
-               // print("fetchrrsult=\(fetchResult)")
+               // print_debug("fetchrrsult=\(fetchResult)")
                 let anObject = myobject as! RecentChatList
-              //  print("fetchrrsult=\(anObject.notificationCount)")
+              //  print_debug("fetchrrsult=\(anObject.notificationCount)")
 
                 if anObject.notificationCount == "0"
                 {
-                    // print("true");
+                    // print_debug("true");
                 }
                 else
                 {
@@ -483,7 +483,7 @@ class DataBaseController : NSObject
                 }
             }
         }
-        print("UnreadCount=\(unreadcount)")
+        print_debug("UnreadCount=\(unreadcount)")
        
         return unreadcount
     }
@@ -509,14 +509,14 @@ class DataBaseController : NSObject
                         // success ...
                     } catch let error as NSError {
                         // failure
-                        print("Fetch failed: \(error.localizedDescription)")
+                        print_debug("Fetch failed: \(error.localizedDescription)")
                     }
            //
                 }
             }
             
             if let error = error {
-                print("Error deleting all objects: \(error)")
+                print_debug("Error deleting all objects: \(error)")
             }
         }
     }
@@ -533,7 +533,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         for resultItem in list
@@ -570,7 +570,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         for resultItem in result
@@ -581,7 +581,7 @@ class DataBaseController : NSObject
             {
                 let delete:String! = countryItem.phoneNumber
                 let str2:String = "phoneNumber contains[cd] \"\(delete)\""
-                //print(str2)
+                //print_debug(str2)
                 self.deleteData("AppContactList", predicate: str2)
             }
             cdhObj.deleteObject(countryItem as! NSManagedObject)
@@ -611,7 +611,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         for resultItem in result
@@ -645,7 +645,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         for resultItem in result
@@ -739,14 +739,14 @@ class DataBaseController : NSObject
     func insertRecentChatData1(modelName:String, params: Dictionary<String, AnyObject>)
     {
         let cdhObj = appDelegate.managedObjectContext
-       // print("for recent chat insertRecentChatData1 ")
+       // print_debug("for recent chat insertRecentChatData1 ")
         
-       // print(params)
+       // print_debug(params)
         //old code
         let exist:RecentChatList! = checkIfChatUserAlreadyExist1(modelName, params: params)
         if (exist != nil)
         {
-           // print("for recent chat insertRecentChatData1 exist")
+           // print_debug("for recent chat insertRecentChatData1 exist")
 
             //exist!.friendName = params["name"] as String
             exist!.friendId = params["friendId"] as? String
@@ -774,7 +774,7 @@ class DataBaseController : NSObject
                     //check is with http or not
                     let string = imgStr1
                     if (string.lowercaseString.rangeOfString("http://") != nil || string.lowercaseString.rangeOfString("https://") != nil ) {
-                        // print("exists")
+                        // print_debug("exists")
                         exist!.friendImageUrl = params["profile_image"] as? String
                     }
                     else
@@ -802,22 +802,22 @@ class DataBaseController : NSObject
                 }else
                 {
                     let strCount: String = exist!.notificationCount!
-                    //print(strCount)
+                    //print_debug(strCount)
                     var count : Int = Int(strCount)!
-                    //print(count)
+                    //print_debug(count)
                     count = count + 1
                     exist!.notificationCount =  "\(count)"
-                    //print(exist!.notificationCount)
+                    //print_debug(exist!.notificationCount)
                 }
             }else
             {
                 let strCount: String = exist!.notificationCount!
-                //print(strCount)
+                //print_debug(strCount)
                 var count : Int = Int(strCount)!
-                //print(count)
+                //print_debug(count)
                 count = count + 1
                 exist!.notificationCount =  "\(count)"
-                //print(exist!.notificationCount)
+                //print_debug(exist!.notificationCount)
             }
             
             appDelegate.saveContext()
@@ -827,7 +827,7 @@ class DataBaseController : NSObject
         {
             
             let newItem: RecentChatList = NSEntityDescription.insertNewObjectForEntityForName(modelName, inManagedObjectContext: cdhObj) as! RecentChatList
-           // print("for recent chat insertRecentChatData1 newItem")
+           // print_debug("for recent chat insertRecentChatData1 newItem")
 
             newItem.friendName = params["name"] as? String
             newItem.friendId = params["friendId"] as? String
@@ -854,7 +854,7 @@ class DataBaseController : NSObject
             {
                 newItem.friendImageUrl  = params["profile_image"] as? String
             }
-            //print(newItem)
+            //print_debug(newItem)
             
             if (NSUserDefaults.standardUserDefaults().stringForKey("friendId")) != nil
             {
@@ -875,8 +875,8 @@ class DataBaseController : NSObject
     
     func insertRecentChatDataFromFlirt(modelName:String, params: Dictionary<String, AnyObject>) -> RecentChatList!
     {
-        //print("for recent chat")
-        //print(params)
+        //print_debug("for recent chat")
+        //print_debug(params)
         let cdhObj = appDelegate.managedObjectContext
         
         let exist:RecentChatList? = checkIfChatUserAlreadyExist1(modelName, params: params)
@@ -918,7 +918,7 @@ class DataBaseController : NSObject
             }
             newItem.isTyping = "0"
             newItem.isNameAvail = params["isNameAvail"] as? String
-            //print(newItem)
+            //print_debug(newItem)
            
             appDelegate.saveContext()
             return newItem
@@ -926,7 +926,7 @@ class DataBaseController : NSObject
     }
     func checkIfChatUserAlreadyExist1(modelName:String, params: Dictionary<String, AnyObject>) -> RecentChatList!
     {
-      //  print(params)
+      //  print_debug(params)
         
         
         let instance = DataBaseController.sharedInstance
@@ -997,7 +997,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         if !result.isEmpty
@@ -1029,7 +1029,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         if !result.isEmpty
@@ -1068,7 +1068,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         return result
         //        if !result.isEmpty
@@ -1112,7 +1112,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         return result
         
@@ -1142,7 +1142,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         return result
         
@@ -1166,7 +1166,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         return result.count
         
@@ -1174,8 +1174,8 @@ class DataBaseController : NSObject
     
     func insertChatMessageInDb(modelName:String, params: Dictionary<String, AnyObject>)->UserChat!
     {
-      //  print(params)
-      //  print("insertChatMessageInDb->UserChat")
+      //  print_debug(params)
+      //  print_debug("insertChatMessageInDb->UserChat")
         
 
         
@@ -1236,7 +1236,7 @@ class DataBaseController : NSObject
     }
     func updateSenderChatMessageInDb(modelName:String, params: Dictionary<String, AnyObject>)->UserChat!
     {
-        //print(params)
+        //print_debug(params)
 
         
         let exist:UserChat? = checkIfSenderChatMsgAlreadyExist(modelName, params: params)
@@ -1253,7 +1253,7 @@ class DataBaseController : NSObject
     }
     func updateSenderGroupChatMessageInDb(modelName:String, params: Dictionary<String, AnyObject>)->GroupChat!
     {
-        //print(params)
+        //print_debug(params)
         _ = appDelegate.managedObjectContext
         
         let exist:GroupChat? = checkIfSenderGroupChatMsgAlreadyExist(modelName, params: params)
@@ -1270,9 +1270,9 @@ class DataBaseController : NSObject
     }
     func insertChatMessageInDb1(modelName:String, params: Dictionary<String, AnyObject>)->UserChat!
     {
-      //  print(params)
+      //  print_debug(params)
         
-        // print(insertChatMessageInDb1)
+        // print_debug(insertChatMessageInDb1)
         
         let chatObj = appDelegate.managedObjectContext
         
@@ -1340,7 +1340,7 @@ class DataBaseController : NSObject
     
     func checkIfChatMsgAlreadyExist(modelName:String, params: Dictionary<String, AnyObject>) -> UserChat!
     {
-        ////print(params)
+        ////print_debug(params)
         let instance = DataBaseController.sharedInstance
         let str1:String = (params["messageId"] as? String)!
         let str:String = "messageId LIKE \"\(str1)\""
@@ -1358,7 +1358,7 @@ class DataBaseController : NSObject
     
     func checkIfSenderChatMsgAlreadyExist(modelName:String, params: Dictionary<String, AnyObject>) -> UserChat!
     {
-        ////print(params)
+        ////print_debug(params)
         let instance = DataBaseController.sharedInstance
         let str1:String = params["locMessageId"] as! String
         let str:String = "locMessageId LIKE \"\(str1)\""
@@ -1375,7 +1375,7 @@ class DataBaseController : NSObject
     
     func checkIfSenderGroupChatMsgAlreadyExist(modelName:String, params: Dictionary<String, AnyObject>) -> GroupChat!
     {
-        ////print(params)
+        ////print_debug(params)
         let instance = DataBaseController.sharedInstance
         let str1:String = params["locMessageId"] as! String
         let str:String = "locMessageId LIKE \"\(str1)\""
@@ -1549,7 +1549,7 @@ class DataBaseController : NSObject
     func insertGroupUsersInfoData(modelName:String, params: Dictionary<String, AnyObject>)
     {
         let cdhObj = appDelegate.managedObjectContext
-        // print(params)
+        // print_debug(params)
         let exist:GroupUserList? = checkIfGroupUserAlreadyExist(modelName, params: params)
         if (exist != nil)
         {
@@ -1619,7 +1619,7 @@ class DataBaseController : NSObject
     
     func insertRecentChatFromGroup(modelName:String, params: Dictionary<String, AnyObject>)
     {
-       // print("db record for recent ===> \(params)")
+       // print_debug("db record for recent ===> \(params)")
         
         let cdhObj = appDelegate.managedObjectContext
         
@@ -1657,12 +1657,12 @@ class DataBaseController : NSObject
             }else
             {
                 let strCount: String = exist!.notificationCount!
-                //print(strCount)
+                //print_debug(strCount)
                 var count : Int = Int(strCount)!
-                //print(count)
+                //print_debug(count)
                 count = count + 1
                 exist!.notificationCount =  "\(count)"
-                //print(exist!.notificationCount)
+                //print_debug(exist!.notificationCount)
             }
             
             appDelegate.saveContext()
@@ -1687,7 +1687,7 @@ class DataBaseController : NSObject
             
             
             //Hidden by Gaurav
-            //print(newItem)
+            //print_debug(newItem)
             
 //            if let name = NSUserDefaults.standardUserDefaults().stringForKey("friendId")
 //            {
@@ -1718,7 +1718,7 @@ class DataBaseController : NSObject
     }
     func checkIfGroupChatUserAlreadyExist(modelName:String, params: Dictionary<String, AnyObject>) -> RecentChatList!
     {
-       // print(params)
+       // print_debug(params)
         let instance = DataBaseController.sharedInstance
         let str1:String = params["groupid"] as! String
         let str2:String = ChatHelper .userDefaultForAny("userId") as! String
@@ -1808,7 +1808,7 @@ class DataBaseController : NSObject
     }
     func insertGroupChatMessageInDb1(modelName:String, params: Dictionary<String, AnyObject>)->GroupChat!
     {
-        //print(params)
+        //print_debug(params)
         let chatObj = appDelegate.managedObjectContext
         
         let newItem: GroupChat = NSEntityDescription.insertNewObjectForEntityForName(modelName, inManagedObjectContext: chatObj) as! GroupChat
@@ -1861,7 +1861,7 @@ class DataBaseController : NSObject
     
     func checkIfGroupChatMsgAlreadyExist(modelName:String, params: Dictionary<String, AnyObject>) -> GroupChat!
     {
-        ////print(params)
+        ////print_debug(params)
         let instance = DataBaseController.sharedInstance
         let str1:String = params["messageId"] as! String
         let str:String = "messageId LIKE \"\(str1)\""
@@ -1929,7 +1929,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         if !result.isEmpty
@@ -1961,7 +1961,7 @@ class DataBaseController : NSObject
             // success ...
         } catch let error as NSError {
             // failure
-            print("Fetch failed: \(error.localizedDescription)")
+            print_debug("Fetch failed: \(error.localizedDescription)")
         }
         
         if !result.isEmpty
@@ -1992,7 +1992,7 @@ extension NSManagedObjectContext {
              //   deleteAllObjectsForEntity(entityDescription, error: error)
                 DataBaseController.sharedInstance.deleteAllData(name)
                 
-                print("Entity Name = ", name)
+                print_debug("Entity Name = ", name)
                 
                 // If there's a problem, bail on the whole operation.
                 if error.memory != nil {
