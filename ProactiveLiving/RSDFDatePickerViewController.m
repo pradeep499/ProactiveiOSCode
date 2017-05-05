@@ -426,8 +426,9 @@ type = 3 for yeary basis
                                       }
                                       else {
                                           vc.fromScreenFlag = @"private";
-                                          vc.currentDateVal = _selectedDate;
                                       }
+                                      vc.currentDateVal = _selectedDate;
+
                                       [self.navigationController pushViewController:vc animated:YES];
                                   }
                                   [alertActionSheet dismissViewControllerAnimated:YES completion:nil];
@@ -451,9 +452,10 @@ type = 3 for yeary basis
                                          }
                                          else {
                                              vc.fromScreenFlag = @"private";
-                                             vc.currentDateVal = _selectedDate;
 
                                          }
+                                         vc.currentDateVal = _selectedDate;
+
                                          [self.navigationController pushViewController:vc animated:YES];
                                      }
                                      

@@ -327,7 +327,9 @@ func connectToSocket() -> Void{
                     self!.homeCoreData.saveContext()
                 }
                 
-                instance.insertGroupUsersInfoData("GroupUserList", params: dict)
+                print_debug("GroupUserList")
+                print_debug(dict)
+               // instance.insertGroupUsersInfoData("GroupUserList", params: dict)
 
                 self?.updateMessageInRecentChatFromGroup(dict)
                 

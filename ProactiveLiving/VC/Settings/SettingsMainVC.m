@@ -41,7 +41,7 @@
     
     // Changed as per client request 3rd May
     
-    if (indexPath.row == 0 || indexPath.row == 1)
+    if (indexPath.row == 1)
     {
         return 0 ;
     }

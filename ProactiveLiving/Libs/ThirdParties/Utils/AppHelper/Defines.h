@@ -183,7 +183,7 @@
 #define passwordMismatch                @"Password do not match"
 #define terms                           @"Please agree to our Terms and Conditions"
 #define invalidEmail                    @"Please enter a valid email address"
-#define serviceError                    @"Um ah, Something went wrong!"
+#define serviceError                    @"We are sorry , but something seems to have gone wrong.\nIf you continue to face this problem , please email us at support@proactively.com"///@"Um ah, Something went wrong!"
 #define pleaseLogin                     @"We have sent a mail to your registered email, please login with new password"
 #define invalidPassword                 @"Incorrect Cell number and Password"
 #define userNotExist                    @"Cell number is not registered with us"
