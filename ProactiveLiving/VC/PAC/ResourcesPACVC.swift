@@ -86,7 +86,7 @@ class ResourcesPACVC: UIViewController {
         let seeMoreVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("MoreDetailVC") as! MoreDetailVC
         
         let desc = resourceDetailArr[indexPath!.section].valueForKey("description") as? String // Description
-        let title = resourceDetailArr[indexPath!.section].valueForKey("title") as! String
+        let title = resourceDetailArr[indexPath!.section].valueForKey("title") as! String  //  Title
         
         seeMoreVC.titleStr = title
         seeMoreVC.detailStr = desc!
