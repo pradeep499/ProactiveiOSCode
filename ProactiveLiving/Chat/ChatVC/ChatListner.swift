@@ -69,8 +69,8 @@ class ChatListner: NSObject {
         
         NSNotificationCenter.defaultCenter().postNotificationName("ConnectingNotificationForChat", object: nil, userInfo: nil)
         
-        let alrt = UIAlertView(title: "hello", message: "connected", delegate: self, cancelButtonTitle: "ok")
-        alrt.show()
+       // let alrt = UIAlertView(title: "Hello", message: "connected", delegate: self, cancelButtonTitle: "ok")
+        //alrt.show()
         
     }
   
@@ -106,7 +106,7 @@ func connectToSocket() -> Void{
                 weakself.socket.off("delUserInGroup")
                                 
                 socket.on("connect") { data, ack in
-                    print(weakself.isConnectionStable)
+                    print_debug(weakself.isConnectionStable)
                     print_debug("connect listner")
                     if self.isConnectionStable{
                         return
@@ -141,14 +141,14 @@ func connectToSocket() -> Void{
         var dataDic = Dictionary<String,String>()
         dataDic["beat"]="1"
         weakself.socket.emit("ping",dataDic)
-        print("ping")
+        print_debug("ping")
     }
     
     /*
     func doNotSleepListener() {
         unowned let weakself = self
         weakself.socket.on("pong") {data, ack in
-        print("pong")
+        print_debug("pong")
         weakself.doNotSleep()
         }
     }*/
@@ -219,7 +219,7 @@ func connectToSocket() -> Void{
         
             var receiveMsgDic = Dictionary<String,AnyObject>()
             receiveMsgDic = data[0] as! Dictionary
-         print(receiveMsgDic);
+         print_debug(receiveMsgDic);
                 print_debug("addReceiveMsgHandlers")
             let lastHitDate = receiveMsgDic["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate")
@@ -244,8 +244,8 @@ func connectToSocket() -> Void{
             timeStr = dateFormatter.stringFromDate(tempDate)
             
             if receiveMsgDic["chatType"] as! String == "group" {
-               // print("receiveMsgDic in group chat string recieveMessage")
-               // print(receiveMsgDic)
+               // print_debug("receiveMsgDic in group chat string recieveMessage")
+               // print_debug(receiveMsgDic)
                 var Pushdict = Dictionary<String, AnyObject>()
                 let strId = receiveMsgDic["_id"] as! String
                 var dict = Dictionary<String, AnyObject>()
@@ -341,8 +341,8 @@ func connectToSocket() -> Void{
                 }
                 
             } else {
-               // print("receiveMsgDic in one to one chat string recieveMessage")
-               // print(receiveMsgDic)
+               // print_debug("receiveMsgDic in one to one chat string recieveMessage")
+               // print_debug(receiveMsgDic)
                 
                 let strId = receiveMsgDic["_id"] as! String
                 var dict = Dictionary<String, AnyObject>()
@@ -374,18 +374,18 @@ func connectToSocket() -> Void{
                 if (receiveMsgDic["profile_image"] as? String) != nil {
                     dict["profile_image"]  = receiveMsgDic["profile_image"] as! String
                 }
-                   // print("receiveMsgDic in one to one chat string recieveMessage")
-              //  print(receiveMsgDic)
+                   // print_debug("receiveMsgDic in one to one chat string recieveMessage")
+              //  print_debug(receiveMsgDic)
                 let instance = DataBaseController.sharedInstance
                 if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
                     self?.checkDateIsDifferentApp(dict)
                 }
                 
                 let chatObj =  instance.insertChatMessageInDb("UserChat", params: dict) as UserChat
-                print(chatObj)
+                print_debug(chatObj)
                 
                 if receiveMsgDic["type"] as! String != "text" && receiveMsgDic["type"] as! String != "audio" {
-                  //  print("receiveMsgDic in one to one chat string ")
+                  //  print_debug("receiveMsgDic in one to one chat string ")
                 
                     let locId = CommonMethodFunctions.nextIdentifies()
                     let mediaStr = receiveMsgDic["mediaThumb"] as! String
@@ -405,7 +405,7 @@ func connectToSocket() -> Void{
                     
                     self!.homeCoreData.saveContext()
                 } else if receiveMsgDic["type"] as! String == "audio" {
-                    //print("receiveMsgDic in one to one chat string ")
+                    //print_debug("receiveMsgDic in one to one chat string ")
 
                     dict["localThumbPath"] = ""
                     dict["localFullPath"] = ""
@@ -445,13 +445,13 @@ func connectToSocket() -> Void{
         dict["sender"] = dic["sender"]
         dict["receiver"] = dic["receiver"]
         dict["localmsgid"] = ""
-        //print(dict)
+        //print_debug(dict)
         
         let str1:String = dic["sender"] as! String
         let strPred1:String = "friendId contains[cd] \"\(str1)\""
         let recentObj=instance.fetchDataRecentChatObject("RecentChatList", predicate: strPred1) as RecentChatList?
-        //print(recentObj?.lastMessageTime)
-        //print(recentObj?.friendName)
+        //print_debug(recentObj?.lastMessageTime)
+        //print_debug(recentObj?.friendName)
         if recentObj != nil && recentObj?.lastMessageTime != "" {
             let dateFormatter = NSDateFormatter()
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
@@ -480,7 +480,7 @@ func connectToSocket() -> Void{
                 
                 let instance = DataBaseController.sharedInstance
                 let fetchResult = instance.fetchChatData("UserChat", predicate: strPred, sort: ("localSortID",false))! as NSArray
-                print(fetchResult)
+                print_debug(fetchResult)
                 let userChatObj = fetchResult.lastObject as? UserChat
                 var dateString : String = ""
                 
@@ -505,7 +505,7 @@ func connectToSocket() -> Void{
                 
                 if dateStr != dateString {
                     let chatObj = instance.insertChatMessageInDb1("UserChat", params: dict) as UserChat!
-                    print(chatObj)
+                    print_debug(chatObj)
                     if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil)  {
                         if dict["sender"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
                             NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserver", object: chatObj, userInfo: nil)
@@ -525,7 +525,7 @@ func connectToSocket() -> Void{
             dict["sortDate"] = dateStr
             
             let chatObj = instance.insertChatMessageInDb1("UserChat", params: dict) as UserChat
-            print(chatObj)
+            print_debug(chatObj)
             if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil) {
                 if dict["sender"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
                     NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserver", object: chatObj, userInfo: nil)
@@ -607,8 +607,8 @@ func connectToSocket() -> Void{
     }
     
     func addUserInRecentChat(dic : NSDictionary) {
-        print(dic);
-        print("addUserInRecentChat");
+        print_debug(dic);
+        print_debug("addUserInRecentChat");
 
         let str:String = dic["sender"] as! String
         let strPred:String = "userId contains[cd] \"\(str)\""
@@ -667,7 +667,7 @@ func connectToSocket() -> Void{
             instance.insertRecentChatData1("RecentChatList", params: dict)
             
             
-            print(dict)
+            print_debug(dict)
             var alertStr : String!
             alertStr = dict["name"] as! String + ": "
             let alertStr1 : String =  dict["message"] as! String
@@ -684,7 +684,7 @@ func connectToSocket() -> Void{
         self?.playSoundBool = false
         var receiveMsgDict = Dictionary<String,AnyObject>()
             receiveMsgDict = data[0] as! Dictionary
-            print(receiveMsgDict)
+            print_debug(receiveMsgDict)
            print_debug("addOffLineReceiveMsgHandlers")
             let lastHitDate = receiveMsgDict["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
@@ -713,8 +713,8 @@ func connectToSocket() -> Void{
                 timeStr = dateFormatter.stringFromDate(tempDate)
             
                 if receiveMsgDic["chatType"] as! String == "group" {
-                   // print(receiveMsgDic)
-                   // print("receiveMsgDic in group chat string recieveMessage")
+                   // print_debug(receiveMsgDic)
+                   // print_debug("receiveMsgDic in group chat string recieveMessage")
                     
                     let strId = receiveMsgDic["_id"] as! String
                     let groupId = receiveMsgDic["groupid"] as! String
@@ -832,8 +832,8 @@ func connectToSocket() -> Void{
                         self?.hitCompleteMsg(dict)
                     }
                 } else {
-                   //   print("receiveMsgDic in one to one chat string recieveMessage")
-                   //   print(receiveMsgDic)
+                   //   print_debug("receiveMsgDic in one to one chat string recieveMessage")
+                   //   print_debug(receiveMsgDic)
                     
                     let strId       = receiveMsgDic["_id"] as! String
                     var dict        = Dictionary<String, AnyObject>()
@@ -857,7 +857,7 @@ func connectToSocket() -> Void{
                     dict["modifiedDate"] = receiveMsgDic["modifiedDate"] as! String
                     dict["phoneNumber"] = receiveMsgDic["phoneNumber"] as! String
                     
-                  //  print(receiveMsgDic)
+                  //  print_debug(receiveMsgDic)
                     
                     if ((receiveMsgDic["user_firstName"] as? String) != nil) {
                         dict["user_firstName"]  = receiveMsgDic["user_firstName"] as! String
@@ -870,7 +870,7 @@ func connectToSocket() -> Void{
                   //  dict["user_firstName"] = receiveMsgDic["user_firstName"] as String
                   //  dict["profile_image"] = receiveMsgDic["profile_image"] as String
                     
-                 // print("receiveMsgDic in one to one 2 chat string recieveMessage")
+                 // print_debug("receiveMsgDic in one to one 2 chat string recieveMessage")
                     
                     let status =  receiveMsgDic["status"] as! Int
                     dict["status"] = "\(status)"
@@ -882,7 +882,7 @@ func connectToSocket() -> Void{
                     if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
                         self?.checkDateIsDifferentApp(dict)
                         exist = instance.checkIfChatMsgAlreadyExist("UserChat", params: dict)
-                        print(exist)
+                        print_debug(exist)
                         if exist != nil {
                             passDic["bfr"] = exist as UserChat!
                         }
@@ -892,7 +892,7 @@ func connectToSocket() -> Void{
                     } else {
                         dict["locMessageId"] = receiveMsgDic["localmsgid"] as! String
                         exist = instance.checkIfSenderChatMsgAlreadyExist("UserChat", params: dict)
-                        print(exist)
+                        print_debug(exist)
                         if exist != nil {
                             passDic["bfr"] = exist as UserChat!
                             chatObj =  instance.updateSenderChatMessageInDb("UserChat", params: dict) as UserChat
@@ -988,7 +988,7 @@ func connectToSocket() -> Void{
             let instance = DataBaseController.sharedInstance
             var receiveMsgDic = Dictionary<String,AnyObject>()
             receiveMsgDic = data[0] as! Dictionary
-            print(receiveMsgDic);
+            print_debug(receiveMsgDic);
             let lastHitDate = receiveMsgDic["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
             
@@ -1116,7 +1116,7 @@ func connectToSocket() -> Void{
        ChatListner .getChatListnerObj().socket.on("isUserTyping") {data, ack in
             var receiveMsgDic = Dictionary<String,AnyObject>()
             receiveMsgDic = data[0] as! Dictionary
-        print(receiveMsgDic);
+        print_debug(receiveMsgDic);
             let lastHitDate = receiveMsgDic["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
            // var status = receiveMsgDic["istyping"] as String
@@ -1201,7 +1201,7 @@ func connectToSocket() -> Void{
         
         let instance = DataBaseController.sharedInstance
         let fetchResult = instance.fetchData("UserChat", predicate: strPred, sort: ("localSortID",true))! as NSArray
-        //print(fetchResult)
+        //print_debug(fetchResult)
         
         for myobject : AnyObject in fetchResult {
             let anObject = myobject as! UserChat
@@ -1246,7 +1246,7 @@ func connectToSocket() -> Void{
                 sendMsgD["chatType"] = "groupChat"
                 sendMsgD["type"] = "text"
                 
-                // print("send group msg\(sendMsgD)")
+                // print_debug("send group msg\(sendMsgD)")
                 
                 ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
             }
@@ -1256,7 +1256,7 @@ func connectToSocket() -> Void{
     }
     
     func showForgroundChatNotification(dict: NSDictionary) {
-      //  print(" showForgroundChatNotification: ")
+      //  print_debug(" showForgroundChatNotification: ")
         
         let chatMsg = dict["alert"] as! String
         let senderid  = dict["senderid"] as! String
@@ -1271,7 +1271,7 @@ func connectToSocket() -> Void{
     }
     
     func showSucessswithString(alertStr:String, alertType:String, width:CGFloat) {
-       // print(" showSucessswithString: ")
+       // print_debug(" showSucessswithString: ")
         
         if (pushNotificationView != nil) {
             pushNotificationView.removeFromSuperview()
@@ -1314,7 +1314,7 @@ func connectToSocket() -> Void{
             
             //BAdru
             
-            //  print("Unread Msg = ", String(DataBaseController.sharedInstance.fetchUnreadCount()))
+            //  print_debug("Unread Msg = ", String(DataBaseController.sharedInstance.fetchUnreadCount()))
             
             // Update Msg Badge
             if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
@@ -1375,7 +1375,7 @@ func connectToSocket() -> Void{
             ChatHelper .saveToUserDefault(senderid, key: "chatId")
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let chatHomeObj: ChatHomeVC = storyBoard.instantiateViewControllerWithIdentifier("ChatHomeVC") as! ChatHomeVC
-            print(chatHomeObj)
+            print_debug(chatHomeObj)
             
            let tabBarObj = AppDelegate.getAppDelegate().window?.rootViewController as! UITabBarController
             
@@ -1400,7 +1400,7 @@ func connectToSocket() -> Void{
           
             var receiveMsgDict = Dictionary<String,AnyObject>()
             receiveMsgDict = data[0] as! Dictionary
-            print(receiveMsgDict)
+            print_debug(receiveMsgDict)
             
             let lastHitDate = receiveMsgDict["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
@@ -1424,10 +1424,10 @@ func connectToSocket() -> Void{
                 dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
                 dateStr = dateFormatter.stringFromDate(tempDate)
               //  let strUrl = ""//receiveMsgDic["imgUrl"] as String!
-              //  print(receiveMsgDic)
+              //  print_debug(receiveMsgDic)
                 
                let strUrl = receiveMsgDic["imgUrl"] as! String //this code is added by mee 30 nov write below code
-               // print(strUrl)
+               // print_debug(strUrl)
                 
                 var localStr : String! = ""
                
@@ -1463,7 +1463,7 @@ func connectToSocket() -> Void{
                 dict["message"] = "New Group"
                 dict["usercount"] = "\(userCount)"
         
-             //   print("getgroupinfo ====> \(dict)")
+             //   print_debug("getgroupinfo ====> \(dict)")
                 
                 let instance = DataBaseController.sharedInstance
                 let arr:NSArray=receiveMsgDic["groupUser"] as! NSArray
@@ -1533,9 +1533,9 @@ func connectToSocket() -> Void{
     func addUserFromGroupInGroupUserList(arr : NSArray) {
         var dictChange = Dictionary<String, AnyObject>()
 
-        print(arr)
+        print_debug(arr)
         for dic in arr {
-            // print(dic)
+            // print_debug(dic)
             let groupId = dic["groupid"] as! NSString
             
             var dict = Dictionary<String, AnyObject>()
@@ -1560,7 +1560,7 @@ func connectToSocket() -> Void{
                 if ((dic["user_firstName"] as? String) != nil) {
                       grpMembrName  = dic["user_firstName"] as! String!
                 }
-               // print(dic)
+               // print_debug(dic)
 
                 /* changed by Badru
                  if  dic["userid"] as? String != ChatHelper.userDefaultForKey("userId") as String! && grpMembrName != "notvalue"{
@@ -1601,7 +1601,7 @@ func connectToSocket() -> Void{
        ChatListner .getChatListnerObj().socket.on("delUserInGroup") {data, ack in
             var receiveMsgDic = Dictionary<String,AnyObject>()
             receiveMsgDic = data[0] as! Dictionary
-        print(receiveMsgDic);
+        print_debug(receiveMsgDic);
         
             let instance = DataBaseController.sharedInstance
             let str:String = ChatHelper.userDefaultForKey("userId") as String
@@ -1695,10 +1695,10 @@ func connectToSocket() -> Void{
     
     
     func performActionForNotification() {
-       // print("navigation")
+       // print_debug("navigation")
         
       if let nav = AppDelegate.getAppDelegate().window?.rootViewController as? UINavigationController {
-        // print(" performActionForNotification %@",nav)
+        // print_debug(" performActionForNotification %@",nav)
         let vcArray=nav.viewControllers as Array;
         
         for i in 0 ..< vcArray.count {
@@ -1714,7 +1714,7 @@ func connectToSocket() -> Void{
                 }
             }
         }
-       // print(vcArray)
+       // print_debug(vcArray)
         
         if self.pushDict != nil {
             let str:String = ChatHelper .userDefaultForAny("userId") as! String
@@ -1738,7 +1738,7 @@ func connectToSocket() -> Void{
             
             let nav = AppDelegate.getAppDelegate().window?.rootViewController as! UINavigationController
            let vcArray=nav.viewControllers as Array;
-           // print(vcArray)
+           // print_debug(vcArray)
         
             for i in 0 ..< vcArray.count {
                 let controller = vcArray[i] as UIViewController;

@@ -115,7 +115,7 @@ type = 3 for yeary basis
         
         nextRecurringDate = [cal dateByAddingComponents:dateComponent toDate:nextRecurringDate options:0];
 //        if ([date1 compare:date2] == NSOrderedDescending) {
-//            NSLog(@"date1 is later than date2");
+//            //NSLog(@"date1 is later than date2");
 //        }
         
         //save event date in date as a key
@@ -125,13 +125,13 @@ type = 3 for yeary basis
         
         
         if ([nextRecurringDate compare:eDate] == NSOrderedDescending) {
-            NSLog(@"nextRecurringDate is later than eDate");
+            //NSLog(@"nextRecurringDate is later than eDate");
             return recuringArr;
         }
         /*else if ([nextRecurringDate compare:eDate] == NSOrderedAscending) {
-            NSLog(@"nextRecurringDate is earlier than eDate");
+            //NSLog(@"nextRecurringDate is earlier than eDate");
         } else {
-            NSLog(@"dates are the same");
+            //NSLog(@"dates are the same");
         }*/
         
         
@@ -201,7 +201,7 @@ type = 3 for yeary basis
                               interval:1
                               end:[EKRecurrenceEnd recurrenceEndWithEndDate:endDate]];
     
-    NSLog(@"Rules = %@", rule);
+    //NSLog(@"Rules = %@", rule);
     
     EKEventStore *store = [[EKEventStore alloc] init];
     
@@ -260,7 +260,7 @@ type = 3 for yeary basis
     
     // Apply it to the event
     [event setRecurrenceRules:@[recurrenceRule]];
-    NSLog(@"Event = %@", event);
+    //NSLog(@"Event = %@", event);
     
     
 }
@@ -292,7 +292,7 @@ type = 3 for yeary basis
 //            dateComponents.month = [numberOfDays integerValue];
 //            NSDate *date = [self.calendar dateByAddingComponents:dateComponents toDate:self.today options:0];
 //            [datesToMark addObject:date];
-//            NSLog(@"Next Recursive = %@", date);
+//            //NSLog(@"Next Recursive = %@", date);
 //        }];
 //        
 //        _datesToMark = [datesToMark copy];
@@ -418,7 +418,7 @@ type = 3 for yeary basis
                                           vc.fromScreenFlag = @"PAC";
                                           vc.pacID = self.pacID; 
                                           vc.arrPACMembers = self.arrPACMembers;
-                                          NSLog(@"arrPACMembers %@",self.arrPACMembers);
+                                          //NSLog(@"arrPACMembers %@",self.arrPACMembers);
                                       }
                                       else {
                                           vc.fromScreenFlag = @"private";
@@ -568,7 +568,7 @@ type = 3 for yeary basis
              [AppDelegate dismissProgressHUD];
              
              
-             NSLog(@" valusfro appoint mnt6 %@" , responseDict);
+             //NSLog(@" valusfro appoint mnt6 %@" , responseDict);
              
              if (![[responseDict objectForKey:@"error"] isKindOfClass:[NSNull class]] && [responseDict objectForKey:@"error"])
              {
@@ -746,14 +746,14 @@ type = 3 for yeary basis
                 
             [self.navigationController pushViewController:vc animated:YES];
         }
-        NSLog(@"%lu",(unsigned long)eventArray.count);
+        //NSLog(@"%lu",(unsigned long)eventArray.count);
     }
     else
     {
         //let time  = convert(time: on!, fromFormat: "dd/MM/yyyy", toFormat: "MM/dd/yyyy")
         _selectedDate = date;
         [self btnCreateEventClick:nil];
-        NSLog(@"No event");
+        //NSLog(@"No event");
     }
 }
 

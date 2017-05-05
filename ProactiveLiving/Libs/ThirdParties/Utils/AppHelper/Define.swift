@@ -137,7 +137,7 @@ let socketIO_BaseURL = "http://52.23.211.77:3000/"
 // MARK : GLOBAL Functions
 func print_debug <T> (object:T)
 {
-    print(object)
+   // print(object)
 }
 
 

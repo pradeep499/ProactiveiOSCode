@@ -98,7 +98,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
         
         
        
-        print("LATLONG App\(AppHelper.userDefaultsForKey("location"))")
+        print_debug("LATLONG App\(AppHelper.userDefaultsForKey("location"))")
         
 
     }
@@ -380,7 +380,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     
     func btnAttachmentClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
         //sender.selected = !sender.selected
         let point = self.tableMeetUpDetails.convertPoint(CGPoint.zero, fromView: sender)
         guard let indexPath = self.tableMeetUpDetails.indexPathForRowAtPoint(point) else {
@@ -428,7 +428,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     }
     
     func btnLikeClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
         
         if let groupID = self.dataDict["_id"] as? String {
             
@@ -481,7 +481,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     }
     
     func btnLinkClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
         
         if let webLink = self.dataDict["webLink"] as? String {
             let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
@@ -492,7 +492,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     }
     
     func btnDialUpClick(sender: UIButton)  {
-        print(sender)
+        print_debug(sender)
 
         if let mobilePhone = self.dataDict["dialInNumber"] as? String {
             if let phoneCallURL:NSURL = NSURL(string: "tel://\(mobilePhone)") {
@@ -534,7 +534,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             ChatListner .getChatListnerObj().socket.off("getDetail_Meetup_Invite")
             ChatListner .getChatListnerObj().socket.on("getDetail_Meetup_Invite") {data, ack in
                 
-                print("value error_code\(data[0]["status"] as! String))")
+                print_debug("value error_code\(data[0]["status"] as! String))")
                 
                 let errorCode = (data[0]["status"] as? String) ?? "1"
                 
@@ -546,7 +546,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     }
                     
                     self.dataDict=dictData["result"] as! Dictionary<String, AnyObject>
-                    print("arrayList \(self.dataDict)")
+                    print_debug("arrayList \(self.dataDict)")
                     self.updateCurrentView()
                 }
                 else
@@ -689,7 +689,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     // MARK: - gesture tapped
     
     func addressGesture(gestureRecognizer: UITapGestureRecognizer) -> Void {
-        print("Address Gesture.....")
+        print_debug("Address Gesture.....")
         let VC = AppHelper.getSecondStoryBoard().instantiateViewControllerWithIdentifier("MapVC") as! MapVC
         VC.address = self.lblLike.text
         
@@ -1130,7 +1130,7 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+        print_debug("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
         
         let dataArr = self.arrangeMembers()
         

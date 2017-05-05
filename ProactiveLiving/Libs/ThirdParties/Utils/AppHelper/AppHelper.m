@@ -216,7 +216,7 @@
     NSDate *date = [dateFormatter dateFromString:dateString];
     dateFormatter.dateFormat = @"EEEE";
     NSString *dayName = [dateFormatter stringFromDate:date];
-    NSLog(@"Day Name: %@", dayName);
+    //NSLog(@"Day Name: %@", dayName);
     return dayName;
 }
 
@@ -227,7 +227,7 @@
     NSError *err = NULL;
     CMTime requestedTime = CMTimeMake(1, 60);     // To create thumbnail image
     CGImageRef imgRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:&err];
-    NSLog(@"err = %@, imageRef = %@", err, imgRef);
+    //NSLog(@"err = %@, imageRef = %@", err, imgRef);
     
     UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
     CGImageRelease(imgRef);    // MUST release explicitly to avoid memory leak

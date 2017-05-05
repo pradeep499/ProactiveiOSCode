@@ -169,7 +169,7 @@ class ExploreVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+        print_debug("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
         self.handleSingleTapAtIndex(indexPath)
     }
     
@@ -238,7 +238,7 @@ class ExploreVC: UIViewController, UIGestureRecognizerDelegate {
         
         if let indexPath : NSIndexPath = (self.collectionView?.indexPathForCell(cell!))!{
             //do whatever you need to do
-            print(indexPath)
+            print_debug(indexPath)
             
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let orgProfileVC: OrgProfileVC = storyBoard.instantiateViewControllerWithIdentifier("OrgProfileVC") as! OrgProfileVC

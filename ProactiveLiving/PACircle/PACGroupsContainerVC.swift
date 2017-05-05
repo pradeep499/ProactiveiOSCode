@@ -2,7 +2,7 @@
 //  PACGroupsContainerVC.swift
 //  ProactiveLiving
 //
-//  Created by Mohd Asim on 21/02/17.
+//  Created by Aseem Akarshan on 21/02/17.
 //  Copyright © 2017 appstudioz. All rights reserved.
 //
 
@@ -11,9 +11,15 @@ import UIKit
 class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate {
     
     
+    
+    //MARK:- Outlets
+    
     @IBOutlet weak var btnRight: UIButton!
     @IBOutlet weak var btnOpenCalender: UIButton!
     @IBOutlet weak var lbl_title: UILabel!
+    
+    
+    //MARK:- Properties
     
     var tokensAdmin = [AnyObject]()
     var tokensMember = [AnyObject]()
@@ -40,8 +46,9 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     var packRole = [String:AnyObject]()
     
     
+    //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         self.lbl_title.text = self.title
@@ -50,6 +57,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         tokensAdmin = [AnyObject]()
         tokensMember = [AnyObject]()
         self.setUpViewControllers()
+        
         
         // To take button on front most
         self.view.addSubview(self.btnOpenCalender)
@@ -60,15 +68,16 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
     }
     
-//    override func viewWillAppear(animated: Bool) {
-//        fetchDataForPACRole()
-//    }
+
     
+    //MARK:- Service Hit
     func fetchDataForPACRole() {
         
         if AppDelegate.checkInternetConnection() {
+           
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
+            
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
@@ -84,7 +93,9 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                     
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
-                        print(responseDict)
+                        print_debug(responseDict)
+                       
+                        
                         self.packRole = responseDict as! [String:AnyObject]
                         self.firstVC.dictValuePacRole = self.packRole;
                         self.secondVC.dictValuePacRole = self.packRole;
@@ -247,8 +258,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
         self.view.endEditing(true)
-        print("current Index : \(Int(index))")
-        print("current controller : \(controller)")
+        print_debug("current Index : \(Int(index))")
+        print_debug("current controller : \(controller)")
         currentIndex = index
        // controller.viewWillAppear(true)
         
@@ -318,7 +329,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
         let windowHeight = self.view.frame.size.height
         let button = sender as? UIButton
-        //        NSLog("button tag \(button!.tag)")
+        //        //NSLog("button tag \(button!.tag)")
         let frameInWindow = button!.convertRect(button!.bounds, toView: self.view)
         let popoverY = frameInWindow.origin.y
         var startPoint = CGPointMake(frameInWindow.midX, frameInWindow.maxY)
@@ -349,7 +360,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                     
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
-                        print(responseDict)
+                        print_debug(responseDict)
                         self.fetchDataForPACRole()
                         self.navigationController?.popViewControllerAnimated(true)
                     } else {
@@ -412,7 +423,7 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
         self.popover.dismiss()
 
         let currentCell = tableView.cellForRowAtIndexPath(indexPath)! as UITableViewCell
-        print(currentCell.textLabel?.text)
+        print_debug(currentCell.textLabel?.text)
         
         if(currentCell.textLabel?.text == "Edit" || currentCell.textLabel?.text == "Done") {
             
@@ -519,7 +530,7 @@ extension PACGroupsContainerVC:MFMailComposeViewControllerDelegate{
     func sendMail() -> Void {
         
         if !MFMailComposeViewController.canSendMail() {
-            print("Mail services are not available")
+            print_debug("Mail services are not available")
             return
         }
         

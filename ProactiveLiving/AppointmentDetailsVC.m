@@ -52,7 +52,7 @@
     else
         [self getAppointmentData];
     
-    NSLog(@"location::::::>  %@",[LocationManagerSingleton sharedSingleton].locationManager.location);
+    //NSLog(@"location::::::>  %@",[LocationManagerSingleton sharedSingleton].locationManager.location);
     
 }
 
@@ -159,14 +159,14 @@
         int weekDay = [[dataDict valueForKey:@"dayNum"]intValue];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         NSString *weekdayString = [[formatter weekdaySymbols] objectAtIndex:weekDay - 1];
-        NSLog(@"Day: %@", weekdayString);
+        //NSLog(@"Day: %@", weekdayString);
         
         NSArray *arrTimings=[dataDict valueForKey:@"timings"];
         NSMutableArray *timingStrArr=[[NSMutableArray alloc]init];
         for (int i=0; i<arrTimings.count; i++) {
             [timingStrArr addObject:[NSString stringWithFormat:@"%@ to %@",[self timeFormatted:[[[arrTimings objectAtIndex:i] valueForKey:@"starttime"] intValue]],[self timeFormatted:[[[arrTimings objectAtIndex:i] valueForKey:@"endtime"] intValue]]]];
         }
-        NSLog(@"Timings: %@",[timingStrArr componentsJoinedByString:@", "]);
+        //NSLog(@"Timings: %@",[timingStrArr componentsJoinedByString:@", "]);
         
         //    for (int i=0; i<timingStrArr.count; i++) {
         //        if ([[timingStrArr objectAtIndex:i] isEqualToString:[timingStrArr objectAtIndex:i+1]]) {
@@ -174,7 +174,7 @@
         //        }
         //        else
         //        {
-        //            NSLog(@"Timings: %@",[timingStrArr componentsJoinedByString:@", "]);
+        //            //NSLog(@"Timings: %@",[timingStrArr componentsJoinedByString:@", "]);
         //
         //        }
         //    }

@@ -99,7 +99,7 @@ class ChatListVC: SOMessagingViewController {
             
             Services.serviceCallWithPath(ServiceGetMessages, withParam: param, success: { (responseDict) in
                 
-                print(responseDict)
+                print_debug(responseDict)
                 
                 let errorCode = (responseDict!["error_code"] as? Int) ?? 0
                 
@@ -110,7 +110,7 @@ class ChatListVC: SOMessagingViewController {
                         if let data :[AnyObject]? = dictData!["result"] as? [AnyObject] where data != nil
                          {
                             self.arrayChatList = data!
-                            print("arrayClassList \(self.arrayChatList)")
+                            print_debug("arrayClassList \(self.arrayChatList)")
 
 
                          }
@@ -126,7 +126,7 @@ class ChatListVC: SOMessagingViewController {
                
                 }, failure: { (error) in
                     
-                    print(error)
+                    print_debug(error)
                     AppHelper.showAlertWithTitle("", message: serviceError, tag: 0, delegate: nil, cancelButton: "Ok", otherButton: nil)
 
             })

@@ -152,7 +152,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         do{
             //Disconect Chat
             let x = try? ChatListner.getChatListnerObj().closeConnection()
-            print("",x)
+            print_debug("",x)
         }catch {
             
         }
@@ -165,7 +165,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                 NSUserDefaults.standardUserDefaults().removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
             NSUserDefaults.standardUserDefaults().synchronize()
             DataBaseController.sharedInstance.deleteEverything()
-            print("",x)
+            print_debug("",x)
         }catch {
             
         }
@@ -229,7 +229,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         self.tf_phoneNo.text = ""
                         
                         AppHelper.showAlertWithTitle(AppName, message: "Friend request sent.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
@@ -297,7 +297,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         
                         AppHelper.showAlertWithTitle(AppName, message: responseDict["result"] as! String, tag: 11, delegate: self, cancelButton: ok, otherButton: nil)

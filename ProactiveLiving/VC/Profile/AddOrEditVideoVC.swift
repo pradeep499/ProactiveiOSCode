@@ -190,7 +190,7 @@ class AddOrEditVideoVC: UIViewController,UIGestureRecognizerDelegate {
                         
                         if ((responseDict["error"] as! Int) == 0) {
                             
-                            print(responseDict["result"])
+                            print_debug(responseDict["result"])
                             
                             let result = responseDict["result"]
                             

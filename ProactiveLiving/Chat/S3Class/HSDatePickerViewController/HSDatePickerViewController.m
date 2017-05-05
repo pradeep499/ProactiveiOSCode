@@ -148,7 +148,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 
 - (void)setMinDate:(NSDate *)minDate {
     if ([minDate compare:self.date] == NSOrderedDescending) {
-        NSLog(@"minDate=%@ is after date=%@. Value will not be set.", minDate, self.date);
+        //NSLog(@"minDate=%@ is after date=%@. Value will not be set.", minDate, self.date);
     } else {
         _minDate = minDate;
     }
@@ -163,7 +163,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 
 - (void)setMaxDate:(NSDate *)maxDate {
     if ([maxDate compare:self.date] == NSOrderedAscending) {
-        NSLog(@"maxDate=%@ is before date=%@. Value will not be set.", maxDate, self.date);
+        //NSLog(@"maxDate=%@ is before date=%@. Value will not be set.", maxDate, self.date);
     } else {
         _maxDate = maxDate;
     }

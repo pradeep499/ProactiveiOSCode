@@ -46,7 +46,7 @@
     [requestOperation1 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.myImage  = responseObject;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Image error: %@", error);
+        //NSLog(@"Image error: %@", error);
         self.myImage = [UIImage imageNamed:@"ic_booking_profilepic"];
     }];
     [requestOperation1 start];
@@ -58,7 +58,7 @@
     [requestOperation2 setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.partnerImage = responseObject;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Image error: %@", error);
+        //NSLog(@"Image error: %@", error);
         self.partnerImage = [UIImage imageNamed:@"ic_booking_profilepic"];
     }];
     [requestOperation2 start];
@@ -89,7 +89,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
     [bottomBar setTabBarVisible:NO animated:YES completion:^(BOOL finished) {
-        NSLog(@"finished chat old vc ");
+        //NSLog(@"finished chat old vc ");
     }];
 
 }
@@ -101,7 +101,7 @@
     [theTimer invalidate];
     
     [bottomBar setTabBarVisible:YES animated:YES completion:^(BOOL finished) {
-        NSLog(@"finished");
+        //NSLog(@"finished");
     }];
 }
 

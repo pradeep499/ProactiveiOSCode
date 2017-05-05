@@ -83,7 +83,7 @@
                     
                     
                    // self.dataArray=[responseDict objectForKey:@"result"];
-                    NSLog(@"$#$#$# %@",responseDict);
+                    //NSLog(@"$#$#$# %@",responseDict);
                    // NSDictionary * resultDict = [[NSDictionary alloc] init];
                     resultDict = [responseDict objectForKey:@"result"];
                     strVideoURL = [resultDict objectForKey:@"video"];
@@ -169,16 +169,16 @@
 
 - (void)MPMoviePlayerLoadStateDidChange:(NSNotification *)notification
 {
-//    NSLog(@"loadstate change: %lu", (unsigned long)[self.moviePlayer moviePlayer].loadState);
+//    //NSLog(@"loadstate change: %lu", (unsigned long)[self.moviePlayer moviePlayer].loadState);
 //    
 //    if (([self.moviePlayer moviePlayer].loadState & MPMovieLoadStatePlayable) == MPMovieLoadStatePlayable)
 //    {
-//        NSLog(@"yay, it became playable");
+//        //NSLog(@"yay, it became playable");
 //    }
 }
 -(void)moviePlaybackDidFinish
 {
-    NSLog(@"Movie finished!!!");
+    //NSLog(@"Movie finished!!!");
 }
 
 @end

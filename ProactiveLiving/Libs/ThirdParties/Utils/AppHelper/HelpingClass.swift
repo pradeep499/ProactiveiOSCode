@@ -120,7 +120,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         do {
             try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
-            NSLog("Unable to create directory \(error.debugDescription)")
+            //NSLog("Unable to create directory \(error.debugDescription)")
         }
         
         let saveImagePath = documentsDirectory.stringByAppendingPathComponent(fileName)
@@ -248,7 +248,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateStr = dateFormatter.stringFromDate(date)
         
-        print("time stam ", dateStr);
+        print_debug(dateStr)
         
         return dateStr
         
@@ -496,7 +496,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
     
    class func isValidEmail(testStr:String) -> Bool {
         
-        print("validate emilId: \(testStr)")
+        print_debug("validate emilId: \(testStr)")
         
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         
@@ -540,7 +540,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         do {
             try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
-            NSLog("Unable to create directory \(error.debugDescription)")
+            //NSLog("Unable to create directory \(error.debugDescription)")
         }
         let path = documentsDirectory.stringByAppendingPathComponent(fileName)
         
@@ -553,14 +553,14 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         let qualityOfServiceClass = QOS_CLASS_BACKGROUND
         let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
         dispatch_async(backgroundQueue, {
-            print("This is run on the background queue")
+            print_debug("This is run on the background queue")
             
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
             let documentsDirectory = paths.stringByAppendingPathComponent(directryName)
             let filePath = documentsDirectory.stringByAppendingPathComponent(fileName as String)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            //    print("This is run on the main queue, after the previous code in outer block")
+            //    print_debug("This is run on the main queue, after the previous code in outer block")
                 
                 if (NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
                     completion(isExistPath: true, fileUrl: filePath)

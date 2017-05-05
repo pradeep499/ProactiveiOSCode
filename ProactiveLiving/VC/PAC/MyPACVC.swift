@@ -68,7 +68,7 @@ class MyPACVC: UIViewController {
     
     @IBAction func segmentedCtrlAction(sender: AnyObject) {
     
-    print("Segmented Ctrl")
+    print_debug("Segmented Ctrl")
     
         if segmentedCtrl.selectedSegmentIndex == 0 {
             createJoinStatus = "1"  // for Created
@@ -112,7 +112,7 @@ class MyPACVC: UIViewController {
             ]
             
             
-            print("PRINT PARAMETERS\(parameters)")
+            print_debug("print_debug PARAMETERS\(parameters)")
             
             //call global web service class latest
             Services.postRequest(ServiceGetMyPAC, parameters: parameters, completionHandler:{
@@ -120,7 +120,7 @@ class MyPACVC: UIViewController {
                 
                 isPostServiceCalled = false
                 
-                print("Response :  \(responseDict)")
+                print_debug("Response :  \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
@@ -131,7 +131,7 @@ class MyPACVC: UIViewController {
                         
                         if let resultArr = responseDict["result"]  as? [[String: AnyObject]] {
                             
-                            print("TESTING FIND PAC \(resultArr)")
+                            print_debug("TESTING FIND PAC \(resultArr)")
                             //Pagination
                             if resultArr.count > 0 {
                             
@@ -284,8 +284,8 @@ extension MyPACVC: UITableViewDataSource{
         
         
         for (key, value) in self.myPACDetailArr[indexPath.row] as [String: AnyObject] {
-            print("Key : ", key)
-            print("value : ", value)
+            print_debug("Key : ", key)
+            print_debug("value : ", value)
         }
         
         
@@ -317,7 +317,7 @@ extension MyPACVC: UITableViewDataSource{
         
         let distance = self.myPACDetailArr[indexPath.row]["dist"] as! Int
         lbl_distance.text = "\(distance) Miles"
-        print(self.myPACDetailArr[indexPath.row]["createdBy"]!["firstName"] as? String)
+        print_debug(self.myPACDetailArr[indexPath.row]["createdBy"]!["firstName"] as? String)
 
         
         //Pagination api hit
@@ -395,7 +395,7 @@ extension MyPACVC:  UITableViewDelegate{
             let reload_distance: Float = 50
             
             if y > h + reload_distance {
-                print("load more data")
+                print_debug("load more data")
                 tableViewMyPAC.tableFooterView!.hidden = false
                 fetchMyPACDataFromServer(self.createJoinStatus)
                 spinner.startAnimating()

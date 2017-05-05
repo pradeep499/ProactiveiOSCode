@@ -266,7 +266,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
     func uniqueName(fileName: String) -> String {
         
         let uniqueImageName = NSString(format: "%@%f", fileName , NSDate().timeIntervalSince1970 * 1000)
-        // print(uniqueImageName)
+        // print_debug(uniqueImageName)
         return uniqueImageName as String
     }
     
@@ -724,7 +724,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         let resultDict = responseDict["result"] as?    [String:String]
                         
@@ -763,10 +763,10 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
             // textField.text = "Some default text."
         })
         
-        //3. Grab the value from the text field, and print it when the user clicks OK.
+        //3. Grab the value from the text field, and print_debug it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { [weak alert] (action) -> Void in
             let textField = alert!.textFields![0] as UITextField
-            print("Text field: \(textField.text)")
+            print_debug("Text field: \(textField.text)")
             
             if(assets != nil){
                 //multiple images
@@ -843,7 +843,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                     
                     if bool_val == true{
                         //self.sendPostToServer("image", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText, thumNailName:thumbNailName)
-                        //    print("image path~~~~~~ = ", pathUrl)
+                        //    print_debug("image path~~~~~~ = ", pathUrl)
                         
                     }
                     

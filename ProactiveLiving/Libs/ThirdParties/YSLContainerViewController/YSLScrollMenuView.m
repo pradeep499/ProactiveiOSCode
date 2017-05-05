@@ -127,7 +127,7 @@ static const CGFloat kYSLIndicatorHeight = 3;
         return;
     }
     _indicatorView.frame = CGRectMake(indicatorX, _scrollView.frame.size.height - kYSLIndicatorHeight, _kYSLScrollMenuViewWidth, kYSLIndicatorHeight);
-    //  NSLog(@"retio : %f",_indicatorView.frame.origin.x);
+    //  //NSLog(@"retio : %f",_indicatorView.frame.origin.x);
 }
 
 - (void)setItemTextColor:(UIColor *)itemTextColor

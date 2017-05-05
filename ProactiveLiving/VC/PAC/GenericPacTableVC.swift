@@ -134,9 +134,9 @@ class GenericPacTableVC: UIViewController {
                 }
 
             }
-            print("parameters values ")
+            print_debug("parameters values ")
 
-            print(parameters)
+            print_debug(parameters)
 
             
             //call global web service class latest
@@ -154,7 +154,7 @@ class GenericPacTableVC: UIViewController {
                         
                         if let resultArr = responseDict["result"]  as? NSArray{
                             
-                            print("TESTING FIND PAC \(resultArr)")
+                            print_debug("TESTING FIND PAC \(resultArr)")
                             
                              if resultArr.count > 0 {
                              
@@ -279,7 +279,7 @@ extension GenericPacTableVC: UITableViewDataSource{
 
         let distance = self.pacDetailArr[indexPath.row]["dist"] as! Int
         lbl_distance.text = "\(distance) Miles"
-        print(self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String)
+        print_debug(self.pacDetailArr[indexPath.row].valueForKey("createdBy")!["firstName"] as? String)
 
       
         return cell
@@ -347,7 +347,7 @@ extension GenericPacTableVC:  UITableViewDelegate{
         let reload_distance: Float = 50
         
         if y > h + reload_distance {
-            print("load more data")
+            print_debug("load more data")
             tv_generic.tableFooterView!.hidden = false
            // fetchMyPACDataFromServer(self.createJoinStatus)
             if isSerrching{

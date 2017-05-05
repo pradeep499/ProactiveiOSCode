@@ -73,7 +73,7 @@
 
 -(void)moviePlaybackDidFinish
 {
-    NSLog(@"Movie finished!!!");
+    //NSLog(@"Movie finished!!!");
 }
 - (IBAction)btnBackClick:(id)sender {
     

@@ -141,13 +141,13 @@
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
     
     if (!addressBook) {
-        NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
+        //NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
         return;
     }
     
     ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
         if (error) {
-            NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
+            //NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
         }
         
         if (granted) {
@@ -179,7 +179,7 @@
         
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
         NSString *lastName  = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-        NSLog(@"Name:%@ %@", (firstName)? firstName : @"", (lastName)? lastName : @"");
+        //NSLog(@"Name:%@ %@", (firstName)? firstName : @"", (lastName)? lastName : @"");
         
         NSString *fullName = @"";
         
@@ -208,7 +208,7 @@
         
         for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
             NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-            NSLog(@"  phone:%@", phoneNumber);
+            //NSLog(@"  phone:%@", phoneNumber);
             [numbers addObject:phoneNumber];
         }
         CFRelease(phoneNumbers);
@@ -223,7 +223,7 @@
         
         [self.arrContacts addObject:contact];
         
-        NSLog(@"=============================================");
+        //NSLog(@"=============================================");
     }
     
     //Short array before make up
@@ -275,7 +275,7 @@
     }
     
     // arraysByLetter will contain the result you expect
-    NSLog(@"Dictionary: %@", self.dicAlphabet);
+    //NSLog(@"Dictionary: %@", self.dicAlphabet);
 }
 
 
@@ -316,7 +316,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    NSLog(@"Data: %@",[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
+    //NSLog(@"Data: %@",[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]);
     
     if(self.constrHeightGroupView.constant == 0)
     {
@@ -330,7 +330,7 @@
         {
             
             NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-            NSLog(@"%@",frndDict);
+            //NSLog(@"%@",frndDict);
             
             NSString * login_id = [AppHelper userDefaultsForKey:uId];
             NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];

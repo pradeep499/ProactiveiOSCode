@@ -214,7 +214,7 @@
     
     [self.navigationController setNavigationBarHidden:true animated:yes];
     
-    NSLog(@"%@",[AppHelper userDefaultsForKey:isRememberUser]);
+    //NSLog(@"%@",[AppHelper userDefaultsForKey:isRememberUser]);
     if (![[AppHelper userDefaultsForKey:isRememberUser] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:isRememberUser]) {
         
         if (![[AppHelper userDefaultsForKey:cellNum] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:cellNum]) {
@@ -367,11 +367,11 @@
             
           //  [Services serviceCallWithPath:ServiceLogin withParam:parameters success:^(NSDictionary *responseDict) {
                 [AppDelegate dismissProgressHUD];
-                NSLog(@"%@",responseDict);
+                //NSLog(@"%@",responseDict);
                 
                 self.detailDictionary = responseDict;
                 
-                NSLog(@"%@",self.detailDictionary);
+                //NSLog(@"%@",self.detailDictionary);
                 
                 if (![[self.detailDictionary objectForKey:@"error"] isKindOfClass:[NSNull class]] && [self.detailDictionary objectForKey:@"error"]) {
                     if ([[self.detailDictionary objectForKey:@"error"] intValue] == 0) {
@@ -410,7 +410,7 @@
                             [[ChatListner getChatListnerObj] createConnection];
                             
                         }
-                        NSLog(@"%@",[AppHelper userDefaultsForKey:uId]);//print uid
+                        //NSLog(@"%@",[AppHelper userDefaultsForKey:uId]);//print_debug uid
                         if (isRememberMe) {
                             [AppHelper saveToUserDefaults:@"yes" withKey:isRememberUser];
                         }
@@ -485,7 +485,7 @@
              /*
                           failure:^(NSError *error) {
               [AppDelegate dismissProgressHUD];
-                NSLog(@"%@",error);
+                //NSLog(@"%@",error);
                 [self showAlert];
             }*/
               ];
@@ -542,7 +542,7 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     if (textField == self.passwordTextField) {
-        NSLog(@"%ld",(long)[[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]);
+        //NSLog(@"%ld",(long)[[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]);
         if ([[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] > 0) {
             [self signIn:nil];
         }

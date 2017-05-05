@@ -112,7 +112,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
    
     
     func receiveMessages(note:NSNotification) {
-        print(note)
+        print_debug(note)
         if isGroup == "0" {
             var msgObj : UserChat!
             msgObj = note.object as! UserChat
@@ -175,7 +175,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     }
     
     func receiveMessagesUpdate(note:NSNotification) {
-      print(note)
+      print_debug(note)
         
         if isGroup == "0" || note.valueForKey("userInfo")?.valueForKey("group")! as! NSString == "0" {
             let msgObj:UserChat = note.valueForKey("userInfo")?.valueForKey("bfr") as! UserChat
@@ -220,7 +220,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     //MARK: - Update Name Method
     
     func updateNameNotification(note:NSNotification) {
-        print(note)
+        print_debug(note)
         if contObj != nil {
             frndName.text=contObj.name
         } else {
@@ -379,7 +379,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 dict["groupid"] = strGroupId
                 dict["msgStatus"] = "2"
                 dict["senderid"] = chatObj.senderId
-                print(dict)
+                print_debug(dict)
                 
                 ChatListner .getChatListnerObj().socket.emit("messageSeened", dict)
                 chatObj.messageStatus="2"
@@ -410,7 +410,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             var receiveMsgDic = Dictionary<String,AnyObject>()
             
             receiveMsgDic = data[0] as! Dictionary
-            print(receiveMsgDic)
+            print_debug(receiveMsgDic)
             
             let lastHitDate = receiveMsgDic["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
@@ -460,12 +460,12 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         let instance = DataBaseController.sharedInstance
         
         let fetchResult=instance.fetchData("GroupUserList", predicate: strPred, sort: ("groupId",false))! as NSArray
-        // print(fetchResult)
+        // print_debug(fetchResult)
         for myobject : AnyObject in fetchResult {
             let groupObj = myobject as! GroupUserList
             self.groupUserDic[groupObj.userId!] = groupObj.userName
-           // print(groupObj.userName)
-           // print(self.groupUserDic[groupObj.userId])
+           // print_debug(groupObj.userName)
+           // print_debug(self.groupUserDic[groupObj.userId])
             
        //     let nameStr = groupObj.userName! as String
       //      let mb = ChatHelper.userDefaultForKey("PhoneNumber") as String
@@ -620,10 +620,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         self.manageChatTableH = "1"
         
         topView.hidden = false
-        // print(self.isPastMeld_)
+        // print_debug(self.isPastMeld_)
         self.lblPastMeldMsg.hidden=true
         //chat from
-         //   print(self.ispast)
+         //   print_debug(self.ispast)
             
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "TypeMsgObserverStop", object: nil)
@@ -647,7 +647,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChattingMainVC.updateNameNotification(_:)),name:"updateNameObserver", object:nil)
       
         if contObj != nil {
-             print(contObj)
+             print_debug(contObj)
             
             frndName.text=contObj.name
             //ChatHelper .saveToUserDefault("5721f430dfcde77833f9daf2", key: "friendId")
@@ -661,7 +661,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             
         } else {
             // Got crash here with andriod meld for two member
-            print(recentChatObj)
+            print_debug(recentChatObj)
             
             frndName.text=recentChatObj.friendName
             //ChatHelper .saveToUserDefault("5721f430dfcde77833f9daf2", key: "friendId")
@@ -737,7 +737,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         self.navigationController?.navigationBarHidden = false
 
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            // print(finish)
+            // print_debug(finish)
         }
         
         IQKeyboardManager.sharedManager().enable = true
@@ -749,7 +749,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     
 //    override func viewDidDisappear(animated: Bool) {
 ////        bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-////            // print(finish)
+////            // print_debug(finish)
 ////        }
 //    }
     
@@ -872,23 +872,23 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     }
     
     @IBAction func onClickDelete(sender: UIButton) {
-        //print(self.deleteIndexP)
+        //print_debug(self.deleteIndexP)
         //  AppDelegate .getAppdelegate().currentOperationDict.removeObjectForKey(newIndexPath)
         let operation =  ChatListner .getChatListnerObj().currentOperationDict[self.deleteIndexP] as? AFHTTPRequestOperation
         
         if operation != nil {
-            //print("operation")
+            //print_debug("operation")
             operation!.cancel()
         }
         
-        //print("onClickDelete")
-        //print(self.deleteIndexP)
+        //print_debug("onClickDelete")
+        //print_debug(self.deleteIndexP)
         self.deleteMessage(self.msgId, indexp: self.deleteIndexP)
         
         viewCopyAndDelete.hidden = true
         imgBackGround.hidden = true
         chatTableView.userInteractionEnabled = true
-        //print(self.deleteIndexP)
+        //print_debug(self.deleteIndexP)
         
         let visibleCell : NSArray = chatTableView.indexPathsForVisibleRows!
         
@@ -943,8 +943,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         if(visibleCell.containsObject(self.deleteIndexP)) {
             let cell:UITableViewCell = self.chatTableView.cellForRowAtIndexPath(self.deleteIndexP)!
-        //////print(cell)
-        //print(self.deleteIndexP)
+        //////print_debug(cell)
+        //print_debug(self.deleteIndexP)
            cell.backgroundColor = UIColor.clearColor()
            self.chatTableView.reloadRowsAtIndexPaths([self.deleteIndexP], withRowAnimation: .None)
         }
@@ -954,7 +954,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         let refreshAlert = UIAlertController(title: "Delete", message: "Are you sure you want to delete?.", preferredStyle: UIAlertControllerStyle.Alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-           // print("Handle Ok logic here")
+           // print_debug("Handle Ok logic here")
             self.chatTableView.userInteractionEnabled = true
              self.deleteMessage(self.msgId, indexp: self.deleteIndexP)
         }))
@@ -1089,13 +1089,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         let instance = DataBaseController.sharedInstance
         let fetchResult = instance.fetchChatData("UserChat", predicate: strPred, sort: ("localSortID",false))! as NSArray
     
-        //print(fetchResult)
+        //print_debug(fetchResult)
         
         for myobject : AnyObject in fetchResult {
             let anObject = myobject as! UserChat
             chatArray.insertObject(anObject, atIndex: 0)
         }
-        //print(chatArray)
+        //print_debug(chatArray)
         
         self.chatTableView.reloadData()
         if self.chatArray.count > 2 {
@@ -2698,7 +2698,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             //localStr = chatCDNbaseUrl + "/" + chatObj.chatFile!.mediaUrl!
             localStr = chatObj.chatFile!.mediaUrl!
 
-            //print(localStr)
+            //print_debug(localStr)
             //imageNameStr = chatObj.chatFile!.mediaUrl!
             imageNameStr = ChatHelper.sharedInstance.uniqueName("")
             
@@ -2730,7 +2730,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         do {
             try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
-            NSLog("Unable to create directory \(error.debugDescription)")
+            //NSLog("Unable to create directory \(error.debugDescription)")
         }
         
         var saveThumbImagePath = "Thumb"+imageNameStr
@@ -2831,7 +2831,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 {
                     playBtn.hidden = false
                     let fileURL=NSURL.fileURLWithPath(saveImagePathFull)
-                   // print(saveImagePathFull)
+                   // print_debug(saveImagePathFull)
                     let thumbImg = CommonMethodFunctions.getThumbNail(fileURL);
                     if thumbImg != nil
                     {
@@ -2883,9 +2883,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 {
                     playBtn.hidden = false
                     
-                    //print(saveImagePathFull)
+                    //print_debug(saveImagePathFull)
                     // var saveImagePathFull = saveImagePathFull + "mp4"
-                    // print(saveImagePathFull)
+                    // print_debug(saveImagePathFull)
                     let fileURL=NSURL.fileURLWithPath(saveImagePathFull)
                     
                     let thumbImg = CommonMethodFunctions.getThumbNail(fileURL);
@@ -2980,7 +2980,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 if (checkValidation.fileExistsAtPath(getImagePath))
                 {
                     let fileURL=NSURL.fileURLWithPath(getImagePath)
-                  // print (fileURL)
+                  // print_debug (fileURL)
                     moviePlayerController = MPMoviePlayerController(contentURL: fileURL)
                     
                     
@@ -3092,11 +3092,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             {
               tempStr = chatObj.groupChatFile!.mediaLocalPath! as String
             }
-           // print(tempStr)
+           // print_debug(tempStr)
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
             let documentsDirectory = paths.stringByAppendingPathComponent("/ChatFile")
             let getImagePath = documentsDirectory.stringByAppendingPathComponent(tempStr)
-           // print(getImagePath)
+           // print_debug(getImagePath)
             let checkValidation = NSFileManager.defaultManager()
             if chatObj.messageType == "video"
             {
@@ -3293,7 +3293,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
        {
         if chatArray.count > 0
         {
-       // print(chatArray.count)
+       // print_debug(chatArray.count)
             let chatObj = chatArray.lastObject as! UserChat
             if self.recentChatObj == nil
             {
@@ -3958,7 +3958,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         }
                         else
                         {
-                            print("fail to set file on aws")
+                            print_debug("fail to set file on aws")
                         }
                         
                         }
@@ -3966,7 +3966,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                             
                             
                             
-                            // print("pathSelected \(pathSelected)")
+                            // print_debug("pathSelected \(pathSelected)")
                             
                             
                             //let newIndexPath:NSIndexPath = NSIndexPath(forRow:dict["index"] as Int,inSection:0)
@@ -4368,7 +4368,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     do {
                         try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
                     } catch let error as NSError {
-                        NSLog("Unable to create directory \(error.debugDescription)")
+                        //NSLog("Unable to create directory \(error.debugDescription)")
                     }
                     let saveThumbImagePath = "Thumb"+dateStr+".jpg"
                     var saveImagePath = documentsDirectory.stringByAppendingPathComponent("Thumb"+dateStr+".jpg")
@@ -4550,7 +4550,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     do {
                         try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
                     } catch let error as NSError {
-                        NSLog("Unable to create directory \(error.debugDescription)")
+                        //NSLog("Unable to create directory \(error.debugDescription)")
                     }
                     let saveVideoPath = documentsDirectory.stringByAppendingPathComponent(videoName)
                     let thumbImg = CommonMethodFunctions.getThumbNail(tempUrl);
@@ -4558,7 +4558,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let saveThumbImagePath = "Thumb"+dateStr+".jpg"
                     let saveImagePath = documentsDirectory.stringByAppendingPathComponent(saveThumbImagePath)
                     
-                    // print("saveImagePath = \(saveImagePath)")
+                    // print_debug("saveImagePath = \(saveImagePath)")
                     data!.writeToFile(saveImagePath, atomically: true)
                     
                     let thumbImg1 = CommonMethodFunctions.generatePhotoThumbnail(thumbImg);
@@ -4636,7 +4636,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     }
                     // New pic by PK
                     
-                    //    print("sent frow ====\(myRow)")
+                    //    print_debug("sent frow ====\(myRow)")
                     
                     CommonMethodFunctions.convertVideoToLowQuailtyWithInputURL(tempUrl, outputURL: NSURL.fileURLWithPath(saveVideoPath), handler: { (exportSession : AVAssetExportSession!) -> Void in
                         switch(exportSession.status)
@@ -4646,7 +4646,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                 
                                 
         
-                                // print("saveVideoPath = \(saveVideoPath)")
+                                // print_debug("saveVideoPath = \(saveVideoPath)")
                                data =  NSData(contentsOfURL: NSURL.fileURLWithPath(saveVideoPath))
                                 
                                 var imageSize   = data!.length as Int
@@ -5229,7 +5229,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         }
         let myString = growingTextView.text
         let newString = myString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        //print(contObj)
+        //print_debug(contObj)
         
         if (self.recentChatObj != nil && self.recentChatObj.isBlock == "1") || (self.contObj != nil && self.contObj.isBlock == "1")
         {
@@ -5285,7 +5285,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             do {
                 try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
             } catch let error as NSError {
-                NSLog("Unable to create directory \(error.debugDescription)")
+                //NSLog("Unable to create directory \(error.debugDescription)")
             }
             let saveFilePath = "Audio"+dateStr+".wav"
             let saveAudioPath = documentsDirectory.stringByAppendingPathComponent(saveFilePath)
@@ -5359,7 +5359,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             
             // New pic by PK
              dict["index"] = chatArray.count-1
-           // print("sent frow ====\(myRow)")
+           // print_debug("sent frow ====\(myRow)")
             
             // bellow code is hidden by pk on 2 dec 2015
             
@@ -5524,13 +5524,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 dict["profile_image"] = AppHelper.userDefaultsForKey("user_imageUrl") // NEW LINE ADDED BY ME 18 OCT
                
                 
-              //  print(AppHelper.userDefaultsForKey("user_imageUrl"))
+              //  print_debug(AppHelper.userDefaultsForKey("user_imageUrl"))
                 
-                print(dict)
+                print_debug(dict)
                 
                 
                 let chatObj =  instance.insertChatMessageInDb1("UserChat", params: dict) as UserChat
-                print(chatObj)
+                print_debug(chatObj)
                 
                 chatArray.addObject(chatObj)
                // if self.recentChatObj == nil || chatArray.count == 2
@@ -5569,7 +5569,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 sendMsgD["recieverid"]=dict["receiver"] as? String
                 sendMsgD["chatType"] = "oneToOne"
                 
-               // print(AppHelper.userDefaultsForKey("user_firstName"))
+               // print_debug(AppHelper.userDefaultsForKey("user_firstName"))
                 if (AppHelper.userDefaultsForKey("user_firstName") as? String) != nil
                 {
                     sendMsgD["user_firstName"] = AppHelper.userDefaultsForKey("user_firstName") as? String
@@ -5609,7 +5609,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 
             }
         
-            print(sendMsgD);
+            print_debug(sendMsgD);
         
             ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
 
@@ -5696,7 +5696,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
                 
                 let date1 = dateFormatter.dateFromString(chatObj.messageDate!)
-              //  print(chatObj.messageDate)
+              //  print_debug(chatObj.messageDate)
                 dateFormatter.dateFormat = "YYYY-MM-dd"
                 let dateStr = dateFormatter.stringFromDate(date1!)
                 
@@ -5761,9 +5761,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     
     func sendImageFilePathToChatServer(dic : NSDictionary, filePath: String!, index: Int) -> Void
     {
-        // print("sendImageFilePathToChatServer ====== sendMsgD to server====0")
+        // print_debug("sendImageFilePathToChatServer ====== sendMsgD to server====0")
         
-         // print("index path -\(dic)")
+         // print_debug("index path -\(dic)")
         
         var newIndexPath:NSIndexPath = NSIndexPath(forRow:index,inSection:0)
         if index == -1
@@ -5839,24 +5839,24 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         sendMsgD["mediaUrl"] = filePath
         
     
-     //   print("sendMsgD to server ==== 2")
+     //   print_debug("sendMsgD to server ==== 2")
         
         
         ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
         
-      //  print(sendMsgD)
+      //  print_debug(sendMsgD)
 
         
     }
     
     func sendVideoFilePathToChatServer(dic : NSDictionary, filePath: String!, index: Int) -> Void
     {
-        //print("got video file 0")
+        //print_debug("got video file 0")
         
-        //print("sendVideoFilePathToChatServer \(dic)")
+        //print_debug("sendVideoFilePathToChatServer \(dic)")
         
         var newIndexPath:NSIndexPath = NSIndexPath(forRow:index,inSection:0)
-       // print(newIndexPath)
+       // print_debug(newIndexPath)
 
         if index == -1
         {
@@ -5934,9 +5934,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     func sendAudioFilePathToChatServer(dic : NSDictionary, filePath: String!, index: Int) -> Void
     {
         
-        //print("got audio file 0")
+        //print_debug("got audio file 0")
         
-       // print("sendAudioFilePathToChatServer \(dic)")
+       // print_debug("sendAudioFilePathToChatServer \(dic)")
         
         var newIndexPath:NSIndexPath = NSIndexPath(forRow:index,inSection:0)
         if index == -1
@@ -5949,7 +5949,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         if(visibleCell.containsObject(newIndexPath))
         {
-           // print("got audio file 2")
+           // print_debug("got audio file 2")
             if     let cell:ChatAudioSenderCell = self.chatTableView.cellForRowAtIndexPath(newIndexPath)! as? ChatAudioSenderCell
             {
            // let cell:UITableViewCell = chatTableView.cellForRowAtIndexPath(newIndexPath)!
@@ -5959,7 +5959,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             playBtn.hidden = false
             progressV.hidden = true
             
-             //   print("got audio file 3")
+             //   print_debug("got audio file 3")
             // New below code open by prabodh 14 dec 2015
            // let str : String = dic["localmsgid"] as String!
             
@@ -5973,7 +5973,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         }
         // New above code open by prabodh 14 dec 2015
 
-       // print("got audio file 4")
+       // print_debug("got audio file 4")
 
         var sendMsgD = Dictionary<String, AnyObject>()
         
@@ -6004,7 +6004,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
  
         ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
         
-      //  print(sendMsgD)
+      //  print_debug(sendMsgD)
 
     }
     
@@ -6655,10 +6655,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             
             switch(result){
             case .Sent:
-                print("Email sent")
+                print_debug("Email sent")
                 
             default:
-                print("Whoops")
+                print_debug("Whoops")
             }
             
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -6882,16 +6882,16 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             switch type {
                 
             case .Insert:
-                //print("Insert")
+                //print_debug("Insert")
                 return
             case .Update:
-                //print("Update")
+                //print_debug("Update")
                 return
             case .Move:
-                //print("Move")
+                //print_debug("Move")
                 return
             case .Delete:
-                //print("Delete")
+                //print_debug("Delete")
                 return
             default:
                 return
@@ -7010,7 +7010,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                 
                                 
                                 
-                                // print("pathSelected \(pathSelected)")
+                                // print_debug("pathSelected \(pathSelected)")
                                 
                                 
                                 //let newIndexPath:NSIndexPath = NSIndexPath(forRow:dict["index"] as Int,inSection:0)
@@ -7098,7 +7098,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 do {
                     try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
                 } catch let error as NSError {
-                    NSLog("Unable to create directory \(error.debugDescription)")
+                    //NSLog("Unable to create directory \(error.debugDescription)")
                 }
                 
                 let indexes = String(index)
@@ -7228,15 +7228,15 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         {
                             //  var fileName : NSString
                             
-                            //print((UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray))
+                            //print_debug((UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray))
                             
                             //for( var index:Int = 0 ; index < (UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray).count; index += 1  )
                             for  index in  0 ..< (UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray).count {
-                                // print("Upload image 1 === \(UploadInS3.sharedGlobal().chatImagesFiles)")
+                                // print_debug("Upload image 1 === \(UploadInS3.sharedGlobal().chatImagesFiles)")
                                 
                                 if let citiesArr = UploadInS3.sharedGlobal().chatImagesFiles{
                                     
-                                    //print("Upload image 2 === \(citiesArr)")
+                                    //print_debug("Upload image 2 === \(citiesArr)")
                                     
                                     var fileName = Dictionary<String, AnyObject>()
                                     
@@ -7255,7 +7255,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                                     }
                                     
                                     
-                                    // print("Upload image 3  ===  \(citiesArr[index])")
+                                    // print_debug("Upload image 3  ===  \(citiesArr[index])")
                                     
                                     
                                     
@@ -7268,7 +7268,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                             
                             (UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray) .removeAllObjects()
                             
-                           // print(UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray)
+                           // print_debug(UploadInS3.sharedGlobal().chatImagesFiles as NSMutableArray)
                             //                            let fileName =  UploadInS3.sharedGlobal().strFilesName
                             //
                             //                            //  progressV.hidden = true
@@ -7302,14 +7302,14 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                             
                             // chatTableView.reloadRowsAtIndexPaths(<#indexPaths: [AnyObject]#>, withRowAnimation: <#UITableViewRowAnimation#>)
                             
-                          //  print("Fails to upload  files ")
+                          //  print_debug("Fails to upload  files ")
                         }
                         
                         } , completionProgress: { ( bool_val : Bool, progress) -> Void in
                             
                             
                             
-                          //  print("pathSelected \(pathSelected)")
+                          //  print_debug("pathSelected \(pathSelected)")
                             
                             
                             //let newIndexPath:NSIndexPath = NSIndexPath(forRow:dict["index"] as Int,inSection:0)
@@ -7363,7 +7363,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     func uniqueName(fileName: String) -> String {
         
         let uniqueImageName = NSString(format: "%@%f", fileName , NSDate().timeIntervalSince1970 * 1000)
-       // print(uniqueImageName)
+       // print_debug(uniqueImageName)
         return uniqueImageName as String
     }
     
@@ -7383,7 +7383,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     
     func gettingUnBlockFriendsRecords(note:NSNotification)
     {
-        //print(note.userInfo)
+        //print_debug(note.userInfo)
      /*   AppDelegate.getAppDelegate().hideActivityViewer()
         NSNotificationCenter.defaultCenter().removeObserver(self, name:Notification_serviceForBlockOrUnBlock, object:nil)
         var tempdict = note.userInfo as Dictionary<String,AnyObject>
@@ -7394,7 +7394,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         }
         else
         {
-            print("else")
+            print_debug("else")
         }
  */
         
@@ -7524,14 +7524,14 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 
                 let getImagePath = documentsDirectory.stringByAppendingPathComponent(dict["localThumbPath"] as! String)
                 
-                //print(getImagePath)
+                //print_debug(getImagePath)
                 _ = NSURL.fileURLWithPath(getImagePath)
                 let getVideoPath = documentsDirectory.stringByAppendingPathComponent(dict["localFullPath"] as! String)
-               // print(getVideoPath)
+               // print_debug(getVideoPath)
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     //let saveVideoPath = NSURL.fileURLWithPath(getVideoPath)
-                    //  print(saveVideoPath)
+                    //  print_debug(saveVideoPath)
                     let videodata: NSData? = NSData.dataWithContentsOfMappedFile(getVideoPath) as? NSData
                     var imageSize   = videodata!.length as Int
                     imageSize = imageSize/1024
@@ -7743,14 +7743,14 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                             
                             // chatTableView.reloadRowsAtIndexPaths(<#indexPaths: [AnyObject]#>, withRowAnimation: <#UITableViewRowAnimation#>)
                             
-                         //   print("Fails to upload  files ")
+                         //   print_debug("Fails to upload  files ")
                         }
                         
                         }
                         
                         , completionProgress: { ( bool_val : Bool, progress) -> Void in
                             
-                            // print("pathSelected \(pathSelected)")
+                            // print_debug("pathSelected \(pathSelected)")
                             
                             let newIndexPath:NSIndexPath = NSIndexPath(forRow:dict["index"] as! Int,inSection:0)
                             

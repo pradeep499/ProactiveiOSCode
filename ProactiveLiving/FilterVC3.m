@@ -62,7 +62,7 @@
                                      @"longitude":[NSString stringWithFormat:@"%f",[AppDelegate getAppDelegate].currentLocation.coordinate.longitude]
                                      };
         
-        NSLog(@"current location chking %@",parameters);
+        //NSLog(@"current location chking %@",parameters);
         //call global web service class
         [Services serviceCallWithPath:ServiceLocationFilter withParam:parameters success:^(NSDictionary *responseDict)
          {
@@ -86,7 +86,7 @@
          } failure:^(NSError *error)
          {
              [AppDelegate dismissProgressHUD];
-             NSLog(@"%@",error);
+             //NSLog(@"%@",error);
              [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
          }];
         
@@ -199,7 +199,7 @@
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     if (!((status == kCLAuthorizationStatusDenied) || (status == kCLAuthorizationStatusNotDetermined))){
     if (sender.tag == 561){
-        NSLog(@"button 561 on switc1");
+        //NSLog(@"button 561 on switc1");
         [self.switch1 setOn:![self.switch1 isOn] animated:YES];
         [self.switch2 setOn:NO animated:YES];
         [self.switch3 setOn:![self.switch1 isOn] animated:YES];
@@ -207,7 +207,7 @@
         
     }
     if (sender.tag == 562){
-        NSLog(@"button 561 on switc2");
+        //NSLog(@"button 561 on switc2");
         [self.switch3 setOn:![self.switch3 isOn] animated:YES];
         [self.switch1 setOn:![self.switch3 isOn] animated:YES];
         [self.switch2 setOn:NO animated:YES];
@@ -257,7 +257,7 @@
     //Capture state of main GPS related switch
     [AppHelper saveToUserDefaults:[NSString stringWithFormat:@"%i",!self.switch1.isOn] withKey:GPSStatus];
 
-    NSLog(@"GPS-%@",[AppHelper userDefaultsForKey:GPSStatus]);
+    //NSLog(@"GPS-%@",[AppHelper userDefaultsForKey:GPSStatus]);
 
 }
 

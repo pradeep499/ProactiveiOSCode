@@ -63,7 +63,7 @@ class FullScreenImageVC: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         bottomTabBar!.setTabBarVisible(false, animated: true) { (finish) in
-            // print(finish)
+            // print_debug(finish)
         }
         super.viewWillAppear(animated)
     }
@@ -72,7 +72,7 @@ class FullScreenImageVC: UIViewController, UIScrollViewDelegate {
         super.viewWillDisappear(animated)
         self.navigationController?.hidesBarsOnTap = false
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            // print(finish)
+            // print_debug(finish)
         }
     }
     

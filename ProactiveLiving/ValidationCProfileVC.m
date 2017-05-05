@@ -203,7 +203,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"SectionNumber: %ld",(long)section);
+    //NSLog(@"SectionNumber: %ld",(long)section);
     switch (section) {
         case 0:
             return 1;

@@ -133,8 +133,8 @@
 #pragma mark -- YSLContainerViewControllerDelegate
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
-    NSLog(@"current Index : %ld",(long)index);
-    NSLog(@"current controller : %@",controller);
+    //NSLog(@"current Index : %ld",(long)index);
+    //NSLog(@"current controller : %@",controller);
    // [controller viewWillAppear:YES];
 }
 
@@ -146,7 +146,7 @@
 }
 - (IBAction)btnInfoAction:(id)sender {
     
-     NSLog(@"ALLPACircleVC Info Button");
+     //NSLog(@"ALLPACircleVC Info Button");
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     aboutPASInstVC = [storyboard instantiateViewControllerWithIdentifier:@"AboutPASInstVC"];
     aboutPASInstVC.strType = @"pac";

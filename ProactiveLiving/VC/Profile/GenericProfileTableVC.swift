@@ -280,7 +280,7 @@ class GenericProfileTableVC: UIViewController {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         //let result = responseDict["result"]["socialNetwork"] as! [AnyObject]
                         //self.socialNetworkArr = result

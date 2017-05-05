@@ -164,7 +164,7 @@
 
 -(void)collectionView:(UICollectionView*)collectionview didSelectItemAtIndexPath:(NSIndexPath*) indexPath
 {
-    NSLog(@"%d",(int)indexPath.item);
+    //NSLog(@"%d",(int)indexPath.item);
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         CertDetailsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CertDetailsVC"];
         vc.menuTitle=[[self.dataArray objectAtIndex:indexPath.item] valueForKey:@"name"];

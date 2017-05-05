@@ -52,18 +52,18 @@
 - (void)locationManager:(CLLocationManager*)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     switch (status) {
         case kCLAuthorizationStatusNotDetermined: {
-            NSLog(@"User still thinking granting location access!");
+            //NSLog(@"User still thinking granting location access!");
             [self.locationManager requestWhenInUseAuthorization]; // this will access location automatically if user granted access manually. and will not show apple's request alert twice. (Tested)
             //[self.tableView reloadData];
             
         } break;
         case kCLAuthorizationStatusDenied: {
-            NSLog(@"User denied location access request!!");
+            //NSLog(@"User denied location access request!!");
             // show text on label
-            NSLog(@"To re-enable, please go to Settings and turn on Location Service for this app.");
+            //NSLog(@"To re-enable, please go to Settings and turn on Location Service for this app.");
         } break;
         case kCLAuthorizationStatusRestricted: {
-            NSLog(@"Restricted by e.g. parental controls. User can't enable Location Services");
+            //NSLog(@"Restricted by e.g. parental controls. User can't enable Location Services");
             // show text on label
         } break;
         case kCLAuthorizationStatusAuthorizedWhenInUse: {
@@ -86,10 +86,10 @@
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     
-    NSLog(@"%@",error.userInfo);
+    //NSLog(@"%@",error.userInfo);
     if([CLLocationManager locationServicesEnabled]){
         
-        NSLog(@"Location Services Enabled");
+        //NSLog(@"Location Services Enabled");
         
         if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
             UIAlertView    *alert = [[UIAlertView alloc] initWithTitle:@"App Permission Denied"
@@ -160,7 +160,7 @@
  
  - (void) restartLocationUpdates
  {
- NSLog(@"restartLocationUpdates");
+ //NSLog(@"restartLocationUpdates");
  
  if (self.shareModel.timer) {
  [self.shareModel.timer invalidate];
@@ -180,19 +180,19 @@
  
  
  - (void)startLocationTracking {
- NSLog(@"startLocationTracking");
+ //NSLog(@"startLocationTracking");
  
  if ([CLLocationManager locationServicesEnabled] == NO) {
- NSLog(@"locationServicesEnabled false");
+ //NSLog(@"locationServicesEnabled false");
  UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
  [servicesDisabledAlert show];
  } else {
  CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
  
  if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
- NSLog(@"authorizationStatus failed");
+ //NSLog(@"authorizationStatus failed");
  } else {
- NSLog(@"authorizationStatus authorized");
+ //NSLog(@"authorizationStatus authorized");
  CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
  locationManager.delegate = self;
  locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
@@ -208,7 +208,7 @@
  
  
  - (void)stopLocationTracking {
- NSLog(@"stopLocationTracking");
+ //NSLog(@"stopLocationTracking");
  
  if (self.shareModel.timer) {
  [self.shareModel.timer invalidate];
@@ -223,7 +223,7 @@
  
  -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
  
- NSLog(@"locationManager didUpdateLocations");
+ //NSLog(@"locationManager didUpdateLocations");
  
  for(int i=0;i<locations.count;i++){
  CLLocation * newLocation = [locations objectAtIndex:i];
@@ -290,13 +290,13 @@
  CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
  [locationManager stopUpdatingLocation];
  
- NSLog(@"locationManager stop Updating after 10 seconds");
+ //NSLog(@"locationManager stop Updating after 10 seconds");
  }
  
  
  - (void)locationManager: (CLLocationManager *)manager didFailWithError: (NSError *)error
  {
- // NSLog(@"locationManager error:%@",error);
+ // //NSLog(@"locationManager error:%@",error);
  
  switch([error code])
  {
@@ -323,7 +323,7 @@
  //Send the location to Server
  - (void)updateLocationToServer {
  
- NSLog(@"updateLocationToServer");
+ //NSLog(@"updateLocationToServer");
  
  // Find the best location from the array based on accuracy
  NSMutableDictionary * myBestLocation = [[NSMutableDictionary alloc]init];
@@ -339,14 +339,14 @@
  }
  }
  }
- NSLog(@"My Best location:%@",myBestLocation);
+ //NSLog(@"My Best location:%@",myBestLocation);
  
  
  //If the array is 0, get the last location
  //Sometimes due to network issue or unknown reason, you could not get the location during that  period, the best you can do is sending the last known location to the server
  if(self.shareModel.myLocationArray.count==0)
  {
- NSLog(@"Unable to get location, use the last known location");
+ //NSLog(@"Unable to get location, use the last known location");
  
  self.myLocation=self.myLastLocation;
  self.myLocationAccuracy=self.myLastLocationAccuracy;
@@ -359,7 +359,7 @@
  self.myLocationAccuracy =[[myBestLocation objectForKey:ACCURACY]floatValue];
  }
  
- NSLog(@"Send to Server: Latitude(%f) Longitude(%f) Accuracy(%f)",self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
+ //NSLog(@"Send to Server: Latitude(%f) Longitude(%f) Accuracy(%f)",self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
  
  //TODO: Your code to send the self.myLocation and self.myLocationAccuracy to your server
  
