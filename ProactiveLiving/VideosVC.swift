@@ -289,14 +289,15 @@ class VideosVC: UIViewController {
         }
         
         
-       // let desc = profileEducationalArr[indexPath!.row].valueForKey("description") as? String // Description
-        seeMoreVC.detailStr = datDict["description"] as! String!
+        if let titleStr = datDict["title"] {
+            seeMoreVC.titleStr = titleStr
+        }
+        seeMoreVC.detailStr = datDict["description"] as String!
+                
         self.navigationController?.pushViewController(seeMoreVC, animated: true)
         
         print("See More")
-
-        
-        
+    
     }
     @IBAction func onClickEditCellBtn(sender: AnyObject) {
         
