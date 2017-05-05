@@ -1598,6 +1598,8 @@ class DataBaseController : NSObject
     }
     func checkIfGroupUserAlreadyExist(modelName:String, params: Dictionary<String, AnyObject>) -> GroupUserList!
     {
+        
+        
         let instance = DataBaseController.sharedInstance
         let str1:String = params["groupid"] as! String
         let str2:String = ChatHelper .userDefaultForAny("userId") as! String
@@ -1769,6 +1771,9 @@ class DataBaseController : NSObject
             newItem.groupId = params["groupid"] as? String
             newItem.messageType = params["type"] as? String
             
+            print_debug("insertGroupChatMessageInDb  == \(params["date"] as! String)")
+
+            
             let dateFormatter = NSDateFormatter()
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
@@ -1789,6 +1794,7 @@ class DataBaseController : NSObject
             
             
             // newItem.messageDate = params["date"] as String
+            
             newItem.messageTime = params["time"] as? String
             newItem.receiverId = params["receiver"] as? String
             newItem.senderId = params["sender"] as? String
@@ -1824,6 +1830,7 @@ class DataBaseController : NSObject
         newItem.localSortID = CommonMethodFunctions.nextChatIdentifies()
         newItem.messageType = params["type"] as? String
         
+        print_debug("insertGroupChatMessageInDb1  == \(params["date"] as! String)")
         let dateFormatter = NSDateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");

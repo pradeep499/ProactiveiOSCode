@@ -525,7 +525,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        bottomTabBar = self.tabBarController as? CustonTabBarController
+        bottomTabBar = self.tabBarController as? CustonTabBarController
         self.exitedView.hidden = true
         ChatHelper .removeFromUserDefaultForKey("chatId")
         copyTextStr = ""
@@ -2399,14 +2399,21 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     userImage.layer.cornerRadius = 5.0
                     let dateLabel = cell.contentView.viewWithTag(10) as! UILabel
                     let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "YYYY-MM-dd"
+                    dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
                     dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
-                    let date = dateFormatter.dateFromString(chatObj.messageDate!)
+                    var date = dateFormatter.dateFromString(chatObj.messageDate!)
+            
+                    if date == nil{
+                        
+                        dateFormatter.dateFormat = "YYYY-MM-dd"
+                        date = dateFormatter.dateFromString(chatObj.messageDate!)
+                    }
                     dateFormatter.dateFormat = "MMMM dd, yyyy"
                     let dateStr = dateFormatter.stringFromDate(date!)
                     let dateStr1 = dateFormatter.stringFromDate(today)
                     let dateStr2 = dateFormatter.stringFromDate(yesterday)
+                    
                     if dateStr1 == dateStr
                     {
                         dateLabel.text = "Today"
@@ -4898,7 +4905,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         
                         let alertController = UIAlertController(title:APP_NAME, message:"You have not provided permission to use microphone. Please go to settings and allow.", preferredStyle: UIAlertControllerStyle.Alert)
                         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        NSOperationQueue.mainQueue().addOperationWithBlock() { () in
                         self.presentViewController(alertController, animated: true, completion: nil)
+                        }
                         
                     }
                 })
@@ -5725,19 +5734,32 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             {
                 let chatObj = chatArray.lastObject as! GroupChat
                 let dateFormatter = NSDateFormatter()
-                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                 dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
+                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+               //dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+            dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
 
-                let date1 = dateFormatter.dateFromString(chatObj.messageDate!)
-                dateFormatter.dateFormat = "YYYY-MM-dd"
+                var date1 = dateFormatter.dateFromString(chatObj.messageDate!)
+                if date1 == nil
+                {
+                    dateFormatter.dateFormat = "YYYY-MM-dd"
+                    date1 = dateFormatter.dateFromString(chatObj.messageDate!)
+                }
+                
                 let dateStr = dateFormatter.stringFromDate(date1!)
                 
                 let date = NSDate()
                 let dateStr1 = dateFormatter.stringFromDate(date)
                 dict["date"] = dateStr1
                 dict["sortDate"] = dateStr
-                if dateStr != dateStr1
+                
+                dateFormatter.dateFormat = "YYYY-MM-dd"
+
+                let dateCurentStr  = dateFormatter.stringFromDate(date)
+                
+                let comingDate = dateFormatter.stringFromDate(date1!)
+                
+                if comingDate != dateCurentStr
                 {
                     let chatObj = instance.insertGroupChatMessageInDb1("GroupChat", params: dict) as GroupChat
                     chatArray.addObject(chatObj)
