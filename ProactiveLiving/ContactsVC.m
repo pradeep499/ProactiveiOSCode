@@ -487,6 +487,8 @@
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
             ChattingMainVC *chatMainVC = [storyboard instantiateViewControllerWithIdentifier:@"ChattingMainVC"];
             
+            chatMainVC.hidesBottomBarWhenPushed = false;
+            
             ChatContactModelClass *anobject = [[ChatContactModelClass alloc] init];
             anobject.userId =[frndDict  valueForKey:@"_id"];
             anobject.loginUserId =[AppHelper userDefaultsForKey:_ID];

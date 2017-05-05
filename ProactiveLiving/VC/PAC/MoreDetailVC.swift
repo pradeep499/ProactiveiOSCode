@@ -23,8 +23,11 @@ class MoreDetailVC: UIViewController {
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        lblTitle.text = titleStr
+   
+   // Setting title for the VC
+        if let title = titleStr {
+             lblTitle.text = title
+        }
         moreDetailTxtView.text = detailStr
         
     }
