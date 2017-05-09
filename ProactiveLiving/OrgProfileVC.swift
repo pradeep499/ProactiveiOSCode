@@ -222,8 +222,11 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
         }
        else if(indexPath.row==3) { // Message
             
-            let email = self.dataDict["email"] as! String
-            UIApplication.sharedApplication().openURL(NSURL(string: "mailto:\(email)")!)
+//            let email = self.dataDict["email"] as! String
+//            UIApplication.sharedApplication().openURL(NSURL(string: "mailto:\(email)")!)
+            
+            self.sendMail()
+            
             
             
         }
@@ -322,5 +325,44 @@ extension OrgProfileVC : UITableViewDelegate {
     
     
 }
+
+
+extension OrgProfileVC:MFMailComposeViewControllerDelegate{
+    
+    
+    func sendMail() -> Void {
+        
+        if !MFMailComposeViewController.canSendMail() {
+            print_debug("Mail services are not available")
+            return
+        }
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        let email = self.dataDict["email"] as! String
+        
+        // Configure the fields of the interface.
+        composeVC.setToRecipients([email])
+        composeVC.setSubject("Query")
+        
+
+        
+        // Present the view controller modally.
+        self.presentViewController(composeVC, animated: true, completion: nil)
+    }
+    
+    
+    func mailComposeController(controller: MFMailComposeViewController,
+                               didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        // Check the result or perform other tasks.
+        
+        // Dismiss the mail compose view controller.
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+}
+
+
 
 

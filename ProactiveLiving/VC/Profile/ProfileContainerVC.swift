@@ -404,6 +404,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         contObj.phoneNumber = self.friendDict!["result"]!["mobilePhone"] as! String
         contObj.firstName = self.friendDict!["result"]!["firstName"] as! String
         
+        chatMainVC.hidesBottomBarWhenPushed = false
         chatMainVC.contObj = contObj;
         chatMainVC.isFromClass = "";
         chatMainVC.isGroup = "0";

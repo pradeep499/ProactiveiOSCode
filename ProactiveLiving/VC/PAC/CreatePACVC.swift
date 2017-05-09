@@ -305,11 +305,13 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         self.tf_location.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
         
         
+        // added by me 8th May 2017
+
         gpaViewController = GooglePlacesAutocomplete(
-            apiKey: "AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0",
+            apiKey: "AIzaSyCEJ4PfgJMJv7Qv-7LJr2iKbHLJ-CotxSE",
             placeType: .Address
         )
-        
+ 
         IQKeyboardManager.sharedManager().enable=true
         IQKeyboardManager.sharedManager().enableAutoToolbar=true
     }

@@ -58,11 +58,18 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    //"AIzaSyCwX2QTq72LeMHwJ8ymH6TGGJP8iqMoFLU"
+
+  
+        
+        // Earlier AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0
+        
+      // added by me 8th May 2017
+        
         gpaViewController = GooglePlacesAutocomplete(
-            apiKey: "AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0",
+            apiKey:"AIzaSyCEJ4PfgJMJv7Qv-7LJr2iKbHLJ-CotxSE",
             placeType: .Address
         )
+ 
         txtFieldWhereSecond.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
         self.tokenField.tagPlaceholder = "Add here";
         self.tokenField.mode = TLTagsControlMode.Edit ;

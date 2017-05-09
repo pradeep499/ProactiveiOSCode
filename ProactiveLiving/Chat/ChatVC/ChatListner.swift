@@ -1349,7 +1349,7 @@ func connectToSocket() -> Void{
             timerConnectingStatus = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:  #selector(ChatListner.hideAlertConnectingToServer), userInfo: nil, repeats: true)
             
             
-          timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(9, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
+          timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(7, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
 
             
         }

@@ -2782,6 +2782,7 @@
 				D83413E62C834B87F6F2CEEC /* [CP] Copy Pods Resources */,
 				91AC7AD12FD9F97B2915882D /* 📦 Embed Pods Frameworks */,
 				B83AB9723D25ACB3DE30F750 /* 📦 Copy Pods Resources */,
+				CE8C90261EC0A6E90095DFBA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3085,6 +3086,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ProactiveLiving/Pods-ProactiveLiving-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CE8C90261EC0A6E90095DFBA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 6980976bb2301e19b62096ef7ef5c36cb41e64a6 7e9de93045eef53359ea7f03ebfd5db6141872b36e3d644cb07f92ddac43260b";
 		};
 		D83413E62C834B87F6F2CEEC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3592,6 +3606,7 @@
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5HKCR2945H;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -3627,6 +3642,7 @@
 				CODE_SIGN_ENTITLEMENTS = ProactiveLiving/ProactiveLiving.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bhupendra Singh Chauhan (ME8D8WXZ53)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5HKCR2945H;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;

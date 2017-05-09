@@ -14,6 +14,8 @@
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "ProactiveLiving-Swift.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
 {
@@ -80,6 +82,12 @@
 
     //Create socket connection
     //[[ChatListner getChatListnerObj] createConnection];
+    
+    
+    // Crashlytics
+    
+    [Fabric with:@[[Crashlytics class]]];
+    
     
     //launch application with notification
     
