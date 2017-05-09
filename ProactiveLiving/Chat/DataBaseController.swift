@@ -470,16 +470,9 @@ class DataBaseController : NSObject
             {
                // print("fetchrrsult=\(fetchResult)")
                 let anObject = myobject as! RecentChatList
-              //  print("fetchrrsult=\(anObject.notificationCount)")
-
-                if anObject.notificationCount == "0"
-                {
-                    // print("true");
-                }
-                else
-                {
+              print("fetchrrsult=\(anObject.notificationCount)")
+                if anObject.notificationCount != "0"{
                     unreadcount += Int(anObject.notificationCount!)!
-                    
                 }
             }
         }
@@ -802,7 +795,10 @@ class DataBaseController : NSObject
                 }else
                 {
                     let strCount: String = exist!.notificationCount!
-                    //print(strCount)
+                    print("strCount")
+                    print(exist!.friendName)
+
+                    print(strCount)
                     var count : Int = Int(strCount)!
                     //print(count)
                     count = count + 1
@@ -811,8 +807,14 @@ class DataBaseController : NSObject
                 }
             }else
             {
+                
                 let strCount: String = exist!.notificationCount!
-                //print(strCount)
+                
+                
+                print("strCount")
+                print(strCount)
+                print(exist!.friendName)
+
                 var count : Int = Int(strCount)!
                 //print(count)
                 count = count + 1
@@ -1659,7 +1661,8 @@ class DataBaseController : NSObject
             }else
             {
                 let strCount: String = exist!.notificationCount!
-                //print(strCount)
+                print("strCount")
+                print(strCount)
                 var count : Int = Int(strCount)!
                 //print(count)
                 count = count + 1

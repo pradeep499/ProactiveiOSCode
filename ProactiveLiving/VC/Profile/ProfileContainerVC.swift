@@ -55,8 +55,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     var popOverTableView:UITableView?
     var popover:DXPopover = DXPopover()
-    var popoverHeight:CGFloat = 235
-    var popOverCellData = [ "Add to Favorites",  "Unfriend", "Block access to my profile", "Block access to my cell number", "Report Member"]
+    var popoverHeight:CGFloat = 145
+    var popOverCellData = ["Unfriend", "Block access to my profile","Report Member"]
 
 
     override func viewDidLoad() {
@@ -189,7 +189,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             self.btnProfileImg.hidden = true
             self.btnSendRequest.hidden = true
             self.btnChat.hidden = true
-            self.btnCall.hidden = true
+           // self.btnCall.hidden = true
             
         }else{
             //Friend
@@ -197,7 +197,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             self.btnEditOrMore.setImage(UIImage(named: "pf_more"), forState: .Normal)
             self.btnSendRequest.hidden = false
             self.btnChat.hidden = false
-            self.btnCall.hidden = false
+            //self.btnCall.hidden = false
             self.btnBgImg.hidden = true
             self.btnProfileImg.hidden = true
             
@@ -701,9 +701,9 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         if blockContactStatus == 0{
             //unblock
-            self.btnCall.hidden = false
+           // self.btnCall.hidden = false
         }else if blockContactStatus == 1{
-            self.btnCall.hidden = true
+           // self.btnCall.hidden = true
         }
         
         
@@ -971,7 +971,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView:UITableView!, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat {
         
-        if indexPath.row == 1 {
+        if indexPath.row == 0 {
             
             let frStatus =  self.friendDict!["friendCheck"]!["friendshipStatus"]!  as! Int
             if frStatus == 0{
@@ -994,7 +994,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == popOverTableView{
-            return 5
+            return 3
         }
         return 0
     }
@@ -1005,7 +1005,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
             let cell = UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
             
             cell.textLabel?.text = popOverCellData[indexPath.row]
-            if indexPath.row == 1 {
+            if indexPath.row == 0{
                 
                 let frStatus =  self.friendDict!["friendCheck"]!["friendshipStatus"]!  as! Int
                 
@@ -1023,7 +1023,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 
                 
                 
-            }else if indexPath.row == 2  {
+            }else if indexPath.row == 1  {
                 let ownerBlockProfileStatus = self.friendDict!["friendCheck"]!["ownerBlockProfileStatus"]! as! Int
                 
                 if ownerBlockProfileStatus == 1{
@@ -1032,16 +1032,16 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 }else{
                     cell.textLabel?.text = "Block access to my profile"
                 }
-            }else if indexPath.row == 3  {
-                  let ownerBlockContactStatus = self.friendDict!["friendCheck"]!["ownerBlockContactStatus"]! as! Int
-                
-                if ownerBlockContactStatus == 1{
-                    
-                    cell.textLabel?.text = "Unblock access to my cell number"
-                }else{
-                    cell.textLabel?.text = "Block access to my cell number"
-                }
-            }
+            }/* else if indexPath.row == 3  {
+             let ownerBlockContactStatus = self.friendDict!["friendCheck"]!["ownerBlockContactStatus"]! as! Int
+             
+             if ownerBlockContactStatus == 1{
+             
+             cell.textLabel?.text = "Unblock access to my cell number"
+             }else{
+             cell.textLabel?.text = "Block access to my cell number"
+             }
+             }*/
             
             cell.textLabel?.textAlignment = .Left
             cell.selectionStyle = .None
@@ -1051,18 +1051,15 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
         return UITableViewCell.init(style: .Default, reuseIdentifier: "cell")
     }
     
+    //  [ "Unfriend", "Block access to my cell number", "Report Member"]
+
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         if tableView == popOverTableView{
             NSLog("\(popOverCellData[indexPath.row]) selected")
             self.popover.dismiss()
             
-            if indexPath.row == 0{
-                
-            
-                
-                
-                
-            }else if indexPath.row == 1{
+           if indexPath.row == 0{
                 
                 let frStatus =  self.friendDict!["friendCheck"]!["friendshipStatus"]!  as! Int
                 
@@ -1097,7 +1094,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 
                 
                 
-            }else if indexPath.row == 2 {
+            }else if indexPath.row == 1 {
                 //block  profile
                 
                 var msg = ""
@@ -1119,26 +1116,26 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 
                 
                 
-            }else if indexPath.row == 3{
-                
-                //block ceel number
-                
-                var msg = ""
-                let ownerBlockContactStatus = self.friendDict!["friendCheck"]!["ownerBlockContactStatus"]! as! Int
-                
-                if ownerBlockContactStatus == 1{
-                    msg = "unblock"
-                }else{
-                    msg = "block"
-                }
-                
-                HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to " + msg + " cell number ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
-                    
-                    if str == "Yes"{
-                        self.blockFriendAPI(0)
-                    }
-                }
-            }else{
+           }/* else if indexPath.row == 3{
+             
+             //block ceel number
+             
+             var msg = ""
+             let ownerBlockContactStatus = self.friendDict!["friendCheck"]!["ownerBlockContactStatus"]! as! Int
+             
+             if ownerBlockContactStatus == 1{
+             msg = "unblock"
+             }else{
+             msg = "block"
+             }
+             
+             HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to " + msg + " cell number ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
+             
+             if str == "Yes"{
+             self.blockFriendAPI(0)
+             }
+             }
+            }*/ else{
                 //report mem
                 self.sendMail()
             }

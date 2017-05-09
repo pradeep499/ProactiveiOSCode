@@ -36,7 +36,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
         imgProfile.layer.borderColor = UIColor.lightGrayColor().CGColor
         imgProfile.layer.cornerRadius = 5
         imgProfile.clipsToBounds = true
-
+    
         tableViewOutlet.delegate = self
         
         print("DATA DICT\(dataDict)")

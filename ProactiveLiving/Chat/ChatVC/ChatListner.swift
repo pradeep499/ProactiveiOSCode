@@ -681,6 +681,7 @@ func connectToSocket() -> Void{
         }
         self.showForgroundChatNotification(pushDict)
     }
+
     
     func addOffLineReceiveMsgHandlers() {
         
@@ -695,7 +696,25 @@ func connectToSocket() -> Void{
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
             
             let arr = receiveMsgDict["result"] as! NSArray
+          print_debug("addOffLineReceiveMsgHandlers")
+             print_debug(arr.count)
+             print_debug(arr)
+
             var playSoundLocalBool = false
+        
+        
+        let arrGroupData = NSMutableArray()
+        let arrOneToOneData = NSMutableArray()
+
+        
+        for reieciveMsg in arr{
+            if reieciveMsg["chatType"] as! String == "group" {
+              arrGroupData.addObject(reieciveMsg)
+            }else{
+                arrOneToOneData.addObject(reieciveMsg)
+            }
+        }
+        
             for receiveMsgDic in arr {
                 var tempDateStr : String
                 var tempDate : NSDate!
@@ -874,8 +893,7 @@ func connectToSocket() -> Void{
                     
                   //  dict["user_firstName"] = receiveMsgDic["user_firstName"] as String
                   //  dict["profile_image"] = receiveMsgDic["profile_image"] as String
-                    
-                 // print("receiveMsgDic in one to one 2 chat string recieveMessage")
+                  // print("receiveMsgDic in one to one 2 chat string recieveMessage")
                     
                     let status =  receiveMsgDic["status"] as! Int
                     dict["status"] = "\(status)"
@@ -993,6 +1011,7 @@ func connectToSocket() -> Void{
             let instance = DataBaseController.sharedInstance
             var receiveMsgDic = Dictionary<String,AnyObject>()
             receiveMsgDic = data[0] as! Dictionary
+            print_debug("messageStatus") 
             print(receiveMsgDic);
             let lastHitDate = receiveMsgDic["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
@@ -1282,8 +1301,21 @@ func connectToSocket() -> Void{
             pushNotificationView.removeFromSuperview()
         }
         
-        pushNotificationView=UIView(frame: CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70))
-        pushNotificationView.backgroundColor=UIColor(red: 255.0/255.0, green: 93.0/255.0, blue: 93.0/255.0, alpha: 1.0)
+        print_debug("rrot view controller")
+
+        print_debug(AppDelegate.getAppDelegate().window.rootViewController)
+        
+        if let vc = AppDelegate.getAppDelegate().window.rootViewController as? UINavigationController{
+            print_debug(vc.topViewController.debugDescription)
+        }
+        if alertType == "notification" {
+            pushNotificationView=UIView(frame: CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70))
+            pushNotificationView.backgroundColor = UIColor(red: 255.0/255.0, green: 93.0/255.0, blue: 93.0/255.0, alpha: 1.0)
+
+        }else{
+            pushNotificationView=UIView(frame:CGRectMake((UIScreen.mainScreen().bounds.size.width-100)/2, -70, 100, 70))
+            pushNotificationView.backgroundColor = UIColor.clearColor()
+        }
         
         pushNotificationView.userInteractionEnabled = true
         let tapGestureOnView = UITapGestureRecognizer(target:self, action:#selector(ChatListner.performActionForNotification))
@@ -1305,7 +1337,15 @@ func connectToSocket() -> Void{
         attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         label.attributedText = attrString
         
-        pushNotificationView.addSubview(label)
+        if alertType == "notification" {
+            pushNotificationView.addSubview(label)
+        }else{
+            let activity = UIActivityIndicatorView(frame: CGRectMake(30, 20, 40,40))
+            activity.activityIndicatorViewStyle = .Gray
+            activity.startAnimating()
+            pushNotificationView.addSubview(activity)
+        }
+
         
         
        
@@ -1332,16 +1372,20 @@ func connectToSocket() -> Void{
             // Connectiong to Socket IO
             
             //Add a View On Screen to disable user Interaction
-            if (userInteractionDisableView != nil) {
-                userInteractionDisableView.removeFromSuperview()
-            }
+           // if (pushNotificationView != nil) {
+               // userInteractionDisableView.removeFromSuperview()
+               // pushNotificationView.removeFromSuperview()
+
+            //}
             
             userInteractionDisableView = UIView(frame: CGRectMake(0,0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
             
-            userInteractionDisableView.addSubview(pushNotificationView)
+            //userInteractionDisableView.addSubview(pushNotificationView)
             
-            AppDelegate.getAppDelegate().window?.addSubview(userInteractionDisableView)
-            AppDelegate.getAppDelegate().window?.bringSubviewToFront(userInteractionDisableView)
+           //AppDelegate.getAppDelegate().window?.addSubview(userInteractionDisableView)
+       /// AppDelegate.getAppDelegate().window?.bringSubviewToFront(userInteractionDisableView)
+            AppDelegate.getAppDelegate().window?.addSubview(pushNotificationView)
+            AppDelegate.getAppDelegate().window?.bringSubviewToFront(pushNotificationView)
             
             
             userInteractionDisableView.backgroundColor = UIColor.clearColor()
@@ -1349,14 +1393,18 @@ func connectToSocket() -> Void{
             timerConnectingStatus = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:  #selector(ChatListner.hideAlertConnectingToServer), userInfo: nil, repeats: true)
             
             
-          timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(9, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
+         // timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(9, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
 
             
         }
         
         UIView.animateWithDuration(0.5, animations:
             {
-                self.pushNotificationView.frame=CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
+                if  alertType == "notification" {
+                    self.pushNotificationView.frame=CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 70)
+                }else{
+                    self.pushNotificationView.frame=CGRectMake((UIScreen.mainScreen().bounds.size.width-100)/2, 0, 100, 70)
+                }
         })
        
  
@@ -1705,7 +1753,7 @@ func connectToSocket() -> Void{
                 UIView.animateWithDuration(0.5, animations:
                     {
                         self.pushNotificationView.frame = CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70)
-                        self.userInteractionDisableView.frame = CGRectMake(0, -UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+                       // self.userInteractionDisableView.frame = CGRectMake(0, -UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
                 })
                 
                 

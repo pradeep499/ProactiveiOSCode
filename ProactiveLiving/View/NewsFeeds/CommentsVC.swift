@@ -186,13 +186,21 @@ class CommentsVC: UIViewController, UITextViewDelegate {
 
         }
 
-        if let logoUrlStr = (self.selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
-            
+        //shared by profile image
+        if let logoUrlStr = (selectedCommentDict as NSDictionary).valueForKeyPath("sharedBy.imgUrl") as? String    {
             let image_url = NSURL(string: logoUrlStr )
             if (image_url != nil) {
-                
                 let placeholder = UIImage(named: "ic_booking_profilepic")
                 iv_CommentsProfile.sd_setImageWithURL((URL: image_url!), placeholderImage: placeholder)
+            }
+        }else{
+            //Posted by profile image
+            if let logoUrlStr = (selectedCommentDict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
+                let image_url = NSURL(string: logoUrlStr )
+                if (image_url != nil) {
+                    let placeholder = UIImage(named: "ic_booking_profilepic")
+                    iv_CommentsProfile.sd_setImageWithURL((URL: image_url!), placeholderImage: placeholder)
+                }
             }
             
         }

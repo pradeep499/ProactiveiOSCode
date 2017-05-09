@@ -1615,44 +1615,22 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         //shared by profile image
-        iv_profile.image = UIImage(named: "ic_booking_profilepic")
         if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("sharedBy.imgUrl") as? String    {
-            
             let image_url = NSURL(string: logoUrlStr )
             if (image_url != nil) {
-                
                 let placeholder = UIImage(named: "ic_booking_profilepic")
                 iv_profile.sd_setImageWithURL((URL: image_url!), placeholderImage: placeholder)
             }
-            
         }else{
              //Posted by profile image
-            let placeholder = UIImage(named: "ic_booking_profilepic")
-
             if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
-                
-                let ulrRequet = NSURLRequest(URL: NSURL(string: logoUrlStr)!)
-            iv_profile.setImageWithURLRequest(ulrRequet, placeholderImage: placeholder, success: { [weak cell] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
-                
-                
-                }, failure: { [weak cell]
-                    (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
-                    
-                    
-                })
-             }
-        
-            
-            if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("createdBy.imgUrl") as? String    {
-                
                 let image_url = NSURL(string: logoUrlStr )
                 if (image_url != nil) {
-                    
                     let placeholder = UIImage(named: "ic_booking_profilepic")
                     iv_profile.sd_setImageWithURL((URL: image_url!), placeholderImage: placeholder)
                 }
-                
-            }
+                }
+        
         }
         
         if let createdDate = dict["createdDate"] as? String {

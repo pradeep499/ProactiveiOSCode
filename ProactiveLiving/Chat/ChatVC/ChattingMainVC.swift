@@ -4785,7 +4785,13 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 
                 let alertController = UIAlertController(title:APP_NAME, message:"You have not provided permission to use microphone. Please go to settings and allow.", preferredStyle: UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
+                
+                dispatch_async(dispatch_get_main_queue(), { 
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                })
+                
+                
+
                 
             }
         })
