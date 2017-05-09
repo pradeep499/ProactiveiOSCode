@@ -15,16 +15,15 @@ enum PacGenericType{
 class GenericPacTableVC: UIViewController {
     
 
-// MARK :- Outlets
+// MARK:- Outlets
     @IBOutlet weak var tv_generic: UITableView!
     
-// MARK :- Properties
+// MARK:- Properties
     var pacDetailArr = [AnyObject]()
     var genericType:PacGenericType!
     var isForMemberProfile = false
     var isFriend = false
     var isviewForID = ""
-
     var strId = ""
     var spinner = UIActivityIndicatorView()
     var fromIndex = 0
@@ -34,7 +33,7 @@ class GenericPacTableVC: UIViewController {
     var filterDic : [NSObject : AnyObject]?
     
     
-// MARK :- view life cycle
+// MARK:- view life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPACsDataFromServer(["data":"empty"], searchStr: "",index:0)  // service call
@@ -47,11 +46,10 @@ class GenericPacTableVC: UIViewController {
         spinner.frame = CGRectMake(0, 0, 320, 44)
         self.tv_generic.tableFooterView = spinner
         
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,23 +101,23 @@ class GenericPacTableVC: UIViewController {
                 serviceURL = ServiceGetMyPAC
 
                 if(searchStr.characters.count > 0 && !(searchStr == "cancel")) { // For main search
+
                     parameters["search"] = searchStr
-                  //  parameters["index"] = 0
-                    
 
                 }
                 else if(filterDict["data"] as! String != "empty") { // For main filter
-                     parameters["filter"] = filterDict
-                    // parameters["index"] = 0
-                    
+               
+                    parameters["filter"] = filterDict
+                   
                 }
                 else if (searchStr == "cancel") {
+                    
                      pacDetailArr.removeAll()
-                    parameters["categoryId"] = strId
-                   // parameters["index"] = 0
+                     parameters["categoryId"] = strId
+                  
                     }
                 else if (self.isSerrching == true) {
-                   // parameters["index"] = 0
+                   
                     parameters["search"] = searchStr
                     
                 }
@@ -170,7 +168,7 @@ class GenericPacTableVC: UIViewController {
                           //  self.pacDetailArr = resultArr as [AnyObject]
                           //  self.tv_generic.reloadData()
                             
-}
+                       }
                     } else {
                         
                         AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
@@ -194,7 +192,7 @@ class GenericPacTableVC: UIViewController {
 }
 
 
-// MARK :- tableView UITableViewDataSource
+// MARK :- TableView UITableViewDataSource
 
 extension GenericPacTableVC: UITableViewDataSource{
     
@@ -218,9 +216,7 @@ extension GenericPacTableVC: UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        if self.genericType == .Find {
-//            self.setUpFindCell(tableView, indexPath: indexPath)
-//        }
+
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FindCell", forIndexPath: indexPath)
         
@@ -285,43 +281,10 @@ extension GenericPacTableVC: UITableViewDataSource{
         return cell
     }
     
-   
-    
-    
-    
-    
-//    func setUpFindCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
-//        
-//        let cell =  tv.dequeueReusableCellWithIdentifier("FindCell", forIndexPath: indexPath)
-//        
-//        
-//        
-//        let iv_item = cell.viewWithTag(1) as! UIImageView
-//        let iv_itemDec = cell.viewWithTag(2) as! UIImageView
-//        let lbl_title = cell.viewWithTag(3) as! UILabel
-//        let lbl_by = cell.viewWithTag(4) as! UILabel
-//        let lbl_members = cell.viewWithTag(5) as! UILabel
-//        let lbl_activateTime = cell.viewWithTag(6) as! UILabel
-//        let lbl_privacy = cell.viewWithTag(7) as! UILabel
-//        let lbl_desc = cell.viewWithTag(8) as! UILabel
-//        let lbl_createdAt = cell.viewWithTag(9) as! UILabel
-//        let lbl_distance = cell.viewWithTag(10) as! UILabel
-//        
-//        
-//        
-//        iv_item.sd_setImageWithURL(NSURL.init(string: (self.pacDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: ""))
-//        
-//        lbl_title.text = self.pacDetailArr[indexPath.row]["name"] as? String
-//        lbl_desc.text = self.pacDetailArr[indexPath.row]["description"] as? String
-//        lbl_createdAt.text = self.pacDetailArr[indexPath.row]["createdDate"] as? String
-//        
-//        
-//        return cell
-//    }
-    
     
 }
 
+//MARK:- UITableViewDelegate
 extension GenericPacTableVC:  UITableViewDelegate{
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -335,6 +298,7 @@ extension GenericPacTableVC:  UITableViewDelegate{
     }
     
     
+    //MARK:- "ScrollView Did End Dragging" For Pagination
     
     func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
@@ -350,6 +314,9 @@ extension GenericPacTableVC:  UITableViewDelegate{
             print_debug("load more data")
             tv_generic.tableFooterView!.hidden = false
            // fetchMyPACDataFromServer(self.createJoinStatus)
+            
+            // Pagination logic
+            
             if isSerrching{
                 fetchPACsDataFromServer(["data":"empty"], searchStr:self.searchText,index:pacDetailArr.count)
  
@@ -376,8 +343,6 @@ extension GenericPacTableVC:  UITableViewDelegate{
         
         return v
     }
-    
-    
-    
+
     
 }

@@ -11,19 +11,29 @@ import UIKit
 class PACFilterContainer: UIViewController ,YSLContainerViewControllerDelegate,UISearchBarDelegate {
     
     
+    
+    
+    //MARK:- Outlets
+    
     @IBOutlet weak var btnDone: UIButton!
+    
+    //MARK:- Variables
     
     var firstVC:FilterVC5!
     var secondVC:FilterVC6!
     var thirdVC:FilterVC3!
-
     var arrViewControllers = [AnyObject]()
+    
+    
+    //MARK:- View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUpViewControllers()
         
     }
+    
+    //MARK:-  setUpViewControllers method
     
     func setUpViewControllers() {
         
@@ -51,20 +61,17 @@ class PACFilterContainer: UIViewController ,YSLContainerViewControllerDelegate,U
         containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
         containerVC.menuItemTitleColor = UIColor.whiteColor()
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
-        //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
-        
         containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
         
         self.view.addSubview(containerVC.view)
     }
     
-    // MARK: -- YSLContainerViewControllerDelegate
+    // MARK:- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
-        //   self.view.endEditing(true)
+      
         print_debug("current Index : \(Int(index))")
         print_debug("current controller : \(controller)")
         currentIndex = index
-      //  controller.viewWillAppear(true)
         
     }
 
@@ -73,7 +80,7 @@ class PACFilterContainer: UIViewController ,YSLContainerViewControllerDelegate,U
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK:- Actions
+    //MARK:- Button Actions
     
     @IBAction func onClickBackBtn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)

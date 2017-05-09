@@ -11,14 +11,17 @@ import UIKit
 class PACContainerViewController: UIViewController, YSLContainerViewControllerDelegate {
  
     
-    
-    // MARK :-  Properties
+    //MARK:-  Properties
     var firstVC:ActivitiesVC!
     var secondVC:MyPACVC!
     var arrViewControllers = [AnyObject]()
-   // var dataDict = [String:AnyObject]()
+// var dataDict = [String:AnyObject]()
     var menuArr = [AnyObject]()
     var strActivityName = ""
+    
+    
+    
+    // MARK:- Outlets
     @IBOutlet weak var lblTitle: UILabel!
     
     
@@ -55,7 +58,7 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
         print_debug("rightButtonAction PACContainerViewController")
     }
     
-    // Set up the Child View Controller
+    // MARK:- Set up the Child View Controller
     
     func setUpViewControllers() {
         
@@ -65,32 +68,10 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
         let mainStoryboard = AppHelper.getStoryBoard()
         
         
-        
         firstVC = mainStoryboard.instantiateViewControllerWithIdentifier("ActivitiesVC") as! ActivitiesVC
         firstVC.title = "FIND"
-        
-        
-                     firstVC.menuTitle=""
-                     firstVC.arrMenueImages = menuArr
-        
-        
-//                     firstVC.arrMenueImages=[
-//                     "ic_activities_badminton",
-//                     "ic_activities_baseball",
-//                     "ic_activities_basketball",
-//                     "ic_activities_flagfootball",
-//                     "ic_activities_football",
-//                     "ic_activities_golf",
-//                     "ic_activities_hockey",
-//                     "ic_activities_kickball",
-//                     "ic_activities_softball",
-//                     "ic_activities_soccer",
-//                     "ic_activities_skiing",
-//                     "ic_activities_swimming",
-//                     "ic_activities_tennis",
-//                     "ic_activities_volleyball",
-//                     "ic_activities_more"]
-        
+        firstVC.menuTitle=""
+        firstVC.arrMenueImages = menuArr
         
        // let nav = UINavigationController.init(rootViewController: firstVC)
         
@@ -100,14 +81,13 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
         arrViewControllers = [firstVC,secondVC]
         
         let containerVC = YSLContainerViewController.init(controllers: arrViewControllers, topBarHeight: 0, parentViewController: self)
-        
-        
         containerVC.delegate = self
         containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
         containerVC.menuItemSelectedFont = UIFont(name: "Roboto-Bold", size: 11.5)
         containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
         containerVC.menuItemTitleColor = UIColor.whiteColor()
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
+      
         //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
         
         containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
@@ -116,17 +96,13 @@ class PACContainerViewController: UIViewController, YSLContainerViewControllerDe
     }
     
     
-    // MARK: -- YSLContainerViewControllerDelegate
+    // MARK:- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
         //   self.view.endEditing(true)
         print_debug("current Index : \(Int(index))")
         print_debug("current controller : \(controller)")
-        //currentIndex = index
         //   controller.viewWillAppear(true)
         
     }
-
-    
-    
    
 }

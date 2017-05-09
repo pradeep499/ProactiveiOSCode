@@ -13,13 +13,20 @@ import AVKit
 
 class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDataSource, UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,  UIActionSheetDelegate, DKImagePickerControllerDelegate , HPGrowingTextViewDelegate {
     
+    
+    //MARK:- Outlets
+    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var view_share: UIView!
     @IBOutlet weak var attachmentViewS: UIView!
     @IBOutlet weak var postContainerView: UIView!
     @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var btnPost: UIButton!
+    @IBOutlet weak var layoutConstHeightShareView: NSLayoutConstraint!
     
+    
+    //MARK:- Properties
+
     //  var dataArr = [AnyObject]()
     var profileArr = [String]()
     var urlArr = [String]()
@@ -35,36 +42,31 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerViewController()
     var globalAssets: [DKAsset]?
-    
     var imgaeProfile  = UIImage(named: "ic_booking_profilepic")
+    //var isFromGallery:Bool!
+    var isBackFromChildVC:Bool!
+    var indexForCommentcount = -1  // 25 April
+    var newsFeedID = ""
+    var dictValuePacRole = [String:AnyObject]()
+    //var isFromCommentVC = false   // used for service hit on the basic of bool value. true if comments has some value
     
- //   var isFromGallery:Bool!
-    
-      var isBackFromChildVC:Bool!
-      var indexForCommentcount = -1  // 25 April
-      var newsFeedID = ""
-      var dictValuePacRole = [String:AnyObject]()
-    //  var isFromCommentVC = false   // used for service hit on the basic of bool value. true if comments has some value
-    
-
-    
-    
-    @IBOutlet weak var layoutConstHeightShareView: NSLayoutConstraint!
-    
+  //MARK:- View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     //   isFromGallery = false
+        // isFromGallery = false
         isBackFromChildVC = false
         viewWillAppaerCount = 0
+        
         //layOutConstrain_view_Post_bottom.constant = 320
         //layoutConstraint_collectionview_bottom.constant = 350
+        
         var viewFrame = self.view.bounds
         viewFrame.size.height = screenHeight-200
+        
         //self.view.frame = viewFrame
         //IQKeyboardManager.sharedManager().enableAutoToolbar = false
-
         //tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewsFeedsAllVC.hideSocialSharingView))
      
         
@@ -105,6 +107,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 
     }
     
+    
+    override func viewWillLayoutSubviews() {
+        
+        super.viewWillLayoutSubviews()
+        self.setupGrowingTextView()
+        
+    }
+    
+
     //MARK:- CommentsVCDelegate
 //    
 //    
@@ -129,7 +140,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         textView.minNumberOfLines = 1
         textView.maxNumberOfLines = 4
         // you can also set the maximum height in points with maxHeight
-        // textView.maxHeight = 200.0f;
+        // textView.maxHeight = 200.0f
         //textView.returnKeyType = .Go
         textView.font = UIFont(name: "Roboto-Light", size: 16)
         textView.delegate = self
@@ -146,9 +157,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //textView.animateHeightChange = NO; //turns off animation
         
     }
+    
+   //MARK:- Growing Text View Methods
     func growingTextView(growingTextView: HPGrowingTextView!, didChangeHeight height: Float) {
         
     }
+    
+    
     func growingTextView(growingTextView: HPGrowingTextView!, willChangeHeight height: Float) {
         let diff: CGFloat = CGFloat(growingTextView.frame.size.height - CGFloat(height))
         var r: CGRect = self.postContainerView.frame
@@ -158,6 +173,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         print_debug(r)
         self.postContainerView.frame = r
     }
+    
     override func viewWillAppear(animated: Bool) {
         
         //createConnection 
@@ -178,12 +194,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         print_debug("hellooo")
         print_debug(dictValuePacRole)
         
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        self.setupGrowingTextView()
-
     }
 
 
@@ -222,9 +232,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             if intValue == 0{   // ALL
                 
-               
                 self.fetchPostDataFromServer()
                 self.fetchExploreDataFromServer()
+                
             }
             else if intValue == 1{   // Explore
                 // Explore condition
@@ -259,12 +269,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 //        self.setColectionViewTags()
 //        self.fetchScreenData()
         
-        if self.indexForCommentcount >= 0 { //  if self.indexForCommentcount >= 0 && self.isFromCommentVC {
+        if self.indexForCommentcount >= 0 {
+            
             self.fetchCommentDataFromServer()
+            
         }
         else {
+            
             self.setColectionViewTags()
             self.fetchScreenData()
+       
         }
         
         print_debug(self.collectionView.tag)
@@ -278,11 +292,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         IQKeyboardManager.sharedManager().enable = true
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: self.view.window)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: self.view.window)
+    
     }
     
     func hideSocialSharingView() -> Void {
         self.view_share.hidden = true
     }
+    
+    
     //MARK:- ActionSheet Delegate
     
     func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int)
@@ -308,27 +325,28 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
         }
         
-        
     }
     
-    //MARK:- onClickBtn
+    //MARK:- Button Actions 
+    
+    
+    //"onClickLikeBtn, onClickComments , onClickShareBtn , onClickPlayVideoBtn , onClickFBBtn , onClickTwiterBtn , onClickSnapChatBtn ,onClickPhotoBtn , onClickPlusBtn , onClickPostBtn
+    
     @IBAction func onClickLikeBtn(sender: AnyObject) {
         
         //   let cell: UITableViewCell = sender.superview!!.superview as! UITableViewCell
         //   let index : NSIndexPath = self.tableView.indexPathForCell(cell)!
+        
         let button: UIButton = sender as! UIButton
         button.selected = !sender.selected
         
         button.setImage(UIImage(named: "like_filled"), forState: .Normal)
         button.setImage(UIImage(named: "like_nav_color"), forState: .Selected)
         
-        
-        
+       
         var dict = Dictionary<String,AnyObject>()
         
         dict["type"]="post"
-         
-        
         dict["likeStatus"] = sender.selected
         dict["userId"] = ChatHelper.userDefaultForKey("userId")
         
@@ -530,7 +548,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             })
             
             
-            
         }
      
         
@@ -577,7 +594,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
-    
     
     
     @IBAction func onClickSnapChatBtn(sender: AnyObject) {
@@ -647,15 +663,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             return
         }
         
-        
-
         self.sendPostToServer("text", isShared: false, createdDict: nil, imgOrVideoUlr: nil, captionText: nil, thumNailName:nil)
-      
-        
         self.textView.text = ""
         self.textView.resignFirstResponder()
         
     }
+    
+    
+    //MARK:- On click methods
     
     func onClickProfileImage(recognizer: UITapGestureRecognizer) {
         
@@ -683,6 +698,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.navigationController?.pushViewController(WebVC, animated: true)
         }
     }
+    
     func onClickOptions(sender : AnyObject) {
         
         var resultData = [String:AnyObject]()
@@ -736,7 +752,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
     }
     
-    //MARK :- Delete post service call
+    // MARK:- Delete post service call
+    
     func deletePostWithData(dataDict : [String : AnyObject]) {
         
         if AppDelegate.checkInternetConnection() {
@@ -865,9 +882,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //fullImageVC.hidesBottomBarWhenPushed = true
         fullImageVC.parentNewsFeed = self
         
-        
-        
-        
+     
         //check the thumbNail name is exist ? or generate from video url and save to db
         HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
             
@@ -881,9 +896,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             self.navigationController?.pushViewController(fullImageVC, animated: true)
             
             })
-        
-       
-        
         
     }
 
@@ -974,7 +986,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 //    
     
     
-    //MARK: - Socket
+
     
     //mark- post type - text/image/video 
     //isShared - if text then y or n else n
@@ -982,10 +994,13 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     //imgOrVideoUlr - if img or video not for text
     //text - if posttype img or video
     
+    
+    
+    //MARK: - Socket
+    
     func sendPostToServer(postType:String, isShared:Bool,  createdDict:NSDictionary?, imgOrVideoUlr:String?, captionText:String?, thumNailName:String?) {
         
-        
-        
+       
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
             
@@ -1082,13 +1097,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }*/
             
              dict["postType"] = postType
-            
-            
-            
-            print_debug( dict)
-            
-           
-            ChatListner .getChatListnerObj().socket.emit("createPost", dict)
+             print_debug( dict)
+             ChatListner .getChatListnerObj().socket.emit("createPost", dict)
             
             
         }else
@@ -1281,7 +1291,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
     }
     
-    //MARK: - Collection Header Footer delegates
+    //MARK:- Collection Header Footer delegates
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
         switch kind {
@@ -1385,15 +1395,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         return CGSize(width: w, height: height)
-        
-        
     
     }
 
-
-
-    
-    
+   
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         
         return 1
@@ -1680,10 +1685,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
         lbl_details.text =  dict["text"] as? String
-        
-        
-
-        
         btn_like.selected = false
         
         // if user id is available in likes arr set btn selected
@@ -1749,9 +1750,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                             indicator.stopAnimating()
                             
                         }
-                        
-                        
-                        
+                      
                     }
                     
                     
@@ -1800,8 +1799,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         
         // Pagination
-        
-      
+  
         if self.collectionView.tag ==  1111 {
             // Pagination
             
@@ -1871,13 +1869,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 
         }
         
-        
-        
         return cell
     }
-    
-    
-    
     
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -1890,8 +1883,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         return 0
     }
     
-    
-
     
 
     
@@ -1931,6 +1922,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         return dateStr
         
     }
+    
     /*
     func generateThumnail(sourceURL sourceURL:NSURL) -> UIImage {
         let asset = AVAsset(URL: sourceURL)
@@ -1949,6 +1941,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 
     
     //MARK:- Collection Delegate
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print_debug("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
         //   self.handleSingleTapAtIndex(indexPath)
@@ -1960,8 +1953,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         // Dispose of any resources that can be recreated.
     }
     
-    
-   
     
     //MARK:- Service Call
     
@@ -2008,6 +1999,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
     }
+    
     //MARK:- Service for comments count 
     
     func fetchCommentDataFromServer() {
@@ -2042,8 +2034,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 parameters["newsfeedId"] = self.newsFeedID
                
             }
-            
-            
+           
             print_debug("Dict = \(parameters)")
             //call global web service class latest
             Services.postRequest(ServiceCommentsData, parameters: parameters, completionHandler:{
@@ -2124,10 +2115,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
     }
     
-    
-    
-    
-    
+    //MARK:- Service Hit "fetchPostDataFromServer"
     
     func fetchPostDataFromServer() {
         
@@ -2178,6 +2166,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             
             print_debug("Dict = \(parameters)")
+            
             //call global web service class latest
             Services.postRequest(ServiceGetNewsFeed, parameters: parameters, completionHandler:{
                 (status,responseDict) in
@@ -2532,7 +2521,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         
     }*/
-    //MARK:- 
+    //MARK:- uniqueName String check
     func uniqueName(fileName: String) -> String {
         
         let uniqueImageName = NSString(format: "%@%f", fileName , NSDate().timeIntervalSince1970 * 1000)
@@ -2763,7 +2752,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }
         */
           self.dismissViewControllerAnimated(true, completion: nil)
-    
         
     }
     
@@ -2955,22 +2943,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
             })
             
-            
-
-                    
-                    
-                    //------------------------
-        
        
        /*
-        
-        
-        
-        
         let videoData =  NSData(contentsOfURL: NSURL.fileURLWithPath(videoUrl.path!))
         */
        
-
 
         }
     
@@ -3078,6 +3055,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 
 }
 
+//MARK:- Extension UITextViewDelegate
+
 extension NewsFeedsAllVC: UITextViewDelegate {
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
       
@@ -3090,9 +3069,9 @@ extension NewsFeedsAllVC: UITextViewDelegate {
     }
 }
 
-// MARK: - FooterAllReUsableView
+// MARK:- FooterAllReUsableView
+
 class FooterAllReUsableView: UICollectionReusableView{
-    
     
     var customView : CollectionHeaderCustomView? = nil
     override init(frame: CGRect) {
@@ -3113,7 +3092,7 @@ class FooterAllReUsableView: UICollectionReusableView{
     
 }
 
-
+//MARK:- CellNewsFeed
 
 class CellNewsFeed:UICollectionViewCell{
     

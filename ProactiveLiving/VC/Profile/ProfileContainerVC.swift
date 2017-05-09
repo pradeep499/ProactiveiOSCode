@@ -8,12 +8,10 @@
 
 import UIKit
 
-
-
- 
-
 class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, GenericProfileCollectionVCDelegate {
     
+   
+//MARK:- Properties
     var firstVC: ProfileVC!
     var secondVC: MyPAStodoVC!
     var thirdVC: NewsFeedsAllVC!
@@ -22,34 +20,10 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     //to check owner or friend not nill all time
     var viewerUserID:String!
+    
     var imgUploadType:String?
-    
-    
-    
-    @IBOutlet weak var iv_profileBg: UIImageView!
-    
-    @IBOutlet weak var iv_profile: UIImageView!
-    @IBOutlet weak var lbl_name: UILabel!
-    @IBOutlet weak var lbl_address: UILabel!
-    
-    @IBOutlet weak var btnEditOrMore: UIButton!
-    @IBOutlet weak var btnCall: UIButton!
-    
-    @IBOutlet weak var btnChat: UIButton!
-    
-    
-    @IBOutlet weak var btnSendRequest: UIButton!
-    
-    
-    
-    @IBOutlet weak var layOutConstrain_ivBg_height: NSLayoutConstraint!
-    
-    @IBOutlet weak var btnBgImg: UIButton!
-    @IBOutlet weak var btnProfileImg: UIButton!
- 
-    
     var arrViewControllers = [AnyObject]()
- 
+    
     var bottomTabBar : CustonTabBarController!
     var friendDict:[String:AnyObject]?
     
@@ -57,7 +31,24 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     var popover:DXPopover = DXPopover()
     var popoverHeight:CGFloat = 235
     var popOverCellData = [ "Add to Favorites",  "Unfriend", "Block access to my profile", "Block access to my cell number", "Report Member"]
+    
+//MARK:- Outlets
+    
+    @IBOutlet weak var iv_profileBg: UIImageView!
+    @IBOutlet weak var iv_profile: UIImageView!
+    @IBOutlet weak var lbl_name: UILabel!
+    @IBOutlet weak var lbl_address: UILabel!
+    @IBOutlet weak var btnEditOrMore: UIButton!
+    @IBOutlet weak var btnCall: UIButton!
+    @IBOutlet weak var btnChat: UIButton!
+    @IBOutlet weak var btnSendRequest: UIButton!
+    @IBOutlet weak var layOutConstrain_ivBg_height: NSLayoutConstraint!
+    @IBOutlet weak var btnBgImg: UIButton!
+    @IBOutlet weak var btnProfileImg: UIButton!
+ 
+    
 
+//MARK:- View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +96,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
 
     
+//MARK:- setUpViewControllers
     
     func setUpViewControllers() {
         
@@ -117,7 +109,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         firstVC.viewerUserID = viewerUserID
         firstVC.cvHeight = 230 // as profile y position is y = 230
          
-        let nav = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = storyboard.instantiateViewControllerWithIdentifier("MyPAStodoVC") as! MyPAStodoVC
         secondVC.title = "ACTIVITY"
@@ -144,31 +135,24 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
         containerVC.scrollMenuViewWidth = 0.0
         containerVC.menuBackGroudColor = UIColor.clearColor()
-        
         containerVC.delegate = self
         containerVC.menuItemFont = UIFont(name: "Roboto-Regular", size: 11)
         containerVC.menuItemSelectedFont = UIFont(name: "Roboto-Bold", size: 11.5)
         containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
-        
         containerVC.menuIndicatorColor = UIColor.clearColor()
-      
-        //containerVC.menuItemTitleColor = UIColor.clearColor() //UIColor.whiteColor()
-        //containerVC.menuItemSelectedTitleColor = UIColor.clearColor()  //UIColor.whiteColor()
-     //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
-        
         containerVC.view.frame = CGRectMake(0, 230, containerVC.view.frame.size.width,   screenHeight - 300 )
         
         self.view.addSubview(containerVC.view)
     }
+    
+ //MARK:- SetUp Profile Page
     
     func setUpProfilePage() -> Void {
         
         
         if String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID{
             //Owner
-            
-            
-            
+        
             let url = NSURL(string: HelpingClass.getUserDetails().imgUrl)
             let bgUrl = NSURL(string: HelpingClass.getUserDetails().imgCoverUrl)
             
@@ -224,6 +208,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         self.iv_profile.addGestureRecognizer(tapProfileGesture)
     }
     
+  //MARK:- Gesture Methods
     
     func bgIvTaped(gesture:UIGestureRecognizer) -> Void {
         
@@ -280,7 +265,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     
     
-    // MARK: -- YSLContainerViewControllerDelegate
+    // MARK:- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
      //   self.view.endEditing(true)
         print_debug("current Index : \(Int(index))")
@@ -291,7 +276,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     }
     
     
-    //MARK: Btn Click
+    //MARK: Button Actions
     @IBAction func onClickBackBtn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -312,9 +297,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                 self.btnEditOrMore.setTitle("Edit", forState: .Normal)
                 self.btnBgImg.hidden = true
                 self.btnProfileImg.hidden = true
-                
-                
-                
+           
             }
             
         }else{
@@ -335,8 +318,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         }
     }
 
-    
-    
     
     @IBAction func onClickSendRequestBtn(sender: AnyObject) {
         HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to send friend request ?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"]) { (str) in
@@ -369,7 +350,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     }
     
     
-    
     @IBAction func onClickCallBtn(sender: AnyObject) {
         let mobilePhone = self.friendDict!["result"]!["mobilePhone"] as! String
         if let phoneCallURL:NSURL = NSURL(string: "tel://\(mobilePhone)") {
@@ -382,7 +362,6 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     }
     
     @IBAction func onClickChatBtn(sender: AnyObject) {
-        
         
         let chatMainVC: ChattingMainVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("ChattingMainVC") as! ChattingMainVC
         //   chatMainObj.contObj = anObject
@@ -418,7 +397,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     }
     
     
-    //MARK:-
+    //MARK:- bgPictureTap method
     
     func bgPictureTap(sender: UITapGestureRecognizer? = nil) {
         self.openActionSheet()
@@ -515,6 +494,9 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             self.presentViewController(actionSheet, animated: true, completion: nil)
         }
     }
+    
+    //MARK:- gotTOPhotosPage
+    
     func gotTOPhotosPage() -> Void {
         
         let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("GenericProfileCollectionVC") as! GenericProfileCollectionVC
@@ -610,9 +592,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         }
     }
     
-    
-    
-    //MARK:- Image Picker Delegate
+
     
     
     //MARK:- Image Picker Delegates
@@ -705,18 +685,14 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         }else if blockContactStatus == 1{
             self.btnCall.hidden = true
         }
-        
-        
-        
-        
+       
     }
     
-    //MARK:- API
+    //MARK:- Image Upload
     
     func uploadImage(imgData:NSData, imgName: String) -> Void {
         
        
-        
         NSOperationQueue.mainQueue().addOperationWithBlock() { () in
             
             AppDelegate.showProgressHUDWithStatus("Please wait..")
@@ -752,11 +728,10 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
     }
     
-    
+    //MARK:- Send To Server API Hit
     func sendToServerAPI( imgUrl:String, thumNailName:String!) {
         
-        
-        
+       
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
             
@@ -774,9 +749,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                 dict["imgUrl"] = imgUrl
               //  dict["imgCoverUrl"] =  HelpingClass.getUserDetails().imgCoverUrl
             }
-            
-            
-            
+          
             //call global web service class latest
             Services.postRequest(ServiceUpdateUserProfile, parameters: dict, completionHandler:{
                 (status,responseDict) in
@@ -807,9 +780,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                             let url = NSURL(string:userObj.imgUrl)
                             self.iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
                             
-                          
                         }
-                        
                         
                         HelpingClass.saveUserDetails(userObj)
                         
@@ -833,24 +804,21 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         }
     }
     
-    
-    
-    
+//MARK:- Get Friend Profile Details API hit
     
     func getFriendProfileDetailsAPI(friendId:String) -> Void {
         
         if AppDelegate.checkInternetConnection() {
+            
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
+            
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
             parameters["friendId"] = friendId
             
-            
-            
-            
-            
+        
             //call global web service class latest
             Services.postRequest(ServiceGetUserProfile, parameters: parameters, completionHandler:{
                 (status,responseDict) in
@@ -916,10 +884,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         
     }
     
-    
-    
-    
-    
+//MARK:- Send Friend Request API hit
     func sendFriendRequestAPI() {
         
         if AppDelegate.checkInternetConnection() {
@@ -934,8 +899,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             Services.postRequest(ServiceSendFriendRequest, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
-                
-                
+            
                 AppDelegate.dismissProgressHUD()
                 
                 if (status == "Success") {
@@ -966,7 +930,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     }
     
 }
-
+//MARK:- Table View DataSource and Delegate
 extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView:UITableView!, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat {
@@ -1020,9 +984,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                     cell.textLabel?.text = "Send Rquest"
                 }
                 
-                
-                
-                
+          
             }else if indexPath.row == 2  {
                 let ownerBlockProfileStatus = self.friendDict!["friendCheck"]!["ownerBlockProfileStatus"]! as! Int
                 
@@ -1058,10 +1020,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
             
             if indexPath.row == 0{
                 
-            
-                
-                
-                
+              
             }else if indexPath.row == 1{
                 
                 let frStatus =  self.friendDict!["friendCheck"]!["friendshipStatus"]!  as! Int
@@ -1094,7 +1053,6 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                         }
                     }
                 }
-                
                 
                 
             }else if indexPath.row == 2 {
@@ -1147,7 +1105,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
     }
     
     
-   
+//MARK:- Un friend API Hit
     func unFriendAPI() {
     
   //  func unFriendAPI(blockType:Int) {
@@ -1203,7 +1161,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
         
     }
     
-    
+//MARK:- Block Friend API Hit
     func blockFriendAPI(blockType:Int) {
         // 0 - contact block  1-profile block
         
@@ -1239,15 +1197,11 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                 }
             }
             
-            
-            
-            //call global web service class latest
+        //call global web service class latest
             Services.postRequest(ServiceBlockUserAction, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
-                
-                
-                AppDelegate.dismissProgressHUD()
+             AppDelegate.dismissProgressHUD()
                 
                 if (status == "Success") {
                     
@@ -1304,7 +1258,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
         
     }
 }
-
+//MARK:- MFMailComposeViewControllerDelegate
 extension ProfileContainerVC:MFMailComposeViewControllerDelegate{
     
     

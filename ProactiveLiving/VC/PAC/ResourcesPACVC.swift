@@ -147,8 +147,6 @@ class ResourcesPACVC: UIViewController {
     @IBAction func  btnActionEdit(sender: AnyObject) {
         
         
-       // let button: UIButton = sender as! UIButton
-        
         let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableViewResource)
         
         let indexPath =  self.tableViewResource.indexPathForRowAtPoint(buttonPosition)
@@ -164,7 +162,7 @@ class ResourcesPACVC: UIViewController {
         let createEditResourcePACVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreateEditResourcePACVC") as! CreateEditResourcePACVC
         createEditResourcePACVC.pageTitle = "Edit Resource"
         createEditResourcePACVC.isEdit = true
-        createEditResourcePACVC.resourceDict = (resourceDetailArr[indexPath!.section] as? Dictionary<String, AnyObject>)! //resourceData as! Dictionary<String, String>   //resourceDetailArr[indexPath!.section] as! [AnyObject]
+        createEditResourcePACVC.resourceDict = (resourceDetailArr[indexPath!.section] as? Dictionary<String, AnyObject>)!
         self.navigationController?.pushViewController(createEditResourcePACVC, animated: true)
         
       
@@ -174,9 +172,7 @@ class ResourcesPACVC: UIViewController {
     
  
     //MARK:- Service Hit
-    
-    
-    
+ 
     func fetchDataForPACRole() {
         
         if AppDelegate.checkInternetConnection() {
@@ -272,17 +268,14 @@ class ResourcesPACVC: UIViewController {
                             
                             print_debug("TESTING Arr \(resultArr)")
                             
-                            
-                           // self.resourceDetailArr = resultArr as! [AnyObject]
-                            
-                          //  self.resourceDetailArr.removeAtIndex(self.indexToDelete)
-                            
-                         
-                            
-                        //    self.tableViewResource.reloadData()
+                        /*
+                               self.resourceDetailArr = resultArr as! [AnyObject]
+                               self.resourceDetailArr.removeAtIndex(self.indexToDelete)
+                               self.tableViewResource.reloadData()
+                        
+                        */
                             
                         self.fetchPostDataFromServer()
-                            
                             
                         }
                     } else {
@@ -314,11 +307,9 @@ class ResourcesPACVC: UIViewController {
             isPostServiceCalled = true
             
             //show indicator on screen
+    
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             var parameters = [String: AnyObject]()
-            
-            
-            
             parameters =   ["userId" : AppHelper.userDefaultsForKey(_ID),
                             "pacId" : (AppHelper.userDefaultsForKey("pacId") as? String)!]
             
@@ -377,6 +368,7 @@ class ResourcesPACVC: UIViewController {
 extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     
     // numberOfSectionsInTableView
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return resourceDetailArr.count
         
@@ -385,16 +377,11 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     
     
     // numberOfRowsInSection
+ 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         
         attachmentArr = (resourceDetailArr[section].valueForKey("attachments") as? NSArray)!
-      
-       // print("Section item lists:\((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!)")
-       // print("COUNT ROWS \((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)")
-        
-      //  print("-----returning rows-  - ", ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1))
-        
         return  ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)
         
         
@@ -482,7 +469,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
     }
     
-    // MARK:-    Method to set up cells for attachment
+    // MARK:-  Method to set up cells for attachment
     
     func setUpAttachmentCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -493,7 +480,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         }
         else {
         
-        
+        //***
         // we are modifying the index because we are taking "numberOfRowsInSection" on the basis of attachmentArr which is one less in total cell count
         var processedIndexPath = indexPath.row
         processedIndexPath = processedIndexPath-1
@@ -539,47 +526,47 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             print_debug("Image URL\((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!))")
             videoLinkImage.sd_setImageWithURL(NSURL.init(string: (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!), placeholderImage: UIImage.init(named: "ic_instruction_video"))
             
-            
-            // 8 th March
-            
-            if let imageUrlStr = self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String //datDict!["link"]
-            {
-                let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
-                let image_url = NSURL(string: (imageUrlStr.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet))! )
-                if (image_url != nil) {
-                    
-                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-                    dispatch_async(backgroundQueue, {
+                
+                // 8 th March
+                
+                if let imageUrlStr = self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String //datDict!["link"]
+                {
+                    let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
+                    let image_url = NSURL(string: (imageUrlStr.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet))! )
+                    if (image_url != nil) {
                         
-                        let grabTime = 0.5
-                        if let image = self.generateThumnail(image_url!, fromTime: Float64(grabTime))
-                        {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                //thumbVideo.setImage(image, forState: .Normal)
-                                videoLinkImage.image = self.addGradientOnImage(image)
-                            })
-                        }
-                        else
-                        {
-                            print_debug("No image")
-                        }
-                    })
-                    
+                        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+                        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+                        dispatch_async(backgroundQueue, {
+                            
+                            let grabTime = 0.5
+                            if let image = self.generateThumnail(image_url!, fromTime: Float64(grabTime))
+                            {
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    //thumbVideo.setImage(image, forState: .Normal)
+                                    videoLinkImage.image = self.addGradientOnImage(image)
+                                })
+                            }
+                            else
+                            {
+                                print_debug("No image")
+                            }
+                        })
+                        
+                    }
                 }
+                return cellVideo
+             
+             }
+             
             }
-            return cellVideo
-         
-         }
-         
-        }
-        
-        return UITableViewCell()
+            
+            return UITableViewCell()
     }
     
     
     
-    //MARK: - addGradientOnImage
+    // MARK:- Add Gradient On Image
     
     
     func addGradientOnImage(image: UIImage) -> UIImage
@@ -606,10 +593,8 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         
     }
     
-    
-    
-    
-    // MARK:- Thumbnail 
+   
+    // MARK:- Generate Thumbnail Method
     func generateThumnail(url : NSURL, fromTime:Float64) -> UIImage? {
         
         let asset : AVAsset = AVAsset(URL: url )
@@ -630,16 +615,12 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     
-    
-    
-    //MARK: - play Video On Cell Tap
-    func playVideoOnCellTap(link : String ) -> Void {//func playVideoOnCellTap(indexPath: NSIndexPath ) -> Void {
+    // MARK:- Play Video On Cell Tap
+    func playVideoOnCellTap(link : String ) -> Void {
         
         var urlStr = String?()
         
-           // let dataDict = self.dataArra![indexPath.row] as? [String:String]
         urlStr = link
-        
         
         if  urlStr != nil {
             
@@ -647,17 +628,6 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             WebVC.title = "Video"
             WebVC.urlStr = urlStr!
             self.navigationController?.pushViewController(WebVC, animated: true)
-            
-//            self.moviePlayer = MPMoviePlayerViewController(contentURL: NSURL(string:urlStr!)!)
-//            self.moviePlayer.moviePlayer.movieSourceType = .Unknown
-//            self.moviePlayer.moviePlayer.prepareToPlay()
-//            self.moviePlayer.moviePlayer.shouldAutoplay = true
-//            //[[self.moviePlayer moviePlayer] setControlStyle:MPMovieControlStyleNone];
-//            //[[self.moviePlayer moviePlayer] setFullscreen:YES animated:YES];
-//            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.mpMoviePlayerLoadStateDidChange(_:)), name: MPMoviePlayerLoadStateDidChangeNotification, object: nil)
-//            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.moviePlaybackDidFinish), name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
-//            self.presentMoviePlayerViewControllerAnimated(self.moviePlayer)
-//            self.moviePlayer.moviePlayer.play()
             
             
         }
@@ -685,7 +655,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     
-  //MARK:- Did select
+  //MARK:-  Table View Did select
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.layoutSubviews()
@@ -720,18 +690,17 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             self.navigationController?.pushViewController(WebVC, animated: true)
             
             if dict["type"] == "video" {
+                
                 print_debug("VIDEO DICT")
+                
             }
             
+           }
             
-        }
-        
-        }
-        }
-        
-        
-       
-    }
+          }
+            
+         }
+      }
     
 }
 

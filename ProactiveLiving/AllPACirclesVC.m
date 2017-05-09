@@ -20,13 +20,15 @@
 @class MyPACVC;
 @interface AllPACirclesVC ()<YSLContainerViewControllerDelegate>
 {
+
+#pragma mark:- Properties
     NSMutableArray *arrServices;
     NSMutableArray *arrTypes;
     PACircleVC *PACircleVC1;
     MyPACVC *myPACVC;
-  //  PACircleVC *PACircleVC2;
- //    PACircleVC *PACircleVC3;
- //    PACircleVC *PACircleVC4;
+  //PACircleVC *PACircleVC2;
+  //PACircleVC *PACircleVC3;
+ // PACircleVC *PACircleVC4;
     AboutPASInstVC * aboutPASInstVC;
 
 }
@@ -35,6 +37,7 @@
 
 @implementation AllPACirclesVC
 
+#pragma mark:- View Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -60,7 +63,7 @@
     myPACVC.title = @"MY PAC";
     
     
-    
+    // Commented for later use
 //    PACircleVC2.arrMenueImages=[NSArray arrayWithObjects:
 //                       @"ic_expert_physicians",
 //                       @"ic_expert_personaltrainers",
@@ -135,7 +138,7 @@
 {
     //NSLog(@"current Index : %ld",(long)index);
     //NSLog(@"current controller : %@",controller);
-   // [controller viewWillAppear:YES];
+   
 }
 
 #pragma mark:- Button Action
@@ -146,7 +149,7 @@
 }
 - (IBAction)btnInfoAction:(id)sender {
     
-     //NSLog(@"ALLPACircleVC Info Button");
+  
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     aboutPASInstVC = [storyboard instantiateViewControllerWithIdentifier:@"AboutPASInstVC"];
     aboutPASInstVC.strType = @"pac";

@@ -60,6 +60,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
         
         // To take button on front most
+        
         self.view.addSubview(self.btnOpenCalender)
         self.view.bringSubviewToFront(self.btnOpenCalender)
         
@@ -71,6 +72,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
 
     
     //MARK:- Service Hit
+    
     func fetchDataForPACRole() {
         
         if AppDelegate.checkInternetConnection() {
@@ -159,13 +161,19 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                                 
                             }
                             else if(currentIndex == 1) {
+                                
                                 if(self.memberStatus == true) {
+                                    
                                     self.btnRight.hidden = false
+                                    
                                     if(self.adminStatus == true || self.creatorStatus == true) {
+                                        
                                         self.popOverCellData = [ "Edit",  "Create New"]
                                         self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
+                                        
                                     }
                                     else {
+                                        
                                         if(self.allowToUpload == true) {
                                             self.popOverCellData = ["Create New"]
                                             self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*1)
@@ -187,7 +195,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
                                 self.popOverCellData = [ "",  ""]
                                 self.popOverTableView?.frame = CGRectMake(0, 0, 150, 45*2)
                             }
-
 
                             self.popOverTableView?.reloadData()
 
@@ -220,6 +227,8 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         // Dispose of any resources that can be recreated.
     }
     
+   //MARK:- SetUp View Controllers
+    
     func setUpViewControllers() {
         
         // SetUp ViewControllers
@@ -245,8 +254,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
         containerVC.menuItemTitleColor = UIColor.whiteColor()
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
-        //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
-        
         containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
     
         self.view.addSubview(containerVC.view)
@@ -255,9 +262,12 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
     
     
-    // MARK: -- YSLContainerViewControllerDelegate
+    //MARK:- YSLContainerViewControllerDelegate
+    
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
+        
         self.view.endEditing(true)
+        
         print_debug("current Index : \(Int(index))")
         print_debug("current controller : \(controller)")
         currentIndex = index
@@ -302,7 +312,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
     }
     
-    // MARK: --Actions
+    // MARK:- Button Actions
     @IBAction func btnOpenCalenderClick(sender: AnyObject) {
         
         let objCalendarVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("CalendarVC") as! RSDFDatePickerViewController
@@ -310,11 +320,13 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         objCalendarVC.allowToCreateMeetup = self.allowToCreateMeetup
         objCalendarVC.allowToCreateWebinvite = self.allowToCreateWebinvite
         objCalendarVC.pacID = self.pacID
+        
         //if self.arrPACMembers1.count > 0{
            // for ele in self.arrPACMembers1{
                // objCalendarVC.arrPACMembers.append(ele)
            // }
        // }
+        
         objCalendarVC.arrPACMembers = self.arrPACMembers1
         print_debug(objCalendarVC.arrPACMembers)
         self.navigationController?.pushViewController(objCalendarVC, animated: true)
@@ -329,7 +341,6 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
         
         let windowHeight = self.view.frame.size.height
         let button = sender as? UIButton
-        //        //NSLog("button tag \(button!.tag)")
         let frameInWindow = button!.convertRect(button!.bounds, toView: self.view)
         let popoverY = frameInWindow.origin.y
         var startPoint = CGPointMake(frameInWindow.midX, frameInWindow.maxY)
@@ -339,14 +350,15 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
             popoverPosition = .Up
         }
         self.popover.showAtPoint(startPoint, popoverPostion: popoverPosition, withContentView: self.popOverTableView, inView: self.view)
-   
      
     }
     
     //MARK:- Service Call For Popover actions
+    
     func serviceCallForActions(service : String, parameters : [String : AnyObject]) {
         
         if AppDelegate.checkInternetConnection() {
+            
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
  
@@ -387,7 +399,7 @@ class PACGroupsContainerVC: UIViewController,YSLContainerViewControllerDelegate 
     
 }
 
-// MARK:- Extension
+// MARK:- UITableViewDelegate & UITableViewDataSource
 
 extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
     
@@ -523,7 +535,7 @@ extension PACGroupsContainerVC : UITableViewDelegate,UITableViewDataSource {
     
     
 }
-
+//MARK:- MFMailComposeViewControllerDelegate
 extension PACGroupsContainerVC:MFMailComposeViewControllerDelegate{
     
     

@@ -27,9 +27,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     @IBOutlet weak var tokenF_inviteMember: TLTagsControl!
     
-    
     @IBOutlet weak var tv_CreatePac: UITableView!
-    
     
     @IBOutlet weak var switch_settting_private: UISwitch!
     
@@ -47,11 +45,9 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     @IBOutlet weak var switch_visible_healthClub: UISwitch!
     
-    
     @IBOutlet weak var switch_visible_male: UISwitch!
     
     @IBOutlet weak var switch_visible_female: UISwitch!
-    
     
     @IBOutlet weak var btnIAgree: UIButton!
     
@@ -88,7 +84,6 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         self.tv_CreatePac.dataSource = self
         
         
-        
         self.tokenF_inviteAdmin.tapDelegate = self
         self.tokenF_inviteMember.tapDelegate = self
         
@@ -99,7 +94,6 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         tv_desc.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         
-        
         // Edit PAC check
         
         if isFromEditPAC == true {
@@ -108,7 +102,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             
             print_debug("ArrayPACMembers \(arrPACmembersFromMemberProfile)")
             
-            let test = arrPACmembersFromMemberProfile//resultDict?.valueForKey("members") as! [AnyObject]
+            let test = arrPACmembersFromMemberProfile
             print_debug("members arr \(test)")
             
             for i in 0  ..< test.count  {
@@ -227,13 +221,13 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
 //                self.reSetInviteTag(dicTemp)
 //                inviteStr = ""
 //                
-////                let str = members[i]["_id"] as! String
-////                
-////                // to make unique
-////                if(!self.tagIDMember.contains({ $0 as! String == str })){
-////                    self.tagIDMember.append(str)
-////                }
+//                let str = members[i]["_id"] as! String
 //                
+//                // to make unique
+//                if(!self.tagIDMember.contains({ $0 as! String == str })){
+//                    self.tagIDMember.append(str)
+//                }
+//
 //            }
            
             
@@ -266,8 +260,6 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             print_debug("files \(files) links \(links)")
             
             arrAttachments = links!
-         
-            
             pacID = resultDict?.valueForKey("_id") as! String
             print_debug("print_debug PACID-\(pacID)")
             
@@ -297,14 +289,12 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
         
         // self.tv_desc.placeholder = "Minimum 50 words"
-        // by me
-      //  self.tv_desc.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
+   
         AppHelper.setBorderOnView(self.tv_desc)
-        
         
         self.tf_location.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
         
-        
+        // Google Places API
         gpaViewController = GooglePlacesAutocomplete(
             apiKey: "AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0",
             placeType: .Address
@@ -316,7 +306,6 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     
     //MARK:- Token add
-    
     
     func reSetInviteTag(contact : [String : AnyObject] ) -> Void {
         
@@ -334,9 +323,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             
         }
         
-        
     }
-    
     
     func NotifyCreatePacInvite(notification:NSNotification) {
         //  print_debug(notification)
@@ -347,7 +334,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     
     
-    //MARK:- Btn Action
+    //MARK:- Button Action
     
     @IBAction func onClickTermsAction(sender: AnyObject) {
         
@@ -370,15 +357,15 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         }
         
         switch(sender.tag) {
-        case 101:                    // Make group private
+        case 101:                           // Make group private
             switchStatus[0] = value
-        case 102:                      // Allow Member to create Meet Ups?
+        case 102:                           // Allow Member to create Meet Ups?
             switchStatus[1] = value
-        case 103:                      // Allow Member to create Web invites?
+        case 103:                           // Allow Member to create Web invites?
             switchStatus[2] = value
-        case 104:                       // Allow Member to to add Resources?
+        case 104:                           // Allow Member to to add Resources?
             switchStatus[3] = value
-        case 105:                       // Everyone
+        case 105:                           // Everyone
             switchStatus[4] = value
         case 106:                           // Friends
             switchStatus[5] = value
@@ -386,7 +373,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             switchStatus[6] = value
         case 108:                           // Health Club Members
             switchStatus[7] = value
-        case 109:                              // Male
+        case 109:                           // Male
             switchStatus[8] = value
         case 110:                           // Female
             switchStatus[9] = value
@@ -490,19 +477,22 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         
     }
     
-    @IBAction func onClickAttachmentBtn(sender: AnyObject) {
-        
-        let importMenu = UIDocumentMenuViewController(documentTypes: ["public.data","public.text","public.image"], inMode: .Import)
-        importMenu.delegate = self
-        importMenu.title="Attach a Document"
-        
-        //importMenu.addOptionWithTitle("Attach from Gallery", image: nil, order: .First, handler: {
-        //print_debug("New Doc Requested") } )
-        
-        presentViewController(importMenu, animated: true, completion: nil)
-        
-        
-    }
+    
+    // Commented to be used in next Phase
+    // Attachment Button Action
+//    @IBAction func onClickAttachmentBtn(sender: AnyObject) {
+//        
+//        let importMenu = UIDocumentMenuViewController(documentTypes: ["public.data","public.text","public.image"], inMode: .Import)
+//        importMenu.delegate = self
+//        importMenu.title="Attach a Document"
+//        
+//        //importMenu.addOptionWithTitle("Attach from Gallery", image: nil, order: .First, handler: {
+//        //print_debug("New Doc Requested") } )
+//        
+//        presentViewController(importMenu, animated: true, completion: nil)
+//        
+//        
+//    }
     
     // Terms and condition
     @IBAction func onClickAgree(sender: AnyObject) {
@@ -527,7 +517,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     }
     
     
-    // MARK: Submit button for API hit
+    // Submit button for API hit
     
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
         
@@ -601,10 +591,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         return true
     }
     
-    
-    
-    
-    
+   
     //MARK:- Image Picker Delegates
     func imagePickerController(picker:UIImagePickerController, didFinishPickingMediaWithInfo info:[String : AnyObject])
     {
@@ -654,11 +641,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                             AppHelper.showAlertWithTitle(AppName, message:cameraSetting, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
 
                         }
-                    });
-
-                    
-                    
-                    
+                    })
                     
 //                    self.presentViewController(imagePicker, animated: true, completion: nil)
                 }
@@ -792,11 +775,9 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     func submitAPI() -> Void {
         
-        // print_debug("ADMIN TAG ### \(self.adminDict["_id"])")
-        // self.tokenField.tags.addObject(contact["firstName"]!)
-        
         print_debug("MEMBER TAG ### \(self.memberArr)")
        
+        // MEMBER TAG
         for i in 0  ..< memberArr.count  {
             
             let str = memberArr[i]["_id"] as! String
@@ -807,7 +788,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             }
             
         }
-        
+        //ADMIN TAG
         for i in 0  ..< adminArr.count  {
             
             let str = adminArr[i]["_id"] as! String
@@ -820,19 +801,16 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         }
         
         
-        
         print_debug("TEST tagIDAdmin \(self.tagIDAdmin)")
         print_debug("TEST tagIDMember \(self.tagIDMember)")
         
         if AppDelegate.checkInternetConnection() {
+ 
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             
-            //  var parameters = [String: AnyObject]()
-            // parameters["AppKey"] = AppKey
-            // parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
+ 
             let savedValue = NSUserDefaults.standardUserDefaults().stringForKey("categoryID")!
-            
             
             if isFromEditPAC == true {
                 
@@ -859,7 +837,6 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                               "pacId"                  : self.pacID
                 ]
                 
-                    //AppHelper.userDefaultsForKey(categoryID)
             }
             else {
                 
@@ -888,7 +865,6 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             }
             
             print_debug("Parameters before : \(parameters)")
-            
             
             if self.iv_coverPic.image != nil
             {
@@ -946,6 +922,8 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         Services.postRequest(ServiceCreatePAC, parameters: self.parameters, completionHandler:{
             (status,responseDict) in
             
+            
+            // Hide indicator
             AppDelegate.dismissProgressHUD()
             
             if (status == "Success") {
@@ -954,25 +932,18 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
                     
                     print_debug(responseDict["result"])
                     
-                    
                     AppHelper.showAlertWithTitle(AppName, message:responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                     
-                   
                     if self.isFromEditPAC == true {
-                        
-//                        let vcS = (self.navigationController?.viewControllers)! as [UIViewController]
-//                        print_debug(vcS)
                         
                         NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_REFRESH_PAC_CONTAINER, object: self)
                         self.navigationController?.popViewControllerAnimated(true)
-                        
                         
                     }
                     else {
                         
                         self.navigationController?.popViewControllerAnimated(true)
                     }
-                    
                     
                 }
                 else if ((responseDict["error"] as! Int) == 1) {
@@ -1002,9 +973,7 @@ extension CreatePACVC : UITextViewDelegate{
     
     func textViewDidBeginEditing(textView: UITextView) {
         
-        
         tv_desc.textColor = UIColor.blackColor()
-        
         
         if tv_desc.text == "Minimum 50 characters" {
             
@@ -1012,9 +981,7 @@ extension CreatePACVC : UITextViewDelegate{
             
         }
         
-        
     }
-    
     
     func textViewDidEndEditing(textView: UITextView) {
         
@@ -1025,20 +992,15 @@ extension CreatePACVC : UITextViewDelegate{
         
     }
     
-    
-    
-    
 }
 
 
 
 //MARK:- TableView DataSource n Delegate
 
-
 extension CreatePACVC: UITableViewDataSource{
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat    {
-        
         
         return 45
     }
@@ -1062,7 +1024,6 @@ extension CreatePACVC: UITableViewDataSource{
     }
     
     
-    
     func btnDeleteClick(sender: UIButton)  {
         print_debug(sender)
         
@@ -1073,7 +1034,6 @@ extension CreatePACVC: UITableViewDataSource{
         self.arrAttachments.removeAtIndex(indexPath.row)
         self.tv_CreatePac.reloadData()
     }
-    
     
 }
 

@@ -22,10 +22,14 @@
     
     
 }
+#pragma mark:- Properties
+
 @property (nonatomic, strong) NSMutableDictionary *data;
 @property (strong, nonatomic) NSArray *dataArray;
 @property (strong, nonatomic)NSString * menuItemId;
 @property (strong, nonatomic)NSString *menuItemName;
+
+#pragma mark:- Outlets
 
 - (IBAction)btnBackClick:(id)sender;
 
@@ -86,10 +90,6 @@
                     
               
                     self.dataArray=[responseDict objectForKey:@"result"];
-                    //NSLog(@"$#$#$# %@",self.dataArray);
-                   
-                    
-                    
                     
                     if (_menuItemId != nil ){
                         
@@ -197,10 +197,6 @@
     NSString *strImage = dicResult[@"image"];
     [recipeImageView sd_setImageWithURL:[NSURL URLWithString:strImage]];
     //recipeImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:strImage]]];
-   
-   
-    
-    
     //  view_Image.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url_Img_FULL]]];
     
     
@@ -243,7 +239,6 @@
 
 -(void)collectionView:(UICollectionView*)collectionview didSelectItemAtIndexPath:(NSIndexPath*) indexPath
 {
-    //NSLog(@"%d",(int)indexPath.item);
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         
@@ -251,94 +246,10 @@
         NSDictionary *dicResult =  self.dataArray[indexPath.row];
         self.menuItemId = dicResult[@"_id"];
         self.menuItemName = dicResult[@"name"];
-        //NSLog(@"HAHAHA%@",self.menuItemId);
         [self getAllCategoriesListing];  // service hit
         
     }
-    
-    
-    
-    
-    
-    
-//    switch ((int)indexPath.item) {
-//        case 0:
-//             if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-//                 
-//                 
-//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PAC" bundle:nil];
-//            pACContainerViewController  = [storyboard instantiateViewControllerWithIdentifier:@"PACContainerViewController"];
-//
-////             vc.menuTitle=@"";
-////             vc.arrMenueImages=[NSArray arrayWithObjects:
-////             @"ic_activities_badminton",
-////             @"ic_activities_baseball",
-////             @"ic_activities_basketball",
-////             @"ic_activities_flagfootball",
-////             @"ic_activities_football",
-////             @"ic_activities_golf",
-////             @"ic_activities_hockey",
-////             @"ic_activities_kickball",
-////             @"ic_activities_softball",
-////             @"ic_activities_soccer",
-////             @"ic_activities_skiing",
-////             @"ic_activities_swimming",
-////             @"ic_activities_tennis",
-////             @"ic_activities_volleyball",
-////             @"ic_activities_more", nil];
-//             [self.navigationController pushViewController:pACContainerViewController animated:YES];
-//             }
-//            break;
-//        case 1:
-////            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-////                ActivitiesVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ActivitiesVC"];
-////                vc.menuTitle=@"";
-////                vc.arrMenueImages=[NSArray arrayWithObjects:
-////                                   @"ic_activities_badminton",
-////                                   @"ic_activities_baseball",
-////                                   @"ic_activities_basketball",
-////                                   @"ic_activities_flagfootball",
-////                                   @"ic_activities_football",
-////                                   @"ic_activities_golf",
-////                                   @"ic_activities_hockey",
-////                                   @"ic_activities_kickball",
-////                                   @"ic_activities_softball",
-////                                   @"ic_activities_soccer",
-////                                   @"ic_activities_skiing",
-////                                   @"ic_activities_swimming",
-////                                   @"ic_activities_tennis",
-////                                   @"ic_activities_volleyball",
-////                                   @"ic_activities_more", nil];
-////                [self.navigationController pushViewController:vc animated:YES];
-////            }
-//            break;
-//        case 2:
-////            if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-////                ActivitiesVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ActivitiesVC"];
-////                vc.menuTitle=@"";
-////                vc.arrMenueImages=[NSArray arrayWithObjects:
-////                                   @"ic_activities_badminton",
-////                                   @"ic_activities_baseball",
-////                                   @"ic_activities_basketball",
-////                                   @"ic_activities_flagfootball",
-////                                   @"ic_activities_football",
-////                                   @"ic_activities_golf",
-////                                   @"ic_activities_hockey",
-////                                   @"ic_activities_kickball",
-////                                   @"ic_activities_softball",
-////                                   @"ic_activities_soccer",
-////                                   @"ic_activities_skiing",
-////                                   @"ic_activities_swimming",
-////                                   @"ic_activities_tennis",
-////                                   @"ic_activities_volleyball",
-////                                   @"ic_activities_more", nil];
-////                [self.navigationController pushViewController:vc animated:YES];
-////            }
-//            break;
-//        
-//        default:
-//            break;
-//    }
+
 }
 
 - (void)didReceiveMemoryWarning {

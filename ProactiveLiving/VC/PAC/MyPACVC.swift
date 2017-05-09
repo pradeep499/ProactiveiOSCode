@@ -20,6 +20,7 @@ class MyPACVC: UIViewController {
     var spinner = UIActivityIndicatorView()
     
     // MARK: - Outlets
+    
     @IBOutlet weak var tableViewMyPAC: UITableView!
     @IBOutlet weak var segmentedCtrl: UISegmentedControl!
     @IBOutlet weak var lblNoRecordFound: UILabel!
@@ -29,9 +30,8 @@ class MyPACVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         
-//         fetchMyPACDataFromServer(createJoinStatus)  // service call
+//       fetchMyPACDataFromServer(createJoinStatus)  // service call
      
          lblNoRecordFound.hidden = true  // hide the no rocord found label
         
@@ -94,9 +94,7 @@ class MyPACVC: UIViewController {
     // MARK:- Service Hit
     func fetchMyPACDataFromServer( JoinStatus:String) {
         
-        
        
-        
         if AppDelegate.checkInternetConnection() {
             isPostServiceCalled = true
             
@@ -190,7 +188,6 @@ class MyPACVC: UIViewController {
         }
         
     }
-    
     
 
 }
@@ -319,54 +316,8 @@ extension MyPACVC: UITableViewDataSource{
         lbl_distance.text = "\(distance) Miles"
         print_debug(self.myPACDetailArr[indexPath.row]["createdBy"]!["firstName"] as? String)
 
-        
-        //Pagination api hit
-//        if (indexPath.row == self.myPACDetailArr.count - 1) {
-//            
-//            //  if self.resultSize > self.myPACDetailArr.count {
-//            
-//          //  fetchMyPACDataFromServer(self.createJoinStatus)
-//            
-//            //  }
-//            
-//        }
-        
         return cell
     }
-    
-    
-    
-    
-    
-    
-    //    func setUpFindCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
-    //
-    //        let cell =  tv.dequeueReusableCellWithIdentifier("FindCell", forIndexPath: indexPath)
-    //
-    //
-    //
-    //        let iv_item = cell.viewWithTag(1) as! UIImageView
-    //        let iv_itemDec = cell.viewWithTag(2) as! UIImageView
-    //        let lbl_title = cell.viewWithTag(3) as! UILabel
-    //        let lbl_by = cell.viewWithTag(4) as! UILabel
-    //        let lbl_members = cell.viewWithTag(5) as! UILabel
-    //        let lbl_activateTime = cell.viewWithTag(6) as! UILabel
-    //        let lbl_privacy = cell.viewWithTag(7) as! UILabel
-    //        let lbl_desc = cell.viewWithTag(8) as! UILabel
-    //        let lbl_createdAt = cell.viewWithTag(9) as! UILabel
-    //        let lbl_distance = cell.viewWithTag(10) as! UILabel
-    //
-    //
-    //
-    //        iv_item.sd_setImageWithURL(NSURL.init(string: (self.pacDetailArr[indexPath.row]["imgUrl"] as? String)!), placeholderImage: UIImage.init(named: ""))
-    //
-    //        lbl_title.text = self.pacDetailArr[indexPath.row]["name"] as? String
-    //        lbl_desc.text = self.pacDetailArr[indexPath.row]["description"] as? String
-    //        lbl_createdAt.text = self.pacDetailArr[indexPath.row]["createdDate"] as? String
-    //
-    //
-    //        return cell
-    //    }
     
     
 }
@@ -383,6 +334,7 @@ extension MyPACVC:  UITableViewDelegate{
         
     }
     
+    //MARK:-  Scroll View Did End Dragging
     
         func scrollViewDidEndDragging(aScrollView: UIScrollView, willDecelerate decelerate: Bool) {
     
@@ -397,7 +349,7 @@ extension MyPACVC:  UITableViewDelegate{
             if y > h + reload_distance {
                 print_debug("load more data")
                 tableViewMyPAC.tableFooterView!.hidden = false
-                fetchMyPACDataFromServer(self.createJoinStatus)
+                fetchMyPACDataFromServer(self.createJoinStatus)   //Pagination api hit
                 spinner.startAnimating()
             }
             else{

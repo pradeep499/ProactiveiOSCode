@@ -1,6 +1,4 @@
 
-
-//
 //  PacContainerVC.swift
 //  ProactiveLiving
 //
@@ -17,10 +15,10 @@ var inviteStr = String()
 class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISearchBarDelegate {
 
       // MARK:- Outlets
+    
     @IBOutlet weak var btnFilter: UIButton!
     @IBOutlet weak var btnSearch: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var lbl_title: UILabel!
     
     
@@ -52,10 +50,6 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         tokensMember = [AnyObject]()
        // btnRight.hidden = false
         
-      
-        
-        
-        
         self.setUpViewControllers()
         
     }
@@ -65,6 +59,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK:- Add Contact Methods
     
     func addCotact(contact : [String : AnyObject] ) -> Void {
         if inviteStr == "admin" {
@@ -87,7 +82,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         
     }
     
-    //MARK:-
+    //MARK:- Button Actions
     
     @IBAction func onClickBackBtn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
@@ -139,7 +134,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
     }
     
     
-   // MARK:- setUpViewControllers
+   // MARK:- Set Up View Controllers
     
     func setUpViewControllers() {
         
@@ -166,8 +161,6 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
             containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
             containerVC.menuItemTitleColor = UIColor.whiteColor()
             containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
-            //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
-            
             containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
             
             self.view.addSubview(containerVC.view)
@@ -194,8 +187,6 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
             containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
             containerVC.menuItemTitleColor = UIColor.whiteColor()
             containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
-            //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
-            
             containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
             
             self.view.addSubview(containerVC.view)
@@ -211,7 +202,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         firstVC.strId = strActivityID
         
         
-        let nav = UINavigationController.init(rootViewController: firstVC)
+       // let nav = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
         secondVC.title = "CREATE A PAC"
@@ -227,8 +218,6 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         containerVC.menuBackGroudColor = UIColor(red: 1.0 / 255, green: 174.0 / 255, blue: 240.0 / 255, alpha: 1.0)
         containerVC.menuItemTitleColor = UIColor.whiteColor()
         containerVC.menuItemSelectedTitleColor = UIColor.whiteColor()
-        //   containerVC.view.frame = CGRectMake(0, self.layOutConstrain_ivBg_height.constant, containerVC.view.frame.size.width, containerVC.view.frame.size.height - self.layOutConstrain_ivBg_height.constant)
-        
         containerVC.view.frame = CGRectMake(0, 64, containerVC.view.frame.size.width,   screenHeight - 64 )
         
         self.view.addSubview(containerVC.view)
@@ -238,7 +227,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         
     }
     
-    // MARK: -- YSLContainerViewControllerDelegate
+    // MARK:- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
         //   self.view.endEditing(true)
         print_debug("current Index : \(Int(index))")

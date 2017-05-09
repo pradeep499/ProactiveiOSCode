@@ -20,6 +20,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
     
     var delegate:AttachMentsVCDelegate?
 
+   //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,17 +31,6 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     //MARK: - Attachment View
     
@@ -59,6 +49,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
         })
     }
     
+//MARK:- Button Action
     @IBAction func takePicFromCameraClick(sender: AnyObject) {
         self.cancelAttchView()
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
@@ -262,7 +253,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
      }
      
      }*/
-    //MARK:-
+    //MARK:- uniqueName method
     func uniqueName(fileName: String) -> String {
         
         let uniqueImageName = NSString(format: "%@%f", fileName , NSDate().timeIntervalSince1970 * 1000)
@@ -383,7 +374,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
         //handle muliple image
         
         var count = 0
-        var thumbArr: NSMutableArray = NSMutableArray()
+        let thumbArr: NSMutableArray = NSMutableArray()
         
         for (index, asset) in assets.enumerate(){
             
@@ -426,9 +417,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                 
                 let name = self.uniqueName("")   + String("-") + String(index)
                 
-                
-                
-                
+            
                 UploadInS3.sharedGlobal().uploadMultipleImagesOnChatTos3(imgData, type: 0, dictInfo: dict, fromDist: "chat", meldID: name, completion: { ( bool_val : Bool, pathUrl : String!) -> Void in
                     
                     
@@ -447,12 +436,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                          {
                          fileName = citiesArr[index] as! Dictionary
                          let strFileName : String = fileName["chatImagesName"] as! String
-                         
-                         
-                         
-                         
-                         
-                         
+                    
                          }
                          else {}
                          }
@@ -677,29 +661,18 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
         })
         
         
-        
-        
-        
-        //------------------------
-        
-        
         /*
          
-         
-         
-         
-         let videoData =  NSData(contentsOfURL: NSURL.fileURLWithPath(videoUrl.path!))
+       let videoData =  NSData(contentsOfURL: NSURL.fileURLWithPath(videoUrl.path!))
          */
         
         
         
     }
     
-    
+ //MARK:- Service hit
     
     func sendToServerAPI(postType:String, imgOrVideoUlr:String, thumNailName:String!) {
-        
-        
         
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
         {
@@ -751,7 +724,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
     }
     
     
-    //MARK:-
+    //MARK:- addCaptionOnPost Method
     
     func addCaptionOnPost(assets: [DKAsset]?, cameraImage:UIImage?, videoUrl:NSURL?) -> Void {
         
@@ -782,12 +755,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
                 
                 
             }
-            
-            
-            
-            
-            
-            
+        
             }))
         
         // 4. Present the alert.
@@ -856,12 +824,5 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
         
         //  self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
-    
-    
-    
-
-    
 
 }

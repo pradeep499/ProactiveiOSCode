@@ -40,10 +40,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         self.tableViewResource.dataSource = self
         self.tableViewResource.separatorStyle = .None
         
-        
-        // setting textView BorderOn
-//         self.txtViewDescription.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
-        
+        // Setting border to text View
         AppHelper.setBorderOnView(self.txtViewDescription)
         
         
@@ -66,18 +63,19 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     }
    
     
-    //MARK: Button Action
+    //MARK:- Button Action
     @IBAction func backBtnAction(sender: AnyObject) {
         
         self.navigationController?.popViewControllerAnimated(true)
     }
    
   
-    
-    @IBAction func rightBtnAction(sender: AnyObject) {
-        
-        
-    }
+    // To be used later
+//    @IBAction func rightBtnAction(sender: AnyObject) {
+//        
+//         // To be used later
+//
+//    }
 
     @IBAction func onClickAddLinkBtn(sender: AnyObject) {
         
@@ -168,21 +166,23 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
      
     }
     
-    @IBAction func onClickAddAttachmentBtn(sender: AnyObject) {
-        
-        
-        let importMenu = UIDocumentMenuViewController(documentTypes: ["public.data","public.text","public.image"], inMode: .Import)
-        importMenu.delegate = self
-        importMenu.title="Attach a Document"
-        
-        //importMenu.addOptionWithTitle("Attach from Gallery", image: nil, order: .First, handler: {
-        //print_debug("New Doc Requested") } )
-        
-        presentViewController(importMenu, animated: true, completion: nil)
-
-        
-        
-    }
+    // To be used in next phase
+    
+//    @IBAction func onClickAddAttachmentBtn(sender: AnyObject) {
+//        
+//        
+//        let importMenu = UIDocumentMenuViewController(documentTypes: ["public.data","public.text","public.image"], inMode: .Import)
+//        importMenu.delegate = self
+//        importMenu.title="Attach a Document"
+//        
+//        //importMenu.addOptionWithTitle("Attach from Gallery", image: nil, order: .First, handler: {
+//        //print_debug("New Doc Requested") } )
+//        
+//        presentViewController(importMenu, animated: true, completion: nil)
+//
+//        
+//        
+//    }
     
     
     // add Video URl action 
@@ -276,8 +276,6 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     // MARK:- Validation
     func isEmpty() -> Bool {
         
-        
-        
       let descriptionStr = txtViewDescription.text
         
         if self.txtFieldTitle.text?.characters.count < 1 {
@@ -321,10 +319,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
             
-              var parameters = [String: AnyObject]()
-            // parameters["AppKey"] = AppKey
-           
-         
+            var parameters = [String: AnyObject]()
             
             if isEdit == true {
                 
@@ -366,9 +361,6 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
                         
                         print_debug(responseDict["result"])
                         
-                        //let msg = "Resource created."
-                        
-                        
                         AppHelper.showAlertWithTitle(AppName, message:responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                         
                         self.navigationController?.popViewControllerAnimated(true)
@@ -381,9 +373,6 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
                     
                 }
             })
-            
-            
-            
          
         }
         else {
@@ -451,8 +440,6 @@ extension CreateEditResourcePACVC : UITextViewDelegate{
         }
         
     }
-    
-    
     
     
 }

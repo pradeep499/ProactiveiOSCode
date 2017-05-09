@@ -13,11 +13,15 @@
 
 @interface ActivityDetailVC ()
 
+#pragma mark:- Outlets
+
 - (IBAction)btnBackClick:(id)sender;
 
 @end
 
 @implementation ActivityDetailVC
+
+#pragma mark:- View Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,7 +48,7 @@
     return mElementSize;    // if the width is higher, only one cell will be shown in a line
 }
 
-#pragma mark collection view cell paddings
+#pragma mark collection view DataSource
 - (UIEdgeInsets)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(10, 10, 10, 10); // top, left, bottom, right
 }
@@ -104,11 +108,11 @@
     
 }
 
-#pragma mark collection view dataSource
+#pragma mark collection view delegate
 
 -(void)collectionView:(UICollectionView*)collectionview didSelectItemAtIndexPath:(NSIndexPath*) indexPath
 {
-    //NSLog(@"%d",(int)indexPath.item);
+    
 }
 
 - (void)didReceiveMemoryWarning {

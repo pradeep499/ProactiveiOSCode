@@ -10,6 +10,7 @@ import UIKit
 
 class AboutPacVC: UIViewController, UIAlertViewDelegate {
 
+    //MARK:- Properties
     var collapsed = true
     var dataDict = [String : AnyObject]()
     var pacID = String()
@@ -23,13 +24,12 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     var isFromMoreDetail = false
     var dictValuePacRole = [String:AnyObject]()
     
-
+    //MARK:- Outlets
     @IBOutlet weak var btnLike: UIButton!
     @IBOutlet weak var lblLikes: UILabel!
     @IBOutlet weak var btnInvite: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageHeader: UIImageView!
-    
     
     
     //MARK:- View Life Cycle
@@ -39,6 +39,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
         self.tableView.registerNib(UINib(nibName:"PACMenbersCell", bundle: nil), forCellReuseIdentifier: "PACMenbersCell")
         tableView.separatorStyle = .None
         // Do any additional setup after loading the view.
+        
         btnLike.addTarget(self, action: #selector(btnLikeClick(_:)), forControlEvents: .TouchUpInside)
         btnLike.setImage(UIImage(named: "like_empty"), forState: .Normal)
         btnLike.setImage(UIImage(named: "like_filled"), forState: .Selected)
@@ -48,26 +49,22 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
         btnInvite.hidden = true
         btnInvite.sizeToFit()
 
-        self.fetchDataForAboutSection()
+        self.fetchDataForAboutSection()  // Service call
         
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name:NOTIFICATION_FROM_MOREDETAILVC , object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AboutPacVC.isFromMoredetailVC), name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
         
-        
-
-        
+       
     }
 
     override func viewWillAppear(animated: Bool) {
         if isFromMoreDetail == false {
-            self.fetchDataForAboutSection()
+            self.fetchDataForAboutSection() // Service call
             // NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
         }
-
         
     }
-    
     
     
     override func didReceiveMemoryWarning() {
@@ -83,13 +80,16 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
         
     }
     
-    //MARK:- fetchDataForAboutSection
+    //MARK:- Service Hit  "fetchDataForAboutSection"
     
     func fetchDataForAboutSection() {
         
         if AppDelegate.checkInternetConnection() {
+            
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
+            
+            
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
@@ -99,17 +99,17 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
             Services.postRequest(ServiceGetPACDetails, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
+                //dissmiss indicator
                 AppDelegate.dismissProgressHUD()
                 
                 if (status == "Success") {
                     
-                    //dissmiss indicator
+                   
                     if ((responseDict["error"] as! Int) == 0) {
                         
                         print_debug("ABOUT### \(responseDict)")
                         
                         self.responseDict = responseDict
-                        
                         self.dataDict = (responseDict["result"]!["pac"] as! [String : AnyObject])
                         self.btnLike.selected = responseDict["result"]!["likeStatus"] as! Bool
                         self.memberStatus = responseDict["result"]!["memberStatus"] as! Bool
@@ -124,38 +124,52 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
                         self.imageHeader.sd_setImageWithURL(NSURL.init(string:self.dataDict["imgUrl"] as! String), placeholderImage: UIImage(named: "pac_listing_no_preview"))
                         
                         if((self.dataDict["likes"] as! [String]).count == 1) {
+                            
                             self.lblLikes.text = "\((self.dataDict["likes"] as! [String]).count) Like"
+                            
                         }
                         else {
+                            
                             self.lblLikes.text = "\((self.dataDict["likes"] as! [String]).count) Likes"
+                            
                         }
                         
                         if(responseDict["result"]!["memberStatus"] as! Bool == false) {
                             
                             if(self.privateStatus == true) {
+                                
                                 if(self.requestStatus == true) {
+                                    
                                     self.btnInvite.hidden = false
                                     self.btnInvite.enabled = false
                                     self.btnInvite.setTitle("Pending", forState: .Normal)
+                                    
                                 }
                                 else {
+                                    
                                     self.btnInvite.hidden = false
                                     self.btnInvite.enabled = true
                                     self.btnInvite.setTitle("Join", forState: .Normal)
+                                    
                                 }
                             }
                             else {
+                                
                                 self.btnInvite.hidden = false
                                 self.btnInvite.enabled = true
                                 self.btnInvite.setTitle("Join", forState: .Normal)
+                                
                             }
                         }
                         else {
                             
                             self.btnInvite.hidden = true
+                            
                             if(responseDict["result"]!["adminStatus"] as! Bool == true || responseDict["result"]!["creatorStatus"] as! Bool == true) {
+                                
                                 self.btnInvite.hidden = false
                                 self.btnInvite.setTitle("Invite", forState: .Normal)
+                                
                             }
                         }
                         
@@ -175,6 +189,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
             
         }
         else {
+            
             AppDelegate.dismissProgressHUD()
             //show internet not available
             AppHelper.showAlertWithTitle(netError, message: netErrorMessage, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
@@ -192,7 +207,7 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
     }
 
     
-    //MARK:- Actions
+    //MARK:-  Button Actions
     
     func btnLikeClick(sender: UIButton) {
         sender.selected = !sender.selected
@@ -409,13 +424,14 @@ class AboutPacVC: UIViewController, UIAlertViewDelegate {
             let memberContactListVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("MemberContactListVC") as! MemberContactListVC
             memberContactListVC.contactArr = dataArr
             self.navigationController?.pushViewController(memberContactListVC, animated: true)
- 
             
         }
       
     }
     
 }
+
+//MARK:- Table View DataSource
 
 extension AboutPacVC: UITableViewDataSource{
     
@@ -480,7 +496,7 @@ extension AboutPacVC: UITableViewDataSource{
         } */
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {  // Number of Sections in Table
         
         if(self.dataDict.count > 0) {
             return 4
@@ -488,7 +504,7 @@ extension AboutPacVC: UITableViewDataSource{
         return 0
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {  // Number of Rows in Table
         
         
         var numOfRows: Int = 0
@@ -500,31 +516,30 @@ extension AboutPacVC: UITableViewDataSource{
         }
         else if(section == 1) {
             
-            if self.memberStatus == false {
+        if self.memberStatus == false {
+        
+        if let settingsDict = self.dataDict["settings"] {
+            
+            let isPrivate = settingsDict["private"] as! Bool
+            
+            if(!isPrivate) {
                 
-                if let settingsDict = self.dataDict["settings"] {
-                    
-                    let isPrivate = settingsDict["private"] as! Bool
-                    
-                    if(!isPrivate) {
-                        
-                        let attachmentDict = self.dataDict["attachements"]
-                        let dictLinks = attachmentDict!["links"] as! [[String : AnyObject]]
-                        numOfRows = dictLinks.count
-                    }
-                    else
-                    {
-                        numOfRows = 0
-                        
-                    }
-                }
+                let attachmentDict = self.dataDict["attachements"]
+                let dictLinks = attachmentDict!["links"] as! [[String : AnyObject]]
+                numOfRows = dictLinks.count
+            }
+            else
+            {
+                numOfRows = 0
+                
+            }
+        }
             }
             else {
                 let attachmentDict = self.dataDict["attachements"]
                 let dictLinks = attachmentDict!["links"] as! [[String : AnyObject]]
                 numOfRows = dictLinks.count
             }
-
 
         }
         else if(section == 2) {
@@ -537,28 +552,28 @@ extension AboutPacVC: UITableViewDataSource{
         else if(section == 3) {
             
             if self.memberStatus == false {
+            
+            if let settingsDict = self.dataDict["settings"] {
                 
-                if let settingsDict = self.dataDict["settings"] {
+                let isPrivate = settingsDict["private"] as! Bool
+                
+                if(!isPrivate) {
                     
-                    let isPrivate = settingsDict["private"] as! Bool
-                    
-                    if(!isPrivate) {
-                        
-                        numOfRows = 4
-                        //tableView.backgroundView = nil
-                    }
-                    else
-                    {
-                        numOfRows = 0
-                        let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-320, width: 320, height: 153))
-                        noDataLabel.image = UIImage(named: "private_user_texticon")
-                        self.tableView.backgroundColor = UIColor.clearColor()
-                        self.view.insertSubview(noDataLabel, belowSubview: self.tableView)
-                        //noDataLabel.center = tableView.center
-                        //let parentVC = self.parentViewController?.parentViewController as! PACGroupsContainerVC
-                        //parentVC.btnOpenCalender.hidden = true;
-                    }
+                    numOfRows = 4
+                    //tableView.backgroundView = nil
                 }
+                else
+                {
+                    numOfRows = 0
+                    let noDataLabel: UIImageView     = UIImageView(frame: CGRect(x: (screenWidth/2)-160, y: screenHeight-320, width: 320, height: 153))
+                    noDataLabel.image = UIImage(named: "private_user_texticon")
+                    self.tableView.backgroundColor = UIColor.clearColor()
+                    self.view.insertSubview(noDataLabel, belowSubview: self.tableView)
+                    //noDataLabel.center = tableView.center
+                    //let parentVC = self.parentViewController?.parentViewController as! PACGroupsContainerVC
+                    //parentVC.btnOpenCalender.hidden = true;
+                }
+            }
             }
             else {
                 numOfRows = 4
@@ -573,11 +588,13 @@ extension AboutPacVC: UITableViewDataSource{
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = self.setUpTableCell(tableView, indexPath: indexPath)
+        let cell = self.setUpTableCell(tableView, indexPath: indexPath)   // method call to render cell
         cell.backgroundColor = UIColor.whiteColor()
         return cell
     }
     
+    
+    //MARK:- Method to render cell
     func setUpTableCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
         
@@ -706,19 +723,13 @@ extension AboutPacVC: UITableViewDataSource{
     }
     
     func seeMoreButtonClick(sender:UIButton!) {
-        
-       
-        //let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableView)
-       // let indexPath =  self.tableView.indexPathForRowAtPoint(buttonPosition)
+
         let seeMoreVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("MoreDetailVC") as! MoreDetailVC
         
         //let desc = resourceDetailArr[indexPath!.section].valueForKey("description") as? String // Description
         seeMoreVC.detailStr = self.dataDict["description"] as! String!
         self.navigationController?.pushViewController(seeMoreVC, animated: true)
-        
-        print_debug("See More")
-        
-        
+ 
         /* collapsed = !collapsed
         self.tableView.beginUpdates()
         self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
@@ -741,10 +752,9 @@ extension AboutPacVC: UITableViewDataSource{
         
     }
     
-    
-    
 }
 
+//MARK:- Table View Delegate
 extension AboutPacVC:  UITableViewDelegate{
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
