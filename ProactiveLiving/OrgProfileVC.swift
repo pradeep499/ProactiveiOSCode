@@ -200,7 +200,7 @@ class OrgProfileVC: UIViewController,UIScrollViewDelegate {
         else if (indexPath.row==2){  // Follow  // API hit for follow
             
            
-            let alertController = UIAlertController(title:APP_NAME, message: "Do you want to Follow ?" , preferredStyle: UIAlertControllerStyle.Alert)
+            let alertController = UIAlertController(title:APP_NAME, message: "Do you want to Follow?" , preferredStyle: UIAlertControllerStyle.Alert)
             
             alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(ACTION :UIAlertAction!)in
                 
