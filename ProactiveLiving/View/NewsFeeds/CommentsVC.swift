@@ -21,6 +21,7 @@ import MediaPlayer
 
 class CommentsVC: UIViewController, UITextViewDelegate {
 
+    //MARK:- Outlets
     
     @IBOutlet weak var view_tableHeader: UIView!
     @IBOutlet weak var iv_CommentsProfile: UIImageView!
@@ -32,20 +33,21 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var imgAttachment: UIImageView!
     @IBOutlet weak var btnPlayVideo: UIButton!
     @IBOutlet weak var playActivityIndicator: UIActivityIndicatorView!
-
     @IBOutlet weak var table_view: UITableView!
-    
-    
     @IBOutlet weak var layOutConstrain_view_writeComments_bottom: NSLayoutConstraint!
     @IBOutlet weak var layoutConstraint_lblCPost: NSLayoutConstraint!
 
+    
+    //MARK:- Properties
     
     var commentsArr = [AnyObject]()
     var selectedCommentDict = [String:AnyObject]()
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerViewController()
-  //  var delegate:CommentsVCDelegate?
+  //var delegate:CommentsVCDelegate?
 
+    //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -108,6 +110,8 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         
     }
     
+    //MARK:- KeyboardWillShow/Hide
+    
     func keyboardWillShow(sender: NSNotification) {
         if let userInfo = sender.userInfo {
             if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
@@ -131,18 +135,8 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             }
         } }
     
-    
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+ //MARK:- Setup Header
     
     func setUpHeader() -> Void {
         
@@ -327,6 +321,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         
     }
     
+    //MARK:- Button Actions
     
     @IBAction func btnPlayClick(sender: AnyObject) {
         
@@ -387,15 +382,17 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func onClickBackBtn(sender: UIButton) {
+        
         self.navigationController!.popViewControllerAnimated(true)
+        
     }
     
     @IBAction func onClickSendBtn(sender: UIButton) {
         
         self.sendCommentToServer()
-        
         self.tv_writeComment.resignFirstResponder()
         self.tv_writeComment.text = "Leave Your Comments..."
+        
     }
     
     // Comment user profile
@@ -430,7 +427,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         
     }
     
-    //MARK: TextView Delegate 
+    // MARK: - TextView Delegate
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         
@@ -442,11 +439,13 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
         if text == "\n"  // Recognizes enter key in keyboard
         {
             textView.resignFirstResponder()
             return false
         }
+        
         return true
     }
 
@@ -462,12 +461,15 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     
     //MARK: - Socket
     
-    //mark- Fetch Meetups/Invites listing data
+    // Fetch Meetups/Invites listing data
+    
     func sendCommentToServer() {
+        
         if self.tv_writeComment.text?.characters.count < 1 {
             AppHelper.showAlertWithTitle(AppName, message: "Post text can't be blank.", tag: 0, delegate: nil, cancelButton: "OK", otherButton: nil)
             return
         }
+        
         if self.tv_writeComment.text ==  "Leave Your Comments..." {
             AppHelper.showAlertWithTitle(AppName, message: "Post text can't be blank.", tag: 0, delegate: nil, cancelButton: "OK", otherButton: nil)
             return
@@ -547,7 +549,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         
     }
 
-
+//MARK:- Table View DataSource
 
 extension CommentsVC:UITableViewDataSource{
     
@@ -555,9 +557,6 @@ extension CommentsVC:UITableViewDataSource{
     {
    
         let dict = commentsArr[indexPath.row] as! NSDictionary
-        
-        
-        
         let newString = dict["comment"]!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         let str = newString.stringByReplacingEmojiCheatCodesWithUnicode()
         
@@ -567,8 +566,6 @@ extension CommentsVC:UITableViewDataSource{
         let size : CGSize =  CommonMethodFunctions.sizeOfCell(str, fontSize: 16 , width: Float(w) , fontName: "Roboto-Light")
         
         let height = size.height + 140
-        
-        
         return height
         
         
@@ -587,9 +584,7 @@ extension CommentsVC:UITableViewDataSource{
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as UITableViewCell
         
         cell.selectionStyle = .None
-        
-        
-        
+     
         let iv_profile = cell.viewWithTag(1) as! UIImageView
         let lbl_name = cell.viewWithTag(2) as! UILabel
         let lbl_timeAgo = cell.viewWithTag(3) as! UILabel
@@ -597,8 +592,7 @@ extension CommentsVC:UITableViewDataSource{
         lbl_details.selectable = true
         lbl_details.dataDetectorTypes = UIDataDetectorTypes.Link
         lbl_details.delegate = self
-        
-   //     let lbl_orgName = cell.viewWithTag(5) as! UILabel
+        //let lbl_orgName = cell.viewWithTag(5) as! UILabel
         
         iv_profile.layer.borderWidth = 1.0
         iv_profile.contentMode = .ScaleAspectFill
@@ -612,7 +606,6 @@ extension CommentsVC:UITableViewDataSource{
         
         
         let dict = commentsArr[indexPath.row] as! NSDictionary
-        
         print_debug("dict = ", dict)
         
         if let name = (dict as NSDictionary).valueForKeyPath("commentedBy.firstName") as? String {
@@ -623,6 +616,7 @@ extension CommentsVC:UITableViewDataSource{
         if let logoUrlStr = (dict as NSDictionary).valueForKeyPath("commentedBy.imgUrl") as? String    {
             
             let image_url = NSURL(string: logoUrlStr )
+       
             if (image_url != nil) {
                 
                 let placeholder = UIImage(named: "ic_booking_profilepic")
@@ -636,10 +630,7 @@ extension CommentsVC:UITableViewDataSource{
             let df = NSDateFormatter.init()
             df.dateFormat = "yyyy-MM-dd HH:mm:ss"
             df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-            //   df.timeZone = NSTimeZone(name: "UTC")
-            
-            
-            
+            //df.timeZone = NSTimeZone(name: "UTC")
             df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             df.timeZone = NSTimeZone(forSecondsFromGMT: 0)
             let tempDate = df.dateFromString(createdDate) as NSDate!
@@ -653,12 +644,9 @@ extension CommentsVC:UITableViewDataSource{
              */
             
             lbl_timeAgo.text = HelpingClass.timeAgoSinceDate(df.dateFromString(dateStr)!, numericDates: false)
-            
-            
-            
             lbl_details.text =  dict["comment"] as? String
             // will display Organisation name
-   //         lbl_orgName.text = ""
+            //  lbl_orgName.text = ""
             
         }
         

@@ -17,15 +17,21 @@ enum userType {
 class MenuVC: UIViewController, UISearchBarDelegate {
 
     
-   // @IBOutlet weak var search_bar: UISearchBar!
     
+//MARK:- Outlets
+    
+   // @IBOutlet weak var search_bar: UISearchBar!
     @IBOutlet weak var table_view: UITableView!
+    @IBOutlet var viewAddFriend: UIView!
+
+    
+//MARK:- Properties
     
     var bottomTabBar : CustonTabBarController!
     var statusLbl : UILabel!
     
-    @IBOutlet var viewAddFriend: UIView!
     
+//MARK:- View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,15 +60,6 @@ class MenuVC: UIViewController, UISearchBarDelegate {
     }
     
 
-    /*
-    
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - Search bar resign
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
@@ -93,7 +90,6 @@ class MenuVC: UIViewController, UISearchBarDelegate {
                 (status,responseDict) in
                 
                 
-                
                 AppDelegate.dismissProgressHUD()
                 
                 if (status == "Success") {
@@ -101,9 +97,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
                     if ((responseDict["error"] as! Int) == 0) {
                         
                         print_debug(responseDict["result"])
-                        
-                         
-                        
+
                         if let result = responseDict["result"] {
                             
                        //     AppHelper.showAlertWithTitle(AppName, message: "Status is  " + String(otp), tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
@@ -135,11 +129,12 @@ class MenuVC: UIViewController, UISearchBarDelegate {
     }
 }
 
+
+ // MARK: - UITableViewDataSource Method
+
 extension MenuVC: UITableViewDataSource{
     
-
-    // MARK: - UITableViewDelegate Method
-    
+   
     func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat
     {
         if indexPath.row == 0 {
@@ -238,71 +233,19 @@ extension MenuVC: UITableViewDataSource{
         return cell;
     }
 }
+
+
+//MARK:- Table View Delegate
+
 extension MenuVC:UITableViewDelegate{
     
-    
-    //MARK:- UIAlertController
-    
-    func showAlert() -> Void {
-        
-        //1. Create the alert controller.
-        let alert = UIAlertController(title: AppName, message: "Update your status.", preferredStyle: .Alert)
-        
-        //2. Add the text field. You can configure it however you need.
-        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
-            
-            textField.delegate = self
-            
-            if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
-                textField.text = status as? String
-            }else{
-                textField.text = "Available."
-            }
-            
-        })
-        
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler:{ [weak alert] (action) -> Void in
-            
-            
-            
-            
-            }))
-        
-        //3. Grab the value from the text field, and print_debug it when the user clicks OK.
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { [weak alert] (action) -> Void in
-           
-            let textField = alert!.textFields![0] as UITextField
-            print_debug("Text field: \(textField.text)")
-            
-            if ((textField.text?.isBlank) == true) {
-                self.statusLbl.text = "  Available"
-                // hit API
-                self.sendStatusAPI("  Available")
-            }
-            else{
-                
-                
-                let finalStr = "  " + textField.text!
-                self.sendStatusAPI(finalStr)
-            }
-            
-            // hit API
-           // self.sendStatusAPI(textField.text!)
-            
-            }))
-        
-        // 4. Present the alert.
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-
-
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         switch indexPath.row {
             
             //Profile
         case 0:
+
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
             vc.viewerUserID = AppHelper.userDefaultsForKey(_ID) as! String
        //     let v = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileVC") as! ProfileVC
@@ -313,24 +256,22 @@ extension MenuVC:UITableViewDelegate{
             
             //Profile status
         case 1:
+
             self.showAlert()
             break
             
             //Contacts
         case 2:
             
-            
             let vc = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
-            vc.fromVC = "Menu";
-            
+            vc.fromVC = "Menu"
             self.navigationController?.pushViewController(vc, animated: true)
-            
             break
             
            // Invite Friend
         case 3:
-            self.openDefaultSharing("")
             
+             self.openDefaultSharing("")
              break
             
             //add afriend
@@ -343,26 +284,24 @@ extension MenuVC:UITableViewDelegate{
             
             //Get my pass
         case 5:
+
             break
             
             //Fav
         case 6:
+
             break
-        
-            
-            
+         
             //Settings
         case 7:
             
             let settingVC: SettingsMainVC = self.storyboard!.instantiateViewControllerWithIdentifier("SettingsMainVC") as! SettingsMainVC
-            
             self.navigationController?.pushViewController(settingVC, animated: true)
             break
             
-        //Help
+             //Help
         case 8:
-            
-            
+           
             let helpVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("HelpViewController") as! HelpViewController
             self.navigationController?.pushViewController(helpVC, animated: true)
             break
@@ -370,10 +309,13 @@ extension MenuVC:UITableViewDelegate{
             
             //TERMS N POLICIES
         case 9:
+            
             let WebVC:WebViewVC = self.storyboard!.instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
             WebVC.pageName = "TERMSNPOLICIES"
             self.navigationController?.pushViewController(WebVC, animated: true)
             break
+            
+        
             //About Us
         case 10:
             
@@ -384,8 +326,6 @@ extension MenuVC:UITableViewDelegate{
             WebVC.title = "About Us"
             WebVC.urlStr = "http://www.proactively.com/"
             self.navigationController?.pushViewController(WebVC, animated: true)
-          
- 
             break
             
             //LogOut
@@ -439,7 +379,61 @@ extension MenuVC:UITableViewDelegate{
         
     }
     
+    
+    //MARK:- UIAlertController
+    
+    func showAlert() -> Void {
+        
+        //1. Create the alert controller.
+        let alert = UIAlertController(title: AppName, message: "Update your status.", preferredStyle: .Alert)
+        
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+            
+            textField.delegate = self
+            
+            if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
+                textField.text = status as? String
+            }else{
+                textField.text = "Available."
+            }
+            
+        })
+        
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler:{ [weak alert] (action) -> Void in
+            
+            }))
+        
+        //3. Grab the value from the text field, and print_debug it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { [weak alert] (action) -> Void in
+            
+            let textField = alert!.textFields![0] as UITextField
+            print_debug("Text field: \(textField.text)")
+            
+            if ((textField.text?.isBlank) == true) {
+                self.statusLbl.text = "  Available"
+                // hit API
+                self.sendStatusAPI("  Available")
+            }
+            else{
+                
+                
+                let finalStr = "  " + textField.text!
+                self.sendStatusAPI(finalStr)
+            }
+            
+            // hit API
+            // self.sendStatusAPI(textField.text!)
+            
+            }))
+        
+        // 4. Present the alert.
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
 
+//MARK:- Open Default Sharing
 
     func openDefaultSharing(textStr:String) -> Void {
         
@@ -457,8 +451,6 @@ extension MenuVC:UITableViewDelegate{
             self.presentViewController(activityVC, animated: true, completion: nil)
         }
     }
-
-
 
 }
 

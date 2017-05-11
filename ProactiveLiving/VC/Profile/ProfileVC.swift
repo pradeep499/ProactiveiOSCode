@@ -10,20 +10,23 @@ import UIKit
 
 class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
 
+    //MARK:- Outlets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var lbl_profileStatus: UILabel!
-    
     @IBOutlet weak var layout_CollectionViewBottomHeight: NSLayoutConstraint!
     
-    var cvHeight:CGFloat = 0.0;
+    
+    
+    //MARK:- Properties
+    
+    var cvHeight:CGFloat = 0.0
     //to check owner or friend not nill all time
     var viewerUserID:String!
     var isFriend = false
-    
     var bottomTabBar : CustonTabBarController!
-    
     var dictForFriends = [String:AnyObject]()
     
+    //MARK:- View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +74,7 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
     }
     
     
+    //MARK:- Set Up Collection view
     
     func setUpCollectionView() -> Void {
         
@@ -87,11 +91,13 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
         self.layout_CollectionViewBottomHeight.constant = cvHeight
     }
     
-    
+    // Notification method
     func NotifyFrDetails(notification: NSNotification){
        
         if let status = friendDetailsDict!["result"]!["userStatus"] ?? ""{
+            
             self.lbl_profileStatus.text = "  Status:" + (status as! String)
+           
             //dictForFriends = notification.userInfo as! [String:AnyObject]
             //print_debug("dictForFriends")
             //print_debug(dictForFriends)
@@ -104,25 +110,30 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
 
 }
 
+//MARK:- CollectionView DataSource Extension
+
 extension ProfileVC : UICollectionViewDataSource{
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-       //  layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-       //  layout.itemSize = CGSize(width: screenWidth/3, height: screenWidth/3)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-      //collectionView.collectionViewLayout = layout
+            let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+           //  layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+           //  layout.itemSize = CGSize(width: screenWidth/3, height: screenWidth/3)
         
-        // UICollectionViewDelegateFlowLayout
-        
-        let w = collectionView.bounds.size.width - 30
-       //  let w = collectionView.bounds.size.width
-        return CGSize(width: w/3 - 5 , height: w/3 + 30)
-        //  return CGSize(width: w/3 , height: w/3)
+            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 0
+           //collectionView.collectionViewLayout = layout
+            
+            // UICollectionViewDelegateFlowLayout
+            
+            let w = collectionView.bounds.size.width - 30
+           //  let w = collectionView.bounds.size.width
+           
+            return CGSize(width: w/3 - 5 , height: w/3 + 30)
+            //  return CGSize(width: w/3 , height: w/3)
         
     }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
        
         return UIEdgeInsets(top: 5, left: 10, bottom:5, right: 10)
@@ -146,86 +157,35 @@ extension ProfileVC : UICollectionViewDataSource{
         let lbl = cell.viewWithTag(2) as! UILabel
         
         switch indexPath.row {
-        case 0:
+        case 0:                                     // About
             iv.image = UIImage(named: "pf_about")
             lbl.text = "About"
             break
-        case 1:
+        case 1:                                     // PACs
             iv.image = UIImage(named: "pf_pacs")
             lbl.text = "PACs"
             break
             
-     /*   case 2:
-            iv.image = UIImage(named: "pf_promotions")
-            lbl.text = "Promotions"
-            break
-            
-        case 3:
-            iv.image = UIImage(named: "pf_photos")
-            lbl.text = "Photos"
-            break
-        
-        case 4:
-            iv.image = UIImage(named: "pf_videos")
-            lbl.text = "Videos"
-            break
-        
-        case 5:
-            iv.image = UIImage(named: "pf_friends")
-            lbl.text = "Friends"
-            break
-        
-        case 6:
-            iv.image = UIImage(named: "pf_qanda")
-            lbl.text = "Q&A"
-            break
-        
-        case 7:
-            iv.image = UIImage(named: "pf_Inspirational")
-            lbl.text = "Inspirational"
-            break
-        
-        case 8:
-            iv.image = UIImage(named: "pf_pass")
-            lbl.text = "My PAS"
-            break
-            
-        case 9:
-            iv.image = UIImage(named: "pf_following")
-            lbl.text = "Followings"
-            break
-        
-        case 10:
-            iv.image = UIImage(named: "pf_followers")
-            lbl.text = "Followers"
-            break
-        
-        case 11:
-            iv.image = UIImage(named: "pf_social")
-            lbl.text = "Social Networks"
-            break*/
-            
-        case 2:
+        case 2:                                     // Friends
             iv.image = UIImage(named: "pf_friends")
             lbl.text = "Friends"
             break
             
-        case 3:
+        case 3:                                     // Gallery
             iv.image = UIImage(named: "pf_photos")
             lbl.text = "Gallery"
             break
             
-        case 4:
+        case 4:                                     // Videos
             iv.image = UIImage(named: "pf_videos")
             lbl.text = "Videos"
             break
             
-        case 5:
+        case 5:                                     // Social Networks
             iv.image = UIImage(named: "pf_social")
             lbl.text = "Social Networks"
             break
             
-       
             
         default:
             break
@@ -236,6 +196,8 @@ extension ProfileVC : UICollectionViewDataSource{
         return cell
     }
 }
+
+//MARK:- Collection View Delegate
 
 extension ProfileVC: UICollectionViewDelegate{
     

@@ -12,8 +12,6 @@ import MediaPlayer
 import AVKit
 
 
-
-    
 protocol GenericProfileCollectionVCDelegate {
     func getSelectedImgData(imgData:NSData, imgName:String) ;
 }
@@ -30,22 +28,21 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     
     @IBOutlet weak var btnRight: UIButton!
     
-    var genericType:ProfileGenericType?
-    
     @IBOutlet weak var layOut_attachmetBottom: NSLayoutConstraint!
-    
     
     @IBOutlet weak var attachmentContainerView: UIView!
     
     @IBOutlet weak var imgDeleteBtn: UIButton!
+    
     //MARK:- Properties
     
     var photoListArr = [AnyObject]()
     var socialNetworkListArr = [AnyObject]()
     var friendListArr = [AnyObject]()
-    
-    var deleteButton:UIButton?  // by me
-    var photoIDArr = [String]() // by me
+    var genericType:ProfileGenericType?
+
+    var deleteButton:UIButton?
+    var photoIDArr = [String]()
     var isDelete = true
     var isHiddenDeleteBtn = false
     var indexToDelete = NSIndexPath()
@@ -63,7 +60,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     //to check owner or friend not nill all time
     var viewerUserID:String!
     
-    
+    //MARK:- View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,62 +94,64 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
     }
     
+  //MARK:- Set Up Page
     
     func setUpPage() -> Void {
         
-        self.btnRight.hidden = true
-        
-        if genericType == .Friends {
-            self.lbl_title.text = "Friends"
-            self.getFriendListAPI()
+            self.btnRight.hidden = true
             
-        }else if genericType == .Followers {
-            self.lbl_title.text = "Followers"
-        }else if genericType == .Gallery {
-            
-            self.lbl_title.text = "Gallery"
-            self.btnRight.hidden = false
-            self.btnRight.setImage(UIImage(named: "pf_add"), forState: .Normal)
-            
-            
-            
-            let attachments = AttachmentsVC()
-            attachments.delegate = self
-            
-            
-            if willCallGetPhotosOrSocialNetworkList == true {
-                self.getPhotosOrSocialNetworkList("photos")
+            if genericType == .Friends {
+                
+                self.lbl_title.text = "Friends"
+                self.getFriendListAPI()
+                
+            }else if genericType == .Followers {
+                
+                self.lbl_title.text = "Followers"
+                
+            }else if genericType == .Gallery {
+                
+                self.lbl_title.text = "Gallery"
+                self.btnRight.hidden = false
+                self.btnRight.setImage(UIImage(named: "pf_add"), forState: .Normal)
+               
+                let attachments = AttachmentsVC()
+                attachments.delegate = self
+                
+                if willCallGetPhotosOrSocialNetworkList == true {
+                    
+                    self.getPhotosOrSocialNetworkList("photos")
+                    
+                }
+                
+            }else if genericType == .SocialNetworks {
+                
+                self.lbl_title.text = "Social Networks"
+                self.btnRight.hidden = false
+                self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
+                self.btnRight.setTitle("Add", forState: .Normal)
+                self.getPhotosOrSocialNetworkList("socialNetworks")
+                
             }
             
+            //hide Attachment VC
             
+            self.layOut_attachmetBottom.constant = -350;
+            self.cv.reloadData()
             
-        }else if genericType == .SocialNetworks {
-            
-            self.lbl_title.text = "Social Networks"
-            self.btnRight.hidden = false
-            self.btnRight.setImage(UIImage(named: ""), forState: .Normal)
-            self.btnRight.setTitle("Add", forState: .Normal)
-            
-            self.getPhotosOrSocialNetworkList("socialNetworks")
-            
-        }
-        
-        //hide Attachment VC
-        
-        self.layOut_attachmetBottom.constant = -350;
-        self.cv.reloadData()
-        
-        //check logged in user or friend
-        if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
-            //Friend
-            self.btnRight.hidden = true
-        }
-        
-        
+            //check logged in user or friend
+            if String(AppHelper.userDefaultsForKey(_ID)) != viewerUserID{
+                //Friend
+                self.btnRight.hidden = true
+                
+            }
         
     }
+    
+    //MARK:- Set up Collection View
     
     func setUpCollectionView() -> Void {
         
@@ -164,7 +163,6 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         layout.itemSize = CGSize(width: w/3 - 5, height: w/3)
         layout.minimumInteritemSpacing = 6
         layout.minimumLineSpacing = 10
-        
         
         
         if genericType == .SocialNetworks {
@@ -185,16 +183,19 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
             //Friend
         }
         
-        
     }
+ 
+    //MARK:- Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "attachmentsSegue" {
             
             let attachmetsVC = segue.destinationViewController as! AttachmentsVC
             attachmetsVC.delegate = self
+            
         }
     }
+    
     //MARK:- Button Actions
     
     @IBAction func onClickDeleteBtn(sender: AnyObject) {
@@ -203,26 +204,20 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         
         // Managing the delete button image
         if isDelete == true {
+        
             isDelete = !isDelete
             //self.deleteButton!.hidden = false
             self.isHiddenDeleteBtn = true
             self.imgDeleteBtn.setImage(UIImage(named: "profile_success"), forState: .Normal)
-          
-       //     self.tempPhotoListArr = self.photoListArr
-      //      self.photoListArr.removeAll()
-          //  self.photoListArr = self.tempPhotoListArr
-          
             
         }
         else {
+            
             isDelete = !isDelete
             //self.deleteButton!.hidden = true
             self.isHiddenDeleteBtn = false
             self.imgDeleteBtn.setImage(UIImage(named: "profile_remove"), forState: .Normal)
-           
-            //self.tempPhotoListArr = self.photoListArr
-            //self.photoListArr.removeAll()
-         //     self.photoListArr = self.tempPhotoListArr
+      
         }
         
         
@@ -269,7 +264,6 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     
     //MARK:- Delete Button Action
     
-    
     func deleteAction(sender: AnyObject) {
         
         let buttonPosition = sender.convertPoint(CGPointZero, toView: self.cv)
@@ -307,7 +301,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     }
     
     
-    //MARK: AttachmentsDelegates
+    //MARK:- AttachmentsDelegates
     
     func didCancelBtnPressed() {
         
@@ -324,15 +318,14 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     
     
     
-    
     func removeElementFromArr(item:Int){
         
     self.photoListArr.removeAtIndex(item)
 
     }
-    //MARK:- API
+   
     
-    
+    //MARK:- Delete Item From Gallery API Hit
     
     func deleteItemFromGallery(id:String) -> Void {
         
@@ -357,7 +350,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                      //  self.photoListArr.removeAtIndex((self.indexToDelete.item))
+                        //self.photoListArr.removeAtIndex((self.indexToDelete.item))
                         //self.cv.reloadData()
                        self.cv.performBatchUpdates({
                         
@@ -389,7 +382,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         
     }
     
-    
+ //MARK:- Get Photos Or SocialNetwork List API Hit
     
     func getPhotosOrSocialNetworkList(type:String) -> Void {
         
@@ -423,11 +416,14 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                             }
                             
                         }else if type == "socialNetworks"{
+                            
                             print_debug("Social Network Response = ")
                             print_debug( responseDict["result"])
                             
                             if let socialNetwork = responseDict["result"]!["socialNetwork"]{
+                                
                                 self.socialNetworkListArr = socialNetwork as! [AnyObject]
+                                
                             }
                         }
                         
@@ -454,17 +450,18 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         
     }
     
-    
+//MARK:- Get Friend List API Hit
     
     func getFriendListAPI() -> Void {
         
         if AppDelegate.checkInternetConnection() {
+          
             //show indicator on screen
             AppDelegate.showProgressHUDWithStatus("Please wait..")
+           
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = viewerUserID // AppHelper.userDefaultsForKey(_ID)
-            
             
             
             //call global web service class latest
@@ -482,10 +479,9 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                         if let content = responseDict["result"]{
                             
                             self.friendListArr = content as! [AnyObject]
+                            
                         }
                         self.cv.reloadData()
-                        
-                        
                         
                     } else {
                         
@@ -508,8 +504,9 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
         
     }
     
-    
 }
+
+//MARK:- CollectionView DataSource
 
 extension GenericProfileCollectionVC:UICollectionViewDataSource{
     
@@ -610,33 +607,23 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             return cell
             
         }
-        
-        
-        
-        
-        
+       
         let cell =  collectionView.dequeueReusableCellWithReuseIdentifier("FollowerCell", forIndexPath: indexPath)
         return cell
     }
     //}
     
-    
-    
-    
-    
     //class PhotoCell: GenericProfileCollectionVC, UIGestureRecognizerDelegate {
     
+    
+//MARK:- Click User Image Tap Gesture
     
     func clickUserImage(recognizer: UITapGestureRecognizer )
     {
         
         let pointInTable = recognizer.locationInView(self.cv)
         let indexPath:NSIndexPath = self.cv.indexPathForItemAtPoint(pointInTable)!
-        
         let dict = self.photoListArr[indexPath.row]
-        
-        
-        
         let imgUrl = dict["url"] as! String
         let thumbNailName = dict["thumNailName"] as! String
         let postType = dict["type"] as! String
@@ -653,8 +640,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             let imgData = UIImageJPEGRepresentation(thumbIV.image!, 0.2);
             
             //let imge =  thumbIV.image?.resizeWithPercentage(60.0)
-            
-           // let imgData = UIImagePNGRepresentation(imge!)
+            // let imgData = UIImagePNGRepresentation(imge!)
 
             self.delegate!.getSelectedImgData(imgData!, imgName:thumbNailName)
             self.navigationController?.popViewControllerAnimated(true)
@@ -662,12 +648,6 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             return
             
         }else if (postType != "image" && pageFrom == "ProfileContainer"){
-
-            
-//            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: "You can't select video.", cancelButtonTitle:nil, otherButtonTitle: ["OK"], completion: { (str) in
-//                   return
-//            })
-//            return
 
             ChatHelper.showALertWithTag(0, title: APP_NAME, message: "You can't select video.", delegate: nil, cancelButtonTitle: "Ok", otherButtonTitle: nil)
             
@@ -679,9 +659,10 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             let fullImageVC: FullScreenImageVC =  AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("FullScreenImageVC") as! FullScreenImageVC
             
-//            fullImageVC.hidesBottomBarWhenPushed = true
+            //  fullImageVC.hidesBottomBarWhenPushed = true
             
             //check the thumbNail name is exist ? or generate from video url and save to db
+            
             HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
                 
                 if isExistPath {
@@ -693,18 +674,11 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                 }
                 self.navigationController?.pushViewController(fullImageVC, animated: true)
             })
-            
-            
-            
-            
-            
-            
+           
         }else if(postType == "video"){
-            
             
             var videoName = thumbNailName.stringByReplacingOccurrencesOfString("Thumb", withString: "Video")
             videoName = videoName.stringByReplacingOccurrencesOfString(".jpg", withString: ".mp4")
-            
             
             HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: videoName, completion: {(isExistPath, fileUrl) -> Void in
                 
@@ -725,9 +699,10 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
         }
     }
+
+//MARK:- SetUp Photo Cell
     
     func setUpPhotoCell(collectionView: UICollectionView, indexPath: NSIndexPath, dict:[String:String]!) -> UICollectionViewCell {
-        
         
         let cell:ProfileCollectionViewCell  =  collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as! ProfileCollectionViewCell
         
@@ -736,6 +711,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
 //        let iv_videoIcon = cell.viewWithTag(2) as! UIImageView
 //        let indicator = cell.viewWithTag(3) as! UIActivityIndicatorView
 //        let deleteBtn = cell.viewWithTag(10) as! UIButton
+        
         self.deleteButton = cell.deleteBtn
         
         if self.isHiddenDeleteBtn == false{
@@ -745,23 +721,12 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         else{
             self.deleteButton?.hidden = false
         }
-        // by me
+        
+        
         self.deleteButton!.addTarget(self, action:#selector(GenericProfileCollectionVC.deleteAction(_:)) , forControlEvents: .TouchUpInside)
         
         let thumbNailName = dict["thumNailName"]!
         let imgUrl = dict["url"]
-        
-        
-        //check the thumbNail name is exist ? or generate from video url and save to db
-        /*let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(backgroundQueue, {
-            print_debug("This is run on the background queue")
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                print_debug("This is run on the main queue, after the previous code in outer block")
-            })
-        })*/
         
         HelpingClass.isFileExistsAtPath(directory: "/ChatFile", fileName: thumbNailName, completion: {(isExistPath, fileUrl) -> Void in
             
@@ -771,9 +736,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             cell.thumbIV.addGestureRecognizer(recognizer)
             cell.thumbIV.userInteractionEnabled = true
             
-            
             if dict["type"]   == "image"{
-                
                 
                 cell.iv_videoIcon.hidden = true
                 cell.indicator.startAnimating()
@@ -782,6 +745,7 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                 if isExistPath {
                     let img = UIImage(contentsOfFile: fileUrl!)
                     cell.thumbIV.image =  CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30);
+                 
                     //cell.thumbIV.sd_setImageWithURL(NSURL(string:fileUrl!), placeholderImage : UIImage(named: "pac_listing_no_preview") )
                     
                     cell.indicator.hidden = true
@@ -807,7 +771,6 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                 //for video
                 
                 cell.iv_videoIcon.hidden = false
-                
                 cell.indicator.hidden = false
                 cell.indicator.startAnimating()
                 
@@ -820,14 +783,11 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                 } else {
                     
                     //generate thumb from video url and display on cell
-                    let img =  CommonMethodFunctions.generateThumbImage(NSURL(string: imgUrl!)!) //self.generateThumnail(sourceURL: NSURL(string: imgUrls.first!)!)
+                    let img =  CommonMethodFunctions.generateThumbImage(NSURL(string: imgUrl!)!)
                     cell.thumbIV.image = CommonMethodFunctions.imageWithImage(img, scaledToWidth: Float( UIScreen.mainScreen().bounds.size.width) - 30)
                    // cell.thumbIV.sd_setImageWithURL(NSURL(string:imgUrl!), placeholderImage:UIImage(named:"pac_listing_no_preview"))
                     
-                    
-                    
-                    
-                    //write to db
+                   //write to db
                     if img != nil{
                         
                         let imgData = UIImagePNGRepresentation(img) as NSData?
@@ -845,7 +805,6 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
                 cell.indicator.stopAnimating()
                 
             }
-            
             
         })
         
@@ -881,38 +840,14 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             
             iv_social.image = UIImage(named: "pintrest")
         }
-        /*    switch indexPath.row {
-         case 0:
-         
-         break
-         case 1:
-         
-         break
-         case 2:
-         iv_social.image = UIImage(named: "")
-         break
-         case 3:
-         iv_social.image = UIImage(named: "")
-         break
-         case 4:
-         iv_social.image = UIImage(named: "")
-         break
-         
-         
-         default:
-         break
-         }*/
         
         return cell
     }
     
     
-    
-    
-    
 }
 
-//MARK:-UICollectionViewDelegate
+//MARK:-Collection View Delegate
 
 extension GenericProfileCollectionVC:UICollectionViewDelegate{
     
@@ -920,18 +855,17 @@ extension GenericProfileCollectionVC:UICollectionViewDelegate{
         
         if genericType == .SocialNetworks {
             
-            // socialNetwork             {type:"facebook",url:"asdfdfsd"}
             
             let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
-            
             let dict = self.socialNetworkListArr[indexPath.row] as! [String:String]
+           
             WebVC.title = "Social Network"
             WebVC.urlStr = dict["url"]!
             self.navigationController?.pushViewController(WebVC, animated: true)
+            
         }else if( genericType == .Friends ){
             
             let vc = AppHelper.getProfileStoryBoard().instantiateViewControllerWithIdentifier("ProfileContainerVC") as! ProfileContainerVC
-            
             let dict = self.friendListArr[indexPath.row] as! [String:AnyObject]
             
             vc.viewerUserID = dict["friendId"]!["_id"] as! String!

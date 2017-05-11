@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileCollectionViewCell: UICollectionViewCell {
     
-    
+  //MARK:- Outlets
     @IBOutlet weak var deleteBtn: UIButton!
     
     @IBOutlet weak var thumbIV: UIImageView!

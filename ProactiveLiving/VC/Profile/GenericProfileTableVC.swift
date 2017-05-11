@@ -20,25 +20,26 @@ var friendDetailsDict:[String:AnyObject]?
 
 class GenericProfileTableVC: UIViewController {
     
-    @IBOutlet weak var btnRight: UIButton!
-    var genericType:ProfileGenericType?
+   
+    //MARK:- Outlets
     
+    @IBOutlet weak var btnRight: UIButton!
     @IBOutlet weak var lbl_title: UILabel!
     @IBOutlet weak var tv_summary: UITextView!
     @IBOutlet weak var tv: UITableView!
-    
-    @IBOutlet weak var headerView_AboutMe: UIView!    
+    @IBOutlet weak var headerView_AboutMe: UIView!
     @IBOutlet weak var headerView_socialNetwork: UIView!
+    
+    //MARK:- Properties
     
     var socialNetworkArr = [AnyObject]?()
     //to check owner or friend not nill all time
     var viewerUserID:String!
-    
-    
-    
-    
+    var genericType:ProfileGenericType?
     var tf_fb:UITextField?, tf_google:UITextField?, tf_linkedIn:UITextField?, tf_twitter:UITextField?, tf_inst:UITextField?, tf_pintrest:UITextField?
 
+    //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,9 +58,10 @@ class GenericProfileTableVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+   
+    //MARK:- Set Up Page
+    
     func setUpPage() -> Void {
-        
-        
         
         if genericType == .AboutMe{
             
@@ -107,11 +109,10 @@ class GenericProfileTableVC: UIViewController {
             
         }
         
-        
     }
     
     
-    //MARK: Btn Click
+    //MARK:- Button Action
     
     @IBAction func onClickRightBtn(sender: AnyObject) {
         
@@ -134,6 +135,13 @@ class GenericProfileTableVC: UIViewController {
         
     }
 
+    
+    @IBAction func onClickBackBatn(sender: AnyObject) {
+        
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
+    
     //MARK:- Validation check
     
     func isValidURLCheck() -> Bool{
@@ -172,7 +180,7 @@ class GenericProfileTableVC: UIViewController {
         return true
     }
     
-    
+    //MARK:- Is Empty check method
     func isEmptyUrl(str : String) -> Bool {
         
         
@@ -186,15 +194,7 @@ class GenericProfileTableVC: UIViewController {
         }
     }
     
-    
-    
-    @IBAction func onClickBackBatn(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    
-    
-    //MARK: - Service Call
+    //MARK:- Service Call
     
     func setSocialDict(tf:UITextField, type:String) -> [String:String] {
         
@@ -220,7 +220,7 @@ class GenericProfileTableVC: UIViewController {
         return dict
     }
     
-    
+    //MARK: API Hit Save Social Link API
     
     func saveSocialLinkAPI() {
         
@@ -268,8 +268,6 @@ class GenericProfileTableVC: UIViewController {
             parameters["socialNetwork"] = socialArr
             
             
-            
-            
             //call global web service class latest
             Services.postRequest(ServiceUpdateUserProfile, parameters: parameters, completionHandler:{
                 (status,responseDict) in
@@ -312,7 +310,9 @@ class GenericProfileTableVC: UIViewController {
     }
 
 }
-    
+
+//MARK:- Alert View Delegate
+
 extension GenericProfileTableVC:UIAlertViewDelegate{
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
@@ -325,7 +325,7 @@ extension GenericProfileTableVC:UIAlertViewDelegate{
 }
 
 
-
+//MARK:- Table View Data Source
 
 extension GenericProfileTableVC: UITableViewDataSource{
     
@@ -366,6 +366,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
         return cell
     }
     
+    //MARK:- setAboutMeCellHeight "Method to return cell height"
     
     func setAboutMeCellHeight(tv: UITableView, indexPath: NSIndexPath) -> CGFloat {
         
@@ -479,6 +480,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
         
     }
     
+  //MARK:- setUpAboutMeCell "Method to render cell with data"
     
     func setUpAboutMeCell(tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -720,9 +722,7 @@ extension GenericProfileTableVC: UITableViewDataSource{
         return cell
     }
 
-
- 
-    
+  
     func getFriendsValue(forKey:String) -> String {
         
         if  (friendDetailsDict!["result"]![forKey] != nil)  {
