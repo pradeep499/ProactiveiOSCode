@@ -12,14 +12,22 @@ import EventKit
 
 class MeetUpsListingVC: UIViewController {
 
+    
+    
+    //MARK:-  Properties
+    
     var pushedFrom : String!
     var arrData = [AnyObject]()
 
+    //MARK:- Outlets
+    
     @IBOutlet weak var tableView: UITableView!
 
+    
+    //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.arrData = Array()
         
       NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.notificationCall), name: "getState", object: nil)
 
@@ -30,22 +38,27 @@ class MeetUpsListingVC: UIViewController {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
 
-        self.fetchAllMeetupsOrWebInvites()
-        self.listenerUpdateMeetupOrWebInvite()
+        self.fetchAllMeetupsOrWebInvites()     //Service hit
+        self.listenerUpdateMeetupOrWebInvite() //Service hit
+        
     }
     
     override func viewDidAppear(animated: Bool) {
+    
         super.viewDidAppear(animated)
+    
     }
     
     override func viewWillLayoutSubviews() {
+        
         super.viewWillLayoutSubviews()
-        self.tableView.setNeedsDisplay(); // repaint
-        self.tableView.setNeedsLayout(); // re-layout
+        self.tableView.setNeedsDisplay() // repaint
+        self.tableView.setNeedsLayout() // re-layout
 
     }
     
     func notificationCall(){
+       
         print_debug("calling notifiaction")
         print_debug(arrData)
 
@@ -53,6 +66,8 @@ class MeetUpsListingVC: UIViewController {
         self.listenerUpdateMeetupOrWebInvite()
 
     }
+   
+    //MARK:- Service Hit "fetchAllMeetupsOrWebInvites"
     
     func fetchAllMeetupsOrWebInvites() {
         
@@ -112,7 +127,7 @@ class MeetUpsListingVC: UIViewController {
         
     }
     
-    //mark- Fetch Meetups/Invites listing data
+    //MARK:- Fetch Meetups/Invites listing data
     func fetchMeetUpOrWebInviteData() {
         AppDelegate.showProgressHUDWithStatus("Please wait...")
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
@@ -171,6 +186,8 @@ class MeetUpsListingVC: UIViewController {
         }
     }
     
+    //MARK:- Service Hit "listenerUpdateMeetupOrWebInvite"
+    
     func listenerUpdateMeetupOrWebInvite() {
         
         if ServiceClass.checkNetworkReachabilityWithoutAlert()
@@ -200,12 +217,11 @@ class MeetUpsListingVC: UIViewController {
                     let predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
                     var filteredarray:[AnyObject] = (self.arrData as NSArray).filteredArrayUsingPredicate(predicate)
                     print_debug("ID = \(resultDict["_id"])")
-                    
                     print_debug("arrayDATA = \(self.arrData)")
-
-                  
+                    
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
+                   
                     if filteredarray.count > 0 {
                         let index = (self.arrData as NSArray).indexOfObject(filteredarray[0])
                        // self.arrData.removeAtIndex(index)
@@ -214,10 +230,7 @@ class MeetUpsListingVC: UIViewController {
                         //let indexpath = NSIndexPath(forRow: index, inSection: 0)
                         //self.tableView.reloadRowsAtIndexPaths([indexpath], withRowAnimation: .Fade)
                         
-                        
                     }
-                    
-                    
                     
                     self.tableView.reloadData()
                    //
@@ -242,7 +255,7 @@ class MeetUpsListingVC: UIViewController {
         }
     }
     
-    
+    // MARK:- Button Actions
     
     //Accept button tapped
     func btnAcceptClick(sender: UIButton)  {
@@ -264,6 +277,7 @@ class MeetUpsListingVC: UIViewController {
         else {
             dict["type"]="webinvite"
         }
+       
         dict["typeId"] = someDict["_id"] as! String
         dict["status"] = "1"
         dict["userId"] = ChatHelper.userDefaultForKey(_ID)
@@ -275,7 +289,6 @@ class MeetUpsListingVC: UIViewController {
         groupDict["groupid"] = someDict["groupId"] as! String
         groupDict["groupuserid"] = ChatHelper.userDefaultForKey(_ID)
         groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
-        
         dict["groupInfo"] = groupDict
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
 
@@ -296,6 +309,7 @@ class MeetUpsListingVC: UIViewController {
     
     // Decline button tapped
     func btnDeclineClick(sender: UIButton)  {
+        
         print_debug(sender)
         //sender.selected = !sender.selected
         
@@ -323,6 +337,7 @@ class MeetUpsListingVC: UIViewController {
         else {
             dict["type"]="webinvite"
         }
+        
         dict["typeId"] = someDict["_id"] as! String
         dict["status"] = "2"
         dict["userId"] = ChatHelper.userDefaultForKey("userId")
@@ -335,10 +350,11 @@ class MeetUpsListingVC: UIViewController {
         groupDict["phoneNumber"] = ChatHelper.userDefaultForKey(cellNum)
         
         dict["groupInfo"] = groupDict
-        
         ChatListner .getChatListnerObj().socket.emit("acceptMeetup_Invite", dict)
 
     }
+    
+    //MARK:- toRemoveOrCheckForExting
     
     func toRemoveOrCheckForExting(startDate:NSDate? ,endDate:NSDate? ,title:String? ){
         let eventStore = EKEventStore()
@@ -360,7 +376,7 @@ class MeetUpsListingVC: UIViewController {
 
 
 
-
+//MARK:- Table View Data Source and Delegate
 
 extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
     
@@ -390,7 +406,8 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         return height
     }
     
-    // By me 
+    // Date formatting
+    
     func daySuffix(from date: NSDate) -> String {
         let calendar = NSCalendar.currentCalendar()
         let dayOfMonth = calendar.component(.Day, fromDate: date)
@@ -424,8 +441,9 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         eventName.text = self.arrData[indexPath.row]["title"] as? String
         var dataDict = self.arrData[indexPath.row] as! [String : AnyObject]
         let arrMembers = dataDict["members"] as! [AnyObject]
-       // cell.btnAccept.layer.borderWidth = 1.0
-       // cell.btnDecline.layer.borderWidth = 1.0
+      
+        // cell.btnAccept.layer.borderWidth = 1.0
+        // cell.btnDecline.layer.borderWidth = 1.0
 
         AppHelper.setBorderOnView(cell.btnAccept)
         AppHelper.setBorderOnView(cell.btnDecline)
@@ -514,18 +532,12 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         if let dateStr =  self.arrData[indexPath.row]["eventDate"] as? String {
             
 
- 
-            
-            
             let df = NSDateFormatter.init()
             df.dateFormat = "dd/MM/yyyy"
             let dayTH = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: "EEE d",  dateStr: dateStr)
             
             let date = HelpingClass.convertDateFormat("dd/MM/yyyy", desireFormat: " MMM",  dateStr: dateStr)
-            
             let eventDate = dayTH + self.daySuffix(from:df.dateFromString(dateStr)! ) + date
-
-            
             lbl_eventDate.text = eventDate
             
              if let eventTime =   self.arrData[indexPath.row]["eventStartTime"] as? String{
@@ -541,14 +553,16 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
             
             let image_url = NSURL(string: imageUrlStr)
             if (image_url != nil) {
+                
                 let placeholder = UIImage(named: "ic_booking_profilepic")
                 eventImage.setImageWithURL(image_url, placeholderImage: placeholder)
+                
             }
         }
         
         let acceptButton = cell.contentView.viewWithTag(25) as! UIButton
         let declineButton = cell.contentView.viewWithTag(26) as! UIButton
-       // AppHelper.setBorderOnView(acceptButton)
+        // AppHelper.setBorderOnView(acceptButton)
         //AppHelper.setBorderOnView(declineButton)
         
         cell.btnAccept.userInteractionEnabled = true
@@ -579,7 +593,7 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
             
             
            // acceptButton.setImage(UIImage.init(named: "sure_deselected"), forState: .Selected)
-          //  declineButton.setImage(UIImage.init(named: "sure_selected"), forState: .Normal)
+           //  declineButton.setImage(UIImage.init(named: "sure_selected"), forState: .Normal)
 
             
            // acceptButton.titleLabel?.text="Sure!"
@@ -600,10 +614,10 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
             declineButton.setTitle("Decline", forState: UIControlState.Normal)
             
             //acceptButton.titleLabel?.text="Accept"
-           // declineButton.titleLabel?.text="Decline"
+            // declineButton.titleLabel?.text="Decline"
         
             //acceptButton.setImage(UIImage.init(named: "accept_selected"), forState: .Selected)
-           // declineButton.setImage(UIImage.init(named: "accept_deselected"), forState: .Normal)
+            // declineButton.setImage(UIImage.init(named: "accept_deselected"), forState: .Normal)
 
             lblAddress.text = self.arrData[indexPath.row]["webLink"] as? String
             imgAddress.image=UIImage(named:"web_invite_link")
@@ -619,6 +633,8 @@ extension MeetUpsListingVC: UITableViewDataSource,UITableViewDelegate{
         
         return cell;
     }
+   
+    /// Redirection to MeetUpDetailsVC
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         

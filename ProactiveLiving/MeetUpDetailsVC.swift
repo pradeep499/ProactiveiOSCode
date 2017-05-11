@@ -10,6 +10,9 @@ import UIKit
 
 class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
+    
+    //MARK:-Properties
+    
     var arrayForBool = [Int]()
     lazy var dataDict = [String : AnyObject]()
     var selectedRowsArray=[String]()
@@ -18,30 +21,29 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     var fwBy: String!
     var meetUpGroupID: String!
     
+    //MARK:-Outlets
+    
     @IBOutlet weak var imgMeetUp: UIImageView!
     @IBOutlet weak var imgLike: UIImageView!
     @IBOutlet weak var lblLike: UILabel!
     @IBOutlet weak var btnForward: UIButton!
     @IBOutlet weak var screenTitle: UILabel!
-    
     @IBOutlet weak var tableMeetUpDetails: UITableView!
     @IBOutlet weak var btnLink: UIButton!
     @IBOutlet weak var btnDialUp: UIButton!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var dialUpView: UIView!
     @IBOutlet weak var HConstDialUpView: NSLayoutConstraint!
-
-    
     @IBOutlet weak var btnSure: UIButton!
     @IBOutlet weak var btnSorry: UIButton!
     @IBOutlet weak var btnLike: UIButton!
     @IBOutlet weak var imgSure: UIImageView!
     @IBOutlet weak var imgSorry: UIImageView!
-    
     @IBOutlet weak var btnChat: UIButton!
-    
-    
     @IBOutlet weak var layout_forwartBtnWidth: NSLayoutConstraint!
+    
+    
+    //MARK:-View Life Cycle
     
     override func viewDidLoad() {
         
