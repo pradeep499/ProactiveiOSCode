@@ -1209,15 +1209,15 @@ class DataBaseController : NSObject
             newItem.messageType = params["type"] as? String
             
             
-            let dateFormatter = NSDateFormatter()
+            /*let dateFormatter = NSDateFormatter()
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
             dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
             let str = params["date"] as! String?
             let date1 = dateFormatter.dateFromString(str!)
-            let dateStr = dateFormatter.stringFromDate(date1!)
+            let dateStr = dateFormatter.stringFromDate(date1!) */
             
-            newItem.messageDate = dateStr as String
+            newItem.messageDate =  params["date"]  as? String
             newItem.localSortID = CommonMethodFunctions.nextChatIdentifies()
             //newItem.sortDate = dateStr as String
             newItem.messageTime = params["time"] as? String
@@ -1705,7 +1705,7 @@ class DataBaseController : NSObject
 //                }
 //            }else
 //            {
-                if(params["createdBy"] as! String == ChatHelper .userDefaultForAny("userId") as! String)
+                if(params["createdBy"] as! String == ChatHelper.userDefaultForAny("userId") as! String)
                 {
                     newItem.notificationCount = "0"
                     

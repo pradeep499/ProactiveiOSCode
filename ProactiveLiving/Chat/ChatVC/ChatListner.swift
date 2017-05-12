@@ -220,30 +220,43 @@ func connectToSocket() -> Void{
         
             var receiveMsgDic = Dictionary<String,AnyObject>()
             receiveMsgDic = data[0] as! Dictionary
-         print(receiveMsgDic);
-                print_debug("addReceiveMsgHandlers")
+        
+            print("recieveMessage ===\(receiveMsgDic)");
+        
             let lastHitDate = receiveMsgDic["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate")
         
             var tempDateStr : String
             var tempDate : NSDate!
-            var dateStr : String
-            var timeStr : String
+            var dateStr : String = ""
+            var timeStr : String = ""
             
             tempDateStr = receiveMsgDic["createdDate"] as! String
             
-            let dateFormatter = NSDateFormatter()
+           /* let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+            //dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+            dateFormatter.timeZone = NSTimeZone(name: "UTC")
+        
             tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
             
             dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
             dateStr = dateFormatter.stringFromDate(tempDate)
             dateFormatter.dateFormat = "HH:mm:ss.sss"
             dateFormatter.timeZone = NSTimeZone()
-            timeStr = dateFormatter.stringFromDate(tempDate)
-            
+            timeStr = dateFormatter.stringFromDate(tempDate) */
+        
+        
+        if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
+            dateStr = formatedDate
+        }
+        if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "HH:mm:ss.sss"){
+            timeStr = formatedDate
+        }
+        
+        
+        
             if receiveMsgDic["chatType"] as! String == "group" {
                // print("receiveMsgDic in group chat string recieveMessage")
                // print(receiveMsgDic)
@@ -703,42 +716,519 @@ func connectToSocket() -> Void{
             var playSoundLocalBool = false
         
         
-        let arrGroupData = NSMutableArray()
-        let arrOneToOneData = NSMutableArray()
+        //let arrGroupData = NSMutableArray()
+        //let arrOneToOneData = NSMutableArray()
 
         
-        for reieciveMsg in arr{
-            if reieciveMsg["chatType"] as! String == "group" {
-              arrGroupData.addObject(reieciveMsg)
-            }else{
-                arrOneToOneData.addObject(reieciveMsg)
+        //for reieciveMsg in arr{
+            //if reieciveMsg["chatType"] as! String == "group" {
+             // arrGroupData.addObject(reieciveMsg)
+            //}else{
+                //arrOneToOneData.addObject(reieciveMsg)
+         //   }
+        //}
+        
+       // self?.toUpdateGroupMessages(arrGroupData)
+            //self?.toUpadateOneToOneMessages(arrOneToOneData)
+        
+        
+        
+        for receiveMsgDic in arr
+        {
+         var tempDateStr : String
+         var tempDate : NSDate!
+         
+         var dateStr : String = ""
+         var timeStr : String = ""
+         
+         tempDateStr = receiveMsgDic["createdDate"] as! String
+        
+            /*let dateFormatter = NSDateFormatter()
+         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+         tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
+         
+         dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
+         dateStr = dateFormatter.stringFromDate(tempDate)
+         
+         dateFormatter.dateFormat = "HH:mm:ss.sss"
+         dateFormatter.timeZone = NSTimeZone()
+         timeStr = dateFormatter.stringFromDate(tempDate) */
+            
+            if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
+                dateStr = formatedDate
             }
+            
+            if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "HH:mm:ss.sss"){
+                timeStr = formatedDate
+            }
+         
+         if receiveMsgDic["chatType"] as! String == "group" {
+         // print(receiveMsgDic)
+         // print("receiveMsgDic in group chat string recieveMessage")
+         
+         let strId = receiveMsgDic["_id"] as! String
+         let groupId = receiveMsgDic["groupid"] as! String
+         var dict = Dictionary<String, AnyObject>()
+         dict["date"] = dateStr
+         dict["time"] = timeStr
+         dict["message"] = receiveMsgDic["messageChat"] as! String
+         dict["groupid"] = "\(groupId)"
+         
+         if receiveMsgDic["type"] as! String == "text" {
+         dict["type"] = "text"
+         } else if receiveMsgDic["type"] as! String == "image" {
+         dict["type"] = "image"
+         } else if receiveMsgDic["type"] as! String == "video" {
+         dict["type"] = "video"
+         } else {
+         dict["type"] = "audio"
+         }
+         
+         dict["sender"] = receiveMsgDic["senderid"] as! String
+         //dict["receiver"] = receiveMsgDic["recieverid"] as! String
+         dict["receiver"] = ""
+         dict["messageId"] = "\(strId)"
+         dict["modifiedDate"] = receiveMsgDic["modifiedDate"] as! String
+         let status = receiveMsgDic["status"] as! Int
+         dict["status"] = "\(status)"
+         let instance = DataBaseController.sharedInstance
+         let str:String = dict["sender"] as! String
+         let strPred:String = "userId contains[cd] \"\(str)\""
+         let fetchResult=instance.fetchData("GroupUserList", predicate: strPred, sort: ("userName",true))! as NSArray
+         
+         for myobject : AnyObject in fetchResult {
+         let contObj = myobject as! GroupUserList
+         dict["sendername"] = contObj.userName
+         }
+         
+         var exist:GroupChat?
+         var chatObj : GroupChat!
+         var passDic = Dictionary<String,AnyObject>()
+         
+         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+         self?.checkDateIsDifferentAppGrp(dict)
+         exist = instance.checkIfGroupChatMsgAlreadyExist("GroupChat", params: dict)
+         if exist != nil {
+         passDic["bfr"] = exist as GroupChat!
+         }
+         chatObj =  instance.insertGroupChatMessageInDb("GroupChat", params: dict) as GroupChat
+         passDic["updated"] = chatObj
+         } else {
+         dict["locMessageId"] = receiveMsgDic["localmsgid"] as! String
+         exist = instance.checkIfSenderGroupChatMsgAlreadyExist("GroupChat", params: dict)
+         if exist != nil {
+         passDic["bfr"] = exist as GroupChat!
+         chatObj =  instance.updateSenderGroupChatMessageInDb("GroupChat", params: dict) as GroupChat
+         }
+         passDic["updated"] = chatObj
+         }
+         
+         if receiveMsgDic["type"] as! String != "text" && receiveMsgDic["type"] as! String != "audio" {
+         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+         let mediaStr = receiveMsgDic["mediaThumb"] as! String
+         let trimmedString = mediaStr.stringByReplacingOccurrencesOfString("\n", withString: "")
+         let mediaThumbStr = receiveMsgDic["mediaUrl"] as! String
+         var saveThumbImagePath = "Thumb"+mediaThumbStr
+         saveThumbImagePath = saveThumbImagePath.stringByReplacingOccurrencesOfString(".mp4", withString: ".jpg")
+         dict["localThumbPath"] = trimmedString
+         dict["localFullPath"] = ""
+         dict["mediaUrl"] = receiveMsgDic["mediaUrl"] as! String
+         dict["mediaThumbUrl"] = trimmedString
+         let fileObj =  instance.insertGroupChatFileInDb1("GroupChatFile", params: dict) as GroupChatFile
+         chatObj.groupChatFile = fileObj
+         let locId = CommonMethodFunctions.nextIdentifies()
+         chatObj.locMessageId = "\(locId)"
+         
+         self!.homeCoreData.saveContext()
+         }
+         } else if receiveMsgDic["type"] as! String == "audio" {
+         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+         dict["localThumbPath"] = ""
+         dict["localFullPath"] = ""
+         dict["mediaUrl"] = receiveMsgDic["mediaUrl"] as! String
+         dict["mediaThumbUrl"] = ""
+         let fileObj =  instance.insertGroupChatFileInDb1("GroupChatFile", params: dict) as GroupChatFile
+         chatObj.groupChatFile = fileObj
+         let locId = CommonMethodFunctions.nextIdentifies()
+         chatObj.locMessageId = "\(locId)"
+         
+         self!.homeCoreData.saveContext()
+         }
+         }
+         
+         if exist != nil {
+         if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil)  {
+         if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["groupid"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
+         passDic["group"] = "1"
+         NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserverUpdate", object: chatObj, userInfo: passDic)
+         }
+         }
+         } else {
+         if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil)  {
+         if dict["groupid"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
+         NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserver", object: chatObj, userInfo: nil)
+         }
+         }
+         }
+         
+         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+         self?.updateMessageInRecentChatFromGroup(dict)
+         }
+         
+         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+         self?.hitDeliveredMsg(dict)
+         playSoundLocalBool = true
+         } else if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["status"] as! String == "2" {
+         self?.hitCompleteMsg(dict)
+         }
+         } else {
+         //   print("receiveMsgDic in one to one chat string recieveMessage")
+         //   print(receiveMsgDic)
+         
+         let strId       = receiveMsgDic["_id"] as! String
+         var dict        = Dictionary<String, AnyObject>()
+         dict["date"]    = dateStr
+         dict["time"]    = timeStr
+         dict["message"] = receiveMsgDic["messageChat"] as! String
+         
+         if receiveMsgDic["type"] as! String == "text" {
+         dict["type"]    = "text"
+         } else if receiveMsgDic["type"] as! String == "image" {
+         dict["type"]    = "image"
+         } else if receiveMsgDic["type"] as! String == "video" {
+         dict["type"]    = "video"
+         } else {
+         dict["type"]    = "audio"
+         }
+         
+         dict["sender"] = receiveMsgDic["senderid"] as! String
+         dict["receiver"] = receiveMsgDic["recieverid"] as! String
+         dict["messageId"] = "\(strId)"
+         dict["modifiedDate"] = receiveMsgDic["modifiedDate"] as! String
+         dict["phoneNumber"] = receiveMsgDic["phoneNumber"] as! String
+         
+         //  print(receiveMsgDic)
+         
+         if ((receiveMsgDic["user_firstName"] as? String) != nil) {
+         dict["user_firstName"]  = receiveMsgDic["user_firstName"] as! String
+         }
+         
+         if ((receiveMsgDic["profile_image"] as? String) != nil) {
+         dict["profile_image"]  = receiveMsgDic["profile_image"] as! String
+         }
+         
+         //  dict["user_firstName"] = receiveMsgDic["user_firstName"] as String
+         //  dict["profile_image"] = receiveMsgDic["profile_image"] as String
+         // print("receiveMsgDic in one to one 2 chat string recieveMessage")
+         
+         let status =  receiveMsgDic["status"] as! Int
+         dict["status"] = "\(status)"
+         let instance = DataBaseController.sharedInstance
+         var exist:UserChat?
+         var chatObj : UserChat!
+         var passDic = Dictionary<String,AnyObject>()
+         
+         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+         self?.checkDateIsDifferentApp(dict)
+         exist = instance.checkIfChatMsgAlreadyExist("UserChat", params: dict)
+         print(exist)
+         if exist != nil {
+         passDic["bfr"] = exist as UserChat!
+         }
+         
+         chatObj =  instance.insertChatMessageInDb("UserChat", params: dict) as UserChat
+         passDic["updated"] = chatObj
+         } else {
+         dict["locMessageId"] = receiveMsgDic["localmsgid"] as! String
+         exist = instance.checkIfSenderChatMsgAlreadyExist("UserChat", params: dict)
+         print(exist)
+         if exist != nil {
+         passDic["bfr"] = exist as UserChat!
+         chatObj =  instance.updateSenderChatMessageInDb("UserChat", params: dict) as UserChat
+         }
+         
+         
+         passDic["updated"] = chatObj
+         }
+         
+         if receiveMsgDic["type"] as! String != "text" && receiveMsgDic["type"] as! String != "audio" {
+         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+         
+         let mediaStr = receiveMsgDic["mediaThumb"] as! String
+         let trimmedString = mediaStr.stringByReplacingOccurrencesOfString("\n", withString: "")
+         let mediaThumbStr = receiveMsgDic["mediaUrl"] as! String
+         var saveThumbImagePath = "Thumb"+mediaThumbStr
+         saveThumbImagePath = saveThumbImagePath.stringByReplacingOccurrencesOfString(".mp4", withString: ".jpg")
+         dict["localThumbPath"] = trimmedString
+         dict["localFullPath"] = ""
+         dict["mediaUrl"] = receiveMsgDic["mediaUrl"] as! String
+         dict["mediaThumbUrl"] = trimmedString
+         let fileObj =  instance.insertChatFileInDb1("UserChatFile", params: dict) as UserChatFile
+         chatObj.chatFile = fileObj
+         let locId = CommonMethodFunctions.nextIdentifies()
+         chatObj.locMessageId = "\(locId)"
+         
+         self!.homeCoreData.saveContext()
+         }
+         
+         } else if receiveMsgDic["type"] as! String == "audio" {
+         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+         dict["localThumbPath"] = ""
+         dict["localFullPath"] = ""
+         dict["mediaUrl"] = receiveMsgDic["mediaUrl"] as! String
+         dict["mediaThumbUrl"] = ""
+         let fileObj =  instance.insertChatFileInDb1("UserChatFile", params: dict) as UserChatFile
+         chatObj.chatFile = fileObj
+         let locId = CommonMethodFunctions.nextIdentifies()
+         chatObj.locMessageId = "\(locId)"
+         
+         self!.homeCoreData.saveContext()
+         }
+         }
+         
+         if exist != nil {
+         if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil) {
+         if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["receiver"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
+         passDic["group"] = "0"
+         NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserverUpdate", object: chatObj, userInfo: passDic)
+         }
+         }
+         
+         } else {
+         if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil) {
+         if dict["sender"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
+         NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserver", object: chatObj, userInfo: nil)
+         }
+         }
+         }
+         
+         if dict["sender"] as! String != ChatHelper.userDefaultForAny("userId") as! String {
+         self?.addUserInRecentChat(dict)
+         }
+         
+         if dict["receiver"] as! String == ChatHelper .userDefaultForAny("userId") as! String {
+         self?.hitDeliveredMsg(dict)
+         } else if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["status"] as! String == "2" {
+         self?.hitCompleteMsg(dict)
+         }
+         }
+         }
+        
+            if playSoundLocalBool == true {
+                let str:String = ChatHelper .userDefaultForKey("chatId") as String
+                if str.characters.count == 0 {
+                    AudioServicesPlaySystemSound(1002);
+                    
+                    
+                    // Update Msg Badge
+                    if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
+                        AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = String(DataBaseController.sharedInstance.fetchUnreadCount())
+                    }else{
+                        AppDelegate.getAppDelegate().tabbarController.tabBar.items![1].badgeValue = nil
+                    }
+                }
+            } 
+        }
+    }
+    
+    func toUpadateOneToOneMessages(arr:NSMutableArray){
+        
+        AppDelegate.getAppDelegate().managedObjectContext.performBlock {
+            autoreleasepool({
+                
+                for receiveMsgDic in arr{
+                    var tempDateStr : String
+                    var tempDate : NSDate!
+                    var dateStr : String
+                    var timeStr : String
+                    tempDateStr = receiveMsgDic["createdDate"] as! String
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+                    tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
+                    
+                    dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
+                    dateStr = dateFormatter.stringFromDate(tempDate)
+                    
+                    dateFormatter.dateFormat = "HH:mm:ss.sss"
+                    dateFormatter.timeZone = NSTimeZone()
+                    timeStr = dateFormatter.stringFromDate(tempDate)
+                    //   print("receiveMsgDic in one to one chat string recieveMessage")
+                    //   print(receiveMsgDic)
+                    
+                    let strId       = receiveMsgDic["_id"] as! String
+                    var dict        = Dictionary<String, AnyObject>()
+                    dict["date"]    = dateStr
+                    dict["time"]    = timeStr
+                    dict["message"] = receiveMsgDic["messageChat"] as! String
+                    
+                    if receiveMsgDic["type"] as! String == "text" {
+                        dict["type"]    = "text"
+                    } else if receiveMsgDic["type"] as! String == "image" {
+                        dict["type"]    = "image"
+                    } else if receiveMsgDic["type"] as! String == "video" {
+                        dict["type"]    = "video"
+                    } else {
+                        dict["type"]    = "audio"
+                    }
+                    
+                    dict["sender"] = receiveMsgDic["senderid"] as! String
+                    dict["receiver"] = receiveMsgDic["recieverid"] as! String
+                    dict["messageId"] = "\(strId)"
+                    dict["modifiedDate"] = receiveMsgDic["modifiedDate"] as! String
+                    dict["phoneNumber"] = receiveMsgDic["phoneNumber"] as! String
+                    
+                    //  print(receiveMsgDic)
+                    
+                    if ((receiveMsgDic["user_firstName"] as? String) != nil) {
+                        dict["user_firstName"]  = receiveMsgDic["user_firstName"] as! String
+                    }
+                    
+                    if ((receiveMsgDic["profile_image"] as? String) != nil) {
+                        dict["profile_image"]  = receiveMsgDic["profile_image"] as! String
+                    }
+                    
+                    //  dict["user_firstName"] = receiveMsgDic["user_firstName"] as String
+                    //  dict["profile_image"] = receiveMsgDic["profile_image"] as String
+                    // print("receiveMsgDic in one to one 2 chat string recieveMessage")
+                    
+                    let status =  receiveMsgDic["status"] as! Int
+                    dict["status"] = "\(status)"
+                    let instance = DataBaseController.sharedInstance
+                    var exist:UserChat?
+                    var chatObj : UserChat!
+                    var passDic = Dictionary<String,AnyObject>()
+                    
+                    if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+                        self.checkDateIsDifferentApp(dict)
+                        exist = instance.checkIfChatMsgAlreadyExist("UserChat", params: dict)
+                        print(exist)
+                        if exist != nil {
+                            passDic["bfr"] = exist as UserChat!
+                        }
+                        
+                        chatObj =  instance.insertChatMessageInDb("UserChat", params: dict) as UserChat
+                        passDic["updated"] = chatObj
+                    } else {
+                        dict["locMessageId"] = receiveMsgDic["localmsgid"] as! String
+                        exist = instance.checkIfSenderChatMsgAlreadyExist("UserChat", params: dict)
+                        print(exist)
+                        if exist != nil {
+                            passDic["bfr"] = exist as UserChat!
+                            chatObj =  instance.updateSenderChatMessageInDb("UserChat", params: dict) as UserChat
+                        }
+                        
+                        
+                        passDic["updated"] = chatObj
+                    }
+                    
+                    if receiveMsgDic["type"] as! String != "text" && receiveMsgDic["type"] as! String != "audio" {
+                        if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+                            
+                            let mediaStr = receiveMsgDic["mediaThumb"] as! String
+                            let trimmedString = mediaStr.stringByReplacingOccurrencesOfString("\n", withString: "")
+                            let mediaThumbStr = receiveMsgDic["mediaUrl"] as! String
+                            var saveThumbImagePath = "Thumb"+mediaThumbStr
+                            saveThumbImagePath = saveThumbImagePath.stringByReplacingOccurrencesOfString(".mp4", withString: ".jpg")
+                            dict["localThumbPath"] = trimmedString
+                            dict["localFullPath"] = ""
+                            dict["mediaUrl"] = receiveMsgDic["mediaUrl"] as! String
+                            dict["mediaThumbUrl"] = trimmedString
+                            let fileObj =  instance.insertChatFileInDb1("UserChatFile", params: dict) as UserChatFile
+                            chatObj.chatFile = fileObj
+                            let locId = CommonMethodFunctions.nextIdentifies()
+                            chatObj.locMessageId = "\(locId)"
+                            
+                            self.homeCoreData.saveContext()
+                        }
+                        
+                    } else if receiveMsgDic["type"] as! String == "audio" {
+                        if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
+                            dict["localThumbPath"] = ""
+                            dict["localFullPath"] = ""
+                            dict["mediaUrl"] = receiveMsgDic["mediaUrl"] as! String
+                            dict["mediaThumbUrl"] = ""
+                            let fileObj =  instance.insertChatFileInDb1("UserChatFile", params: dict) as UserChatFile
+                            chatObj.chatFile = fileObj
+                            let locId = CommonMethodFunctions.nextIdentifies()
+                            chatObj.locMessageId = "\(locId)"
+                            
+                            self.homeCoreData.saveContext()
+                        }
+                    }
+                    
+                    if exist != nil {
+                        if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil) {
+                            if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["receiver"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
+                                passDic["group"] = "0"
+                                NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserverUpdate", object: chatObj, userInfo: passDic)
+                            }
+                        }
+                        
+                    } else {
+                        if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil) {
+                            if dict["sender"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
+                                NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserver", object: chatObj, userInfo: nil)
+                            }
+                        }
+                    }
+                    
+                    if dict["sender"] as! String != ChatHelper.userDefaultForAny("userId") as! String {
+                        self.addUserInRecentChat(dict)
+                    }
+                    
+                    if dict["receiver"] as! String == ChatHelper .userDefaultForAny("userId") as! String {
+                        self.hitDeliveredMsg(dict)
+                    } else if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["status"] as! String == "2" {
+                        self.hitCompleteMsg(dict)
+                    }
+                }
+                
+            })
+            // only save once per batch insert
+            do {
+                try AppDelegate.getAppDelegate().managedObjectContext.save()
+            } catch {
+                print(error)
+            }
+            
+            AppDelegate.getAppDelegate().managedObjectContext.reset()
         }
         
-            for receiveMsgDic in arr {
-                var tempDateStr : String
-                var tempDate : NSDate!
+        
+        
+        
+    }
+    
+    func toUpdateGroupMessages(arr:NSMutableArray){
+        var playSoundLocalBool = false
+        
+        AppDelegate.getAppDelegate().managedObjectContext.performBlock {
+            autoreleasepool({
                 
-                var dateStr : String
-                var timeStr : String
-                
-                tempDateStr = receiveMsgDic["createdDate"] as! String
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-                tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
-
-                dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                dateStr = dateFormatter.stringFromDate(tempDate)
-               
-                dateFormatter.dateFormat = "HH:mm:ss.sss"
-                dateFormatter.timeZone = NSTimeZone()
-                timeStr = dateFormatter.stringFromDate(tempDate)
-            
-                if receiveMsgDic["chatType"] as! String == "group" {
-                   // print(receiveMsgDic)
-                   // print("receiveMsgDic in group chat string recieveMessage")
+                for receiveMsgDic in arr{
+                    var tempDateStr : String
+                    var tempDate : NSDate!
+                    var dateStr : String
+                    var timeStr : String
+                    tempDateStr = receiveMsgDic["createdDate"] as! String
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+                    tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
+                    
+                    dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
+                    dateStr = dateFormatter.stringFromDate(tempDate)
+                    
+                    dateFormatter.dateFormat = "HH:mm:ss.sss"
+                    dateFormatter.timeZone = NSTimeZone()
+                    timeStr = dateFormatter.stringFromDate(tempDate)
+                    // print(receiveMsgDic)
+                    // print("receiveMsgDic in group chat string recieveMessage")
                     
                     let strId = receiveMsgDic["_id"] as! String
                     let groupId = receiveMsgDic["groupid"] as! String
@@ -780,7 +1270,7 @@ func connectToSocket() -> Void{
                     var passDic = Dictionary<String,AnyObject>()
                     
                     if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
-                        self?.checkDateIsDifferentAppGrp(dict)
+                        self.checkDateIsDifferentAppGrp(dict)
                         exist = instance.checkIfGroupChatMsgAlreadyExist("GroupChat", params: dict)
                         if exist != nil {
                             passDic["bfr"] = exist as GroupChat!
@@ -813,7 +1303,7 @@ func connectToSocket() -> Void{
                             let locId = CommonMethodFunctions.nextIdentifies()
                             chatObj.locMessageId = "\(locId)"
                             
-                            self!.homeCoreData.saveContext()
+                            self.homeCoreData.saveContext()
                         }
                     } else if receiveMsgDic["type"] as! String == "audio" {
                         if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
@@ -826,7 +1316,7 @@ func connectToSocket() -> Void{
                             let locId = CommonMethodFunctions.nextIdentifies()
                             chatObj.locMessageId = "\(locId)"
                             
-                            self!.homeCoreData.saveContext()
+                            self.homeCoreData.saveContext()
                         }
                     }
                     
@@ -846,153 +1336,30 @@ func connectToSocket() -> Void{
                     }
                     
                     if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
-                        self?.updateMessageInRecentChatFromGroup(dict)
+                        self.updateMessageInRecentChatFromGroup(dict)
                     }
                     
                     if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
-                        self?.hitDeliveredMsg(dict)
+                        self.hitDeliveredMsg(dict)
                         playSoundLocalBool = true
                     } else if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["status"] as! String == "2" {
-                        self?.hitCompleteMsg(dict)
-                    }
-                } else {
-                   //   print("receiveMsgDic in one to one chat string recieveMessage")
-                   //   print(receiveMsgDic)
-                    
-                    let strId       = receiveMsgDic["_id"] as! String
-                    var dict        = Dictionary<String, AnyObject>()
-                    dict["date"]    = dateStr
-                    dict["time"]    = timeStr
-                    dict["message"] = receiveMsgDic["messageChat"] as! String
-                    
-                    if receiveMsgDic["type"] as! String == "text" {
-                          dict["type"]    = "text"
-                    } else if receiveMsgDic["type"] as! String == "image" {
-                         dict["type"]    = "image"
-                    } else if receiveMsgDic["type"] as! String == "video" {
-                         dict["type"]    = "video"
-                    } else {
-                         dict["type"]    = "audio"
-                    }
-                    
-                    dict["sender"] = receiveMsgDic["senderid"] as! String
-                    dict["receiver"] = receiveMsgDic["recieverid"] as! String
-                    dict["messageId"] = "\(strId)"
-                    dict["modifiedDate"] = receiveMsgDic["modifiedDate"] as! String
-                    dict["phoneNumber"] = receiveMsgDic["phoneNumber"] as! String
-                    
-                  //  print(receiveMsgDic)
-                    
-                    if ((receiveMsgDic["user_firstName"] as? String) != nil) {
-                        dict["user_firstName"]  = receiveMsgDic["user_firstName"] as! String
-                    }
-                    
-                    if ((receiveMsgDic["profile_image"] as? String) != nil) {
-                        dict["profile_image"]  = receiveMsgDic["profile_image"] as! String
-                    }
-                    
-                  //  dict["user_firstName"] = receiveMsgDic["user_firstName"] as String
-                  //  dict["profile_image"] = receiveMsgDic["profile_image"] as String
-                  // print("receiveMsgDic in one to one 2 chat string recieveMessage")
-                    
-                    let status =  receiveMsgDic["status"] as! Int
-                    dict["status"] = "\(status)"
-                    let instance = DataBaseController.sharedInstance
-                    var exist:UserChat?
-                    var chatObj : UserChat!
-                    var passDic = Dictionary<String,AnyObject>()
-                    
-                    if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
-                        self?.checkDateIsDifferentApp(dict)
-                        exist = instance.checkIfChatMsgAlreadyExist("UserChat", params: dict)
-                        print(exist)
-                        if exist != nil {
-                            passDic["bfr"] = exist as UserChat!
-                        }
-                        
-                        chatObj =  instance.insertChatMessageInDb("UserChat", params: dict) as UserChat
-                        passDic["updated"] = chatObj
-                    } else {
-                        dict["locMessageId"] = receiveMsgDic["localmsgid"] as! String
-                        exist = instance.checkIfSenderChatMsgAlreadyExist("UserChat", params: dict)
-                        print(exist)
-                        if exist != nil {
-                            passDic["bfr"] = exist as UserChat!
-                            chatObj =  instance.updateSenderChatMessageInDb("UserChat", params: dict) as UserChat
-                        }
-                        
-                        
-                        passDic["updated"] = chatObj
-                    }
-                
-                    if receiveMsgDic["type"] as! String != "text" && receiveMsgDic["type"] as! String != "audio" {
-                        if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
-                            
-                            let mediaStr = receiveMsgDic["mediaThumb"] as! String
-                            let trimmedString = mediaStr.stringByReplacingOccurrencesOfString("\n", withString: "")
-                            let mediaThumbStr = receiveMsgDic["mediaUrl"] as! String
-                            var saveThumbImagePath = "Thumb"+mediaThumbStr
-                            saveThumbImagePath = saveThumbImagePath.stringByReplacingOccurrencesOfString(".mp4", withString: ".jpg")
-                            dict["localThumbPath"] = trimmedString
-                            dict["localFullPath"] = ""
-                            dict["mediaUrl"] = receiveMsgDic["mediaUrl"] as! String
-                            dict["mediaThumbUrl"] = trimmedString
-                            let fileObj =  instance.insertChatFileInDb1("UserChatFile", params: dict) as UserChatFile
-                            chatObj.chatFile = fileObj
-                            let locId = CommonMethodFunctions.nextIdentifies()
-                            chatObj.locMessageId = "\(locId)"
-                            
-                            self!.homeCoreData.saveContext()
-                        }
-                        
-                    } else if receiveMsgDic["type"] as! String == "audio" {
-                        if dict["sender"] as! String != ChatHelper .userDefaultForAny("userId") as! String {
-                            dict["localThumbPath"] = ""
-                            dict["localFullPath"] = ""
-                            dict["mediaUrl"] = receiveMsgDic["mediaUrl"] as! String
-                            dict["mediaThumbUrl"] = ""
-                            let fileObj =  instance.insertChatFileInDb1("UserChatFile", params: dict) as UserChatFile
-                            chatObj.chatFile = fileObj
-                            let locId = CommonMethodFunctions.nextIdentifies()
-                            chatObj.locMessageId = "\(locId)"
-                            
-                            self!.homeCoreData.saveContext()
-                        }
-                    }
-                    
-                    if exist != nil {
-                        if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil) {
-                            if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["receiver"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
-                                passDic["group"] = "0"
-                                NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserverUpdate", object: chatObj, userInfo: passDic)
-                            }
-                        }
-                        
-                    } else {
-                        if (NSUserDefaults.standardUserDefaults().stringForKey("friendId") != nil) {
-                            if dict["sender"] as! String == ChatHelper .userDefaultForAny("friendId") as! String {
-                                NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserver", object: chatObj, userInfo: nil)
-                            }
-                        }
-                    }
-                    
-                    if dict["sender"] as! String != ChatHelper.userDefaultForAny("userId") as! String {
-                        self?.addUserInRecentChat(dict)
-                    }
-                    
-                    if dict["receiver"] as! String == ChatHelper .userDefaultForAny("userId") as! String {
-                        self?.hitDeliveredMsg(dict)
-                    } else if dict["sender"] as! String == ChatHelper .userDefaultForAny("userId") as! String && dict["status"] as! String == "2" {
-                        self?.hitCompleteMsg(dict)
+                        self.hitCompleteMsg(dict)
                     }
                 }
+                
+            })
+            // only save once per batch insert
+            do {
+                try AppDelegate.getAppDelegate().managedObjectContext.save()
+            } catch {
+                print(error)
             }
-        
+            
+            AppDelegate.getAppDelegate().managedObjectContext.reset()
             if playSoundLocalBool == true {
                 let str:String = ChatHelper .userDefaultForKey("chatId") as String
                 if str.characters.count == 0 {
                     AudioServicesPlaySystemSound(1002);
-                    
                     
                     // Update Msg Badge
                     if DataBaseController.sharedInstance.fetchUnreadCount() > 0{
@@ -1003,6 +1370,8 @@ func connectToSocket() -> Void{
                 }
             }
         }
+        
+        
     }
     
     
@@ -1029,8 +1398,8 @@ func connectToSocket() -> Void{
                 if (exist != nil) {
                     var tempDateStr : String
                     var tempDate : NSDate!
-                    var dateStr : String
-                    var timeStr : String
+                    var dateStr : String = ""
+                    var timeStr : String = ""
                     tempDateStr = receiveMsgDic["createdDate"] as! String
                     
 //                    let dateFormatter = NSDateFormatter()
@@ -1040,19 +1409,27 @@ func connectToSocket() -> Void{
 //                    dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
 //                    tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
           
-                    let dateFormatter = NSDateFormatter()
+                   /* let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
                     dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
+                    tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!*/
                     
-                    dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
+                    if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
+                        dateStr = formatedDate
+                    }
+                    
+                    if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "HH:mm:ss.sss"){
+                        timeStr = formatedDate
+                    }
+                    
+                   /* dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
                     dateStr = dateFormatter.stringFromDate(tempDate)
                     
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
                     dateFormatter.timeZone = NSTimeZone()
 
-                    timeStr = dateFormatter.stringFromDate(tempDate)
+                    timeStr = dateFormatter.stringFromDate(tempDate)*/
                     
                     let strId = receiveMsgDic["_id"] as! String
                     let strStatus = receiveMsgDic["status"] as! Int
@@ -1077,12 +1454,12 @@ func connectToSocket() -> Void{
                 
                 if (exist != nil) {
                     var tempDateStr : String
-                    var tempDate : NSDate!
-                    var dateStr : String
+                    //var tempDate : NSDate!
+                    var dateStr : String = ""
                    
                     tempDateStr = receiveMsgDic["createdDate"] as! String
                     
-                    let dateFormatter = NSDateFormatter()
+                    /*let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
                     dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
@@ -1094,7 +1471,14 @@ func connectToSocket() -> Void{
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
                     dateFormatter.timeZone = NSTimeZone()
                     
-                    dateFormatter.stringFromDate(tempDate)
+                    dateFormatter.stringFromDate(tempDate)*/
+                    if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
+                        dateStr = formatedDate
+                    }
+                    
+                    //if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "HH:mm:ss.sss"){
+                       // timeStr = formatedDate
+                   // }
                     
                     let strId = receiveMsgDic["_id"] as! String
                     let strStatus = receiveMsgDic["status"] as! Int
@@ -1393,7 +1777,7 @@ func connectToSocket() -> Void{
             timerConnectingStatus = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:  #selector(ChatListner.hideAlertConnectingToServer), userInfo: nil, repeats: true)
             
             
-         // timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(9, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
+          // timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(9, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
 
             
         }
@@ -1468,18 +1852,23 @@ func connectToSocket() -> Void{
                 var tempDateStr : String
                 var tempDate : NSDate!
                 
-                var dateStr : String
+                var dateStr : String = ""
                 
                 //tempDateStr = receiveMsgDic["createdDate"] as! String
                 tempDateStr = (receiveMsgDic["createdDate"] as? String)!   // changed on 5/04/17
  
-                let dateFormatter = NSDateFormatter()
+                /*let dateFormatter = NSDateFormatter()
                 dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
                 tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
                 dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                dateStr = dateFormatter.stringFromDate(tempDate)
+                dateStr = dateFormatter.stringFromDate(tempDate) */
+                
+                if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
+                   dateStr = formatedDate
+                    
+                }
               //  let strUrl = ""//receiveMsgDic["imgUrl"] as String!
               //  print(receiveMsgDic)
                 
@@ -1852,7 +2241,7 @@ func connectToSocket() -> Void{
                 if(controller.isKindOfClass(UITabBarController)) {
                    let tabBarObj = controller as! UITabBarController;
                     chattingVc.recentChatObj = recentObj;
-                    tabBarObj.selectedIndex = 3
+                    tabBarObj.selectedIndex = 1
                     
                     delay(0.1, closure: {
                         let navobj : UINavigationController = tabBarObj.selectedViewController as! UINavigationController

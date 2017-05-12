@@ -182,7 +182,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             dispatch_after(1, dispatch_get_main_queue()) { () -> Void in
                 if ChatListner.getChatListnerObj().socket.status != .Connected {
                     //print("connectToSocket ==connectToSocket")
-                    ChatListner.sharedInstance.connectToSocket()   // call your method.
+                    //ChatListner.sharedInstance.connectToSocket()   // call your method.
                 }
             }
         }
@@ -323,6 +323,10 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             anObject = fetchedResultsController.objectAtIndexPath(indexPath) as! RecentChatList
         }
         
+        print_debug("an object for cell")
+         print_debug(anObject)
+        
+        
         //NSLog(anObject.friendImageUrl!)
         let imageString = NSString(format:"%@", anObject.friendImageUrl!) as String
         userName.text = anObject.friendName
@@ -345,7 +349,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         }
 
         if anObject.lastMessageTime!.characters.count > 0 {
-            var dateFormatter = NSDateFormatter()
+            /* var dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             let date = dateFormatter.dateFromString(anObject.lastMessageTime!)
@@ -358,9 +362,21 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             lastMessageDate.text=dateStr
             dateFormatter.dateFormat = "hh:mm a"
             let timeStr = dateFormatter.stringFromDate(date!)
-            lastMessageTime.text = timeStr
+            lastMessageTime.text = timeStr */
             
             
+            if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(anObject.lastMessageTime!, firstDateFormat: "yyyy-MM-dd-HH:mm:ss.sss", secondDateFormat: "dd MMM"){
+                lastMessageDate.text = formatedDate
+            }
+            
+            
+            if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(anObject.lastMessageTime!, firstDateFormat: "yyyy-MM-dd-HH:mm:ss.sss", secondDateFormat: "hh:mm a"){
+                lastMessageTime.text = formatedDate
+            }
+            
+            
+            return cell
+
            
             
         } else {
@@ -444,7 +460,11 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
 //                lastMessage.text=anObject.lastMessage
 //                lastMessage.textColor=UIColor.grayColor()
 //            }
-            userImage.setImageWithURL(NSURL(string:anObject.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+            
+            
+            userImage.sd_setImageWithURL(NSURL(string:anObject.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+
+          //  userImage.setImageWithURL(NSURL(string:anObject.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
         }
         userImage.layer.masksToBounds = true
         userImage.layer.cornerRadius = 30

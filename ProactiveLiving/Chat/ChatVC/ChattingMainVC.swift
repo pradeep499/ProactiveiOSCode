@@ -1488,14 +1488,24 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         //onetoone
                         cell.heightNameLabel.constant = 0
                     }
-                 
-                    let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    let date = dateFormatter.dateFromString(chatObj.messageTime!)
-                    dateFormatter.dateFormat = "hh:mm a"
-                    let dateStr = dateFormatter.stringFromDate(date!)
-                    timeLabel.text = dateStr
+                    
+                     let dateFormatter = NSDateFormatter()
+                     dateFormatter.dateFormat = "HH:mm:ss.sss"
+                    // dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
+                     dateFormatter.dateFormat = "hh:mm a"
+                     let dateStr = dateFormatter.stringFromDate(date!)
+                     timeLabel.text = dateStr
+                    
+                    ///if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(chatObj.messageTime!,firstDateFormat: //"HH:mm:ss.sss", secondDateFormat: "hh:mm a"){
+                      //  timeLabel.text = formatedDate
+                  //  }
+                    
+                    
+                    print_debug("receiver date actual === \(chatObj.messageTime)")
+                    print_debug("receiver date modified === \( timeLabel.text )")
+
+                    
                     return cell
                     
                 } else if(chatObj.messageType == "notification") {
@@ -1749,16 +1759,24 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    //dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
                     timeLabel.text = dateStr
                     
+                   // if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(chatObj.messageTime!,firstDateFormat: "HH:mm:ss.sss", secondDateFormat: "hh:mm a"){
+                      //  timeLabel.text = formatedDate
+                   // }
+                    
+                    print_debug("Sender date actual === \(chatObj.messageTime)")
+                    print_debug("Sender date modified === \( timeLabel.text )")
+                    
                     let myImage = UIImage(named: "sender_bg.png")!
                     bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     return cell
+                    
                 } else if(chatObj.messageType == "notification") {
                     let cell: ChatNotificationCell = tableView.dequeueReusableCellWithIdentifier("NotificationCell", forIndexPath: indexPath) as! ChatNotificationCell
                     cell.selectionStyle = .None
@@ -1771,8 +1789,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let yesterday = today.dateByAddingTimeInterval(-24 * 60 * 60)
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "YYYY-MM-dd"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
+                   // dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                   // dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
                     let date = dateFormatter.dateFromString(chatObj.messageDate!)
                     dateFormatter.dateFormat = "MMMM dd, yyyy"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -1826,7 +1844,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    //dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -1954,7 +1972,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     chatImage.layer.cornerRadius=5.0
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    //dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -2075,7 +2093,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     }
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                   // dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -2095,8 +2113,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let dateLabel = cell.contentView.viewWithTag(10) as! UILabel
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "YYYY-MM-dd"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
+                   // dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                   // dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
                     let date = dateFormatter.dateFromString(chatObj.messageDate!)
                     dateFormatter.dateFormat = "MMMM dd, yyyy"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -2178,7 +2196,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                   // dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -2310,7 +2328,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     chatImage.layer.cornerRadius=5.0
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    //dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -2375,13 +2393,21 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         cell.horizontalSpacingConst.constant = 5
                     }
                     
-                    let dateFormatter = NSDateFormatter()
+                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                   // dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
                     timeLabel.text = dateStr
+                    
+                    
+                    
+                  //  if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(chatObj.messageTime!,firstDateFormat: "HH:mm:ss.sss", secondDateFormat: "hh:mm a"){
+                       // timeLabel.text = formatedDate
+                   // }
+                    
+
                     
                     let myImage = UIImage(named: "sender_bg.png")!
                     bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
@@ -2400,8 +2426,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let dateLabel = cell.contentView.viewWithTag(10) as! UILabel
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
+                   // dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                   // dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
                     var date = dateFormatter.dateFromString(chatObj.messageDate!)
             
                     if date == nil{
@@ -2465,7 +2491,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     }
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                   // dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -2599,7 +2625,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     chatImage.layer.cornerRadius=5.0
                     let dateFormatter = NSDateFormatter()
                     dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    //dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                     let date = dateFormatter.dateFromString(chatObj.messageTime!)
                     dateFormatter.dateFormat = "hh:mm a"
                     let dateStr = dateFormatter.stringFromDate(date!)
@@ -4986,11 +5012,12 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                         }
                         
                     } else{
-                        
+                        dispatch_async(dispatch_get_main_queue(),{
                         let alertController = UIAlertController(title:APP_NAME, message:"You have not provided permission to use microphone. Please go to settings and allow.", preferredStyle: UIAlertControllerStyle.Alert)
                         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(alertController, animated: true, completion: nil)
                         
+                        })
                     }
                 })
                 
@@ -5553,8 +5580,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     self.saveRecentChat()
                 //}
              
-            }else
-            {
+            } else{
                 self.checkDateIsDifferent(dict)
                 date = NSDate()
                 dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
@@ -5623,7 +5649,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 
                 
             }
-        
+             print("sendMsgD");
+
             print(sendMsgD);
         
             ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)

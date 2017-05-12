@@ -53,7 +53,71 @@ class ChatHelper: NSObject {
         completion(countries: countries, codes: countriesPHNOCode)
     }
     
-   
+    
+    class func convertDateFormatOfStringWithTwoDateFormats(dateString:String, firstDateFormat:String,secondDateFormat:String) -> String?{
+        
+        // print_debug(dateString)
+        // print_debug(firstDateFormat)
+        // print_debug(secondDateFormat)
+        
+        let dateFormatter = NSDateFormatter()
+        //dateFormatter.locale = NSLocale(localeIdentifier: "+91")
+        dateFormatter.timeZone = NSTimeZone(name: "UTC")
+        dateFormatter.dateFormat = firstDateFormat
+        
+        let processDate = dateFormatter.dateFromString(dateString)
+        
+        //dateFormatter.timeZone = NSTimeZone.localTimeZone()
+        
+        //processDate = processDate!.toLocalTime()
+        
+        dateFormatter.dateFormat = secondDateFormat
+        
+        
+        if  (processDate == nil) {
+            
+            return nil
+            
+        }else {
+            
+            if  let dateStr:String = dateFormatter.stringFromDate(processDate!){
+                return dateStr
+            }
+            else{
+                return nil
+            }
+        }
+        
+    }
+    
+    
+    class func convertDateFormatOfStringWithTwoDateFormatsInReciever(dateString:String, firstDateFormat:String,secondDateFormat:String) -> String?{
+        
+
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone(name: "UTC")
+        dateFormatter.dateFormat = firstDateFormat
+        let processDate = dateFormatter.dateFromString(dateString)
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+        dateFormatter.dateFormat = secondDateFormat
+    
+        if  (processDate == nil) {
+            
+            return nil
+            
+        }else {
+            
+            if  let dateStr:String = dateFormatter.stringFromDate(processDate!){
+                
+                print_debug("Final reciever date == \(dateStr)")
+                return dateStr
+            }
+            else{
+                return nil
+            }
+        }
+        
+    }
     
     //MARK: UserDefault
     class func saveToUserDefault(value:AnyObject, key:String)
