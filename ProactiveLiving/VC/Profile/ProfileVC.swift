@@ -53,7 +53,7 @@ class ProfileVC: UIViewController ,UICollectionViewDelegateFlowLayout{
         
         bottomTabBar = self.tabBarController as? CustonTabBarController
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            // print(finish)
+            // print_debug(finish)
         }
         
         if !(String(AppHelper.userDefaultsForKey(_ID)) == viewerUserID){

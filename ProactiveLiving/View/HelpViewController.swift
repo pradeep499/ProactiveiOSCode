@@ -70,7 +70,7 @@ class HelpViewController: UIViewController,MKMapViewDelegate {
                     //dissmiss indicator
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print("VALUE### \(responseDict)")
+                        print_debug("VALUE### \(responseDict)")
                         
                         let result = responseDict["result"]
                         
@@ -261,7 +261,7 @@ extension HelpViewController: MFMailComposeViewControllerDelegate {
     func sendMail() -> Void {
         
         if !MFMailComposeViewController.canSendMail() {
-            print("Mail services are not available")
+            print_debug("Mail services are not available")
             return
         }
         

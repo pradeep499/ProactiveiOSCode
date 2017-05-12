@@ -238,7 +238,7 @@ extension String {
                 return true
             }
         }else{
-            print("Could not create link data detector: \(err?.localizedDescription): \(err?.userInfo)")
+            print_debug("Could not create link data detector: \(err?.localizedDescription): \(err?.userInfo)")
         }
         
         return false

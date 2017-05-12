@@ -102,7 +102,7 @@ class OTPVC: UIViewController {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         if let otp = responseDict["result"]{
                             
@@ -156,7 +156,7 @@ class OTPVC: UIViewController {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         
                         AppHelper.showAlertWithTitle(AppName, message: responseDict["result"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)

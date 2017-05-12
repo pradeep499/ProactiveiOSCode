@@ -20,19 +20,26 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - Crashlytics (3.8.4):
+    - Fabric (~> 1.6.3)
   - DXPopover (0.1.1)
+  - Fabric (1.6.11)
   - SVProgressHUD (2.1.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5.4)
+  - Crashlytics
   - DXPopover
+  - Fabric
   - SVProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   DXPopover: 13e6bbd1a0da4e62b2190de51f43a94850769e0f
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
 
-PODFILE CHECKSUM: c0e11970872a41b804b13bb3e1af71d8dac0bf12
+PODFILE CHECKSUM: 9d65a55b4298fcc1ee59681c347e233b6c5c385b
 
 COCOAPODS: 1.0.1

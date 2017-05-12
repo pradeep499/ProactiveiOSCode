@@ -164,7 +164,7 @@
                 
             } failure:^(NSError *error) {
                 [AppDelegate dismissProgressHUD];
-                NSLog(@"%@",error);
+                //NSLog(@"%@",error);
                 [self showAlert];
             }];
         }

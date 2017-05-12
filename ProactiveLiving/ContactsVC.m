@@ -58,7 +58,7 @@
 
 -(void)showCreateGroup:(id)info
 {
-    NSLog(@"Create Group Clicked..");
+    //NSLog(@"Create Group Clicked..");
     if ([self.delegate2 respondsToSelector:@selector(someAction)]) {
         [self.delegate2 someAction];
     }
@@ -270,7 +270,7 @@
     }
     
     // arraysByLetter will contain the result you expect
-    NSLog(@"Dictionary: %@", self.dicAlphabet);
+    //NSLog(@"Dictionary: %@", self.dicAlphabet);
 }
 
 -(void)filter:(NSString*)text
@@ -413,7 +413,7 @@
     cell.imgPerson.layer.cornerRadius = 23;
     cell.imgPerson.clipsToBounds = true;
     
-    NSLog(@"%@",[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]]);
+    //NSLog(@"%@",[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]]);
     
     NSString *lastname = [NSString stringWithFormat:@"%@",[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"lastName"]];
     NSString *firstName = [[NSString stringWithFormat:@"%@",[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"firstName"]] stringByAppendingString:@" "];
@@ -476,7 +476,7 @@
         if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
         {
             NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-            NSLog(@"%@",frndDict);
+            //NSLog(@"%@",frndDict);
             
             NSString * login_id = [AppHelper userDefaultsForKey:uId];
             NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
@@ -515,7 +515,7 @@
         else //if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
         {
             NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-            NSLog(@"%@",frndDict);
+            //NSLog(@"%@",frndDict);
             
             NSString * login_id = [AppHelper userDefaultsForKey:uId];
             NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
@@ -602,7 +602,7 @@
 
 -(void)insertRemoveToSelecetedRowArray:(NSDictionary *) dict{
     
-    NSLog(@"seelcted arraty %@",_selectedRowsArray);
+    //NSLog(@"seelcted arraty %@",_selectedRowsArray);
     
     if ([self.selectedRowsArray containsObject:dict])
     {

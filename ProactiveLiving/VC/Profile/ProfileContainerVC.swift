@@ -91,7 +91,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         self.navigationController?.navigationBarHidden = true
         
         bottomTabBar!.setTabBarVisible(true, animated: true) { (finish) in
-            // print(finish)
+            // print_debug(finish)
          }
         
         
@@ -283,8 +283,8 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
      //   self.view.endEditing(true)
-        print("current Index : \(Int(index))")
-        print("current controller : \(controller)")
+        print_debug("current Index : \(Int(index))")
+        print_debug("current controller : \(controller)")
         currentIndex = index
      //   controller.viewWillAppear(true)
         
@@ -322,7 +322,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
             
             let windowHeight = self.view.frame.size.height
             let button = sender as? UIButton
-            //        NSLog("button tag \(button!.tag)")
+            //        //NSLog("button tag \(button!.tag)")
             let frameInWindow = button!.convertRect(button!.bounds, toView: self.view)
             let popoverY = frameInWindow.origin.y
             var startPoint = CGPointMake(frameInWindow.midX, frameInWindow.maxY)
@@ -404,6 +404,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         contObj.phoneNumber = self.friendDict!["result"]!["mobilePhone"] as! String
         contObj.firstName = self.friendDict!["result"]!["firstName"] as! String
         
+        chatMainVC.hidesBottomBarWhenPushed = false
         chatMainVC.contObj = contObj;
         chatMainVC.isFromClass = "";
         chatMainVC.isGroup = "0";
@@ -663,7 +664,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateStr = dateFormatter.stringFromDate(date)
         
-        print("time stam ", dateStr);
+        print_debug( dateStr);
         
         return dateStr
         
@@ -787,7 +788,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         let resultDict = responseDict["result"] as! [String: AnyObject]
                         
@@ -861,7 +862,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                     
                     if ((responseDict["error"] as! Int) == 0) {
                        
-                        print("Friend Details....", responseDict)
+                        print_debug("Friend Details....", responseDict)
                         
                         self.friendDict = responseDict as? [String:AnyObject]// responseDict["result"] as! [String:AnyObject]
                         
@@ -942,7 +943,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         AppHelper.showAlertWithTitle(AppName, message:"Friend request sent successfuly.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                         
@@ -1056,7 +1057,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         if tableView == popOverTableView{
-            NSLog("\(popOverCellData[indexPath.row]) selected")
+            //NSLog("\(popOverCellData[indexPath.row]) selected")
             self.popover.dismiss()
             
            if indexPath.row == 0{
@@ -1172,7 +1173,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         let msg = "Member has been unfriend."
                         
@@ -1250,7 +1251,7 @@ extension ProfileContainerVC:UITableViewDataSource, UITableViewDelegate{
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         var msg = ""
                         if blockType == 0{
@@ -1308,7 +1309,7 @@ extension ProfileContainerVC:MFMailComposeViewControllerDelegate{
     func sendMail() -> Void {
         
         if !MFMailComposeViewController.canSendMail() {
-            print("Mail services are not available")
+            print_debug("Mail services are not available")
             return
         }
         

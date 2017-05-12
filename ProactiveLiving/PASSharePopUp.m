@@ -94,7 +94,7 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event  {
-    NSLog(@"touches began");
+    //NSLog(@"touches began");
     UITouch *touch = [touches anyObject];
     if(touch.view==self.dimView){
         [self hidePopUp];

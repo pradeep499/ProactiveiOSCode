@@ -118,7 +118,7 @@
     
 -(void)moviePlaybackDidFinish
 {
-    NSLog(@"Movie finished!!!");
+    //NSLog(@"Movie finished!!!");
 }
 
 @end

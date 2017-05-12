@@ -31,7 +31,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         self.layer.borderColor = borderColor.CGColor
         self.layer.borderWidth = 1.0
         
-        //print("border created")
+        //print_debug("border created")
     }
     
     func addBottomLine() {
@@ -53,12 +53,12 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        //print("focused")
+        //print_debug("focused")
         //pulseColor()
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        //print("lost focus")
+        //print_debug("lost focus")
         //normalColor()
     }
 }

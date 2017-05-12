@@ -79,7 +79,7 @@
 
 -(void)openContactsClick:(UIButton *)sender
 {
-    NSLog(@"%ld",(long)sender.tag);
+    //NSLog(@"%ld",(long)sender.tag);
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         __block NSInteger selectedIndex = sender.tag;

@@ -66,13 +66,13 @@
         if (_menuItemId != nil )
         {
             menuListID = [menuListID stringByAppendingString:self.menuItemId];
-            NSLog(@"Test 2%@",menuListID);
+            //NSLog(@"Test 2%@",menuListID);
            
         }
         else {
             
             menuListID = [menuListID stringByAppendingString:@"1b24e5f9-5318-4838-b81a-85d2ee7dc403"];
-             NSLog(@"TEST 1%@",menuListID);
+             //NSLog(@"TEST 1%@",menuListID);
         }
        
         //call global web service class
@@ -86,7 +86,7 @@
                     
               
                     self.dataArray=[responseDict objectForKey:@"result"];
-                    NSLog(@"$#$#$# %@",self.dataArray);
+                    //NSLog(@"$#$#$# %@",self.dataArray);
                    
                     
                     
@@ -95,7 +95,7 @@
                         
                         if([self.dataArray count] !=0){
                             
-                            NSLog(@"When Array has data %lu",(unsigned long)[self.dataArray count]);
+                            //NSLog(@"When Array has data %lu",(unsigned long)[self.dataArray count]);
                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PAC" bundle:nil];
                             pACContainerViewController  = [storyboard instantiateViewControllerWithIdentifier:@"PACContainerViewController"];
                             pACContainerViewController.menuArr = self.dataArray;
@@ -106,7 +106,7 @@
                         
                         else{
                             
-                            NSLog(@"Redirection to the Find");
+                            //NSLog(@"Redirection to the Find");
                             PacContainerVC *vc = [[AppHelper getPacStoryBoard] instantiateViewControllerWithIdentifier:@"PacContainerVC"];
                             vc.strActivityID = self.menuItemId;
                             vc.strActivityName =self.menuItemName;
@@ -243,7 +243,7 @@
 
 -(void)collectionView:(UICollectionView*)collectionview didSelectItemAtIndexPath:(NSIndexPath*) indexPath
 {
-    NSLog(@"%d",(int)indexPath.item);
+    //NSLog(@"%d",(int)indexPath.item);
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         
@@ -251,7 +251,7 @@
         NSDictionary *dicResult =  self.dataArray[indexPath.row];
         self.menuItemId = dicResult[@"_id"];
         self.menuItemName = dicResult[@"name"];
-        NSLog(@"HAHAHA%@",self.menuItemId);
+        //NSLog(@"HAHAHA%@",self.menuItemId);
         [self getAllCategoriesListing];  // service hit
         
     }

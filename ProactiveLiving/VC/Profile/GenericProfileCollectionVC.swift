@@ -199,7 +199,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
     
     @IBAction func onClickDeleteBtn(sender: AnyObject) {
         
-        print("Delete button clicked!!!")
+        print_debug("Delete button clicked!!!")
         
         // Managing the delete button image
         if isDelete == true {
@@ -413,8 +413,9 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                     if ((responseDict["error"] as! Int) == 0) {
                         
                         if type == "photos" {
-                            
-                            print("Photo Response = ", responseDict["result"]!)
+                           
+                            print_debug("Photo Response = ")
+                            print_debug(responseDict["result"]!)
                             
                             if let content = responseDict["result"]!["gallery"]{
                                 
@@ -422,8 +423,8 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                             }
                             
                         }else if type == "socialNetworks"{
-                            
-                            print("Social Network Response = ", responseDict["result"])
+                            print_debug("Social Network Response = ")
+                            print_debug( responseDict["result"])
                             
                             if let socialNetwork = responseDict["result"]!["socialNetwork"]{
                                 self.socialNetworkListArr = socialNetwork as! [AnyObject]
@@ -476,7 +477,7 @@ class GenericProfileCollectionVC: UIViewController, AttachMentsVCDelegate, UIGes
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print("Friends Response = ", responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         if let content = responseDict["result"]{
                             
@@ -755,10 +756,10 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
         /*let qualityOfServiceClass = QOS_CLASS_BACKGROUND
         let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
         dispatch_async(backgroundQueue, {
-            print("This is run on the background queue")
+            print_debug("This is run on the background queue")
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                print("This is run on the main queue, after the previous code in outer block")
+                print_debug("This is run on the main queue, after the previous code in outer block")
             })
         })*/
         

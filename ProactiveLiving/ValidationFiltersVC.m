@@ -175,7 +175,7 @@
          } failure:^(NSError *error)
          {
              [AppDelegate dismissProgressHUD];
-             NSLog(@"%@",error);
+             //NSLog(@"%@",error);
              [AppHelper showAlertWithTitle:@"" message:serviceError tag:0 delegate:nil cancelButton:ok otherButton:nil];
          }];
         
@@ -189,8 +189,8 @@
 #pragma mark -- YSLContainerViewControllerDelegate
 - (void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller
 {
-        NSLog(@"current Index : %ld",(long)index);
-        NSLog(@"current controller : %@",controller);
+        //NSLog(@"current Index : %ld",(long)index);
+        //NSLog(@"current controller : %@",controller);
    // [controller viewWillAppear:YES];
 }
 

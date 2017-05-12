@@ -176,7 +176,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
         importMenu.title="Attach a Document"
         
         //importMenu.addOptionWithTitle("Attach from Gallery", image: nil, order: .First, handler: {
-        //print("New Doc Requested") } )
+        //print_debug("New Doc Requested") } )
         
         presentViewController(importMenu, animated: true, completion: nil)
 
@@ -263,7 +263,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     
     @IBAction func onClickSubmitBtn(sender: AnyObject) {
         
-        print("Submit Button pressed!!!")
+        print_debug("Submit Button pressed!!!")
         
         if isEmpty() == true {
             serviceHit()
@@ -350,7 +350,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
             }
             
            
-            print("PARAMETERS \(parameters)")
+            print_debug("PARAMETERS \(parameters)")
             
             //call global web service class latest
             Services.postRequest(url, parameters:parameters, completionHandler:{
@@ -358,13 +358,13 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
                 
                 AppDelegate.dismissProgressHUD()
                 
-                print(responseDict)
+                print_debug(responseDict)
                 
                 if (status == "Success") {
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
-                        print(responseDict["result"])
+                        print_debug(responseDict["result"])
                         
                         //let msg = "Resource created."
                         
@@ -411,7 +411,7 @@ class CreateEditResourcePACVC: UIViewController, UIImagePickerControllerDelegate
     }
     
     func documentPickerWasCancelled(controller: UIDocumentPickerViewController) {
-        print(#function)
+        print_debug(#function)
     }
     
     
@@ -510,7 +510,7 @@ extension CreateEditResourcePACVC: UITableViewDataSource{
    
     func btnDeleteClick(sender: UIButton)  {
         
-        print(sender)
+        print_debug(sender)
         
         let point = self.tableViewResource.convertPoint(CGPoint.zero, fromView: sender)
         

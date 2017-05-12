@@ -346,7 +346,7 @@
     NSIndexPath *indexPath;
     
     long rowNo = [self getCurrentRow:textField];
-    NSLog(@"Row number %ld",rowNo);
+    //NSLog(@"Row number %ld",rowNo);
 
     indexPath = [NSIndexPath indexPathForRow:rowNo+1 inSection:0];
     SignUpCell *cell = (SignUpCell*)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -388,10 +388,10 @@
 //    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
 //    
     long rowNo = [self getCurrentRow:textField];
-//    NSLog(@"%ld",rowNo);
+//    //NSLog(@"%ld",rowNo);
 //    if (rowNo == 0) {
 //        //firstname
-//        NSLog(@"%d",[string isEqualToString:filtered]);
+//        //NSLog(@"%d",[string isEqualToString:filtered]);
 //        return [string isEqualToString:filtered];
 //    }
 //    else if (rowNo == 1) {
@@ -642,10 +642,10 @@
             
             [Services serviceCallWithPath:ServiceRegister withParam:parameters success:^(NSDictionary *responseDict) {
                 [AppDelegate dismissProgressHUD];
-                NSLog(@"%@",responseDict);
+                //NSLog(@"%@",responseDict);
                 self.detailDictionary = responseDict;
                 
-                NSLog(@"%@",self.detailDictionary);
+                //NSLog(@"%@",self.detailDictionary);
                 
                 if (![[self.detailDictionary objectForKey:@"error"] isKindOfClass:[NSNull class]] && [self.detailDictionary objectForKey:@"error"]) {
                     if ([[self.detailDictionary objectForKey:@"error"] intValue] == 0) {
@@ -667,7 +667,7 @@
                 }
             } failure:^(NSError *error) {
                 [AppDelegate dismissProgressHUD];
-                NSLog(@"%@",error);
+                //NSLog(@"%@",error);
                 [self showAlert];
             }];
         }

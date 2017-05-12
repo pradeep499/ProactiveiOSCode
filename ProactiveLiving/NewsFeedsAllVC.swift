@@ -155,7 +155,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         r.size.height -= diff
         r.origin.y += diff
         
-        print(r)
+        print_debug(r)
         self.postContainerView.frame = r
     }
     override func viewWillAppear(animated: Bool) {
@@ -254,7 +254,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     override func viewDidAppear(animated: Bool) {
 
         super.viewDidAppear(animated)
-        print("SCREEN TAG ==> \(intValue)")
+        print_debug("SCREEN TAG ==> \(intValue)")
         
 //        self.setColectionViewTags()
 //        self.fetchScreenData()
@@ -429,7 +429,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to share the post ?", cancelButtonTitle: "NO", otherButtonTitle: ["YES"], completion: {(clickedBtn) in
             
-            print("Clicked Btn = \(clickedBtn)")
+            print_debug("Clicked Btn = \(clickedBtn)")
             
             if clickedBtn == "YES"{
                 var resultData = [String:AnyObject]()
@@ -593,7 +593,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         //self.layoutAttachmetBottom.constant = 120;
         intValue = self.view.tag
-        print(intValue)
+        print_debug(intValue)
         //
         self.attachmentViewS.hidden = false
         self.textView.resignFirstResponder()
@@ -670,9 +670,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     func onClickMessage(recognizer: UITapGestureRecognizer) {
         
-        print("tapped")
+        print_debug("tapped")
         let thisMessage = recognizer.view as! UILabel
-        print(thisMessage.text)
+        print_debug(thisMessage.text)
         
         let urlString = thisMessage.text! as String
         
@@ -1085,7 +1085,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             
             
-            print("emit dict = ", dict)
+            print_debug( dict)
             
            
             ChatListner .getChatListnerObj().socket.emit("createPost", dict)
@@ -1178,7 +1178,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         ChatListner .getChatListnerObj().socket.on("getPostUpdate") {data, ack in
             
             
-            print("value error_code\(data[0]["status"] as! String))")
+            print_debug("value error_code\(data[0]["status"] as! String))")
             
             let errorCode = (data[0]["status"] as? String) ?? "1"
             
@@ -1202,7 +1202,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     
                     
                     var filteredarray:[AnyObject] = self.postAllArr.filteredArrayUsingPredicate(predicate)
-                    print("ID = \(resultDict["_id"])")
+                    print_debug("ID = \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
                         let index = self.postAllArr.indexOfObject( filteredarray[0])
@@ -1213,7 +1213,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 }
                 else if resultDict["section"] as! String  == "friends" {
                     var filteredarray:[AnyObject] = self.postFriendsArr.filteredArrayUsingPredicate(predicate)
-                    print("ID =  \(resultDict["_id"])")
+                    print_debug("ID =  \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
                         
@@ -1227,7 +1227,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 else if resultDict["section"] as! String  == "colleagues" {
                     
                     var filteredarray:[AnyObject] = self.postColleagueArr.filteredArrayUsingPredicate(predicate)
-                    print("ID =  \(resultDict["_id"])")
+                    print_debug("ID =  \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
                         let index = self.postColleagueArr.indexOfObject( filteredarray[0])
@@ -1238,7 +1238,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 else if resultDict["section"] as! String  == "health clubs" {
                     
                     var filteredarray:[AnyObject] = self.postHealthClubsArr.filteredArrayUsingPredicate(predicate)
-                    print("ID =  \(resultDict["_id"])")
+                    print_debug("ID =  \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
                         let index = self.postHealthClubsArr.indexOfObject( filteredarray[0])
@@ -1249,7 +1249,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 else if resultDict["section"] as! String  == "pac circles" {
                     
                     var filteredarray:[AnyObject] = self.postCircleArr.filteredArrayUsingPredicate(predicate)
-                    print("ID =  \(resultDict["_id"])")
+                    print_debug("ID =  \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
                         let index = self.postCircleArr.indexOfObject( filteredarray[0])
@@ -1259,7 +1259,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 }
                 else if resultDict["section"] as! String  == "pac" {
                     var filteredarray:[AnyObject] = self.pacWallArr.filteredArrayUsingPredicate(predicate)
-                    print("ID =  \(resultDict["_id"])")
+                    print_debug("ID =  \(resultDict["_id"])")
                     
                     if filteredarray.count > 0 {
                         
@@ -1904,7 +1904,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateStr = dateFormatter.stringFromDate(date)
         
-        print("time stam ", dateStr);
+        print_debug(dateStr);
         
         return dateStr
         
@@ -1919,7 +1919,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
             return UIImage(CGImage: imageRef)
         } catch {
-            print(error)
+            print_debug(error)
             return UIImage(named: "some generic thumbnail")!
         }
     }
@@ -1928,7 +1928,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     //MARK:- Collection Delegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+        print_debug("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
         //   self.handleSingleTapAtIndex(indexPath)
     }
     
@@ -2022,14 +2022,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             
             
-            print("Dict = \(parameters)")
+            print_debug("Dict = \(parameters)")
             //call global web service class latest
             Services.postRequest(ServiceCommentsData, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 isPostServiceCalled = false
                 
-                print("Response = \(responseDict)")
+                print_debug("Response = \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
@@ -2155,14 +2155,14 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             
             
-            print("Dict = \(parameters)")
+            print_debug("Dict = \(parameters)")
             //call global web service class latest
             Services.postRequest(ServiceGetNewsFeed, parameters: parameters, completionHandler:{
                 (status,responseDict) in
                 
                 isPostServiceCalled = false
                 
-          //      print("Response = \(responseDict)")
+          //      print_debug("Response = \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
@@ -2514,7 +2514,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     func uniqueName(fileName: String) -> String {
         
         let uniqueImageName = NSString(format: "%@%f", fileName , NSDate().timeIntervalSince1970 * 1000)
-        // print(uniqueImageName)
+        // print_debug(uniqueImageName)
         return uniqueImageName as String
     }
     
@@ -2968,7 +2968,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { [weak alert] (action) -> Void in
             let textField = alert!.textFields![0] as UITextField
-            print("Text field: \(textField.text)")
+            print_debug("Text field: \(textField.text)")
             
             if(assets != nil){
                 //multiple images
@@ -3040,7 +3040,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     
                     if bool_val == true {
                         self.sendPostToServer("image", isShared: false, createdDict: nil, imgOrVideoUlr: pathUrl , captionText: captionText, thumNailName:thumbNailName)
-                    //    print("image path~~~~~~ = ", pathUrl)
+                    //    print_debug("image path~~~~~~ = ", pathUrl)
                      
                     }
                     
@@ -3086,7 +3086,7 @@ class FooterAllReUsableView: UICollectionReusableView{
     }
     
     func myCustomInit() {
-        print("hello there from SupView")
+        print_debug("hello there from SupView")
     }
     
 }

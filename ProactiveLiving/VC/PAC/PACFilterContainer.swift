@@ -61,8 +61,8 @@ class PACFilterContainer: UIViewController ,YSLContainerViewControllerDelegate,U
     // MARK: -- YSLContainerViewControllerDelegate
     func containerViewItemIndex(index: Int, currentController controller: UIViewController) {
         //   self.view.endEditing(true)
-        print("current Index : \(Int(index))")
-        print("current controller : \(controller)")
+        print_debug("current Index : \(Int(index))")
+        print_debug("current controller : \(controller)")
         currentIndex = index
       //  controller.viewWillAppear(true)
         
@@ -114,12 +114,12 @@ class PACFilterContainer: UIViewController ,YSLContainerViewControllerDelegate,U
         
         if(CLLocationManager.locationServicesEnabled()){
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            print(appDelegate.currentLocation)
+            print_debug(appDelegate.currentLocation)
             dataDict["latitude"] = appDelegate.currentLocation.coordinate.latitude
             dataDict["longitude"] = appDelegate.currentLocation.coordinate.longitude
         }
         
-        print(dataDict)
+        print_debug(dataDict)
         
         NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_PAC_FILTER, object: nil, userInfo: dataDict)
 
