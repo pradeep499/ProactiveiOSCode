@@ -810,6 +810,7 @@ extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let imagePerson = cell.viewWithTag(111) as! UIImageView
         imagePerson.layer.cornerRadius = imagePerson.frame.size.width/2
         imagePerson.clipsToBounds = true
+        imagePerson.contentMode = .ScaleAspectFill
         let namePerson = cell.viewWithTag(222) as! UILabel
         
         switch collectionView.tag {

@@ -57,7 +57,7 @@
     UIStoryboard *story = [UIStoryboard storyboardWithName:@"PAC" bundle:nil];
     
     myPACVC = [story instantiateViewControllerWithIdentifier:@"MyPACVC"];
-    myPACVC.title = @"MY PAC";
+    myPACVC.title = @"MY PACs";
     
     
     

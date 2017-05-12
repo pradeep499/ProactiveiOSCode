@@ -705,7 +705,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         UIApplication.sharedApplication().statusBarHidden = false;
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         leadContAudioConst.constant = 400
-        bottomPlusConstraint.constant = -290
+        bottomPlusConstraint.constant = -390//-290
         
         leadContAudioConst.constant = self.view.frame.width
         self.view.layoutIfNeeded()
@@ -4115,7 +4115,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     
     func cancelAttchView()-> Void
     {
-        bottomPlusConstraint.constant = -290;
+        bottomPlusConstraint.constant = -390//-290;
         
         UIView.animateWithDuration(0.5, animations:
             {

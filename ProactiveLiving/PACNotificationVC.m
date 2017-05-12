@@ -223,9 +223,10 @@
     
     
     iv_profile.layer.borderWidth = 1.0;
-    //  iv_profile.contentMode = ScaleAspectFill;
+    iv_profile.contentMode  =  UIViewContentModeScaleAspectFill; //ScaleAspectFill;
     iv_profile.layer.masksToBounds = false;
-    iv_profile.layer.borderColor = [UIColor lightGrayColor].CGColor;    iv_profile.layer.cornerRadius = 30;
+    iv_profile.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    iv_profile.layer.cornerRadius = 30;
     iv_profile.clipsToBounds = true;
     
     
@@ -243,12 +244,11 @@
     
     lbl_name.text = [NSString stringWithFormat:@"%@ %@",[[requestArr objectAtIndex:indexPath.row][@"userId"] valueForKey:@"firstName"], [[requestArr objectAtIndex:indexPath.row][@"userId"] valueForKey:@"lastName"]];
      // changed as per client request 28th April
-   // lbl_desc.text = [NSString stringWithFormat:@"Has requested you to join PAC %@.", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
-      //  lbl_desc.text = [NSString stringWithFormat:@"Has requested to join the %@ PAC.", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
-    // changed as per client request 3rd May
+     // lbl_desc.text = [NSString stringWithFormat:@"Has requested you to join PAC %@.", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
+     //  lbl_desc.text = [NSString stringWithFormat:@"Has requested to join the %@ PAC.", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
+     // changed as per client request 3rd May
 
     lbl_desc.text = [NSString stringWithFormat:@"Has requested to join the following PAC:\n%@", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
- 
     lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd HH:mm:ss" desireFormat:@"dd MMM hh:mm a" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
     
     return cell;

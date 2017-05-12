@@ -134,6 +134,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+      
         let headerView = UIView(frame: CGRectMake(0, 0, screenWidth, 50))
         headerView.tag = section
         headerView.backgroundColor = UIColor.whiteColor()
@@ -160,10 +161,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                         counter = counter+1
                     }
 
-                    
                 }
                 
-                headerString.text = "Invited Friends ( \(counter) Of  \(dataArr.count))"
+                headerString.text = "Invited Friends (\(counter) Of  \(dataArr.count))"
         default:
             break
         }

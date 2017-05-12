@@ -427,7 +427,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     @IBAction func onClickShareBtn(sender: AnyObject) {
         
         
-        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to share the post ?", cancelButtonTitle: "NO", otherButtonTitle: ["YES"], completion: {(clickedBtn) in
+        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to share this post?", cancelButtonTitle: "NO", otherButtonTitle: ["YES"], completion: {(clickedBtn) in
             
             print_debug("Clicked Btn = \(clickedBtn)")
             
@@ -457,7 +457,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                         resultData = self.pacWallArr[indexPath!.row ] as! [String:AnyObject]
                     }
                 }
-                
                 
                 self.sendPostToServer(resultData["postType"] as! String, isShared: true, createdDict: resultData, imgOrVideoUlr: nil, captionText: nil, thumNailName:nil)
                 
@@ -1593,8 +1592,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         }else{
             //Posted by name
             if let fName = (dict as NSDictionary).valueForKeyPath("createdBy.firstName") as? String {
+                
                 let lName = (dict as NSDictionary).valueForKeyPath("createdBy.lastName") as? String
                 lbl_name.text = fName + " shared post"
+                
             }
         }
         
@@ -1647,7 +1648,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
             df.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
             let dateStr = df.stringFromDate(tempDate)
-           /* df.dateFormat = "HH:mm:ss.sss"
+          
+            /* df.dateFormat = "HH:mm:ss.sss"
             df.timeZone = NSTimeZone()
             let timeStr = df.stringFromDate(tempDate)
             
