@@ -328,7 +328,11 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         
         
         //NSLog(anObject.friendImageUrl!)
-        let imageString = NSString(format:"%@", anObject.friendImageUrl!) as String
+        var imageString = ""
+        if let imageurl  = anObject.friendImageUrl {
+             imageString = NSString(format:"%@",imageurl) as String
+ 
+        }
         userName.text = anObject.friendName
         
         if anObject.isTyping != "0" {
@@ -375,7 +379,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
             }
             
             
-            return cell
+           // return cell
 
            
             
