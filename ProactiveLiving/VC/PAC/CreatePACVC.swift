@@ -299,16 +299,22 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         // self.tv_desc.placeholder = "Minimum 50 words"
         // by me
       //  self.tv_desc.setCornerRadiusWithBorderWidthAndColor(3, borderWidth: 1, borderColor: UIColor(red: 145.0/255.0, green: 145.0/255.0, blue: 145.0/255.0, alpha: 0.2))
+       
         AppHelper.setBorderOnView(self.tv_desc)
         
-        
         self.tf_location.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
+       
+        // added by me 8th May 2017 Affle API key
         
+        //        gpaViewController = GooglePlacesAutocomplete(
+        //            apiKey:"AIzaSyC_3yIiHlJLmkn-gquloBGAipOc0apuAZc",
+        //            placeType: .Address
+        //        )
         
-        // added by me 8th May 2017
-
+        // Client's API key
+        
         gpaViewController = GooglePlacesAutocomplete(
-            apiKey: "AIzaSyCEJ4PfgJMJv7Qv-7LJr2iKbHLJ-CotxSE",
+            apiKey:"AIzaSyA0D6-JS7HyyQwvs2JhDclsMyCw7xG1HKU",
             placeType: .Address
         )
  

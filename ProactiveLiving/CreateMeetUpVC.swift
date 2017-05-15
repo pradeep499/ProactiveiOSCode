@@ -59,16 +59,23 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 
-  
         
-        // Earlier AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0
+      // added by me 8th May 2017 Affle API key
         
-      // added by me 8th May 2017
+//        gpaViewController = GooglePlacesAutocomplete(
+//            apiKey:"AIzaSyC_3yIiHlJLmkn-gquloBGAipOc0apuAZc",
+//            placeType: .Address
+//        )
         
+       // Client's API key
+     
         gpaViewController = GooglePlacesAutocomplete(
-            apiKey:"AIzaSyCEJ4PfgJMJv7Qv-7LJr2iKbHLJ-CotxSE",
+            
+            apiKey:"AIzaSyA0D6-JS7HyyQwvs2JhDclsMyCw7xG1HKU",
             placeType: .Address
+            
         )
+        
  
         txtFieldWhereSecond.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
         self.tokenField.tagPlaceholder = "Add here";
