@@ -56,6 +56,8 @@ class ChatListner: NSObject {
     /*!
     Make a connection to socket
     */
+    
+    
     func createOnline(){
         
         self.isConnectionStable = true
@@ -70,8 +72,8 @@ class ChatListner: NSObject {
         
         NSNotificationCenter.defaultCenter().postNotificationName("ConnectingNotificationForChat", object: nil, userInfo: nil)
         
-        let alrt = UIAlertView(title: "hello", message: "connected", delegate: self, cancelButtonTitle: "ok")
-        alrt.show()
+       //let alrt = UIAlertView(title: "hello", message: "connected", delegate: self, cancelButtonTitle: "ok")
+       // alrt.show()
         
     }
   
@@ -116,6 +118,9 @@ func connectToSocket() -> Void{
                     weakself.sendOffLineMessage()
                     //NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "getState", object: nil))
                 }
+                
+    
+
                 weakself.isTypingChatListener()
                 weakself.addReceiveMsgHandlers()
                 weakself.addOffLineReceiveMsgHandlers();
@@ -1639,10 +1644,10 @@ func connectToSocket() -> Void{
         let strStatus:String = "3"
         let strPred:String = "loginUserId contains[cd] \"\(strLogin)\" AND senderId contains[cd] \"\(strSender)\"  AND messageStatus contains[cd] \"\(strStatus)\""
         let instance = DataBaseController.sharedInstance
-        var fetchResult = instance.fetchData("GroupChat", predicate: strPred, sort: ("localSortID",true))! as NSArray
+        let fetchResult = instance.fetchData("GroupChat", predicate: strPred, sort: ("localSortID",true))! as NSArray
         for myobject : AnyObject in fetchResult
         {
-            var anObject = myobject as! GroupChat
+            let anObject = myobject as! GroupChat
             if anObject.messageType == "text"
             {
                 var sendMsgD = Dictionary<String,String>()
@@ -1733,11 +1738,18 @@ func connectToSocket() -> Void{
         
         
        
-        
+        let vc = AppDelegate.getAppDelegate().tabbarController.viewControllers![1] as! UINavigationController
+    
+        let view = vc.topViewController?.view
+        print_debug("vc.description ==== \(vc.description)")
+
         if alertType == "notification" {
             
             AppDelegate.getAppDelegate().window?.addSubview(pushNotificationView)
             AppDelegate.getAppDelegate().window?.bringSubviewToFront(pushNotificationView)
+            
+            
+           // [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = [NSString stringWithFormat:@"%zd",  [[DataBaseController sharedInstance] fetchUnreadCount]  ];
             
             NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector:  #selector(ChatListner.hideAlert), userInfo: nil, repeats: false)
             
@@ -1755,8 +1767,8 @@ func connectToSocket() -> Void{
         else{
             // Connectiong to Socket IO
             
-            //Add a View On Screen to disable user Interaction
-           // if (pushNotificationView != nil) {
+                //Add a View On Screen to disable user Interaction
+               // if (pushNotificationView != nil) {
                // userInteractionDisableView.removeFromSuperview()
                // pushNotificationView.removeFromSuperview()
 
@@ -1768,8 +1780,8 @@ func connectToSocket() -> Void{
             
            //AppDelegate.getAppDelegate().window?.addSubview(userInteractionDisableView)
        /// AppDelegate.getAppDelegate().window?.bringSubviewToFront(userInteractionDisableView)
-            AppDelegate.getAppDelegate().window?.addSubview(pushNotificationView)
-            AppDelegate.getAppDelegate().window?.bringSubviewToFront(pushNotificationView)
+            view!.addSubview(pushNotificationView)
+            view!.bringSubviewToFront(pushNotificationView)
             
             
             userInteractionDisableView.backgroundColor = UIColor.clearColor()
@@ -1777,7 +1789,7 @@ func connectToSocket() -> Void{
             timerConnectingStatus = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector:  #selector(ChatListner.hideAlertConnectingToServer), userInfo: nil, repeats: true)
             
             
-          // timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(9, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
+         /// timerConnectingStatusToConnectAgain = NSTimer.scheduledTimerWithTimeInterval(7, target: self, selector:  #selector(ChatListner.againConnectionConnectingToServer), userInfo: nil, repeats: false)
 
             
         }
@@ -2175,7 +2187,7 @@ func connectToSocket() -> Void{
                 UIView.animateWithDuration(0.5, animations:
                     {
                         self.pushNotificationView.frame = CGRectMake(0, -70, UIScreen.mainScreen().bounds.size.width, 70)
-                        self.userInteractionDisableView.frame = CGRectMake(0, -UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+                       // self.userInteractionDisableView.frame = CGRectMake(0, -UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
                 })
                 ChatListner.getChatListnerObj().socket.disconnect()
                 
@@ -2282,11 +2294,13 @@ func connectToSocket() -> Void{
         else {
             ChatHelper.removeFromUserDefaultForKey("userId")
         }
+        
         ChatHelper.removeFromUserDefaultForKey("oneTime")
         ChatHelper.removeFromUserDefaultForKey("friendId")
     }
     
     func closeConnection() {
+        
         
         if (AppHelper.userDefaultsForKey("userId")) != nil {
             
@@ -2298,7 +2312,7 @@ func connectToSocket() -> Void{
                     
                     ChatListner.getChatListnerObj().socket.disconnect()
                     
-                  //  socket = nil
+                     socket = nil
                     isConnectionStable = false
                     
                 }

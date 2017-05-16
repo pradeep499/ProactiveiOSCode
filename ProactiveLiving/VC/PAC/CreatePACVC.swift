@@ -308,7 +308,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
         // added by me 8th May 2017
 
         gpaViewController = GooglePlacesAutocomplete(
-            apiKey: "AIzaSyCEJ4PfgJMJv7Qv-7LJr2iKbHLJ-CotxSE",
+            apiKey: "AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0",
             placeType: .Address
         )
  

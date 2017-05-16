@@ -36,6 +36,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var moviePlayerController = MPMoviePlayerViewController()
     var globalAssets: [DKAsset]?
     
+    
+    var refreshControl: UIRefreshControl!
+
+    var isFromPullToRefresh = false
+    
     var imgaeProfile  = UIImage(named: "ic_booking_profilepic")
     
  //   var isFromGallery:Bool!
@@ -60,13 +65,20 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         viewWillAppaerCount = 0
         //layOutConstrain_view_Post_bottom.constant = 320
         //layoutConstraint_collectionview_bottom.constant = 350
+        refreshControl = UIRefreshControl()
+        //refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refreshControl(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        collectionView.addSubview(refreshControl)
+        
+
         var viewFrame = self.view.bounds
         viewFrame.size.height = screenHeight-200
         //self.view.frame = viewFrame
         //IQKeyboardManager.sharedManager().enableAutoToolbar = false
 
         //tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewsFeedsAllVC.hideSocialSharingView))
-     
+        
+       
         
         self.view_share.hidden = true
         
@@ -103,6 +115,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
            // self.fetchExploreDataFromServer()
         //}
 
+        
+        
+        
+         //
+        
+        
     }
     
     //MARK:- CommentsVCDelegate
@@ -114,6 +132,32 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 //        
 //    }
     
+    
+    
+    func refreshControl(sender:AnyObject){
+       refreshControl.endRefreshing()
+        isFromPullToRefresh =  true
+            switch self.collectionView.tag {
+            case 1111:
+               self.postAllArr.removeAllObjects()
+            case 3333:
+                self.postFriendsArr.removeAllObjects()
+            case 4444:
+                self.postColleagueArr.removeAllObjects()
+            case 5555:
+                self.postHealthClubsArr.removeAllObjects()
+            case 6666:
+                self.postCircleArr.removeAllObjects()
+            case 1000:
+                self.pacWallArr.removeAllObjects()
+                
+            default:
+                print_debug("don't do anythiong ")
+            }
+        self.collectionView.reloadData()
+        print_debug("pull to resfresh")
+        self.fetchScreenData()
+    }
     
     //MARK:- Growing TextView mthods
     func setupGrowingTextView() {
@@ -161,15 +205,17 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     override func viewWillAppear(animated: Bool) {
         
         //createConnection 
-        ChatListner.getChatListnerObj().createConnection()
+      ///  ChatListner.getChatListnerObj().createConnection()
+        
+       
         
         //super.viewWillAppear(animated)
         if self.title != "EXPLORE" {
             
-            self.postCircleArr.removeAllObjects()
-            self.collectionView.reloadData()
-            self.getAllPostEvent()
-            self.getLikeUpdate()
+           // self.postCircleArr.removeAllObjects()
+           // self.collectionView.reloadData()
+           // self.getAllPostEvent()
+           // self.getLikeUpdate()
             
         }
         self.attachmentViewS.hidden = true
@@ -332,6 +378,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         dict["likeStatus"] = sender.selected
         dict["userId"] = ChatHelper.userDefaultForKey("userId")
         
+        var typeID = ""
+        
         let buttonPosition = sender.convertPoint(CGPointZero, toView: self.collectionView)
         let indexPath =  self.collectionView.indexPathForItemAtPoint(buttonPosition)
         if indexPath != nil {
@@ -359,9 +407,123 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             
            
             dict["typeId"] = resultData["_id"] as! String
+            
+            typeID = resultData["_id"] as! String
         }
+       // /api/v1/likePost/:userId/:typeId/:likeStatus
         
-        ChatListner.getChatListnerObj().socket.emit("like", dict)
+        let url = "likePost/" + "\(ChatHelper.userDefaultForKey("userId"))" + "/" + "\(typeID)" + "/" + "\(sender.selected)"
+        
+        if AppDelegate.checkInternetConnection() {
+        
+            Services.getRequest(url, parameters: nil, completionHandler: { (status, response) in
+                print_debug("response post for like =====\n \(response)")
+                
+                if (status == "Success") {
+                    if ((response["error"] as! Int) == 0) {
+
+                        guard let dictData = response as? Dictionary<String, AnyObject> else
+                        {
+                            return
+                        }
+                        
+                        guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else
+                        {
+                            return
+                        }
+                        
+                        
+                        
+                        let predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
+                        if resultDict["section"] as! String == "all" {
+                            
+                            
+                            
+                            var filteredarray:[AnyObject] = self.postAllArr.filteredArrayUsingPredicate(predicate)
+                            print_debug("ID = \(resultDict["_id"])")
+                            
+                            if filteredarray.count > 0 {
+                                let index = self.postAllArr.indexOfObject( filteredarray[0])
+                                self.postAllArr.replaceObjectAtIndex(index, withObject: resultDict)
+                            }
+                            
+                            
+                        }
+                        else if resultDict["section"] as! String  == "friends" {
+                            var filteredarray:[AnyObject] = self.postFriendsArr.filteredArrayUsingPredicate(predicate)
+                            print_debug("ID =  \(resultDict["_id"])")
+                            
+                            if filteredarray.count > 0 {
+                                
+                                let index = self.postFriendsArr.indexOfObject( filteredarray[0])
+                                self.postFriendsArr.replaceObjectAtIndex(index, withObject: resultDict)
+                            }
+                            
+                            
+                        }
+                            
+                        else if resultDict["section"] as! String  == "colleagues" {
+                            
+                            var filteredarray:[AnyObject] = self.postColleagueArr.filteredArrayUsingPredicate(predicate)
+                            print_debug("ID =  \(resultDict["_id"])")
+                            
+                            if filteredarray.count > 0 {
+                                let index = self.postColleagueArr.indexOfObject( filteredarray[0])
+                                self.postColleagueArr.replaceObjectAtIndex(index, withObject: resultDict)
+                            }
+                            
+                        }
+                        else if resultDict["section"] as! String  == "health clubs" {
+                            
+                            var filteredarray:[AnyObject] = self.postHealthClubsArr.filteredArrayUsingPredicate(predicate)
+                            print_debug("ID =  \(resultDict["_id"])")
+                            
+                            if filteredarray.count > 0 {
+                                let index = self.postHealthClubsArr.indexOfObject( filteredarray[0])
+                                self.postHealthClubsArr.replaceObjectAtIndex(index, withObject: resultDict)
+                            }
+                            
+                        }
+                        else if resultDict["section"] as! String  == "pac circles" {
+                            
+                            var filteredarray:[AnyObject] = self.postCircleArr.filteredArrayUsingPredicate(predicate)
+                            print_debug("ID =  \(resultDict["_id"])")
+                            
+                            if filteredarray.count > 0 {
+                                let index = self.postCircleArr.indexOfObject( filteredarray[0])
+                                self.postCircleArr.replaceObjectAtIndex(index, withObject: resultDict)
+                            }
+                            
+                        }
+                        else if resultDict["section"] as! String  == "pac" {
+                            var filteredarray:[AnyObject] = self.pacWallArr.filteredArrayUsingPredicate(predicate)
+                            print_debug("ID =  \(resultDict["_id"])")
+                            
+                            if filteredarray.count > 0 {
+                                
+                                let index = self.pacWallArr.indexOfObject( filteredarray[0])
+                                self.pacWallArr.replaceObjectAtIndex(index, withObject: resultDict)
+                            }
+                            
+                            
+                        }
+                        
+                        self.collectionView.reloadData()
+                    
+                
+                }
+                }
+
+            })
+            
+        
+        }
+
+        
+        
+        
+        
+       // ChatListner.getChatListnerObj().socket.emit("like", dict)
         
         
     }
@@ -1053,41 +1215,82 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
                 }
             }
-            //==============
-       /*     if postType == "text" {
-               
-                if isShared{
-                    
-                    dict["createdBy"] = (createdDict! as NSDictionary).valueForKeyPath("createdBy._id") as? String
-                    
-                    dict["sharedBy"] =  ChatHelper.userDefaultForKey(_ID)
-                    dict["text"] = createdDict!["text"] as? String
-                    
-                }else{
-                    
-                    
-                    dict["text"] = self.textView.text
-                    dict["createdBy"] = ChatHelper.userDefaultForKey(_ID)
-                }
-                
-            }else{
-                 dict["url"] = imgOrVideoUlr
-                 dict["text"] = captionText!
-                dict["createdBy"] = ChatHelper.userDefaultForKey(_ID)
-                
-               dict["thumNailName"] = thumNailName
-                
-                
-            }*/
             
              dict["postType"] = postType
-            
-            
-            
             print_debug( dict)
             
-           
-            ChatListner .getChatListnerObj().socket.emit("createPost", dict)
+           Services.postRequest("createPost", parameters: dict, completionHandler: { (status, response) in
+            
+            print_debug("response post for  =====\n \(response)")
+            
+            if (status == "Success") {
+                if ((response["error"] as! Int) == 0) {
+
+                guard let dictData = response as? Dictionary<String, AnyObject> else {
+                    return
+                }
+                
+                guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else {
+                    return
+                }
+                
+                //var predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
+                if resultDict["section"] as! String == "all" {
+                    
+                    self.postAllArr.insertObject(resultDict, atIndex: 0)
+                    if(self.postAllArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    }
+                }
+                else if resultDict["section"] as! String  == "friends" {
+                    self.postFriendsArr.insertObject(resultDict, atIndex: 0)
+                    if(self.postFriendsArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    }
+                }
+                else if resultDict["section"] as! String  == "colleagues" {
+                    
+                    self.postColleagueArr.insertObject(resultDict, atIndex: 0)
+                    if(self.postColleagueArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    }
+                }
+                else if resultDict["section"] as! String  == "health clubs" {
+                    
+                    self.postHealthClubsArr.insertObject(resultDict, atIndex: 0)
+                    if(self.postHealthClubsArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    }
+                }
+                else if resultDict["section"] as! String  == "pac circles" {
+                    
+                    self.postCircleArr.insertObject(resultDict, atIndex: 0)
+                    if(self.postCircleArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    }
+                }
+                if resultDict["section"] as! String  == "pac" {
+                    
+                    self.pacWallArr.insertObject(resultDict, atIndex: 0)
+                    if(self.pacWallArr.count > 0) {
+                        self.collectionView.reloadData()
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    }
+                }
+                }
+            }
+            
+            
+           })
+            
+            
+            
+           // ChatListner .getChatListnerObj().socket.emit("createPost", dict)
             
             
         }else
@@ -2157,6 +2360,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             
             
+            
             print_debug("Dict = \(parameters)")
             //call global web service class latest
             Services.postRequest(ServiceGetNewsFeed, parameters: parameters, completionHandler:{
@@ -2170,23 +2374,27 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
                 if (status == "Success") {
                     
+                  print_debug("responseDict ====== \(responseDict)")
+                    
+                    guard let dict:[NSObject:AnyObject]? = responseDict where dict != nil else{
+                        return
+                    }
+                    
                   if ((responseDict["error"] as! Int) == 0) {
                     
+                    if self.isFromPullToRefresh{
+                        self.isFromPullToRefresh = false
+
+                    }
                     
                     if let resultArr = responseDict["result"]  as? NSArray{
                         
                         if self.collectionView.tag ==  1111 {
-                           
-                            //self.postAllArr = NSMutableArray.init(array: resultArr)
                             
-                            if resultArr.count > 0 {
-                                self.postAllArr.addObjectsFromArray(resultArr as [AnyObject])
-                               // self.newsFeedIndex = self.postAllArr.count
-                            
-                            }
-                            else {
+                            guard let countVal:Int? = resultArr.count where countVal > 0 else{
                                 return
                             }
+                            self.postAllArr.addObjectsFromArray(resultArr as [AnyObject])
                             
                         }
                         else if self.collectionView.tag ==  3333 {

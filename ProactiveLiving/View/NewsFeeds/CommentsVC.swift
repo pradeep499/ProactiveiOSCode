@@ -497,9 +497,37 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             
             dict["postId"] = self.selectedCommentDict["_id"]
             
+          //  /api/v1/commentOnPost/:userId/:typeId/:comment
             
-            ChatListner .getChatListnerObj().socket.emit("comment", dict)
+            var url = "commentOnPost/" + "\(ChatHelper.userDefaultForKey("userId"))" + "/"
             
+            url +=  "\(self.selectedCommentDict["_id"]!)" + "/" + "\(self.tv_writeComment.text)"
+
+            //ChatListner .getChatListnerObj().socket.emit("comment", dict)
+            if AppDelegate.checkInternetConnection() {
+                
+            Services.postRequest("commentOnPost", parameters: dict, completionHandler: { (status, response) in
+                if (status == "Success") {
+                    if ((response["error"] as! Int) == 0) {
+                        guard let dictData = response as? Dictionary<String, AnyObject> else{
+                            return
+                        }
+                        guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else{
+                            return
+                        }
+                        print_debug(" response = ", resultDict)
+                        self.commentsArr = resultDict["comments"] as! [AnyObject]
+                        self.table_view.reloadData()
+                        self.table_view.scrollToLastRow(true)
+                    }
+                    
+                }
+
+                
+              })
+                
+                
+            }
             
         }else
         {

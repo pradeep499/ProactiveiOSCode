@@ -51,6 +51,7 @@ class MyPACVC: UIViewController {
         
         
        // self.myPACDetailArr.removeAll()
+        print_debug("pac listing ")
         fetchMyPACDataFromServer(createJoinStatus)  // service call
         self.tableViewMyPAC.reloadData()
     }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+var isFromListing = false
+
 class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     
     var arrayForBool = [Int]()
@@ -1004,6 +1006,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     }
     
     @IBAction func btnBackClick(sender: AnyObject) {
+        isFromListing = true
         self.navigationController?.popViewControllerAnimated(true)
     }
     

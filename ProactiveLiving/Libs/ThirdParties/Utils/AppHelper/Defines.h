@@ -41,7 +41,7 @@
 //-------------************Service Call URLs **************-------------
 
 //Testing ULR
-//#define BASE_URL @"http://192.168.1.40:3000/api/v1/"
+//#define BASE_URL @"http://192.168.5.33:3000/api/v1/"
 
 //LiveServer URL
 #define BASE_URL @"http://52.23.211.77/api/v1/"

@@ -407,7 +407,7 @@
                             [AppHelper saveToUserDefaults:[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] withKey:cellNum];
                             
                             //Create connection
-                            [[ChatListner getChatListnerObj] createConnection];
+                            //[[ChatListner getChatListnerObj] createConnection];
                             
                         }
                         //NSLog(@"%@",[AppHelper userDefaultsForKey:uId]);//print_debug uid

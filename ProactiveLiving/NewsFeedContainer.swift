@@ -39,6 +39,8 @@ class NewsFeedContainer: UIViewController, YSLContainerViewControllerDelegate {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        ChatListner.getChatListnerObj().createConnection()
+
          self.setUpViewControllers()
         
     }

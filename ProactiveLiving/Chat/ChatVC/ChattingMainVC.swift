@@ -536,11 +536,12 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
         isTyping = false
         
-        //AppDelegate.getAppDelegate().btnCreateMeld.hidden = true
- 
-        //if ChatListner .getChatListnerObj().socket.status == SocketIOClientStatus.NotConnected {
-                //ChatListner .getChatListnerObj().socket.reconnect()
-        //}
+        let status  = ChatListner .getChatListnerObj().socket.status
+        if status != .Connected {
+            print_debug("status :  \(status)")
+
+             ChatListner.getChatListnerObj().createConnection()
+         }
         
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("fontName") != nil) {

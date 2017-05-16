@@ -107,7 +107,7 @@ let chatCDNbaseUrl=""
 //for chat profile images
 
 //Testing URL
-//let ChatBaseMediaUrl = "http://192.168.1.40:3000/"
+//let ChatBaseMediaUrl = "http://192.168.5.33:3000/"
 
 // Live Server URL
 let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
@@ -123,10 +123,10 @@ let ChatMediaPath = "api/v1/sendMedia"
 
 //----------------************Socket IO URL **************-------------
 // Test Server
-//let socketIO_BaseURL =  "http://192.168.1.40:3000/"
+//let socketIO_BaseURL =  "http://192.168.5.33:3001/"
 
 //Live Server
-let socketIO_BaseURL = "http://52.23.211.77:3000/"
+let socketIO_BaseURL = "http://52.23.211.77:3001/"
 
 //Production Serever
 //let socketIO_BaseURL = "http://52.89.149.60:3000"
@@ -137,7 +137,7 @@ let socketIO_BaseURL = "http://52.23.211.77:3000/"
 // MARK : GLOBAL Functions
 func print_debug <T> (object:T)
 {
-   // print(object)
+    print(object)
 }
 
 

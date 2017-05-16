@@ -50,7 +50,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var dataDict = [String : AnyObject]()
     var arrPACMembers = [[String : AnyObject]]()
     var strLatLong : String!
-    var fromScreenFlag : String!
+    var fromScreenFlag : String! = " "
     var pacID : String!
     var recurrenceDict:[String:String]!
     var currentDateVal = NSDate()
@@ -59,16 +59,15 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 
-  
-        
-        // Earlier AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0
-        
+      // Earlier AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0
+        //// new one AIzaSyCEJ4PfgJMJv7Qv-7LJr2iKbHLJ-CotxSE
       // added by me 8th May 2017
         
         gpaViewController = GooglePlacesAutocomplete(
-            apiKey:"AIzaSyCEJ4PfgJMJv7Qv-7LJr2iKbHLJ-CotxSE",
+            apiKey:"AIzaSyCofV_YsTjl-9lu2m4rOCj1bMmW4PS1Td0",
             placeType: .Address
         )
+        
  
         txtFieldWhereSecond.addTarget(self, action: #selector(addressTextFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingDidBegin)
         self.tokenField.tagPlaceholder = "Add here";
@@ -164,7 +163,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             switchAllowInvite.on = self.dataDict["isAllow"] as! Bool
             let imgUrl = self.dataDict["imgUrl"] as? String
             if !(imgUrl == "") {
-                imgCoverPic.setImageWithURL(NSURL(string: imgUrl!))
+                imgCoverPic.sd_setImageWithURL(NSURL(string: imgUrl!))
             }
             
         }
@@ -1372,7 +1371,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         dismissViewControllerAnimated(true, completion: nil)
         place.getDetails { details in
             self.strLatLong = "\(details.latitude),\(details.longitude)"
-            print_debug(details.description)
+            print_debug("details.description : \(details.description)")
         }
     }
     

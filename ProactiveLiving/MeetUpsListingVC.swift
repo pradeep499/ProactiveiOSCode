@@ -14,6 +14,7 @@ class MeetUpsListingVC: UIViewController {
 
     var pushedFrom : String!
     var arrData = [AnyObject]()
+    
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -21,7 +22,6 @@ class MeetUpsListingVC: UIViewController {
         super.viewDidLoad()
         //self.arrData = Array()
         
-      NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.notificationCall), name: "getState", object: nil)
 
     }
     
@@ -29,9 +29,14 @@ class MeetUpsListingVC: UIViewController {
     {
         super.viewWillAppear(true)
         self.navigationController?.navigationBarHidden = true
-
-        self.fetchAllMeetupsOrWebInvites()
-        self.listenerUpdateMeetupOrWebInvite()
+        if !isFromListing{
+            self.fetchAllMeetupsOrWebInvites()
+            self.listenerUpdateMeetupOrWebInvite()
+        }else{
+            isFromListing = false
+        }
+            
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -45,14 +50,7 @@ class MeetUpsListingVC: UIViewController {
 
     }
     
-    func notificationCall(){
-        print_debug("calling notifiaction")
-        print_debug(arrData)
-
-        self.fetchAllMeetupsOrWebInvites()
-        self.listenerUpdateMeetupOrWebInvite()
-
-    }
+   
     
     func fetchAllMeetupsOrWebInvites() {
         
@@ -76,6 +74,10 @@ class MeetUpsListingVC: UIViewController {
                 
                 AppDelegate.dismissProgressHUD()
                 if (status == "Success") {
+                    
+                    guard let dict:[NSObject:AnyObject]? = responseDict where dict != nil else{
+                        return
+                    }
                     
                     if ((responseDict["error"] as! Int) == 0) {
                         
