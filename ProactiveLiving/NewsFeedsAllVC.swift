@@ -725,11 +725,19 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     self.deletePostWithData(resultData)
                 }))
             
+            
+            actionSheet.addAction(UIAlertAction(title: "Report this post", style: UIAlertActionStyle.Default, handler:
+                { (ACTION :UIAlertAction!)in
+                    
+                    self.sendMail()
+                    
+                }))
+            
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:
                 { (ACTION :UIAlertAction!)in
                         
                 }))
-                    
+            
             self.presentViewController(actionSheet, animated: true, completion: nil)
         }
         
@@ -3068,7 +3076,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                      
                     }
                     
-                    
                     } , completionProgress: { ( bool_val : Bool, progress) -> Void in
                        
                 })
@@ -3079,6 +3086,46 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     }
 
 }
+
+
+extension NewsFeedsAllVC:MFMailComposeViewControllerDelegate{
+    
+    
+    func sendMail() -> Void {
+        
+        if !MFMailComposeViewController.canSendMail() {
+        
+            print_debug("Report")
+            return
+        
+        }
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        let email = "support@proactively.com"
+        
+      
+        // Configure the fields of the interface.
+        composeVC.setToRecipients([email])
+        composeVC.setSubject("Report")
+        
+        // Present the view controller modally.
+        self.presentViewController(composeVC, animated: true, completion: nil)
+        
+    }
+    
+    
+    func mailComposeController(controller: MFMailComposeViewController,
+                               didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        // Check the result or perform other tasks.
+        
+        // Dismiss the mail compose view controller.
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+}
+
 
 extension NewsFeedsAllVC: UITextViewDelegate {
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
