@@ -847,6 +847,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                 mesagesVC.recentChatObj=recentObj
                 mesagesVC.manageChatTableH="0"
                 mesagesVC.isGroup = "1"
+                mesagesVC.hidesBottomBarWhenPushed = false
                 
                 self.navigationController?.pushViewController(mesagesVC, animated: true)
             }
