@@ -30,5 +30,7 @@
 @property (nonatomic, weak) id <GroupChatProtocol> delegate1;
 @property (nonatomic, weak) id<SomeProtocol> delegate2;
 @property (nonatomic,copy)NSArray *arrContacts;
+@property (copy, nonatomic) NSString *fromVCName;
+
 -(void)createGroupWithContacts;
 @end

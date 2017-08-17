@@ -211,7 +211,7 @@ class PacContainerVC: UIViewController,YSLContainerViewControllerDelegate,UISear
         firstVC.strId = strActivityID
         
         
-        let nav = UINavigationController.init(rootViewController: firstVC)
+        _ = UINavigationController.init(rootViewController: firstVC)
         
         secondVC = profileStoryboard.instantiateViewControllerWithIdentifier("CreatePACVC") as! CreatePACVC
         secondVC.title = "CREATE A PAC"

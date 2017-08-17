@@ -168,7 +168,7 @@ class GenericPacTableVC: UIViewController {
                              }
 
                           //  self.pacDetailArr = resultArr as [AnyObject]
-                          //  self.tv_generic.reloadData()
+                            self.tv_generic.reloadData()
                             
 }
                     } else {
@@ -214,6 +214,11 @@ extension GenericPacTableVC: UITableViewDataSource{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if pacDetailArr.count == 0{
+            HelpingClass.toSetEmptyViewInTableViewNoDataAvaiable(tableView, message: "No PACs listed.")
+        }else{
+            tableView.backgroundView = nil
+        }
         return pacDetailArr.count  //return 2
     }
     

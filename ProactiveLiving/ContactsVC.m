@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *imgGroup;
 @property (weak, nonatomic) IBOutlet UITextField *txtTitleGroup;
 @property (weak, nonatomic) IBOutlet UILabel *lblTotalSelected;
+@property  NSString *fromVcName;
 
 @end
 
@@ -47,6 +48,7 @@
     self.selectedRowsArray=[NSMutableArray new];
     self.constrHeightGroupView.constant=0;
     self.lblTotalSelected.text=[NSString stringWithFormat:@"(%@ Selected)",@0];
+    _fromVcName = @"";
    // [self getContactsListing];
     
 }
@@ -75,6 +77,23 @@
     }
     
     [self.tableView reloadData];
+}
+
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if ([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[CreateMeetUpVC class]]   ) {
+        
+     _fromVcName = @"CreateMeetUpVC";
+        
+    }
+    
+    if ((self.constrHeightGroupView.constant == 0) || ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])){
+        _fromVcName = @"SingleChat";
+
+    }
+
+    
 }
 
 -(void)POP_CONTCT_VC{
@@ -384,10 +403,10 @@
     
     NSURL *url = [NSURL URLWithString:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"imgUrl"]];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+   // NSURLRequest *request = [NSURLRequest requestWithURL:url];
     UIImage *placeholderImage = [UIImage imageNamed:@"ic_booking_profilepic"];
     
-    __weak ContactsCell *weakCell = cell;
+   // __weak ContactsCell *weakCell = cell;
     
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureTapProfileIcon:)];
     gesture.delegate = self;
@@ -438,8 +457,14 @@
             [cell.imgCellSelection setImage:[UIImage imageNamed:@"check_round"]];
         }
         else {
-          //  [cell.imgCellSelection setImage:[UIImage imageNamed:@"uncheck_round"]];
-            [cell.imgCellSelection setHidden:YES];
+            [cell.imgCellSelection setImage:[UIImage imageNamed:@"uncheck_round"]];
+            
+            
+           if (![_fromVCName  isEqual: @"oneToOne"]){
+               [cell.imgCellSelection setHidden:NO];
+            }else{
+                [cell.imgCellSelection setHidden:YES];
+            }
         }
         
     }
@@ -473,14 +498,15 @@
             //[self.delegate getSelectedPhone:[[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row] valueForKey:@"mobilePhone"]];
         //}
         //else
+        
         if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
         {
             NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
             //NSLog(@"%@",frndDict);
             
-            NSString * login_id = [AppHelper userDefaultsForKey:uId];
-            NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
-            DataBaseController *dbInstance = [DataBaseController sharedInstance];
+           // NSString * login_id = [AppHelper userDefaultsForKey:uId];
+           // NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
+            //DataBaseController *dbInstance = [DataBaseController sharedInstance];
             //RecentChatList * recentObj = [dbInstance fetchDataRecentChatObject:@"RecentChatList" predicate:predicate];
             
             
@@ -489,10 +515,29 @@
             
             chatMainVC.hidesBottomBarWhenPushed = false;
             
+
             ChatContactModelClass *anobject = [[ChatContactModelClass alloc] init];
             anobject.userId =[frndDict  valueForKey:@"_id"];
             anobject.loginUserId =[AppHelper userDefaultsForKey:_ID];
-            anobject.name =  [frndDict valueForKey:@"firstName"];
+            
+            NSLog(@"%@ frnd fatsfdsfgsfgdfgdsg==\n)" , anobject);
+
+            NSString *fullName1 = [frndDict valueForKey:@"firstName"];
+            NSString *lastName1 = [frndDict valueForKey:@"lastName"];
+            
+            NSString *fullName = @"";
+            
+            if (fullName1 != nil)
+            {
+                fullName = [fullName stringByAppendingString:fullName1];
+            }
+            if (lastName1 != nil)
+            {
+                fullName = [fullName stringByAppendingString:@" "];
+                fullName = [fullName stringByAppendingString:lastName1];
+            }
+            anobject.name =  fullName;
+            anobject.firstName = fullName;
             anobject.email = @"etrfgg";
             anobject.isBlock = @"0";
             anobject.isReport = @"0";
@@ -501,7 +546,6 @@
             anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
             anobject.isFromCont = @"yes";
             anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
-            anobject.firstName = [frndDict valueForKey:@"firstName"];
             
             chatMainVC.contObj=anobject;
             chatMainVC.isFromClass = @"chatd";
@@ -510,21 +554,18 @@
             //chatMainVC.recentChatObj = recentObj;
             chatMainVC.recentChatObj = nil;
             
+            
             [self.navigationController pushViewController:chatMainVC animated:YES];
         }
         else //if ([[self.navigationController.viewControllers objectAtIndex:1] isKindOfClass:[AllContactsVC class]])
         {
             NSDictionary *frndDict=[[self.dicAlphabet objectForKey:[[self allShortedKeys:[self.dicAlphabet allKeys]] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-            //NSLog(@"%@",frndDict);
             
             NSString * login_id = [AppHelper userDefaultsForKey:uId];
             NSString *predicate = [NSString stringWithFormat:@"loginUserId contains[cd] %@ AND friendId contains[cd] %@",login_id, [frndDict objectForKey:@"_id"]];
             DataBaseController *dbInstance = [DataBaseController sharedInstance];
-            //RecentChatList * recentObj = [dbInstance fetchDataRecentChatObject:@"RecentChatList" predicate:predicate];
             
-            //if let classObject = NSClassFromString("YOURAPPNAME.MyClass") as? MyClass.Type {
-            //let object = classObject.init()
-            //}
+          
             if([[[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)] isKindOfClass:[GroupDetailVC class]])
             {
                 GroupDetailVC *previousVC = [[[self navigationController]viewControllers] objectAtIndex:([[[self navigationController]viewControllers]count]-2)];
@@ -540,7 +581,22 @@
                 anobject.userImgString = [frndDict valueForKey:@"imgUrl"];
                 anobject.isFromCont = @"yes";
                 anobject.phoneNumber = [frndDict valueForKey:@"mobilePhone"];
-                anobject.firstName = [frndDict valueForKey:@"firstName"];
+                NSString *fullName1 = [frndDict valueForKey:@"firstName"];
+                NSString *lastName1 = [frndDict valueForKey:@"lastName"];
+
+                NSString *fullName = @"";
+                
+                if (fullName1 != nil)
+                {
+                    fullName = [fullName stringByAppendingString:fullName1];
+                }
+                if (lastName1 != nil)
+                {
+                    fullName = [fullName stringByAppendingString:@" "];
+                    fullName = [fullName stringByAppendingString:lastName1];
+                }
+
+                anobject.firstName = fullName;
                 
                 [previousVC addNewFrndIngrp:anobject];
                 
@@ -667,7 +723,16 @@
         NSMutableDictionary *tempDict = [NSMutableDictionary new];
         tempDict[@"userid"]=[ChatHelper userDefaultForKey:_ID];
         tempDict[@"phoneNumber"]=[AppHelper userDefaultsForKey:cellNum];
-        tempDict[@"user_firstName"]=[AppHelper userDefaultsForKey:userFirstName];
+        
+        NSString *str = [AppHelper userDefaultsForKey:userFirstName];
+        
+        NSString *str1 = [[NSString alloc] initWithFormat:@"%@ %@", @" ", [AppHelper userDefaultsForKey:userLastName]];
+        
+        NSString *str3 = [str stringByAppendingString:str1];
+        
+        tempDict[@"user_firstName"]=str3 ;
+        
+        
         tempDict[@"user_image"]= [[HelpingClass getUserDetails] imgUrl];
         
         NSLog(@"%@",[NSURL URLWithString:[[HelpingClass getUserDetails] imgUrl]]);

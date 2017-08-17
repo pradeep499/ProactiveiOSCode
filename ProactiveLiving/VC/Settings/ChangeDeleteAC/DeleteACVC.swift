@@ -42,7 +42,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableViewOutlet.tableFooterView = UIView()
         self.navigationController?.navigationBarHidden = true
         
         ChatHelper.getCountryLitWithTelePhoneCode { (countries, codes) in
@@ -65,12 +65,13 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
             self.lbl_title.text = "Add a Friend"
             self.ivHeader.image = UIImage(named: "add_friend")
           //  self.lbl_text.text = "To add a friend, enter friend's country code and enter friend's phone number."
-            self.lbl_text.text = "To add a friend, enter the friend's phone number with country code."  // Changed as per client request 3rd May 2017
+            self.lbl_text.text = "To add a friend, enter the friend's phone number with country code. If your friend is already a member of Proactive Living, they will get a friend request. If they are not already a member of Proactive Living, you can send them a text message or email asking them to download the App."
+              ///"To add a friend, enter the friend's phone number with country code."  // Changed as per client request 3rd May 2017
             
         }else{
-            self.lbl_title.text = "Delete Account"
+            self.lbl_title.text = "Deactivate Account"
             self.ivHeader.image = UIImage(named: "delete_ac")
-            self.lbl_text.text = "To delete your account, confirm your        country code and enter your phone number."
+            self.lbl_text.text = "To deactivate your account, confirm your        country code and enter your phone number."
         }
     }
 
@@ -191,7 +192,7 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
         
         let textToShare = textStr
         
-        if let myWebsite = NSURL(string: "http://www.proactively.com/") {
+        if let myWebsite = NSURL(string: "https://itunes.apple.com/app/id1234229217") {
             let objectsToShare = [textToShare, myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             
@@ -230,9 +231,10 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                     if ((responseDict["error"] as! Int) == 0) {
                         
                         print_debug(responseDict["result"])
+                        let number = self.tf_phoneNo.text!
+                        let str = (number) + " is a member of Proactive Living and a friend request has been sent"
                         self.tf_phoneNo.text = ""
-                        
-                        AppHelper.showAlertWithTitle(AppName, message: "Friend request sent.", tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        AppHelper.showAlertWithTitle(AppName, message:str, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
                         
                         
                     } else {
@@ -241,8 +243,9 @@ class DeleteACVC: UIViewController, UIAlertViewDelegate {
                         
                         if responseDict["errorMsg"] as! String == "Friend Not Found"{
                             
+                            let str =  "\(String(self.tf_phoneNo.text!))" + " " + "is not a current member of Proactive Living. Send an invitation?"
                             
-                            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: "Do you want to invite" + String(self.tf_phoneNo.text!)+" ?"  , cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+                            HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: APP_NAME, message: str  , cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
                                 
                                 if str == "Yes"{
                                     self.openDefaultSharing("")

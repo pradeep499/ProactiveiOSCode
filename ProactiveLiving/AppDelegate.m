@@ -1,4 +1,4 @@
- //
+//
 //  AppDelegate.m
 //  ProactiveLiving
 //
@@ -16,10 +16,13 @@
 #import "ProactiveLiving-Swift.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "InboxVC.h"
+#import "UIImage+animatedGIF.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () 
 {
     UIImageView *splashView;
+    UIWebView *webView;
     
 }
 
@@ -32,7 +35,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    
+    [AppHelper saveToUserDefaults:@"yes" withKey:@"gifData"];
+
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    
+    
+    [NSTimer scheduledTimerWithTimeInterval:10.56
+                                     target:self
+                                   selector:@selector(targetMethod)
+                                   userInfo:nil
+                                    repeats:NO];
+
+    [self toShowGifInLaunchScreen];
+   // return YES;
 
     //Location
     [self startUpdatingLocation];
@@ -41,27 +57,27 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber =0;
     
     // Register for Push Notification
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0){
+        
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+            if(!error){
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            }
+        }];
+    } else if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
         
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
-    else
-    {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeNewsstandContentAvailability| UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    }
-
     
-     // fetch and hold static data
-//    [AppDelegate connectedCompletionBlock:^(BOOL connected) {
-//        if (connected)
-//          //  [self getStaticData];
-//        else
-//            //NSLog(@"NOT REACHABLE");
-//    }];
-
-    //UISearchBar Global look n feel alteration
+    
+    
+    
+    
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:
                                                 [NSDictionary dictionaryWithObjectsAndKeys:                                                                                                  [UIColor whiteColor],                                                                                                  NSForegroundColorAttributeName,                                                                                                 [UIColor whiteColor],                                                                                              NSForegroundColorAttributeName,                                                                                                  [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],                                                                                                  NSForegroundColorAttributeName,nil] forState:UIControlStateNormal];
     //UITabBar appearance
@@ -88,23 +104,48 @@
     
     [Fabric with:@[[Crashlytics class]]];
     
-    
+
     //launch application with notification
-    
+   
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (notification) {
-            //NSLog(@"app recieved notification from remote%@",notification);
+            if ([AppHelper userDefaultsForKey:@"userId"]) {
             [self application:application didReceiveRemoteNotification:notification];
+                
+            }
         }else{
-            //NSLog(@"app did not recieve notification");
         }
     });
-  
-    
-   
     
     return YES;
+}
+
+-(void)toShowGifInLaunchScreen{
+    
+    
+    [AppHelper saveToUserDefaults:@"yes" withKey:@"gifData"];
+    
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    
+    [self.window.rootViewController.view addSubview:webView];
+    
+    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"WebViewContent" ofType:@"html"];
+    
+    NSURL * htmlUrl = [[NSURL alloc]initFileURLWithPath:filePath];
+    
+    NSData *data = [[NSData alloc]initWithContentsOfURL:htmlUrl];
+    
+    [webView loadData:data MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[htmlUrl URLByDeletingPathExtension]];
+    
+
+ }
+
+
+-(void)targetMethod{
+    [AppHelper saveToUserDefaults:@"no" withKey:@"gifData"];
+
+    [webView removeFromSuperview];
 }
 
 -(void)startUpdatingLocation
@@ -129,6 +170,8 @@
 
 }
 
+
+
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     NSString * token = [NSString stringWithFormat:@"%@", deviceToken];
@@ -136,7 +179,7 @@
     NSString *tokenString = [NSString stringWithFormat:@"%@",token];
     tokenString = [tokenString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     tokenString = [tokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
-    //NSLog(@"Device Token:%@",tokenString);
+     NSLog(@"Device Token:%@",tokenString);
     [AppHelper saveToUserDefaults:tokenString withKey:DEVICE_TOKEN];
     [AppHelper saveToUserDefaults:CURRENT_DEVICE withKey:DEVICE_TYPE];
 
@@ -173,47 +216,78 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
     [UIApplication sharedApplication].applicationIconBadgeNumber =0;
-    //NSLog(@"[userInfo didReceiveRemoteNotification == %@",[userInfo valueForKey:@"aps"]);
     
     if ([AppHelper userDefaultsForKey:@"userId"]) {
             NSDictionary *info_dic = [userInfo valueForKey:@"aps"];
-        self.notyDic=[NSMutableDictionary dictionaryWithDictionary:info_dic];
-        int pushType = [[info_dic objectForKey:@"push_type"] intValue]; // 10->one to one & 11->group chat
-        
-        if (pushType == 10 || pushType==11) {
-            
-                UINavigationController *nav=(UINavigationController *)[AppDelegate getAppDelegate].self.window.rootViewController;
-                NSArray*vcArray=[nav viewControllers];
-                UITabBarController *tabBarController=nil;
-                BOOL isTab=NO;
-                NSInteger tabBarValue=0;
-                for (int i = 0; i<vcArray.count; i++){
-                    UIViewController* controller = [vcArray objectAtIndex:i];
-                    //NSLog(@"$UIViewController===1%@",controller);
-                    if ([controller isKindOfClass:[UITabBarController class]]) {
-                        isTab = YES;
-                        tabBarValue = i;
-                        tabBarController = (UITabBarController*)controller;
-                        break;
-                    }
-                    
-                }
-                if (isTab) {
-                    tabBarController.selectedIndex = 1;
-                }
-            
-                //set up badge Icon
-                
-                if ([[DataBaseController sharedInstance] fetchUnreadCount] > 0) {
-                
-                [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = [NSString stringWithFormat:@"%zd",  [[DataBaseController sharedInstance] fetchUnreadCount]  ];
-                }else{
-                    [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = nil;
-                }
-                
+        [self handlingNotificationDirection:info_dic];
+    }
+}
+
+
+//Called when a notification is delivered to a foreground app.
+
+
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler{
+    NSLog(@"User Info : %@",notification.request.content.userInfo);
+    completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
+}
+
+//Called to let your app know which action was selected by the user for a given notification.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
+    NSLog(@"User Info : %@",response.notification.request.content.userInfo);
+    if ([AppHelper userDefaultsForKey:@"userId"]) {
+    [self handlingNotificationDirection:response.notification.request.content.userInfo[@"aps"]];
+    }
+    completionHandler();
+}
+
+
+//"/pushType // 10 - onetoOne , 11 - groupChat, 12 -meetup, 13- invite, 14- friend request , 15- pac request."
+
+-(void)handlingNotificationDirection:(NSDictionary*)info_dic{
+    
+    self.notyDic=[NSMutableDictionary dictionaryWithDictionary:info_dic];
+   // NSInteger pushType = [[info_dic objectForKey:@"push_type"] intValue]; // 10->one to one & 11->group chat
+    
+    
+        UINavigationController *nav=(UINavigationController *)[AppDelegate getAppDelegate].self.window.rootViewController;
+        NSArray*vcArray=[nav viewControllers];
+        UITabBarController *tabBarController=nil;
+        BOOL isTab=NO;
+        NSInteger tabBarValue=0;
+        for (int i = 0; i<vcArray.count; i++){
+            UIViewController* controller = [vcArray objectAtIndex:i];
+            //NSLog(@"$UIViewController===1%@",controller);
+            if ([controller isKindOfClass:[UITabBarController class]]) {
+                isTab = YES;
+                tabBarValue = i;
+                tabBarController = (UITabBarController*)controller;
+                break;
+            }
             
         }
-    }
+        if (isTab) {
+            tabBarController.selectedIndex = 1;
+            NSArray * vc  = [[self tabbarController] viewControllers];
+            UINavigationController *nav = (UINavigationController*)vc[1];
+            InboxVC *vc1 = (InboxVC*)[nav topViewController];
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:info_dic];
+            [vc1 performSelector:@selector(scrollToNewTab:) withObject:dict afterDelay:1.0];
+            
+        }
+        
+        //set up badge Icon
+        
+        if ([[DataBaseController sharedInstance] fetchUnreadCount] > 0) {
+            
+            [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = [NSString stringWithFormat:@"%zd",  [[DataBaseController sharedInstance] fetchUnreadCount]  ];
+        }else{
+            [[AppDelegate getAppDelegate].tabbarController.tabBar.items objectAtIndex:1].badgeValue = nil;
+        }
+        
+        
+    
+    
 }
 
 #pragma mark - Utility methods
@@ -317,6 +391,9 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [[NSNotificationCenter defaultCenter] postNotificationName:@"POP_TO_CHAT_MAIN_SCREEN" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ComingFromBackground" object:nil];
+
     [[ChatListner getChatListnerObj]closeConnection];
     
 }
@@ -333,6 +410,8 @@
     
     
 }
+
+
 
 
 

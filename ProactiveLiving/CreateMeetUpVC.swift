@@ -50,10 +50,12 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var dataDict = [String : AnyObject]()
     var arrPACMembers = [[String : AnyObject]]()
     var strLatLong : String!
-    var fromScreenFlag : String!
+    var fromScreenFlag : String! = " "
     var pacID : String!
     var recurrenceDict:[String:String]!
     var currentDateVal = NSDate()
+    
+    
     
     
     override func viewDidLoad() {
@@ -171,7 +173,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             switchAllowInvite.on = self.dataDict["isAllow"] as! Bool
             let imgUrl = self.dataDict["imgUrl"] as? String
             if !(imgUrl == "") {
-                imgCoverPic.setImageWithURL(NSURL(string: imgUrl!))
+                imgCoverPic.sd_setImageWithURL(NSURL(string: imgUrl!), placeholderImage: UIImage.init(named: "upload_pic"))
             }
             
         }
@@ -228,13 +230,15 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             switchAllowInvite.on = self.dataDict["isAllow"] as! Bool
             let imgUrl = self.dataDict["imgUrl"] as? String
             if !(imgUrl == "") {
-                imgCoverPic.sd_setImageWithURL(NSURL(string: imgUrl!))
+                //imgCoverPic.sd_setImageWithURL(NSURL(string: imgUrl!))
+                imgCoverPic.sd_setImageWithURL(NSURL(string: imgUrl!), placeholderImage: UIImage.init(named: "upload_pic"))
+
             }
             
         }
         
         
-        if (self.fromScreenFlag != nil &&  self.fromScreenFlag == "private"){
+        if (self.fromScreenFlag != nil &&  self.fromScreenFlag == "private" || self.fromScreenFlag == "PAC"){
             print_debug(currentDateVal)
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -386,9 +390,9 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         recognizer.delegate = self
         imgCoverPic.addGestureRecognizer(recognizer)
         imgCoverPic.userInteractionEnabled = true
-        imgCoverPic.layer.cornerRadius = imgCoverPic.frame.height/2
+        imgCoverPic.layer.cornerRadius = 27//imgCoverPic.frame.height/2
         imgCoverPic.clipsToBounds = true
-        imgCoverPic.setImageWithURL(NSURL(string:""), placeholderImage: UIImage(named:"profile.png"))
+        imgCoverPic.sd_setImageWithURL(NSURL(string:""), placeholderImage: UIImage(named:"upload_pic"))
         
         self.tableAttachments.separatorStyle = UITableViewCellSeparatorStyle.None
         self.txtViewDesc.placeholder = "Minimum 50 words"
@@ -776,10 +780,13 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 {
                     var tempDict = Dictionary<String,AnyObject>()
                     tempDict["userId"]=myobject["_id"] as! String
-               //     tempDict["mobilePhone"]=myobject["mobilePhone"] as! String
-                    
+               //     tempDict["mobilePhone"]=myobject["mobilePhone"] as! String lastName
+                    var lastName = ""
+                    if let lastName1 = myobject["lastName"] as? String {
+                        lastName = lastName1
+                    }
                     if let firstName = myobject["firstName"] as? String {
-                        tempDict["firstName"] = firstName
+                        tempDict["firstName"] = firstName + " " + lastName
                     }
                     if let mobilePhone = myobject["mobilePhone"] as? String {
                         tempDict["mobilePhone"] = mobilePhone
@@ -821,7 +828,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     var userDict = [String: AnyObject]()
                     userDict["userid"] = ChatHelper.userDefaultForKey(_ID)
                     userDict["phoneNumber"] = AppHelper.userDefaultsForKey(cellNum)
-                    userDict["user_firstName"] = AppHelper.userDefaultsForKey(userFirstName)
+                    userDict["user_firstName"] = AppHelper.userDefaultsForKey(userFirstName)///lats
                     groupMembers.append(userDict)
                     groupDict["users"] = groupMembers
                     dict["groupDetail"] = groupDict
@@ -846,14 +853,30 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
                 }
                 
-                
-                
-                if (recurrenceDict != nil) {
-                    dict["isrecur"] = String(true)
-                    dict["recurrence"] = recurrenceDict
+                if dataDict.count == 0{
+                    if (recurrenceDict != nil) {
+                        dict["isrecur"] = String(true)
+                        dict["recurrence"] = recurrenceDict
+                    }else{
+                        dict["isrecur"] = String(false)
+                    }
+                    
                 }else{
-                    dict["isrecur"] = String(false)
+                    if recurrenceDict != nil{
+                        dict["isrecur"] = String(true)
+                        dict["recurrence"] = recurrenceDict
+                    }else{
+                       if let dataRec = dataDict["recurrence"]{
+                            dict["isrecur"] = String(true)
+                            dict["recurrence"] = dataRec
+                       }else{
+                           dict["isrecur"] = String(false)
+                        }
+                    }
+                    
                 }
+                
+               
                 
            
                 print_debug(dict)
@@ -918,7 +941,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     )
                 }else
                 {
-                    dict["imgUrl"] = ""
+                   // dict["imgUrl"] = ""
                     if(self.pushedFrom == "EDITMEETUPS" || self.pushedFrom == "EDITWEBINVITES")
                     {
                         ChatListner .getChatListnerObj().socket.emit("editMeetup_Invite", dict)
@@ -983,7 +1006,7 @@ class CreateMeetUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     print_debug("arrayList \(resultDict)")
                     
                     //Add newly created meeup/invite to phone calender
-                    if let newEvent = resultDict["isNewMeetupInvite"] as? String {
+                    if (resultDict["isNewMeetupInvite"] as? String) != nil {
                         let dateFormatter = NSDateFormatter()
                         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm a"
                         let startDate = dateFormatter.dateFromString((resultDict["eventDate"] as! String) + " " + (resultDict["eventStartTime"] as! String))

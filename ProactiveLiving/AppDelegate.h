@@ -10,8 +10,10 @@
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
 #import "LocationManagerSingleton.h"
+#import <UserNotifications/UserNotifications.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate,UNUserNotificationCenterDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -27,7 +29,9 @@
 + (void)dismissProgressHUD;
 +(void)connectedCompletionBlock:(void(^)(BOOL connected))block;
 
--(void)getStaticData;
+//-(void)getStaticData;
+-(void)toShowGifInLaunchScreen;
+
 @property (nonatomic, strong) CLLocationManager * locationManager;
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, copy) NSString *PASInst;

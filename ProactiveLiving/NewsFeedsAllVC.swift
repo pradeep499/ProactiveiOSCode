@@ -20,7 +20,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var btnPost: UIButton!
     
-    //  var dataArr = [AnyObject]()
     var profileArr = [String]()
     var urlArr = [String]()
     var postAllArr:NSMutableArray = NSMutableArray()
@@ -30,7 +29,6 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     var postCircleArr:NSMutableArray = NSMutableArray()
     var pacWallArr:NSMutableArray = NSMutableArray()
     var textView:HPGrowingTextView = HPGrowingTextView()
-    //var containerView: UIView = UIView()
     var pacID:String = String()
     var tapGesture = UITapGestureRecognizer()
     var moviePlayerController = MPMoviePlayerViewController()
@@ -43,13 +41,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     var imgaeProfile  = UIImage(named: "ic_booking_profilepic")
     
- //   var isFromGallery:Bool!
-    
       var isBackFromChildVC:Bool!
       var indexForCommentcount = -1  // 25 April
       var newsFeedID = ""
       var dictValuePacRole = [String:AnyObject]()
-    //  var isFromCommentVC = false   // used for service hit on the basic of bool value. true if comments has some value
     
 
     
@@ -59,27 +54,18 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-     //   isFromGallery = false
+        collectionView.keyboardDismissMode = .OnDrag
+
         isBackFromChildVC = false
         viewWillAppaerCount = 0
-        //layOutConstrain_view_Post_bottom.constant = 320
-        //layoutConstraint_collectionview_bottom.constant = 350
         refreshControl = UIRefreshControl()
-        //refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refreshControl(_:)), forControlEvents: UIControlEvents.ValueChanged)
         collectionView.addSubview(refreshControl)
         
+         
 
         var viewFrame = self.view.bounds
         viewFrame.size.height = screenHeight-200
-        //self.view.frame = viewFrame
-        //IQKeyboardManager.sharedManager().enableAutoToolbar = false
-
-        //tapGesture = UITapGestureRecognizer(target: self, action: #selector(NewsFeedsAllVC.hideSocialSharingView))
-        
-       
-        
         self.view_share.hidden = true
         
        
@@ -103,78 +89,57 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NewsFeedsAllVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        
-        //self.collectionView.keyboardDismissMode = .OnDrag
-        //self.hideKeyboardWhenTappedAround()
-
-        
-        
-        //self.fetchPostDataFromServer()
-        //if self.title == "ALL" || self.title == "EXPLORE" {
-            
-           // self.fetchExploreDataFromServer()
-        //}
-
-        
-        
-        
-         //
-        
+      //  AppDelegate.getAppDelegate().toShowGifInLaunchScreen()
         
     }
     
-    //MARK:- CommentsVCDelegate
-//    
-//    
-//    func didFinishUpload(flag: Bool) {
-//        
-//        self.isFromCommentVC = flag
-//        
-//    }
-    
-    
     
     func refreshControl(sender:AnyObject){
-       refreshControl.endRefreshing()
+        
+      _  =  NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.refreshData), userInfo: nil, repeats: false)
+    
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        textView.resignFirstResponder()
+    }
+    
+    
+    func refreshData(){
+        refreshControl.endRefreshing()
         isFromPullToRefresh =  true
-            switch self.collectionView.tag {
-            case 1111:
-               self.postAllArr.removeAllObjects()
-            case 3333:
-                self.postFriendsArr.removeAllObjects()
-            case 4444:
-                self.postColleagueArr.removeAllObjects()
-            case 5555:
-                self.postHealthClubsArr.removeAllObjects()
-            case 6666:
-                self.postCircleArr.removeAllObjects()
-            case 1000:
-                self.pacWallArr.removeAllObjects()
-                
-            default:
-                print_debug("don't do anythiong ")
-            }
+        switch self.collectionView.tag {
+        case 1111:
+            self.postAllArr.removeAllObjects()
+        case 3333:
+            self.postFriendsArr.removeAllObjects()
+        case 4444:
+            self.postColleagueArr.removeAllObjects()
+        case 5555:
+            self.postHealthClubsArr.removeAllObjects()
+        case 6666:
+            self.postCircleArr.removeAllObjects()
+        case 1000:
+            self.pacWallArr.removeAllObjects()
+            
+        default:
+            print_debug("don't do anythiong ")
+        }
         self.collectionView.reloadData()
         print_debug("pull to resfresh")
         self.fetchScreenData()
+
     }
     
     //MARK:- Growing TextView mthods
     func setupGrowingTextView() {
-        
-        //containerView = UIView(frame: CGRectMake(0, self.collectionView.frame.size.height - 40, 320, 40))
-        //containerView.backgroundColor = UIColor.redColor()
         textView = HPGrowingTextView(frame: CGRect(x: CGFloat(35), y: CGFloat(30), width: CGFloat(screenWidth-100), height: CGFloat(35)))
-        //textView.internalTextView.autocorrectionType = .No
         textView.internalTextView.inputAccessoryView = UIView(frame: CGRectZero)
         textView.internalTextView.reloadInputViews()
         textView.isScrollable = false
         textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
         textView.minNumberOfLines = 1
         textView.maxNumberOfLines = 4
-        // you can also set the maximum height in points with maxHeight
-        // textView.maxHeight = 200.0f;
-        //textView.returnKeyType = .Go
         textView.font = UIFont(name: "Roboto-Light", size: 16)
         textView.delegate = self
         textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0)
@@ -184,10 +149,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         textView.autoresizingMask = .FlexibleHeight
         postContainerView.addSubview(textView)
         print_debug(textView.frame)
-        
         self.view.layoutIfNeeded()
         self.view.bringSubviewToFront(textView)
-        //textView.animateHeightChange = NO; //turns off animation
         
     }
     func growingTextView(growingTextView: HPGrowingTextView!, didChangeHeight height: Float) {
@@ -202,22 +165,11 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         print_debug(r)
         self.postContainerView.frame = r
     }
+  
+    
+    
     override func viewWillAppear(animated: Bool) {
-        
-        //createConnection 
-      ///  ChatListner.getChatListnerObj().createConnection()
-        
-       
-        
-        //super.viewWillAppear(animated)
-        if self.title != "EXPLORE" {
-            
-           // self.postCircleArr.removeAllObjects()
-           // self.collectionView.reloadData()
-           // self.getAllPostEvent()
-           // self.getLikeUpdate()
-            
-        }
+       super.viewWillAppear(animated)
         self.attachmentViewS.hidden = true
         IQKeyboardManager.sharedManager().enable = false
         
@@ -287,7 +239,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 self.fetchPostDataFromServer()
             }
             else if intValue == 5{    // PAC Circles
-               
+                postCircleArr.removeAllObjects()
                 self.fetchPostDataFromServer()
             }
         }
@@ -301,10 +253,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 
         super.viewDidAppear(animated)
         print_debug("SCREEN TAG ==> \(intValue)")
-        
-//        self.setColectionViewTags()
-//        self.fetchScreenData()
-        
+        //sockets
+        self.getLikeUpdate()
+        self.getAllPostEvent()
         if self.indexForCommentcount >= 0 { //  if self.indexForCommentcount >= 0 && self.isFromCommentVC {
             self.fetchCommentDataFromServer()
         }
@@ -409,121 +360,125 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             dict["typeId"] = resultData["_id"] as! String
             
             typeID = resultData["_id"] as! String
+            
+            
         }
+        
+        ChatListner.getChatListnerObj().socket.emit("like", dict)
+
        // /api/v1/likePost/:userId/:typeId/:likeStatus
         
-        let url = "likePost/" + "\(ChatHelper.userDefaultForKey("userId"))" + "/" + "\(typeID)" + "/" + "\(sender.selected)"
+       // let url = "likePost/" + "\(ChatHelper.userDefaultForKey("userId"))" + "/" + "\(typeID)" + "/" + "\(sender.selected)"
         
-        if AppDelegate.checkInternetConnection() {
-        
-            Services.getRequest(url, parameters: nil, completionHandler: { (status, response) in
-                print_debug("response post for like =====\n \(response)")
-                
-                if (status == "Success") {
-                    if ((response["error"] as! Int) == 0) {
+        //if AppDelegate.checkInternetConnection()
 
-                        guard let dictData = response as? Dictionary<String, AnyObject> else
-                        {
-                            return
-                        }
-                        
-                        guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else
-                        {
-                            return
-                        }
-                        
-                        
-                        
-                        let predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
-                        if resultDict["section"] as! String == "all" {
-                            
-                            
-                            
-                            var filteredarray:[AnyObject] = self.postAllArr.filteredArrayUsingPredicate(predicate)
-                            print_debug("ID = \(resultDict["_id"])")
-                            
-                            if filteredarray.count > 0 {
-                                let index = self.postAllArr.indexOfObject( filteredarray[0])
-                                self.postAllArr.replaceObjectAtIndex(index, withObject: resultDict)
-                            }
-                            
-                            
-                        }
-                        else if resultDict["section"] as! String  == "friends" {
-                            var filteredarray:[AnyObject] = self.postFriendsArr.filteredArrayUsingPredicate(predicate)
-                            print_debug("ID =  \(resultDict["_id"])")
-                            
-                            if filteredarray.count > 0 {
-                                
-                                let index = self.postFriendsArr.indexOfObject( filteredarray[0])
-                                self.postFriendsArr.replaceObjectAtIndex(index, withObject: resultDict)
-                            }
-                            
-                            
-                        }
-                            
-                        else if resultDict["section"] as! String  == "colleagues" {
-                            
-                            var filteredarray:[AnyObject] = self.postColleagueArr.filteredArrayUsingPredicate(predicate)
-                            print_debug("ID =  \(resultDict["_id"])")
-                            
-                            if filteredarray.count > 0 {
-                                let index = self.postColleagueArr.indexOfObject( filteredarray[0])
-                                self.postColleagueArr.replaceObjectAtIndex(index, withObject: resultDict)
-                            }
-                            
-                        }
-                        else if resultDict["section"] as! String  == "health clubs" {
-                            
-                            var filteredarray:[AnyObject] = self.postHealthClubsArr.filteredArrayUsingPredicate(predicate)
-                            print_debug("ID =  \(resultDict["_id"])")
-                            
-                            if filteredarray.count > 0 {
-                                let index = self.postHealthClubsArr.indexOfObject( filteredarray[0])
-                                self.postHealthClubsArr.replaceObjectAtIndex(index, withObject: resultDict)
-                            }
-                            
-                        }
-                        else if resultDict["section"] as! String  == "pac circles" {
-                            
-                            var filteredarray:[AnyObject] = self.postCircleArr.filteredArrayUsingPredicate(predicate)
-                            print_debug("ID =  \(resultDict["_id"])")
-                            
-                            if filteredarray.count > 0 {
-                                let index = self.postCircleArr.indexOfObject( filteredarray[0])
-                                self.postCircleArr.replaceObjectAtIndex(index, withObject: resultDict)
-                            }
-                            
-                        }
-                        else if resultDict["section"] as! String  == "pac" {
-                            var filteredarray:[AnyObject] = self.pacWallArr.filteredArrayUsingPredicate(predicate)
-                            print_debug("ID =  \(resultDict["_id"])")
-                            
-                            if filteredarray.count > 0 {
-                                
-                                let index = self.pacWallArr.indexOfObject( filteredarray[0])
-                                self.pacWallArr.replaceObjectAtIndex(index, withObject: resultDict)
-                            }
-                            
-                            
-                        }
-                        
-                        self.collectionView.reloadData()
-                    
-                
-                }
-                }
-
-            })
-            
+        /* {
+         
+         Services.getRequest(url, parameters: nil, completionHandler: { (status, response) in
+         print_debug("response post for like =====\n \(response)")
+         
+         if (status == "Success") {
+         if ((response["error"] as! Int) == 0) {
+         
+         guard let dictData = response as? Dictionary<String, AnyObject> else
+         {
+         return
+         }
+         
+         guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else
+         {
+         return
+         }
+         
+         
+         
+         let predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
+         if resultDict["section"] as! String == "all" {
+         
+         
+         
+         var filteredarray:[AnyObject] = self.postAllArr.filteredArrayUsingPredicate(predicate)
+         print_debug("ID = \(resultDict["_id"])")
+         
+         if filteredarray.count > 0 {
+         let index = self.postAllArr.indexOfObject( filteredarray[0])
+         self.postAllArr.replaceObjectAtIndex(index, withObject: resultDict)
+         }
+         
+         
+         }
+         else if resultDict["section"] as! String  == "friends" {
+         var filteredarray:[AnyObject] = self.postFriendsArr.filteredArrayUsingPredicate(predicate)
+         print_debug("ID =  \(resultDict["_id"])")
+         
+         if filteredarray.count > 0 {
+         
+         let index = self.postFriendsArr.indexOfObject( filteredarray[0])
+         self.postFriendsArr.replaceObjectAtIndex(index, withObject: resultDict)
+         }
+         
+         
+         }
+         
+         else if resultDict["section"] as! String  == "colleagues" {
+         
+         var filteredarray:[AnyObject] = self.postColleagueArr.filteredArrayUsingPredicate(predicate)
+         print_debug("ID =  \(resultDict["_id"])")
+         
+         if filteredarray.count > 0 {
+         let index = self.postColleagueArr.indexOfObject( filteredarray[0])
+         self.postColleagueArr.replaceObjectAtIndex(index, withObject: resultDict)
+         }
+         
+         }
+         else if resultDict["section"] as! String  == "health clubs" {
+         
+         var filteredarray:[AnyObject] = self.postHealthClubsArr.filteredArrayUsingPredicate(predicate)
+         print_debug("ID =  \(resultDict["_id"])")
+         
+         if filteredarray.count > 0 {
+         let index = self.postHealthClubsArr.indexOfObject( filteredarray[0])
+         self.postHealthClubsArr.replaceObjectAtIndex(index, withObject: resultDict)
+         }
+         
+         }
+         else if resultDict["section"] as! String  == "pac circles" {
+         
+         var filteredarray:[AnyObject] = self.postCircleArr.filteredArrayUsingPredicate(predicate)
+         print_debug("ID =  \(resultDict["_id"])")
+         
+         if filteredarray.count > 0 {
+         let index = self.postCircleArr.indexOfObject( filteredarray[0])
+         self.postCircleArr.replaceObjectAtIndex(index, withObject: resultDict)
+         }
+         
+         }
+         else if resultDict["section"] as! String  == "pac" {
+         var filteredarray:[AnyObject] = self.pacWallArr.filteredArrayUsingPredicate(predicate)
+         print_debug("ID =  \(resultDict["_id"])")
+         
+         if filteredarray.count > 0 {
+         
+         let index = self.pacWallArr.indexOfObject( filteredarray[0])
+         self.pacWallArr.replaceObjectAtIndex(index, withObject: resultDict)
+         }
+         
+         
+         }
+         
+         self.collectionView.reloadData()
+         
+         
+         }
+         }
+         
+         })
+         
+         
+         }*/
         
-        }
-
         
         
-        
-        
-       // ChatListner.getChatListnerObj().socket.emit("like", dict)
         
         
     }
@@ -844,6 +799,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         self.navigationController?.pushViewController(WebVC, animated: true)
         }
     }
+    
+    
     func onClickOptions(sender : AnyObject) {
         
         var resultData = [String:AnyObject]()
@@ -872,6 +829,35 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
         }
         
+        var reportPost = false
+        var deletePost = false
+        
+        if let createdBy = (resultData as NSDictionary).valueForKeyPath("createdBy._id") as? String {
+            
+            if let sharedBy = (resultData as NSDictionary).valueForKeyPath("sharedBy._id") as? String {
+                if(sharedBy == AppHelper.userDefaultsForKey(_ID) as? String) {
+                    deletePost = true
+                    reportPost = false
+                }
+                else {
+                    deletePost = false
+                    reportPost = true
+                }
+            }
+            else {
+                if(createdBy == AppHelper.userDefaultsForKey(_ID) as? String) {
+                    deletePost = true
+                    reportPost = false
+                }
+                else {
+                    deletePost = false
+                    reportPost = true
+                }
+            }
+        }
+        
+        
+        
         if(IS_IOS_7)
         {
             let actionSheet = UIActionSheet(title:"", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle:nil, otherButtonTitles: "Delete Post","Cancel")
@@ -882,18 +868,24 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         {
             let actionSheet =  UIAlertController(title:nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
+            if deletePost{
             actionSheet.addAction(UIAlertAction(title: "Delete Post", style: UIAlertActionStyle.Default, handler:
                 { (ACTION :UIAlertAction!)in
                     self.deletePostWithData(resultData)
                 }))
+            }
             
-            
+            if reportPost{
             actionSheet.addAction(UIAlertAction(title: "Report this post", style: UIAlertActionStyle.Default, handler:
-                { (ACTION :UIAlertAction!)in
-                    
-                    self.sendMail()
-                    
-                }))
+             { (ACTION :UIAlertAction!)in
+             
+            let name = AppHelper.userDefaultsForKey(userFirstName) as? String
+            let str = "This post with id : " + "\(resultData["_id"] as! String)" + " is reported by " + "\(name!)" + " ."
+                self.sendMail(str)
+             
+             }))
+            }
+            
             
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:
                 { (ACTION :UIAlertAction!)in
@@ -946,6 +938,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     if ((responseDict["error"] as! Int) == 0) {
 
                         if let resultArr = responseDict["result"]  as? NSArray{
+                            print_debug("resultArr=========/\(resultArr)")
                             
                             if self.collectionView.tag ==  1111 {
                                 self.postAllArr = NSMutableArray.init(array: resultArr)
@@ -960,7 +953,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                                 self.postHealthClubsArr = NSMutableArray.init(array: resultArr)
                             }
                             else if self.collectionView.tag ==  6666 {
-                                self.postCircleArr = NSMutableArray.init(array: resultArr)
+                                //self.postCircleArr = NSMutableArray.init(array: resultArr)
+                                self.postCircleArr.removeAllObjects()
+                                self.fetchPostDataFromServer()
+
                             }
                             else if self.collectionView.tag ==  1000 {
                                 self.pacWallArr = NSMutableArray.init(array: resultArr)
@@ -1091,6 +1087,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 var postViewFrame = self.postContainerView.frame
                 postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + keyboardSize.height + 60)
                 self.postContainerView.frame = postViewFrame
+              print_debug("postContainerView.frame ===== \(self.postContainerView.frame)")
                 
                 //self.view.frame.origin.y -= keyboardSize.height
             })
@@ -1102,7 +1099,8 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 postViewFrame.origin.y = self.view.bounds.size.height - (postViewFrame.size.height + keyboardSize.height + 100)
 
                 self.postContainerView.frame = postViewFrame
-                
+                print_debug("postContainerView.frame1 ===== \(self.postContainerView.frame)")
+
                 //self.view.frame.origin.y += keyboardSize.height - offset.height
             })
         }
@@ -1227,78 +1225,80 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
              dict["postType"] = postType
             print_debug( dict)
             
-           Services.postRequest("createPost", parameters: dict, completionHandler: { (status, response) in
-            
-            print_debug("response post for  =====\n \(response)")
-            
-            if (status == "Success") {
-                if ((response["error"] as! Int) == 0) {
+             ChatListner .getChatListnerObj().socket.emit("createPost", dict)
 
-                guard let dictData = response as? Dictionary<String, AnyObject> else {
-                    return
-                }
-                
-                guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else {
-                    return
-                }
-                
-                //var predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
-                if resultDict["section"] as! String == "all" {
-                    
-                    self.postAllArr.insertObject(resultDict, atIndex: 0)
-                    if(self.postAllArr.count > 0) {
-                        self.collectionView.reloadData()
-                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-                else if resultDict["section"] as! String  == "friends" {
-                    self.postFriendsArr.insertObject(resultDict, atIndex: 0)
-                    if(self.postFriendsArr.count > 0) {
-                        self.collectionView.reloadData()
-                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-                else if resultDict["section"] as! String  == "colleagues" {
-                    
-                    self.postColleagueArr.insertObject(resultDict, atIndex: 0)
-                    if(self.postColleagueArr.count > 0) {
-                        self.collectionView.reloadData()
-                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-                else if resultDict["section"] as! String  == "health clubs" {
-                    
-                    self.postHealthClubsArr.insertObject(resultDict, atIndex: 0)
-                    if(self.postHealthClubsArr.count > 0) {
-                        self.collectionView.reloadData()
-                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-                else if resultDict["section"] as! String  == "pac circles" {
-                    
-                    self.postCircleArr.insertObject(resultDict, atIndex: 0)
-                    if(self.postCircleArr.count > 0) {
-                        self.collectionView.reloadData()
-                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-                if resultDict["section"] as! String  == "pac" {
-                    
-                    self.pacWallArr.insertObject(resultDict, atIndex: 0)
-                    if(self.pacWallArr.count > 0) {
-                        self.collectionView.reloadData()
-                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
-                    }
-                }
-                }
-            }
+            
+           //Services.postRequest("createPost", parameters: dict, completionHandler: )
             
             
-           })
-            
-            
-            
-           // ChatListner .getChatListnerObj().socket.emit("createPost", dict)
+            /*{ (status, response) in
+             
+             print_debug("response post for  =====\n \(response)")
+             
+             if (status == "Success") {
+             if ((response["error"] as! Int) == 0) {
+             
+             guard let dictData = response as? Dictionary<String, AnyObject> else {
+             return
+             }
+             
+             guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else {
+             return
+             }
+             
+             //var predicate = NSPredicate(format: "(%K == %@)", "_id", resultDict["_id"] as! String)
+             if resultDict["section"] as! String == "all" {
+             
+             self.postAllArr.insertObject(resultDict, atIndex: 0)
+             if(self.postAllArr.count > 0) {
+             self.collectionView.reloadData()
+             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+             }
+             }
+             else if resultDict["section"] as! String  == "friends" {
+             self.postFriendsArr.insertObject(resultDict, atIndex: 0)
+             if(self.postFriendsArr.count > 0) {
+             self.collectionView.reloadData()
+             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+             }
+             }
+             else if resultDict["section"] as! String  == "colleagues" {
+             
+             self.postColleagueArr.insertObject(resultDict, atIndex: 0)
+             if(self.postColleagueArr.count > 0) {
+             self.collectionView.reloadData()
+             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+             }
+             }
+             else if resultDict["section"] as! String  == "health clubs" {
+             
+             self.postHealthClubsArr.insertObject(resultDict, atIndex: 0)
+             if(self.postHealthClubsArr.count > 0) {
+             self.collectionView.reloadData()
+             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+             }
+             }
+             else if resultDict["section"] as! String  == "pac circles" {
+             
+             self.postCircleArr.insertObject(resultDict, atIndex: 0)
+             if(self.postCircleArr.count > 0) {
+             self.collectionView.reloadData()
+             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+             }
+             }
+             if resultDict["section"] as! String  == "pac" {
+             
+             self.pacWallArr.insertObject(resultDict, atIndex: 0)
+             if(self.pacWallArr.count > 0) {
+             self.collectionView.reloadData()
+             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+             }
+             }
+             }
+             }
+             
+             
+             } */
             
             
         }else
@@ -1374,7 +1374,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     self.pacWallArr.insertObject(resultDict, atIndex: 0)
                     if(self.pacWallArr.count > 0) {
                         self.collectionView.reloadData()
-                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
+                    self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0),atScrollPosition: .Top,animated: true)
                     }
                 }
             }
@@ -1643,10 +1643,12 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                     self.view.addSubview(noDataImage)
                 }
                 postContainerView.hidden = true
+                return 0
             }
             else{
                 postContainerView.hidden = false
             }
+                
             }
 
             return self.pacWallArr.count
@@ -1731,7 +1733,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             cell.layoutConstBtnShare.constant = 0
             btn_share.alpha = 0.0
             //btn_comments.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
-            btn_options.alpha = 0.0
+            //btn_options.alpha = 0.0
             btn_like.userInteractionEnabled = false
             postContainerView.hidden = true
 
@@ -1762,26 +1764,9 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         //btn_options.setImage(theImageView.image, forState: .Normal)
         btn_options.addTarget(self, action: #selector(NewsFeedsAllVC.onClickOptions(_:)), forControlEvents: .TouchUpInside)
 
-        if let createdBy = (dict as NSDictionary).valueForKeyPath("createdBy._id") as? String {
-           
-            if let sharedBy = (dict as NSDictionary).valueForKeyPath("sharedBy._id") as? String {
-                if(sharedBy == AppHelper.userDefaultsForKey(_ID) as? String) {
-                    btn_options.hidden = false
-                }
-                else {
-                    btn_options.hidden = true
-                }
-            }
-            else {
-                if(createdBy == AppHelper.userDefaultsForKey(_ID) as? String) {
-                    btn_options.hidden = false
-                }
-                else {
-                    btn_options.hidden = true
-                }
-            }
-        }
         
+       
+
         
         //shared by name
         if let sharedByFname = (dict as NSDictionary).valueForKeyPath("sharedBy.firstName") as? String {
@@ -1848,24 +1833,25 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         if let createdDate = dict["createdDate"] as? String {
             
             let df = NSDateFormatter.init()
-            df.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+           // df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            //df.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             //   df.timeZone = NSTimeZone(name: "UTC")
             
             
             
-            df.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-            let tempDate = df.dateFromString(createdDate) as NSDate!
+            //df.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+            //let tempDate = df.dateFromString(createdDate) as NSDate!
             
             df.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
-            let dateStr = df.stringFromDate(tempDate)
+            var dateStr = "" //df.stringFromDate(tempDate)
           
             /* df.dateFormat = "HH:mm:ss.sss"
             df.timeZone = NSTimeZone()
             let timeStr = df.stringFromDate(tempDate)
             
             */
-            
+            dateStr = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(createdDate, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "yyyy-MM-dd-HH:mm:ss.sss")!//HelpingClass.convertDateFormat(, desireFormat: ,  dateStr: dateStr)
+
             lbl_timeAgo.text = HelpingClass.timeAgoSinceDate(df.dateFromString(dateStr)!, numericDates: false)
            
         }
@@ -2159,7 +2145,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
     func fetchExploreDataFromServer() {
         if AppDelegate.checkInternetConnection() {
             //show indicator on screen
-            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            
+          if let str = AppHelper.userDefaultsForKey("gifData") as? String{
+            
+            print_debug("strexplore === \(str)")
+                if str == "no"{
+                  AppDelegate.showProgressHUDWithStatus("Please wait..")
+                }
+            }
+            
             var parameters = [String: AnyObject]()
             parameters["AppKey"] = AppKey
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
@@ -2172,6 +2166,10 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
                 if (status == "Success") {
                     
+                    guard let dict:[NSObject:AnyObject]? = responseDict where dict != nil else {
+                        return
+                    }
+
                     if ((responseDict["error"] as! Int) == 0) {
                         
                         dataArr = responseDict["allStories"] as! [AnyObject]
@@ -2325,7 +2323,15 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         if AppDelegate.checkInternetConnection() {
             isPostServiceCalled = true
             //show indicator on screen
-            AppDelegate.showProgressHUDWithStatus("Please wait..")
+            
+            if let str = AppHelper.userDefaultsForKey("gifData") as? String{
+                
+                print_debug("str====\(str)")
+                if str == "no"{
+                    AppDelegate.showProgressHUDWithStatus("Please wait..")
+                }
+            }
+
             var parameters = [String: AnyObject]()
             
             parameters["userId"] = AppHelper.userDefaultsForKey(_ID)
@@ -2368,6 +2374,16 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             }
             
             
+            #if TARGET_IPHONE_SIMULATOR
+                parameters["deviceToken"] = "DUMMY_TOKEN"
+                #else
+                if((AppHelper.userDefaultsForKey("PushToken")) != nil){
+                    parameters["deviceToken"] = AppHelper.userDefaultsForKey("PushToken")
+                }
+                else{
+                    parameters["deviceToken"] = "NA"
+                }
+                #endif
             
             print_debug("Dict = \(parameters)")
             //call global web service class latest
@@ -2376,7 +2392,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
                 
                 isPostServiceCalled = false
                 
-          //      print_debug("Response = \(responseDict)")
+              print_debug("Response = \(responseDict)")
                 
                 AppDelegate.dismissProgressHUD()
                 
@@ -3214,7 +3230,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
         
         var count = 0
         
-        for (index, asset) in assets!.enumerate() {
+        for (_, asset) in assets!.enumerate() {
             
             
             let locId = CommonMethodFunctions.nextIdentifies()
@@ -3224,7 +3240,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
             count = count + 1
             
             let fullImage = UIImageView(image: asset.fullScreenImage)
-            let thumbImage = UIImageView(image: asset.thumbnailImage)
+            _ = UIImageView(image: asset.thumbnailImage)
             
             let imgData = UIImageJPEGRepresentation(fullImage.image!, 0.5)
             let thumbNailName = "Thumb" + timeStamp + ".jpg"
@@ -3277,7 +3293,7 @@ class NewsFeedsAllVC: UIViewController, UIGestureRecognizerDelegate, UICollectio
 extension NewsFeedsAllVC:MFMailComposeViewControllerDelegate{
     
     
-    func sendMail() -> Void {
+    func sendMail(messageBody:String) -> Void {
         
         if !MFMailComposeViewController.canSendMail() {
         
@@ -3293,6 +3309,9 @@ extension NewsFeedsAllVC:MFMailComposeViewControllerDelegate{
       
         // Configure the fields of the interface.
         composeVC.setToRecipients([email])
+        
+        composeVC.setMessageBody(messageBody, isHTML: false)
+        
         composeVC.setSubject("Report")
         
         // Present the view controller modally.
@@ -3306,16 +3325,35 @@ extension NewsFeedsAllVC:MFMailComposeViewControllerDelegate{
         // Check the result or perform other tasks.
         
         // Dismiss the mail compose view controller.
+        
+       // http://34.224.172.49/api/v1/users/reportContent/:contentDetails
+        
+        
+        if result.rawValue == 2{
+        let url = "users/reportContent/" + "Postisreported."
+        if AppDelegate.checkInternetConnection()
+        {
+            Services.getRequest(url, parameters: nil, completionHandler: { (status, response) in
+                if (status == "Success") {
+                    if ((response["error"] as! Int) == 0) {
+                        guard (response as? Dictionary<String, AnyObject>) != nil else{
+                            return
+                        }
+                AppHelper.showAlertWithTitle(AppName, message: response["errorMsg"] as! String, tag: 0, delegate: self, cancelButton: "Ok", otherButton: nil)
+                    }
+                }
+            })
+        }
+        }
         controller.dismissViewControllerAnimated(true, completion: nil)
+
     }
-    
-    
 }
 
 
 extension NewsFeedsAllVC: UITextViewDelegate {
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-      
+ 
         let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
         WebVC.title = "Web Browser"
         WebVC.urlStr = URL.absoluteString!

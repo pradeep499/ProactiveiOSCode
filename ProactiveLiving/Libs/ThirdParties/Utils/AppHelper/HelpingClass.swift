@@ -90,6 +90,29 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         
     }
     
+    //To set empty message in table view
+    class func toSetEmptyViewInTableViewNoDataAvaiable(tableView:UITableView , message : String){
+        let lblEmpty = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth-40, height: tableView.bounds.size.height))
+        lblEmpty.text =  message
+        lblEmpty.textAlignment = NSTextAlignment.Center
+        lblEmpty.textColor = UIColor.grayColor()
+        lblEmpty.numberOfLines = 0
+        tableView.backgroundView = lblEmpty
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+    }
+    
+    //To set empty message in table view
+    class func toSetEmptyViewInCollectioncViewNoDataAvaiable(collectioncView:UICollectionView , message : String){
+        let lblEmpty = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth-40, height: collectioncView.bounds.size.height))
+        lblEmpty.text =  message
+        lblEmpty.textAlignment = NSTextAlignment.Center
+        lblEmpty.textColor = UIColor.grayColor()
+        lblEmpty.numberOfLines = 0
+        collectioncView.backgroundView = lblEmpty
+    }
+
+
+    
     class func showAlertControllerWithType(type:UIAlertControllerStyle , fromController viewController:UIViewController, title:String, message:String?, cancelButtonTitle:String?, otherButtonTitle:[String]?, completion:(str:String)-> Void )
     {
         
@@ -119,7 +142,7 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
         let fileManager = NSFileManager.defaultManager()
         do {
             try fileManager.createDirectoryAtPath(documentsDirectory, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
+        } catch let _ as NSError {
             //NSLog("Unable to create directory \(error.debugDescription)")
         }
         
@@ -165,7 +188,12 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
     class func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
         
         let calendar = NSCalendar.currentCalendar()
-        let now = NSDate()
+        var now = NSDate()
+        let df = NSDateFormatter()
+        df.dateFormat = "yyyy-MM-dd-HH:mm:ss.sss"
+        let dateLat = df.stringFromDate(now)
+        now = df.dateFromString(dateLat)!
+        
         let earliest = now.earlierDate(date)
         let latest = (earliest == now) ? date : now
         let components:NSDateComponents = calendar.components([NSCalendarUnit.Minute , NSCalendarUnit.Hour , NSCalendarUnit.Day , NSCalendarUnit.WeekOfYear , NSCalendarUnit.Month , NSCalendarUnit.Year , NSCalendarUnit.Second], fromDate: earliest, toDate: latest, options: NSCalendarOptions())
@@ -218,10 +246,11 @@ class HelpingClass: NSObject,UIAlertViewDelegate {
             } else {
                 return NSLocalizedString("A minute ago", comment: "")
             }
-        } else if (components.second >= 3) {
-            return String.localizedStringWithFormat(NSLocalizedString("%d seconds ago", comment: ""), components.second)
+        } else if (components.second <= 20) {
+            return NSLocalizedString("Just now", comment: "")//
         } else {
-            return NSLocalizedString("Just now", comment: "")
+            return String.localizedStringWithFormat(NSLocalizedString("%d seconds ago", comment: ""), components.second)
+
         }
     }
     

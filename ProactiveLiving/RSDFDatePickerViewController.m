@@ -179,7 +179,6 @@ type = 3 for yeary basis
 
     }
     
-    _selectedDate = [[NSDate alloc]init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -191,7 +190,8 @@ type = 3 for yeary basis
   
     recuringArr = [[NSMutableArray alloc]init];
     
-    
+    _selectedDate = [[NSDate alloc]init];
+
     
   //  [self createRecurringEvent];
 
@@ -288,19 +288,7 @@ type = 3 for yeary basis
 - (NSArray *)datesToMark
 {
     if (!_datesToMark) {
-//        NSArray *numberOfDaysFromToday = @[@(1), @(2), @(3), @(0), @(-1), @(-2), @(-3), @(13), @(22)];
-//        
-//        NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-//        NSMutableArray *datesToMark = [[NSMutableArray alloc] initWithCapacity:[numberOfDaysFromToday count]];
-//        [numberOfDaysFromToday enumerateObjectsUsingBlock:^(NSNumber *numberOfDays, NSUInteger idx, BOOL *stop) {
-//            dateComponents.month = [numberOfDays integerValue];
-//            NSDate *date = [self.calendar dateByAddingComponents:dateComponents toDate:self.today options:0];
-//            [datesToMark addObject:date];
-//            //NSLog(@"Next Recursive = %@", date);
-//        }];
-//        
-//        _datesToMark = [datesToMark copy];
-        
+
     }
     return _datesToMark;
 }
@@ -581,7 +569,7 @@ type = 3 for yeary basis
                  if ([[responseDict objectForKey:@"error"] intValue] == 0) {
                      
                      self.dataArray=[responseDict objectForKey:@"result"];
-                     printf("Events : %d",self.dataArray.count);
+                   // printf("Events : %d",self.dataArray.count);
                      
                      self.eventData = [[NSMutableDictionary alloc] init];
                      
@@ -598,10 +586,7 @@ type = 3 for yeary basis
                              
                              //Title not nil means Appontment else Meet up may have recurrence
                              NSString *title = [[[[groups objectForKey:key] objectAtIndex:i] objectForKey:@"organizationId"] valueForKey:@"name"];
-                             
-                             
-                             
-                             date = [NSDate
+                            date = [NSDate
                                      dateWithDay:[[[[[[groups objectForKey:key] objectAtIndex:i] valueForKey:@"bookingDate"] componentsSeparatedByString:@"/"]objectAtIndex:2] intValue]
                                      month:[[[[[[groups objectForKey:key] objectAtIndex:i] valueForKey:@"bookingDate"] componentsSeparatedByString:@"/"]objectAtIndex:1] intValue]
                                      year:[[[[[[groups objectForKey:key] objectAtIndex:i] valueForKey:@"bookingDate"] componentsSeparatedByString:@"/"]objectAtIndex:0] intValue]];
@@ -619,7 +604,7 @@ type = 3 for yeary basis
                                  
                              }
                              
-                             // create recurrence of meet up if have. 1 = have, 0 = not have
+                             // create recurrence of meet up if isrecur = 1  have, 0 = not have
                              if (([title isKindOfClass:[NSNull class]]) || (title == nil || [title isEqualToString:@"<nil>"] || title.length == 0) && [[[[groups objectForKey:key] objectAtIndex:i] valueForKeyPath:@"meetupInviteId.isrecur"] integerValue] == 1) {
                                  
                                  NSDictionary *recurrenceDict = [[[groups objectForKey:key] objectAtIndex:i] valueForKeyPath:@"meetupInviteId.recurrence"];
@@ -627,9 +612,6 @@ type = 3 for yeary basis
                                  NSString *endDate = [recurrenceDict valueForKey:@"endDate"];
                                  NSString *recurrenceType = [recurrenceDict valueForKey:@"pattern"];
                                  int interval = [[recurrenceDict valueForKey:@"recurevery"]intValue];
-                                 
-                                 
-                                 
                                  
                                  
                                  //get the recurrence date n append array
@@ -671,10 +653,10 @@ type = 3 for yeary basis
                   //   }
                   /*   [self setupRecurringEventFromStartingDate:[df dateFromString:@"07-11-2016"] toEndDate:[df dateFromString:@"07-11-2020"] withType:1];
                      [self setupRecurringEventFromStartingDate:[df dateFromString:@"08-11-2016"] toEndDate:[df dateFromString:@"08-11-2020"] withType:2];
-                     [self setupRecurringEventFromStartingDate:[df dateFromString:@"09-11-2016"] toEndDate:[df dateFromString:@"09-11-2020"] withType:3];
+                     [self setupRecurringEventFromStartingDate:[df dateFromString:@"09-11-2016"] toEndDate:[df dateFromString:@"09-11-2020"] withType:3]; */
                      
                      // add recurring date in arry to display on calendar
-                     [datesToMark addObjectsFromArray:recuringArr]; */
+                    // [datesToMark addObjectsFromArray:recuringArr];
                      
                      _datesToMark = [datesToMark copy];
                      _datePickerView.eventData = self.eventData;

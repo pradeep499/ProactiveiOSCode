@@ -44,10 +44,10 @@
 //#define BASE_URL @"http://192.168.5.33:3000/api/v1/"
 
 //LiveServer URL
-#define BASE_URL @"http://52.23.211.77/api/v1/"
+//#define BASE_URL @"http://52.23.211.77/api/v1/"
 
 //Production URL
-//#define BASE_URL @"http://52.89.149.60:3000/api/v1/"
+#define BASE_URL @"http://34.224.172.49/api/v1/"
 
 #define RESIGN_KEYBOARD_FROM_APP [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 
@@ -89,6 +89,8 @@
 #define ServiceGetSubscribedStories     @"getSubscribeStories"
 #define ServiceGetNewsFeed              @"getNewsFeed"
 #define ServiceDeleteNewsFeed           @"deleteNewsFeed"
+#define ServiceDeleteComment            @"deleteFeedComment"
+
 #define ServiceGetAllMeetupInvite       @"getAllMeetupInvite"
 #define ServiceGetDetailMeetupInvite    @"getDetailMeetupInvite"
 #define ServiceCommentsData             @"getNewsFeedById"
@@ -184,7 +186,7 @@
 #define terms                           @"Please agree to our Terms and Conditions"
 #define invalidEmail                    @"Please enter a valid email address"
 #define serviceError                    @"We are sorry , but something seems to have gone wrong.\nIf you continue to face this problem , please email us at support@proactively.com"///@"Um ah, Something went wrong!"
-#define pleaseLogin                     @"We have sent a mail to your registered email, please login with new password"
+#define pleaseLogin                     @"We have sent an email to your registered email address. Please login with a new password."
 #define invalidPassword                 @"Incorrect Cell number and Password"
 #define userNotExist                    @"Cell number is not registered with us"
 #define cameraSetting                   @"You need to enable Camera option from Privacy Settings"

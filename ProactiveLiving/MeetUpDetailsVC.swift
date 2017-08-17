@@ -19,6 +19,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
     var meetUpID: String!
     var fwBy: String!
     var meetUpGroupID: String!
+    weak var mydelegate:toRefresh?
     
     @IBOutlet weak var imgMeetUp: UIImageView!
     @IBOutlet weak var imgLike: UIImageView!
@@ -292,7 +293,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             if let imageUrlStr = dict["imgUrl"] as? String {
                 let image_url = NSURL(string: imageUrlStr)
                 if (image_url != nil) {
-                    let placeholder = UIImage(named: "no_photo")
+                    let placeholder = UIImage(named: "ic_booking_profilepic")
                     cell.imgProfile.sd_setImageWithURL(image_url, placeholderImage: placeholder)
                 }
             }
@@ -548,6 +549,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                     }
                     
                     self.dataDict=dictData["result"] as! Dictionary<String, AnyObject>
+                    self.mydelegate?.toRefreshMeetUpOrWebTntive(self.dataDict)
                     print_debug("arrayList \(self.dataDict)")
                     self.updateCurrentView()
                 }
@@ -709,9 +711,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             arrayForBool.removeLast()
             //reload specific section animated
             let range = NSMakeRange(indexPath.section, 1)
-            let sectionToReload = NSIndexSet(indexesInRange: range)
+            _ = NSIndexSet(indexesInRange: range)
             
-            let indexToReload = NSIndexPath(forRow: 0, inSection: indexPath.section)
+            _ = NSIndexPath(forRow: 0, inSection: indexPath.section)
             //self.tableMeetUpDetails.reloadRowsAtIndexPaths([indexToReload], withRowAnimation: .Automatic)
             //self.tableMeetUpDetails.reloadSections(sectionToReload, withRowAnimation: .Fade)
             self.tableMeetUpDetails.reloadData()
@@ -815,6 +817,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             case 2:
                 self.deleteMeetUpOrInvite()
                 break;
+            case 3:
+                self.sendMail("")
+                break;
             default:
                 break;
             }
@@ -830,6 +835,9 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             sender.center = point
         }
     }
+    
+    
+    
 
     @IBAction func btnChatClick(sender: UIButton) {
         
@@ -849,6 +857,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                 mesagesVC.recentChatObj=recentObj
                 mesagesVC.manageChatTableH="0"
                 mesagesVC.isGroup = "1"
+                mesagesVC.hidesBottomBarWhenPushed = false
                 
                 self.navigationController?.pushViewController(mesagesVC, animated: true)
             }
@@ -893,6 +902,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             //self.listenerUpdateMeetUpOrWebInvite()
         }
     }
+    
     
     func deleteMeetUpOrInvite() {
       
@@ -1017,15 +1027,19 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
             let buttonOneTitle : String!
             let buttonTwoTitle : String!
             let buttonThreeTitle : String!
-            
+            let buttonFourTitle : String!
+
             if(self.screenName == "MEET UPS") {
                 buttonOneTitle = "Get Directions"
                 buttonTwoTitle = "Edit Meet Up"
                 buttonThreeTitle = "Cancel Meet Up"
+                buttonFourTitle = "Report this Meet Up"
             } else {
                 buttonOneTitle = "Go To Link"
                 buttonTwoTitle = "Edit Web Invite"
                 buttonThreeTitle = "Cancel Web Invite"
+                buttonFourTitle = "Report this Web Invite"
+
             }
             
             if(IS_IOS_7)
@@ -1039,7 +1053,7 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                 }
                 else
                 {
-                    actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle)
+                    actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle:"Cancel", otherButtonTitles: buttonOneTitle,buttonFourTitle)
                 }
                 
                 actionSheet.tag=300
@@ -1068,6 +1082,13 @@ class MeetUpDetailsVC: UIViewController, UIActionSheetDelegate {
                             self.deleteMeetUpOrInvite()
                     }))
                     
+                }else{
+                    actionSheet.addAction(UIAlertAction(title: buttonFourTitle , style: UIAlertActionStyle.Default, handler:
+                        { (ACTION :UIAlertAction!)in
+                    let name = AppHelper.userDefaultsForKey(userFirstName) as? String
+                    let str = "This post with id : " + "\(self.dataDict["_id"] as! String)" + " is reported by " + "\(name!)" + " ."
+                            self.sendMail(str)
+                    }))
                 }
                 
                 actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
@@ -1110,11 +1131,14 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
 
         if let imageUrlStr = dataDict["imgUrl"] as? String {
             let image_url = NSURL(string: imageUrlStr )
-            if (image_url != nil) {
-                let placeholder = UIImage(named: "no_photo")
+            if (image_url != nil) && imageUrlStr != " "{
+                let placeholder = UIImage(named: "ic_booking_profilepic")
                 imgProfile.sd_setImageWithURL(image_url, placeholderImage: placeholder)
                 lblName.text = dataDict["name"] as? String
 
+            }else{
+                let placeholder = UIImage(named: "ic_booking_profilepic")
+               imgProfile.image = placeholder
             }
         }
         
@@ -1201,6 +1225,61 @@ extension MeetUpDetailsVC: UICollectionViewDelegate, UICollectionViewDataSource 
         
         let finalArr = acceptedArr + notAcceptedArr        
         return finalArr
+    }
+}
+
+extension MeetUpDetailsVC:MFMailComposeViewControllerDelegate{
+    
+    
+    func sendMail(message:String) -> Void {
+        
+        if !MFMailComposeViewController.canSendMail() {
+            
+            print_debug("Report")
+            return
+            
+        }
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        let email = "support@proactively.com"
+        
+        composeVC.setMessageBody(message, isHTML: false)
+        // Configure the fields of the interface.
+        composeVC.setToRecipients([email])
+        composeVC.setSubject("Report")
+        
+        // Present the view controller modally.
+        self.presentViewController(composeVC, animated: true, completion: nil)
+        
+    }
+    
+    
+    func mailComposeController(controller: MFMailComposeViewController,
+                               didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        // Check the result or perform other tasks.
+        
+        // Dismiss the mail compose view controller.
+        
+        // http://34.224.172.49/api/v1/users/reportContent/:contentDetails
+        if result.rawValue == 2{
+        let url = "users/reportContent/" + "Postisreported."
+        if AppDelegate.checkInternetConnection()
+        {
+            Services.getRequest(url, parameters: nil, completionHandler: { (status, response) in
+                if (status == "Success") {
+                    if ((response["error"] as! Int) == 0) {
+                        guard (response as? Dictionary<String, AnyObject>) != nil else{
+                            return
+                        }
+                        AppHelper.showAlertWithTitle(AppName, message: response["errorMsg"] as! String, tag: 0, delegate: self, cancelButton: "Ok", otherButton: nil)
+                    }
+                }
+            })
+        }
+        }
+        controller.dismissViewControllerAnimated(true, completion: nil)
+        
     }
 }
 

@@ -53,7 +53,8 @@ class GroupDetailVC: UIViewController,UIImagePickerControllerDelegate,UIActionSh
         dict["groupid"]=groupObj.groupId
         dict["groupuserid"]=frndObj.userId
         dict["phoneNumber"]=frndObj.phoneNumber
-        dict["user_firstName"]=frndObj.firstName
+        dict["user_firstName"] = frndObj.firstName
+        dict["user_image"] = frndObj.userImgString
         //println(dict)
         ChatListner .getChatListnerObj().socket.emit("addInGroup", dict)
         dispatch_after(5, dispatch_get_main_queue(), {

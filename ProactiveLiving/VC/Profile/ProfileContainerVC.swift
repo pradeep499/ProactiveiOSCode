@@ -12,7 +12,7 @@ import UIKit
 
  
 
-class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, GenericProfileCollectionVCDelegate {
+class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, GenericProfileCollectionVCDelegate,UIAlertViewDelegate {
     
     var firstVC: ProfileVC!
     var secondVC: MyPAStodoVC!
@@ -350,7 +350,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     @IBAction func onClickProfileImg(sender: AnyObject) {
         
         
-        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change the profile image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
             if str == "Yes"{
                 self.gotTOPhotosPage()
                 self.imgUploadType = "profile"
@@ -360,7 +360,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
     
     @IBAction func onClickBgImgBtn(sender: AnyObject) {
         
-        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change Profile background image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
+        HelpingClass.showAlertControllerWithType(.Alert, fromController: self, title: AppName, message: "Do you want to change the profile background image?", cancelButtonTitle: "No", otherButtonTitle: ["Yes"], completion: { (str) in
             if str == "Yes"{
                 self.gotTOPhotosPage()
                 self.imgUploadType = "bg"
@@ -874,10 +874,13 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         }
                         // set UI
                         
-                        let url = NSURL(string: self.friendDict!["result"]!["imgUrl"] as! String )
+                        if let image = self.friendDict!["result"]!["imgUrl"] as? String{
+                            self.iv_profile.sd_setImageWithURL(NSURL.init(string: image), placeholderImage: UIImage(named: "user"))
+                        }
+                        
+                        
                         let bgUrl = NSURL(string: self.friendDict!["result"]!["imgCoverUrl"] as! String)
                         
-                        self.iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
                         self.iv_profileBg.sd_setImageWithURL(bgUrl, placeholderImage: UIImage(named: ""))
                         
                         
@@ -898,7 +901,7 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
                         
                     } else {
                         
-                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                        AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 54, delegate: self, cancelButton: ok, otherButton: nil)
                     }
                     
                 } else if (status == "Error"){
@@ -965,6 +968,14 @@ class ProfileContainerVC: UIViewController, YSLContainerViewControllerDelegate, 
         }
         
     }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if alertView.tag == 54{
+            self.navigationController?.popViewControllerAnimated(true)
+            
+        }
+    }
+
     
 }
 

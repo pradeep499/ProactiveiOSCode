@@ -110,10 +110,10 @@ let chatCDNbaseUrl=""
 //let ChatBaseMediaUrl = "http://192.168.5.33:3000/"
 
 // Live Server URL
-let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
+//let ChatBaseMediaUrl = "http://52.23.211.77:3000/"
 
 //Production URL
-//let ChatBaseMediaUrl = "http://52.89.149.60:3000/"
+let ChatBaseMediaUrl = "http://34.224.172.49/"   //52.23.211.77:3000/"
 
 
 //------------------------*********************
@@ -126,10 +126,10 @@ let ChatMediaPath = "api/v1/sendMedia"
 //let socketIO_BaseURL =  "http://192.168.5.33:3001/"
 
 //Live Server
-let socketIO_BaseURL = "http://52.23.211.77:3001/"
+//let socketIO_BaseURL = "http://52.23.211.77:3001/"
 
 //Production Serever
-//let socketIO_BaseURL = "http://52.89.149.60:3000"
+let socketIO_BaseURL = "http://34.224.172.49:90"
 
 
 //----------------************Socket IO URL **************-------------
@@ -137,7 +137,8 @@ let socketIO_BaseURL = "http://52.23.211.77:3001/"
 // MARK : GLOBAL Functions
 func print_debug <T> (object:T)
 {
-    print(object)
+  ///  print(object)
+    
 }
 
 

@@ -148,6 +148,38 @@
     // Dispose of any resources that can be recreated.
 }
 
+//"/pushType // 10 - onetoOne , 11 - groupChat, 12 -meetup, 13- invite, 14- friend request , 15- pac request."
+
+-(void)scrollToNewTab:(NSMutableDictionary*)dict{
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scrollToNewTab:) object:nil];
+    NSInteger selectedIndex = [[dict objectForKey:@"push_type"] intValue];
+    switch (selectedIndex) {
+        case 10:
+            [containerVC scrollMenuViewSelectedIndex:0];
+           break;
+        case 11:
+            [containerVC scrollMenuViewSelectedIndex:0];
+            break;
+        case 12:
+            [containerVC scrollMenuViewSelectedIndex:1];
+            break;
+        case 13:
+            [containerVC scrollMenuViewSelectedIndex:2];
+            break;
+        case 14:
+            [containerVC scrollMenuViewSelectedIndex:3];
+            break;
+        case 15:
+            [containerVC scrollMenuViewSelectedIndex:4];
+            break;
+
+        default:
+            break;
+    }
+    
+}
+
 - (IBAction)btnCancelClick:(UIButton*)sender {
     
     sender.selected=!sender.selected;
@@ -172,6 +204,7 @@
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
         AllContactsVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AllContactsVC"];
         vc.fromVC=@"Inbox";
+        vc.fromVCName = @"oneToOne";
         [self.navigationController pushViewController:vc animated:YES];
     }
 

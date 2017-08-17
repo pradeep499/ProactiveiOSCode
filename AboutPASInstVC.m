@@ -120,8 +120,8 @@
 - (IBAction)btnPASInstClick:(id)sender {
     
     if (![[AppHelper userDefaultsForKey:uId] isKindOfClass:[NSNull class]] && [AppHelper userDefaultsForKey:uId]) {
-        PASInstVideoVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PASInstVideoVC"];
-        [self.navigationController pushViewController:vc animated:YES];
+       // PASInstVideoVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PASInstVideoVC"];
+       // [self.navigationController pushViewController:vc animated:YES];
     }
     
 }

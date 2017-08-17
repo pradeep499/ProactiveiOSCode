@@ -74,19 +74,40 @@ class VideosVC: UIViewController {
         self.tableView.reloadData()
     }
     
-    
+   
     //mark- UITableview Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if videoContainerType == .Explore {
+            if dataArra?.count == 0{
+                HelpingClass.toSetEmptyViewInTableViewNoDataAvaiable(tableView, message: "No videos available.")
+            }else{
+                tableView.backgroundView = nil
+            }
             return dataArra!.count
+            
         }else if videoContainerType == .Profile{
             
             if self.title == "PERSONAL" {
+                if profilePersionalArr.count == 0{
+                    HelpingClass.toSetEmptyViewInTableViewNoDataAvaiable(tableView, message: "No videos available.")
+                }else{
+                    tableView.backgroundView = nil
+                }
                 return profilePersionalArr.count
             }else if self.title == "EDUCATIONAL" {
+                if profileEducationalArr.count == 0{
+                    HelpingClass.toSetEmptyViewInTableViewNoDataAvaiable(tableView, message: "No videos available.")
+                }else{
+                    tableView.backgroundView = nil
+                }
                 return profileEducationalArr.count
             }else if self.title == "INSPIRATIONAL" {
+                if profileInspirationalArr.count == 0{
+                    HelpingClass.toSetEmptyViewInTableViewNoDataAvaiable(tableView, message: "No videos available.")
+                }else{
+                    tableView.backgroundView = nil
+                }
                 return profileInspirationalArr.count
             }
         }

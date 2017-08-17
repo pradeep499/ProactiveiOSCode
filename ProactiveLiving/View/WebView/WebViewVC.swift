@@ -61,6 +61,14 @@ class WebViewVC: UIViewController {
             self.lblTitle.text = "OrgDetailsLink"
             self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
             break
+        case "TERMS N POLICIES":
+            self.lblTitle.text = "Terms of Use"
+            self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
+            break
+        case "terms SignUP":
+            self.lblTitle.text = "Terms & Conditions"
+            self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
+            break
         default:
             self.lblTitle.text = self.title
             self.performSelectorInBackground(#selector(self.loadUrlOnWebView), withObject: nil)
@@ -84,49 +92,50 @@ class WebViewVC: UIViewController {
     @IBAction func onClickBackBtn(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     
     func getTermsNPolicyContentfromUrl() -> Void{
         self.indicator.startAnimating()
          
-        let myURLString =  "http://52.23.211.77:3000/users/termsPolicy"
+        let myURLString =  "http://www.iubenda.com/privacy-policy/7923451"
         guard let myURL = NSURL(string: myURLString) else {
             print_debug("Error: \(myURLString) doesn't seem to be a valid URL")
             return
         }
         
-        do {
-            let myHTMLString = try String(contentsOfURL: myURL)
-            print_debug("HTML : \(myHTMLString)")
+        let request = NSURLRequest.init(URL: myURL)
+        self.web_view.loadRequest(request)
+        
+        self.indicator.stopAnimating()
+        self.indicator.hidden = true
+        
+
+        
+        //do {
             
-            let data = myHTMLString.dataUsingEncoding(NSUTF8StringEncoding)
-            if let json  = try?NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers){
-                print_debug(json)
-                if let content = json["content"] as? String{
-                    self.web_view.loadHTMLString(content, baseURL: nil)
-                    
-                }
-                self.indicator.stopAnimating()
-                self.indicator.hidden = true
-                
-            }
+            /* let myHTMLString = try String(contentsOfURL: myURL)
+             print_debug("HTML : \(myHTMLString)")
+             
+             let data = myHTMLString.dataUsingEncoding(NSUTF8StringEncoding)
+             if let json  = try?NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers){
+             print_debug(json)
+             if let content = json["content"] as? String{
+             self.web_view.loadHTMLString(content, baseURL: nil)
+             
+             }
+             self.indicator.stopAnimating()
+             self.indicator.hidden = true
+             
+             }
+             } catch let error as NSError {
+             print_debug("Error: \(error)")
+             self.indicator.stopAnimating()
+             self.indicator.hidden = true
+             }
+*/
             
             
-            
-        } catch let error as NSError {
-            print_debug("Error: \(error)")
-            self.indicator.stopAnimating()
-            self.indicator.hidden = true
-        }
+        
     }
     
     func loadUrlOnWebView() -> Void    {

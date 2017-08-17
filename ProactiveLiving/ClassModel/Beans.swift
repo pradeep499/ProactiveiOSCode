@@ -12,7 +12,6 @@ import UIKit
 class Beans: NSObject {
     
     
-    
     @objc
         class UserDetails: NSObject, NSCoding{
         

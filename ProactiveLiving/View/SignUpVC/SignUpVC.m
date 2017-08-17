@@ -698,13 +698,13 @@
 
 - (IBAction)termsAndConditionRedirection:(id)sender {
     
-    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    aboutPASInstVC = [storyboard instantiateViewControllerWithIdentifier:@"AboutPASInstVC"];
-    aboutPASInstVC.strType = @"pac";
-    aboutPASInstVC.strTitle = @"Terms & Conditions";
-    
-    [self.navigationController pushViewController:aboutPASInstVC animated:YES];
+    WebViewVC * vc = (WebViewVC*)[storyboard instantiateViewControllerWithIdentifier:@"WebViewVC"];
+    vc.pageName = @"terms SignUP";
+    vc.urlStr = @"http://www.proactively.com/eulaandtermsconditions";
+    [self.navigationController pushViewController:vc animated:YES];
+
+
 }
 
 

@@ -17,6 +17,9 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     
     @IBOutlet weak var tv_desc:UIPlaceHolderTextView!
     
+    @IBOutlet weak var iv_uploadPic: UIImageView!
+
+    
     @IBOutlet weak var iv_coverPic: UIImageView!
     
     @IBOutlet weak var tf_location: CustomTextField!
@@ -272,8 +275,8 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
             print_debug("print_debug PACID-\(pacID)")
             
            let imageURL = resultDict?.valueForKey("imgUrl") as! String
-            iv_coverPic.sd_setImageWithURL(NSURL.init(string: imageURL), placeholderImage: UIImage.init(named: "pac_listing_no_preview"))
-            
+          iv_uploadPic.sd_setImageWithURL(NSURL.init(string: imageURL), placeholderImage: UIImage.init(named: "upload_pic"))
+            //self.iv_coverPic.image = UIImage(named: "ic_booking_profilepic")
         }
         
         self.setUpPage()
@@ -287,11 +290,15 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     func setUpPage() -> Void {
         
         
-        let recognizer = UITapGestureRecognizer(target: self, action:#selector(GroupDetailVC.clickUserImage(_:)))  // need to change
+         let recognizer = UITapGestureRecognizer(target: self, action:#selector(GroupDetailVC.clickUserImage(_:)))  // need to change
         recognizer.delegate = self
         self.iv_coverPic.addGestureRecognizer(recognizer)
+        self.iv_uploadPic.userInteractionEnabled = true
+        self.iv_uploadPic.layer.cornerRadius = 27
+        self.iv_uploadPic.clipsToBounds = true
         self.iv_coverPic.userInteractionEnabled = true
-        self.iv_coverPic.layer.cornerRadius = self.iv_coverPic.frame.height/2
+        self.iv_coverPic.layer.cornerRadius = 27
+        
         self.iv_coverPic.clipsToBounds = true
         //self.iv_coverPic.setImageWithURL(NSURL(string:""), placeholderImage: UIImage(named:"profile.png"))
         
@@ -360,9 +367,9 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     @IBAction func onClickTermsAction(sender: AnyObject) {
         
         let mainStoryboard = AppHelper.getStoryBoard()
-        let termsAndCondition = mainStoryboard.instantiateViewControllerWithIdentifier("AboutPASInstVC") as! AboutPASInstVC
-        termsAndCondition.strTitle = "Terms & Conditions"
-        termsAndCondition.strType = "pac"
+        let termsAndCondition = mainStoryboard.instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        termsAndCondition.pageName = "TERMS N POLICIES"
+        termsAndCondition.urlStr = "http://www.proactively.com/termsandconditions"
         self.navigationController?.pushViewController(termsAndCondition, animated: true)
         
         
@@ -618,6 +625,7 @@ class CreatePACVC: UIViewController, TLTagsControlDelegate, UIGestureRecognizerD
     {
         let tempImage = info[UIImagePickerControllerEditedImage] as! UIImage
         self.iv_coverPic.image = tempImage
+        self.iv_uploadPic.image = tempImage
         self.dismissViewControllerAnimated(true, completion: {
             //self.updateGroupDetails()
         })

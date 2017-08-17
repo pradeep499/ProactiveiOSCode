@@ -3,7 +3,7 @@
 //  ProactiveLiving
 //
 //  Created by Hitesh on 1/12/16.
-//  Copyright © 2016 MaverickHitesh. All rights reserved.
+//  Copyright © 2016 Maverick Hitesh. All rights reserved.
 //
 
 #import "LoginVC.h"
@@ -111,8 +111,8 @@
                                                     initWithRootViewController:thirdViewController];
   //  /* Changed by client AllPACirclesVC
     
-   // MyPAStodoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPAStodoVC"];
-    AllPACirclesVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AllPACirclesVC"];
+    MyPAStodoVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MyPAStodoVC"];
+    //AllPACirclesVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AllPACirclesVC"];
     fourthViewController.title=@"Activate";
     fourthViewController.tabBarItem.image=[UIImage imageNamed:@"ic_tabbar_activate"];
     UIViewController *fourthNavigationController = [[UINavigationController alloc]
@@ -120,7 +120,7 @@
    // */
     
     
- /*    //* Changed by client
+ /*     Changed by client
     ImproveVC *fourthViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ImproveVC"];
     fourthViewController.menuTitle=@"";
     fourthViewController.arrMenueImages=[NSArray arrayWithObjects:

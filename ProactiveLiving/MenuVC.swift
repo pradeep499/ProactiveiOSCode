@@ -54,16 +54,7 @@ class MenuVC: UIViewController, UISearchBarDelegate {
     }
     
 
-    /*
-    
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+   
     // MARK: - Search bar resign
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
        // self.search_bar.resignFirstResponder()
@@ -179,10 +170,12 @@ extension MenuVC: UITableViewDataSource{
             let url = NSURL(string: HelpingClass.getUserDetails().imgUrl)
             
             iv_profile.sd_setImageWithURL(url, placeholderImage: UIImage(named: "user"))
-            lbl_title.text = AppHelper.userDefaultsForKey("user_firstName") as? String
-            cell.separatorInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, cell.bounds.size.width)
+            let strFirstName = AppHelper.userDefaultsForKey("user_firstName") as? String
+            lbl_title.text = strFirstName!
 
             
+            
+            cell.separatorInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, cell.bounds.size.width)
             
             //make circle profile image
             iv_profile.layer.borderWidth = 2.0
@@ -208,8 +201,12 @@ extension MenuVC: UITableViewDataSource{
             self.statusLbl = lbl_title
             
             
-            if let status = AppHelper.userDefaultsForKey(userProfileStatus) {
-                statusLbl.text = status as? String
+            if let status = AppHelper.userDefaultsForKey(userProfileStatus) as? String{
+                if status.characters.first == " "{
+                    statusLbl.text = status
+                }else{
+                    statusLbl.text = "  " + status
+                }
             }else{
                  statusLbl.textColor = UIColor.grayColor()
                  statusLbl.text = "Share your status here."
@@ -217,12 +214,6 @@ extension MenuVC: UITableViewDataSource{
             
             break
             
-      /*  case 4:
-            cell.selectionStyle = .None
-            cell.accessoryType = .None
-            tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-            cell.layoutMargins = UIEdgeInsetsZero;
-            break*/
             
         case 11:
             cell.selectionStyle = .Default
@@ -321,6 +312,7 @@ extension MenuVC:UITableViewDelegate{
             
             
             let vc = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("AllContactsVC") as! AllContactsVC
+            vc.fromVCName = "oneToOne";
             vc.fromVC = "Menu";
             
             self.navigationController?.pushViewController(vc, animated: true)
@@ -382,7 +374,7 @@ extension MenuVC:UITableViewDelegate{
             
             let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
             WebVC.title = "About Us"
-            WebVC.urlStr = "http://www.proactively.com/"
+            WebVC.urlStr =  "http://www.proactively.com/"
             self.navigationController?.pushViewController(WebVC, animated: true)
           
  
@@ -445,7 +437,7 @@ extension MenuVC:UITableViewDelegate{
         
         let textToShare = textStr
         
-        if let myWebsite = NSURL(string: "http://www.proactively.com/") {
+        if let myWebsite = NSURL(string: "https://itunes.apple.com/app/id1234229217") {
             let objectsToShare = [textToShare, myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             

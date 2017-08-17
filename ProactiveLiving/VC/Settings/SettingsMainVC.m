@@ -72,7 +72,7 @@
             headerLabel.text=@"Change Number";
             break;
         case 3:
-            headerLabel.text=@"Delete Account";
+            headerLabel.text=@"Deactivate Account";
             break;
         default:
             break;

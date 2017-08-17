@@ -53,7 +53,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CommentsVC.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
 
         self.setUpHeader()
-        self.getPostUpdate()
+        self.getPostUpdate() //socket 
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(CommentsVC.returnKeyBoard))
         
         //tv_writeComment.autocorrectionType = .No
@@ -123,7 +123,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     
     func keyboardWillHide(sender: NSNotification) {
         if let userInfo = sender.userInfo {
-            if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+            if let _ = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
                 
                 self.table_view.removeGestureRecognizer(tapGesture)
                 layOutConstrain_view_writeComments_bottom.constant = 0
@@ -134,16 +134,7 @@ class CommentsVC: UIViewController, UITextViewDelegate {
     
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+        
     func setUpHeader() -> Void {
         
         
@@ -503,31 +494,32 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             
             url +=  "\(self.selectedCommentDict["_id"]!)" + "/" + "\(self.tv_writeComment.text)"
 
-            //ChatListner .getChatListnerObj().socket.emit("comment", dict)
-            if AppDelegate.checkInternetConnection() {
-                
-            Services.postRequest("commentOnPost", parameters: dict, completionHandler: { (status, response) in
-                if (status == "Success") {
-                    if ((response["error"] as! Int) == 0) {
-                        guard let dictData = response as? Dictionary<String, AnyObject> else{
-                            return
-                        }
-                        guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else{
-                            return
-                        }
-                        print_debug(" response = ", resultDict)
-                        self.commentsArr = resultDict["comments"] as! [AnyObject]
-                        self.table_view.reloadData()
-                        self.table_view.scrollToLastRow(true)
-                    }
-                    
-                }
-
-                
-              })
-                
-                
-            }
+            ChatListner .getChatListnerObj().socket.emit("comment", dict)
+           // if AppDelegate.checkInternetConnection()
+            /*{
+             
+             Services.postRequest("commentOnPost", parameters: dict, completionHandler: { (status, response) in
+             if (status == "Success") {
+             if ((response["error"] as! Int) == 0) {
+             guard let dictData = response as? Dictionary<String, AnyObject> else{
+             return
+             }
+             guard let resultDict = dictData["result"]  as? Dictionary<String, AnyObject>  else{
+             return
+             }
+             print_debug(" response = ", resultDict)
+             self.commentsArr = resultDict["comments"] as! [AnyObject]
+             self.table_view.reloadData()
+             self.table_view.scrollToLastRow(true)
+             }
+             
+             }
+             
+             
+             })
+             
+             
+             } */
             
         }else
         {
@@ -580,7 +572,100 @@ class CommentsVC: UIViewController, UITextViewDelegate {
             }
         }
         
+    
+    func btnClickedMoreOptions(sender:UIButton){
         
+        let buttonPosition = sender.superview?.convertPoint(CGPointZero, toView: self.table_view)
+        let indexPath =  self.table_view.indexPathForRowAtPoint(buttonPosition!)
+        
+        var reportPost = false
+        var deletePost = false
+        
+        let dictArr = commentsArr[(indexPath?.item)!]
+        
+        if let createdBy =  dictArr["commentedBy"]!!["_id"] as? String {
+                if(createdBy == AppHelper.userDefaultsForKey(_ID) as! String) {
+                    deletePost = true
+                    reportPost = false
+                }
+                else {
+                    deletePost = false
+                    reportPost = true
+                }
+            }
+        
+        
+        let actionSheet =  UIAlertController(title:nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        if  deletePost{
+          actionSheet.addAction(UIAlertAction(title: "Delete this comment", style: UIAlertActionStyle.Default, handler:
+                { (ACTION :UIAlertAction!)in
+                    self.toDeleteParticularComment(indexPath!)
+            }))
+        }
+        
+        if reportPost{
+        actionSheet.addAction(UIAlertAction(title: "Report this comment", style: UIAlertActionStyle.Default, handler:
+                { (ACTION :UIAlertAction!)in
+                    
+                let name = AppHelper.userDefaultsForKey(userFirstName) as? String
+                   let id = dictArr[(indexPath!.item)]["_id"] as? String
+                    let str = "This comment with id : " + "\(id!)" + " is reported by " + "\(name!)" + " ."
+                    self.sendMail(str)
+                    
+            }))
+        }
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:
+            { (ACTION :UIAlertAction!)in
+                
+        }))
+        
+        self.presentViewController(actionSheet, animated: true, completion: nil)
+    }
+    
+    
+    
+    func toDeleteParticularComment(indexPath:NSIndexPath){
+        
+        let dictValue = commentsArr[indexPath.item]
+        var parameters = [String: AnyObject]()
+
+        parameters["userId"] =  dictValue["commentedBy"]!!["_id"]
+        parameters["newsfeedId"] = selectedCommentDict["_id"]
+        parameters["commentId"] = dictValue["_id"]
+        
+        Services.postRequest(ServiceDeleteComment, parameters: parameters , completionHandler:{
+            (status,responseDict) in
+            AppDelegate.dismissProgressHUD()
+            
+            if (status == "Success") {
+                
+                if ((responseDict["error"] as! Int) == 0) {
+                    
+                    guard let resultDict = responseDict["result"]  as? Dictionary<String, AnyObject>  else {
+                        return
+                    }
+                    
+                    print(resultDict["comments"])
+                     self.commentsArr = resultDict["comments"] as! [AnyObject]
+                    
+                    self.table_view.reloadData()
+
+                    //AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                    }
+                
+                else {
+                    AppHelper.showAlertWithTitle(AppName, message: responseDict["errorMsg"] as! String, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+                }
+            }
+            else if (status == "Error"){
+                AppHelper.showAlertWithTitle(AppName, message: serviceError, tag: 0, delegate: nil, cancelButton: ok, otherButton: nil)
+            }
+        })
+              }
+
+
     }
 
 
@@ -630,11 +715,16 @@ extension CommentsVC:UITableViewDataSource{
         let lbl_name = cell.viewWithTag(2) as! UILabel
         let lbl_timeAgo = cell.viewWithTag(3) as! UILabel
         let lbl_details = cell.viewWithTag(4) as! UITextView
+        let btnMore = cell.viewWithTag(555) as! UIButton
+        
+        btnMore.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2));
+        
+        btnMore.addTarget(self, action: #selector(self.btnClickedMoreOptions(_:)), forControlEvents: .TouchUpInside)
+
         lbl_details.selectable = true
         lbl_details.dataDetectorTypes = UIDataDetectorTypes.Link
         lbl_details.delegate = self
         
-   //     let lbl_orgName = cell.viewWithTag(5) as! UILabel
         
         iv_profile.layer.borderWidth = 1.0
         iv_profile.contentMode = .ScaleAspectFill
@@ -702,3 +792,62 @@ extension CommentsVC:UITableViewDataSource{
     }
 }
 
+extension CommentsVC : MFMailComposeViewControllerDelegate{
+    
+    
+    func sendMail(messageBody:String) -> Void {
+        
+        if !MFMailComposeViewController.canSendMail() {
+            
+            print_debug("Report")
+            return
+            
+        }
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        let email = "support@proactively.com"
+        
+        
+        // Configure the fields of the interface.
+        composeVC.setToRecipients([email])
+        
+        composeVC.setMessageBody(messageBody, isHTML: false)
+        
+        composeVC.setSubject("Report")
+        
+        // Present the view controller modally.
+        self.presentViewController(composeVC, animated: true, completion: nil)
+        
+    }
+    
+    
+    func mailComposeController(controller: MFMailComposeViewController,
+                               didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        // Check the result or perform other tasks.
+        
+        // Dismiss the mail compose view controller.
+        
+        // http://34.224.172.49/api/v1/users/reportContent/:contentDetails
+        
+        
+        if result.rawValue == 2{
+            let url = "users/reportContent/" + "Postisreported."
+            if AppDelegate.checkInternetConnection()
+            {
+                Services.getRequest(url, parameters: nil, completionHandler: { (status, response) in
+                    if (status == "Success") {
+                        if ((response["error"] as! Int) == 0) {
+                            guard (response as? Dictionary<String, AnyObject>) != nil else{
+                                return
+                            }
+                            AppHelper.showAlertWithTitle(AppName, message: response["errorMsg"] as! String, tag: 0, delegate: self, cancelButton: "Ok", otherButton: nil)
+                        }
+                    }
+                })
+            }
+        }
+        controller.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+}

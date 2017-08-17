@@ -10,4 +10,7 @@
 
 @interface InboxVC : UIViewController
 
+
+-(void)scrollToNewTab:(NSMutableDictionary*)dict;
+
 @end

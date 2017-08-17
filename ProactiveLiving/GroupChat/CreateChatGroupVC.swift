@@ -657,7 +657,7 @@ class CreateChatGroupVC: UIViewController,UIImagePickerControllerDelegate,UIActi
                 }
                 
                 tempDict["userid"]=dict["userid"] as! String
-                tempDict["phoneNumber"]=ChatHelper.userDefaultForKey("PhoneNumber") as String
+                tempDict["phoneNumber"] = ChatHelper.userDefaultForKey("PhoneNumber") as String
                 
                 userIdArray.addObject(tempDict)
                 dict["users"] = userIdArray

@@ -25,14 +25,6 @@ class BroadcastVC: UIViewController, UICollectionViewDataSource, UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-    //    self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
-        
 
         imgArr = ["http://www.healthyhearthealthyplanet.com/wordpress1/wp-content/uploads/2014/10/25129988.jpg",
                   "https://sites.duke.edu/blogcfm/files/2015/07/group-shot-1024x692.jpg",
@@ -73,6 +65,13 @@ class BroadcastVC: UIViewController, UICollectionViewDataSource, UICollectionVie
 
      func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
+        
+        if self.dataDictArr!.count == 0{
+            HelpingClass.toSetEmptyViewInCollectioncViewNoDataAvaiable(collectionView, message: "No broadcasts currently available.")
+        }else{
+            collectionView.backgroundView = nil
+        }
+
         return self.dataDictArr!.count
     }
 
@@ -150,33 +149,5 @@ class BroadcastVC: UIViewController, UICollectionViewDataSource, UICollectionVie
         return 10
     }
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
     
-    }
-    */
-
 }

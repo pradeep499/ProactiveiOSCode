@@ -25,13 +25,17 @@
 
 @end
 
-@implementation AppointmentListingVC
+@implementation AppointmentListingVC{
+    //NSMutableArray *recuringArr;
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.positionOfSelectedDate = -1;
+   // recuringArr = [[NSMutableArray alloc]init];
 
 }
 
@@ -74,20 +78,75 @@
              {
                  if ([[responseDict objectForKey:@"error"] intValue] == 0) {
                      
-                     self.dataArray=[[responseDict objectForKey:@"result"] mutableCopy];
+                     self.dataArray = [[responseDict objectForKey:@"result"] mutableCopy];
+                     
+                     NSMutableArray *arr = [[responseDict objectForKey:@"result"] mutableCopy];
                      
                     if([self.dataArray count]>0){
                    
                     //     [self filterArrayUsingEvents:self.arrEvents];
                         
-                        [self getSelectedDatePositionInTableArr:self.dataArray];
-                        [self.tableView reloadData];
-                        [self performSelector:@selector(moveCellToTop) withObject:nil afterDelay:0.5];
-                   
-                   }
+                        [self getSelectedDatePositionInTableArr:arr];
+                       // [self performSelector:@selector(moveCellToTop) withObject:nil afterDelay:0.5];
                    
                      
-                     
+                        for (int i = 0; i < arr.count; i++)
+                        {
+                            if ([[_dataArray[i] valueForKeyPath:@"meetupInviteId.isrecur"] integerValue] == 1 ){
+                                NSDictionary *recurrenceDict = [arr[i] valueForKeyPath:@"meetupInviteId.recurrence"];
+                                //  NSString *startDate = [recurrenceDict valueForKey:@""];
+                                NSString *endDate = [recurrenceDict valueForKey:@"endDate"];
+                                NSString *recurrenceType = [recurrenceDict valueForKey:@"pattern"];
+                                int interval = [[recurrenceDict valueForKey:@"recurevery"]intValue];
+                                
+                                
+                                NSDictionary *dict = [arr[i] valueForKeyPath:@"meetupInviteId"];
+                                
+                                NSString *startDate = [dict valueForKey:@"eventDate"];
+                                //get the recurrence date n append array
+                                NSDateFormatter *df = [[NSDateFormatter alloc]init];
+                                [df setDateFormat:@"yyyy/MM/dd"];
+                                
+                                NSDateFormatter *df1 = [[NSDateFormatter alloc]init];
+                                [df1 setDateFormat:@"dd/MM/yyyy"];
+                                
+                                int rType = 0;
+                                if([recurrenceType isEqualToString:@"Weekly"])
+                                rType = 1;
+                                else if([recurrenceType isEqualToString:@"Monthly"])
+                                rType = 2;
+                                else if([recurrenceType isEqualToString:@"Yearly"])
+                                rType = 3;
+                                
+                                
+                                NSArray *recurrenceArr = [self setupRecurringEventFromStartingDate:[df1 dateFromString:startDate ] toEndDate:[df dateFromString:endDate] withType:rType interval:interval];
+                                
+                                NSLog(@"recurrenceArr %@" , recurrenceArr);
+                                
+                                for (int j = 0; j < recurrenceArr.count; j++) {
+                                    NSMutableDictionary *newDict = [[NSMutableDictionary alloc] init];
+                                    NSDictionary *oldDict = arr[i];
+                                    [newDict addEntriesFromDictionary:oldDict];
+                                    
+                                    [newDict setObject:recurrenceArr[j] forKey:@"bookingDate"];
+                                    NSLog(@"new dict values =%@: " , newDict);
+                                    [self.dataArray addObject:newDict];
+                                    
+                                }
+                                
+                                
+                            }
+                            //[self.tableView reloadData];
+                            
+                        }
+                    }
+                     NSSortDescriptor *bookingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"bookingDate" ascending:YES];
+                     NSSortDescriptor *timeDescriptor = [[NSSortDescriptor alloc] initWithKey:@"bookingTime" ascending:YES];
+                     NSArray *arr1 = [self.dataArray sortedArrayUsingDescriptors:@[bookingDescriptor,timeDescriptor]];
+                     self.dataArray = [[NSMutableArray alloc]init];
+                    self.dataArray = [NSMutableArray arrayWithArray:arr1];
+                     [self.tableView reloadData];
+
                  }
                  else
                  {
@@ -159,7 +218,7 @@
      //   [HelpingClass convertDateFormat
          
         
-        cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[HelpingClass convertDateFormat:@"yyyy/MM/dd" desireFormat:@"MM/dd/yyyyy" dateStr:date],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
+        cell.lblDateTime.text=[NSString stringWithFormat:@"%@ at %@",[HelpingClass convertDateFormat:@"yyyy/MM/dd" desireFormat:@"MM/dd/yyyy" dateStr:date],[self timeFormatted:[[self.dataArray objectAtIndex:indexPath.row][@"bookingTime"] intValue]]];
         
    // }
     
@@ -258,6 +317,58 @@
         [AppHelper showAlertWithTitle:netError message:netErrorMessage tag:0 delegate:nil cancelButton:ok otherButton:nil];
 }
 
+-(NSMutableArray *)setupRecurringEventFromStartingDate:(NSDate*)sDate toEndDate:(NSDate*)eDate withType:(NSInteger)type interval:(NSInteger)interval{
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    [df setDateFormat:@"dd-mm-yyyy"];
+    
+    NSMutableArray *recuringArr = [[NSMutableArray alloc]init];
+    NSDate *nextRecurringDate = sDate;
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    
+    do {
+        
+        NSDateComponents *dateComponent = [[NSDateComponents alloc] init];
+        // dateComponent.
+        
+        switch (type) {
+            case 0:
+                dateComponent.day = interval;
+                break;
+            case 1:
+                dateComponent.weekOfMonth = interval;
+                break;
+            case 2:
+                dateComponent.month = interval;
+                break;
+            case 3:
+                dateComponent.year = interval;
+                break;
+                
+                
+            default:
+                break;
+        }
+        
+        nextRecurringDate = [cal dateByAddingComponents:dateComponent toDate:nextRecurringDate options:0];
+        
+        if ([nextRecurringDate compare:eDate] == NSOrderedDescending) {
+            //NSLog(@"nextRecurringDate is later than eDate");
+            return recuringArr;
+        }
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.dateFormat = @"yyyy/MM/dd";
+        
+        NSString *dateValStr = [dateFormatter stringFromDate:nextRecurringDate];
+        
+        
+        [recuringArr addObject: dateValStr];
+        
+    }while (1);
+    
+    return recuringArr;
+    
+}
 
 #pragma mark-
 // filter on array to move events to top

@@ -161,6 +161,7 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    
     CGFloat oldPointX = self.currentIndex * scrollView.frame.size.width;
     CGFloat ratio = (scrollView.contentOffset.x - oldPointX) / scrollView.frame.size.width;
     

@@ -56,7 +56,7 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatHomeVC.isConnecting(_:)),name:"ConnectingNotificationForChat", object:nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatHomeVC.popToRootViewControllerAnimated),name:"POP_TO_CHAT_MAIN_SCREEN", object:nil)
-
+       
         unreadCount=0;
         
         recentChatArray = NSMutableArray()
@@ -178,14 +178,15 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         //Manage Connection it from server if not connected
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatHomeVC.callNotification),name:"PostNotificationToChatNotification", object:nil)
         
-        if(!ChatHelper .userDefaultForKey("userId").isEmpty) {
-            dispatch_after(1, dispatch_get_main_queue()) { () -> Void in
-                if ChatListner.getChatListnerObj().socket.status != .Connected {
+       // if(!ChatHelper .userDefaultForKey("userId").isEmpty) {
+            //dispatch_after(1, dispatch_get_main_queue()) { () -> Void in
+               // if ChatListner.getChatListnerObj().socket.status != .Connected {
                     //print("connectToSocket ==connectToSocket")
                     //ChatListner.sharedInstance.connectToSocket()   // call your method.
-                }
-            }
-        }
+                //}
+          //  }
+       // 
+    
         
         let str:String = ChatHelper .userDefaultForKey("chatId") 
         if str.characters.count > 0 {
@@ -473,12 +474,6 @@ class ChatHomeVC: UIViewController, NSFetchedResultsControllerDelegate, UIGestur
         userImage.layer.masksToBounds = true
         userImage.layer.cornerRadius = 30
        
-        
-            
-        
-        
-        
-        
         return cell;
     }
     

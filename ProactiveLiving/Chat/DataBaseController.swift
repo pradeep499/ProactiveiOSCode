@@ -1642,7 +1642,11 @@ class DataBaseController : NSObject
             {
                 exist!.lastMessageTime = params["messageTime"] as? String
             }
-            exist!.loginUserId = ChatHelper .userDefaultForAny("userId") as? String
+            
+            if (ChatHelper.userDefaultForAny("userId") as? String) != nil{
+                exist!.loginUserId = ChatHelper .userDefaultForAny("userId") as? String
+            }
+            
             exist!.lastMessage = params["message"] as? String
             
         

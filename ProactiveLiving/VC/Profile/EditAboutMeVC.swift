@@ -242,7 +242,9 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
         
         let thirdNVC = UINavigationController.init(rootViewController: thirdVC)
         
-        let fourthVC = storyBoard.instantiateViewControllerWithIdentifier("MyPAStodoVC") as!MyPAStodoVC
+       //let fourthVC = storyBoard.instantiateViewControllerWithIdentifier("MyPAStodoVC") as! MyPAStodoVC
+        
+        let fourthVC = storyBoard.instantiateViewControllerWithIdentifier("AllPACirclesVC") as! AllPACirclesVC
         fourthVC.title = "Activate";
         fourthVC.tabBarItem.image = UIImage(named:"ic_tabbar_activate");
         
@@ -311,7 +313,7 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
             else {
                 
                 let obj:Beans.UserDetails = HelpingClass.getUserDetails()
-                 parameters["gender"] = obj.gender as! String
+                 parameters["gender"] = obj.gender
             }
            
             
@@ -342,8 +344,6 @@ class EditAboutMeVC: UIViewController, UIAlertViewDelegate {
                         print_debug(responseDict["result"])
                         
                         let result = responseDict["result"]
-                        
-                        var dict = [String:String]()
                         
                         let userObj = Beans.UserDetails.sharedInstance
                         

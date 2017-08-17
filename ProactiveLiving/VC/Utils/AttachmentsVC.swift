@@ -383,7 +383,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
         //handle muliple image
         
         var count = 0
-        var thumbArr: NSMutableArray = NSMutableArray()
+        let thumbArr: NSMutableArray = NSMutableArray()
         
         for (index, asset) in assets.enumerate(){
             
@@ -537,7 +537,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
     func uploadImage(uploadImage:UIImage, captionText: String?) -> Void {
         
         let locId = CommonMethodFunctions.nextIdentifies()
-        let strId = String(locId)
+        _ = String(locId)
         
         let timeStamp = HelpingClass.generateTimeStamp()
         
@@ -597,7 +597,7 @@ class AttachmentsVC: UIViewController,UIImagePickerControllerDelegate,UINavigati
         String?) -> Void {
         
         let locId = CommonMethodFunctions.nextIdentifies()
-        let strId = String(locId)
+        _ = String(locId)
         
         let timeStamp = HelpingClass.generateTimeStamp()
         

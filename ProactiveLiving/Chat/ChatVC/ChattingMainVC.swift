@@ -112,7 +112,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
    
     
     func receiveMessages(note:NSNotification) {
-        print(note)
+        print("note ++++============== \(note)")
         if isGroup == "0" {
             var msgObj : UserChat!
             msgObj = note.object as! UserChat
@@ -175,26 +175,28 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
     }
     
     func receiveMessagesUpdate(note:NSNotification) {
-      print(note)
-        
-        if isGroup == "0" || note.valueForKey("userInfo")?.valueForKey("group")! as! NSString == "0" {
-            let msgObj:UserChat = note.valueForKey("userInfo")?.valueForKey("bfr") as! UserChat
-         
-            var index : Int
-            index=chatArray.indexOfObject(msgObj) as Int
+        print("note +++++++++ \(note)")
+        //isGroup == "0" ||
+        if  note.valueForKey("userInfo")?.valueForKey("group")! as! NSString == "0" {
             
-            if index < chatArray.count {
-                var path = [NSIndexPath]()
-                path.append(NSIndexPath(forRow:index,inSection:0))
-                self.chatTableView.beginUpdates()
-                chatTableView.reloadRowsAtIndexPaths(path, withRowAnimation: UITableViewRowAnimation.None)
-                self.chatTableView.endUpdates()
-            }
+                let msgObj:UserChat = note.valueForKey("userInfo")?.valueForKey("bfr") as! UserChat
+                var index : Int
+                index=self.chatArray.indexOfObject(msgObj) as Int
+                
+                if index < self.chatArray.count {
+                    var path = [NSIndexPath]()
+                    path.append(NSIndexPath(forRow:index,inSection:0))
+                    self.chatTableView.beginUpdates()
+                    self.chatTableView.reloadRowsAtIndexPaths(path, withRowAnimation: UITableViewRowAnimation.None)
+                    self.chatTableView.endUpdates()
+                }
+                
+                if self.chatArray.count == 3 {
+                    self.chatTableView.tableHeaderView=nil;
+                    self.chatTableView.reloadData()
+                }
+ 
             
-            if self.chatArray.count == 3 {
-                chatTableView.tableHeaderView=nil;
-                chatTableView.reloadData()
-            }
             
         } else {
             let msgObj:GroupChat = note.valueForKey("userInfo")?.valueForKey("bfr") as! GroupChat
@@ -402,8 +404,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         }
         
         dict["userid"] = ChatHelper .userDefaultForAny("userId") as! String
-    
-        ChatListner .getChatListnerObj().socket.emit("checkUserStatus", dict)
+        if ChatListner .getChatListnerObj().socket  != nil {
+            ChatListner .getChatListnerObj().socket.emit("checkUserStatus", dict)
+        }else{
+            return
+        }
         unowned let weakself = self
         ChatListner .getChatListnerObj().socket.off("getUserStatus")
         ChatListner .getChatListnerObj().socket.on("getUserStatus") {data, ack in
@@ -474,7 +479,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
      //       let trimmedString1 = mb.stringByReplacingOccurrencesOfString("+91", withString: "")
             
             
-            if groupObj.userId == ChatHelper.userDefaultForAny(_ID) as! String {
+            if groupObj.userId == ChatHelper.userDefaultForAny(_ID) as? String {
                 groupUserName = groupUserName + "You" + ", "
             } else {
                 groupUserName = groupUserName + groupObj.userName! + ", "
@@ -512,7 +517,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             growingTextView.resignFirstResponder()
             frndName.text=recentChatObj.friendName!.stringByReplacingEmojiCheatCodesWithUnicode()
             
-            frndImage.setImageWithURL(NSURL(string:recentChatObj.friendImageUrl!), placeholderImage: UIImage(named:"default_userImage"))
+            frndImage.sd_setImageWithURL(NSURL(string:recentChatObj.friendImageUrl!), placeholderImage: UIImage(named:"default_userImage"))
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
                 self.getGroupUserInfo()
@@ -535,13 +540,15 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         self.groupUserDic = NSMutableDictionary()
         
         isTyping = false
-        
+        if ChatListner .getChatListnerObj().socket != nil{
         let status  = ChatListner .getChatListnerObj().socket.status
         if status != .Connected {
-            print_debug("status :  \(status)")
-
-             ChatListner.getChatListnerObj().createConnection()
-         }
+        print_debug("status :  \(status)")
+        
+        ChatListner.getChatListnerObj().createConnection()
+        }
+        }
+       
         
         let defaults = NSUserDefaults.standardUserDefaults()
         if (defaults.stringForKey("fontName") != nil) {
@@ -613,9 +620,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             //self.attachmentViewS.backgroundColor=UIColor.whiteColor()
         })
         
-        if ChatListner .getChatListnerObj().socket.status == SocketIOClientStatus.NotConnected {
-            ChatListner .getChatListnerObj().socket.connect()
-        }
+       // if ChatListner .getChatListnerObj().socket.status == SocketIOClientStatus.NotConnected {
+         //   ChatListner .getChatListnerObj().socket.connect()
+        //}
         
         self.isFromDeatilScreen = "1"
         self.manageChatTableH = "1"
@@ -653,26 +660,33 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             frndName.text=contObj.name
             //ChatHelper .saveToUserDefault("5721f430dfcde77833f9daf2", key: "friendId")
             ChatHelper .saveToUserDefault(contObj.userId, key: "friendId")
-            let imageString = NSString(format:"%@",contObj.userImgString) as String
-            if (imageString.characters.count > 2) {
-                frndImage.setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"ic_booking_profilepic"))
-            } else {
-                frndImage.image=UIImage(named:"ic_booking_profilepic")
-            }
             
-        } else {
+            if contObj.userImgString == nil{
+                frndImage.image=UIImage(named:"ic_booking_profilepic")
+            }else{
+                let imageString = NSString(format:"%@",contObj.userImgString) as String
+                if (imageString.characters.count > 2) {
+                    frndImage.setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+               }
+            }
+          }  else {
             // Got crash here with andriod meld for two member
             print(recentChatObj)
             
             frndName.text=recentChatObj.friendName
             //ChatHelper .saveToUserDefault("5721f430dfcde77833f9daf2", key: "friendId")
-            ChatHelper .saveToUserDefault(recentChatObj.friendId!, key: "friendId")
-            let imageString = NSString(format:"%@",recentChatObj.friendImageUrl!) as String
-            if (imageString.characters.count > 2) {
-                frndImage.setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"ic_booking_profilepic"))
-            } else {
-                frndImage.image=UIImage(named:"ic_booking_profilepic")
+            if (recentChatObj.friendImageUrl != nil) {
+                let imageString = NSString(format:"%@",recentChatObj.friendImageUrl!) as String
+                if (imageString.characters.count > 2) {
+                    frndImage.sd_setImageWithURL(NSURL(string:imageString), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+                }
+                else{
+                    frndImage.image =  UIImage(named:"ic_booking_profilepic")
+                }
             }
+            
+            ChatHelper .saveToUserDefault(recentChatObj.friendId!, key: "friendId")
+            
             
             recentChatObj.notificationCount = "0"
             homeCoreData.saveContext()
@@ -682,7 +696,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             self.userStatus()
             self.fetchChatFromDb()
         } else {
-            frndImage.setImageWithURL(NSURL(string:recentChatObj.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+            if (recentChatObj.friendImageUrl != nil) {
+                frndImage.sd_setImageWithURL(NSURL(string:recentChatObj.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+
+            }
+
             ChatHelper .saveToUserDefault(recentChatObj.groupId!, key: "friendId")
             self.fetchGroupChatFromDb()
         }
@@ -692,7 +710,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChattingMainVC.backBtnGroup(_:)),name:"groupBack", object:nil)
         
             frndName.text=recentChatObj.friendName
-            frndImage.setImageWithURL(NSURL(string:recentChatObj.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+            if (recentChatObj.friendImageUrl != nil) {
+                frndImage.sd_setImageWithURL(NSURL(string:recentChatObj.friendImageUrl!), placeholderImage: UIImage(named:"ic_booking_profilepic"))
+
+            }
 
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
                 self.getGroupUserInfo()
@@ -1047,10 +1068,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             let strDeletePred:String = "loginUserId contains[cd] \"\(strLogin)\" AND groupId LIKE \"\(groupId)\" AND messageDate contains[cd] \"\(dateL)\""
             let fetchResult = instance.fetchChatData("GroupChat", predicate: strDeletePred, sort: ("localSortID",false))! as NSArray
             
-            if chatObj.messageType != "text" {
-                let strPred2:String = "mediaUrl LIKE \"\(chatObj.groupChatFile!.mediaUrl)\""
-                instance.deleteData("GroupChatFile", predicate: strPred2)
-            }
+           // if chatObj.messageType != "text" {
+               // let strPred2:String = "mediaUrl LIKE \"\(chatObj.groupChatFile!.mediaUrl)\""
+               // instance.deleteData("GroupChatFile", predicate: strPred2)
+           // }
             
             if fetchResult.count == 2 {
                 instance.deleteData("GroupChat", predicate: strPred)
@@ -1069,6 +1090,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             }
         }
         msgId = ""
+        self.chatTableView.userInteractionEnabled = true
     }
     
     //MARK: - Fetch Chat from db Method
@@ -1465,6 +1487,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let myImage = UIImage(named: "recevier_bg.png")!
                     //bgImageView.image = myImage.stretchableImageWithLeftCapWidth(40, topCapHeight: 32);
 
+                    textMessage.selectable = true
+                    textMessage.dataDetectorTypes = UIDataDetectorTypes.Link
+                    textMessage.delegate = self
+                    textMessage.userInteractionEnabled = true
+
                     bgImageView.image=myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     
                     textMessage.font=UIFont(name: fontName, size: fontSize)
@@ -1716,12 +1743,21 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     
                     let cell: ChatTextCell1 = tableView.dequeueReusableCellWithIdentifier("TextChatCell2", forIndexPath: indexPath) as! ChatTextCell1
                     cell.selectionStyle = .None
+                    
                     let bgImageView = cell.contentView.viewWithTag(9) as! UIImageView
                     let textMessage = cell.contentView.viewWithTag(10) as! UITextView
                     let timeLabel = cell.contentView.viewWithTag(11) as! UILabel
                     let tickBtn = cell.contentView.viewWithTag(12) as! UIButton
                     let fontName = ChatHelper .userDefaultForAny("fontName") as! String
                     let fontSize = ChatHelper .userDefaultForAny("fontSize") as! CGFloat
+                    
+                    textMessage.selectable = true
+                    textMessage.dataDetectorTypes = UIDataDetectorTypes.Link
+                    textMessage.delegate = self
+                    textMessage.userInteractionEnabled = true
+
+                    
+                    textMessage.userInteractionEnabled = true
                     textMessage.font=UIFont(name: fontName, size: fontSize)
                     //resendBtn.addTarget(self, action: "buttonResendClicked:", forControlEvents:
                       //  UIControlEvents.TouchUpInside)
@@ -2046,6 +2082,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let bgImageView = cell.contentView.viewWithTag(9) as! UIImageView
                     let myImage = UIImage(named: "recevier_bg.png")!
                     
+                    textMessage.selectable = true
+                    textMessage.dataDetectorTypes = UIDataDetectorTypes.Link
+                    textMessage.delegate = self
+                    textMessage.userInteractionEnabled = true
+                    
                     bgImageView.image = myImage.resizableImageWithCapInsets(UIEdgeInsetsMake(17, 27, 21, 17))
                     let tintedImage = myImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
                     bgImageView.image = tintedImage
@@ -2356,6 +2397,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                     let timeLabel = cell.contentView.viewWithTag(11) as! UILabel
                     let tickBtn = cell.contentView.viewWithTag(12) as! UIButton
                     
+                    textMessage.selectable = true
+                    textMessage.dataDetectorTypes = UIDataDetectorTypes.Link
+                    textMessage.delegate = self
+                    textMessage.userInteractionEnabled = true
+
                     let fontName = ChatHelper .userDefaultForAny("fontName") as! String
                     let fontSize = ChatHelper .userDefaultForAny("fontSize") as! CGFloat
                     textMessage.font=UIFont(name: fontName, size: fontSize)
@@ -3231,8 +3277,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         {
             self.isTypingStop()
         }
-        
-        ChatListner .getChatListnerObj().socket.off("getUserStatus")
+      
         
         var offDic = Dictionary<String, AnyObject>()
         offDic["userid"] = ChatHelper .userDefaultForAny("userId") as! String
@@ -3244,7 +3289,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             offDic["recieverid"] = recentChatObj.friendId
         }
         
-        ChatListner .getChatListnerObj().socket.emit("backUpdateUserStatus", offDic)
+        if  ChatListner .getChatListnerObj().socket != nil{
+            ChatListner .getChatListnerObj().socket.off("getUserStatus")
+            ChatListner .getChatListnerObj().socket.emit("backUpdateUserStatus", offDic)
+        }
+        
         ChatHelper .removeFromUserDefaultForKey("friendId")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "TypeMsgObserverStop", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "TypeMsgObserver", object: nil)
@@ -3641,7 +3690,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         {
             sendDic["groupid"] = recentChatObj.groupId
         }
+        if  ChatListner .getChatListnerObj().socket != nil{
             ChatListner .getChatListnerObj().socket.emit("userTyping", sendDic)
+        }
+
     }
     
     func isTypingStop() -> Void
@@ -3663,7 +3715,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         {
             sendDic["groupid"] = recentChatObj.groupId
         }
-            ChatListner .getChatListnerObj().socket.emit("userTyping", sendDic)
+        
+       if  ChatListner .getChatListnerObj().socket != nil{
+        ChatListner .getChatListnerObj().socket.emit("userTyping", sendDic)
+
+        }
     }
    
      // MARK: - More Button Methods
@@ -5532,11 +5588,14 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             var timeStr : String
             let dateFormatter = NSDateFormatter()
         
-            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+          //  dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
             dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
             dateStr = dateFormatter.stringFromDate(NSDate())
-            dateFormatter.dateFormat = "HH:mm:ss.sss"
-            timeStr = dateFormatter.stringFromDate(date)
+           // dateFormatter.dateFormat = "HH:mm:ss.sss"
+            //timeStr = dateFormatter.stringFromDate(date)
+        
+             timeStr =  ChatHelper.convertDateFormatOfStringWithTwoDateFormats(dateStr, firstDateFormat: "YYYY-MM-dd-HH:mm:ss.sss", secondDateFormat: "HH:mm:ss.sss")!
+        
             let instance = DataBaseController.sharedInstance
             var dict = Dictionary<String, AnyObject>()
             dict["date"] = dateStr
@@ -5563,13 +5622,18 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 dateStr = dateFormatter.stringFromDate(date)
                 dict["date"] = dateStr
                 
-                dict["user_firstName"] = AppHelper.userDefaultsForKey("user_firstName")
+                let strFirst = ChatHelper.userDefaultForKey("firstName")
+                
+                var lastname:String =  strFirst.stringByAppendingString(" ")
+               lastname = lastname.stringByAppendingString(ChatHelper.userDefaultForKey("lastName"))
+                
+                dict["user_firstName"] = lastname
                 dict["profile_image"] = AppHelper.userDefaultsForKey("user_imageUrl") // NEW LINE ADDED BY ME 18 OCT
                
                 
               //  print(AppHelper.userDefaultsForKey("user_imageUrl"))
                 
-                print(dict)
+                print("dict for send msg =====\(dict)")
                 
                 
                 let chatObj =  instance.insertChatMessageInDb1("UserChat", params: dict) as UserChat
@@ -5614,7 +5678,11 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                // print(AppHelper.userDefaultsForKey("user_firstName"))
                 if (AppHelper.userDefaultsForKey("user_firstName") as? String) != nil
                 {
-                    sendMsgD["user_firstName"] = AppHelper.userDefaultsForKey("user_firstName") as? String
+                    let strFirst = ChatHelper.userDefaultForKey("firstName")
+                    var lastname:String =  strFirst.stringByAppendingString(" ")
+                    lastname = lastname.stringByAppendingString(ChatHelper.userDefaultForKey("lastName"))
+                    
+                    sendMsgD["user_firstName"] = lastname
                 }
                 if (AppHelper.userDefaultsForKey("user_imageUrl") as? String) != nil
                 {
@@ -5636,7 +5704,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 
                 if (AppHelper.userDefaultsForKey("user_firstName") as? String) != nil
                 {
-                    sendMsgD["user_firstName"] = AppHelper.userDefaultsForKey("user_firstName") as? String
+                    let strFirst = ChatHelper.userDefaultForKey("firstName")
+                    var lastname:String =  strFirst.stringByAppendingString(" ")
+                    lastname = lastname.stringByAppendingString(ChatHelper.userDefaultForKey("lastName"))
+                    sendMsgD["user_firstName"] = lastname//AppHelper.userDefaultsForKey("user_firstName") as? String
                     sendMsgD["groupid"]=self.recentChatObj.groupId
                     sendMsgD["chatType"] = "groupChat"
                 }
@@ -5654,7 +5725,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
 
             print(sendMsgD);
         
+          if ChatListner .getChatListnerObj().socket != nil{
             ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
+          }
 
             growingTextView.text=""
             var path = [NSIndexPath]()
@@ -6057,7 +6130,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             sendMsgD["chatType"] = "groupChat"
             sendMsgD["groupid"] = recentChatObj.groupId
         }
- 
+  
+        
+        print("sendMessage ===== \(sendMsgD)")
         ChatListner .getChatListnerObj().socket.emit("sendMessage", sendMsgD)
         
       //  print(sendMsgD)
@@ -7479,7 +7554,7 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             _ = cell.contentView.viewWithTag(22) as! PICircularProgressView
             var data:NSData?
             
-            
+            var strLocalPath:String?
             let resendBtn = cell.contentView.viewWithTag(58) as! UIButton
             resendBtn.hidden=true
             // ChatListner .getChatListnerObj().chatProgressV[chatObj.locMessageId] = progressV
@@ -7522,9 +7597,10 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 messageType =  chatObj.messageType!
                 
                 let  str  = chatObj.chatFile!.mediaLocalPath
-                let getImagePath = documentsDirectory.stringByAppendingPathComponent("\(str!)")
+                strLocalPath = chatObj.chatFile!.mediaLocalPath
+                //let getImagePath = documentsDirectory.stringByAppendingPathComponent("\(str!)")
                 
-                data = UIImageJPEGRepresentation(UIImage(contentsOfFile: getImagePath)!, 0.8)
+               // data = UIImageJPEGRepresentation(UIImage(contentsOfFile: getImagePath)!, 0.8)
                 
             }
             else
@@ -7569,9 +7645,8 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
                 }
                 
                 let str = grpChatObj.groupChatFile!.mediaLocalPath
-                let getImagePath = documentsDirectory.stringByAppendingPathComponent("\(str!)")
+                strLocalPath = grpChatObj.groupChatFile!.mediaLocalPath
                 
-                data = UIImageJPEGRepresentation(UIImage(contentsOfFile: getImagePath)!, 0.8)
             }
             dict["index"] = indexPath.row
             
@@ -7758,6 +7833,9 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
             else
             {
                 
+                let getImagePath = documentsDirectory.stringByAppendingPathComponent("\(strLocalPath!)")
+                data = UIImageJPEGRepresentation(UIImage(contentsOfFile: getImagePath)!, 0.8)
+                
                 
                 NSOperationQueue.mainQueue().addOperationWithBlock() { () in
                     
@@ -7860,4 +7938,15 @@ class ChattingMainVC: UIViewController ,UIActionSheetDelegate,UIImagePickerContr
         
     }
     
+}
+extension ChattingMainVC: UITextViewDelegate {
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+        
+        let WebVC:WebViewVC = AppHelper.getStoryBoard().instantiateViewControllerWithIdentifier("WebViewVC") as! WebViewVC
+        WebVC.title = "Web Browser"
+        WebVC.urlStr = URL.absoluteString!
+        self.navigationController?.pushViewController(WebVC, animated: true)
+        
+        return false
+    }
 }

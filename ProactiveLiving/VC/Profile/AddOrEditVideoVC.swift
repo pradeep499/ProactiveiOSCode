@@ -153,7 +153,7 @@ class AddOrEditVideoVC: UIViewController,UIGestureRecognizerDelegate {
                 
                 var url = String()
                 
-                if((self.tf_videoUrl.text! as String).hasPrefix("http://") || (self.tf_videoUrl.text! as! String).hasPrefix("https://")){
+                if((self.tf_videoUrl.text! as String).hasPrefix("http://") || (self.tf_videoUrl.text! ).hasPrefix("https://")){
                     
                     url = self.tf_videoUrl.text!
                 }
@@ -192,7 +192,7 @@ class AddOrEditVideoVC: UIViewController,UIGestureRecognizerDelegate {
                             
                             print_debug(responseDict["result"])
                             
-                            let result = responseDict["result"]
+                            _ = responseDict["result"]
                             
                             if self.videoType == "Edit" {
                                 

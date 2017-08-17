@@ -552,13 +552,29 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
+        
         if genericType == .Friends {
+            if self.friendListArr.count == 0{
+                HelpingClass.toSetEmptyViewInCollectioncViewNoDataAvaiable(collectionView, message: "")
+            }else{
+                collectionView.backgroundView = nil
+            }
             return self.friendListArr.count
         }else if genericType == .Followers {
             return 15
         }else if genericType == .Gallery {
+            if self.photoListArr.count == 0{
+                HelpingClass.toSetEmptyViewInCollectioncViewNoDataAvaiable(collectionView, message: "The Gallery is currently empty.")
+            }else{
+                collectionView.backgroundView = nil
+            }
             return self.photoListArr.count
         }else if genericType == .SocialNetworks{
+            if self.socialNetworkListArr.count == 0{
+                HelpingClass.toSetEmptyViewInCollectioncViewNoDataAvaiable(collectionView, message: "No Social Networks linked.")
+            }else{
+                collectionView.backgroundView = nil
+            }
             return self.socialNetworkListArr.count
         }
         return 0
@@ -589,7 +605,11 @@ extension GenericProfileCollectionVC:UICollectionViewDataSource{
             let fName = dict["friendId"]!["firstName"] as? String
             let lName = dict["friendId"]!["lastName"] as? String
             
-            iv_frImg.sd_setImageWithURL(NSURL(string: imageUrlStr ), placeholderImage: placeholder)
+            if let image = imageUrlStr{
+                iv_frImg.sd_setImageWithURL(NSURL(string: image ), placeholderImage: placeholder)
+            }else{
+                iv_frImg.image = placeholder
+            }
             lbl_name.text = fName! + " " + lName!
             
             return cell

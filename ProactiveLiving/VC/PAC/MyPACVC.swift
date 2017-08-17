@@ -49,7 +49,7 @@ class MyPACVC: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        
+    
        // self.myPACDetailArr.removeAll()
         print_debug("pac listing ")
         fetchMyPACDataFromServer(createJoinStatus)  // service call

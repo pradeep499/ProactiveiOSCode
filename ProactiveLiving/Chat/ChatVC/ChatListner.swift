@@ -72,8 +72,8 @@ class ChatListner: NSObject {
         
         NSNotificationCenter.defaultCenter().postNotificationName("ConnectingNotificationForChat", object: nil, userInfo: nil)
         
-       //let alrt = UIAlertView(title: "hello", message: "connected", delegate: self, cancelButtonTitle: "ok")
-       // alrt.show()
+        // let alrt = UIAlertView(title: "hello", message: "connected", delegate: self, cancelButtonTitle: "ok")
+        //  alrt.show()
         
     }
   
@@ -82,7 +82,7 @@ func connectToSocket() -> Void{
     
     print_debug("coonrct to scoket ")
     
-    if let value:String = ChatHelper.userDefaultForKey(_ID)  {
+    if let _:String = ChatHelper.userDefaultForKey(_ID)  {
         //Registered user
         
         
@@ -232,7 +232,7 @@ func connectToSocket() -> Void{
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate")
         
             var tempDateStr : String
-            var tempDate : NSDate!
+            //var tempDate : NSDate!
             var dateStr : String = ""
             var timeStr : String = ""
             
@@ -345,8 +345,7 @@ func connectToSocket() -> Void{
                     self!.homeCoreData.saveContext()
                 }
                 
-                print_debug("GroupUserList")
-                print_debug(dict)
+                print_debug(" GroupUserList ==== \(dict)")
                // instance.insertGroupUsersInfoData("GroupUserList", params: dict)
 
                 self?.updateMessageInRecentChatFromGroup(dict)
@@ -721,45 +720,17 @@ func connectToSocket() -> Void{
             var playSoundLocalBool = false
         
         
-        //let arrGroupData = NSMutableArray()
-        //let arrOneToOneData = NSMutableArray()
-
-        
-        //for reieciveMsg in arr{
-            //if reieciveMsg["chatType"] as! String == "group" {
-             // arrGroupData.addObject(reieciveMsg)
-            //}else{
-                //arrOneToOneData.addObject(reieciveMsg)
-         //   }
-        //}
-        
-       // self?.toUpdateGroupMessages(arrGroupData)
-            //self?.toUpadateOneToOneMessages(arrOneToOneData)
-        
-        
         
         for receiveMsgDic in arr
         {
          var tempDateStr : String
-         var tempDate : NSDate!
+        // var tempDate : NSDate!
          
          var dateStr : String = ""
          var timeStr : String = ""
          
          tempDateStr = receiveMsgDic["createdDate"] as! String
         
-            /*let dateFormatter = NSDateFormatter()
-         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-         tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
-         
-         dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-         dateStr = dateFormatter.stringFromDate(tempDate)
-         
-         dateFormatter.dateFormat = "HH:mm:ss.sss"
-         dateFormatter.timeZone = NSTimeZone()
-         timeStr = dateFormatter.stringFromDate(tempDate) */
             
             if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
                 dateStr = formatedDate
@@ -770,8 +741,7 @@ func connectToSocket() -> Void{
             }
          
          if receiveMsgDic["chatType"] as! String == "group" {
-         // print(receiveMsgDic)
-         // print("receiveMsgDic in group chat string recieveMessage")
+        
          
          let strId = receiveMsgDic["_id"] as! String
          let groupId = receiveMsgDic["groupid"] as! String
@@ -1389,11 +1359,8 @@ func connectToSocket() -> Void{
             print(receiveMsgDic);
             let lastHitDate = receiveMsgDic["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
-            
             var params = Dictionary<String, AnyObject>()
-            
             params["localmsgid"] = receiveMsgDic["localmsgid"] as? String
-            
             if receiveMsgDic["chatType"] as! String == "group" {
                 let exist:GroupChat? = instance.checkIfGroupChatMsgAlreadyExistWithLocId("GroupChat", params: params)
                 var passDic = Dictionary<String,AnyObject>()
@@ -1402,24 +1369,9 @@ func connectToSocket() -> Void{
                 
                 if (exist != nil) {
                     var tempDateStr : String
-                    var tempDate : NSDate!
                     var dateStr : String = ""
                     var timeStr : String = ""
                     tempDateStr = receiveMsgDic["createdDate"] as! String
-                    
-//                    let dateFormatter = NSDateFormatter()
-//                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-//                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//                    
-//                    dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-//                    tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
-          
-                   /* let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!*/
-                    
                     if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
                         dateStr = formatedDate
                     }
@@ -1427,14 +1379,6 @@ func connectToSocket() -> Void{
                     if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "HH:mm:ss.sss"){
                         timeStr = formatedDate
                     }
-                    
-                   /* dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                    dateStr = dateFormatter.stringFromDate(tempDate)
-                    
-                    dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.timeZone = NSTimeZone()
-
-                    timeStr = dateFormatter.stringFromDate(tempDate)*/
                     
                     let strId = receiveMsgDic["_id"] as! String
                     let strStatus = receiveMsgDic["status"] as! Int
@@ -1452,6 +1396,7 @@ func connectToSocket() -> Void{
                 }
                 
             } else {
+                
                 let exist:UserChat? = instance.checkIfChatMsgAlreadyExistWithLocId("UserChat", params: params)
                 var passDic = Dictionary<String,AnyObject>()
                 passDic["bfr"] = exist as UserChat!
@@ -1461,29 +1406,14 @@ func connectToSocket() -> Void{
                     var tempDateStr : String
                     //var tempDate : NSDate!
                     var dateStr : String = ""
-                   
+                    
                     tempDateStr = receiveMsgDic["createdDate"] as! String
                     
-                    /*let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-                    dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    tempDate = dateFormatter.dateFromString(tempDateStr) as NSDate!
                     
-
-                    dateFormatter.dateFormat = "YYYY-MM-dd-HH:mm:ss.sss"
-                    dateStr = dateFormatter.stringFromDate(tempDate)
-                    dateFormatter.dateFormat = "HH:mm:ss.sss"
-                    dateFormatter.timeZone = NSTimeZone()
-                    
-                    dateFormatter.stringFromDate(tempDate)*/
-                    if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
+                    if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormatsInReciever(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "YYYY-MM-dd-HH:mm:ss.sss"){
                         dateStr = formatedDate
+                        
                     }
-                    
-                    //if let formatedDate = ChatHelper.convertDateFormatOfStringWithTwoDateFormats(tempDateStr, firstDateFormat: "yyyy-MM-dd HH:mm:ss", secondDateFormat: "HH:mm:ss.sss"){
-                       // timeStr = formatedDate
-                   // }
                     
                     let strId = receiveMsgDic["_id"] as! String
                     let strStatus = receiveMsgDic["status"] as! Int
@@ -1492,11 +1422,14 @@ func connectToSocket() -> Void{
                     exist?.modifiedDate = receiveMsgDic["modifiedDate"] as? String
                     exist?.messageDate = dateStr
                     
-                    
                     self.homeCoreData.saveContext()
-                    NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserverUpdate", object: nil, userInfo: passDic)
                     
+                 
+                    NSNotificationCenter.defaultCenter().postNotificationName("receiveMsgObserverUpdate", object: nil, userInfo: passDic)
+               
                 }
+                
+                
             }
         }
     }
@@ -1845,7 +1778,7 @@ func connectToSocket() -> Void{
         }
     }
     
-    // MARK: - Node.js Methods for Group chat
+    // MARK: - Node.js Methods for Group chat   
     
     func getGroupInfoListner() {
 
@@ -1853,7 +1786,7 @@ func connectToSocket() -> Void{
           
             var receiveMsgDict = Dictionary<String,AnyObject>()
             receiveMsgDict = data[0] as! Dictionary
-            print(receiveMsgDict)
+            print("receiveMsgDict === \(receiveMsgDict)")
             
             let lastHitDate = receiveMsgDict["lastHitDate"] as! String
             ChatHelper .saveToUserDefault(lastHitDate, key: "lastHitDate");
@@ -2310,8 +2243,16 @@ func connectToSocket() -> Void{
             if socket != nil{
                 if socket.status == .Connected  {
                     
+                    unowned let weakself = self
+                    weakself.socket.off("recieveMessage")
+                    weakself.socket.off("recieveMessageAll")
+                    weakself.socket.off("messageStatus")
+                    //weakself.socket.off("getUserStatus")
+                    weakself.socket.off("isUserTyping")
+                    weakself.socket.off("getGroupInfo")
+                    weakself.socket.off("delUserInGroup")
                     ChatListner.getChatListnerObj().socket.disconnect()
-                    
+                   
                      socket = nil
                     isConnectionStable = false
                     

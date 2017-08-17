@@ -16,5 +16,6 @@ typedef void (^ContactSelectBlock)(NSString*);
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnDone;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCreateNewGroup;
 @property (copy, nonatomic) NSString *fromVC;
+@property (copy, nonatomic) NSString *fromVCName;
 
 @end

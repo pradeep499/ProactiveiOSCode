@@ -21,12 +21,14 @@
 @implementation PACNotificationVC {
 
     NSMutableArray *requestArr;
+    BOOL serviceSuucess;
 }
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero ]];
+    serviceSuucess = false;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -78,11 +80,12 @@
             {
                 if ([[responseDict objectForKey:@"error"] intValue] == 0) {
                     requestArr = [[NSMutableArray alloc]initWithArray:[responseDict objectForKey:@"result"]];
-                    
+                    serviceSuucess = true;
+
                     [self.tableView reloadData];
                 }
                 else
-                {
+                {    serviceSuucess = false;
                     [AppHelper showAlertWithTitle:[responseDict objectForKey:@"errorMsg"] message:@"" tag:0 delegate:nil cancelButton:ok otherButton:nil];
                 }
                 
@@ -199,6 +202,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (!serviceSuucess){
+        return 0;
+    }
+    if (requestArr.count == 0){
+        [HelpingClass toSetEmptyViewInTableViewNoDataAvaiable:tableView message:@"No notifications yet."];
+    }
+    else{
+        tableView.backgroundView = nil;
+    }
     return requestArr.count;
 }
 
@@ -249,54 +261,12 @@
      // changed as per client request 3rd May
 
     lbl_desc.text = [NSString stringWithFormat:@"Has requested to join the following PAC:\n%@", [[requestArr objectAtIndex:indexPath.row][@"pacId"] valueForKey:@"name"]];
-    lbl_time.text = [HelpingClass convertDateFormat:@"yyyy-MM-dd HH:mm:ss" desireFormat:@"dd MMM hh:mm a" dateStr:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"]];
+    
+    lbl_time.text = [ChatHelper convertDateFormatOfStringWithTwoDateFormatsInReciever:[[requestArr objectAtIndex:indexPath.row] valueForKey:@"createdDate"] firstDateFormat:@"yyyy-MM-dd HH:mm:ss" secondDateFormat:@"dd MMM hh:mm a"];
+
     
     return cell;
 }
 
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

@@ -24,7 +24,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.menuTitle=@"";
+   // self.menuTitle=@"";
     self.arrMenueImages=[NSArray arrayWithObjects:
                        @"ic_pasodo_current",
                        @"ic_pasodo_improve",

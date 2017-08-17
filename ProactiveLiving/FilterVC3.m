@@ -270,7 +270,7 @@
     if ((status == kCLAuthorizationStatusDenied) || (status == kCLAuthorizationStatusNotDetermined)) {
         NSString *title;
         title =  @"Location services are off";
-        NSString *message = @"Need location access for updating nearby friends";
+        NSString *message = @"Need location access for search";
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
                                                             message:message

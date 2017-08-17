@@ -54,4 +54,7 @@
 #import "FilterVC3.h"
 #import "CustomUISwitch.h"
 
+#import "AllPACirclesVC.h"
+
+
 #endif /* ProactiveLiving_Bridging_Header_h */

@@ -18,7 +18,6 @@
 		603863801E23497300FE1598 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6038637F1E23497300FE1598 /* Profile.storyboard */; };
 		603863851E234BBF00FE1598 /* ProfileContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603863841E234BBF00FE1598 /* ProfileContainerVC.swift */; };
 		603863871E2363AC00FE1598 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603863861E2363AC00FE1598 /* ProfileVC.swift */; };
-		603863891E23755900FE1598 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 603863881E23755900FE1598 /* bg.png */; };
 		603AFCD21E24BB480081F246 /* GenericProfileTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */; };
 		603AFCD41E24DDD90081F246 /* GenericProfileCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603AFCD31E24DDD90081F246 /* GenericProfileCollectionVC.swift */; };
 		60527C4F1E542B5B00D65332 /* PAC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60527C4E1E542B5B00D65332 /* PAC.storyboard */; };
@@ -407,15 +406,6 @@
 		BAD5F1181CB5380A00C8F206 /* AppointmentListTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD5F1171CB5380A00C8F206 /* AppointmentListTableCell.m */; };
 		BAD63EF61D9960EB002BDF0A /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD63EF51D9960EB002BDF0A /* ExploreVC.swift */; };
 		BAD63F061D9A8EEA002BDF0A /* ExploreDynamicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD63F051D9A8EEA002BDF0A /* ExploreDynamicVC.swift */; };
-		BAD63F181D9A9413002BDF0A /* r0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F0F1D9A9413002BDF0A /* r0.jpg */; };
-		BAD63F191D9A9413002BDF0A /* r1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F101D9A9413002BDF0A /* r1.jpg */; };
-		BAD63F1A1D9A9413002BDF0A /* r2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F111D9A9413002BDF0A /* r2.jpg */; };
-		BAD63F1B1D9A9413002BDF0A /* r3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F121D9A9413002BDF0A /* r3.jpg */; };
-		BAD63F1C1D9A9413002BDF0A /* r4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F131D9A9413002BDF0A /* r4.jpg */; };
-		BAD63F1D1D9A9413002BDF0A /* r5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F141D9A9413002BDF0A /* r5.jpg */; };
-		BAD63F1E1D9A9413002BDF0A /* r6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F151D9A9413002BDF0A /* r6.jpg */; };
-		BAD63F1F1D9A9413002BDF0A /* r7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F161D9A9413002BDF0A /* r7.jpg */; };
-		BAD63F201D9A9413002BDF0A /* r8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BAD63F171D9A9413002BDF0A /* r8.jpg */; };
 		BAD8D5F91CBCCCD60037ED23 /* CalendarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD8D5F81CBCCCD60037ED23 /* CalendarVC.m */; };
 		BAD98DC31CAA75C900EF2723 /* AppointmentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD98DC21CAA75C900EF2723 /* AppointmentVC.m */; };
 		BADFD6F41D1D31C7008B1FA9 /* MyPAStodoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BADFD6F31D1D31C7008B1FA9 /* MyPAStodoVC.m */; };
@@ -441,7 +431,10 @@
 		CE4999151E64657D00C48845 /* CreateEditResourcePACVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4999141E64657D00C48845 /* CreateEditResourcePACVC.swift */; };
 		CE4999171E69A83B00C48845 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4999161E69A83B00C48845 /* Extensions.swift */; };
 		CE4999191E6D609600C48845 /* MyPACVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4999181E6D609600C48845 /* MyPACVC.swift */; };
-		CEE3EC3D1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3EC3C1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift */; };
+		CE507C671ECC6E300007F18E /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE507C661ECC6E300007F18E /* NotificationCenter.framework */; };
+		CE64855A1ED578AB00C565E8 /* ProactiveLivingGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE6485591ED578AB00C565E8 /* ProactiveLivingGif.gif */; };
+		CE6485611ED59CC600C565E8 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6485601ED59CC600C565E8 /* UIImage+animatedGIF.m */; };
+		CE91532A1EDBFCED00FC03CB /* WebViewContent.html in Resources */ = {isa = PBXBuildFile; fileRef = CE9153291EDBFCED00FC03CB /* WebViewContent.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -474,7 +467,6 @@
 		6038637F1E23497300FE1598 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		603863841E234BBF00FE1598 /* ProfileContainerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProfileContainerVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		603863861E2363AC00FE1598 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ProfileVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		603863881E23755900FE1598 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		603AFCD11E24BB480081F246 /* GenericProfileTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GenericProfileTableVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		603AFCD31E24DDD90081F246 /* GenericProfileCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GenericProfileCollectionVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		60527C4E1E542B5B00D65332 /* PAC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PAC.storyboard; sourceTree = "<group>"; };
@@ -1048,15 +1040,6 @@
 		BAD5F1171CB5380A00C8F206 /* AppointmentListTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppointmentListTableCell.m; sourceTree = "<group>"; };
 		BAD63EF51D9960EB002BDF0A /* ExploreVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ExploreVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BAD63F051D9A8EEA002BDF0A /* ExploreDynamicVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ExploreDynamicVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		BAD63F0F1D9A9413002BDF0A /* r0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r0.jpg; sourceTree = "<group>"; };
-		BAD63F101D9A9413002BDF0A /* r1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r1.jpg; sourceTree = "<group>"; };
-		BAD63F111D9A9413002BDF0A /* r2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r2.jpg; sourceTree = "<group>"; };
-		BAD63F121D9A9413002BDF0A /* r3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r3.jpg; sourceTree = "<group>"; };
-		BAD63F131D9A9413002BDF0A /* r4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r4.jpg; sourceTree = "<group>"; };
-		BAD63F141D9A9413002BDF0A /* r5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r5.jpg; sourceTree = "<group>"; };
-		BAD63F151D9A9413002BDF0A /* r6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r6.jpg; sourceTree = "<group>"; };
-		BAD63F161D9A9413002BDF0A /* r7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r7.jpg; sourceTree = "<group>"; };
-		BAD63F171D9A9413002BDF0A /* r8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r8.jpg; sourceTree = "<group>"; };
 		BAD8D5F71CBCCCD60037ED23 /* CalendarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarVC.h; sourceTree = "<group>"; };
 		BAD8D5F81CBCCCD60037ED23 /* CalendarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarVC.m; sourceTree = "<group>"; };
 		BAD98DC11CAA75C900EF2723 /* AppointmentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppointmentVC.h; path = ../AppointmentVC.h; sourceTree = "<group>"; };
@@ -1094,7 +1077,11 @@
 		CE4999141E64657D00C48845 /* CreateEditResourcePACVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CreateEditResourcePACVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CE4999161E69A83B00C48845 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Extensions.swift; path = AppHelper/Extensions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CE4999181E6D609600C48845 /* MyPACVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MyPACVC.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		CEE3EC3C1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateClassForSocketConnection.swift; sourceTree = "<group>"; };
+		CE507C661ECC6E300007F18E /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		CE6485591ED578AB00C565E8 /* ProactiveLivingGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = ProactiveLivingGif.gif; path = ProactiveLiving/ProactiveLivingGif.gif; sourceTree = "<group>"; };
+		CE64855F1ED59CC600C565E8 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		CE6485601ED59CC600C565E8 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		CE9153291EDBFCED00FC03CB /* WebViewContent.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = WebViewContent.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1102,6 +1089,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE507C671ECC6E300007F18E /* NotificationCenter.framework in Frameworks */,
 				60A7CADF1DDD6BB10033BA1E /* Social.framework in Frameworks */,
 				92E091D41D3775AF00BEC575 /* AWSS3.framework in Frameworks */,
 				92E091D31D3775AF00BEC575 /* AWSRuntime.framework in Frameworks */,
@@ -1130,6 +1118,7 @@
 		3BD02C3FB4517E2652864AFB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE507C661ECC6E300007F18E /* NotificationCenter.framework */,
 				60A7CADE1DDD6BB10033BA1E /* Social.framework */,
 				BAC8D2A11C58D50E0084AA47 /* MapKit.framework */,
 				83E71382609AD0AB059BF338 /* libPods-ProactiveLiving.a */,
@@ -1232,6 +1221,8 @@
 		605EAB6A1E1E63C60048EA8F /* ThirdParties */ = {
 			isa = PBXGroup;
 			children = (
+				CE64855F1ED59CC600C565E8 /* UIImage+animatedGIF.h */,
+				CE6485601ED59CC600C565E8 /* UIImage+animatedGIF.m */,
 				60B755F01E1E6B94003650A1 /* TLTagsControl */,
 				605EAB6B1E1E63C60048EA8F /* ASStarRatingView */,
 				605EAB6E1E1E63C60048EA8F /* CalendarKit */,
@@ -1716,11 +1707,12 @@
 		671C3D531C44FB71006A5423 = {
 			isa = PBXGroup;
 			children = (
-				BAD63F0E1D9A9413002BDF0A /* Images */,
 				671C3D6E1C44FB72006A5423 /* Assets.xcassets */,
 				671C3D951C44FE7A006A5423 /* AppDelegate */,
 				671C3D5E1C44FB72006A5423 /* ProactiveLiving */,
 				671C3D7B1C44FB72006A5423 /* ProactiveLivingTests */,
+				CE6485591ED578AB00C565E8 /* ProactiveLivingGif.gif */,
+				CE9153291EDBFCED00FC03CB /* WebViewContent.html */,
 				671C3D861C44FB72006A5423 /* ProactiveLivingUITests */,
 				671C3D5D1C44FB72006A5423 /* Products */,
 				3BD02C3FB4517E2652864AFB /* Frameworks */,
@@ -1749,7 +1741,6 @@
 				671C3D981C44FEF6006A5423 /* ControllerClasses */,
 				671C3D5F1C44FB72006A5423 /* Supporting Files */,
 				671C3D9A1C44FF26006A5423 /* Resources */,
-				CEE3EC3C1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift */,
 			);
 			path = ProactiveLiving;
 			sourceTree = "<group>";
@@ -2661,23 +2652,6 @@
 			name = Appointments;
 			sourceTree = "<group>";
 		};
-		BAD63F0E1D9A9413002BDF0A /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				603863881E23755900FE1598 /* bg.png */,
-				BAD63F0F1D9A9413002BDF0A /* r0.jpg */,
-				BAD63F101D9A9413002BDF0A /* r1.jpg */,
-				BAD63F111D9A9413002BDF0A /* r2.jpg */,
-				BAD63F121D9A9413002BDF0A /* r3.jpg */,
-				BAD63F131D9A9413002BDF0A /* r4.jpg */,
-				BAD63F141D9A9413002BDF0A /* r5.jpg */,
-				BAD63F151D9A9413002BDF0A /* r6.jpg */,
-				BAD63F161D9A9413002BDF0A /* r7.jpg */,
-				BAD63F171D9A9413002BDF0A /* r8.jpg */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
 		BAD8D5F61CBCCC9D0037ED23 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2841,15 +2815,21 @@
 				TargetAttributes = {
 					671C3D5B1C44FB72006A5423 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 5HKCR2945H;
+						DevelopmentTeam = H6S5L8EZAY;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -2893,11 +2873,11 @@
 				BA5900A31D364EFD006142AC /* ic_chat_search@2x.png in Resources */,
 				BA5900CD1D364EFD006142AC /* check_status_mark@3x.png in Resources */,
 				605EAC6B1E1E63C70048EA8F /* bubbleReceive.png in Resources */,
+				CE64855A1ED578AB00C565E8 /* ProactiveLivingGif.gif in Resources */,
 				BA5900BF1D364EFD006142AC /* message_got_receipt_from_server@2x.png in Resources */,
 				BA5900A51D364EFD006142AC /* ic_chat_voice@2x.png in Resources */,
 				BA59009F1D364EFD006142AC /* ic_chat_camera@2x.png in Resources */,
 				6038637D1E2347C000FE1598 /* Main.storyboard in Resources */,
-				BAD63F1A1D9A9413002BDF0A /* r2.jpg in Resources */,
 				BA5900C21D364EFD006142AC /* attachemnet_icn@2x.png in Resources */,
 				BA5900AF1D364EFD006142AC /* chat_field@3x.png in Resources */,
 				BA5900961D364EFD006142AC /* center_divider@2x.png in Resources */,
@@ -2905,10 +2885,7 @@
 				BA5900A41D364EFD006142AC /* ic_chat_tick@2x.png in Resources */,
 				BA5900D11D364EFD006142AC /* pastmeld_view@3x.png in Resources */,
 				BA5900C61D364EFD006142AC /* pastmeld_date@2x.png in Resources */,
-				BAD63F1E1D9A9413002BDF0A /* r6.jpg in Resources */,
 				67BD407A1C47AAC90084EFD4 /* Roboto-Thin.ttf in Resources */,
-				603863891E23755900FE1598 /* bg.png in Resources */,
-				BAD63F201D9A9413002BDF0A /* r8.jpg in Resources */,
 				605EAC691E1E63C70048EA8F /* bubble.png in Resources */,
 				BA9AE8751D9CEECC00830B40 /* HeaderScrollerView.xib in Resources */,
 				BA8CF5691E5C850E00D67A99 /* PACMenbersCell.xib in Resources */,
@@ -2916,7 +2893,6 @@
 				BA5900D31D364EFD006142AC /* sender_bg@3x.png in Resources */,
 				BA9AE87B1D9D026E00830B40 /* HeaderCollectionCell.xib in Resources */,
 				BA59009E1D364EFD006142AC /* ic_chat_add@2x.png in Resources */,
-				BAD63F1F1D9A9413002BDF0A /* r7.jpg in Resources */,
 				605EAC6F1E1E63C70048EA8F /* play_button.png in Resources */,
 				BA5900B21D364EFD006142AC /* ic_chat_tick@3x.png in Resources */,
 				671C3D6F1C44FB72006A5423 /* Assets.xcassets in Resources */,
@@ -2924,7 +2900,6 @@
 				605EAC6A1E1E63C70048EA8F /* bubble@2x.png in Resources */,
 				BA5900C71D364EFD006142AC /* pastmeld_view@2x.png in Resources */,
 				67BD40721C47AAC90084EFD4 /* Roboto-Bold.ttf in Resources */,
-				BAD63F181D9A9413002BDF0A /* r0.jpg in Resources */,
 				BA5900BD1D364EFD006142AC /* ic_audio_chat@2x.png in Resources */,
 				BA5900BE1D364EFD006142AC /* ic_video_chatSymb@2x.png in Resources */,
 				BA5900AB1D364EFD006142AC /* line_chat_divider@2x.png in Resources */,
@@ -2932,7 +2907,6 @@
 				BA5900AA1D364EFD006142AC /* ic_tick_single@2x.png in Resources */,
 				BA5900AD1D364EFD006142AC /* patch_chat_green.png in Resources */,
 				BA5900B01D364EFD006142AC /* ic_chat_group@3x.png in Resources */,
-				BAD63F1C1D9A9413002BDF0A /* r4.jpg in Resources */,
 				605EAC461E1E63C60048EA8F /* GooglePlacesAutocomplete.xib in Resources */,
 				BA5900D21D364EFD006142AC /* recevier_bg@3x.png in Resources */,
 				BA5900A81D364EFD006142AC /* ic_tick_double@2x.png in Resources */,
@@ -2948,7 +2922,6 @@
 				BA5900C81D364EFD006142AC /* recevier_bg@2x.png in Resources */,
 				60527C4F1E542B5B00D65332 /* PAC.storyboard in Resources */,
 				BA5900981D364EFD006142AC /* chat_line@2x.png in Resources */,
-				BAD63F191D9A9413002BDF0A /* r1.jpg in Resources */,
 				BA5900B11D364EFD006142AC /* ic_chat_search@3x.png in Resources */,
 				603863801E23497300FE1598 /* Profile.storyboard in Resources */,
 				BA5901AB1D36579D006142AC /* IQKeyboardManager.bundle in Resources */,
@@ -2957,6 +2930,7 @@
 				605EAC6D1E1E63C70048EA8F /* inputTextBG.png in Resources */,
 				BA8CF5711E5C87D700D67A99 /* AdminsCollectionCell.xib in Resources */,
 				BA9AE87F1D9D219200830B40 /* CollectionHeaderCustomView.xib in Resources */,
+				CE91532A1EDBFCED00FC03CB /* WebViewContent.html in Resources */,
 				605EAC681E1E63C70048EA8F /* attachment@2x.png in Resources */,
 				BA5900B71D364EFD006142AC /* button_chat_download@2x.png in Resources */,
 				BA5900A21D364EFD006142AC /* ic_chat_pending@2x.png in Resources */,
@@ -2978,13 +2952,11 @@
 				67BD40771C47AAC90084EFD4 /* Roboto-Medium.ttf in Resources */,
 				BA5900CE1D364EFD006142AC /* more_icn_titlebar@3x.png in Resources */,
 				67BD40791C47AAC90084EFD4 /* Roboto-Regular.ttf in Resources */,
-				BAD63F1D1D9A9413002BDF0A /* r5.jpg in Resources */,
 				BA5900B91D364EFD006142AC /* button_chat_retry@2x.png in Resources */,
 				BA5900CF1D364EFD006142AC /* pastmeld_address@3x.png in Resources */,
 				BA59009A1D364EFD006142AC /* ic_add_camera@2x.png in Resources */,
 				BA5900B41D364EFD006142AC /* ic_tick_read@3x.png in Resources */,
 				6038637E1E2347C000FE1598 /* SecondStoryboard.storyboard in Resources */,
-				BAD63F1B1D9A9413002BDF0A /* r3.jpg in Resources */,
 				BA5900D41D364EFD006142AC /* sender_chat_icn@3x.png in Resources */,
 				BA5901301D364F55006142AC /* HSDatePickerViewController.xib in Resources */,
 				BA5900CC1D364EFD006142AC /* attachemnet_icn@3x.png in Resources */,
@@ -3161,6 +3133,7 @@
 				BABB57DC1CEF105100F7C879 /* MessagesVC.m in Sources */,
 				BAC9B4B01CBF7A8600373F73 /* ExpertsVC.m in Sources */,
 				BAFFA5BE1D8BF2CD00969211 /* MembersCollectionCell.swift in Sources */,
+				CE6485611ED59CC600C565E8 /* UIImage+animatedGIF.m in Sources */,
 				BA5900E61D364EFD006142AC /* RecentChat.swift in Sources */,
 				BA5901121D364EFD006142AC /* ChattingMainVC.swift in Sources */,
 				BA48591A1DC9DEF800DED552 /* RSDFCustomDatePickerDayCell.m in Sources */,
@@ -3445,7 +3418,6 @@
 				BA27071F1CA96F4600C1E242 /* BookTableCell.m in Sources */,
 				BA5900EB1D364EFD006142AC /* Test+CoreDataProperties.swift in Sources */,
 				605EAC711E1E63C70048EA8F /* SOImageBrowserView.m in Sources */,
-				CEE3EC3D1EB724EB00B1F8CA /* DelegateClassForSocketConnection.swift in Sources */,
 				BA1683A71E83D8D1005EF1C1 /* PACNotificationVC.m in Sources */,
 				BA59019D1D36579D006142AC /* IQUIScrollView+Additions.swift in Sources */,
 			);
@@ -3608,7 +3580,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5HKCR2945H;
+				DEVELOPMENT_TEAM = H6S5L8EZAY;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3620,11 +3592,11 @@
 				INFOPLIST_FILE = ProactiveLiving/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ProactiveLiving.com;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "116bc1a2-5db3-4dfa-8f98-44286379b4f4";
-				PROVISIONING_PROFILE_SPECIFIER = ProactiveDistProvisioning;
+				PROVISIONING_PROFILE = "a0f6d642-575f-43bb-b7b7-56280e1f735a";
+				PROVISIONING_PROFILE_SPECIFIER = Proactive_Pro_Ad_Hoc;
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
@@ -3644,7 +3616,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5HKCR2945H;
+				DEVELOPMENT_TEAM = H6S5L8EZAY;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3656,11 +3628,11 @@
 				INFOPLIST_FILE = ProactiveLiving/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.affle.proactiveliving;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ProactiveLiving.com;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "116bc1a2-5db3-4dfa-8f98-44286379b4f4";
-				PROVISIONING_PROFILE_SPECIFIER = ProactiveDistProvisioning;
+				PROVISIONING_PROFILE = "a0f6d642-575f-43bb-b7b7-56280e1f735a";
+				PROVISIONING_PROFILE_SPECIFIER = Proactive_Pro_Ad_Hoc;
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/ProactiveLiving/Libs/ThirdParties/Utils/AppHelper/ProactiveLiving-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 2.3;

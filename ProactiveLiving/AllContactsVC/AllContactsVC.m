@@ -89,30 +89,38 @@
     contactVC1.delegate2=self;
     contactVC1.title = @"ALL";
     contactVC1.contactType=@"all";
+    contactVC1.fromVCName = self.fromVCName;
     
 //    contactVC2 = [storyboard instantiateViewControllerWithIdentifier:@"ContactFriendsVC"];
     contactVC2 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC2.delegate = self;
     contactVC2.contactType=@"friends";
     contactVC2.title = @"FRIENDS";
+    contactVC2.fromVCName = self.fromVCName;
+
 
     contactVC3 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC3.delegate = self;
     contactVC3.delegate1 = self;
     contactVC3.title = @"COLLEAGUES";
     contactVC3.contactType=@"colleagues";
+    contactVC3.fromVCName = self.fromVCName;
+
 
     contactVC4 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC4.delegate = self;
     contactVC4.delegate1 = self;
     contactVC4.title = @"HEALTH CLUBS";
     contactVC4.contactType=@"healthclub";
+    contactVC4.fromVCName = self.fromVCName;
+
 
     contactVC5 = [storyboard instantiateViewControllerWithIdentifier:@"ContactsVC"];
     contactVC5.delegate = self;
     contactVC5.delegate1 = self;
     contactVC5.title = @"OTHERS";
     contactVC5.contactType=@"";
+    contactVC5.fromVCName = self.fromVCName;
 
     // ContainerView
     //float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
@@ -189,7 +197,7 @@
         }
         else if([currentController isKindOfClass:[ContactFriendsVC class]])
         {
-            ContactFriendsVC *currentVC=(ContactFriendsVC*) currentController;
+            ///ContactFriendsVC *currentVC=(ContactFriendsVC*) currentController;
             //[currentVC createGroupWithContacts];
         }
     }else{

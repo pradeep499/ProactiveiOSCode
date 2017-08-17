@@ -808,7 +808,7 @@ extension AboutPacVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.backgroundColor = UIColor.clearColor()
         
         let imagePerson = cell.viewWithTag(111) as! UIImageView
-        imagePerson.layer.cornerRadius = imagePerson.frame.size.width/2
+        imagePerson.layer.cornerRadius = 20.5
         imagePerson.clipsToBounds = true
         imagePerson.contentMode = .ScaleAspectFill
         let namePerson = cell.viewWithTag(222) as! UILabel

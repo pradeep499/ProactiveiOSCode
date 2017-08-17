@@ -25,6 +25,7 @@ class ResourcesPACVC: UIViewController {
     var dictValuePacRole = [String:AnyObject]()
 
     var indexToDelete = Int()
+    var currentIndexPath = NSIndexPath()
     
 // MARK:- View Life Cycle
     
@@ -34,6 +35,7 @@ class ResourcesPACVC: UIViewController {
         // Do any additional setup after loading the view.
         
         // api Hit
+        tableViewResource.tableFooterView = UIView()
         fetchPostDataFromServer()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ResourcesPACVC.isFromMoredetailVC), name: NOTIFICATION_FROM_MOREDETAILVC, object: nil)
@@ -80,17 +82,48 @@ class ResourcesPACVC: UIViewController {
     // See More Button Action
     
     func seeMoreAction(sender: AnyObject) {
+        /*
+         let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableViewResource)
+         let indexPath =  self.tableViewResource.indexPathForRowAtPoint(buttonPosition)
+         
+         self.resourceDetailArr.removeAtIndex((indexPath?.section)!)
+         let indexs = NSIndexSet.init(index: (indexPath?.section)!)
+         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+         
+         let cell = self.tableViewResource.cellForRowAtIndexPath(indexPath!)
+         cell?.hidden = true
+         //for view1 in (cell?.contentView.subviews)!{
+         //  view1.removeFromSuperview()
+         // view1.hidden = true
+         //  }
+         
+         //cell?.contentView = UIView.init(frame: CGRect.zero)
+         
+         self.tableViewResource.beginUpdates()
+         self.tableViewResource.deleteSections(indexs, withRowAnimation: .Fade)
+         self.tableViewResource.endUpdates()
+         self.tableViewResource.backgroundColor = UIColor.redColor()
+         self.tableViewResource.reloadData()
+         // self.tableViewResource.setNeedsDisplay()
+         // self.tableViewResource.contentSize = CGSize(width: screenWidth, height: 200)
+         
+         });
+         
+         // [self.tableView beginUpdates];
+         //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+         //  [self.tableView endUpdates];*/
+
         
         let buttonPosition = sender.convertPoint(CGPointZero, toView: self.tableViewResource)
-        let indexPath =  self.tableViewResource.indexPathForRowAtPoint(buttonPosition)
-        let seeMoreVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("MoreDetailVC") as! MoreDetailVC
-        
-        let desc = resourceDetailArr[indexPath!.section].valueForKey("description") as? String // Description
-        let title = resourceDetailArr[indexPath!.section].valueForKey("title") as! String  //  Title
-        
-        seeMoreVC.titleStr = title
-        seeMoreVC.detailStr = desc!
-        self.navigationController?.pushViewController(seeMoreVC, animated: true)
+         let indexPath =  self.tableViewResource.indexPathForRowAtPoint(buttonPosition)
+         let seeMoreVC = AppHelper.getPacStoryBoard().instantiateViewControllerWithIdentifier("MoreDetailVC") as! MoreDetailVC
+         
+         let desc = resourceDetailArr[indexPath!.section].valueForKey("description") as? String // Description
+         let title = resourceDetailArr[indexPath!.section].valueForKey("title") as! String  //  Title
+         
+         seeMoreVC.titleStr = title
+         seeMoreVC.detailStr = desc!
+         self.navigationController?.pushViewController(seeMoreVC, animated: true)
         
         print_debug("See More : MoreDetailVC")
         
@@ -130,7 +163,30 @@ class ResourcesPACVC: UIViewController {
                 print_debug("PARAM DELETE \(parameters)")
                 
                 self.indexToDelete = indexPath!.section
+                self.currentIndexPath = indexPath!
                 self.deleteResourceAPI(parameters)
+                
+                //self.resourceDetailArr.removeAtIndex(self.currentIndexPath.section)
+
+               // let indexSet = NSIndexSet(index: self.currentIndexPath.section)
+               // self.tableViewResource.deleteSections(indexSet, withRowAnimation: .Fade)
+               // let cell1 = self.tableViewResource.numberOfRowsInSection(self.currentIndexPath.section)
+                
+                
+                //var arrIndexp = [NSIndexPath]()
+                //for index in 0..<cell1{
+                    //let indexPath1 = NSIndexPath(forItem: index, inSection: self.currentIndexPath.section)
+                    //arrIndexp.append(indexPath1)
+                    //self.tableViewResource.deleteRowsAtIndexPaths([indexPath1], withRowAnimation: .Fade)
+                    
+                    //print_debug("indexpath ===\(indexPath1)")
+               // }
+                
+               // self.tableViewResource.deleteSections(NSIndexSet.init(index: self.currentIndexPath.section), withRowAnimation: .Fade)
+                //self.tableViewResource.reloadData()
+                
+              //  self.tableViewResource.deleteRowsAtIndexPaths(arrIndexp, withRowAnimation: .Fade)
+
                 
                 
                 
@@ -273,16 +329,24 @@ class ResourcesPACVC: UIViewController {
                             print_debug("TESTING Arr \(resultArr)")
                             
                             
-                           // self.resourceDetailArr = resultArr as! [AnyObject]
+                            self.resourceDetailArr = resultArr as! [AnyObject]
+                            //self.resourceDetailArr.removeAtIndex(self.currentIndexPath.section)
+                            let indexSet = NSIndexSet(index: self.currentIndexPath.section)
+                            self.tableViewResource.deleteSections(indexSet, withRowAnimation: .Fade)
+                            //self.tableViewResource.deleteRowsAtIndexPaths([self.currentIndexPath], withRowAnimation: .Fade)
+
+                           // self.tableViewResource.reloadData()
+                           //// let cells = self.tableViewResource.visibleCells
+                          //  var indexpaths = [NSIndexPath]()
+                           // for cell in cells{
+                                //let indexPath = self.tableViewResource.indexPathForCell(cell)
+                                 //indexpaths.append(indexPath!)
+                               // print_debug(indexPath)
+                           // }
                             
-                          //  self.resourceDetailArr.removeAtIndex(self.indexToDelete)
-                            
-                         
-                            
-                        //    self.tableViewResource.reloadData()
-                            
-                        self.fetchPostDataFromServer()
-                            
+                            //self.tableViewResource.reloadRowsAtIndexPaths(indexpaths, withRowAnimation: .Fade)
+                           // print_debug(cells)
+                           //
                             
                         }
                     } else {
@@ -378,24 +442,34 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     
     // numberOfSectionsInTableView
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if resourceDetailArr.count == 0{
+            HelpingClass.toSetEmptyViewInTableViewNoDataAvaiable(tableView, message: "No resources currently available.")
+        }else{
+            tableView.backgroundView = nil
+        }
+
         return resourceDetailArr.count
+        
         
     }
    
+    //func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+      //  return "section"
+    //}
+    
+    //func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+      //  return 50.0
+    //}
     
     
     // numberOfRowsInSection
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         
-        attachmentArr = (resourceDetailArr[section].valueForKey("attachments") as? NSArray)!
+       let  attachmentArr2 = (resourceDetailArr[section].valueForKey("attachments") as? NSArray)!
       
-       // print("Section item lists:\((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!)")
-       // print("COUNT ROWS \((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)")
-        
-      //  print("-----returning rows-  - ", ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1))
-        
-        return  ((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)
+               
+        return  (attachmentArr2.count) + 1//2//((resourceDetailArr[section].valueForKey("attachments") as? [AnyObject])!.count + 1)
         
         
     }
@@ -404,7 +478,8 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     //  heightForRowAtIndexPath
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        
+        let  attachmentArr2 = (resourceDetailArr[indexPath.section].valueForKey("attachments") as? NSArray)!
+
         if indexPath.row == 0{
             return 120
         }
@@ -414,7 +489,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             var processedIndexPath = indexPath.row
             processedIndexPath = processedIndexPath-1
 
-            if (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type"))! as! String == "link" ||  self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("type") as? String == "attachment"
+            if (attachmentArr2.objectAtIndex(processedIndexPath).objectForKey("type"))! as! String == "link" || attachmentArr2.objectAtIndex(processedIndexPath).objectForKey("type") as? String == "attachment"
             {
                 return 54
             }
@@ -431,8 +506,6 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
        
-        attachmentArr = (resourceDetailArr[indexPath.section].valueForKey("attachments") as? NSArray)!
-        print_debug("MIKE attachmentArr\(attachmentArr)")
        
         if indexPath.row == 0 {
             
@@ -475,9 +548,35 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
         }else {
             
             // check the Attachment folder
-            setUpAttachmentCell(tableViewResource, indexPath: indexPath)
-        }
+           setUpAttachmentCell(tableViewResource, indexPath: indexPath)
+            
+         /*  let  attachmentArr1 = (resourceDetailArr[indexPath.section].valueForKey("attachments") as? NSArray)!
+            
+            if attachmentArr1.count == 0{
+                
+                return UITableViewCell()
+                
+            }
+            else {
+                
+                
+                // we are modifying the index because we are taking "numberOfRowsInSection" on the basis of attachmentArr which is one less in total cell count
+                var processedIndexPath = indexPath.row
+                processedIndexPath = processedIndexPath-1
+            
+            let cellVideo = tableView.dequeueReusableCellWithIdentifier("videoCell", forIndexPath: indexPath) as UITableViewCell
+            
+            // cellVideo.selectionStyle = .None
+            
+            let videoLinkImage = cellVideo.viewWithTag(16) as! UIImageView
+                videoLinkImage.hidden = false
+                
+            print_debug("Image URL\((attachmentArr1.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!))")
+                
+            videoLinkImage.sd_setImageWithURL(NSURL.init(string: (attachmentArr1.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!), placeholderImage: UIImage.init(named: "ic_instruction_video"))
+        }*/
   
+        }
         return UITableViewCell()
         
     }
@@ -486,6 +585,8 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
     
     func setUpAttachmentCell(tv: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
         
+        attachmentArr = (resourceDetailArr[indexPath.section].valueForKey("attachments") as? NSArray)!
+
         if attachmentArr!.count == 0{
        
             return UITableViewCell()
@@ -535,7 +636,11 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
             
             // cellVideo.selectionStyle = .None
             
+           
             let videoLinkImage = cellVideo.viewWithTag(16) as! UIImageView
+            
+            videoLinkImage.hidden = false
+            
             print_debug("Image URL\((self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!))")
             videoLinkImage.sd_setImageWithURL(NSURL.init(string: (self.attachmentArr?.objectAtIndex(processedIndexPath).objectForKey("url") as? String)!), placeholderImage: UIImage.init(named: "ic_instruction_video"))
             
@@ -557,7 +662,7 @@ extension ResourcesPACVC : UITableViewDelegate , UITableViewDataSource {
                         {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 //thumbVideo.setImage(image, forState: .Normal)
-                                videoLinkImage.image = self.addGradientOnImage(image)
+                                videoLinkImage.image = image//self.addGradientOnImage(image)
                             })
                         }
                         else
